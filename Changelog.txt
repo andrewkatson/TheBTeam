@@ -1,0 +1,11 @@
+[Unreleased]
+
+###Added
+-Fonts folder with sample Fonts
+-Textures folder
+-Game class
+-GameLogic class skeleton
+-UserView class skeleton
+-CompView class skeleton
+-MapFactory class that constructs a map for each game
+-Direction class
