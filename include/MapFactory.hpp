@@ -6,7 +6,13 @@
 #include <vector>
 #include <memory>
 #include <cmath>
+#include <time.h>
+#include <algorithm>
+#include <iostream>
 
+using std::cout;
+using std::endl;
+using std::fill;
 using std::unique_ptr;
 using std::vector;
 
@@ -49,7 +55,7 @@ private:
     * tile, a path tile, or the exit tile. 0 is reserved for the exit. posiitve
     * numbers are for path tiles. negative values are for non path tiles.
     */
-   vector<vector<int>> floor;
+   vector<vector<int>> floorGrid;
 
     /* 2d array where the index has a value indicating the texture used on the
      * board at that position ABOVE the floor level. These values correspond
@@ -57,13 +63,24 @@ private:
      * 0 is the exit. positive numebers are towers. negative numbers less than
      * -1 are different obstacles
      */
-    vector<vector<int>> aboveFloor;
+    vector<vector<int>> aboveFloorGrid;
 
 public:
 
   MapFactory(MapChoices *mapCustomizationChoices, int xDim, int yDim);
 
+  void generateMap();
 
+  void initGridArrays();
+
+  void makeExit();
+  int chooseIndexOfExit(int side);
+  void placeExit(int exitSide, int exitIndexOnSide);
+
+  void makeEntry();
+
+  template <class T>
+  void printVector(vector<vector<T>> v);
 
   double Equilikely(double a, double b);
   double Geometric(double p);

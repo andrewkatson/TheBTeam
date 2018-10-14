@@ -1,11 +1,13 @@
 [Unreleased]
 
 ###Added
--Fonts folder with sample Fonts
+-Fonts folder with sample Fonts [@andrewkatson][https://github.com/andrewkatson]
 -Textures folder
 -Game class
 -GameLogic class skeleton
 -UserView class skeleton
 -CompView class skeleton
 -MapFactory class that constructs a map for each game
--Direction class
+-Direction class that keeps track of a direction
+-MapChoices container class to hold all map generation customization values
+-rngs file for random number generation (from a class library)
