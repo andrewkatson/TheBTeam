@@ -109,7 +109,7 @@ void MapFactory::placeExit(int exitSide, int exitIndexOnSide){
         break;
       case 1:
         this -> exitPos.push_back(exitIndexOnSide);
-        this -> exitPos.push_back(this -> floorGrid.size() - 1);
+        this -> exitPos.push_back(this -> floorGrid[0].size() - 1);
         break;
       case 2:
         this -> exitPos.push_back(0);
@@ -117,7 +117,7 @@ void MapFactory::placeExit(int exitSide, int exitIndexOnSide){
         break;
       case 3:
       default:
-        this -> exitPos.push_back(this -> floorGrid[0].size() - 1);
+        this -> exitPos.push_back(this -> floorGrid.size() - 1);
         this -> exitPos.push_back(exitIndexOnSide);
         break;
   }
