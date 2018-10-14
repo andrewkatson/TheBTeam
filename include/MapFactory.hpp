@@ -9,12 +9,16 @@
 #include <time.h>
 #include <algorithm>
 #include <iostream>
+#include <numeric>
 
+using std::vector;
+using std::unique_ptr;
+using std::abs;
+using std::random_shuffle;
+using std::fill;
 using std::cout;
 using std::endl;
-using std::fill;
-using std::unique_ptr;
-using std::vector;
+using std::iota;
 
 class MapFactory{
 private:
@@ -32,16 +36,21 @@ private:
    */
   Direction exitDirection;
 
-  //array identifying the exit position
+  //array identifying the exit position (x_1,y_1)
   vector<int> exitPos;
 
-  //array with each entry position
+  //array with each entry position (x_1,y_1,x_2,y_2,...)
   vector<int> entryPos;
 
   /* 2d array where any index not related to a path tile
    * is a -1, the exit is 0, and any path is identified with n >= 1
    */
   vector<vector<int>> paths;
+
+  /* 2d array where any index will be marked to indicate if an entry can be
+   * placed at that position (-1 is defualt, 0 is no, and 1 is yes);
+   */
+  vector<vector<int>> unavailableSpots;
 
   /* 2d array where the index has a value indicating the distance
    * from the exit from that spot. a -1 is used for a tile that is not
@@ -76,11 +85,28 @@ public:
   void makeExit();
   int chooseIndexOfExit(int side);
   void placeExit(int exitSide, int exitIndexOnSide);
+  void setUnavailableSpotsFromExit(int exitXPos, int exitYPos);
+  void setUnavailableSpotsFromLeftExit(int exitXPos, int exitYPos);
+  void setUnavailableSpotsFromRightExit(int exitXPos, int exitYPos);
+  void setUnavailableSpotsFromTopExit(int exitXPos, int exitYPos);
+  void setUnavailableSpotsFromBottomExit(int exitXPos, int exitYPos);
 
-  void makeEntry();
+  void makeEntry(int pathNumber);
+  bool aSideIsNotFull(vector<Direction::Directions> &sides);
+  bool sideIsNotFull(Direction::Directions &side, vector<int> &possibleEntries);
+  bool leftSideIsNotFull(vector<int> &possibleEntries);
+  bool rightSideIsNotFull(vector<int> &possibleEntries);
+  bool topSideIsNotFull(vector<int> &possibleEntries);
+  bool bottomSideIsNotFull(vector<int> &possibleEntries);
+  void placeEntry(Direction::Directions &entrySide, int entryIndexOnSide, int pathNumberOfEntry);
+  void setUnavailableSpotsFromEntry(int entryXPos, int entryYPos);
+  void setUnavailableSpotsFromLeftEntry(int entryXPos, int entryYPos);
+  void setUnavailableSpotsFromRightEntry(int entryXPos, int entryYPos);
+  void setUnavailableSpotsFromTopEntry(int entryXPos, int entryYPos);
+  void setUnavailableSpotsFromBottomEntry(int entryXPos, int entryYPos);
 
   template <class T>
-  void printVector(vector<vector<T>> v);
+  void printVector(vector<vector<T>> &v);
 
   double Equilikely(double a, double b);
   double Geometric(double p);

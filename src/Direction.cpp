@@ -16,10 +16,10 @@ Direction::Directions Direction::intToDirection(int d){
     case 1:
       return Directions::Right;
     case 2:
-      return Directions::Up;
+      return Directions::Top;
     case 3:
     default:
-      return Directions::Down;
+      return Directions::Bottom;
   }
 }
 
@@ -30,9 +30,9 @@ int Direction::directionToInt(Direction::Directions d){
       return 0;
     case Directions::Right:
       return 1;
-    case Directions::Up:
+    case Directions::Top:
       return 2;
-    case Directions::Down:
+    case Directions::Bottom:
     default:
       return 3;
   }
@@ -45,18 +45,18 @@ Direction::Directions Direction::oppositeDirection(Direction::Directions d) {
       return Directions::Right;
     case Directions::Right:
       return Directions::Left;
-    case Directions::Up:
-      return Directions::Down;
-    case Directions::Down:
+    case Directions::Top:
+      return Directions::Bottom;
+    case Directions::Bottom:
     default:
-      return Directions::Up;
+      return Directions::Top;
   }
 }
 
 //return a vector with the three directions that are not the one passed
 vector<Direction::Directions> Direction::allOtherDirections(Direction::Directions d) {
   vector<Direction::Directions> otherDirections;
-  for(int direct = Left; direct != Down; direct++){
+  for(int direct = Left; direct != Bottom + 1; direct++){
     Directions direction = static_cast<Directions>(direct);
     if(direction != d){
       otherDirections.push_back(direction);

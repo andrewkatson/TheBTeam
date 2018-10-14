@@ -6,7 +6,7 @@ using std::vector;
 class Direction{
 
 public:
-  enum Directions  {Left, Right, Up, Down};
+  enum Directions  {Left, Right, Top, Bottom};
   Direction();
   Direction(int d);
 
@@ -17,7 +17,6 @@ public:
 
   vector<Direction::Directions> allOtherDirections(Direction::Directions d);
 
-private:
   Directions facing;
 };
 #endif

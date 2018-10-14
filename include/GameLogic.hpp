@@ -1,10 +1,10 @@
 #ifndef GAMELOGIC_H
 #define GAMELOGIC_H
-#include "MapFactory.hpp"
+#include "BoardManager.hpp"
 
 class GameLogic{
 private:
-  unique_ptr<MapFactory> mapFactory;
+  unique_ptr<BoardManager> boardManager;
 
 public:
   GameLogic();
