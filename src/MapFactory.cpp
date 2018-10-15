@@ -21,12 +21,15 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices, int xDim, int yDim){
 
 //fill all four grids with valid values for a map
 void MapFactory::generateMap(){
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < 1; i++){
   //initializes all vector indicies to -1
   this -> initGridArrays();
 
   //place an exit on all boards
   this -> makeExit();
+
+  //initialize the distances pattern
+  this -> makeDistances();
 
   //place an entry on all boards
   for(int e = 0; e < this -> mapCustomizationChoices -> pathEntryChoice; e++){
@@ -37,9 +40,6 @@ void MapFactory::generateMap(){
 
   //initialize the floor pattern
   this -> makeFloor();
-
-  //initialize the distances pattern
-  this -> makeDistances();
 
   //initilize the array indicating whether an entry leads to the exit
   entrysToExit.resize(entryPos.size() /2);
@@ -52,7 +52,12 @@ void MapFactory::generateMap(){
     this -> makePath(p + 1);
     //now this path leads to the exit
     entrysToExit.at(p) = 1;
+
   }
+
+
+  //place obstacles on the board
+  this -> makeObstacles();
 
   //TODO remove when done checking grids
   //this -> printVector(this -> paths);
@@ -60,6 +65,8 @@ void MapFactory::generateMap(){
   //this -> printVector(this -> distances);
   //this -> printVector(this -> floorGrid);
   //this -> printVector(this -> aboveFloorGrid);
+  //this -> printVector(this -> adjacientPathSpots);
+  //this -> printUnorderedMap(this -> pathAdjacient);
   cout << endl << endl;
 
   paths.clear();
@@ -70,6 +77,7 @@ void MapFactory::generateMap(){
   exitPos.clear();
   entryPos.clear();
   entryDirections.clear();
+  adjacientPathSpots.clear();
 }
 }
 
@@ -83,6 +91,7 @@ void MapFactory::initGridArrays(){
       this -> distances.push_back(vector<int>(this -> xDim, -1));
       this -> floorGrid.push_back(vector<int>(this -> xDim, -1));
       this -> aboveFloorGrid.push_back(vector<int>(this -> xDim, -1));
+      this -> adjacientPathSpots.push_back(vector<int>(this -> xDim, -1));
   }
 }
 
@@ -250,35 +259,46 @@ void MapFactory::setUnavailableSpotsFromBottomExit(int exitXPos, int exitYPos){
 
 //set each entry on all the map grids
 void MapFactory::makeEntry(int pathNumber){
-  vector<Direction::Directions> otherThreeSides;
-
-  //get all three other directions that are not on the exit's side of the map
-  otherThreeSides = this -> exitDirection.allOtherDirections(this -> exitDirection.facing);
-
-  //shuffle the other sides so we will pick one random side each time
-  random_shuffle(otherThreeSides.begin(), otherThreeSides.end());
 
   //vector to hold all the entries on the chosen side of the grid
   vector<int> entriesOnSide;
 
+  //side that is furthest away (used only for special case of first path)
+  Direction::Directions furthestAway;
+
+  vector<Direction::Directions> otherThreeSides;
   int chosenSideIndex = -1;
 
-  //check to make sure that there is room on one of the three sides for an entry
-  if(this -> aSideIsNotFull(otherThreeSides)){
-    //keep picking a side until you find one that can have an exit placed on it
-    do {
-      entriesOnSide.clear();
-      //choose one of the three sides of the grid the exit is not on
-      chosenSideIndex = (int)this->Equilikely(0,2);
-
-    }while(!(this ->  sideIsNotFull(otherThreeSides[chosenSideIndex], entriesOnSide)));
-
+  //if this the the first path it is ALWAYS placed on the side with the furthest
+  //spot away to ensure at least one entry point can be used for the easy mode
+  if(pathNumber == 1){
+    furthestAway = entriesOnFurthestSide(entriesOnSide);
   }
   else{
-    //return if there are no sides that can have entries placed on them
-    return;
-  }
 
+    //get all three other directions that are not on the exit's side of the map
+    otherThreeSides = this -> exitDirection.allOtherDirections(this -> exitDirection.facing);
+
+    //shuffle the other sides so we will pick one random side each time
+    random_shuffle(otherThreeSides.begin(), otherThreeSides.end());
+
+
+    //check to make sure that there is room on one of the three sides for an entry
+    if(this -> aSideIsNotFull(otherThreeSides)){
+      //keep picking a side until you find one that can have an exit placed on it
+      do {
+        entriesOnSide.clear();
+        //choose one of the three sides of the grid the exit is not on
+        chosenSideIndex = (int)this->Equilikely(0,2);
+
+      }while(!(this ->  sideIsNotFull(otherThreeSides[chosenSideIndex], entriesOnSide)));
+
+    }
+    else{
+      //return if there are no sides that can have entries placed on them
+      return;
+    }
+  }
   /*
    * generate a value in the range of the possible entries on this side
    * then select one of these indicies
@@ -286,9 +306,95 @@ void MapFactory::makeEntry(int pathNumber){
    int index = (int) Equilikely(0, entriesOnSide.size() - 1);
    int entryIndex = entriesOnSide.at(index);
 
-   //set a pathNumber on each grid where the entry should be
-   this -> placeEntry(otherThreeSides[chosenSideIndex], entryIndex, pathNumber);
+   if(pathNumber == 1){
+     //set a pathNumber on each grid where the first entry should be
+     this -> placeEntry(furthestAway, entryIndex, pathNumber);
+   }
+   else{
+     //set a pathNumber on each grid where the entry should be
+     this -> placeEntry(otherThreeSides[chosenSideIndex], entryIndex, pathNumber);
+   }
 }
+
+/*
+ * special case for the first entry placed where the side with the
+ * furthest distance is chosen and all the tiles on that are
+ * poetential entry points
+ */
+ Direction::Directions MapFactory::entriesOnFurthestSide(vector<int> &possibleEntries){
+   Direction::Directions furthestSide;
+   int maxAverageSumDistance = 0;
+   int sideSumDistance = 0;
+   int sideNumTiles = 0;
+
+   vector<int> currSideEntries;
+   int row = 0;
+   int col = 0;
+
+   //check the left and then right columns
+   for(col = 0; col < xDim; col += xDim - 1){
+     sideNumTiles = 0;
+     sideSumDistance = 0;
+     currSideEntries.clear();
+     //check all the spaces on this row
+     for(row = 0; row < yDim; row++){
+       currSideEntries.push_back(row);
+       sideSumDistance += distances.at(row).at(col);
+       sideNumTiles++;
+     }
+     int averageDistance = sideSumDistance / sideNumTiles;
+
+     //if this side had a larger distance on average than the previous max
+     //then set the new max average sum to this one
+     //and copy over all the entries
+     if(averageDistance > maxAverageSumDistance){
+       maxAverageSumDistance = averageDistance;
+       possibleEntries.clear();
+       possibleEntries = currSideEntries;
+       //if this is the left side then the furthest direction is the left
+       if(col == 0){
+         furthestSide = Direction::Left;
+       }
+       //else the right side
+       else{
+         furthestSide = Direction::Right;
+       }
+     }
+   }
+
+
+   //check the top and bottom rows
+   for(row = 0; row < yDim; row += yDim - 1){
+     sideNumTiles = 0;
+     sideSumDistance = 0;
+     currSideEntries.clear();
+     //check all the spaces on this col
+     for(col = 0; col < xDim; col++){
+       currSideEntries.push_back(col);
+       sideSumDistance += distances.at(row).at(col);
+       sideNumTiles++;
+     }
+     int averageDistance = sideSumDistance / sideNumTiles;
+
+     //if this side had a larger distance on average than the previous max
+     //then set the new max average sum to this one
+     //and copy over all the entries
+     if(averageDistance > maxAverageSumDistance){
+       maxAverageSumDistance = averageDistance;
+       possibleEntries.clear();
+       possibleEntries = currSideEntries;
+       //if this is the left side then the furthest direction is the top
+       if(col == 0){
+         furthestSide = Direction::Top;
+       }
+       //else the bottom side
+       else{
+         furthestSide = Direction::Bottom;
+       }
+     }
+   }
+   return furthestSide;
+ }
 
 //return true is at least one of the three sides the exit is not on
 // can have an entry placed on it
@@ -421,6 +527,9 @@ void MapFactory::placeEntry(Direction::Directions &entrySide, int entryIndexOnSi
 
   //set the direction of this entrance
   entryDirections.push_back(Direction(entrySide));
+
+  //record all tiles next to this one
+  addAdjacientsTiles(entryPos[entryPos.size() - 1],entryPos[entryPos.size() - 2]);
 
   //mark the spots around this entrance as unavailabe for future entry positions
   this -> setUnavailableSpotsFromEntry(entryPos[entryPos.size() - 2], entryPos[entryPos.size() - 1]);
@@ -564,10 +673,12 @@ void MapFactory::makeDistances(){
 
 //make a path for the specified path on the board
 void MapFactory::makePath(int pathNumber){
-
   //grab the starting row and column
   int currRowNum = entryPos.at(2*(pathNumber - 1) + 1);
   int currColNum = entryPos.at(2*(pathNumber - 1));
+
+  //remove the current tile from the adjacientTiles if it exists there
+  removeAdjacientTiles(currRowNum, currColNum);
 
   //the direction the entry faces in
   Direction::Directions entryDirection = entryDirections[pathNumber - 1].facing;
@@ -580,13 +691,12 @@ void MapFactory::makePath(int pathNumber){
   //The below is to take a step into the map grid
   Direction::Directions oneStepInDirection = exitDirection.oppositeDirection(directionExpandedFrom);
 
-  //update the row to the exapnded direction
-  currRowNum = expandInRow(currRowNum, oneStepInDirection);
-  //update the column to the exapnded direction
-  currColNum = expandInCol(currColNum, oneStepInDirection);
+  //keep track of all non exit paths this path touches along the way to the exit
+  vector<int> allNonExitPaths;
 
-  //place a path value at the current tile
-  paths.at(currRowNum).at(currColNum) = pathNumber;
+  //to keep track of the last shortest direction in case
+  // we get to a corner where the only way to the exit is by taking a side path
+  int lastShortestDistance = 0xFFFF;
 
   //while we have not reached another path or the exit tile
   while(paths.at(currRowNum).at(currColNum) < 0 || paths.at(currRowNum).at(currColNum) == pathNumber
@@ -597,11 +707,20 @@ void MapFactory::makePath(int pathNumber){
         if(connectedWithExitPath(currRowNum, currColNum, pathNumber)){
           break;
         }
+      //if the newest path tile is touching a differnt path and it is not an
+      //exit path than we add it to the list of paths to exit because we can
+      //assume that this current path will reach the exit
+      vector<int> connectedNonExitPaths = connectedWithNonExitPath(currRowNum, currColNum, pathNumber);
+      if(connectedNonExitPaths.size() != 0){
+        for(int otherPath : connectedNonExitPaths){
+          allNonExitPaths.push_back(otherPath);
+        }
+      }
 
 
       //get all the shortest possible steps
       vector<Direction::Directions> nextSteps;
-      nextSteps = calcNextShortestStep(currRowNum, currColNum);
+      nextSteps = calcNextShortestStep(currRowNum, currColNum, lastShortestDistance);
 
       random_shuffle(nextSteps.begin(), nextSteps.end());
 
@@ -615,15 +734,118 @@ void MapFactory::makePath(int pathNumber){
       //update the column to the exapnded direction
       currColNum = expandInCol(currColNum, expandInto);
 
+      //update the last shortest distance to be the distance of the current space
+      lastShortestDistance = distances.at(currRowNum).at(currColNum);
+
       //place a path value at the current tile
       paths.at(currRowNum).at(currColNum) = pathNumber;
 
+      //mark this spot as unavailable for use later
+      unavailableSpots.at(currRowNum).at(currRowNum) = 0;
+
+      //record all tiles next to this one
+      addAdjacientsTiles(currRowNum, currColNum);
+
+      //remove the current tile from the adjacientTiles if it exists there
+      removeAdjacientTiles(currRowNum, currColNum);
+
       //reset the direction we exaneded from
       directionExpandedFrom = expandInto;
+  }
 
+  //finally take all non exit paths we touched and mark them as exit paths
+  if(allNonExitPaths.size() != 0){
+    for(int nonExitPath : allNonExitPaths){
+      entrysToExit.at(nonExitPath - 1) = 1;
+    }
   }
 }
 
+/*
+ * Add every adjacient tile to the passed one that is not on a path or the exit
+ * and is not already in the unordered_map of adjacient tiles
+ */
+void MapFactory::addAdjacientsTiles(int row, int col){
+
+  vector<vector<int>> adjacientPositions;
+  if(col - 1 >= 0){
+    if(paths.at(row).at(col - 1) < 0){
+
+      vector<int> v{row,col - 1};
+      adjacientPositions.push_back(v);
+    }
+  }
+  if(col + 1 < xDim){
+    if(paths.at(row).at(col + 1) < 0){
+
+      vector<int> v{row,col + 1};
+      adjacientPositions.push_back(v);
+    }
+  }
+  if(row - 1 >= 0){
+    if(paths.at(row - 1).at(col) < 0){
+
+      vector<int> v{row - 1,col};
+      adjacientPositions.push_back(v);
+    }
+  }
+  if(row + 1 < yDim){
+    if(paths.at(row + 1).at(col) < 0){
+
+      vector<int> v{row + 1,col};
+      adjacientPositions.push_back(v);
+    }
+  }
+
+  //iterate through the positions we identiifed and add them
+  //to the hashtable of all the possible positions for obstacles
+  //if they are not already in it
+  for(vector<int> pos : adjacientPositions){
+    //look for row
+    unordered_map<int, unordered_map<int,bool>>::const_iterator rowLookup = pathAdjacient.find(pos.at(0));
+    //if the current row is not recorded
+    if(rowLookup == pathAdjacient.end()){
+      //then add a new entry in the unordered_map for the row
+      //and the column because that will not be in the map either
+      unordered_map<int,bool> toInsert;
+      toInsert.insert({pos.at(1), true});
+      pathAdjacient.insert({pos.at(0), toInsert});
+
+      adjacientPathSpots.at(pos.at(0)).at(pos.at(1)) = 0;
+    }
+    //if the current row is recorded we check to see if this column is recorded
+    else{
+        //look for column
+        unordered_map<int,bool>::const_iterator colLookup = pathAdjacient.at(pos.at(0)).find(pos.at(1));
+        //if the current column is not recorded
+        if(colLookup == pathAdjacient.at(pos.at(0)).end()){
+          //then add a new entry in the unordered_map assocaited with the row
+          //for this new column entry
+          pathAdjacient.at(pos.at(0)).insert({pos.at(1), true});
+          adjacientPathSpots.at(pos.at(0)).at(pos.at(1)) = 0;
+        }
+    }
+  }
+}
+
+/*
+ * Remove the current tile from the list of adjacient tiles if it is in there
+ */
+ void MapFactory::removeAdjacientTiles(int row, int col){
+   //look for row
+   unordered_map<int, unordered_map<int,bool>>::const_iterator rowLookup = pathAdjacient.find(row);
+   //if the current row is recorded
+   if(rowLookup != pathAdjacient.end()){
+     //then search for the column
+     //look for column
+    unordered_map<int,bool>::const_iterator colLookup = pathAdjacient.at(row).find(col);
+    if(colLookup != pathAdjacient.at(row).end()){
+      //if we have found the tile we remove it
+      pathAdjacient.at(row).erase(col);
+      adjacientPathSpots.at(row).at(col) = -2;
+    }
+   }
+ }
 
  /*
   * return true if the direction specified can be exapnded into by this path
@@ -761,34 +983,109 @@ bool MapFactory::connectedWithExit(int row, int col){
  }
 
  /*
+  * checks to see if there is a path connected to this tile that is not
+  * on the same path as the path specified and that path is not an exit path
+  * returns the path number of the path
+  */
+  vector<int> MapFactory::connectedWithNonExitPath(int row, int col, int path){
+    vector<int> nonExitPaths;
+    bool exitPath = false;
+    //check left
+    if(col - 1 >= 0){
+      if(paths.at(row).at(col - 1) != path && paths.at(row).at(col - 1) > 0){
+        exitPath = (bool) entrysToExit.at(paths.at(row).at(col - 1) - 1);
+        if(!exitPath){
+          nonExitPaths.push_back(paths.at(row).at(col - 1));
+        }
+      }
+    }
+    if(col + 1 < xDim){
+      //check right
+      if(paths.at(row).at(col + 1) != path && paths.at(row).at(col + 1) > 0){
+        exitPath = (bool) entrysToExit.at(paths.at(row).at(col + 1) - 1);
+        if(!exitPath){
+          nonExitPaths.push_back(paths.at(row).at(col + 1));
+        }
+      }
+    }
+    if(row - 1 >= 0){
+      //check top
+      if(paths.at(row - 1).at(col) != path && paths.at(row - 1).at(col) > 0){
+        exitPath = (bool) entrysToExit.at(paths.at(row - 1).at(col) - 1);
+        if(!exitPath){
+          nonExitPaths.push_back(paths.at(row - 1).at(col));
+        }
+      }
+    }
+    if(row + 1 < yDim){
+      //check bottom
+      if(paths.at(row + 1).at(col) != path && paths.at(row + 1).at(col) > 0){
+        exitPath = (bool) entrysToExit.at(paths.at(row + 1).at(col) - 1);
+        if(!exitPath){
+          nonExitPaths.push_back(paths.at(row + 1).at(col));
+        }
+      }
+    }
+
+    return nonExitPaths;
+  }
+
+ /*
   * return the direction of the next shortest step
   */
-  vector<Direction::Directions> MapFactory::calcNextShortestStep(int row, int col){
-    int topDist = 0x1FFFFF;
-    int bottomDist = 0x1FFFFFF;
-    int leftDist = 0x1FFFFF;
-    int rightDist = 0x1FFFFF;
+  vector<Direction::Directions> MapFactory::calcNextShortestStep(int row, int col, int lastShortestDistance){
+    int topDist = 0x1FFF;
+    int bottomDist = 0x1FFF;
+    int leftDist = 0x1FFF;
+    int rightDist = 0x1FFF;
 
     vector<Direction::Directions> shortestSteps;
 
+    /*
+     * We do not look in directions that are on one of the edges to avoid
+     * paths that run along the edge and miss the first step
+     * each path takes
+     */
     //check left
-    if(col - 1 >= 0){
+    if(col - 1 > 0){
       leftDist = distances.at(row).at(col - 1);
     }
     //check right
-    if(col + 1 < xDim){
+    if(col + 1 < xDim - 1){
       rightDist = distances.at(row).at(col + 1);
     }
     //check top
-    if(row - 1 >= 0){
+    if(row - 1 > 0){
       topDist = distances.at(row - 1).at(col);
     }
     //check bottom
-    if(row + 1 < yDim){
+    if(row + 1 < yDim - 1){
       bottomDist = distances.at(row + 1).at(col);
     }
 
     int shortestDist = min(leftDist, min(rightDist, min(topDist, bottomDist)));
+    //if the last shortest distance was longer than the current one we just
+    //take a normal path
+    if(shortestDist > lastShortestDistance){
+      //check left
+      if(col - 1 >= 0){
+        leftDist = distances.at(row).at(col - 1);
+      }
+      //check right
+      if(col + 1 < xDim){
+        rightDist = distances.at(row).at(col + 1);
+      }
+      //check top
+      if(row - 1 >= 0){
+        topDist = distances.at(row - 1).at(col);
+      }
+      //check bottom
+      if(row + 1 < yDim){
+        bottomDist = distances.at(row + 1).at(col);
+      }
+
+      shortestDist = min(leftDist, min(rightDist, min(topDist, bottomDist)));
+    }
 
     //find out which distance is the shortest and add the distance correspoonding to it
     //to the vector of the possible shortets distances
@@ -841,6 +1138,15 @@ int MapFactory::expandInRow(int row, Direction::Directions expandDirection){
    }
  }
 
+ /*
+  * Search through the hash table of path adjacinet tiles until we find one
+  * place an obstacle, and repeat until no new obstacles can or need to be placed
+  */
+void MapFactory::makeObstacles(){
+
+}
+
+
 template <class T>
 void MapFactory::printVector(vector<vector<T>> &v){
   for(vector<int> vec : v){
@@ -863,6 +1169,17 @@ void MapFactory::printVector(vector<T> &v){
     cout << vec << " ";
   }
   cout <<endl;
+}
+
+template <class T, class T2>
+void MapFactory::printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo){
+  for(auto uo: pathAdjacient){
+    cout << "Row " << (uo).first << endl;
+    for(auto dt: uo.second){
+      cout <<  dt.first << " ";
+    }
+    cout << endl;
+  }
 }
 
 double  MapFactory::Equilikely (double a, double b){

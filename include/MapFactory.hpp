@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <iostream>
 #include <numeric>
+#include <unordered_map>
 
 using std::vector;
 using std::unique_ptr;
@@ -20,6 +21,7 @@ using std::fill;
 using std::cout;
 using std::endl;
 using std::iota;
+using std::unordered_map;
 
 class MapFactory{
 private:
@@ -56,9 +58,23 @@ private:
   vector<vector<int>> paths;
 
   /* 2d array where any index will be marked to indicate if an entry can be
-   * placed at that position (-1 is defualt, 0 is no, and 1 is yes);
+   * placed at that position (-1 is default, 0 is no, and 1 is yes);
    */
   vector<vector<int>> unavailableSpots;
+
+  /*
+   * unordered_map where each key is row on the board
+   * and each value is another unordered_map with the columns
+   * that unordered_map has a boolean that has no purpose at the moment
+   */
+   unordered_map<int, unordered_map<int, bool>> pathAdjacient;
+
+  /*
+   *  2d array to complement the unordered_map of adjacient spaces
+   *  use it to visualize what spaces are being marked off as path adjacient
+   *  no other purpose
+   */
+  vector<vector<int>> adjacientPathSpots;
 
   /* 2d array where the index has a value indicating the distance
    * from the exit from that spot. a -1 is used for a tile that is not
@@ -100,6 +116,7 @@ public:
   void setUnavailableSpotsFromBottomExit(int exitXPos, int exitYPos);
 
   void makeEntry(int pathNumber);
+  Direction::Directions entriesOnFurthestSide(vector<int> &possibleEntries);
   bool aSideIsNotFull(vector<Direction::Directions> &sides);
   bool sideIsNotFull(Direction::Directions &side, vector<int> &possibleEntries);
   bool leftSideIsNotFull(vector<int> &possibleEntries);
@@ -118,18 +135,25 @@ public:
   void makeDistances();
 
   void makePath(int pathNumber);
+  void addAdjacientsTiles(int row, int col);
+  void removeAdjacientTiles(int row, int col);
   bool canExpand(Direction::Directions expand, int row, int col, int path);
   bool connectedWithExit(int row, int col);
   bool connectedWithSamePath(int row, int col, int newrow, int newcol, int path);
   bool connectedWithExitPath(int row, int col , int path);
-  vector<Direction::Directions> calcNextShortestStep(int row, int col);
+  vector<int> connectedWithNonExitPath(int row, int col, int path);
+  vector<Direction::Directions> calcNextShortestStep(int row, int col, int lastShortestDistance);
   int expandInRow(int row, Direction::Directions expandDirection);
   int expandInCol(int col, Direction::Directions expandDirection);
+
+  void makeObstacles();
 
   template <class T>
   void printVector(vector<vector<T>> &v);
   template <class T>
   void printVector(vector<T> &v);
+  template <class T, class T2>
+  void printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo);
 
   double Equilikely(double a, double b);
   double Geometric(double p);
