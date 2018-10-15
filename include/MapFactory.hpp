@@ -105,6 +105,8 @@ public:
   void setUnavailableSpotsFromTopEntry(int entryXPos, int entryYPos);
   void setUnavailableSpotsFromBottomEntry(int entryXPos, int entryYPos);
 
+  void makeFloor();
+
   template <class T>
   void printVector(vector<vector<T>> &v);
 

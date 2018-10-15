@@ -35,11 +35,14 @@ void MapFactory::generateMap(){
     this -> makeEntry(e + 1);
   }
 
+  //initialize the floor pattern
+  this -> makeFloor();
+
   //TODO remove when done checking grids
-  this -> printVector(this -> paths);
-  this -> printVector(this -> unavailableSpots);
+  //this -> printVector(this -> paths);
+  //this -> printVector(this -> unavailableSpots);
   //this -> printVector(this -> distances);
-  //this -> printVector(this -> floorGrid);
+  this -> printVector(this -> floorGrid);
   //this -> printVector(this -> aboveFloorGrid);
   cout << endl << endl;
 
@@ -500,6 +503,23 @@ void MapFactory::setUnavailableSpotsFromBottomEntry(int entryXPos, int entryYPos
   }
   else{
     unavailableSpots.at(entryYPos + 1).at(entryXPos) = 0;
+  }
+}
+
+//make the floor with an alternating pattern of negative numbers to
+//set everything as a non-path tile (except the exit which is marked already)
+void MapFactory::makeFloor(){
+  for(int row = 0; row < yDim; row++){
+    for(int col = 0; col < xDim; col++){
+      if(floorGrid.at(row).at(col) != 0){
+        if(col % 2 == 0){
+          floorGrid.at(row).at(col) = 2 * (mapCustomizationChoices -> cafeteriaChoice - 1) - 1;
+        }
+        else{
+          floorGrid.at(row).at(col) = 2 * (mapCustomizationChoices -> cafeteriaChoice - 1) - 2;
+        }
+      }
+    }
   }
 }
 
