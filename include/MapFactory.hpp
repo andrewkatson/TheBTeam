@@ -14,6 +14,7 @@
 using std::vector;
 using std::unique_ptr;
 using std::abs;
+using std::min;
 using std::random_shuffle;
 using std::fill;
 using std::cout;
@@ -30,17 +31,24 @@ private:
   //y dimension of board
   int yDim;
 
-  /* the direction the exit is facing
+  /* the side the exit is on
    * so if it is in the right hand column then
-   * the direction is Left
+   * the direction is right
    */
   Direction exitDirection;
+
+  /* the side of the entry starting positiions
+   */
+  vector<Direction> entryDirections;
 
   //array identifying the exit position (x_1,y_1)
   vector<int> exitPos;
 
   //array with each entry position (x_1,y_1,x_2,y_2,...)
   vector<int> entryPos;
+
+  //array to keep track of which paths lead to exit. 0 is no and 1 is yes
+  vector<int> entrysToExit;
 
   /* 2d array where any index not related to a path tile
    * is a -1, the exit is 0, and any path is identified with n >= 1
@@ -107,8 +115,21 @@ public:
 
   void makeFloor();
 
+  void makeDistances();
+
+  void makePath(int pathNumber);
+  bool canExpand(Direction::Directions expand, int row, int col, int path);
+  bool connectedWithExit(int row, int col);
+  bool connectedWithSamePath(int row, int col, int newrow, int newcol, int path);
+  bool connectedWithExitPath(int row, int col , int path);
+  vector<Direction::Directions> calcNextShortestStep(int row, int col);
+  int expandInRow(int row, Direction::Directions expandDirection);
+  int expandInCol(int col, Direction::Directions expandDirection);
+
   template <class T>
   void printVector(vector<vector<T>> &v);
+  template <class T>
+  void printVector(vector<T> &v);
 
   double Equilikely(double a, double b);
   double Geometric(double p);
