@@ -105,7 +105,9 @@ private:
 
 public:
 
-  MapFactory(MapChoices *mapCustomizationChoices, int xDim, int yDim);
+  MapFactory(MapChoices *mapCustomizationChoices);
+
+  void generateDimensions();
 
   void generateMap();
 
@@ -166,6 +168,12 @@ public:
   void printVector(vector<T> &v);
   template <class T, class T2>
   void printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo);
+
+  vector<int>& getExitPos();
+  vector<int>& getEntryPos();
+  vector<vector<int>>& distances();
+  vector<vector<int>>& getFloor();
+  vector<vector<int>>& getAboveFloor();
 
   double Equilikely(double a, double b);
   double Geometric(double p);

@@ -1,22 +1,33 @@
  #include "MapFactory.hpp"
 
 
-MapFactory::MapFactory(MapChoices *mapCustomizationChoices, int xDim, int yDim){
+MapFactory::MapFactory(MapChoices *mapCustomizationChoices){
   this -> mapCustomizationChoices = unique_ptr<MapChoices>(mapCustomizationChoices);
 
-  //checks to ensure that the dimensions are never negative or 0
-  if(xDim <= 0){
-    xDim = 1;
-  }
-  if(yDim <= 0){
-    yDim = 1;
-  }
-  this -> xDim = xDim;
-  this -> yDim = yDim;
+  //generate the dimensions of the board using the cafeteria size choice
+  generateDimensions();
+
+
 
   //set seed for random number generator from file rngs
   time_t t;
   PutSeed(time(&t));
+}
+
+//a higher cafeteria choice means a larger cafeteria
+void MapFactory::generateDimensions(){
+  int xDim = mapCustomizationChoices -> cafeteriaChoice * 6;
+  int yDim = mapCustomizationChoices -> cafeteriaChoice * 6;
+
+  //checks to ensure that the dimensions are never negative or 0
+  if(xDim <= 0){
+    xDim = 6;
+  }
+  if(yDim <= 0){
+    yDim = 6;
+  }
+  this -> xDim = xDim;
+  this -> yDim = yDim;
 }
 
 //fill all four grids with valid values for a map
@@ -1600,6 +1611,24 @@ void MapFactory::printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo){
     cout << endl;
   }
 }
+
+
+  vector<int>& MapFactory::getExitPos(){
+    return exitPos;
+  }
+  vector<int>& MapFactory::getEntryPos(){
+    return entryPos;
+  }
+  vector<vector<int>>& MapFactory::distances(){
+    return distances;
+  }
+  vector<vector<int>>& MapFactory::getFloor(){
+    return floorGrid;
+  }
+  vector<vector<int>>& MapFactory::getAboveFloor(){
+    return aboveFloorGrid;
+  }
+
 
 double  MapFactory::Equilikely (double a, double b){
   /* ---------------------------------------------------
