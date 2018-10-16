@@ -37,7 +37,7 @@ private:
    * so if it is in the right hand column then
    * the direction is right
    */
-  Direction exitDirection;
+  Direction exitDirection;;
 
   /* the side of the entry starting positiions
    */
@@ -51,6 +51,8 @@ private:
 
   //array to keep track of which paths lead to exit. 0 is no and 1 is yes
   vector<int> entrysToExit;
+
+  vector<vector<int>> markPathSoFar;
 
   /* 2d array where any index not related to a path tile
    * is a -1, the exit is 0, and any path is identified with n >= 1
@@ -134,19 +136,26 @@ public:
 
   void makeDistances();
 
+  void makePathRecursively(int pathNumber);
+  bool recursiveMakePath(int pathNumber, int row, int col, vector<Direction::Directions> &pathDirects, Direction::Directions cameFrom, int recurLevel, vector<vector<int>> &keepTrack, int lastDistance);
   void makePath(int pathNumber);
   void addAdjacientsTiles(int row, int col);
   void removeAdjacientTiles(int row, int col);
-  bool canExpand(Direction::Directions expand, int row, int col, int path);
+  bool canExpand(Direction::Directions &expand, int row, int col, int path);
   bool connectedWithExit(int row, int col);
   bool connectedWithSamePath(int row, int col, int newrow, int newcol, int path);
+  bool connectedWithSamePath(int row, int col, int newrow, int newcol, int path, vector<vector<int>> &marked);
   bool connectedWithExitPath(int row, int col , int path);
   vector<int> connectedWithNonExitPath(int row, int col, int path);
   vector<Direction::Directions> calcNextShortestStep(int row, int col, int lastShortestDistance);
+  vector<Direction::Directions> calcNextShortestOrEqualStep(int row, int col, int path, int lastShortestDistance);
+  void stripOfDeadEnds(vector<Direction::Directions> &expandOptions,  int row, int col, int lastShortestDistance);
+  bool possibleMoves(Direction::Directions &expand,  int row, int col,  int lastShortestDistance);
   int expandInRow(int row, Direction::Directions expandDirection);
   int expandInCol(int col, Direction::Directions expandDirection);
 
   void makeObstacles();
+  int countPathAdjacient();
 
   template <class T>
   void printVector(vector<vector<T>> &v);
