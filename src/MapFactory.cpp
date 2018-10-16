@@ -21,7 +21,7 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices, int xDim, int yDim){
 
 //fill all four grids with valid values for a map
 void MapFactory::generateMap(){
-  for(int i = 0; i < 1000; i++){
+  for(int i = 0; i < 10; i++){
   //initializes all vector indicies to -1
   this -> initGridArrays();
 
@@ -32,7 +32,7 @@ void MapFactory::generateMap(){
   this -> makeDistances();
 
   //place an entry on all boards
-  for(int e = 0; e < 1; e++){
+  for(int e = 0; e < mapCustomizationChoices -> pathEntryChoice; e++){
     // add one because the path number should always start at 1 since 0
     // is the exit
     this -> makeEntry(e + 1);
@@ -1515,7 +1515,41 @@ void MapFactory::makeObstacles(){
   //and there are still adjacient path spots to place them
   while(placedObstacles < mapCustomizationChoices -> obstacleChoice &&
         placedObstacles < numPathAdjacient){
-    placedObstacles = mapCustomizationChoices -> obstacleChoice;
+
+    //select a random row value
+    int randRowChosen = (int) Equilikely(0, yDim - 1);
+    //find that row in the hash table of path adjacient tiles
+    unordered_map<int, unordered_map<int,bool>>::const_iterator randRowIterator = pathAdjacient.find(randRowChosen);
+
+    while(randRowIterator == pathAdjacient.end()){
+      randRowChosen = (int) Equilikely(0, yDim - 1);
+      randRowIterator = pathAdjacient.find(randRowChosen);
+    }
+
+    //if we picked an empty row just go around while loop again after it is removed
+    if(pathAdjacient.at(randRowChosen).size() == 0){
+      pathAdjacient.erase(randRowChosen);
+      continue;
+    }
+
+    //select a random column value
+    int randColChosen = (int) Equilikely(0, xDim - 1);
+    //find that column in the hash table for the row
+    unordered_map<int,bool>::const_iterator randColIterator = pathAdjacient.at(randRowChosen).find(randColChosen);
+
+    while(randColIterator == pathAdjacient.at(randRowChosen).end()){
+      randColChosen = (int) Equilikely(0, xDim - 1);
+      randColIterator = pathAdjacient.at(randRowChosen).find(randColChosen);
+    }
+
+    //place an obstacle at the chosen row and column
+    aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
+
+    //remove the obstacle from the map
+    pathAdjacient.at(randRowChosen).erase(randColChosen);
+
+    placedObstacles++;
+
   }
 }
 

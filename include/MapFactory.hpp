@@ -11,6 +11,7 @@
 #include <iostream>
 #include <numeric>
 #include <unordered_map>
+#include <iterator>
 
 using std::vector;
 using std::unique_ptr;
@@ -22,6 +23,8 @@ using std::cout;
 using std::endl;
 using std::iota;
 using std::unordered_map;
+using std::next;
+using std::begin;
 
 class MapFactory{
 private:
