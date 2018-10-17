@@ -38,7 +38,7 @@ void MapFactory::generateMap(){
 
   //initialize the floor pattern
   this -> makeFloor();
-  
+
   //place an exit on all boards
   this -> makeExit();
 
@@ -69,10 +69,10 @@ void MapFactory::generateMap(){
   this -> makeObstacles();
 
   //TODO remove when done checking grids
-  this -> printVector(this -> paths);
+  //this -> printVector(this -> paths);
   //this -> printVector(this -> unavailableSpots);
   //this -> printVector(this -> distances);
-  this -> printVector(this -> floorGrid);
+  //this -> printVector(this -> floorGrid);
   //this -> printVector(this -> aboveFloorGrid);
   //this -> printVector(this -> adjacientPathSpots);
   //this -> printUnorderedMap(this -> pathAdjacient);
