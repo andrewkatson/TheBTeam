@@ -36,6 +36,9 @@ void MapFactory::generateMap(){
   //initializes all vector indicies to -1
   this -> initGridArrays();
 
+  //initialize the floor pattern
+  this -> makeFloor();
+  
   //place an exit on all boards
   this -> makeExit();
 
@@ -48,9 +51,6 @@ void MapFactory::generateMap(){
     // is the exit
     this -> makeEntry(e + 1);
   }
-
-  //initialize the floor pattern
-  this -> makeFloor();
 
   //initilize the array indicating whether an entry leads to the exit
   entrysToExit.resize(entryPos.size() /2);
@@ -69,10 +69,10 @@ void MapFactory::generateMap(){
   this -> makeObstacles();
 
   //TODO remove when done checking grids
-  //this -> printVector(this -> paths);
+  this -> printVector(this -> paths);
   //this -> printVector(this -> unavailableSpots);
   //this -> printVector(this -> distances);
-  //this -> printVector(this -> floorGrid);
+  this -> printVector(this -> floorGrid);
   //this -> printVector(this -> aboveFloorGrid);
   //this -> printVector(this -> adjacientPathSpots);
   //this -> printUnorderedMap(this -> pathAdjacient);
@@ -534,6 +534,10 @@ void MapFactory::placeEntry(Direction::Directions &entrySide, int entryIndexOnSi
   //we know that the two most recently pushed entry positions correspond to
   // the x and y of the newest entry
   this -> paths[entryPos[entryPos.size() - 1]][entryPos[entryPos.size() - 2]] = pathNumberOfEntry;
+  //mark the entry on the floor grid that will draw the textures
+  //will have the path number on it (will always be positive) should allow
+  //for different paths to have different textures
+  this -> floorGrid[entryPos[entryPos.size() - 1]][entryPos[entryPos.size() - 2]]  = pathNumberOfEntry;
 
   //set the direction of this entrance
   entryDirections.push_back(Direction(entrySide));
@@ -909,6 +913,8 @@ void MapFactory::makePath(int pathNumber){
 
       //place a path value at the current tile
       paths.at(currRowNum).at(currColNum) = pathNumber;
+      //place the path indicator on the floor grid array used for textures
+      floorGrid.at(currRowNum).at(currColNum) = pathNumber;
 
       //mark this spot as unavailable for use later
       unavailableSpots.at(currRowNum).at(currRowNum) = 0;
@@ -1619,7 +1625,7 @@ void MapFactory::printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo){
   vector<int>& MapFactory::getEntryPos(){
     return entryPos;
   }
-  vector<vector<int>>& MapFactory::distances(){
+  vector<vector<int>>& MapFactory::getDistances(){
     return distances;
   }
   vector<vector<int>>& MapFactory::getFloor(){

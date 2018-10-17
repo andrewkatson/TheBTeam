@@ -171,7 +171,7 @@ public:
 
   vector<int>& getExitPos();
   vector<int>& getEntryPos();
-  vector<vector<int>>& distances();
+  vector<vector<int>>& getDistances();
   vector<vector<int>>& getFloor();
   vector<vector<int>>& getAboveFloor();
 
