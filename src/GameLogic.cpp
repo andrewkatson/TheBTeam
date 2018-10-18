@@ -5,4 +5,7 @@ GameLogic::GameLogic(){
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager());
 }
 
-void GameLogic::updateGameLogic(float deltaS){}
+void GameLogic::updateGameLogic(float deltaS){
+  
+  
+}
