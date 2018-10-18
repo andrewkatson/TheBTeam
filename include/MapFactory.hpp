@@ -55,6 +55,9 @@ private:
   //array to keep track of which paths lead to exit. 0 is no and 1 is yes
   vector<int> entrysToExit;
 
+  /*
+   * 2d array used by recursive functions to mark where that path has gone before
+   */
   vector<vector<int>> markPathSoFar;
 
   /* 2d array where any index not related to a path tile
@@ -63,14 +66,15 @@ private:
   vector<vector<int>> paths;
 
   /* 2d array where any index will be marked to indicate if an entry can be
-   * placed at that position (-1 is default, 0 is no, and 1 is yes);
+   * placed at that position ( 1 is yes but only obstacles, 0 is no, and -1 is yes);
    */
   vector<vector<int>> unavailableSpots;
 
-  /*
+/*
    * unordered_map where each key is row on the board
    * and each value is another unordered_map with the columns
    * that unordered_map has a boolean that has no purpose at the moment
+   * used to find spaces on the board next to a path
    */
    unordered_map<int, unordered_map<int, bool>> pathAdjacient;
 
@@ -116,11 +120,9 @@ public:
   void makeExit();
   int chooseIndexOfExit(int side);
   void placeExit(int exitSide, int exitIndexOnSide);
+  void makeDistances();
   void setUnavailableSpotsFromExit(int exitXPos, int exitYPos);
-  void setUnavailableSpotsFromLeftExit(int exitXPos, int exitYPos);
-  void setUnavailableSpotsFromRightExit(int exitXPos, int exitYPos);
-  void setUnavailableSpotsFromTopExit(int exitXPos, int exitYPos);
-  void setUnavailableSpotsFromBottomExit(int exitXPos, int exitYPos);
+
 
   void makeEntry(int pathNumber);
   Direction::Directions entriesOnFurthestSide(vector<int> &possibleEntries);
@@ -139,7 +141,7 @@ public:
 
   void makeFloor();
 
-  void makeDistances();
+
 
   void makePathRecursively(int pathNumber);
   bool recursiveMakePath(int pathNumber, int row, int col, vector<Direction::Directions> &pathDirects, Direction::Directions cameFrom, int recurLevel, vector<vector<int>> &keepTrack, int lastDistance);
@@ -161,6 +163,10 @@ public:
 
   void makeObstacles();
   int countPathAdjacient();
+  int countPossibleObstaclePositions();
+  void setBlockedSides(vector<int> &blockedSides);
+  int markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides);
+
 
   template <class T>
   void printVector(vector<vector<T>> &v);
