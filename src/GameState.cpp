@@ -12,7 +12,6 @@ GameState::GameState(){
   
 }
 
-void GameState::setState(int new_state){
-  
-
+void GameState::setState(int newState){
+  this->currentState=newState;
 }
