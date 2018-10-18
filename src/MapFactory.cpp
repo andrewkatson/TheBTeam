@@ -71,11 +71,11 @@ void MapFactory::generateMap(){
 
 
   //TODO remove when done checking grids
-  this -> printVector(this -> paths);
+  //this -> printVector(this -> paths);
   //this -> printVector(this -> unavailableSpots);
   //this -> printVector(this -> distances);
   //this -> printVector(this -> floorGrid);
-  this -> printVector(this -> aboveFloorGrid);
+  //this -> printVector(this -> aboveFloorGrid);
   //this -> printVector(this -> adjacientPathSpots);
   //this -> printUnorderedMap(this -> pathAdjacient);
 
@@ -627,145 +627,6 @@ void MapFactory::makeDistances(){
   }
 }
 
-/*
- * find a recursive path and then execute it
- * TODO Optimize if have time
- */
-void MapFactory::makePathRecursively(int pathNumber){
-  vector<Direction::Directions> moveToMake;
-
-  //grab the starting row and column
-  int currRowNum = entryPos.at(2*(pathNumber - 1) + 1);
-  int currColNum = entryPos.at(2*(pathNumber - 1));
-
-  //remove the current tile from the adjacientTiles if it exists there
-  removeAdjacientTiles(currRowNum, currColNum);
-
-  //the direction the entry faces in
-  Direction::Directions entryDirection = entryDirections[pathNumber - 1].facing;
-  //the direction we cannot expand towards
-  Direction::Directions directionExpandedFrom = entryDirection;
-
-  //the starting distance
-  int distance = distances.at(currRowNum).at(currColNum);
-
-  vector<vector<int>> keepTrack = markPathSoFar;
-
-
-  bool possible = recursiveMakePath(pathNumber, currRowNum, currColNum, moveToMake, directionExpandedFrom, 0 , keepTrack, distance);
-
-  for(Direction::Directions move : moveToMake){
-
-    //update the row to the exapnded direction
-    currRowNum = expandInRow(currRowNum, move);
-    //update the column to the exapnded direction
-    currColNum = expandInCol(currColNum, move);
-
-    //place a path value at the current tile
-    paths.at(currRowNum).at(currColNum) = pathNumber;
-
-    //mark this spot as unavailable for use later
-    unavailableSpots.at(currRowNum).at(currRowNum) = 0;
-
-    //record all tiles next to this one
-    addAdjacientsTiles(currRowNum, currColNum);
-
-    //remove the current tile from the adjacientTiles if it exists there
-    removeAdjacientTiles(currRowNum, currColNum);
-  }
-
-}
-
-/*
- * recursively find a path and return a random one
- */
-
- bool MapFactory::recursiveMakePath(int pathNumber, int row, int col, vector<Direction::Directions> &pathDirects, Direction::Directions cameFrom, int recurLevel, vector<vector<int>> &keepTrack, int lastDistance){
-
-
-   vector<Direction::Directions> goInto = exitDirection.allOtherDirections(cameFrom);
-
-   if(connectedWithExit(row, col) || connectedWithExitPath(row, col, pathNumber) || recurLevel > 30){
-     return true;
-   }
-
-   int distance = distances.at(row).at(col);
-   if(lastDistance < distance - 1){
-     return false;
-   }
-
-
-
-   if(keepTrack.at(row).at(col) >= 0){
-     return false;
-   }
-   //let us know we have been here before on this path
-   keepTrack.at(row).at(col) = recurLevel;
-   vector<Direction::Directions> canMove;
-   for(Direction::Directions d : goInto){
-     if(canExpand(d,row, col, pathNumber)){
-       canMove.push_back(d);
-     }
-   }
-
-   vector<vector<Direction::Directions>> allPaths;
-   vector<bool> pathPossible;
-   for(int i= 0; i < canMove.size(); i++){
-     int newcol = col;
-     int newrow = row;
-     Direction::Directions curr = canMove.at(i);
-     switch(curr){
-       case Direction::Left:
-         newcol--;
-         break;
-       case Direction::Right:
-         newcol++;
-         break;
-       case Direction::Top:
-         newrow--;
-         break;
-       case Direction::Bottom:
-       default:
-         newrow++;
-         break;
-     }
-
-      if(connectedWithSamePath( row, col,newrow, newcol, pathNumber, keepTrack)){
-          continue;
-      }
-
-     vector<vector<int>> keepTrackPlus = keepTrack;
-     vector<Direction::Directions> path = pathDirects;
-
-     pathPossible.push_back(recursiveMakePath(pathNumber, newrow, newcol, path, exitDirection.oppositeDirection(curr), recurLevel+1, keepTrackPlus, distance));
-
-
-     if(pathPossible.at(pathPossible.size() - 1)){
-      allPaths.push_back(path);
-     }
-   }
-
-   if(allPaths.size() == 0){
-     return false;
-   }
-
-   int pickPath = (int) Equilikely(0, allPaths.size() -1 );
-
-   random_shuffle(allPaths.begin(), allPaths.end());
-   for(Direction::Directions d : allPaths.at(pickPath)){
-     pathDirects.push_back(d);
-   }
-
-   if(canMove.size() == 0){
-     return false;
-   }
-   vector<int> nonExitPaths =  connectedWithNonExitPath(row, col, pathNumber);
-   if(nonExitPaths.size() != 0){
-     for(int nonExitPath : nonExitPaths){
-       entrysToExit.at(nonExitPath - 1) = 1;
-     }
-   }
- }
 
 //make a path for the specified path on the board
 void MapFactory::makePath(int pathNumber){
@@ -825,23 +686,6 @@ void MapFactory::makePath(int pathNumber){
 
 
       nextSteps = calcNextShortestStep(currRowNum, currColNum, lastShortestDistance);
-
-      /*
-      //only take a non shortest path when the coin flip is correct
-      //and we are far from the exit
-      if(shortestOrNot < 4 || currDistance < 4 || firstStep == true || abs(currRowNum - exitPos.at(1)) < 2 || abs(currColNum - exitPos.at(0)) < 2){
-        nextSteps = calcNextShortestStep(currRowNum, currColNum, lastShortestDistance);
-      }
-      else{
-        nextSteps = calcNextShortestOrEqualStep(currRowNum, currColNum, pathNumber, lastShortestDistance);
-
-        stripOfDeadEnds(nextSteps, currRowNum, currColNum, lastShortestDistance);
-
-        if(nextSteps.size() == 0){
-          nextSteps =  calcNextShortestStep(currRowNum, currColNum, lastShortestDistance);
-        }
-      }
-      */
 
       random_shuffle(nextSteps.begin(), nextSteps.end());
 
@@ -1508,8 +1352,18 @@ void MapFactory::makeObstacles(){
         unavailableSpots.at(randRowChosen).at(randColChosen) == 1){
       continue;
     }
+
+    //randomly decide if this obstacle is actually invisible and does
+    //not count towards the total number of obstacles
+    int isInvisible = Equilikely(0,3);
+    if(isInvisible > 2){
+      aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
+      possiblePlacements--;
+      continue;
+    }
+
     //place an obstacle at the chosen row and column
-    aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
+    aboveFloorGrid.at(randRowChosen).at(randColChosen) = -3;
 
     //vector where each index corresponds to a true (1) or false (1)
     //for left, right, top, bottom, top left, top right, bottom left, bottom right
@@ -1526,63 +1380,6 @@ void MapFactory::makeObstacles(){
     placedObstacles++;
   }
 
-  /*
-  int numPathAdjacient = countPathAdjacient();
-
-  //while we have not placed the maximum specified number of obstacles
-  //and there are still adjacient path spots to place them
-  while(placedObstacles < mapCustomizationChoices -> obstacleChoice &&
-        placedObstacles < numPathAdjacient){
-
-    //select a random row value
-    int randRowChosen = (int) Equilikely(0, yDim - 1);
-    //find that row in the hash table of path adjacient tiles
-    unordered_map<int, unordered_map<int,bool>>::const_iterator randRowIterator = pathAdjacient.find(randRowChosen);
-
-    while(randRowIterator == pathAdjacient.end()){
-      randRowChosen = (int) Equilikely(0, yDim - 1);
-      randRowIterator = pathAdjacient.find(randRowChosen);
-    }
-
-    //if we picked an empty row just go around while loop again after it is removed
-    if(pathAdjacient.at(randRowChosen).size() == 0){
-      pathAdjacient.erase(randRowChosen);
-      continue;
-    }
-
-    //select a random column value
-    int randColChosen = (int) Equilikely(0, xDim - 1);
-    //find that column in the hash table for the row
-    unordered_map<int,bool>::const_iterator randColIterator = pathAdjacient.at(randRowChosen).find(randColChosen);
-
-    while(randColIterator == pathAdjacient.at(randRowChosen).end()){
-      randColChosen = (int) Equilikely(0, xDim - 1);
-      randColIterator = pathAdjacient.at(randRowChosen).find(randColChosen);
-    }
-
-    //place an obstacle at the chosen row and column
-    aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
-
-    //remove the obstacle from the map
-    pathAdjacient.at(randRowChosen).erase(randColChosen);
-
-    placedObstacles++;
-
-  }
-  */
-}
-
-/*
- * count and return the number of path adjacinet tiles
- */
-int MapFactory::countPathAdjacient(){
-  int counter = 0;
-  for(auto uo: pathAdjacient){
-    for(auto dt: uo.second){
-      counter++;
-    }
-  }
-  return counter;
 }
 
 /*

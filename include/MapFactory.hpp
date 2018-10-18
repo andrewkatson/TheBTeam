@@ -102,18 +102,14 @@ private:
     /* 2d array where the index has a value indicating the texture used on the
      * board at that position ABOVE the floor level. These values correspond
      * to towers and obstacles. -1 indicates nothing is at this space.
-     * 0 is the exit. positive numebers are towers. negative numbers less than
-     * -1 are different obstacles
+     * 0 is the exit. positive numbers are towers. negative numbers less than
+     * -1 are different obstacles (-2 means an invisible obstacle, i.e. no
+     * obstacle texture is rendered and it will not matter for tower placement
+     * but the path will avoid it)
      */
     vector<vector<int>> aboveFloorGrid;
 
-public:
-
-  MapFactory(MapChoices *mapCustomizationChoices);
-
   void generateDimensions();
-
-  void generateMap();
 
   void initGridArrays();
 
@@ -141,10 +137,6 @@ public:
 
   void makeFloor();
 
-
-
-  void makePathRecursively(int pathNumber);
-  bool recursiveMakePath(int pathNumber, int row, int col, vector<Direction::Directions> &pathDirects, Direction::Directions cameFrom, int recurLevel, vector<vector<int>> &keepTrack, int lastDistance);
   void makePath(int pathNumber);
   void addAdjacientsTiles(int row, int col);
   void removeAdjacientTiles(int row, int col);
@@ -162,7 +154,6 @@ public:
   int expandInCol(int col, Direction::Directions expandDirection);
 
   void makeObstacles();
-  int countPathAdjacient();
   int countPossibleObstaclePositions();
   void setBlockedSides(vector<int> &blockedSides);
   int markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides);
@@ -175,6 +166,11 @@ public:
   template <class T, class T2>
   void printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo);
 
+public:
+
+  MapFactory(MapChoices *mapCustomizationChoices);
+
+  void generateMap();
   vector<int>& getExitPos();
   vector<int>& getEntryPos();
   vector<vector<int>>& getDistances();

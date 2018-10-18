@@ -1,5 +1,10 @@
 [Unreleased]
 
+###Changed
+-MapFactory places obstacles first and uses invisible obstacles that block the path
+  but not towers 
+
+[0.0.1] - 2018 - 10 - 18
 ###Added
 -Fonts folder with sample Fonts [@andrewkatson][https://github.com/andrewkatson]
 -Textures folder
