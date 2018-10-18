@@ -9,9 +9,9 @@
 #include "GameState.hpp"
 
 GameState::GameState(){
-  
+  setState(State::Title);
 }
 
-void GameState::setState(int newState){
+void GameState::setState(State newState){
   this->currentState=newState;
 }
