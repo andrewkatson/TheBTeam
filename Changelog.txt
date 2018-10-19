@@ -4,6 +4,7 @@
 -MapFactory places obstacles first and uses invisible obstacles that block the path
   but not towers
 -SoundManager class skeleton [@jeremyelkayam][https://github.com/jeremyelkayam]
+-Player class implementation with docs
 
 [0.0.1] - 2018 - 10 - 18
 ###Added
