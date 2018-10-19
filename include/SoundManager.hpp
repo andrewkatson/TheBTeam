@@ -16,19 +16,32 @@ using namespace std;
 class SoundManager{
 public:
 
-  //Stores 
+  //Stores game objects referencing streaming music.
   vector<sf::Music>music_objs;
 
+  //Stores game objects referencing pre-loaded sounds.
   vector<sf::Sound>sound_objs;
   
 private:
 
+  /*
+    
+   */
   SoundManager();
-  
+
+  /*
+    
+   */
   void playSound();
-  
+
+  /*
+    
+   */
   void resumeSound();
 
+  /*
+    
+   */
   void stopSound();
 };
 
