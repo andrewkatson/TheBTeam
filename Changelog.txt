@@ -5,6 +5,7 @@
   but not towers
 -SoundManager class skeleton [@jeremyelkayam][https://github.com/jeremyelkayam]
 -Player class implementation with docs
+-ActorInterface ~~skeleton~~ implementation with docs
 
 [0.0.1] - 2018 - 10 - 18
 ###Added
