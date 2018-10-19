@@ -9,6 +9,7 @@
 #include "GameState.hpp"
 
 GameState::GameState(){
+  //potentially make an Init state in which the game initializes itself?
   setState(State::Title);
 }
 

@@ -19,7 +19,7 @@ private:
   unique_ptr<BoardManager> boardManager;
   //Store the instance of the GameState class that the logic needs to remember
   //and modify the game's current state.
-  unique_ptr<GameState> state;
+  unique_ptr<GameState> gameState;
 
 public:
   /*
