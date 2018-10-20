@@ -2,7 +2,9 @@
 
 ###Changed
 -MapFactory places obstacles first and uses invisible obstacles that block the path
-  but not towers 
+  but not towers [@andrewkatson][https://github.com/andrewkatson]
+-BoardManager stores map made from mapgenerator and provides access to them
+
 
 [0.0.1] - 2018 - 10 - 18
 ###Added
