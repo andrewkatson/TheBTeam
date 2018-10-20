@@ -9,7 +9,7 @@
 - ProjectileManager skeleton
 - Projectile skeleton
 - MeleeUnit skeleton
-- 
+- HitpointBar skeleton
 
 ### Changed
 - MapFactory places obstacles first and uses invisible obstacles that block the path

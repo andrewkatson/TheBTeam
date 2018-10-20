@@ -7,3 +7,15 @@
  */
 
 #include "HitpointBar.hpp"
+
+HitpointBar::HitpointBar(){
+
+}
+
+sf::RectangleShape HitpointBar::getFilled(){
+
+}
+
+sf::RectangleShape HitpointBar::getEmpty(){
+
+}
