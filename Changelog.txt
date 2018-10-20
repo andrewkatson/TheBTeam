@@ -5,7 +5,7 @@
 -ActorInterface ~~skeleton~~ implementation with docs
 -SoundManager implementation with docs
   -NO CONSTRUCTOR YET BUT THERE IS A PSEUDOCODE VERSION FOR WHEN WE HAVE SOUNDS
--WaveManager skeleton
+-WaveManager skeleton with shitty documentation
 
 ###Changed
 -MapFactory places obstacles first and uses invisible obstacles that block the path

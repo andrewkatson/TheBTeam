@@ -25,3 +25,11 @@ void WaveManager::spawnNextUnit() {
 void WaveManager::update(float deltaS) {
     //TODO - implement
 }
+
+WaveManager::WaveManager(){
+
+}
+
+queue <shared_ptr<ActorInterface>> WaveManager::getNextWave() {return waves.front();}
+
+queue <queue<shared_ptr < ActorInterface>>>WaveManager::getWaves() {return waves;}
