@@ -1,10 +1,12 @@
 [Unreleased]
+###Added 
 
 ###Changed
 -MapFactory places obstacles first and uses invisible obstacles that block the path
   but not towers [@andrewkatson][https://github.com/andrewkatson]
 -BoardManager stores map made from mapgenerator and provides access to them
-
+-SoundManager class skeleton [@jeremyelkayam][https://github.com/jeremyelkayam]
+-Player class implementation with docs
 
 [0.0.1] - 2018 - 10 - 18
 ###Added
@@ -19,3 +21,5 @@
 -MapChoices container class to hold all map generation customization values
 -rngs file for random number generation (from a class library)
 -BoardManager class handles the map factory and the layouts
+-GameState class with enum to store state [@jeremyelkayam][https://github.com/jeremyelkayam]
+-Documentation for GameState and GameLogic
