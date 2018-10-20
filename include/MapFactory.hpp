@@ -70,8 +70,9 @@ private:
    */
   vector<vector<int>> paths;
 
-  /* 2d array where any index will be marked to indicate if an entry can be
-   * placed at that position ( 1 is yes but only obstacles, 0 is no, and -1 is yes);
+  /* 2d array where any index will be marked to indicate if an entry or obstacle can be
+   * placed at that position ( 1 is no to anything, 0 is no to entries but yes to obstacles
+   * , and -1 is anything can be placed);
    */
   vector<vector<int>> unavailableSpots;
 
@@ -145,16 +146,10 @@ private:
   void makePath(int pathNumber);
   void addAdjacientsTiles(int row, int col);
   void removeAdjacientTiles(int row, int col);
-  bool canExpand(Direction::Directions &expand, int row, int col, int path);
   bool connectedWithExit(int row, int col);
-  bool connectedWithSamePath(int row, int col, int newrow, int newcol, int path);
-  bool connectedWithSamePath(int row, int col, int newrow, int newcol, int path, vector<vector<int>> &marked);
   bool connectedWithExitPath(int row, int col , int path);
   vector<int> connectedWithNonExitPath(int row, int col, int path);
   vector<Direction::Directions> calcNextShortestStep(int row, int col, int lastShortestDistance);
-  vector<Direction::Directions> calcNextShortestOrEqualStep(int row, int col, int path, int lastShortestDistance);
-  void stripOfDeadEnds(vector<Direction::Directions> &expandOptions,  int row, int col, int lastShortestDistance);
-  bool possibleMoves(Direction::Directions &expand,  int row, int col,  int lastShortestDistance);
   int expandInRow(int row, Direction::Directions expandDirection);
   int expandInCol(int col, Direction::Directions expandDirection);
 
@@ -181,6 +176,13 @@ public:
   vector<vector<int>>& getDistances();
   vector<vector<int>>& getFloor();
   vector<vector<int>>& getAboveFloor();
+  int getXDim();
+  int getYDim();
+
+  void setMapCustomizationChoices(MapChoices * newCustomization);
+  void setMapObstacleChoice(int obstacleChoice);
+  void setMapCafeteriaChoice(int cafeteriaChoice);
+  void setMapEntryChoice(int pathEntryChoice);
 
   double Equilikely(double a, double b);
   double Geometric(double p);

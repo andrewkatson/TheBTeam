@@ -71,7 +71,7 @@ void MapFactory::generateMap(){
 
 
   //TODO remove when done checking grids
-  this -> printVector(this -> paths);
+  //this -> printVector(this -> paths);
   //this -> printVector(this -> unavailableSpots);
   //this -> printVector(this -> distances);
   //this -> printVector(this -> floorGrid);
@@ -817,44 +817,6 @@ void MapFactory::addAdjacientsTiles(int row, int col){
    }
  }
 
- /*
-  * return true if the direction specified can be exapnded into by this path
-  * false when the spot specified is off the board or touching a current space
-  * in this same path (do not want overlap on same path)
-  */
-bool MapFactory::canExpand(Direction::Directions &expand, int row, int col, int path){
-  int newrow = row;
-  int newcol = col;
-  switch(expand){
-    case Direction::Left:
-      newcol--;
-      break;
-    case Direction::Right:
-      newcol++;
-      break;
-    case Direction::Top:
-      newrow--;
-      break;
-    case Direction::Bottom:
-    default:
-      newrow++;
-      break;
-  }
-
-
-  if(newrow < 0 || newrow >= yDim){
-    return false;
-  }
-  else if(newcol < 0 || newcol >= xDim){
-    return false;
-  }
-  else if(connectedWithSamePath(row, col, newrow, newcol, path)){
-
-    return false;
-  }
-  return true;
-}
-
 /*
  * return true if the passed tile is connected to the exit
  */
@@ -889,76 +851,6 @@ bool MapFactory::connectedWithExit(int row, int col){
 
 
 /*
- * checks to see if there is a path connected to this tile that is
- * on the same path as the path specified
- */
- bool MapFactory::connectedWithSamePath(int row, int col, int newrow, int newcol, int path){
-
-   //check left
-   if(newcol - 1 >= 0 && !(col == newcol - 1 && newrow == row)){
-     if(paths.at(newrow).at(newcol - 1) == path){
-       return true;
-     }
-   }
-   if(newcol + 1 < xDim && !(col == newcol + 1 && newrow == row)){
-     //check right
-     if(paths.at(newrow).at(newcol + 1) == path){
-       return true;
-     }
-   }
-   if(newrow - 1 >= 0 && !(col == newcol && newrow - 1 == row)){
-     //check top
-     if(paths.at(newrow - 1).at(newcol) == path){
-       return true;
-     }
-   }
-   if(newrow + 1 < yDim && !(col == newcol && newrow + 1 == row)){
-     //check bottom
-     if(paths.at(newrow + 1).at(newcol) == path){
-       return true;
-     }
-   }
-
-   return false;
- }
-
- /*
-  * checks to see if there is a path connected to this tile that is
-  * on the same path that is marked in the passed vector of the marked path
-  * every marked path section should be >=0
-  */
-  bool MapFactory::connectedWithSamePath(int row, int col, int newrow, int newcol, int path, vector<vector<int>> &markedPath){
-
-    //check left
-    if(newcol - 1 >= 0 && !(col == newcol - 1 && newrow == row)){
-      if(markedPath.at(newrow).at(newcol - 1) >=0){
-        return true;
-      }
-    }
-    if(newcol + 1 < xDim && !(col == newcol + 1 && newrow == row)){
-      //check right
-      if(markedPath.at(newrow).at(newcol + 1) >=0){
-        return true;
-      }
-    }
-    if(newrow - 1 >= 0 && !(col == newcol && newrow - 1 == row)){
-      //check top
-      if(markedPath.at(newrow - 1).at(newcol) >=0){
-        return true;
-      }
-    }
-    if(newrow + 1 < yDim && !(col == newcol && newrow + 1 == row)){
-      //check bottom
-      if(markedPath.at(newrow + 1).at(newcol) >=0){
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-
-/*
  * checks to see if there is a path connected to this tile that is not
  * on the same path as the path specified and that path is an exit path
  */
@@ -984,6 +876,7 @@ bool MapFactory::connectedWithExit(int row, int col){
    }
    if(row + 1 < yDim){
      //check bottom
+
      if(paths.at(row + 1).at(col) != path && paths.at(row + 1).at(col) > 0){
        retVal = (bool) entrysToExit.at(paths.at(row + 1).at(col) - 1);
      }
@@ -1129,169 +1022,6 @@ bool MapFactory::connectedWithExit(int row, int col){
     }
 
     return shortestSteps;
-  }
-
-/*
- * return a vector with the directions of every possible step (i.e.) not onto a
- * step that exists
- */
-vector<Direction::Directions> MapFactory::calcNextShortestOrEqualStep(int row, int col, int path, int lastShortestDistance){
-
-    vector<Direction::Directions> otherSteps;
-
-
-    //add a step for every direction that is not on a path already
-    //check left
-    if(col - 1 >= 0){
-      //if the tile is not on a path
-      if(paths.at(row).at(col-1) < 0){
-        //if the tile is not touching a tile of the same path other than this one
-        if(!connectedWithSamePath(row, col, row, col - 1, path)){
-          //cannot be further away from the exit
-          int distance = distances.at(row).at(col - 1);
-          if(distance <= lastShortestDistance ){
-              otherSteps.push_back(Direction::Left);
-          }
-        }
-      }
-    }
-    //check right
-    if(col + 1 < xDim){
-      if(paths.at(row).at(col+1) < 0){
-        //if the tile is not touching a tile of the same path other than this one
-        if(!connectedWithSamePath(row, col, row, col + 1, path)){
-            //cannot be further away from the exit
-            int distance = distances.at(row).at(col + 1);
-            if(distance <= lastShortestDistance ){
-                otherSteps.push_back(Direction::Right);
-            }
-          }
-        }
-      }
-    //check top
-    if(row - 1 >= 0){
-      if(paths.at(row - 1).at(col) < 0){
-        //if the tile is not touching a tile of the same path other than this one
-        if(!connectedWithSamePath(row, col, row - 1, col, path)){
-            //cannot be further away from the exit
-            int distance = distances.at(row - 1).at(col);
-            if(distance <= lastShortestDistance ){
-                otherSteps.push_back(Direction::Top);
-            }
-          }
-        }
-      }
-    //check bottom
-    if(row + 1 < yDim){
-      if(paths.at(row + 1).at(col) < 0){
-        //if the tile is not touching a tile of the same path other than this one
-        if(!connectedWithSamePath(row, col, row + 1, col, path)){
-            //cannot be further away from the exit
-            int distance = distances.at(row + 1).at(col);
-            if(distance <= lastShortestDistance ){
-                otherSteps.push_back(Direction::Bottom);
-            }
-          }
-        }
-      }
-
-    return otherSteps;
-  }
-
-/*
- * remove any step that leads to a dead end (i.e. a positon with no moves)
- */
-  void MapFactory::stripOfDeadEnds(vector<Direction::Directions> &expandOptions, int row, int col, int lastShortestDistance){
-
-    vector<Direction::Directions> possibleDirections;
-    for(Direction::Directions d : expandOptions){
-      if(possibleMoves(d, row, col, lastShortestDistance)){
-        possibleDirections.push_back(d);
-      }
-    }
-    expandOptions = possibleDirections;
-  }
-
-  /*
-   * check if the passed tile could move in a direction other than the one it stepped from
-   */
-  bool MapFactory::possibleMoves(Direction::Directions &expand,  int row, int col, int lastShortestDistance){
-    int oldrow = row;
-    int oldcol = col;
-    switch(expand){
-      case Direction::Left:
-        col--;
-        break;
-      case Direction::Right:
-        col++;
-        break;
-      case Direction::Top:
-        row--;
-        break;
-      case Direction::Bottom:
-      default:
-        row++;
-        break;
-    }
-
-    //add a step for every direction that is not on a path already
-    //check left
-    if(col - 1 >= 0){
-      //if the tile is not on a path
-      if(paths.at(row).at(col-1) < 0){
-        //if this is not the path we moved from
-        if(!(oldcol == col - 1 && oldrow == row)){
-          //cannot be further away from the exit
-          int distance = distances.at(row).at(col - 1);
-          if(distance <= lastShortestDistance + 1){
-              return true;
-          }
-        }
-      }
-    }
-    //check right
-    if(col + 1 < xDim){
-      if(paths.at(row).at(col+1) < 0){
-        //if this is not the path we moved from
-        if(!(oldcol == col + 1 && oldrow == row)){
-        //if the tile is not touching a tile of the same path other than this one
-            //cannot be further away from the exit
-            int distance = distances.at(row).at(col + 1);
-            if(distance <= lastShortestDistance + 1){
-                return true;
-            }
-          }
-        }
-    }
-    //check top
-    if(row - 1 >= 0){
-      if(paths.at(row - 1).at(col) < 0){
-        //if this is not the path we moved from
-        if(!(oldcol == col && oldrow == row - 1)){
-        //if the tile is not touching a tile of the same path other than this one
-            //cannot be further away from the exit
-            int distance = distances.at(row - 1).at(col);
-            if(distance <= lastShortestDistance + 1){
-                return true;
-            }
-          }
-        }
-      }
-    //check bottom
-    if(row + 1 < yDim){
-      if(paths.at(row + 1).at(col) < 0){
-        //if this is not the path we moved from
-        if(!(oldcol == col && oldrow == row + 1)){
-        //if the tile is not touching a tile of the same path other than this one
-            //cannot be further away from the exit
-            int distance = distances.at(row + 1).at(col);
-            if(distance <= lastShortestDistance + 1){
-                return true;
-            }
-          }
-        }
-      }
-    return false;
   }
 
  /*
@@ -1556,24 +1286,43 @@ void MapFactory::printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo){
   }
 }
 
+//------------------------------------------------------------------------------
+vector<int>& MapFactory::getExitPos(){
+  return exitPos;
+}
+vector<int>& MapFactory::getEntryPos(){
+  return entryPos;
+}
+vector<vector<int>>& MapFactory::getDistances(){
+  return distances;
+}
+vector<vector<int>>& MapFactory::getFloor(){
+  return floorGrid;
+}
+vector<vector<int>>& MapFactory::getAboveFloor(){
+  return aboveFloorGrid;
+}
+int MapFactory::getXDim(){
+  return xDim;
+}
+int MapFactory::getYDim(){
+  return yDim;
+}
 
-  vector<int>& MapFactory::getExitPos(){
-    return exitPos;
-  }
-  vector<int>& MapFactory::getEntryPos(){
-    return entryPos;
-  }
-  vector<vector<int>>& MapFactory::getDistances(){
-    return distances;
-  }
-  vector<vector<int>>& MapFactory::getFloor(){
-    return floorGrid;
-  }
-  vector<vector<int>>& MapFactory::getAboveFloor(){
-    return aboveFloorGrid;
-  }
+void MapFactory::setMapCustomizationChoices(MapChoices * newCustomization){
+  this -> mapCustomizationChoices.reset(newCustomization);
+}
+void MapFactory::setMapObstacleChoice(int obstacleChoice){
+  mapCustomizationChoices -> obstacleChoice = obstacleChoice;
+}
+void MapFactory::setMapCafeteriaChoice(int cafeteriaChoice){
+  mapCustomizationChoices -> cafeteriaChoice = cafeteriaChoice;
+}
+void MapFactory::setMapEntryChoice(int pathEntryChoice){
+  mapCustomizationChoices -> pathEntryChoice = pathEntryChoice;
+}
 
-
+//------------------------------------------------------------------------------
 double  MapFactory::Equilikely (double a, double b){
   /* ---------------------------------------------------
    * generate an Equilikely random variate, use a < b
