@@ -45,18 +45,18 @@ private:
   void playSound(int dex);
 
   /*
-    Resume the sound from sound_objs at the given index from the point at which
-    it was last stopped.
-
-    [potential redundancy with playsound?]
+    Pause the music from music_objs at the given index if it is currently
+    playing. Remembers the current place in the music, so that when the music is
+    played next, it will play from where it was paused.
 
     @param dex the index in sound_objs where the sound is stored.
    */
-  void resumeSound(int dex);
+  void pauseSound(int dex);
 
   /*
-    Stop the sound from sound_objs at the given index if it is currently
-    playing.
+    Stop the music from music_objs at the given index if it is currently
+    playing. Discards the current place in the music, so that when the music is
+    played next, it will play from the beginning.
     
     @param dex the index in sound_objs where the sound is stored.
    */
@@ -70,18 +70,18 @@ private:
   void playMusic(int dex);
 
   /*
-    Resume the music from music_objs at the given index from the point at which
-    it was last stopped.
-
-    [potential redundancy with playMusic?]
+    Pause the music from music_objs at the given index if it is currently
+    playing. Remembers the current place in the music, so that when the music is
+    played next, it will play from where it was paused.
 
     @param dex the index in music_objs where the music is stored.
    */
-  void resumeMusic(int dex);
+  void pauseMusic(int dex);
 
   /*
     Stop the music from music_objs at the given index if it is currently
-    playing.
+    playing. Discards the current place in the music, so that when the music is
+    played next, it will play from the beginning.
     
     @param dex the index in music_objs where the music is stored.
    */

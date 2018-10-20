@@ -23,6 +23,7 @@ SoundManager::SoundManager(){
     for all the filenames in the music files
        if(you found the file)
           append it to the music vector
+	  set looping t/f ****probably true but there may be special cases***
        else
           stop the game and pull up a box saying you 'screwed' up (family friendly)
 
@@ -30,10 +31,10 @@ SoundManager::SoundManager(){
 }
 
 void SoundManager::playSound(int dex){
-  
+  sound_objs[dex].play();
 }
 
-void SoundManager::resumeSound(int dex){
+void SoundManager::pauseSound(int dex){
   
 }
 
@@ -45,7 +46,7 @@ void SoundManager::playMusic(int dex){
   
 }
 
-void SoundManager::resumeMusic(int dex){
+void SoundManager::pauseMusic(int dex){
   
 }
 
