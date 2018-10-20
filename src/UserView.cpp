@@ -8,7 +8,7 @@ void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
 }
 
 
-//TODO REMOVE WHEN EVENT SYSTEM IS SETUP
+//TODO - REMOVE WHEN EVENT SYSTEM IS SETUP
 //TEMPORARY EVENT PROCESSOR
 void UserView::processEvents(sf::RenderWindow  &game){
   // process events
