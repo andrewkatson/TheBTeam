@@ -13,7 +13,7 @@
 
 class Projectile : public ActorInterface {
 
-public:
+private:
 
   //The amount that this projectile penetrates a unit's armor [a percentage, maybe?]
   float armorPenetration;
@@ -24,7 +24,7 @@ public:
   //Area on the board that this projectile effects.
   int affectedArea;
 
-private:
+public:
 
   /*
    * Return the amount that this projectile penetrates the armor of a given unit

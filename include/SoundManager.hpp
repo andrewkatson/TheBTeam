@@ -14,7 +14,7 @@
 using namespace std;
 
 class SoundManager{
-public:
+private:
 
   //Stores game objects referencing streaming music.
   vector<sf::Music>music_objs;
@@ -28,7 +28,7 @@ public:
   */
   sf::SoundBuffer buffer;
   
-private:
+public:
 
   /*
     Constructor for the SoundManager class. Initializes the Music and Sound

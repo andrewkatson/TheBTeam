@@ -16,10 +16,10 @@ using namespace std;
 #include "ActorInterface.hpp"
 
 class ProjectileManager {
-public:
+private:
   //Array storing the actors representing all projectiles.
   vector<shared_ptr<ActorInterface>> projectiles;
-private:
+public:
 
   /*
    * Constructor. Initialize the projectile vector

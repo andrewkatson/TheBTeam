@@ -15,7 +15,7 @@ using namespace std;
 
 class MeleeUnit : public ActorInterface {
 
-public:
+private:
 
   //The unit's current hitpoints.
   int hitpoints;
@@ -32,7 +32,7 @@ public:
   //A reference to the unit that this unit is fighting.
   shared_ptr<ActorInterface> engagedUnit;
 
-private:
+public:
 
   /*
    * Return the amount of hitpoints the unit has

@@ -11,7 +11,7 @@
 
 class Player{
 
-public:
+private:
 
   /*
     balance: amount of currency the player currently possesses
@@ -20,7 +20,7 @@ public:
    */
   int balance,hitpoints;
 
-private:
+public:
 
   /*
     Initialize the player class. Sets balance and hitpoints to their default
