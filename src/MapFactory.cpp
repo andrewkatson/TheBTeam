@@ -71,7 +71,7 @@ void MapFactory::generateMap(){
 
 
   //TODO remove when done checking grids
-  //this -> printVector(this -> paths);
+  this -> printVector(this -> paths);
   //this -> printVector(this -> unavailableSpots);
   //this -> printVector(this -> distances);
   //this -> printVector(this -> floorGrid);
@@ -1334,10 +1334,11 @@ int MapFactory::expandInRow(int row, Direction::Directions expandDirection){
 void MapFactory::makeObstacles(){
 
   int placedObstacles = 0;
+  int placedInvisibleObstacles = 0;
   int possiblePlacements = countPossibleObstaclePositions();
 
-  int randRowChosen = (int) Equilikely(0, yDim-1);
-  int randColChosen = (int) Equilikely(0, xDim-1);
+  int randRowChosen = (int) Equilikely(1, yDim-2);
+  int randColChosen = (int) Equilikely(1, xDim-2);
 
   //place obstacles until we have hit the specified number
   //or there are no more spaces
@@ -1358,6 +1359,7 @@ void MapFactory::makeObstacles(){
     int isInvisible = Equilikely(0,3);
     if(isInvisible > 2){
       aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
+      placedInvisibleObstacles++;
       possiblePlacements--;
       continue;
     }
@@ -1380,6 +1382,9 @@ void MapFactory::makeObstacles(){
     placedObstacles++;
   }
 
+
+  //place invisible obstacles if more need to be placed
+  placeRemainingInvisibleObstacles(placedInvisibleObstacles, possiblePlacements);
 }
 
 /*
@@ -1498,6 +1503,23 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
 }
 
 
+/*
+ * place invisible obstacles on the board if there are spaces and the
+ * minimum number have not been placed
+ */
+void MapFactory::placeRemainingInvisibleObstacles(int placedInvisibleObstacles, int possiblePlacements){
+  int randRowChosen = (int) Equilikely(1, yDim-2);
+  int randColChosen = (int) Equilikely(1, xDim-2);
+  //if there are still spots on the board to place obstacles and
+  //we still have more invisible obstacles to place
+  while(placedInvisibleObstacles < minimumInvisibleObstacles && possiblePlacements > 0){
+    randRowChosen = (int) Equilikely(1, yDim-2);
+    randColChosen = (int) Equilikely(1, xDim-2);
+    aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
+    placedInvisibleObstacles++;
+    possiblePlacements--;
+  }
+}
 
 template <class T>
 void MapFactory::printVector(vector<vector<T>> &v){
