@@ -35,21 +35,23 @@ void SoundManager::playSound(int dex){
 }
 
 void SoundManager::pauseSound(int dex){
-  
+  sound_objs[dex].pause();  
 }
 
 void SoundManager::stopSound(int dex){
-
+  sound_objs[dex].stop();
 }
 
 void SoundManager::playMusic(int dex){
-  
+  music_objs[dex].play();
 }
 
 void SoundManager::pauseMusic(int dex){
+  music_objs[dex].pause();
   
 }
 
 void SoundManager::stopMusic(int dex){
+  music_objs[dex].stop();
 
 }
