@@ -6,6 +6,8 @@
 -SoundManager class skeleton [@jeremyelkayam][https://github.com/jeremyelkayam]
 -Player class implementation with docs
 -ActorInterface ~~skeleton~~ implementation with docs
+-SoundManager implementation with docs
+  -NO CONSTRUCTOR YET BUT THERE IS A PSEUDOCODE VERSION FOR WHEN WE HAVE SOUNDS
 
 [0.0.1] - 2018 - 10 - 18
 ###Added
