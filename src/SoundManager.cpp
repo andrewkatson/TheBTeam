@@ -40,3 +40,15 @@ void SoundManager::resumeSound(int dex){
 void SoundManager::stopSound(int dex){
 
 }
+
+void SoundManager::playMusic(int dex){
+  
+}
+
+void SoundManager::resumeMusic(int dex){
+  
+}
+
+void SoundManager::stopMusic(int dex){
+
+}
