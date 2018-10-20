@@ -7,6 +7,12 @@ public:
   CompView();
 
   void updateCompView(float deltaS);
+  
+  void attackEnemies();
+  
+  void moveUnits();
+  
+  void delegateEvents();
 
 };
 
