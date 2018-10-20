@@ -29,7 +29,12 @@ using std::begin;
 class MapFactory{
 private:
 
+  //a container class with customization options for this map
   unique_ptr<MapChoices> mapCustomizationChoices;
+
+  // a minimum number of invisible obstacles used to make
+  //the path more windy. they do not block tower placement
+  int minimumInvisibleObstacles = 6;
 
   //x dimension of board
   int xDim;
@@ -157,7 +162,7 @@ private:
   int countPossibleObstaclePositions();
   void setBlockedSides(vector<int> &blockedSides);
   int markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides);
-
+  void placeRemainingInvisibleObstacles(int placedInvisibleObstacles, int possiblePlacements);
 
   template <class T>
   void printVector(vector<vector<T>> &v);
