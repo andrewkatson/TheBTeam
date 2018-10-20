@@ -10,6 +10,5 @@
 
 bool ActorInterface::isCollision(sf::FloatRect colliding_with)
 {
-  
-  return false;
+  return this->collisionBox.intersects(colliding_with);
 }

@@ -1,6 +1,8 @@
 # Build folders
 Release/
 Debug/
+.idea/
+cmake-build-debug/
 
 # Emacs buffer files
 *~
