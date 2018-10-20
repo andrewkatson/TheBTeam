@@ -8,14 +8,14 @@
 - WaveManager skeleton with shitty documentation
 - ProjectileManager skeleton
 - Projectile skeleton
+- MeleeUnit skeleton
+- 
 
 ### Changed
 - MapFactory places obstacles first and uses invisible obstacles that block the path
   but not towers [@andrewkatson][https://github.com/andrewkatson]
 - BoardManager stores map made from mapgenerator and provides access to them
 - BoardManager can generate new maps
-- SoundManager class skeleton [@jeremyelkayam][https://github.com/jeremyelkayam]
-- Player class implementation with docs
 - CompView psuedocode [@KP-HB][https://github.com/KP-HB]
 - UserView psuedocode
 

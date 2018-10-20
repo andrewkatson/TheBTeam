@@ -1,6 +1,10 @@
-//
-// Created by jeremy on 10/20/18.
-//
+/*
+ * Projectile.hpp
+ *
+ * Purpose: Manage a projectile's properties and behavior
+ *
+ * @author Jeremy Elkayam
+ */
 
 #ifndef CSCI437_PROJECTILE_HPP
 #define CSCI437_PROJECTILE_HPP
