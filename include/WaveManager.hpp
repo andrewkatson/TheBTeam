@@ -8,4 +8,14 @@
 #ifndef WAVEMANAGER_H
 #define WAVEMANAGER_H
 
+class WaveManager{
+
+private:
+  
+  
+public:
+  
+
+};
+
 #endif
