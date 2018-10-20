@@ -1,5 +1,5 @@
 #include "CompView.hpp"
-#include "Player.cpp"
+#include "Player.hpp"
 
 CompView::CompView(){}
 

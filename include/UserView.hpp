@@ -4,6 +4,7 @@
 
 class UserView{
 private:
+
 public:
   UserView();
 

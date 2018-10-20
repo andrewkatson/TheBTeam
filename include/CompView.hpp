@@ -3,6 +3,7 @@
 
 class CompView{
 private:
+
 public:
   CompView();
 
