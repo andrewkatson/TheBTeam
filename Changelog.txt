@@ -14,6 +14,8 @@
 -BoardManager can generate new maps
 -SoundManager class skeleton [@jeremyelkayam][https://github.com/jeremyelkayam]
 -Player class implementation with docs
+- CompView psuedocode [@KP-HB][https://github.com/KP-HB]
+- UserView psuedocode
 
 ###Removed
 -Unused methods from MapFactory [@andrewkatson][https://github.com/andrewkatson]
