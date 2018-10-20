@@ -111,7 +111,7 @@ endif()
 # executables (any CPP file in 'bin' dir)
 foreach(EXEC ${EXECLIST})
   get_filename_component(EXECNAME ${EXEC} NAME_WE)
-  add_executable(${EXECNAME} ${EXEC} include/ProjectileManager.cpp include/ProjectileManager.hpp)
+  add_executable(${EXECNAME} ${EXEC} include/ProjectileManager.cpp include/ProjectileManager.hpp include/Projectile.cpp include/Projectile.hpp)
 
   if(NOT SRC STREQUAL "")
     target_link_libraries(${EXECNAME} LINK_PUBLIC ${LIBNAME})

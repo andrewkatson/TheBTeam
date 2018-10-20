@@ -1,5 +1,9 @@
 /*
  * ProjectileManager.hpp
+ *
+ * Purpose: Handle the life-cycles of all on-screen projectiles.
+ *
+ * @author Jeremy Elkayam
  */
 
 #ifndef CSCI437_PROJECTILEMANAGER_HPP

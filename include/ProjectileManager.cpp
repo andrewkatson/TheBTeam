@@ -1,6 +1,10 @@
-//
-// Created by jeremy on 10/20/18.
-//
+/*
+ * ProjectileManager.cpp
+ *
+ * Purpose: Handle the life-cycles of all on-screen projectiles.
+ *
+ * @author Jeremy Elkayam
+ */
 
 
 #include "ProjectileManager.hpp"

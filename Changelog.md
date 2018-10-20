@@ -7,6 +7,7 @@
   -NO CONSTRUCTOR YET BUT THERE IS A PSEUDOCODE VERSION FOR WHEN WE HAVE SOUNDS
 -WaveManager skeleton with shitty documentation
 -ProjectileManager skeleton
+-Projectile skeleton
 
 ###Changed
 -MapFactory places obstacles first and uses invisible obstacles that block the path
