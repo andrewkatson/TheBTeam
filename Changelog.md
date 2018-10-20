@@ -19,7 +19,7 @@
 - CompView psuedocode [@KP-HB][https://github.com/KP-HB]
 - UserView psuedocode
 
-###Removed
+### Removed
 - Unused methods from MapFactory [@andrewkatson][https://github.com/andrewkatson]
 
 [0.0.1] - 2018 - 10 - 18
