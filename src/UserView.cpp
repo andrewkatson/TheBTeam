@@ -2,7 +2,9 @@
 
 #include "UserView.hpp"
 
-UserView::UserView(){}
+UserView::UserView(shared_ptr<GameLogic> gameLogic){
+  
+}
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
   this -> processEvents(game);

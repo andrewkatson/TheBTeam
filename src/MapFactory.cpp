@@ -1,3 +1,13 @@
+/*
+
+  MapFactory.cpp
+
+  Purpose: Generate a unique random grid map with obstacles, an exit, and path(s)
+            to the exit
+
+  @author Andrew Katson
+*/
+
  #include "MapFactory.hpp"
 
 
