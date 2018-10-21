@@ -1,9 +1,9 @@
 /*
-  SoundManager.hpp
-  
-  Purpose: Handle loading and playing of all game sounds through simple methods.
-  
-  @author Jeremy Elkayam
+ * WaveManager.cpp
+ *
+ * Purpose: Handle loading and playing of all game sounds through simple methods.
+ *
+ * @author Jeremy Elkayam
 */
 
 #ifndef SOUNDMANAGER_H
@@ -14,7 +14,7 @@
 using namespace std;
 
 class SoundManager{
-public:
+private:
 
   //Stores game objects referencing streaming music.
   vector<sf::Music>music_objs;
@@ -28,7 +28,7 @@ public:
   */
   sf::SoundBuffer buffer;
   
-private:
+public:
 
   /*
     Constructor for the SoundManager class. Initializes the Music and Sound
