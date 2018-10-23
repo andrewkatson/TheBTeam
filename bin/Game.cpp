@@ -43,7 +43,7 @@ void Game::initGame(sf::RenderWindow  &game){
   unsigned int windowY = windowSize.y;
 
   //initialize the Game Logic
-  this -> gameLogic = make_shared<GameLogic>();
+  this -> gameLogic = make_shared<GameLogic>(GameLogic());
   //initialize the User View
   this -> userView = unique_ptr<UserView>(new UserView(this -> gameLogic));
   //initlaize the Computer View

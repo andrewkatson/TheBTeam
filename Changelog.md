@@ -11,6 +11,10 @@
 - MeleeUnit skeleton
 - HitpointBar skeleton
 -Event Manager, Event Type, Event Interface, Event Data Interface added with implementation[@meisong1997][https://github.com/meisong1997]
+-TowerManager skeleton[@andrewkatson][https://github.com/andrewkatson]
+-TowerInterface
+-MeleeTower skeleton
+-RangedTower sekeleton
 
 
 ### Changed

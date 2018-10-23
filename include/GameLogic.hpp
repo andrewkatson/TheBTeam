@@ -1,6 +1,6 @@
 /*
   GameLogic.hpp
-  
+
   Purpose: Handle all logical processes for Food Fight.
 
   @author Andrew Katson, Jeremy Elkayam
@@ -11,15 +11,23 @@
 
 #include "BoardManager.hpp"
 #include "GameState.hpp"
+#include "TowerManager.hpp"
+#include "EventManager.hpp"
 
 class GameLogic{
 private:
   //Store the game's instance of the BoardManager class that the game logic
-  //needs for generation and playing of game boards. 
+  //needs for generation and playing of game boards.
   unique_ptr<BoardManager> boardManager;
   //Store the instance of the GameState class that the logic needs to remember
   //and modify the game's current state.
   unique_ptr<GameState> gameState;
+  //Store the instance of the TowerManager class that the logic needs to
+  //interact with the defensive towers
+  unique_ptr<TowerManager> towerManager;
+  //Store the Event Manger for the game that receives and distributes irregular
+  //game events
+  shared_ptr<EventManager> eventManager;
 
 public:
   /*
