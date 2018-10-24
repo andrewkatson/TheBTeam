@@ -10,11 +10,11 @@
 - Projectile skeleton
 - MeleeUnit skeleton
 - HitpointBar skeleton
--Event Manager, Event Type, Event Interface, Event Data Interface added with implementation[@meisong1997][https://github.com/meisong1997]
--TowerManager skeleton[@andrewkatson][https://github.com/andrewkatson]
--TowerInterface
--MeleeTower skeleton
--RangedTower sekeleton
+- Event Manager, Event Type, Event Interface, Event Data Interface added with implementation[@meisong1997][https://github.com/meisong1997]
+- TowerManager skeleton[@andrewkatson][https://github.com/andrewkatson]
+- TowerInterface
+- MeleeTower skeleton
+- RangedTower skeleton
 
 
 ### Changed
@@ -26,6 +26,7 @@
 - UserView psuedocode
 - Button constructor includes order for positioning (untested)
 - Main Menu skeleton (UserView)
+- Fixed compile-time erros in UserView and CompView classes[@jeremyelkayam][https://github.com/jeremyelkayam]
 
 ### Removed
 - Unused methods from MapFactory [@andrewkatson][https://github.com/andrewkatson]

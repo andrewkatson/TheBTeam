@@ -15,8 +15,7 @@ private:
   int order;
   int numChars;
 public:
-  Button(int windowX, int windowY, int order string str);
-
+  Button(int windowX, int windowY, int order, string str);
 
   void setWindowSize(int windowX, int windowY);
 

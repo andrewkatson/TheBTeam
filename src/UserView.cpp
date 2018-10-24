@@ -1,32 +1,35 @@
 #include "UserView.hpp"
-#include "Player.cpp"
+#include <memory>
+
+using namespace std;
 
 #define textNormal = 255, 255, 255
 #define textHighlight = 255, 200, 10
-#deine windowX = 800
-#define windowY = 600
+#define windowX 800
+#define windowY 600
 
 UserView::UserView(shared_ptr<GameLogic> gameLogic){
-  font.loadFromFile("fonts/PWYummyDonuts.ttf")
+
+  font.loadFromFile("fonts/PWYummyDonuts.ttf");
 
   //Main Menu
 
   title.setFont(font);
-  title.setColor(255,255,255,255);
+  title.setFillColor(sf::Color(255,255,255,255));
   title.setString("Food Fight");
   title.setCharacterSize(60);
-  title.setPosition(350.f 100.f);
+  title.setPosition(350.f, 100.f);
 
-  playButton = new Button(windowX, windowY, 1, "Play");
+  playButton = unique_ptr<Button>(new Button(windowX, windowY, 1, "Play"));
 
-  optionButton = new Button(windowX, windowY, 2, "Options");
+  optionButton = unique_ptr<Button>(new Button(windowX, windowY, 2, "Options"));
 
-  exitButton = new Button(windowX, windowY, 3, "Exit");
+  exitButton = unique_ptr<Button>(new Button(windowX, windowY, 3, "Exit"));
 
   //Options menu
 
 
-  backButton = new Button(windowX, windowY, 3, "Back");
+  backButton = unique_ptr<Button>(new Button(windowX, windowY, 3, "Back"));
 
 }
 
