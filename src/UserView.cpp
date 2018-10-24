@@ -1,8 +1,33 @@
 #include "UserView.hpp"
 #include "Player.cpp"
 
+#define textNormal = 255, 255, 255
+#define textHighlight = 255, 200, 10
+#deine windowX = 800
+#define windowY = 600
+
 UserView::UserView(shared_ptr<GameLogic> gameLogic){
-  
+  font.loadFromFile("fonts/PWYummyDonuts.ttf")
+
+  //Main Menu
+
+  title.setFont(font);
+  title.setColor(255,255,255,255);
+  title.setString("Food Fight");
+  title.setCharacterSize(60);
+  title.setPosition(350.f 100.f);
+
+  playButton = new Button(windowX, windowY, 1, "Play");
+
+  optionButton = new Button(windowX, windowY, 2, "Options");
+
+  exitButton = new Button(windowX, windowY, 3, "Exit");
+
+  //Options menu
+
+
+  backButton = new Button(windowX, windowY, 3, "Back");
+
 }
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
@@ -26,16 +51,16 @@ void UserView::processEvents(sf::RenderWindow  &game){
     //game.close();
     // Game Screen
     //if(Event.type == sf::Event::Closed){
-	// If Player selects valid unit tile with no units currently placed 
+	// If Player selects valid unit tile with no units currently placed
 	//draw a button that will direct them to the purchase screen
 	//if player selects a tile that currently has a tower direct them to an upgrade screen
     // Restart Screen
     //if(((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::R)) OR (Player.hitpoints == 0)){
     // One Button with the option of returning to the main menu;
-	
+
     // Buy Tower Screen
 	// Import tower textures and display alongside name, price. If tower is selected check
-	// player.balance is >= than tower cost then place tower in previosuly selected spot 
+	// player.balance is >= than tower cost then place tower in previosuly selected spot
 
     if(Event.type == sf::Event::Closed){
       game.close();

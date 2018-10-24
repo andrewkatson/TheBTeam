@@ -24,6 +24,8 @@
 - BoardManager can generate new maps
 - CompView psuedocode [@KP-HB][https://github.com/KP-HB]
 - UserView psuedocode
+- Button constructor includes order for positioning (untested)
+- Main Menu skeleton (UserView)
 
 ### Removed
 - Unused methods from MapFactory [@andrewkatson][https://github.com/andrewkatson]

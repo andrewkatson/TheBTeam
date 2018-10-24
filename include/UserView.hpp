@@ -1,15 +1,12 @@
 #ifndef USERVIEW_H
 #define USERVIEW_H
 #include <SFML/Graphics.hpp>
-#include <memory>
-#include "GameLogic.hpp"
+#include "Button.cpp"
 
-using std::shared_ptr;
 class UserView{
 private:
-
 public:
-  UserView(shared_ptr<GameLogic> gameLogic);
+  UserView();
 
   void updateUserView(float deltaS, sf::RenderWindow &game);
 
