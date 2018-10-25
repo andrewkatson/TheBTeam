@@ -1,7 +1,11 @@
 #include "CompView.hpp"
-#include "Player.hpp"
 
-CompView::CompView(){}
+CompView::CompView(shared_ptr<EventManager> eventManager){
+  this -> eventManager = eventManager;
+}
+
+void CompView::delegateMethod(const EventInterface& event){}
+
 
 void CompView::updateCompView(float deltaS){}
 
@@ -18,8 +22,3 @@ void CompView::moveUnits(){
 
 // Poll the actor class for its speed and position on map, use the shortest distance >= 0
 //	and move that direction
-
-void CompView::delegateEvents(){
-
-}
-

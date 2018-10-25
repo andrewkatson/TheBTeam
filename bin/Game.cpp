@@ -11,7 +11,7 @@ int main(){
   sf::Clock gameClock;
 
   // create main window
-  sf::RenderWindow game(sf::VideoMode(800,600,32), "FoodFight", sf::Style::Close);
+  sf::RenderWindow game(sf::VideoMode(800,600,32), "Food Fight", sf::Style::Close);
 
   foodFight -> initGame(game);
 
@@ -44,14 +44,17 @@ void Game::initGame(sf::RenderWindow  &game){
 
   //initialize the Game Logic
   this -> gameLogic = make_shared<GameLogic>(GameLogic());
+  //get the event manager from the game logic so it can be passed to the user View
+  //and comp view
+  shared_ptr<EventManager> eventManager = this -> gameLogic -> getEventManager();
   //initialize the User View
-  this -> userView = unique_ptr<UserView>(new UserView(this -> gameLogic));
+  this -> userView = unique_ptr<UserView>(new UserView(eventManager, game));
   //initlaize the Computer View
-  this -> compView = unique_ptr<CompView>(new CompView());
+  this -> compView = unique_ptr<CompView>(new CompView(eventManager));
 }
 
 
-void Game::updateGame(float deltaS, sf::RenderWindow  &game){
+void Game::updateGame(float deltaS,sf::RenderWindow &game){
 
   this -> gameLogic -> updateGameLogic(deltaS);
   this -> userView -> updateUserView( deltaS, game);

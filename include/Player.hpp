@@ -1,14 +1,17 @@
 /*
   Player.hpp
 
-  Purpose: Store and manage player attributes with set/get methods 
-  
+  Purpose: Store and manage player attributes with set/get methods
+
   @author Jeremy Elkayam
  */
 
 #ifndef PLAYER_H
 #define PLAYER_H
+#include "EventManager.hpp"
+#include <memory>
 
+using std::shared_ptr;
 class Player{
 
 private:
@@ -20,13 +23,18 @@ private:
    */
   int balance,hitpoints;
 
+  //event manager (used to register, deregister from events, and create them)
+  shared_ptr<EventManager> eventManager;
+
 public:
 
   /*
     Initialize the player class. Sets balance and hitpoints to their default
     values.
    */
-  Player();
+  Player(shared_ptr<EventManager> eventManager);
+
+  void delegateMethod(const EventInterface& event);
 
   /*
     Return the player's currency balance as stored by the balance instance
@@ -38,7 +46,7 @@ public:
 
   /*
     Return the player's current hit-points.
-    
+
     @return the amount of hit-points the player currently has.
    */
   int getHitpoints(){return hitpoints;}

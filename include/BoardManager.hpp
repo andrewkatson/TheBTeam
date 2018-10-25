@@ -1,11 +1,15 @@
 #ifndef BOARDMANAGER_H
 #define BOARDMANAGER_H
 #include "MapFactory.hpp"
+#include "EventManager.hpp"
 
 class BoardManager{
 private:
     //random map generator
     unique_ptr<MapFactory> mapFactory;
+
+    //event manager (used to register, deregister from events, and create them)
+    shared_ptr<EventManager> eventManager;
 
     // grid of the distance from the exit from each tile
     // exit is 0 and all the others are positive numbers
@@ -23,7 +27,9 @@ private:
 
 
 public:
-  BoardManager();
+  BoardManager(shared_ptr<EventManager> eventManager);
+
+  void delegateMethod(const EventInterface& event);
 
   void newMap();
   void newMap(MapChoices * newCustomization);

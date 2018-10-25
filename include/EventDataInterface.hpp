@@ -4,6 +4,5 @@
 
 class EventDataInterface{
 public:
-  struct data & getData();
 };
 #endif

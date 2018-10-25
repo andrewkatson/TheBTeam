@@ -25,6 +25,9 @@ void ProjectileManager::update(float deltaS){
 
 }
 
-ProjectileManager::ProjectileManager() {
+ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager) {
   //initialize the projectile vector
+  this -> eventManager = eventManager;
 }
+//handle events
+void ProjectileManager::delegateMethod(const EventInterface& event){}

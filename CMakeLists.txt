@@ -28,9 +28,11 @@ endif()
 
 # Set include directories
 include_directories(${csci437_SOURCE_DIR}/include)
+include_directories( ${csci437_SOURCE_DIR}/include/Events)
 
 # Get CPP files
 file(GLOB SRC src/*cpp)
+file(GLOB EVENTS src/Events/*cpp)
 
 # Get executable files
 file(GLOB EXECLIST bin/*cpp)
@@ -70,7 +72,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 # 1) use build type if specified by the user.
 # 2) if in-source building, use default (debug) build type.
 # 3) if out-source building, determine based on the build directory's name which build type.
-#    If build directory is called 'Release' or 'Profile' then use the 'Release' and 'Profile' 
+#    If build directory is called 'Release' or 'Profile' then use the 'Release' and 'Profile'
 #    build type respectively, otherwise use 'debug'.
 if(CMAKE_BUILD_TYPE)
   string(TOUPPER "${CMAKE_BUILD_TYPE}" TYPE)
@@ -108,13 +110,20 @@ if(NOT SRC STREQUAL "")
   add_library(${LIBNAME} ${SRC})
 endif()
 
+if(NOT EVENTS STREQUAL "")
+  get_filename_component(EVENTLIBNAME ${csci437_SOURCE_DIR}/EVENTS NAME)
+  set(EVENTLIBNAME "${EVENTLIBNAME}_core")
+  add_library(${EVENTLIBNAME} ${EVENTS})
+endif()
+
+
 # executables (any CPP file in 'bin' dir)
 foreach(EXEC ${EXECLIST})
   get_filename_component(EXECNAME ${EXEC} NAME_WE)
   add_executable(${EXECNAME} ${EXEC})
 
   if(NOT SRC STREQUAL "")
-    target_link_libraries(${EXECNAME} LINK_PUBLIC ${LIBNAME})
+    target_link_libraries(${EXECNAME} LINK_PUBLIC ${LIBNAME} LINK_PUBLIC ${EVENTLIBNAME})
   endif()
 
   message("-- Adding executable: ${EXECNAME}")

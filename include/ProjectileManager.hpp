@@ -14,9 +14,12 @@ using namespace std;
 #include <memory>
 #include <vector>
 #include "ActorInterface.hpp"
+#include "EventManager.hpp"
 
 class ProjectileManager {
 private:
+  //event manager (used to register, deregister from events, and create them)
+  shared_ptr<EventManager> eventManager;
   //Array storing the actors representing all projectiles.
   vector<shared_ptr<ActorInterface>> projectiles;
 public:
@@ -24,7 +27,9 @@ public:
   /*
    * Constructor. Initialize the projectile vector
    */
-  ProjectileManager();
+  ProjectileManager(shared_ptr<EventManager> eventManager);
+
+  void delegateMethod(const EventInterface& event);
 
   /*
    * Return the vector of projectiles stored by the class.

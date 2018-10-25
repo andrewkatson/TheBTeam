@@ -39,22 +39,24 @@ public:
 
   void queueEvent(shared_ptr<EventInterface> event);
 
+  void registerEvent(const EventType &type);
+
   void registerDelegate(const EventDelegate& d, const EventType& type);
 
   void deregisterDelegate(const EventDelegate& d, const EventType& type);
 
-  void triggerEvent(const EventInterface& event);
-
   void processEvent();
 
-  int find(event_delegates &eventDelegateList,  const EventDelegate& toFind);
-  template<typename T, typename... U>
+private:
+  void triggerEvent(const EventInterface& event);
 
-  size_t getAddress(std::function<T(U...)> f);
+  int find(event_delegates &eventDelegateList,  const EventDelegate& toFind);
+  //template<typename T, typename... U>
+
+  //size_t getAddress(std::function<T(U...)> f);
 
   void clear(event_queue &q);
 
-private:
   std::vector<event_queue> queues;
   event_queue *process_queue;
   event_queue *register_queue;

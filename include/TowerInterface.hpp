@@ -12,7 +12,7 @@
 class TowerInterface{
 
 public:
-  virtual void attack()=0;
+  virtual void upgrade()=0;
 
 };
 

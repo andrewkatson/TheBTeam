@@ -1,44 +1,63 @@
 #include "UserView.hpp"
-#include "Player.cpp"
 
-UserView::UserView(shared_ptr<GameLogic> gameLogic){
-  
+UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game){
+  this -> eventManager = eventManager;
+  this -> userInputManager = unique_ptr<UserInputManager>(new UserInputManager(eventManager));
+  this -> registerDelegates();
+  this -> game = &game;
 }
+
+UserView::~UserView(){
+  game = nullptr;
+}
+
+/*
+ * Register the delegate method for this class
+ * with any events it needs to know about
+ */
+void UserView::registerDelegates(){
+  //bind our delegatefunction for key presses
+  std::function<void(const EventInterface&)> delegate = std::bind(&UserView::handleKeyPress, this, _1);
+
+  //make an event and get its type
+  KeyPressEvent event = KeyPressEvent();
+  EventType type = event.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(delegate, type);
+}
+
+/*
+ * Handle any key press from the user
+ * @param event: event of the key press
+ */
+void UserView::handleKeyPress(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * KeyPressEvent type which allows us to access variables and methods
+   * specific to KeyPressEvent
+   */
+  const KeyPressEvent* kpEvent = static_cast<const KeyPressEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a KeyPressEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  KeyPressEventData* kpEventData = static_cast<KeyPressEventData*>((kpEvent -> data).get());
+  //get the key string identifier from the data
+  string key = kpEventData -> keyID;
+  if(key == "CLOSE"){
+    shutDown();
+  }
+  else if(key == "Q"){
+    shutDown();
+  }
+}
+
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
-  this -> processEvents(game);
+  this -> userInputManager -> processUserInput(game);
 }
 
-
-//TODO - REMOVE WHEN EVENT SYSTEM IS SETUP
-//TEMPORARY EVENT PROCESSOR
-void UserView::processEvents(sf::RenderWindow  &game){
-  // process events
-  sf::Event Event;
-  while(game.pollEvent(Event))
-  {
-
-    // Main Screen
-    //if(sf::Event::Keypressed){
-    //game.close();
-    // Options Screen
-    // if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::O))
-    //game.close();
-    // Game Screen
-    //if(Event.type == sf::Event::Closed){
-	// If Player selects valid unit tile with no units currently placed 
-	//draw a button that will direct them to the purchase screen
-	//if player selects a tile that currently has a tower direct them to an upgrade screen
-    // Restart Screen
-    //if(((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::R)) OR (Player.hitpoints == 0)){
-    // One Button with the option of returning to the main menu;
-	
-    // Buy Tower Screen
-	// Import tower textures and display alongside name, price. If tower is selected check
-	// player.balance is >= than tower cost then place tower in previosuly selected spot 
-
-    if(Event.type == sf::Event::Closed){
-      game.close();
-    }
- }
+void UserView::shutDown(){
+  game -> close();
 }

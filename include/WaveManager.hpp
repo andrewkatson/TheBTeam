@@ -12,11 +12,16 @@ using namespace std;
 
 #include <memory>
 #include <queue>
+#include "EventManager.hpp"
 #include "ActorInterface.hpp"
 
 class WaveManager{
 
 private:
+
+  //event manager (used to register, deregister from events, and create them)
+  shared_ptr<EventManager> eventManager;
+
   //Vector storing every enemy type that can be spawned.
   vector<shared_ptr<ActorInterface>> enemies;
 
@@ -26,13 +31,15 @@ private:
    * within the wave.
    */
   queue<queue<shared_ptr<ActorInterface>>> waves;
-  
+
 public:
   /*
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager();
+  WaveManager(shared_ptr<EventManager> eventManager);
+
+  void delegateMethod(const EventInterface& event);
 
   /*
    * Return the next wave in waves.

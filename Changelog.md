@@ -1,4 +1,9 @@
 [Unreleased]
+
+
+
+
+[0.0.2] - 2018 - 10 - 24
 ### Added
 - SoundManager class skeleton [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Player class implementation with docs
@@ -15,13 +20,21 @@
 -TowerInterface
 -MeleeTower skeleton
 -RangedTower sekeleton
-
+-UserInputManager skeleton
+-UserKeyPressEvent skeleton
+-UserKeyPressEventData skeleton
+-RandomVariates class holds all the random variate generation functions now
 
 ### Changed
 - MapFactory places obstacles first and uses invisible obstacles that block the path
   but not towers [@andrewkatson][https://github.com/andrewkatson]
 - BoardManager stores map made from mapgenerator and provides access to them
 - BoardManager can generate new maps
+- BoardManager, TowerManager, GameState, ProjectileManager, SoundManager, WaveManager
+  Player, GameLogic, UserView, CompView all have delegateMethod functions and a reference
+  passed to them for the event manager so they can register and deregister events
+  as well as push new ones to the event queue
+- MapFactory now deals with getting stuck by removing an obstacle
 - CompView psuedocode [@KP-HB][https://github.com/KP-HB]
 - UserView psuedocode
 

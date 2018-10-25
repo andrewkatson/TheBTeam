@@ -1,11 +1,18 @@
 #ifndef EVENTTYPE_H
 #define EVENTTYPE_H
 #include <string>
+#include <memory>
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+using std::addressof;
 class EventType{
 public:
   int type;
 
-  EventType(int type);
+  EventType(const EventType *eventType);
 
   friend bool operator==(const EventType& a, const EventType& t) {
     return a.type == t.type;

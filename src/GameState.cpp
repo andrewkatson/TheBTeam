@@ -2,17 +2,22 @@
   GameState.cpp
 
   Purpose: Store the current state of the game and provide methods to alter or
-           get the current state of the game. Also stores game states. 
+           get the current state of the game. Also stores game states.
 
   @author Jeremy Elkayam
  */
 #include "GameState.hpp"
 
-GameState::GameState(){
+GameState::GameState(shared_ptr<EventManager> eventManager){
   //potentially make an Init state in which the game initializes itself?
   setState(State::Title);
+
+  this -> eventManager = eventManager;
 }
 
 void GameState::setState(State newState){
   this->currentState=newState;
 }
+
+//handle events
+void GameState::delegateMethod(const EventInterface& event){}

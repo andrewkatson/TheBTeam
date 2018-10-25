@@ -2,10 +2,18 @@
   WaveManager.cpp
 
   Purpose: Handle production and deployment of waves within a single class.
-  
+
   @author Jeremy Elkayam
  */
 #include "WaveManager.hpp"
+
+
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager){
+  this -> eventManager = eventManager;
+}
+
+//handle events
+void WaveManager::delegateMethod(const EventInterface& event){}
 
 void WaveManager::startNextWave() {
     queue<shared_ptr<ActorInterface>> next_wave = waves.front();
@@ -26,9 +34,6 @@ void WaveManager::update(float deltaS) {
     //TODO - implement
 }
 
-WaveManager::WaveManager(){
-
-}
 
 queue <shared_ptr<ActorInterface>> WaveManager::getNextWave() {return waves.front();}
 

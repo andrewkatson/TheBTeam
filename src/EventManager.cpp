@@ -27,15 +27,43 @@ EventManager::~EventManager(){
 
 //add an event to the queue of registered events
 void EventManager::queueEvent(shared_ptr<EventInterface> event){
+
+  //in case we do not find the event type we add it
+  //to the map
+  event_map::const_iterator it = EventDelegateMap.find(event -> getEventType());
+  if(it == EventDelegateMap.end()){
+    registerEvent(event -> getEventType());
+  }
+
   register_queue->push(event);
+
+}
+
+//add an event to the map of events and their delegates
+void EventManager::registerEvent(const EventType &type){
+  event_delegates newdelegateList;
+  event_map::const_iterator it = EventDelegateMap.find(type);
+  if(it == EventDelegateMap.end()){
+    EventDelegateMap.insert({type, newdelegateList});
+  }
 }
 
 //register a delegate to an event type. Think of this like a person (class) is subscribing
 // to a particular magazine (EvenetType) and is sending their address (EventDelegate)
 void EventManager::registerDelegate(const EventDelegate& d,const EventType &type){
+
+  //in case we do not find the event type we add it
+  //to the map
+  event_map::const_iterator it = EventDelegateMap.find(type);
+  if(it == EventDelegateMap.end()){
+    registerEvent(type);
+  }
+  //look for the delegate to see if it is already in the list
   event_delegates eventList = EventDelegateMap.at(type);
+  //if it is not we add it to the list of event delegates
   if(!find(eventList, d)){
-    eventList.push_back(make_shared<EventDelegate>(d));
+    shared_ptr<EventDelegate> ed = make_shared<EventDelegate>(d);
+    EventDelegateMap.at(type).push_back(ed);
   }
 }
 //deregister a delegate to an event type
@@ -45,10 +73,12 @@ void EventManager::deregisterDelegate(const EventDelegate& d, const EventType& t
   if(isFound){
     eventList.erase(eventList.begin() + isFound);
   }
+
 }
 
 void EventManager::triggerEvent(const EventInterface& event)
 {
+
   //search to see if this event is registered
   auto delegateList = EventDelegateMap.find(event.getEventType());
   if(delegateList == EventDelegateMap.end()){
@@ -57,6 +87,8 @@ void EventManager::triggerEvent(const EventInterface& event)
   //the delegate list above is an iterator used to identify if an event even exists
   //the one below is the vector of event delegates
   auto actualDelegateList = EventDelegateMap.at(event.getEventType());
+
+
   for(auto itr = actualDelegateList.begin(); itr != actualDelegateList.end(); itr++){
     //we dereference twice because the first gets us out of the iterator
     //and the second grabs the std::function from the shared pointer
@@ -67,6 +99,7 @@ void EventManager::triggerEvent(const EventInterface& event)
 
 //iterate through all registered events and trigger them
 void EventManager::processEvent(){
+
   std::swap(process_queue, register_queue);
   clear(*register_queue);
 
@@ -86,7 +119,7 @@ int EventManager::find(event_delegates &eventDelegateList,  const EventDelegate&
 
   int index = 0;
   for(auto delegate: eventDelegateList){
-    if(getAddress(*delegate) == getAddress(toFind)){
+    if(&(*delegate) == &(toFind)){
       return index;
     }
     index++;
@@ -94,17 +127,11 @@ int EventManager::find(event_delegates &eventDelegateList,  const EventDelegate&
   return 0;
 }
 
-// get the address of the function pointed to by the passed std::function object
-template<typename T, typename... U>
-size_t EventManager::getAddress(std::function<T(U...)> f) {
-    typedef T(fnType)(U...);
-    fnType ** fnPointer = f.template target<fnType*>();
-    return (size_t) *fnPointer;
-}
-
 //used to clear the queue efficiently
 void EventManager::clear( event_queue &q )
 {
-   event_queue empty;
-   std::swap( q, empty );
+   if(q.size() != 0){
+     event_queue empty;
+     std::swap( q, empty );
+   }
 }

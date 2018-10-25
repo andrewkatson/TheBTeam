@@ -1,10 +1,13 @@
 #include "BoardManager.hpp"
 
-BoardManager::BoardManager(){
+BoardManager::BoardManager(shared_ptr<EventManager> eventManager){
   this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,1,5)));
-
+  this -> eventManager = eventManager;
   this -> newMap();
 }
+
+//handle new event
+void BoardManager::delegateMethod(const EventInterface& event){}
 
 //genearte a new random map
 void BoardManager::newMap(){

@@ -1,18 +1,18 @@
 /*
   SoundManager.cpp
-  
+
   Purpose: Handle loading and playing of all game sounds through simple methods.
-  
+
   @author Jeremy Elkayam
 */
 
 #include "SoundManager.hpp"
 
-SoundManager::SoundManager(){
+SoundManager::SoundManager(shared_ptr<EventManager> eventManager){
   /*
     pseudocode since we don't have any sounds or an xml storing our sound
     file paths
-    
+
     for all the filenames in the sound files
        if(you found the file)
           append it to the sound vector
@@ -28,14 +28,18 @@ SoundManager::SoundManager(){
           stop the game and pull up a box saying you 'screwed' up (family friendly)
 
    */
+   this -> eventManager = eventManager;
 }
+
+//handle new event
+void SoundManager::delegateMethod(const EventInterface& event){}
 
 void SoundManager::playSound(int dex){
   sound_objs[dex].play();
 }
 
 void SoundManager::pauseSound(int dex){
-  sound_objs[dex].pause();  
+  sound_objs[dex].pause();
 }
 
 void SoundManager::stopSound(int dex){
@@ -48,7 +52,7 @@ void SoundManager::playMusic(int dex){
 
 void SoundManager::pauseMusic(int dex){
   music_objs[dex].pause();
-  
+
 }
 
 void SoundManager::stopMusic(int dex){
