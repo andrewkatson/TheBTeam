@@ -47,7 +47,7 @@ void UserView::registerDelegates(){
   KeyPressEvent event = KeyPressEvent();
   EventType type = event.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(delegate, type);
+  this -> eventManager -> registerDelegate(delegate,  string("USERVIEWHANDLEKEYPRESS"),type);
 }
 
 /*

@@ -50,7 +50,7 @@ void EventManager::registerEvent(const EventType &type){
 
 //register a delegate to an event type. Think of this like a person (class) is subscribing
 // to a particular magazine (EvenetType) and is sending their address (EventDelegate)
-void EventManager::registerDelegate(const EventDelegate& d,const EventType &type){
+void EventManager::registerDelegate(const EventDelegate& d, const string &eventDelegateIdentifier,const EventType &type){
 
   //in case we do not find the event type we add it
   //to the map
@@ -59,19 +59,22 @@ void EventManager::registerDelegate(const EventDelegate& d,const EventType &type
     registerEvent(type);
   }
   //look for the delegate to see if it is already in the list
-  event_delegates eventList = EventDelegateMap.at(type);
+  event_delegates eventDelegatesEventMap = EventDelegateMap.at(type);
   //if it is not we add it to the list of event delegates
-  if(!find(eventList, d)){
+  if(eventDelegatesEventMap.find(eventDelegateIdentifier) == eventDelegatesEventMap.end()){
     shared_ptr<EventDelegate> ed = make_shared<EventDelegate>(d);
-    EventDelegateMap.at(type).push_back(ed);
+    EventDelegateMap.at(type).insert({eventDelegateIdentifier,ed});
+
+    cout << "ANOTHER!" << endl;
   }
 }
 //deregister a delegate to an event type
-void EventManager::deregisterDelegate(const EventDelegate& d, const EventType& type){
-  event_delegates eventList = EventDelegateMap.at(type);
-  int isFound = find(eventList, d);
-  if(isFound){
-    eventList.erase(eventList.begin() + isFound);
+void EventManager::deregisterDelegate(const EventDelegate& d, const string &eventDelegateIdentifier, const EventType& type){
+
+  //look for the delegate to see if it is already in the list
+  event_delegates eventDelegatesEventMap = EventDelegateMap.at(type);
+  if(!(eventDelegatesEventMap.find(eventDelegateIdentifier) == eventDelegatesEventMap.end())){
+    EventDelegateMap.at(type).erase(eventDelegateIdentifier);
   }
 
 }
@@ -86,13 +89,13 @@ void EventManager::triggerEvent(const EventInterface& event)
   }
   //the delegate list above is an iterator used to identify if an event even exists
   //the one below is the vector of event delegates
-  auto actualDelegateList = EventDelegateMap.at(event.getEventType());
+  auto actualDelegateMap = EventDelegateMap.at(event.getEventType());
 
 
-  for(auto itr = actualDelegateList.begin(); itr != actualDelegateList.end(); itr++){
+  for(auto itr = actualDelegateMap.begin(); itr != actualDelegateMap.end(); itr++){
     //we dereference twice because the first gets us out of the iterator
     //and the second grabs the std::function from the shared pointer
-    (*(*itr))(event);
+    (*(*itr).second)(event);
   }
 
 }
@@ -115,6 +118,7 @@ void EventManager::processEvent(){
  * search the passed list of event delegates for one and if it is not found
  * then return 0 (false), else return the index it is at (true)
  */
+ /*
 int EventManager::find(event_delegates &eventDelegateList,  const EventDelegate& toFind){
 
   int index = 0;
@@ -126,7 +130,7 @@ int EventManager::find(event_delegates &eventDelegateList,  const EventDelegate&
   }
   return 0;
 }
-
+*/
 //used to clear the queue efficiently
 void EventManager::clear( event_queue &q )
 {

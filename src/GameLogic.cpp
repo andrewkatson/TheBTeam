@@ -32,7 +32,16 @@ void GameLogic::registerDelegates(){
   KeyPressEvent event = KeyPressEvent();
   EventType type = event.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(delegate, type);
+  this -> eventManager -> registerDelegate(delegate, string("GAMELOGICHANDLEKEYPRESS"),type);
+
+  //bind our delegate function for key presses
+  EventManager::EventDelegate d1 = std::bind(&GameLogic::handleKeyPress, this, _1);
+
+  //make an event and get its type
+  KeyPressEvent ep = KeyPressEvent();
+  EventType ept = ep.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(d1, string("GAMELOGICHANDLEKEYPRESS"),ept);
 }
 
 

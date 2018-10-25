@@ -26,13 +26,15 @@ using std::endl;
 using std::unordered_map;
 using std::size_t;
 using std::queue;
+using std::string;
 class EventManager{
 public:
   typedef std::function<void(const EventInterface&)> EventDelegate;
   typedef std::queue<shared_ptr<EventInterface>> event_queue;
 
-  typedef std::vector<shared_ptr<EventDelegate>> event_delegates;
+  typedef std::unordered_map<string,shared_ptr<EventDelegate>> event_delegates;
   typedef std::unordered_map<EventType, event_delegates> event_map;
+
 
   EventManager();
   ~EventManager();
@@ -41,16 +43,16 @@ public:
 
   void registerEvent(const EventType &type);
 
-  void registerDelegate(const EventDelegate& d, const EventType& type);
+  void registerDelegate(const EventDelegate& d, const string &eventDelegateIdentifier, const EventType& type);
 
-  void deregisterDelegate(const EventDelegate& d, const EventType& type);
+  void deregisterDelegate(const EventDelegate& d, const string &eventDelegateIdentifier,  const EventType& type);
 
   void processEvent();
 
 private:
   void triggerEvent(const EventInterface& event);
 
-  int find(event_delegates &eventDelegateList,  const EventDelegate& toFind);
+//  int find(event_delegates &eventDelegateList,  const EventDelegate& toFind);
 
   void clear(event_queue &q);
 
@@ -59,6 +61,7 @@ private:
   event_queue *register_queue;
 
   event_map EventDelegateMap;
+
 };
 
 #endif
