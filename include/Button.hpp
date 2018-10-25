@@ -12,10 +12,10 @@ private:
   sf::RectangleShape rect;
   int windowX;
   int windowY;
+  int order;
   int numChars;
 public:
-  Button(int windowX, int windowY, string str);
-
+  Button(int windowX, int windowY, int order, string str);
 
   void setWindowSize(int windowX, int windowY);
 

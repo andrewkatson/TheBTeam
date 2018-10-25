@@ -15,6 +15,7 @@ public:
   void attackEnemies();
 
   void moveUnits();
+  void delegateEvents();
 
 };
 

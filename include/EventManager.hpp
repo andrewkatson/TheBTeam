@@ -51,9 +51,6 @@ private:
   void triggerEvent(const EventInterface& event);
 
   int find(event_delegates &eventDelegateList,  const EventDelegate& toFind);
-  //template<typename T, typename... U>
-
-  //size_t getAddress(std::function<T(U...)> f);
 
   void clear(event_queue &q);
 

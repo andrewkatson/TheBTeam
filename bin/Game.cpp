@@ -39,8 +39,8 @@ void Game::initGame(sf::RenderWindow  &game){
   sf::Vector2u windowSize = game.getSize();
 
   //dimensions of the window
-  unsigned int windowX = windowSize.x;
-  unsigned int windowY = windowSize.y;
+  unsigned int windowXSize = windowSize.x;
+  unsigned int windowYSize = windowSize.y;
 
   //initialize the Game Logic
   this -> gameLogic = make_shared<GameLogic>(GameLogic());

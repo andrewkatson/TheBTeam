@@ -37,6 +37,9 @@
 - MapFactory now deals with getting stuck by removing an obstacle
 - CompView psuedocode [@KP-HB][https://github.com/KP-HB]
 - UserView psuedocode
+- Button constructor includes order for positioning (untested)
+- Main Menu skeleton (UserView)
+- Fixed compile-time erros in UserView and CompView classes[@jeremyelkayam][https://github.com/jeremyelkayam]
 
 ### Removed
 - Unused methods from MapFactory [@andrewkatson][https://github.com/andrewkatson]
