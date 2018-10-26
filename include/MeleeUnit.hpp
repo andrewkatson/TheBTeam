@@ -31,7 +31,7 @@ private:
   int armor;
 
   //A reference to the unit that this unit is fighting.
-  shared_ptr<ActorInterface> engagedUnit;
+  shared_ptr<MeleeUnit> engagedUnit;
 
   //The bar for rendering the unit's HP
   HitpointBar hpBar;
@@ -48,12 +48,12 @@ public:
   /*
    * Update the unit's hit points accordingly
    */
-  void updateHitpoints();
+  void updateHitpoints(int damage);
 
   /*
    * Update the unit's armor value.
    */
-  void updateArmor();
+  void updateArmor(int damage);
 
   /*
    * Return whether or not the unit can attack.
