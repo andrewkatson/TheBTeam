@@ -1,5 +1,4 @@
 <?xml version ="1.0" encoding="UTF-8"?>
 <strings>
-    <string value="Ok" id="IDS_OK"/>
-    <string value="Are you sure?" id="IDS_SURE"/>
+    <string value="Food Fight" id="IDS_GAMETITLE"/>
 </strings>

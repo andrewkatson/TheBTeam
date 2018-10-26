@@ -2,16 +2,16 @@
 
 #include "Game.hpp"
 
-
 int main(){
+
   //make a Game
   auto foodFight = unique_ptr<Game>(new Game());
-;
+
   //start game clock
   sf::Clock gameClock;
 
   // create main window
-  sf::RenderWindow game(sf::VideoMode(800,600,32), "Food Fight", sf::Style::Close);
+  sf::RenderWindow game(sf::VideoMode(800,600,32), TextLoader::getText("IDS_GAMETITLE"), sf::Style::Close);
 
   foodFight -> initGame(game);
 
