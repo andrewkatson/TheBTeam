@@ -1,6 +1,13 @@
 [Unreleased]
 
+#Added
+- All tower classes (CheesePizza, CrinkleFry, DeepDish, EnergyDrink, Gravy, MeatLovers,
+  MiniM&MS, NormalFry, NormalM&MS, PeanutButterM&Ms, PeanutM&Ms, PepperoniPizza,
+  Slushie, Soda, SpicyFry, WaffleFry)
+- Events, Obstacles, and Towers folders
 
+###Changed
+-CMakeLists now compiles recursively so subdirectories will be included in compilation [@andrewkatson][https://github.com/andrewkatson]
 
 
 [0.0.2] - 2018 - 10 - 24

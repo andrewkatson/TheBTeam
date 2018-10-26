@@ -24,6 +24,12 @@ void BoardManager::newMap(MapChoices * newCustomization){
   }
 }
 
+int BoardManager::getYDim(){
+  return mapFactory -> getYDim();
+}
+int BoardManager::getXDim(){
+  return mapFactory -> getXDim();
+}
 void BoardManager::setMapCustomizationChoices(MapChoices * newCustomization){
   mapFactory -> setMapCustomizationChoices(newCustomization);
 }

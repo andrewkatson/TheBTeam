@@ -34,6 +34,9 @@ public:
   void newMap();
   void newMap(MapChoices * newCustomization);
 
+  int getYDim();
+  int getXDim();
+
   void setMapCustomizationChoices(MapChoices * newCustomization);
   void setMapObstacleChoice(int obstacleChoice);
   void setMapCafeteriaChoice(int cafeteriaChoice);

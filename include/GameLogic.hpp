@@ -17,7 +17,7 @@
 #include "WaveManager.hpp"
 #include "ProjectileManager.hpp"
 #include "EventManager.hpp"
-#include "KeyPressEvent.hpp"
+#include "../include/Events/KeyPressEvent.hpp"
 #include "EventType.hpp"
 #include <functional>
 

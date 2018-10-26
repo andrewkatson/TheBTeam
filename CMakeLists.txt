@@ -28,11 +28,9 @@ endif()
 
 # Set include directories
 include_directories(${csci437_SOURCE_DIR}/include)
-include_directories( ${csci437_SOURCE_DIR}/include/Events)
 
 # Get CPP files
-file(GLOB SRC src/*cpp)
-file(GLOB EVENTS src/Events/*cpp)
+file(GLOB_RECURSE SRC src/*cpp)
 
 # Get executable files
 file(GLOB EXECLIST bin/*cpp)
@@ -110,12 +108,6 @@ if(NOT SRC STREQUAL "")
   add_library(${LIBNAME} ${SRC})
 endif()
 
-if(NOT EVENTS STREQUAL "")
-  get_filename_component(EVENTLIBNAME ${csci437_SOURCE_DIR}/EVENTS NAME)
-  set(EVENTLIBNAME "${EVENTLIBNAME}_core")
-  add_library(${EVENTLIBNAME} ${EVENTS})
-endif()
-
 
 # executables (any CPP file in 'bin' dir)
 foreach(EXEC ${EXECLIST})
@@ -123,7 +115,7 @@ foreach(EXEC ${EXECLIST})
   add_executable(${EXECNAME} ${EXEC})
 
   if(NOT SRC STREQUAL "")
-    target_link_libraries(${EXECNAME} LINK_PUBLIC ${LIBNAME} LINK_PUBLIC ${EVENTLIBNAME})
+    target_link_libraries(${EXECNAME} LINK_PUBLIC ${LIBNAME})
   endif()
 
   message("-- Adding executable: ${EXECNAME}")

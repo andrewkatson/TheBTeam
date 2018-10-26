@@ -12,7 +12,7 @@ GameLogic::GameLogic(){
   this -> eventManager = make_shared<EventManager>(EventManager());
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager));
+  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, boardManager -> getYDim(), boardManager -> getXDim()));
   this -> player = unique_ptr<Player>(new Player(eventManager));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
   this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager));
@@ -33,15 +33,6 @@ void GameLogic::registerDelegates(){
   EventType type = event.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(delegate, string("GAMELOGICHANDLEKEYPRESS"),type);
-
-  //bind our delegate function for key presses
-  EventManager::EventDelegate d1 = std::bind(&GameLogic::handleKeyPress, this, _1);
-
-  //make an event and get its type
-  KeyPressEvent ep = KeyPressEvent();
-  EventType ept = ep.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> registerDelegate(d1, string("GAMELOGICHANDLEKEYPRESS"),ept);
 }
 
 
