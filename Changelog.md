@@ -5,9 +5,14 @@
   MiniM&MS, NormalFry, NormalM&MS, PeanutButterM&Ms, PeanutM&Ms, PepperoniPizza,
   Slushie, Soda, SpicyFry, WaffleFry)
 - Events, Obstacles, and Towers folders
+- tinyxml2 library [@jeremyelkayam][https://github.com/jeremyelkayam]
+- TextLoader class to load text values from xml
+- XML files for storage of constants and strings
+- Enemy type classes (FatKidUnit, SkinnyKidUnit, AverageKidUnit)
 
 ###Changed
--CMakeLists now compiles recursively so subdirectories will be included in compilation [@andrewkatson][https://github.com/andrewkatson]
+- CMakeLists now compiles recursively so subdirectories will be included in compilation [@andrewkatson][https://github.com/andrewkatson]
+- Executable now loads window title from xml file [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 
 [0.0.2] - 2018 - 10 - 24
