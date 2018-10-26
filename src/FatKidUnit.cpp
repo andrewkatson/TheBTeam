@@ -5,7 +5,7 @@
 #include "FatKidUnit.hpp"
 
 FatKidUnit::FatKidUnit(){
-  hitpoints=300;
-  damage=40;
-  armor=100;
+  this->hitpoints=300;
+  this->damage=40;
+  this->armor=100;
 }

@@ -16,7 +16,7 @@ using namespace std;
 
 class MeleeUnit : public ActorInterface {
 
-private:
+protected:
 
   //The unit's current hitpoints.
   int hitpoints;
@@ -24,11 +24,13 @@ private:
   //The damage the unit can deal.
   int damage;
 
-  //The radius of the unit's automatic attack.
-  int attackRadius;
-
   //The amount of armor the unit has.
   int armor;
+
+private:
+
+  //The radius of the unit's automatic attack.
+  int attackRadius;
 
   //A reference to the unit that this unit is fighting.
   shared_ptr<MeleeUnit> engagedUnit;

@@ -5,6 +5,7 @@
 #ifndef CSCI437_FATKIDUNIT_HPP
 #define CSCI437_FATKIDUNIT_HPP
 
+#include "MeleeUnit.hpp"
 
 class FatKidUnit : public MeleeUnit {
 
