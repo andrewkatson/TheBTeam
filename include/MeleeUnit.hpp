@@ -12,10 +12,11 @@ using namespace std;
 
 #include <memory>
 #include "ActorInterface.hpp"
+#include "HitpointBar.hpp"
 
 class MeleeUnit : public ActorInterface {
 
-private:
+protected:
 
   //The unit's current hitpoints.
   int hitpoints;
@@ -23,14 +24,19 @@ private:
   //The damage the unit can deal.
   int damage;
 
-  //The radius of the unit's automatic attack.
-  int attackRadius;
-
   //The amount of armor the unit has.
   int armor;
 
+private:
+
+  //The radius of the unit's automatic attack.
+  int attackRadius;
+
   //A reference to the unit that this unit is fighting.
-  shared_ptr<ActorInterface> engagedUnit;
+  shared_ptr<MeleeUnit> engagedUnit;
+
+  //The bar for rendering the unit's HP
+  HitpointBar hpBar;
 
 public:
 
@@ -44,12 +50,12 @@ public:
   /*
    * Update the unit's hit points accordingly
    */
-  void updateHitpoints();
+  void updateHitpoints(int damage);
 
   /*
    * Update the unit's armor value.
    */
-  void updateArmor();
+  void updateArmor(int damage);
 
   /*
    * Return whether or not the unit can attack.
@@ -62,6 +68,11 @@ public:
    * Have the unit initiate an attack.
    */
   void attack();
+
+  /*
+   * @return the unit's hitpoint bar
+   */
+  HitpointBar getHpBar();
 
 };
 

@@ -7,18 +7,29 @@
  */
 #include "MeleeUnit.hpp"
 
-void MeleeUnit::updateHitpoints(){
-  
+void MeleeUnit::updateHitpoints(int damage){
+  hitpoints-=damage;
 }
 
-void MeleeUnit::updateArmor() {
-
+void MeleeUnit::updateArmor(int damage) {
+  armor-=damage;
 }
 
 bool MeleeUnit::canAttack() {
-
+  //TODO - check if enemy in attack radius, return true if there's someone to attack
+  //maybe leave this to using Box2D?
+  //wait for animation to finish before initiate new attack
 }
 
 void MeleeUnit::attack() {
+  engagedUnit->updateHitpoints(damage);
+  //TODO - handle attacking animation with userview, initiate attack.
+}
 
+HitpointBar MeleeUnit::getHpBar() {
+  return this->hpBar;
+}
+
+void move(float deltaS=0){
+  
 }
