@@ -12,6 +12,7 @@ using namespace std;
 
 #include <memory>
 #include "ActorInterface.hpp"
+#include "HitpointBar.hpp"
 
 class MeleeUnit : public ActorInterface {
 
@@ -31,6 +32,9 @@ private:
 
   //A reference to the unit that this unit is fighting.
   shared_ptr<ActorInterface> engagedUnit;
+
+  //The bar for rendering the unit's HP
+  HitpointBar hpBar;
 
 public:
 
@@ -62,6 +66,11 @@ public:
    * Have the unit initiate an attack.
    */
   void attack();
+
+  /*
+   * @return the unit's hitpoint bar
+   */
+  HitpointBar getHpBar();
 
 };
 

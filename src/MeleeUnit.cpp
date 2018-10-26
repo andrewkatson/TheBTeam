@@ -22,3 +22,7 @@ bool MeleeUnit::canAttack() {
 void MeleeUnit::attack() {
 
 }
+
+HitpointBar MeleeUnit::getHpBar() {
+  return this->hpBar;
+}
