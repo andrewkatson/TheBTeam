@@ -5,8 +5,9 @@
 #ifndef CSCI437_AVERAGEKIDUNIT_HPP
 #define CSCI437_AVERAGEKIDUNIT_HPP
 
+#include "MeleeUnit.hpp"
 
-class AverageKidUnit {
+class AverageKidUnit : public MeleeUnit {
 public:
   AverageKidUnit();
 };
