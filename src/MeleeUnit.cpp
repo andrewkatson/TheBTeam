@@ -31,5 +31,5 @@ HitpointBar MeleeUnit::getHpBar() {
 }
 
 void move(float deltaS=0){
-
+  
 }
