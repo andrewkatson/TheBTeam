@@ -19,11 +19,11 @@
 #include "EventManager.hpp"
 #include "../include/Events/KeyPressEvent.hpp"
 #include "EventType.hpp"
-#include <functional>
 
-using namespace std::placeholders;
 class GameLogic{
 private:
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
   //Store the game's instance of the BoardManager class that the game logic
   //needs for generation and playing of game boards.
   unique_ptr<BoardManager> boardManager;
@@ -50,7 +50,7 @@ public:
   /*
     Constructor. Initialize game, setting up instance variables.
    */
-  GameLogic();
+  GameLogic(shared_ptr<TextLoader> textLoader);
 
   void registerDelegates();
 

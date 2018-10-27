@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <constants>
-
+  <constant value="200" id="IDS_AK_HP"> </constant>
+  <constant value="60" id="IDS_AK_DM"> </constant>
+  <constant value="50" id="IDS_AK_AM"> </constant>
+  <constant value="7" id="IDS_AK_SP"> </constant>
+  <constant value="2" id="IDS_AK_AP"> </constant>
+  <constant value="300" id="IDS_FK_HP"> </constant>
+  <constant value="40" id="IDS_FK_DM"> </constant>
+  <constant value="100" id="IDS_FK_AM"> </constant>
+  <constant value="2" id="IDS_FK_SP"> </constant>
+  <constant value="10" id="IDS_FK_AP"> </constant>
+  <constant value="100" id="IDS_SK_HP"> </constant>
+  <constant value="80" id="IDS_SK_DM"> </constant>
+  <constant value="10" id="IDS_SK_AM"> </constant>
+  <constant value="20" id="IDS_SK_SP"> </constant>
+  <constant value="0" id="IDS_SK_AP"> </constant>
 </constants>

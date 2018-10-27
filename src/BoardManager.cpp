@@ -1,13 +1,27 @@
 #include "BoardManager.hpp"
 
-BoardManager::BoardManager(shared_ptr<EventManager> eventManager){
+BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+  this -> textLoader = textLoader;
   this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,1,5)));
   this -> eventManager = eventManager;
   this -> newMap();
+  this -> registerDelegates();
 }
 
-//handle new event
-void BoardManager::delegateMethod(const EventInterface& event){}
+/*
+ * Register the delegate method for this class
+ * with any events it needs to know about
+ */
+void BoardManager::registerDelegates(){
+  //bind our delegate function for tower creation events
+  EventManager::EventDelegate delegate = std::bind(&BoardManager::handleTowerCreation, this, _1);
+
+  //make an event and get its type
+  TowerCreationEvent event = TowerCreationEvent();
+  EventType type = event.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(delegate, textLoader -> getString(string("IDS_BMD1")),type);
+}
 
 //genearte a new random map
 void BoardManager::newMap(){
@@ -24,6 +38,27 @@ void BoardManager::newMap(MapChoices * newCustomization){
   }
 }
 
+/*
+ * Handle any tower creation
+ * @param event: event of the tower creation
+ */
+void BoardManager::handleTowerCreation(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * TowerCreationEvent type which allows us to access variables and methods
+   * specific to TowerCreationEvent
+   */
+  const TowerCreationEvent* tcEvent = static_cast<const TowerCreationEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a TowerCreationEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  TowerCreationEventData* tcEventData = static_cast<TowerCreationEventData*>((tcEvent -> data).get());
+
+  cout << "ID " << tcEventData -> towerID << endl;
+
+}
 int BoardManager::getYDim(){
   return mapFactory -> getYDim();
 }

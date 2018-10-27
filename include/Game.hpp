@@ -3,6 +3,7 @@
 #include "GameLogic.hpp"
 #include "UserView.hpp"
 #include "CompView.hpp"
+#include "TextLoader.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -16,11 +17,14 @@ using std::shared_ptr;
 class Game {
 private:
 shared_ptr<GameLogic> gameLogic;
+
 unique_ptr<UserView> userView;
 unique_ptr<CompView> compView;
 public:
-
+  shared_ptr<TextLoader> textLoader;
   Game();
+
+  void setUpTextLoader();
 
   void initGame(sf::RenderWindow &game);
 

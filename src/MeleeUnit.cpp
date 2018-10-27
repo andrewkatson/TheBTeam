@@ -7,6 +7,8 @@
  */
 #include "MeleeUnit.hpp"
 
+MeleeUnit::MeleeUnit(){}
+
 void MeleeUnit::updateHitpoints(int damage){
   hitpoints-=damage;
 }
@@ -30,6 +32,10 @@ HitpointBar MeleeUnit::getHpBar() {
   return this->hpBar;
 }
 
-void move(float deltaS=0){
-  
+void MeleeUnit::move(float deltaS=0){
+
+}
+
+bool MeleeUnit::isCollision(sf::FloatRect colliding_with){
+
 }

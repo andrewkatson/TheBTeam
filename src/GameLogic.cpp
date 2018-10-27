@@ -8,14 +8,15 @@
 #include "GameLogic.hpp"
 
 //Constructor.
-GameLogic::GameLogic(){
+GameLogic::GameLogic(shared_ptr<TextLoader> textLoader){
+  this -> textLoader = textLoader;
   this -> eventManager = make_shared<EventManager>(EventManager());
-  this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager));
+  this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, boardManager -> getYDim(), boardManager -> getXDim()));
+  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, boardManager -> getYDim(), boardManager -> getXDim()));
   this -> player = unique_ptr<Player>(new Player(eventManager));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
-  this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager));
+  this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader));
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerDelegates();
 }
@@ -32,7 +33,7 @@ void GameLogic::registerDelegates(){
   KeyPressEvent event = KeyPressEvent();
   EventType type = event.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(delegate, string("GAMELOGICHANDLEKEYPRESS"),type);
+  this -> eventManager -> registerDelegate(delegate, textLoader -> getString(string("IDS_GLD1")),type);
 }
 
 

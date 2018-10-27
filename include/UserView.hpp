@@ -20,6 +20,8 @@ using std::unique_ptr;
 using namespace std::placeholders;
 class UserView{
 private:
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
   //receives user input through keys or mouse
@@ -33,11 +35,13 @@ private:
 
   unique_ptr<Button> playButton,optionButton,exitButton,backButton;
 public:
-  UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game);
+  UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game, shared_ptr<TextLoader> textLoader);
 
   ~UserView();
 
   void registerDelegates();
+
+  void registerEvents();
 
   void handleKeyPress(const EventInterface& event);
 

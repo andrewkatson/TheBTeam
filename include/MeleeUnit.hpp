@@ -39,6 +39,10 @@ private:
   HitpointBar hpBar;
 
 public:
+  /*
+   * Default constructor
+   */
+  MeleeUnit();
 
   /*
    * Return the amount of hitpoints the unit has
@@ -73,6 +77,38 @@ public:
    * @return the unit's hitpoint bar
    */
   HitpointBar getHpBar();
+
+  /*
+    Returns the unique identifier for the actor.
+
+    @return an integer representing the actor's identity
+   */
+  int getID(){return id;}
+
+  /*
+    Returns the actor's sprite.
+
+    @return the Sprite object that the interface contains.
+   */
+  sf::Sprite& getSprite(){return sprite;}//PEOPLE WHO KNOW MORE THAN ME: SHOULD THIS RETURN A REFERENCE?
+
+  /*
+    Move the actor according to its speed and the actor's innate properties.
+
+    This must be implemented by extending classes, since different types of
+    actors obviously have different movement patterns.
+  */
+  void move(float deltaS);
+
+  /*
+    Determine whether or not the object's collision box is colliding with the
+    given collision box. By default, this is determined by whether or not the
+    wo collision boxes intersect.
+
+    @return true if the actor's collision box is colliding with colliding_with,
+            false otherwise.
+   */
+  bool isCollision(sf::FloatRect colliding_with);
 
 };
 

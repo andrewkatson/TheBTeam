@@ -64,8 +64,6 @@ void EventManager::registerDelegate(const EventDelegate& d, const string &eventD
   if(eventDelegatesEventMap.find(eventDelegateIdentifier) == eventDelegatesEventMap.end()){
     shared_ptr<EventDelegate> ed = make_shared<EventDelegate>(d);
     EventDelegateMap.at(type).insert({eventDelegateIdentifier,ed});
-
-    cout << "ANOTHER!" << endl;
   }
 }
 //deregister a delegate to an event type

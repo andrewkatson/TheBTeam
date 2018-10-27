@@ -65,7 +65,7 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
       shared_ptr<EventInterface> closeKey = make_shared<KeyPressEvent>(KeyPressEvent(string("CLOSE"), nowInNano));
 
       this -> eventManager -> queueEvent(closeKey);
-      game.close();
+      
     }
    else if(Event.type == sf::Event::KeyPressed){
      handleKeyPress(Event);

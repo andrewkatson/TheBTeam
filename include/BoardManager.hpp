@@ -2,9 +2,15 @@
 #define BOARDMANAGER_H
 #include "MapFactory.hpp"
 #include "EventManager.hpp"
+#include "TextLoader.hpp"
+#include "../include/Events/TowerCreationEvent.hpp"
+#include <functional>
 
+using namespace std::placeholders;
 class BoardManager{
 private:
+    //Store the textLoader to make requests for strings and constants
+    shared_ptr<TextLoader> textLoader;
     //random map generator
     unique_ptr<MapFactory> mapFactory;
 
@@ -27,12 +33,14 @@ private:
 
 
 public:
-  BoardManager(shared_ptr<EventManager> eventManager);
+  BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
-  void delegateMethod(const EventInterface& event);
+  void registerDelegates();
 
   void newMap();
   void newMap(MapChoices * newCustomization);
+
+  void handleTowerCreation(const EventInterface& event);
 
   int getYDim();
   int getXDim();

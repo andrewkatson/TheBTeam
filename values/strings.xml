@@ -1,4 +1,8 @@
 <?xml version ="1.0" encoding="UTF-8"?>
 <strings>
-    <string value="Food Fight" id="IDS_GAMETITLE"/>
+    <string value="Food Fight" id="IDS_GAMETITLE"> </string>
+    <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD1"> </string>
+    <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD1"> </string>
+    <string value="BOARDMANAGERHANDLETOWERCREATION" id="IDS_BMD1"> </string>
+    <string value="BOARDMANAGERHANDLETOWERREMOVE" id="IDS_BMD2"> </string>
 </strings>

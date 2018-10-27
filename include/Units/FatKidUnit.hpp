@@ -13,7 +13,7 @@ private:
 
 public:
 
-  FatKidUnit();
+  FatKidUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration);
 
 
 };

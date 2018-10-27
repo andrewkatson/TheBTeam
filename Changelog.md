@@ -3,8 +3,14 @@
 #Added
 - All tower classes (CheesePizza, CrinkleFry, DeepDish, EnergyDrink, Gravy, MeatLovers,
   MiniM&MS, NormalFry, NormalM&MS, PeanutButterM&Ms, PeanutM&Ms, PepperoniPizza,
-  Slushie, Soda, SpicyFry, WaffleFry)
+  Slushie, Soda, SpicyFry, WaffleFry)[@andrewkatson][https://github.com/andrewkatson]
 - Events, Obstacles, and Towers folders
+- CafeteriaTable Obstacle, TrashCan Obstacle
+- Projectiles Folder
+- CheesePizzaProjectile, DeepDishProjectile, EnergyDrinkProjectile, GravyProjectile,
+  MeatLoversProjectile, MiniMMSProjectile, NormalMMSProjectile, PeanutButterMMSProjectile,
+  PeantuMMSProjectile, PepperoniPizzaProjectile, SlushieProjectile, SodaProjectile
+- NormalyFryUnit, SpicyFryUnit, WaffleFryUnit, CrinkleFryUnit
 - tinyxml2 library [@jeremyelkayam][https://github.com/jeremyelkayam]
 - TextLoader class to load text values from xml
 - XML files for storage of constants and strings
@@ -12,7 +18,11 @@
 
 ###Changed
 - CMakeLists now compiles recursively so subdirectories will be included in compilation [@andrewkatson][https://github.com/andrewkatson]
-- Executable now loads window title from xml file [@jeremyelkayam][https://github.com/jeremyelkayam]
+- TextLoader held by the Game class and loads in all constants and strings
+- All constants and strings replaced with xml
+- Executable now loads window title from xml file
+- WaveManager initializes the vector of possible enemy units
+ [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 
 [0.0.2] - 2018 - 10 - 24

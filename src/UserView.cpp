@@ -1,10 +1,11 @@
 #include "UserView.hpp"
 
 
-UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game){
-
+UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game, shared_ptr<TextLoader> textLoader){
+  this -> textLoader = textLoader;
   this -> eventManager = eventManager;
   this -> userInputManager = unique_ptr<UserInputManager>(new UserInputManager(eventManager));
+  this -> registerEvents();
   this -> registerDelegates();
   this -> game = &game;
 
@@ -47,8 +48,21 @@ void UserView::registerDelegates(){
   KeyPressEvent event = KeyPressEvent();
   EventType type = event.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(delegate,  string("USERVIEWHANDLEKEYPRESS"),type);
+  this -> eventManager -> registerDelegate(delegate,  textLoader -> getString(string("IDS_UVD1")),type);
 }
+
+//TODO MOVE TO GAMESCREEN WHEN IT IS MADE
+/*
+ * any events created by this class must be registered with the
+ * Event Manager
+ */
+ void UserView::registerEvents(){
+   //make a generic tower creation event, get its type, and register it
+   TowerCreationEvent event = TowerCreationEvent();
+   EventType type = event.getEventType();
+   this -> eventManager -> registerEvent(type);
+ }
+
 
 /*
  * Handle any key press from the user

@@ -14,11 +14,16 @@ using namespace std;
 #include <queue>
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
+#include "TextLoader.hpp"
+#include "../include/Units/AverageKidUnit.hpp"
+#include "../include/Units/SkinnyKidUnit.hpp"
+#include "../include/Units/FatKidUnit.hpp"
 
 class WaveManager{
 
 private:
-
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
 
@@ -37,9 +42,14 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
   void delegateMethod(const EventInterface& event);
+
+  /*
+   * Setup the possible enemies that can spawn
+   */
+  void setUpPossibleEnemies();
 
   /*
    * Return the next wave in waves.

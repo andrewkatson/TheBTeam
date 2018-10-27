@@ -1,6 +1,7 @@
 #include "CompView.hpp"
 
-CompView::CompView(shared_ptr<EventManager> eventManager){
+CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+  this -> textLoader = textLoader;
   this -> eventManager = eventManager;
 }
 
