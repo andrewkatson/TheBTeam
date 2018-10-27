@@ -28,6 +28,12 @@ public:
 
   virtual void upgrade();
 
+  /*
+   * set the currentProjectile to be the projectile object of the type of the tower
+   * this projectile will be fired from 
+   */
+  virtual void setProjectile();
+
 };
 
  #endif

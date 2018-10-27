@@ -9,8 +9,10 @@
 #ifndef TOWERINTERFACE_H
 #define TOWERINTERFACE_H
 #include <string>
+#include <memory>
 
 using std::string;
+using std::make_shared;
 class TowerInterface{
 protected:
   //the tower type identifier that allows for its next upgrade to be pulled

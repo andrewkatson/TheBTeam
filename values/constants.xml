@@ -10,46 +10,151 @@
   <constant value="5" id ="IDS_SFT_RS"> </constant>
   <!--Waffle Fry Tower-->
   <constant value="30" id ="IDS_WFT_RS"> </constant>
+
+
+
+
+
+
   <!--Average Kid Unit-->
   <constant value="200" id="IDS_AK_HP"> </constant>
   <constant value="60" id="IDS_AK_DM"> </constant>
   <constant value="50" id="IDS_AK_AM"> </constant>
   <constant value="7" id="IDS_AK_SP"> </constant>
   <constant value="2" id="IDS_AK_AP"> </constant>
+  <constant value="5" id="IDS_AK_AR"> </constant>
   <!--Fat Kid Unit-->
   <constant value="300" id="IDS_FK_HP"> </constant>
   <constant value="100" id="IDS_FK_DM"> </constant>
   <constant value="100" id="IDS_FK_AM"> </constant>
   <constant value="2" id="IDS_FK_SP"> </constant>
   <constant value="10" id="IDS_FK_AP"> </constant>
+  <constant value="10" id="IDS_FK_AR"> </constant>
   <!--Skinny Kid Unit-->
   <constant value="100" id="IDS_SK_HP"> </constant>
   <constant value="20" id="IDS_SK_DM"> </constant>
   <constant value="10" id="IDS_SK_AM"> </constant>
   <constant value="20" id="IDS_SK_SP"> </constant>
   <constant value="0" id="IDS_SK_AP"> </constant>
+  <constant value="1" id="IDS_SK_AR"> </constant>
   <!--Normal Fry Unit-->
   <constant value="10" id="IDS_NF_HP"> </constant>
   <constant value="5" id="IDS_NF_DM"> </constant>
   <constant value="0" id="IDS_NF_AM"> </constant>
   <constant value="10" id="IDS_NF_SP"> </constant>
   <constant value="0" id="IDS_NF_AP"> </constant>
+  <constant value="1" id="IDS_NF_AR"> </constant>
   <!--Crinkle Fry Unit-->
   <constant value="20" id="IDS_CF_HP"> </constant>
   <constant value="10" id="IDS_CF_DM"> </constant>
   <constant value="1" id="IDS_CF_AM"> </constant>
   <constant value="9" id="IDS_CF_SP"> </constant>
   <constant value="0" id="IDS_CF_AP"> </constant>
+  <constant value="2" id="IDS_NF_AR"> </constant>
   <!--Waffle Fry Unit-->
   <constant value="40" id="IDS_WF_HP"> </constant>
   <constant value="20" id="IDS_WF_DM"> </constant>
   <constant value="8" id="IDS_WF_AM"> </constant>
   <constant value="5" id="IDS_WF_SP"> </constant>
   <constant value="5" id="IDS_WF_AP"> </constant>
+  <constant value="10" id="IDS_WF_AR"> </constant>
   <!--Spicy Fry Unit-->
   <constant value="60" id="IDS_SF_HP"> </constant>
   <constant value="15" id="IDS_SF_DM"> </constant>
   <constant value="50" id="IDS_SF_AM"> </constant>
   <constant value="20" id="IDS_SF_SP"> </constant>
   <constant value="1" id="IDS_SF_AP"> </constant>
+  <constant value="5" id="IDS_SF_AR"> </constant>
+
+
+
+
+
+
+  <!--NOTE:FOR ALL PROJECTILES AR IS AREA OF EFFECT-->
+  <!--CheesePizza Projectile-->
+  <constant value="0" id="IDS_CP_HP"> </constant>
+  <constant value="10" id="IDS_CP_DM"> </constant>
+  <constant value="0" id="IDS_CP_AM"> </constant>
+  <constant value="4" id="IDS_CP_SP"> </constant>
+  <constant value="10" id="IDS_CP_AP"> </constant>
+  <constant value="2" id="IDS_CP_AR"> </constant>
+  <!--PepperoniPizza Projectile-->
+  <constant value="0" id="IDS_PP_HP"> </constant>
+  <constant value="15" id="IDS_PP_DM"> </constant>
+  <constant value="0" id="IDS_PP_AM"> </constant>
+  <constant value="6" id="IDS_PP_SP"> </constant>
+  <constant value="14" id="IDS_PP_AP"> </constant>
+  <constant value="4" id="IDS_PP_AR"> </constant>
+  <!--MeatLovers Projectile-->
+  <constant value="0" id="IDS_ML_HP"> </constant>
+  <constant value="25" id="IDS_ML_DM"> </constant>
+  <constant value="50" id="IDS_ML_AM"> </constant>
+  <constant value="8" id="IDS_ML_SP"> </constant>
+  <constant value="14" id="IDS_ML_AP"> </constant>
+  <constant value="4" id="IDS_ML_AR"> </constant>
+  <!--DeepDish Projectile-->
+  <constant value="0" id="IDS_DD_HP"> </constant>
+  <constant value="15" id="IDS_DD_DM"> </constant>
+  <constant value="0" id="IDS_DD_AM"> </constant>
+  <constant value="3" id="IDS_DD_SP"> </constant>
+  <constant value="20" id="IDS_DD_AP"> </constant>
+  <constant value="8" id="IDS_DD_AR"> </constant>
+  <!--MiniM&Ms Projectile-->
+  <constant value="0" id="IDS_MMM_HP"> </constant>
+  <constant value="1" id="IDS_MMM_DM"> </constant>
+  <constant value="0" id="IDS_MMM_AM"> </constant>
+  <constant value="40" id="IDS_MMM_SP"> </constant>
+  <constant value="0" id="IDS_MMM_AP"> </constant>
+  <constant value="0" id="IDS_MMM_AR"> </constant>
+  <!--NormalM&Ms Projectile-->
+  <constant value="0" id="IDS_NMM_HP"> </constant>
+  <constant value="3" id="IDS_NMM_DM"> </constant>
+  <constant value="0" id="IDS_NMM_AM"> </constant>
+  <constant value="45" id="IDS_NMM_SP"> </constant>
+  <constant value="0" id="IDS_NMM_AP"> </constant>
+  <constant value="0" id="IDS_NMM_AR"> </constant>
+  <!--PeanutButterM&Ms Projectile-->
+  <constant value="0" id="IDS_PBMM_HP"> </constant>
+  <constant value="2" id="IDS_PBMM_DM"> </constant>
+  <constant value="0" id="IDS_PBMM_AM"> </constant>
+  <constant value="60" id="IDS_PBMM_SP"> </constant>
+  <constant value="0" id="IDS_PBMM_AP"> </constant>
+  <constant value="2" id="IDS_PBMM_AR"> </constant>
+  <!--PeanutM&Ms Projectile-->
+  <constant value="0" id="IDS_PMM_HP"> </constant>
+  <constant value="3" id="IDS_PMM_DM"> </constant>
+  <constant value="0" id="IDS_PMM_AM"> </constant>
+  <constant value="30" id="IDS_PMM_SP"> </constant>
+  <constant value="6" id="IDS_PMM_AP"> </constant>
+  <constant value="0" id="IDS_PMM_AR"> </constant>
+  <!--Soda Projectile-->
+  <constant value="0" id="IDS_SO_HP"> </constant>
+  <constant value="4" id="IDS_SO_DM"> </constant>
+  <constant value="0" id="IDS_SO_AM"> </constant>
+  <constant value="10" id="IDS_SO_SP"> </constant>
+  <constant value="4" id="IDS_SO_AP"> </constant>
+  <constant value="30" id="IDS_SO_AR"> </constant>
+  <!--EnergyDrink Projectile-->
+  <constant value="0" id="IDS_ED_HP"> </constant>
+  <constant value="6" id="IDS_ED_DM"> </constant>
+  <constant value="0" id="IDS_ED_AM"> </constant>
+  <constant value="12" id="IDS_ED_SP"> </constant>
+  <constant value="6" id="IDS_ED_AP"> </constant>
+  <constant value="40" id="IDS_ED_AR"> </constant>
+  <!--Gravy Projectile-->
+  <constant value="0" id="IDS_G_HP"> </constant>
+  <constant value="10" id="IDS_G_DM"> </constant>
+  <constant value="0" id="IDS_G_AM"> </constant>
+  <constant value="6" id="IDS_G_SP"> </constant>
+  <constant value="10" id="IDS_G_AP"> </constant>
+  <constant value="20" id="IDS_G_AR"> </constant>
+  <!--Slushie Projectile-->
+  <constant value="0" id="IDS_SL_HP"> </constant>
+  <constant value="7" id="IDS_SL_DM"> </constant>
+  <constant value="0" id="IDS_SL_AM"> </constant>
+  <constant value="14" id="IDS_SL_SP"> </constant>
+  <constant value="4" id="IDS_SL_AP"> </constant>
+  <constant value="60" id="IDS_SL_AR"> </constant>
+
 </constants>

@@ -9,7 +9,7 @@ private:
 
 public:
 
-  NormalFryUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration);
+  NormalFryUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration, int attackRadius);
 
 
 };

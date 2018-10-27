@@ -2,6 +2,7 @@
 
 WaffleFry::WaffleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits) : MeleeTower(){
   this -> totalUnits = maxMeleeUnits;
+  this -> textLoader = textLoader;
   this -> respawnSpeed = textLoader -> getConstant(string("IDS_WFT_RS"));
   this -> towerTypeID = towerTypeID;
   this -> setUpUnits();
@@ -24,10 +25,12 @@ void WaffleFry::setUpUnits(){
   int waffleFrySP = textLoader -> getConstant(string("IDS_WF_SP"));
   //armor penetration
   int waffleFryAP = textLoader -> getConstant(string("IDS_WF_AP"));
+  //attack radius
+  int waffleFryAR = textLoader -> getConstant(string("IDS_WF_AR"));
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
-    shared_ptr<MeleeUnit> unitToAdd = make_shared<WaffleFryUnit>(WaffleFryUnit(waffleFryHP, waffleFryDM, waffleFryAM, waffleFrySP, waffleFryAP));
+    shared_ptr<MeleeUnit> unitToAdd = make_shared<WaffleFryUnit>(WaffleFryUnit(waffleFryHP, waffleFryDM, waffleFryAM, waffleFrySP, waffleFryAP, waffleFryAR));
     currentUnits.push_back(unitToAdd);
   }
 }

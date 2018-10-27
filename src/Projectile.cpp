@@ -4,7 +4,7 @@
 
 #include "Projectile.hpp"
 
-float Projectile::getArmorPenetration() const {
+int Projectile::getArmorPenetration() const {
   return armorPenetration;
 }
 
@@ -14,4 +14,13 @@ int Projectile::getDamage() const {
 
 void Projectile::move(float deltaS){
 
+}
+
+void Projectile::setVector(int x, int y){
+  this -> x = x;
+  this -> y = y;
+}
+
+void Projectile::setProjectileID(int ID){
+  this -> projectileID = ID;
 }

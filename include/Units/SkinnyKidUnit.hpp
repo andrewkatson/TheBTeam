@@ -9,7 +9,7 @@
 
 class SkinnyKidUnit : public MeleeUnit {
 public:
-  SkinnyKidUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration);
+  SkinnyKidUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration, int attackRadius);
 };
 
 

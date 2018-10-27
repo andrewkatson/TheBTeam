@@ -192,6 +192,11 @@ shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int row, int col){
 void TowerManager::addTower(int type, int combinedRowCol){
 
 }
+/*
+ * @param type: the index in the vector of tower types that
+ * @param row: the posiition on the grid in the row
+ * @param col: the position on the grid in the col 
+ */
 void TowerManager::addTower(int type, int row, int col){
 
 }

@@ -2,5 +2,6 @@
 
 #include "Projectile.hpp"
 class SlushieProjectile : public Projectile{
-  SlushieProjectile();
+public:
+  SlushieProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect);
 };

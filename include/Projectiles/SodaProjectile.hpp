@@ -1,5 +1,6 @@
 #pragma once
 #include "Projectile.hpp"
 class SodaProjectile : public Projectile{
-  SodaProjectile();
+public:
+  SodaProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect);
 };

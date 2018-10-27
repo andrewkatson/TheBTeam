@@ -7,7 +7,7 @@ private:
 
 public:
 
-  WaffleFryUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration);
+  WaffleFryUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration, int attackRadius);
 
 
 };

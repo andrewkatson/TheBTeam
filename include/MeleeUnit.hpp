@@ -27,8 +27,6 @@ protected:
   //The amount of armor the unit has.
   int armor;
 
-private:
-
   //The radius of the unit's automatic attack.
   int attackRadius;
 

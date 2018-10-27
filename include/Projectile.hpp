@@ -13,16 +13,18 @@
 
 class Projectile : public ActorInterface {
 
-private:
-
-  //The amount that this projectile penetrates a unit's armor [a percentage, maybe?]
-  float armorPenetration;
-
-  //Amount of damage dealt by this projectile.
-  int damage;
+protected:
 
   //Area on the board that this projectile effects.
-  int affectedArea;
+  int areaOfEffect;
+
+  //the x of the vector of movement
+  int x;
+  //the y of the vector of movement
+  int y;
+
+  //the unique identifier for the projectile when it is spawned
+  int projectileID;
 
 public:
 
@@ -31,7 +33,7 @@ public:
    *
    * @return the projectile's penetration of enemy armor in percent of total armor.
    */
-  float getArmorPenetration() const;
+  int getArmorPenetration() const;
 
   /*
    * Returns the damage this projectile deals.
@@ -44,6 +46,19 @@ public:
    * Move the projectile based on its speed and direction.
    */
   void move(float deltaS);
+
+  /*
+   * set the vector for movement (defined by an x and y)
+   * @param x: the x component of the vector
+   * @param y: the y component of the vectors
+   */
+  void setVector(int x, int y);
+
+  /*
+   * set the identifier for this projectile
+   * @param projectileID: the integer identifier (probably the address)
+   */
+  void setProjectileID(int ID);
 
 };
 

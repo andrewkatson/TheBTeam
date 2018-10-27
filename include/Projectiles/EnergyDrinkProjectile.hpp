@@ -1,5 +1,6 @@
 #pragma once
 #include "Projectile.hpp"
 class EnergyDrinkProjectile : public Projectile{
-  EnergyDrinkProjectile();
+  public:
+  EnergyDrinkProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect);
 };

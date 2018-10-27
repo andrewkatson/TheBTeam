@@ -13,3 +13,5 @@ RangeTower::RangeTower(shared_ptr<RangeTower> startingTower){
 }
 
 void RangeTower::upgrade(){}
+
+void RangeTower::setProjectile(){}

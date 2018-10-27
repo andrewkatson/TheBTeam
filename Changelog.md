@@ -1,5 +1,8 @@
 [Unreleased]
 
+
+[0.0.3] - 2018 - 10 - 27
+
 #Added
 - All tower classes (CheesePizza, CrinkleFry, DeepDish, EnergyDrink, Gravy, MeatLovers,
   MiniM&MS, NormalFry, NormalM&MS, PeanutButterM&Ms, PeanutM&Ms, PepperoniPizza,
@@ -24,6 +27,12 @@
 - WaveManager initializes the vector of possible enemy units
 - TowerManager makes a map of possible upgrades from any towertype
 - NormalFry,CrinkleFry,SpicyFry,WaffleFry all create a set of units to spawn
+- CheesePizzaProjectile, DeepDishProjectile, EnergyDrinkProjectile, GravyProjectile,
+  MeatLoversProjectile, MiniMMSProjectile, NormalMMSProjectile, PeanutButterMMSProjectile,
+  PeantuMMSProjectile, PepperoniPizzaProjectile, SlushieProjectile, SodaProjectile
+- NormalyFryUnit, SpicyFryUnit, WaffleFryUnit, CrinkleFryUnit have default values
+- All RangeTower types now are initialized with their own projectiles
+- Projectile class holds an id for every projectile and a vector describing its direction
  [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 
