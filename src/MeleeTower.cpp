@@ -12,3 +12,5 @@ MeleeTower::MeleeTower(shared_ptr<MeleeTower>  startingTower){
 }
 
 void MeleeTower::upgrade(){}
+
+void MeleeTower::setUpUnits(){}

@@ -18,6 +18,7 @@
 #include "../include/Towers/MeatLovers.hpp"
 #include "../include/Towers/MiniMMS.hpp"
 #include "../include/Towers/NormalFry.hpp"
+#include "../include/Towers/NormalMMS.hpp"
 #include "../include/Towers/PeanutButterMMS.hpp"
 #include "../include/Towers/PeanutMMS.hpp"
 #include "../include/Towers/PepperoniPizza.hpp"
@@ -45,6 +46,9 @@ shared_ptr<EventManager> eventManager;
 //All possible towers that can be purchased
 vector<shared_ptr<TowerInterface>> towersToChoose;
 
+//All possible upgrades for each type of tower
+unordered_map<string, vector<shared_ptr<TowerInterface>>> possibleUpgrades;
+
 //Towers placed on the board
 //the integer key is the row*collength + colindex of the tower on the map
 unordered_map<int, shared_ptr<TowerInterface>> towersPlaced;
@@ -63,10 +67,14 @@ public:
   unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
 
   shared_ptr<TowerInterface> getTowerPlaced(int combinedRowCol);
-  shared_ptr<TowerInterface>getTowerPlaced(int row, int col);
+  shared_ptr<TowerInterface> getTowerPlaced(int row, int col);
 
 private:
   void populateTowersToChoose();
+  void populateTowerUpgrades();
+  void populateTowerUpgradesLvl1(int maxMeleeUnits);
+  void populateTowerUpgradesLvl2(int maxMeleeUnits);
+
 
   void addTower(int type, int combinedRowCol);
   void addTower(int type, int row, int col);

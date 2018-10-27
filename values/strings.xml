@@ -1,8 +1,45 @@
 <?xml version ="1.0" encoding="UTF-8"?>
 <strings>
+    <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
+    <!--GameLogic Delegates-->
     <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD1"> </string>
+    <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD1"> </string>
+    <!--Board Manager Delegates-->
     <string value="BOARDMANAGERHANDLETOWERCREATION" id="IDS_BMD1"> </string>
     <string value="BOARDMANAGERHANDLETOWERREMOVE" id="IDS_BMD2"> </string>
+    <!--TowerTypeIDS-->
+    <!--CheesePizza-->
+    <string value="CPT" id="IDS_CPT"> </string>
+    <!--CrinkleFry-->
+    <string value="CFT" id="IDS_CFT"> </string>
+    <!--DeepDish-->
+    <string value="DDT" id="IDS_DDT"> </string>
+    <!--EnergyDrink-->
+    <string value="EDT" id="IDS_EDT"> </string>
+    <!--Gravy-->
+    <string value="GT" id="IDS_GT"> </string>
+    <!--MeatLovers-->
+    <string value="MLT" id="IDS_MLT"> </string>
+    <!--MiniM&Ms-->
+    <string value="MMMT" id="IDS_MMMT"> </string>
+    <!--NormalFry-->
+    <string value="NFT" id="IDS_NFT"> </string>
+    <!--NormalM&Ms-->
+    <string value="NMMT" id="IDS_NMMT"> </string>
+    <!--PeautButterM&Ms-->
+    <string value="PBMMT" id="IDS_PBMMT"> </string>
+    <!--PeanutM&Ms-->
+    <string value="PMMT" id="IDS_PMMT"> </string>
+    <!--PepperoniPizza-->
+    <string value="PPT" id="IDS_PPT"> </string>
+    <!--Slushie-->
+    <string value="SLT" id="IDS_SLT"> </string>
+    <!--Soda-->
+    <string value="SOT" id="IDS_SOT"> </string>
+    <!--SpicyFry-->
+    <string value="SFT" id="IDS_SFT"> </string>
+    <!--WaffleFry-->
+    <string value="WFT" id="IDS_WFT"> </string>
 </strings>

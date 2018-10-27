@@ -3,7 +3,7 @@
 
 class Soda : public RangeTower{
 public:
-  Soda();
+  Soda(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

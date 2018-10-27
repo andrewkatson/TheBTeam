@@ -3,7 +3,7 @@
 
 class MeatLovers : public RangeTower{
 public:
-  MeatLovers();
+  MeatLovers(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

@@ -22,6 +22,8 @@
 - All constants and strings replaced with xml
 - Executable now loads window title from xml file
 - WaveManager initializes the vector of possible enemy units
+- TowerManager makes a map of possible upgrades from any towertype
+- NormalFry,CrinkleFry,SpicyFry,WaffleFry all create a set of units to spawn
  [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 

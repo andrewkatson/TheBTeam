@@ -2,7 +2,7 @@
 #include "RangeTower.hpp"
 class MiniMMS : public RangeTower{
 public:
-  MiniMMS();
+  MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

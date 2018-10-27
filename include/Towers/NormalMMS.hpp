@@ -3,7 +3,7 @@
 
 class NormalMMS : public RangeTower{
 public:
-  NormalMMS();
+  NormalMMS(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

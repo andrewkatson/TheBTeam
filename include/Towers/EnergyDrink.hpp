@@ -3,7 +3,7 @@
 
 class EnergyDrink : public RangeTower{
 public:
-  EnergyDrink();
+  EnergyDrink(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

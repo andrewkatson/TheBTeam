@@ -2,7 +2,7 @@
 #include "RangeTower.hpp"
 class DeepDish : public RangeTower{
 public:
-  DeepDish();
+  DeepDish(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

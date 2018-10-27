@@ -3,7 +3,7 @@
 
 class Slushie : public RangeTower{
 public:
-  Slushie();
+  Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

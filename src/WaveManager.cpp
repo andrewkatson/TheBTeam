@@ -25,7 +25,7 @@ void WaveManager::setUpPossibleEnemies(){
   int skinnyKidAM = textLoader -> getConstant(string("IDS_SK_AM"));
   //speed
   int skinnyKidSP = textLoader -> getConstant(string("IDS_SK_SP"));
-  //armor armor penetration
+  //armor  penetration
   int skinnyKidAP = textLoader -> getConstant(string("IDS_AK_AP"));
 
   //constants for the average kid

@@ -3,7 +3,7 @@
 #include "RangeTower.hpp"
 class CheesePizza : public RangeTower{
 public:
-  CheesePizza();
+  CheesePizza(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

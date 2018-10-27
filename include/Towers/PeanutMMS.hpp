@@ -4,7 +4,7 @@
 
 class PeanutMMS : public RangeTower{
 public:
-  PeanutMMS();
+  PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };

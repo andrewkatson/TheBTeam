@@ -3,7 +3,7 @@
 
 class Gravy : public RangeTower{
 public:
-  Gravy();
+  Gravy(shared_ptr<TextLoader> textLoader, string towerTypeID);
 
   void upgrade();
 };
