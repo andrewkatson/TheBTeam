@@ -1,12 +1,12 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#inlcude<string>
+#include<string>
 #include<iostream>
 #include <memory>
 #include <functional>
 
-using std::out;
+using std::cout;
 using std::string;
 
 class Screen{
@@ -22,4 +22,4 @@ public:
   void delegateEvents();
   void draw(sf::RenderWindow &window);
   int getSelectedItem() {return selectedItem:}
-}
+};

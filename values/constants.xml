@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <constants>
+
+  <!--Window-->
+  <constant value="800" id="IDS_W_X"></constant>
+  <constant value="600" id="IDS_W_Y"></constant>
+
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
   <constant value="100" id ="IDS_P_B"> </constant>
