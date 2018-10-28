@@ -43,8 +43,7 @@
 - NormalyFryUnit, SpicyFryUnit, WaffleFryUnit, CrinkleFryUnit have default values
 - All RangeTower types now are initialized with their own projectiles
 - Projectile class holds an id for every projectile and a vector describing its direction
- [@jeremyelkayam][https://github.com/jeremyelkayam]
-
+ 
 ###Fixed
 - MapFactory no longer endlessely loops when it gets stuck. (removes a wall)
 
