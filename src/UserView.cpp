@@ -1,11 +1,10 @@
 #include "UserView.hpp"
 
 
-UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game, shared_ptr<TextLoader> textLoader){
-  this -> textLoader = textLoader;
+UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game){
+
   this -> eventManager = eventManager;
   this -> userInputManager = unique_ptr<UserInputManager>(new UserInputManager(eventManager));
-  this -> registerEvents();
   this -> registerDelegates();
   this -> game = &game;
 
@@ -19,17 +18,6 @@ UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game
   title.setCharacterSize(60);
   title.setPosition(350.f, 100.f);
 
-  playButton = unique_ptr<Button>(new Button(windowX, windowY, 1, "Play"));
-
-  optionButton = unique_ptr<Button>(new Button(windowX, windowY, 2, "Options"));
-
-  exitButton = unique_ptr<Button>(new Button(windowX, windowY, 3, "Exit"));
-
-  //Options menu
-
-
-  backButton = unique_ptr<Button>(new Button(windowX, windowY, 3, "Back"));
-
 }
 
 UserView::~UserView(){
@@ -41,37 +29,15 @@ UserView::~UserView(){
  * with any events it needs to know about
  */
 void UserView::registerDelegates(){
-  //bind our delegate function for key presses
-  EventManager::EventDelegate keyPressDelegate = std::bind(&UserView::handleKeyPress, this, _1);
+  //bind our delegatefunction for key presses
+  std::function<void(const EventInterface&)> delegate = std::bind(&UserView::handleKeyPress, this, _1);
 
   //make an event and get its type
-  KeyPressEvent keyPressEvent = KeyPressEvent();
-  EventType keyPressEventType = keyPressEvent.getEventType();
+  KeyPressEvent event = KeyPressEvent();
+  EventType type = event.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_UVD_KP")),keyPressEventType);
-
-  //bind our delegate function for mouse presses
-  EventManager::EventDelegate mousePressDelegate = std::bind(&UserView::handleMousePress, this, _1);
-
-  //make an event and get its type
-  MousePressEvent mousePressEvent = MousePressEvent();
-  EventType mousePressEventType = mousePressEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_UVD_MP")),mousePressEventType);
+  this -> eventManager -> registerDelegate(delegate, type);
 }
-
-//TODO MOVE TO GAMESCREEN WHEN IT IS MADE
-/*
- * any events created by this class must be registered with the
- * Event Manager
- */
- void UserView::registerEvents(){
-   //make a generic tower creation event, get its type, and register it
-   TowerCreationEvent event = TowerCreationEvent();
-   EventType type = event.getEventType();
-   this -> eventManager -> registerEvent(type);
- }
-
 
 /*
  * Handle any key press from the user
@@ -95,33 +61,10 @@ void UserView::handleKeyPress(const EventInterface& event){
   if(key == "CLOSE"){
     shutDown();
   }
+  else if()
   else if(key == "Q"){
     shutDown();
   }
-}
-
-/*
- * Handle any mouse press from the user
- * @param event: event of the mouse press
- */
-void UserView::handleMousePress(const EventInterface& event){
-  /*
-   * cast the EventInterface reference to a CONST pointer to the
-   * MousePressEvent type which allows us to access variables and methods
-   * specific to MousePressEvent
-   */
-  const MousePressEvent* mpEvent = static_cast<const MousePressEvent*>(&event);
-  /*
-   * cast the "data" (a EventDataInterface) to a KeyPressEventData type
-   * the .get() is because data is a unique_ptr and we need to grab the
-   * raw pointer inside of it for this
-   */
-  MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
-  //get the xposition
-  float xPos = mpEventData -> x;
-  //get the y position
-  float yPos = mpEventData -> y;
-
 }
 
 
