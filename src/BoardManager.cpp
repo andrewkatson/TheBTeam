@@ -145,3 +145,7 @@ vector<int>const & BoardManager::getFloorCol(int col){
 int BoardManager::getFloorRowCol(int row, int col){
   return floorGrid.at(row).at(col);
 }
+
+vector<int> BoardManager::getEntryPositions(){
+  return mapFactory->getEntryPos();
+}

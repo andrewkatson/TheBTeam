@@ -65,11 +65,13 @@ void WaveManager::setUpPossibleEnemies(){
 }
 
 //handle events
-void WaveManager::delegateMethod(const EventInterface& event){}
+void WaveManager::delegateMethod(const EventInterface& event){
+
+}
 
 void WaveManager::startNextWave() {
     queue<shared_ptr<ActorInterface>> next_wave = waves.front();
-    //TODO - code for spawning waves
+
 }
 
 void WaveManager::endCurrentWave() {

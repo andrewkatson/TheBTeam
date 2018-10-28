@@ -67,5 +67,7 @@ public:
   vector<int>const & getFloorCol(int col);
   int getFloorRowCol(int row, int col);
 
+  vector<int> getEntryPositions();
+
 };
 #endif

@@ -22,15 +22,14 @@ class TextLoader {
 
 public:
 
-//tinyxml2::XMLDocument doc;
-unordered_map<string, string> strings;
-unordered_map<string, int> constants;
-
-TextLoader();
-std::string getString(const std::string id);
-int getConstant(const std::string id);
+  TextLoader();
+  std::string getString(const std::string id);
+  int getConstant(const std::string id);
 
 private:
+  unordered_map<string, string> strings;
+  unordered_map<string, int> constants;
+
   void loadStrings();
   void loadConstants();
 };

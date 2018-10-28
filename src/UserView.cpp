@@ -1,12 +1,13 @@
 #include "UserView.hpp"
 
 
-UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game, shared_ptr<TextLoader> textLoader){
+UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game,shared_ptr<TextLoader> textLoader){
+
   this -> textLoader = textLoader;
   this -> eventManager = eventManager;
   this -> userInputManager = unique_ptr<UserInputManager>(new UserInputManager(eventManager));
-  this -> registerEvents();
   this -> registerDelegates();
+  this -> registerEvents();
   this -> game = &game;
 
   font.loadFromFile("../Fonts/PWYummyDonuts.ttf");
@@ -65,12 +66,12 @@ void UserView::registerDelegates(){
  * any events created by this class must be registered with the
  * Event Manager
  */
- void UserView::registerEvents(){
-   //make a generic tower creation event, get its type, and register it
-   TowerCreationEvent event = TowerCreationEvent();
-   EventType type = event.getEventType();
-   this -> eventManager -> registerEvent(type);
- }
+void UserView::registerEvents(){
+  //make a generic tower creation event, get its type, and register it
+  TowerCreationEvent event = TowerCreationEvent();
+  EventType type = event.getEventType();
+  this -> eventManager -> registerEvent(type);
+}
 
 
 /*
@@ -123,7 +124,6 @@ void UserView::handleMousePress(const EventInterface& event){
   float yPos = mpEventData -> y;
 
 }
-
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
   this -> userInputManager -> processUserInput(game);

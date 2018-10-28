@@ -37,6 +37,8 @@ private:
    */
   queue<queue<shared_ptr<ActorInterface>>> waves;
 
+  int numWaves,level;
+
 public:
   /*
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
