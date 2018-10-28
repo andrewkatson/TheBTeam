@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <iterator>
 #include <stdexcept>
+#include <sstream>
 
 using std::vector;
 using std::unique_ptr;
@@ -26,6 +27,7 @@ using std::unordered_map;
 using std::next;
 using std::begin;
 using std::out_of_range;
+using std::stringstream;
 
 class MapFactory{
 private:
@@ -111,9 +113,12 @@ private:
    */
   unique_ptr<RandomVariates> randomVariates = unique_ptr<RandomVariates>(new RandomVariates());
 
-  void generateDimensions();
+  stringstream s;
 
+  void generateDimensions();
+  bool tryAMap();
   void initGridArrays();
+  void resetEverything();
 
   void makeExit();
   int chooseIndexOfExit(int side);
@@ -132,20 +137,20 @@ private:
   bool bottomSideIsNotFull(vector<int> &possibleEntries);
   void placeEntry(Direction::Directions &entrySide, int entryIndexOnSide, int pathNumberOfEntry);
   void setUnavailableSpotsFromEntry(int entryXPos, int entryYPos);
-  void setUnavailableSpotsFromLeftEntry(int entryXPos, int entryYPos);
-  void setUnavailableSpotsFromRightEntry(int entryXPos, int entryYPos);
-  void setUnavailableSpotsFromTopEntry(int entryXPos, int entryYPos);
-  void setUnavailableSpotsFromBottomEntry(int entryXPos, int entryYPos);
 
   void makeFloor();
 
-  void makePath(int pathNumber);
+  bool makePath(int pathNumber);
   bool connectedWithExit(int row, int col);
   bool connectedWithExitPath(int row, int col , int path);
   vector<int> connectedWithNonExitPath(int row, int col, int path);
-  vector<Direction::Directions> calcNextShortestStep(int row, int col, int lastRow, int lastCol);
+  vector<Direction::Directions> calcNextShortestStep(int row, int col);
   bool connectedWithSamePath(int newrow, int newcol, int row, int col, int path);
+  bool surroundedWithSamePath(int newrow, int newcol, int row, int col, int path);
+  bool connectedWithOtherPath(int newrow, int newcol, int row, int col, int path);
   void removeObstacleInShortestStep(int row, int col);
+  void walkBack(vector<Direction::Directions>& stepsMade, vector<int>& allNonExitPaths,  int &row, int &col, int path);
+  void resetPath(int row, int col, int path);
   int expandInRow(int row, Direction::Directions expandDirection);
   int expandInCol(int col, Direction::Directions expandDirection);
 
@@ -155,6 +160,8 @@ private:
   void setBlockedSides(vector<int> &blockedSides);
   int markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides);
   void placeRemainingInvisibleObstacles(int placedInvisibleObstacles, int possiblePlacements);
+
+  void putEmptyEntriesOnBoard();
 
   bool isInMap(int row, int col);
   bool rowIsInMap(int row);

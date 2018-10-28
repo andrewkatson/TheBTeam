@@ -5,6 +5,7 @@ BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
   this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,1,5)));
   this -> eventManager = eventManager;
   this -> newMap();
+  cout << "done with maps " << endl;
   this -> registerDelegates();
 }
 

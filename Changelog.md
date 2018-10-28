@@ -7,9 +7,13 @@
 - TowerInterface has a radius of attack for each tower[@andrewkatson][https://github.com/andrewkatson]
 - RangeTower has a rate of fire
 - UserInputManager handles mouse presses (left or right)
+- MapFactory will reset a path if it gets stuck (soft reset)
+- MapFactory will now reset the whole board and start over if a path cannot be restarted
+  successfully (hard reset)
 
 ###Fixed
 - EventType not saving the address passed as its type [@andrewkatson][https://github.com/andrewkatson]
+- MapFactory no longer crashes or fails to generate a board
 
 [0.0.3] - 2018 - 10 - 27
 
