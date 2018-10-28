@@ -2,6 +2,7 @@
 #define USERINPUTMANAGER_H
 #include "EventManager.hpp"
 #include "../include/Events/KeyPressEvent.hpp"
+#include "../include/Events/MousePressEvent.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <memory>
@@ -28,6 +29,8 @@ public:
   void processUserInput(sf::RenderWindow &game);
 
   void handleKeyPress(sf::Event &event);
+
+  void handleMousePress(sf::Event &event);
 
 };
 #endif

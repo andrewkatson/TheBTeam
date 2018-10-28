@@ -18,6 +18,9 @@ class MeleeUnit : public ActorInterface {
 
 protected:
 
+  //the money given to the player when he feeds this unit
+  int lunchMoney;
+
   //The unit's current hitpoints.
   int hitpoints;
 

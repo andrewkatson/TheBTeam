@@ -43,6 +43,7 @@ void EventManager::queueEvent(shared_ptr<EventInterface> event){
 void EventManager::registerEvent(const EventType &type){
   event_delegates newdelegateList;
   event_map::const_iterator it = EventDelegateMap.find(type);
+
   if(it == EventDelegateMap.end()){
     EventDelegateMap.insert({type, newdelegateList});
   }
@@ -88,7 +89,6 @@ void EventManager::triggerEvent(const EventInterface& event)
   //the delegate list above is an iterator used to identify if an event even exists
   //the one below is the vector of event delegates
   auto actualDelegateMap = EventDelegateMap.at(event.getEventType());
-
 
   for(auto itr = actualDelegateMap.begin(); itr != actualDelegateMap.end(); itr++){
     //we dereference twice because the first gets us out of the iterator

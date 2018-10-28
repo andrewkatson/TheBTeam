@@ -3,12 +3,17 @@
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
     <!--GameLogic Delegates-->
-    <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD1"> </string>
+    <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD_MP"> </string>
+    <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
     <!--UserView Delegates-->
-    <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD1"> </string>
+    <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
+    <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>
     <!--Board Manager Delegates-->
-    <string value="BOARDMANAGERHANDLETOWERCREATION" id="IDS_BMD1"> </string>
-    <string value="BOARDMANAGERHANDLETOWERREMOVE" id="IDS_BMD2"> </string>
+    <string value="BOARDMANAGERHANDLETOWERCREATION" id="IDS_BMD_TC"> </string>
+    <string value="BOARDMANAGERHANDLETOWERREMOVE" id="IDS_BMD_TR"> </string>
+    <!--Tower Manager Delegates-->
+    <string value="TOWERMANAGERHANDLETOWERCREATION" id="IDS_TMD_TC"> </string>
+    <string value="TOWERMANAGERHANDLETOWERREMOVE" id="IDS_TMD_TR"> </string>
     <!--TowerTypeIDS-->
     <!--CheesePizza-->
     <string value="CPT" id="IDS_CPT"> </string>

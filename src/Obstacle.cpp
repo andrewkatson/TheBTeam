@@ -2,3 +2,5 @@
 
 
 Obstacle::Obstacle(){}
+
+void Obstacle::upgrade(){}

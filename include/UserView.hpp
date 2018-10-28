@@ -44,6 +44,7 @@ public:
   void registerEvents();
 
   void handleKeyPress(const EventInterface& event);
+  void handleMousePress(const EventInterface& event);
 
   void updateUserView(float deltaS, sf::RenderWindow &game);
 

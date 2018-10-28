@@ -14,13 +14,14 @@ BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
  */
 void BoardManager::registerDelegates(){
   //bind our delegate function for tower creation events
-  EventManager::EventDelegate delegate = std::bind(&BoardManager::handleTowerCreation, this, _1);
+  EventManager::EventDelegate towerCreationEventDelegate = std::bind(&BoardManager::handleTowerCreation, this, _1);
 
   //make an event and get its type
-  TowerCreationEvent event = TowerCreationEvent();
-  EventType type = event.getEventType();
+  TowerCreationEvent towerCreationEvent = TowerCreationEvent();
+  EventType towerCreationEventType = towerCreationEvent.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(delegate, textLoader -> getString(string("IDS_BMD1")),type);
+  this -> eventManager -> registerDelegate(towerCreationEventDelegate,
+     textLoader -> getString(string("IDS_BMD_TC")),towerCreationEventType);
 }
 
 //genearte a new random map
@@ -56,9 +57,17 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
    */
   TowerCreationEventData* tcEventData = static_cast<TowerCreationEventData*>((tcEvent -> data).get());
 
-  cout << "ID " << tcEventData -> towerID << endl;
+  cout << "BLARGH" << tcEventData -> towerID << endl;
 
 }
+
+/*
+ * @return true if the selected grid has a tower or an obstacle
+ */
+bool BoardManager::isTowerOrObstacle(int row, int col){
+  return aboveFloorGrid.at(row).at(col) > 0 || aboveFloorGrid.at(row).at(col) < -1;
+}
+
 int BoardManager::getYDim(){
   return mapFactory -> getYDim();
 }

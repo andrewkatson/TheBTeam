@@ -1,21 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <constants>
+  <!--Player-->
+  <constant value="100" id ="IDS_P_HP"> </constant>
+  <constant value="100" id ="IDS_P_B"> </constant>
+
   <!--Total Number of Melee Units Per Tower-->
   <constant value="3" id="IDS_MT_MU"> </constant>
+
+  <!--Melee Towers -->
   <!--Normal Fry Tower-->
   <constant value="10" id ="IDS_NFT_RS"> </constant>
+  <constant value="5" id ="IDS_NFT_RA"> </constant>
+  <constant value="5" id ="IDS_NFT_PR"> </constant>
   <!--Crinkle Fry Tower-->
   <constant value="15" id ="IDS_CFT_RS"> </constant>
+  <constant value="10" id ="IDS_CFT_RA"> </constant>
+  <constant value="10" id ="IDS_CFT_PR"> </constant>
   <!--Spicy Fry Tower-->
   <constant value="5" id ="IDS_SFT_RS"> </constant>
+  <constant value="30" id ="IDS_SFT_RA"> </constant>
+  <constant value="15" id ="IDS_SFT_PR"> </constant>
   <!--Waffle Fry Tower-->
   <constant value="30" id ="IDS_WFT_RS"> </constant>
+  <constant value="15" id ="IDS_WFT_RA"> </constant>
+  <constant value="15" id ="IDS_WFT_PR"> </constant>
 
 
+  <!--Range Towers -->
+  <!--CheesePizza Tower-->
+  <constant value="5" id ="IDS_CPT_ROF"> </constant>
+  <constant value="10" id ="IDS_CPT_RA"> </constant>
+  <constant value="5" id ="IDS_CPT_PR"> </constant>
+  <!--PepperoniPizza Tower-->
+  <constant value="7" id ="IDS_PPT_ROF"> </constant>
+  <constant value="12" id ="IDS_PPT_RA"> </constant>
+  <constant value="10" id ="IDS_PPT_PR"> </constant>
+  <!--DeepDish Tower-->
+  <constant value="3" id ="IDS_DDT_ROF"> </constant>
+  <constant value="20" id ="IDS_DDT_RA"> </constant>
+  <constant value="15" id ="IDS_DDT_PR"> </constant>
+  <!--MeatLovers Tower-->
+  <constant value="10" id ="IDS_MLT_ROF"> </constant>
+  <constant value="12" id ="IDS_MLT_RA"> </constant>
+  <constant value="15" id ="IDS_MLT_PR"> </constant>
+  <!--MiniM&Ms Tower-->
+  <constant value="100" id ="IDS_MMMT_ROF"> </constant>
+  <constant value="1" id ="IDS_MMMT_RA"> </constant>
+  <constant value="5" id ="IDS_MMMT_PR"> </constant>
+  <!--Normal M&Ms Tower-->
+  <constant value="120" id ="IDS_NMMT_ROF"> </constant>
+  <constant value="3" id ="IDS_NMMT_RA"> </constant>
+  <constant value="10" id ="IDS_NMMT_PR"> </constant>
+  <!--PeanutButter M&Ms Tower-->
+  <constant value="150" id ="IDS_PBMMT_ROF"> </constant>
+  <constant value="4" id ="IDS_PBMMT_RA"> </constant>
+  <constant value="15" id ="IDS_PBMMT_PR"> </constant>
+  <!--Peanut M&Ms Tower-->
+  <constant value="70" id ="IDS_PMMT_ROF"> </constant>
+  <constant value="6" id ="IDS_PMMT_RA"> </constant>
+  <constant value="15" id ="IDS_PMMT_PR"> </constant>
+  <!--Soda Tower-->
+  <constant value="8" id ="IDS_SOT_ROF"> </constant>
+  <constant value="6" id ="IDS_SOT_RA"> </constant>
+  <constant value="5" id ="IDS_SOT_PR"> </constant>
+  <!--EnergyDrink Tower-->
+  <constant value="12" id ="IDS_EDT_ROF"> </constant>
+  <constant value="8" id ="IDS_EDT_RA"> </constant>
+  <constant value="10" id ="IDS_EDT_PR"> </constant>
+  <!--Gravy Tower-->
+  <constant value="3" id ="IDS_GT_ROF"> </constant>
+  <constant value="10" id ="IDS_GT_RA"> </constant>
+  <constant value="15" id ="IDS_GT_PR"> </constant>
+  <!-- Slushie Tower-->
+  <constant value="16" id ="IDS_SLT_ROF"> </constant>
+  <constant value="15" id ="IDS_SLT_RA"> </constant>
+  <constant value="15" id ="IDS_SLT_PR"> </constant>
 
 
+  <!-- Obstacles -->
+  <!--Cafeteria Table-->
+  <constant value="100" id ="IDS_CT_PR"> </constant>
+  <!--TrashCan-->
+  <constant value="20" id ="IDS_TC_PR"> </constant>
 
 
+  <!--Enemy Units -->
   <!--Average Kid Unit-->
   <constant value="200" id="IDS_AK_HP"> </constant>
   <constant value="60" id="IDS_AK_DM"> </constant>
@@ -23,6 +92,7 @@
   <constant value="7" id="IDS_AK_SP"> </constant>
   <constant value="2" id="IDS_AK_AP"> </constant>
   <constant value="5" id="IDS_AK_AR"> </constant>
+  <constant value="5" id ="IDS_AK_LM"> </constant>
   <!--Fat Kid Unit-->
   <constant value="300" id="IDS_FK_HP"> </constant>
   <constant value="100" id="IDS_FK_DM"> </constant>
@@ -30,6 +100,7 @@
   <constant value="2" id="IDS_FK_SP"> </constant>
   <constant value="10" id="IDS_FK_AP"> </constant>
   <constant value="10" id="IDS_FK_AR"> </constant>
+  <constant value="20" id ="IDS_FK_LM"> </constant>
   <!--Skinny Kid Unit-->
   <constant value="100" id="IDS_SK_HP"> </constant>
   <constant value="20" id="IDS_SK_DM"> </constant>
@@ -37,6 +108,10 @@
   <constant value="20" id="IDS_SK_SP"> </constant>
   <constant value="0" id="IDS_SK_AP"> </constant>
   <constant value="1" id="IDS_SK_AR"> </constant>
+  <constant value="1" id ="IDS_SK_LM"> </constant>
+
+
+  <!--Allied Units -->
   <!--Normal Fry Unit-->
   <constant value="10" id="IDS_NF_HP"> </constant>
   <constant value="5" id="IDS_NF_DM"> </constant>
@@ -44,6 +119,7 @@
   <constant value="10" id="IDS_NF_SP"> </constant>
   <constant value="0" id="IDS_NF_AP"> </constant>
   <constant value="1" id="IDS_NF_AR"> </constant>
+  <constant value="0" id ="IDS_NF_LM"> </constant>
   <!--Crinkle Fry Unit-->
   <constant value="20" id="IDS_CF_HP"> </constant>
   <constant value="10" id="IDS_CF_DM"> </constant>
@@ -51,6 +127,7 @@
   <constant value="9" id="IDS_CF_SP"> </constant>
   <constant value="0" id="IDS_CF_AP"> </constant>
   <constant value="2" id="IDS_NF_AR"> </constant>
+  <constant value="0" id ="IDS_CF_LM"> </constant>
   <!--Waffle Fry Unit-->
   <constant value="40" id="IDS_WF_HP"> </constant>
   <constant value="20" id="IDS_WF_DM"> </constant>
@@ -58,6 +135,7 @@
   <constant value="5" id="IDS_WF_SP"> </constant>
   <constant value="5" id="IDS_WF_AP"> </constant>
   <constant value="10" id="IDS_WF_AR"> </constant>
+  <constant value="0" id ="IDS_WF_LM"> </constant>
   <!--Spicy Fry Unit-->
   <constant value="60" id="IDS_SF_HP"> </constant>
   <constant value="15" id="IDS_SF_DM"> </constant>
@@ -65,12 +143,13 @@
   <constant value="20" id="IDS_SF_SP"> </constant>
   <constant value="1" id="IDS_SF_AP"> </constant>
   <constant value="5" id="IDS_SF_AR"> </constant>
+  <constant value="0" id ="IDS_SF_LM"> </constant>
 
 
 
 
 
-
+  <!--Projectiles -->
   <!--NOTE:FOR ALL PROJECTILES AR IS AREA OF EFFECT-->
   <!--CheesePizza Projectile-->
   <constant value="0" id="IDS_CP_HP"> </constant>

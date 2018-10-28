@@ -3,6 +3,9 @@
 PeanutMMS::PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_PMMT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_PMMT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_PMMT_PR"));
 }
 
 void PeanutMMS::upgrade(){}
@@ -10,18 +13,18 @@ void PeanutMMS::upgrade(){}
 void PeanutMMS::setProjectile(){
   //constants for the PeanutMMS
   //health
-  int peanutButterMMSHP = textLoader -> getConstant(string("IDS_PBMM_HP"));
+  int peanutMMSHP = textLoader -> getConstant(string("IDS_PMM_HP"));
   //damage
-  int peanutButterMMSDM = textLoader -> getConstant(string("IDS_PBMM_DM"));
+  int peanutMMSDM = textLoader -> getConstant(string("IDS_PMM_DM"));
   //armor
-  int peanutButterMMSAM = textLoader -> getConstant(string("IDS_PBMM_AM"));
+  int peanutMMSAM = textLoader -> getConstant(string("IDS_PMM_AM"));
   //speed
-  int peanutButterMMSSP = textLoader -> getConstant(string("IDS_PBMM_SP"));
+  int peanutMMSSP = textLoader -> getConstant(string("IDS_PMM_SP"));
   //armor penetration
-  int peanutButterMMSAP = textLoader -> getConstant(string("IDS_PBMM_AP"));
+  int peanutMMSAP = textLoader -> getConstant(string("IDS_PMM_AP"));
   //area of effect
-  int peanutButterMMSAR = textLoader -> getConstant(string("IDS_PBMM_AR"));
+  int peanutMMSAR = textLoader -> getConstant(string("IDS_PMM_AR"));
 
   this-> currentProjectile = make_shared<PeanutMMSProjectile>(PeanutMMSProjectile(
-    peanutButterMMSHP, peanutButterMMSDM, peanutButterMMSAM, peanutButterMMSSP, peanutButterMMSAP, peanutButterMMSAR));
+    peanutMMSHP, peanutMMSDM, peanutMMSAM, peanutMMSSP, peanutMMSAP, peanutMMSAR));
 }

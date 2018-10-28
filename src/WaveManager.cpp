@@ -29,6 +29,8 @@ void WaveManager::setUpPossibleEnemies(){
   int skinnyKidAP = textLoader -> getConstant(string("IDS_SK_AP"));
   //attack radius
   int skinnyKidAR = textLoader -> getConstant(string("IDS_SK_AR"));
+  //lunch money
+  int skinnyKidLM = textLoader -> getConstant(string("IDS_SK_LM"));
 
   //constants for the average kid
   int averageKidHP = textLoader -> getConstant(string("IDS_AK_HP"));
@@ -37,6 +39,7 @@ void WaveManager::setUpPossibleEnemies(){
   int averageKidSP = textLoader -> getConstant(string("IDS_AK_SP"));
   int averageKidAP = textLoader -> getConstant(string("IDS_AK_AP"));
   int averageKidAR = textLoader -> getConstant(string("IDS_AK_AR"));
+  int averageKidLM = textLoader -> getConstant(string("IDS_AK_LM"));
 
   //constants for the fat kid
   int fatKidHP = textLoader -> getConstant(string("IDS_FK_HP"));
@@ -45,10 +48,16 @@ void WaveManager::setUpPossibleEnemies(){
   int fatKidSP = textLoader -> getConstant(string("IDS_FK_SP"));
   int fatKidAP = textLoader -> getConstant(string("IDS_FK_AP"));
   int fatKidAR = textLoader -> getConstant(string("IDS_FK_AR"));
+  int fatKidLM = textLoader -> getConstant(string("IDS_FK_LM"));
 
-  shared_ptr<ActorInterface> skinnyKid = make_shared<SkinnyKidUnit>(SkinnyKidUnit(skinnyKidHP, skinnyKidDM, skinnyKidAM, skinnyKidSP, skinnyKidAP, skinnyKidAR));
-  shared_ptr<ActorInterface> averageKid = make_shared<AverageKidUnit>(AverageKidUnit(averageKidHP, averageKidDM, averageKidAM, averageKidSP, averageKidAP, averageKidAR));
-  shared_ptr<ActorInterface> fatKid = make_shared<FatKidUnit>(FatKidUnit(fatKidHP, fatKidDM, fatKidAM, fatKidSP, fatKidAP, fatKidAR));
+  shared_ptr<ActorInterface> skinnyKid = make_shared<SkinnyKidUnit>(SkinnyKidUnit(
+    skinnyKidHP, skinnyKidDM, skinnyKidAM, skinnyKidSP, skinnyKidAP, skinnyKidAR, skinnyKidLM));
+
+  shared_ptr<ActorInterface> averageKid = make_shared<AverageKidUnit>(AverageKidUnit(
+    averageKidHP, averageKidDM, averageKidAM, averageKidSP, averageKidAP, averageKidAR, averageKidLM));
+
+  shared_ptr<ActorInterface> fatKid = make_shared<FatKidUnit>(FatKidUnit(
+    fatKidHP, fatKidDM, fatKidAM, fatKidSP, fatKidAP, fatKidAR, fatKidLM));
 
   enemies.push_back(skinnyKid);
   enemies.push_back(averageKid);

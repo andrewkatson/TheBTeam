@@ -41,14 +41,23 @@ UserView::~UserView(){
  * with any events it needs to know about
  */
 void UserView::registerDelegates(){
-  //bind our delegatefunction for key presses
-  std::function<void(const EventInterface&)> delegate = std::bind(&UserView::handleKeyPress, this, _1);
+  //bind our delegate function for key presses
+  EventManager::EventDelegate keyPressDelegate = std::bind(&UserView::handleKeyPress, this, _1);
 
   //make an event and get its type
-  KeyPressEvent event = KeyPressEvent();
-  EventType type = event.getEventType();
+  KeyPressEvent keyPressEvent = KeyPressEvent();
+  EventType keyPressEventType = keyPressEvent.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(delegate,  textLoader -> getString(string("IDS_UVD1")),type);
+  this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_UVD_KP")),keyPressEventType);
+
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate mousePressDelegate = std::bind(&UserView::handleMousePress, this, _1);
+
+  //make an event and get its type
+  MousePressEvent mousePressEvent = MousePressEvent();
+  EventType mousePressEventType = mousePressEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_UVD_MP")),mousePressEventType);
 }
 
 //TODO MOVE TO GAMESCREEN WHEN IT IS MADE
@@ -89,6 +98,30 @@ void UserView::handleKeyPress(const EventInterface& event){
   else if(key == "Q"){
     shutDown();
   }
+}
+
+/*
+ * Handle any mouse press from the user
+ * @param event: event of the mouse press
+ */
+void UserView::handleMousePress(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * MousePressEvent type which allows us to access variables and methods
+   * specific to MousePressEvent
+   */
+  const MousePressEvent* mpEvent = static_cast<const MousePressEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a KeyPressEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
+  //get the xposition
+  float xPos = mpEventData -> x;
+  //get the y position
+  float yPos = mpEventData -> y;
+
 }
 
 

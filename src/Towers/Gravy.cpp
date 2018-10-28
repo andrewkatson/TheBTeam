@@ -3,6 +3,9 @@
 Gravy::Gravy(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_GT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_GT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_GT_PR"));
 }
 
 void Gravy::upgrade(){}

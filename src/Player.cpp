@@ -8,11 +8,12 @@
 
 #include "Player.hpp"
 
-Player::Player(shared_ptr<EventManager> eventManager)
+Player::Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader)
 {
-  balance=100;
-  hitpoints=100;
+  balance=textLoader -> getConstant(string("IDS_P_HP"));
+  hitpoints=textLoader -> getConstant(string("IDS_P_B"));
   this -> eventManager = eventManager;
+  this -> textLoader = textLoader;
 }
 
 void Player::delegateMethod(const EventInterface& event){}

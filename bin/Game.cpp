@@ -14,7 +14,8 @@ int main(){
   sf::Clock gameClock;
 
   // create main window
-  sf::RenderWindow game(sf::VideoMode(800,600,32), foodFight -> textLoader -> getString("IDS_GAMETITLE"), sf::Style::Close);
+  sf::RenderWindow game(sf::VideoMode(800,600,32),
+    foodFight -> textLoader -> getString("IDS_GAMETITLE"), sf::Style::Close);
 
   foodFight -> initGame(game);
 
@@ -52,7 +53,7 @@ void Game::initGame(sf::RenderWindow  &game){
 
 
   //initialize the Game Logic
-  this -> gameLogic = make_shared<GameLogic>(GameLogic(textLoader));
+  this -> gameLogic = make_shared<GameLogic>(GameLogic(textLoader, windowXSize, windowYSize));
   //get the event manager from the game logic so it can be passed to the user View
   //and comp view
   shared_ptr<EventManager> eventManager = this -> gameLogic -> getEventManager();

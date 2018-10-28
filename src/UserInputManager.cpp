@@ -14,9 +14,14 @@ UserInputManager::UserInputManager(shared_ptr<EventManager> eventManager){
  */
  void UserInputManager::registerEvents(){
    //make a generic key press event, get its type, and register it
-   KeyPressEvent event = KeyPressEvent();
-   EventType type = event.getEventType();
-   this -> eventManager -> registerEvent(type);
+   KeyPressEvent keyPressEvent = KeyPressEvent();
+   EventType keyPressEventType = keyPressEvent.getEventType();
+
+   this -> eventManager -> registerEvent(keyPressEventType);
+   //make a generic mouse press event, get its type, and register it
+   MousePressEvent mousePressEvent = MousePressEvent();
+   EventType mousePressEventType = mousePressEvent.getEventType();
+   this -> eventManager -> registerEvent(mousePressEventType);
  }
 
 /*
@@ -32,6 +37,7 @@ void UserInputManager::delegateMethod(const EventInterface& event){
  * @param game: the game window
  */
 void UserInputManager::processUserInput(sf::RenderWindow &game){
+
   // process events
   sf::Event Event;
   while(game.pollEvent(Event))
@@ -65,10 +71,13 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
       shared_ptr<EventInterface> closeKey = make_shared<KeyPressEvent>(KeyPressEvent(string("CLOSE"), nowInNano));
 
       this -> eventManager -> queueEvent(closeKey);
-      
+
     }
    else if(Event.type == sf::Event::KeyPressed){
      handleKeyPress(Event);
+   }
+   else if(Event.type == sf::Event::MouseButtonPressed){
+     handleMousePress(Event);
    }
  }
 }
@@ -86,5 +95,32 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
      shared_ptr<EventInterface> qKey = make_shared<KeyPressEvent>(KeyPressEvent(string("Q"), nowInNano));
 
      this -> eventManager -> queueEvent(qKey);
+   }
+ }
+
+ /*
+  * Handle a mouse press by the user and make a game event
+  * @param event: the sfml event indicating the mouse was pressed
+  */
+ void UserInputManager::handleMousePress(sf::Event &event){
+   //the time object of the class
+   auto now = high_resolution_clock::now();
+   //the actual count in nanoseconds for the time
+   auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+   //x coordinate of the mouse
+   float mouseX = event.mouseButton.x;
+   //y coordinate of the mouse
+   float mouseY = event.mouseButton.y;
+
+   //Handle left mouse button
+   if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+     shared_ptr<EventInterface> leftMouse = make_shared<MousePressEvent>(MousePressEvent(string("Left"), mouseX, mouseY, nowInNano));
+
+     this -> eventManager -> queueEvent(leftMouse);
+   }
+   else if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+     shared_ptr<EventInterface> rightMouse = make_shared<MousePressEvent>(MousePressEvent(string("Right"), mouseX, mouseY, nowInNano));
+
+     this -> eventManager -> queueEvent(rightMouse);
    }
  }

@@ -22,6 +22,8 @@ shared_ptr<RangeTower> currentTower;
 shared_ptr<Projectile> currentProjectile;
 //Store the textLoader to make requests for strings and constants
 shared_ptr<TextLoader> textLoader;
+//the rate that this tower can fire projectiles at
+int rateOfFire;
 public:
   RangeTower();
   RangeTower(shared_ptr<RangeTower> startingTower);
@@ -30,9 +32,14 @@ public:
 
   /*
    * set the currentProjectile to be the projectile object of the type of the tower
-   * this projectile will be fired from 
+   * this projectile will be fired from
    */
   virtual void setProjectile();
+
+  /*
+   * @return the price of the tower
+   */
+  int getPrice();
 
 };
 

@@ -3,6 +3,9 @@
 NormalMMS::NormalMMS(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_NMMT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_NMMT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_NMMT_PR"));
 }
 
 void NormalMMS::upgrade(){}

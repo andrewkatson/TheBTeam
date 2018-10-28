@@ -1,5 +1,15 @@
 [Unreleased]
 
+###Added
+- MousePressEvent, MousePressEventData to regsiter mouse presses [@andrewkatson][https://github.com/andrewkatson]
+
+###Changed
+- TowerInterface has a radius of attack for each tower[@andrewkatson][https://github.com/andrewkatson]
+- RangeTower has a rate of fire
+- UserInputManager handles mouse presses (left or right)
+
+###Fixed
+- EventType not saving the address passed as its type [@andrewkatson][https://github.com/andrewkatson]
 
 [0.0.3] - 2018 - 10 - 27
 
@@ -34,6 +44,9 @@
 - All RangeTower types now are initialized with their own projectiles
 - Projectile class holds an id for every projectile and a vector describing its direction
  [@jeremyelkayam][https://github.com/jeremyelkayam]
+
+###Fixed
+- MapFactory no longer endlessely loops when it gets stuck. (removes a wall)
 
 
 [0.0.2] - 2018 - 10 - 24

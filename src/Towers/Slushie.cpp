@@ -3,6 +3,9 @@
 Slushie::Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_SLT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_SLT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_SLT_PR"));
 }
 
 void Slushie::upgrade(){}

@@ -1,5 +1,9 @@
 #include "EventType.hpp"
 
-EventType::EventType(const EventType *eventType){
-  
+EventType::EventType(){
+  cout << "what" << endl;
+}
+
+EventType::EventType(const EventType* eventType){
+  this -> type = (long) addressof(*eventType);
 }

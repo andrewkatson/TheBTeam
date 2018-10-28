@@ -12,7 +12,6 @@
  * constructor used just for registering
  */
 KeyPressEvent::KeyPressEvent(){
-
 }
 
 /*

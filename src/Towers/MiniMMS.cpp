@@ -2,6 +2,9 @@
 MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower() {
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_MMMT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_MMMT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_MMMT_PR"));
 }
 
 void MiniMMS::upgrade(){}

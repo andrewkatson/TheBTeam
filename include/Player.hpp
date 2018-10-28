@@ -9,6 +9,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "EventManager.hpp"
+#include "TextLoader.hpp"
 #include <memory>
 
 using std::shared_ptr;
@@ -23,6 +24,9 @@ private:
    */
   int balance,hitpoints;
 
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
+
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
 
@@ -32,7 +36,7 @@ public:
     Initialize the player class. Sets balance and hitpoints to their default
     values.
    */
-  Player(shared_ptr<EventManager> eventManager);
+  Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
   void delegateMethod(const EventInterface& event);
 

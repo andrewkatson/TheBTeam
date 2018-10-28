@@ -4,6 +4,8 @@ WaffleFry::WaffleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int 
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;
   this -> respawnSpeed = textLoader -> getConstant(string("IDS_WFT_RS"));
+  this -> radius = textLoader -> getConstant(string("IDS_WFT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_WFT_PR"));
   this -> towerTypeID = towerTypeID;
   this -> setUpUnits();
 }
@@ -27,10 +29,13 @@ void WaffleFry::setUpUnits(){
   int waffleFryAP = textLoader -> getConstant(string("IDS_WF_AP"));
   //attack radius
   int waffleFryAR = textLoader -> getConstant(string("IDS_WF_AR"));
+  //lunch money
+  int waffleFryLM = textLoader -> getConstant(string("IDS_WF_LM"));
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
-    shared_ptr<MeleeUnit> unitToAdd = make_shared<WaffleFryUnit>(WaffleFryUnit(waffleFryHP, waffleFryDM, waffleFryAM, waffleFrySP, waffleFryAP, waffleFryAR));
+    shared_ptr<MeleeUnit> unitToAdd = make_shared<WaffleFryUnit>(WaffleFryUnit(
+      waffleFryHP, waffleFryDM, waffleFryAM, waffleFrySP, waffleFryAP, waffleFryAR, waffleFryLM));
     currentUnits.push_back(unitToAdd);
   }
 }

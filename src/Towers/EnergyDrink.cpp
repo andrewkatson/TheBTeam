@@ -3,6 +3,9 @@
 EnergyDrink::EnergyDrink(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower() {
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_EDT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_EDT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_EDT_PR"));
 }
 
 void EnergyDrink::upgrade(){}

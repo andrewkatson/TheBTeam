@@ -18,10 +18,15 @@
 #include "ProjectileManager.hpp"
 #include "EventManager.hpp"
 #include "../include/Events/KeyPressEvent.hpp"
+#include "../include/Events/MousePressEvent.hpp"
 #include "EventType.hpp"
 
 class GameLogic{
 private:
+  //x dimension of the render window
+  int windowX;
+  //y dimension of the render window
+  int windowY;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //Store the game's instance of the BoardManager class that the game logic
@@ -50,11 +55,12 @@ public:
   /*
     Constructor. Initialize game, setting up instance variables.
    */
-  GameLogic(shared_ptr<TextLoader> textLoader);
+  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY);
 
   void registerDelegates();
 
   void handleKeyPress(const EventInterface& event);
+  void handleMousePress(const EventInterface& event);
 
   /*
     Called once every game loop. Updates the game's happenings according to the
@@ -66,6 +72,10 @@ public:
   void updateGameLogic(float deltaS);
 
   shared_ptr<EventManager> getEventManager();
+
+  bool canBuy(int row, int col);
+
+  int getTowerPrice(int row, int col);
 
   void shutDown();
 };

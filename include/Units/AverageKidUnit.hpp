@@ -9,7 +9,7 @@
 
 class AverageKidUnit : public MeleeUnit {
 public:
-  AverageKidUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration, int attackRadius);
+  AverageKidUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration, int attackRadius, int lunchMoney);
 };
 
 

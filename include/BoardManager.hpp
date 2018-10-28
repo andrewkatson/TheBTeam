@@ -42,6 +42,8 @@ public:
 
   void handleTowerCreation(const EventInterface& event);
 
+  bool isTowerOrObstacle(int row, int col);
+
   int getYDim();
   int getXDim();
 

@@ -62,6 +62,8 @@ int yDim;
 public:
   TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, int yDim ,int xDim);
 
+  int getTowerPrice(int row, int col);
+
   vector<shared_ptr<TowerInterface>>& getTowersToChoose();
 
   unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();

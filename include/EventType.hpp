@@ -6,13 +6,14 @@
 
 using std::cout;
 using std::endl;
-
+using std::string;
 using std::addressof;
 class EventType{
 public:
-  int type;
+  long type;
 
-  EventType(const EventType *eventType);
+  EventType();
+  EventType(const EventType* eventType);
 
   friend bool operator==(const EventType& a, const EventType& t) {
     return a.type == t.type;
@@ -34,7 +35,7 @@ template <> struct hash<EventType>
     // second and third and combine them using XOR
     // and bit shifting:
 
-    return ((hash<int>()(k.type)));
+    return ((hash<long>()(k.type)));
   }
 };
 }

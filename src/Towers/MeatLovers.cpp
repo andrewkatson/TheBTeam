@@ -2,6 +2,9 @@
 MeatLovers::MeatLovers(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_MLT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_MLT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_MLT_PR"));
 }
 
 void MeatLovers::upgrade(){}

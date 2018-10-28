@@ -3,6 +3,9 @@
 Soda::Soda(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
+  this -> rateOfFire = textLoader -> getConstant(string("IDS_SOT_ROF"));
+  this -> radius = textLoader -> getConstant(string("IDS_SOT_RA"));
+  this -> price = textLoader -> getConstant(string("IDS_SOT_PR"));
 }
 
 void Soda::upgrade(){}

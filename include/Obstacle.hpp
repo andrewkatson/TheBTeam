@@ -8,8 +8,11 @@
 
  #ifndef OBSTACLE_H
  #define OBSTACLE_H
-class Obstacle{
+ #include "TowerInterface.hpp"
+class Obstacle : public TowerInterface{
 public:
   Obstacle();
+
+  void upgrade();
 };
  #endif

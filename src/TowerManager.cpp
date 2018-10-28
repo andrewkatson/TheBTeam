@@ -153,6 +153,13 @@ void TowerManager::populateTowerUpgradesLvl2(int maxMeleeUnits){
   possibleUpgrades.insert({normalMMSID, normalMMSUpgrades});
 }
 
+/*
+ * @return the price of the tower at the row and col
+ */
+int TowerManager::getTowerPrice(int row, int col){
+  return getTowerPlaced(row, col) -> getPrice();
+}
+
 
 /*
  * @return vector<TowerInterface>: all the towers the player can choose from
@@ -195,7 +202,7 @@ void TowerManager::addTower(int type, int combinedRowCol){
 /*
  * @param type: the index in the vector of tower types that
  * @param row: the posiition on the grid in the row
- * @param col: the position on the grid in the col 
+ * @param col: the position on the grid in the col
  */
 void TowerManager::addTower(int type, int row, int col){
 
