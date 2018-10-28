@@ -570,117 +570,21 @@ void MapFactory::placeEntry(Direction::Directions &entrySide, int entryIndexOnSi
  */
 void MapFactory::setUnavailableSpotsFromEntry(int entryXPos, int entryYPos){
   this -> unavailableSpots.at(entryYPos).at(entryXPos) = 0;
-  //left side
-  if (entryXPos == 0){
-    this -> setUnavailableSpotsFromLeftEntry(entryXPos, entryYPos);
-  }
-  //right side
-  else if(entryXPos == xDim -1){
-    this -> setUnavailableSpotsFromRightEntry(entryXPos, entryYPos);
-  }
-  //Top side
-  else if(entryYPos == 0){
-    this -> setUnavailableSpotsFromTopEntry(entryXPos, entryYPos);
-  }
-  //Bottom side
-  else{
-    this -> setUnavailableSpotsFromBottomEntry(entryXPos, entryYPos);
-  }
-}
+  int distanceForEntry = distances.at(entryYPos).at(entryXPos);
 
-/*
- * mark indicies as unavaiable for an entry given the entry position is on the left side
- * @param entryXPos: the column index of the entry
- * @param entryYPos: the row index of the entry
- */
-void MapFactory::setUnavailableSpotsFromLeftEntry(int entryXPos, int entryYPos){
-  //we want to set the value above this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a column over
-  if(entryYPos - 1 >= 0){
-    unavailableSpots.at(entryYPos - 1).at(entryXPos) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos).at(entryXPos + 1) = 0;
-  }
-  //we want to set the value below this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a column over
-  if(entryYPos + 1 < yDim ){
-    unavailableSpots.at(entryYPos + 1).at(entryXPos) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos).at(entryXPos + 1) = 0;
-  }
-}
-
-/*
- * mark indicies as unavaiable for an entry given the entry position is on the right side
- * @param entryXPos: the column index of the entry
- * @param entryYPos: the row index of the entry
- */
-void MapFactory::setUnavailableSpotsFromRightEntry(int entryXPos, int entryYPos){
-  //we want to set the value above this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a column back
-  if(entryYPos - 1 >= 0){
-    unavailableSpots.at(entryYPos - 1).at(entryXPos) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos).at(entryXPos - 1) = 0;
-  }
-  //we want to set the value below this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a column back
-  if(entryYPos + 1 < yDim){
-    unavailableSpots.at(entryYPos + 1).at(entryXPos) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos).at(entryXPos - 1) = 0;
-  }
-}
-
-/*
- * mark indicies as unavaiable for an entry given the entry position is on the Top side
- * @param entryXPos: the column index of the entry
- * @param entryYPos: the row index of the entry
- */
-void MapFactory::setUnavailableSpotsFromTopEntry(int entryXPos, int entryYPos){
-  //we want to set the value to the left of this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a row down
-  if(entryXPos - 1 >= 0){
-    unavailableSpots.at(entryYPos).at(entryXPos - 1) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos - 1).at(entryXPos) = 0;
-  }
-  //we want to set the value below this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a row down
-  if(entryXPos + 1 < xDim){
-    unavailableSpots.at(entryYPos).at(entryXPos + 1) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos - 1).at(entryXPos) = 0;
-  }
-}
-
-/*
- * mark indicies as unavaiable for an entry given the entry position is on the Bottom side
- * @param entryXPos: the column index of the entry
- * @param entryYPos: the row index of the entry
- */
-void MapFactory::setUnavailableSpotsFromBottomEntry(int entryXPos, int entryYPos){
-  //we want to set the value to the left of this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a row up
-  if(entryXPos - 1 >= 0){
-    unavailableSpots.at(entryYPos).at(entryXPos - 1) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos + 1).at(entryXPos) = 0;
-  }
-  //we want to set the value below this space to indicate it cannot be used
-  //however if it cannot be we set the space touching this one a row up
-  if(entryXPos + 1 < xDim){
-    unavailableSpots.at(entryYPos).at(entryXPos + 1) = 0;
-  }
-  else{
-    unavailableSpots.at(entryYPos + 1).at(entryXPos) = 0;
+  //loop over up to two rows above the entry and
+  //the two rows below the entry to mark off any spots as unavaiable for placement
+  for(int row = entryYPos - 2; row < entryYPos + 2; row++){
+    for(int col = entryXPos - 2; col < entryYPos + 2; col++){
+      //if the position we are checking is within bounds
+      if(row >= 0 && row < yDim && col >= 0 && col < xDim){
+        int currDistance = distances.at(row).at(col);
+        int difference = abs(distanceForEntry - currDistance);
+        if(difference < 2){
+          unavailableSpots.at(row).at(col) = 0;
+        }
+      }
+    }
   }
 }
 
