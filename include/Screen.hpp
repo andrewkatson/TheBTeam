@@ -21,5 +21,5 @@ public:
   void moveDown();
   void delegateEvents();
   void draw(sf::RenderWindow &window);
-  int getSelectedItem() {return selectedItem:}
+  int getSelectedItem() {return selectedItem;}
 };

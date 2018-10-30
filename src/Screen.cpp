@@ -87,6 +87,6 @@ void Screen::MoveDown()
 		menu[selectedItem].setColor(sf::Color::White);
 		selectedItemIndex++;
 		menu[selectedItem].setColor(sf::Color::Red);
-}
+  }
 
 }
