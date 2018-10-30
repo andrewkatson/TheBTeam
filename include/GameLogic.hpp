@@ -57,6 +57,7 @@ public:
    */
   GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY);
 
+  void registerEvents();
   void registerDelegates();
 
   void handleKeyPress(const EventInterface& event);

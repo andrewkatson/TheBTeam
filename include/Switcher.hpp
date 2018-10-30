@@ -10,4 +10,4 @@ class Switcher{
 private:
   int id;
   std::vector<int> v;
-}
+};

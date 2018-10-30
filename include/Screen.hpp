@@ -13,13 +13,9 @@ class Screen{
 private:
   int windowX;
   int windowY;
-  int numItems;
-  int selectedItem;
 public:
-  Screen(int windowX, int windowY, int numItems);
-  void moveUp();
-  void moveDown();
-  void delegateEvents();
-  void draw(sf::RenderWindow &window);
-  int getSelectedItem() {return selectedItem:}
+  Screen();
+
+  virtual void draw(sf::RenderWindow &window)=0;
+
 };

@@ -2,6 +2,7 @@
 
 ###Added
 - MousePressEvent, MousePressEventData to regsiter mouse presses [@andrewkatson][https://github.com/andrewkatson]
+- MainMenuScreen, PlayingScreen, RestartScreen, OptionsMenuScreen, and RestartScreen
 
 ###Changed
 - TowerInterface has a radius of attack for each tower[@andrewkatson][https://github.com/andrewkatson]
@@ -17,7 +18,7 @@
 - EventType not saving the address passed as its type [@andrewkatson][https://github.com/andrewkatson]
 - MapFactory no longer crashes or fails to generate a board
 - Random seg fault with event manager is avoided by remaking the game logic in the event
-  we get one. seg fault seemed to be caused by sfml 
+  we get one. seg fault seemed to be caused by sfml
 
 ###Known Issues
 - Segfault occurs randomly after board creation. It is unknown what causes this.
