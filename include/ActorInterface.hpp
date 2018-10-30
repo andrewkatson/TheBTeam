@@ -38,6 +38,12 @@ protected:
   //The rectangle corresponding to the object's dimensions.
   sf::FloatRect collisionBox;
 
+  //The coordinates of the actor.
+  double x,y;
+
+  //Row and column of the actor on the world grid.
+  int row,col;
+
 public:
 
   /*
@@ -75,6 +81,7 @@ public:
             false otherwise.
    */
   bool isCollision(sf::FloatRect colliding_with);
+
 
 };
 

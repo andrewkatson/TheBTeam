@@ -39,3 +39,39 @@ void MeleeUnit::move(float deltaS=0){
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){
 
 }
+
+int MeleeUnit::getLunchMoney() const {
+  return lunchMoney;
+}
+
+void MeleeUnit::setLunchMoney(int lunchMoney) {
+  MeleeUnit::lunchMoney = lunchMoney;
+}
+
+void MeleeUnit::setHitpoints(int hitpoints) {
+  MeleeUnit::hitpoints = hitpoints;
+}
+
+int MeleeUnit::getDamage() const {
+  return damage;
+}
+
+void MeleeUnit::setDamage(int damage) {
+  MeleeUnit::damage = damage;
+}
+
+int MeleeUnit::getArmor() const {
+  return armor;
+}
+
+void MeleeUnit::setArmor(int armor) {
+  MeleeUnit::armor = armor;
+}
+
+int MeleeUnit::getAttackRadius() const {
+  return attackRadius;
+}
+
+void MeleeUnit::setAttackRadius(int attackRadius) {
+  MeleeUnit::attackRadius = attackRadius;
+}

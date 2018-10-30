@@ -18,7 +18,7 @@ class MeleeUnit : public ActorInterface {
 
 protected:
 
-  //the money given to the player when he feeds this unit
+  //the money given to the player when they feed this unit
   int lunchMoney;
 
   //The unit's current hitpoints.
@@ -40,6 +40,26 @@ protected:
   HitpointBar hpBar;
 
 public:
+
+
+  int getLunchMoney() const;
+
+  void setLunchMoney(int lunchMoney);
+
+  void setHitpoints(int hitpoints);
+
+  int getDamage() const;
+
+  void setDamage(int damage);
+
+  int getArmor() const;
+
+  void setArmor(int armor);
+
+  int getAttackRadius() const;
+
+  void setAttackRadius(int attackRadius);
+
   /*
    * Default constructor
    */
