@@ -68,10 +68,10 @@ void WaveManager::setUpPossibleEnemies(){
 
 void WaveManager::setupWaves(int difficulty){
 
-  std::exponential_distribution<int> num_waves_rng (1+difficulty*level/2);
+  std::exponential_distribution<double> num_waves_rng (1+difficulty*level/2);
   std::mt19937 rnd_gen (rd ());
 
-  unsigned long num_waves=num_waves_rng(rnd_gen);
+  unsigned long num_waves=round(num_waves_rng(rnd_gen));
 
   numWaves=num_waves;
 
@@ -91,7 +91,7 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
   std::mt19937 rnd_gen (rd ());
 
   //average 15, standard deviation 5
-  std::normal_distribution<int> enemy_type_rng(15,5);
+  std::normal_distribution<double> enemy_type_rng(15,5);
 
   //TODO adjust this based on difficulty
   std::uniform_real_distribution<double> percent_perturbation_rng(-.2,.2);
@@ -119,11 +119,11 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
   }
 }
 
-
+/*
 //handle events
 void WaveManager::delegateMethod(const EventInterface& event){
 
-}
+}*/
 
 void WaveManager::startNextWave() {
   queue<shared_ptr<MeleeUnit>> next_wave = waves.front();
