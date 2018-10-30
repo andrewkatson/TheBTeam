@@ -5,9 +5,6 @@ CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
   this -> eventManager = eventManager;
 }
 
-void CompView::delegateMethod(const EventInterface& event){}
-
-
 void CompView::updateCompView(float deltaS){}
 
 void CompView::attackEnemies(){}

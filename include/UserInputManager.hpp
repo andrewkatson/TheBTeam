@@ -24,8 +24,6 @@ public:
 
   void registerEvents();
 
-  void delegateMethod(const EventInterface& event);
-
   void processUserInput(sf::RenderWindow &game);
 
   void handleKeyPress(sf::Event &event);

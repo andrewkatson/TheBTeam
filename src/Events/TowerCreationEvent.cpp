@@ -6,7 +6,7 @@
 
  //the event type for ALL objects of this event will be set to the value
  //of the address of this event type variable
- const EventType TowerCreationEvent::eventType = EventType(&TowerCreationEvent::eventType);
+ const EventType TowerCreationEvent::eventType = EventType(&TowerCreationEvent::eventType, string("TowerCreationEvent"));
 
 /*
  * constructor used just for registering
@@ -17,11 +17,12 @@ TowerCreationEvent::TowerCreationEvent(){
 
 /*
  * constructor a key press event
- * @param keyID: the string identifier for the key pressed
+ * @param towerPosID: the string identifier for the key pressed
+ * @param towerTypeID: the tower type stored for each tower
  * @param timeStamp: the timestamp of the creation of this event
  */
-TowerCreationEvent::TowerCreationEvent(int towerID, float timeStamp){
-  this -> data = unique_ptr<TowerCreationEventData>(new TowerCreationEventData(towerID, timeStamp));
+TowerCreationEvent::TowerCreationEvent(int towerPosID, string towerTypeID, float timeStamp){
+  this -> data = unique_ptr<TowerCreationEventData>(new TowerCreationEventData(towerPosID, towerTypeID, timeStamp));
 }
 /*
  * return the event type

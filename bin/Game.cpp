@@ -54,19 +54,25 @@ void Game::initGame(sf::RenderWindow  &game){
 
   //initialize the Game Logic
   this -> gameLogic = make_shared<GameLogic>(GameLogic(textLoader, windowXSize, windowYSize));
+
   //get the event manager from the game logic so it can be passed to the user View
   //and comp view
   shared_ptr<EventManager> eventManager = this -> gameLogic -> getEventManager();
+
+  //logic check to make a new event manager if the last one has that weird error
+  while(eventManager -> process_queue -> size() > 100){
+    this -> gameLogic = make_shared<GameLogic>(GameLogic(textLoader, windowXSize, windowYSize));
+    eventManager = this -> gameLogic -> getEventManager();
+  }
+
   //initialize the User View
   this -> userView = unique_ptr<UserView>(new UserView(eventManager, game, textLoader));
   //initlaize the Computer View
   this -> compView = unique_ptr<CompView>(new CompView(eventManager, textLoader));
-
 }
 
 
 void Game::updateGame(float deltaS,sf::RenderWindow &game){
-
   this -> gameLogic -> updateGameLogic(deltaS);
   this -> userView -> updateUserView( deltaS, game);
   this -> compView -> updateCompView(deltaS);

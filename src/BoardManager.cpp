@@ -2,11 +2,11 @@
 
 BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   this -> textLoader = textLoader;
-  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,1,5)));
+  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,1,10)));
   this -> eventManager = eventManager;
   this -> newMap();
-  cout << "done with maps " << endl;
   this -> registerDelegates();
+
 }
 
 /*
@@ -58,7 +58,12 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
    */
   TowerCreationEventData* tcEventData = static_cast<TowerCreationEventData*>((tcEvent -> data).get());
 
-  cout << "BLARGH" << tcEventData -> towerID << endl;
+  //the combined interger ID identifying the towers position
+  int towerPosID = tcEventData -> towerPosID;
+  //the string ID identifying the towers
+  string towerTypeID = tcEventData -> towerTypeID;
+
+
 
 }
 

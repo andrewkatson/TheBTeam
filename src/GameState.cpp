@@ -18,6 +18,3 @@ GameState::GameState(shared_ptr<EventManager> eventManager){
 void GameState::setState(State newState){
   this->currentState=newState;
 }
-
-//handle events
-void GameState::delegateMethod(const EventInterface& event){}

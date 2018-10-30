@@ -19,7 +19,7 @@ public:
   static const EventType eventType;
 
   TowerCreationEvent();
-  TowerCreationEvent(int towerID, float timeStamp);
+  TowerCreationEvent(int towerPosID, string towerTypeID, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;

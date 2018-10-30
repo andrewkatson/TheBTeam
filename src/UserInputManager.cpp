@@ -25,14 +25,6 @@ UserInputManager::UserInputManager(shared_ptr<EventManager> eventManager){
  }
 
 /*
- * handle a new event
- * @param event: the event passed from the Event Manager
- */
-void UserInputManager::delegateMethod(const EventInterface& event){
-
-}
-
-/*
  * receive user input from keys or mouse and create a relevant event
  * @param game: the game window
  */

@@ -47,7 +47,6 @@ public:
    */
   void setState(State newState);
 
-  void delegateMethod(const EventInterface& event);
 
   /*
     Returns the state of the game.

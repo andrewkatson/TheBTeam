@@ -11,8 +11,25 @@ TowerManager::TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
   this -> textLoader = textLoader;
   this -> xDim = xDim;
   this -> yDim = yDim;
+  this -> registerDelegates();
   this -> populateTowersToChoose();
-  this -> populateTowerUpgrades();
+}
+
+/*
+ * Register the delegate method for this class
+ * with any events it needs to know about
+ */
+void TowerManager::registerDelegates(){
+  //bind our delegate function for tower creation events
+  EventManager::EventDelegate towerCreationEventDelegate = std::bind(&TowerManager::handleTowerCreation, this, _1);
+
+  //make an event and get its type
+  TowerCreationEvent towerCreationEvent = TowerCreationEvent();
+  EventType towerCreationEventType = towerCreationEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(towerCreationEventDelegate, textLoader -> getString(string("IDS_TMD_TC")),towerCreationEventType);
+
+
 }
 
 /*
@@ -22,6 +39,10 @@ void TowerManager::populateTowersToChoose(){
 
   //get the maximum number of melee units allowed per melee tower
   int maxMeleeUnits = textLoader -> getConstant(string("IDS_MT_MU"));
+
+  //get the identifier for no tower type chosen
+  string noTowerAtTileID = textLoader -> getString("IDS_NT");
+
   //get the identifier for each basic type of tower
   string cheesePizzaID = textLoader -> getString(string("IDS_CPT"));
   string sodaID = textLoader -> getString(string("IDS_SOT"));
@@ -29,23 +50,23 @@ void TowerManager::populateTowersToChoose(){
   string miniMMSID = textLoader -> getString(string("IDS_MMMT"));
 
   //first make a pointer to the first of the tower types for each tower tree
-  shared_ptr<CheesePizza> cheesePizza = make_shared<CheesePizza>(CheesePizza(textLoader, cheesePizzaID));
-  shared_ptr<Soda> soda = make_shared<Soda>(Soda(textLoader, sodaID));
-  shared_ptr<NormalFry> normalFry = make_shared<NormalFry>(NormalFry(textLoader, normalFryID,maxMeleeUnits));
-  shared_ptr<MiniMMS> miniMMS = make_shared<MiniMMS>(MiniMMS(textLoader, miniMMSID));
+  shared_ptr<RangeTower> cheesePizza = make_shared<CheesePizza>(CheesePizza(textLoader, cheesePizzaID));
+  shared_ptr<RangeTower> soda = make_shared<Soda>(Soda(textLoader, sodaID));
+  shared_ptr<MeleeTower> normalFry = make_shared<NormalFry>(NormalFry(textLoader, normalFryID,maxMeleeUnits));
+  shared_ptr<RangeTower> miniMMS = make_shared<MiniMMS>(MiniMMS(textLoader, miniMMSID));
 
-  //then make pointers to the generic types of tower that will hold an internal tower(i.e. their specific branch)
-  shared_ptr<TowerInterface> towerType1 = make_shared<RangeTower>(RangeTower(cheesePizza));
-  shared_ptr<TowerInterface> towerType2 = make_shared<RangeTower>(RangeTower(soda));
-  shared_ptr<TowerInterface> towerType3 = make_shared<MeleeTower>(MeleeTower(normalFry));
-  shared_ptr<TowerInterface> towerType4 = make_shared<RangeTower>(RangeTower(miniMMS));
+
+  //push all basic towers into a single vector (the vector for an empty tile)
+  vector<shared_ptr<TowerInterface>> noTowerAtTileUpgrades;
+  noTowerAtTileUpgrades.push_back(cheesePizza);
+  noTowerAtTileUpgrades.push_back(soda);
+  noTowerAtTileUpgrades.push_back(normalFry);
+  noTowerAtTileUpgrades.push_back(miniMMS);
 
   //add the towers to towers to choose
-  towersToChoose.push_back(towerType1);
-  towersToChoose.push_back(towerType2);
-  towersToChoose.push_back(towerType3);
-  towersToChoose.push_back(towerType4);
+  allTowersToChoose.insert({noTowerAtTileID, noTowerAtTileUpgrades});
 
+  this -> populateTowerUpgrades();
 }
 
 /*
@@ -94,10 +115,10 @@ void TowerManager::populateTowerUpgradesLvl1(int maxMeleeUnits){
 
   //insert the vector into the map of all possible upgrades keyed on the string identifier
   //from the type of tower you upgrade from
-  possibleUpgrades.insert({cheesePizzaID, cheesePizzaUpgrades});
-  possibleUpgrades.insert({sodaID, sodaUpgrades});
-  possibleUpgrades.insert({normalFryID, normalFryUpgrades});
-  possibleUpgrades.insert({miniMMSID, miniMMSUpgrades});
+  allTowersToChoose.insert({cheesePizzaID, cheesePizzaUpgrades});
+  allTowersToChoose.insert({sodaID, sodaUpgrades});
+  allTowersToChoose.insert({normalFryID, normalFryUpgrades});
+  allTowersToChoose.insert({miniMMSID, miniMMSUpgrades});
 
 }
 /*
@@ -147,10 +168,10 @@ void TowerManager::populateTowerUpgradesLvl2(int maxMeleeUnits){
 
   //insert the vector into the map of all possible upgrades keyed on the string identifier
   //from the type of tower you upgrade from
-  possibleUpgrades.insert({pepperoniPizzaID, pepperoniPizzaUpgrades});
-  possibleUpgrades.insert({crinkleFryID, crinkleFryUpgrades});
-  possibleUpgrades.insert({energyDrinkID, energyDrinkUpgrades});
-  possibleUpgrades.insert({normalMMSID, normalMMSUpgrades});
+  allTowersToChoose.insert({pepperoniPizzaID, pepperoniPizzaUpgrades});
+  allTowersToChoose.insert({crinkleFryID, crinkleFryUpgrades});
+  allTowersToChoose.insert({energyDrinkID, energyDrinkUpgrades});
+  allTowersToChoose.insert({normalMMSID, normalMMSUpgrades});
 }
 
 /*
@@ -164,8 +185,8 @@ int TowerManager::getTowerPrice(int row, int col){
 /*
  * @return vector<TowerInterface>: all the towers the player can choose from
  */
-vector<shared_ptr<TowerInterface>>& TowerManager::getTowersToChoose(){
-  return towersToChoose;
+unordered_map<string, vector<shared_ptr<TowerInterface>>>& TowerManager::getAllTowersToChoose(){
+  return allTowersToChoose;
 }
 
 /*
@@ -191,6 +212,32 @@ shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int combinedRowCol){
 shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int row, int col){
   return towersPlaced.at(row*xDim + col);
 }
+
+
+/*
+ * Handle a tower creation event
+ * @param event: the tower creation event
+ */
+void TowerManager::handleTowerCreation(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * TowerCreationEvent type which allows us to access variables and methods
+   * specific to TowerCreationEvent
+   */
+  const TowerCreationEvent* tcEvent = static_cast<const TowerCreationEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a TowerCreationEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  TowerCreationEventData* tcEventData = static_cast<TowerCreationEventData*>((tcEvent -> data).get());
+  //get the tower id
+  int towerPosID = tcEventData -> towerPosID;
+  //get the type of the tower (an index corresponding to a type in towersToChoose)
+  string towerTypeID = tcEventData -> towerTypeID;
+
+}
+
 
 /*
  * @param type: the index in the vector of tower types that

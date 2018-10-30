@@ -15,5 +15,3 @@ Player::Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> tex
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
 }
-
-void Player::delegateMethod(const EventInterface& event){}

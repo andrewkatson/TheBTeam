@@ -29,7 +29,6 @@ public:
    */
   ProjectileManager(shared_ptr<EventManager> eventManager);
 
-  void delegateMethod(const EventInterface& event);
 
   /*
    * Return the vector of projectiles stored by the class.
@@ -41,7 +40,7 @@ public:
   /*
    * Appends the given projectile to the manager's vector.
    */
-  void addProjectile(shared_ptr<ActorInterface> ikiiprojectile);
+  void addProjectile(shared_ptr<ActorInterface> projectile);
 
   /*
    * Removes the projectile at the given index.

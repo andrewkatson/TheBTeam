@@ -11,9 +11,10 @@ using std::addressof;
 class EventType{
 public:
   long type;
+  string eventWithin;
 
   EventType();
-  EventType(const EventType* eventType);
+  EventType(const EventType* eventType, string eventWithin);
 
   friend bool operator==(const EventType& a, const EventType& t) {
     return a.type == t.type;

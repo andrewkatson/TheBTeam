@@ -11,8 +11,6 @@ private:
 public:
   CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
-  void delegateMethod(const EventInterface& event);
-
   void updateCompView(float deltaS);
 
   void attackEnemies();

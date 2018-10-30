@@ -4,7 +4,8 @@
  * @author Andrew Katson
  */
 
- TowerCreationEventData::TowerCreationEventData(int towerID, float timeStamp){
+ TowerCreationEventData::TowerCreationEventData(int towerPosID, string towerTypeID, float timeStamp){
    this -> timeStamp = timeStamp;
-   this -> towerID = towerID;
+   this -> towerPosID = towerPosID;
+   this -> towerTypeID = towerTypeID;
  }

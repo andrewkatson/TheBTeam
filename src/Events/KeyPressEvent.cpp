@@ -6,7 +6,7 @@
 
  //the event type for ALL objects of this event will be set to the value
  //of the address of this event type variable
- const EventType KeyPressEvent::eventType = EventType(&KeyPressEvent::eventType);
+ const EventType KeyPressEvent::eventType = EventType(&KeyPressEvent::eventType, string("KeyPressEvent"));
 
 /*
  * constructor used just for registering

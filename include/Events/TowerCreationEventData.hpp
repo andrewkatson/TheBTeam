@@ -6,8 +6,12 @@
 using std::string;
 class TowerCreationEventData : public EventDataInterface{
 public:
-  int towerID;
+  //a value corresponding to row*maxCol + col of the location of the tower (or tile if none exists yet)
+  int towerPosID;
+  //the index corresponding to a type in TowersToChoose.
+  //used to find the initial type which we then use to find the upgraded version
+  string towerTypeID;
   float timeStamp;
 
-  TowerCreationEventData(int towerID, float timeStamp);
+  TowerCreationEventData(int towerPosID, string towerTypeID, float timeStamp);
 };

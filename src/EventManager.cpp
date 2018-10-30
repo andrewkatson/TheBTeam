@@ -15,7 +15,6 @@ EventManager::EventManager(){
   event_queue b;
   queues.push_back(a);
   queues.push_back(b);
-
   process_queue = &queues.at(0);
   register_queue = &queues.at(1);
 }
@@ -27,7 +26,6 @@ EventManager::~EventManager(){
 
 //add an event to the queue of registered events
 void EventManager::queueEvent(shared_ptr<EventInterface> event){
-
   //in case we do not find the event type we add it
   //to the map
   event_map::const_iterator it = EventDelegateMap.find(event -> getEventType());
@@ -52,7 +50,6 @@ void EventManager::registerEvent(const EventType &type){
 //register a delegate to an event type. Think of this like a person (class) is subscribing
 // to a particular magazine (EvenetType) and is sending their address (EventDelegate)
 void EventManager::registerDelegate(const EventDelegate& d, const string &eventDelegateIdentifier,const EventType &type){
-
   //in case we do not find the event type we add it
   //to the map
   event_map::const_iterator it = EventDelegateMap.find(type);
@@ -100,14 +97,11 @@ void EventManager::triggerEvent(const EventInterface& event)
 
 //iterate through all registered events and trigger them
 void EventManager::processEvent(){
-
   std::swap(process_queue, register_queue);
   clear(*register_queue);
-
   while(!process_queue->empty()){
     shared_ptr<EventInterface> event = process_queue->front();
     process_queue->pop();
-
     triggerEvent(*event);
   }
 }

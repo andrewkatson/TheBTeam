@@ -64,11 +64,6 @@ void WaveManager::setUpPossibleEnemies(){
   enemies.push_back(fatKid);
 }
 
-//handle events
-void WaveManager::delegateMethod(const EventInterface& event){
-
-}
-
 void WaveManager::startNextWave() {
     queue<shared_ptr<ActorInterface>> next_wave = waves.front();
 

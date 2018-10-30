@@ -43,11 +43,9 @@ shared_ptr<TextLoader> textLoader;
 //event manager (used to register, deregister from events, and create them)
 shared_ptr<EventManager> eventManager;
 
-//All possible towers that can be purchased
-vector<shared_ptr<TowerInterface>> towersToChoose;
-
-//All possible upgrades for each type of tower
-unordered_map<string, vector<shared_ptr<TowerInterface>>> possibleUpgrades;
+//All possible upgrades for each type of tower (basic towers all share the "IDS_NT" key)
+//which indicates that a tile with nothing can be any base type
+unordered_map<string, vector<shared_ptr<TowerInterface>>> allTowersToChoose;
 
 //Towers placed on the board
 //the integer key is the row*collength + colindex of the tower on the map
@@ -64,19 +62,22 @@ public:
 
   int getTowerPrice(int row, int col);
 
-  vector<shared_ptr<TowerInterface>>& getTowersToChoose();
+  unordered_map<string, vector<shared_ptr<TowerInterface>>>& getAllTowersToChoose();
 
   unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
 
   shared_ptr<TowerInterface> getTowerPlaced(int combinedRowCol);
   shared_ptr<TowerInterface> getTowerPlaced(int row, int col);
 
+  void handleTowerCreation(const EventInterface& event);
+
 private:
+  void registerDelegates();
+
   void populateTowersToChoose();
   void populateTowerUpgrades();
   void populateTowerUpgradesLvl1(int maxMeleeUnits);
   void populateTowerUpgradesLvl2(int maxMeleeUnits);
-
 
   void addTower(int type, int combinedRowCol);
   void addTower(int type, int row, int col);

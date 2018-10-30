@@ -50,7 +50,6 @@ void UserView::registerDelegates(){
   EventType keyPressEventType = keyPressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_UVD_KP")),keyPressEventType);
-
   //bind our delegate function for mouse presses
   EventManager::EventDelegate mousePressDelegate = std::bind(&UserView::handleMousePress, this, _1);
 
