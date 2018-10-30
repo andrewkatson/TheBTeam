@@ -19,6 +19,9 @@
 - Random seg fault with event manager is avoided by remaking the game logic in the event
   we get one. seg fault seemed to be caused by sfml 
 
+###Known Issues
+- Segfault occurs randomly after board creation. It is unknown what causes this.
+
 [0.0.3] - 2018 - 10 - 27
 
 #Added
