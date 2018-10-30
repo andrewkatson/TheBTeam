@@ -5,9 +5,11 @@
 #include <iostream>
 #include <memory>
 #include <functional>
+#include "TextLoader.hpp"
 
 using std::cout;
 using std::string;
+using std::shared_ptr;
 
 class Screen{
 protected:

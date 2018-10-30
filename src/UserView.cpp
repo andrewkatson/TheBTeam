@@ -11,7 +11,9 @@ UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game
   this -> game = &game;
   this -> gameLogic = gameLogic;
 
-  if(!font.loadFromFile("../Fonts/PWYummyDonuts.ttf")){
+  string mainFontPath = textLoader -> getString(string("IDS_MFP"));
+
+  if(!font.loadFromFile(mainFontPath)){
     cout << "No font!" << endl;
   }
   else{
@@ -66,7 +68,7 @@ void UserView::registerEvents(){
  */
 void UserView::initScreens(){
   //Main Menu Screen
-  shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(MainMenuScreen(windowX, windowY, 3, font));
+  shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(MainMenuScreen(windowX, windowY, 3, textLoader));
   //Options Menu Screen
   //shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(OptionsMenuScreen(windowX, windowY, 7, font));
   //Playing Screen
@@ -89,7 +91,6 @@ void UserView::initScreens(){
 void UserView::updateState(){
  State state = gameLogic -> getGameState();
  screen = (int)state;
- cout << screen << endl;
 }
 
 
@@ -147,37 +148,9 @@ void UserView::handleMousePress(const EventInterface& event){
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
   game.clear();
-  /*
-  title.setFont(font);
-  title.setFillColor(sf::Color::Red);
-  title.setString("Play");
-  title.setPosition(sf::Vector2f(windowX / 2, windowY / 2));
-  game.draw(title);
-  */
-  // define a 120x50 rectangle
-  sf::RectangleShape rectangle(sf::Vector2f(120.f, 50.f));
 
-  // change the size to 100x100
-  rectangle.setSize(sf::Vector2f(100.f, 100.f));
-  rectangle.setFillColor(sf::Color::Red);
-
-  sf::Font hereFont;
-  if (!font.loadFromFile("../Fonts/ARCADECLASSIC.TTF"))
-  {
-    cout << "no font" << endl;
-  }
-  sf::Text text;
-  text.setString("Play");
-  text.setCharacterSize(24);
-  text.setPosition(sf::Vector2f(windowX / 2, windowY / 2));
-  text.setFillColor(sf::Color::White);
-
-  //text.setFont(hereFont);
-  game.draw(text);
-
-  //game.draw(rectangle);
   this -> userInputManager -> processUserInput(game);
-  //screens.at(screen) -> draw(game);
+  screens.at(screen) -> draw(game);
 
   game.display();
 }

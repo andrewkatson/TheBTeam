@@ -53,9 +53,9 @@ OptionsMenu::OptionsMenu(int windowX, int windowY, int numItems, sf::Font font) 
 {
 	if (selectedItem - 1 >= 0)
 	{
-		screen[selectedItem].setColor(sf::Color::White);
+		screen[selectedItem].setFillColor(sf::Color::White);
 		selectedItem--;
-		screen[selectedItem].setColor(sf::Color::Red);
+		screen[selectedItem].setFillColor(sf::Color::Red);
 	}
 }
 
@@ -63,9 +63,9 @@ void OptionsMenu::moveDown()
 {
 	if (selectedItem + 1 < numItems)
 	{
-		screen[selectedItem].setColor(sf::Color::White);
+		screen[selectedItem].setFillColor(sf::Color::White);
 		selectedItem++;
-		screen[selectedItem].setColor(sf::Color::Red);
+		screen[selectedItem].setFillColor(sf::Color::Red);
 }
 
 }

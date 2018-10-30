@@ -35,6 +35,7 @@ public:
   typedef std::unordered_map<string,shared_ptr<EventDelegate>> event_delegates;
   typedef std::unordered_map<EventType, event_delegates> event_map;
 
+  int processQueueVal;
 
   EventManager();
   ~EventManager();
@@ -55,9 +56,9 @@ public:
 
   void clear(event_queue &q);
 
-  std::vector<event_queue> queues;
-  event_queue *process_queue;
-  event_queue *register_queue;
+  std::vector<shared_ptr<event_queue>> queues;
+  shared_ptr<event_queue> process_queue;
+  shared_ptr<event_queue> register_queue;
 
   event_map EventDelegateMap;
 

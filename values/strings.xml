@@ -1,5 +1,10 @@
 <?xml version ="1.0" encoding="UTF-8"?>
 <strings>
+
+    <!--Font Paths -->
+    <!--Main Font Path -->
+    <string value="../Fonts/PWYummyDonuts.ttf" id="IDS_MFP"> </string>
+
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
     <!--GameLogic Delegates-->

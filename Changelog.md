@@ -17,8 +17,7 @@
 ###Fixed
 - EventType not saving the address passed as its type [@andrewkatson][https://github.com/andrewkatson]
 - MapFactory no longer crashes or fails to generate a board
-- Random seg fault with event manager is avoided by remaking the game logic in the event
-  we get one. seg fault seemed to be caused by sfml
+- Random seg fault with event manager. made the raw pointers shared pointers!
 
 ###Known Issues
 - Segfault occurs randomly after board creation. It is unknown what causes this.
