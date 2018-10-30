@@ -11,8 +11,15 @@ UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game
   this -> game = &game;
   this -> gameLogic = gameLogic;
 
-  font.loadFromFile("../Fonts/PWYummyDonuts.ttf");
+  if(!font.loadFromFile("../Fonts/PWYummyDonuts.ttf")){
+    cout << "No font!" << endl;
+  }
+  else{
+    cout << "loaded font!" << endl;
+  }
 
+  this -> initScreens();
+  this -> updateState();
 }
 
 UserView::~UserView(){
@@ -53,6 +60,38 @@ void UserView::registerEvents(){
   EventType type = event.getEventType();
   this -> eventManager -> registerEvent(type);
 }
+
+/*
+ * Initialize all the screens that can be made by the user view
+ */
+void UserView::initScreens(){
+  //Main Menu Screen
+  shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(MainMenuScreen(windowX, windowY, 3, font));
+  //Options Menu Screen
+  //shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(OptionsMenuScreen(windowX, windowY, 7, font));
+  //Playing Screen
+  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(PlayingScreen(windowX, windowY));
+  //Buy Tower Sreeen
+  shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(BuyTowerScreen(windowX, windowY));
+  //Restart Screen
+  shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(RestartScreen(windowX, windowY));
+
+  screens.push_back(mainMenuScreen);
+  //screens.push_back(optionsMenuScreen);
+  screens.push_back(playingScreen);
+  screens.push_back(buyTowerScreen);
+  screens.push_back(restartScreen);
+}
+
+/*
+ * Update the state. Which will change the screen
+ */
+void UserView::updateState(){
+ State state = gameLogic -> getGameState();
+ screen = (int)state;
+ cout << screen << endl;
+}
+
 
 
 /*
@@ -107,7 +146,40 @@ void UserView::handleMousePress(const EventInterface& event){
 }
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
+  game.clear();
+  /*
+  title.setFont(font);
+  title.setFillColor(sf::Color::Red);
+  title.setString("Play");
+  title.setPosition(sf::Vector2f(windowX / 2, windowY / 2));
+  game.draw(title);
+  */
+  // define a 120x50 rectangle
+  sf::RectangleShape rectangle(sf::Vector2f(120.f, 50.f));
+
+  // change the size to 100x100
+  rectangle.setSize(sf::Vector2f(100.f, 100.f));
+  rectangle.setFillColor(sf::Color::Red);
+
+  sf::Font hereFont;
+  if (!font.loadFromFile("../Fonts/ARCADECLASSIC.TTF"))
+  {
+    cout << "no font" << endl;
+  }
+  sf::Text text;
+  text.setString("Play");
+  text.setCharacterSize(24);
+  text.setPosition(sf::Vector2f(windowX / 2, windowY / 2));
+  text.setFillColor(sf::Color::White);
+
+  //text.setFont(hereFont);
+  game.draw(text);
+
+  //game.draw(rectangle);
   this -> userInputManager -> processUserInput(game);
+  //screens.at(screen) -> draw(game);
+
+  game.display();
 }
 
 void UserView::shutDown(){

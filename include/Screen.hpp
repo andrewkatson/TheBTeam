@@ -10,7 +10,7 @@ using std::cout;
 using std::string;
 
 class Screen{
-private:
+protected:
   int windowX;
   int windowY;
 public:

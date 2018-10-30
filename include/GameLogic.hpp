@@ -78,6 +78,8 @@ public:
 
   int getTowerPrice(int row, int col);
 
+  State getGameState();
+
   void shutDown();
 };
 

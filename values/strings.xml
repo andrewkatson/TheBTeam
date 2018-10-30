@@ -53,4 +53,9 @@
     <string value="CTO" id="IDS_CTO"> </string>
     <!--Trash Can -->
     <string value="TCO" id="IDS_TCO"> </string>
+
+
+    <!--Option-->
+    <!--TODO FILL IN -->
+    <string value="" id="IDS_TCO"> </string>
 </strings>

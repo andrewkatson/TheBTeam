@@ -147,6 +147,13 @@ int GameLogic::getTowerPrice(int row, int col){
 }
 
 /*
+ * Return the current GameState
+ */
+State GameLogic::getGameState(){
+  return gameState -> getState();
+}
+
+/*
  * Handle any cleanup required for shutting down the game
  */
 void GameLogic::shutDown(){

@@ -66,7 +66,7 @@ void Game::initGame(sf::RenderWindow  &game){
   }
 
   //initialize the User View
-  this -> userView = unique_ptr<UserView>(new UserView(eventManager, game, textLoader, gameLogic));
+  this -> userView = unique_ptr<UserView>(new UserView(eventManager,game,  textLoader, gameLogic));
   //initlaize the Computer View
   this -> compView = unique_ptr<CompView>(new CompView(eventManager, textLoader, gameLogic));
 }

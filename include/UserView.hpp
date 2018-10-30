@@ -7,6 +7,11 @@
 #include "UserInputManager.hpp"
 #include "Button.hpp"
 #include "Screen.hpp"
+#include "MainMenuScreen.hpp"
+#include "OptionsMenuScreen.hpp"
+#include "RestartScreen.hpp"
+#include "BuyTowerScreen.hpp"
+#include "PlayingScreen.hpp"
 #include "GameLogic.hpp"
 
 
@@ -47,6 +52,10 @@ public:
   void registerDelegates();
 
   void registerEvents();
+
+  void initScreens();
+
+  void updateState();
 
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
