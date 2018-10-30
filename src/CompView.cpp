@@ -1,12 +1,10 @@
 #include "CompView.hpp"
 
-CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic){
   this -> textLoader = textLoader;
   this -> eventManager = eventManager;
+  this -> gameLogic = gameLogic;
 }
-
-void CompView::delegateMethod(const EventInterface& event){}
-
 
 void CompView::updateCompView(float deltaS){}
 

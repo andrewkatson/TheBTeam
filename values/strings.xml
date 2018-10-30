@@ -15,6 +15,8 @@
     <string value="TOWERMANAGERHANDLETOWERCREATION" id="IDS_TMD_TC"> </string>
     <string value="TOWERMANAGERHANDLETOWERREMOVE" id="IDS_TMD_TR"> </string>
     <!--TowerTypeIDS-->
+    <!--No Tower -->
+    <string value="NT" id="IDS_NT"> </string>
     <!--CheesePizza-->
     <string value="CPT" id="IDS_CPT"> </string>
     <!--CrinkleFry-->
@@ -47,4 +49,8 @@
     <string value="SFT" id="IDS_SFT"> </string>
     <!--WaffleFry-->
     <string value="WFT" id="IDS_WFT"> </string>
+    <!-- Cafeteria Table-->
+    <string value="CTO" id="IDS_CTO"> </string>
+    <!--Trash Can -->
+    <string value="TCO" id="IDS_TCO"> </string>
 </strings>

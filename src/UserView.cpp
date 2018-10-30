@@ -1,7 +1,7 @@
 #include "UserView.hpp"
 
 
-UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game,shared_ptr<TextLoader> textLoader){
+UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic){
 
   this -> textLoader = textLoader;
   this -> eventManager = eventManager;
@@ -9,27 +9,9 @@ UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game
   this -> registerDelegates();
   this -> registerEvents();
   this -> game = &game;
+  this -> gameLogic = gameLogic;
 
   font.loadFromFile("../Fonts/PWYummyDonuts.ttf");
-
-  //Main Menu
-
-  title.setFont(font);
-  title.setFillColor(sf::Color(255,255,255,255));
-  title.setString("Food Fight");
-  title.setCharacterSize(60);
-  title.setPosition(350.f, 100.f);
-
-  playButton = unique_ptr<Button>(new Button(windowX, windowY, 1, "Play"));
-
-  optionButton = unique_ptr<Button>(new Button(windowX, windowY, 2, "Options"));
-
-  exitButton = unique_ptr<Button>(new Button(windowX, windowY, 3, "Exit"));
-
-  //Options menu
-
-
-  backButton = unique_ptr<Button>(new Button(windowX, windowY, 3, "Back"));
 
 }
 
@@ -50,7 +32,6 @@ void UserView::registerDelegates(){
   EventType keyPressEventType = keyPressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_UVD_KP")),keyPressEventType);
-
   //bind our delegate function for mouse presses
   EventManager::EventDelegate mousePressDelegate = std::bind(&UserView::handleMousePress, this, _1);
 

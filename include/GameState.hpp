@@ -22,7 +22,7 @@ using namespace std;
 
   TODO - add states as needed.
 */
-enum class State{ Title, Playing };
+enum class State{ MainMenu, OptionsMenu, Playing, BuyTower, Restart};
 
 class GameState{
 private:
@@ -47,7 +47,6 @@ public:
    */
   void setState(State newState);
 
-  void delegateMethod(const EventInterface& event);
 
   /*
     Returns the state of the game.

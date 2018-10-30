@@ -6,7 +6,7 @@
 
  //the event type for ALL objects of this event will be set to the value
  //of the address of this event type variable
- const EventType MousePressEvent::eventType = EventType(&MousePressEvent::eventType);
+ const EventType MousePressEvent::eventType = EventType(&MousePressEvent::eventType,string("MousePressEvent"));
 
 /*
  * constructor used just for registering

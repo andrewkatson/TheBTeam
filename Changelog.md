@@ -2,6 +2,7 @@
 
 ###Added
 - MousePressEvent, MousePressEventData to regsiter mouse presses [@andrewkatson][https://github.com/andrewkatson]
+- MainMenuScreen, PlayingScreen, RestartScreen, OptionsMenuScreen, and RestartScreen
 
 ###Changed
 - TowerInterface has a radius of attack for each tower[@andrewkatson][https://github.com/andrewkatson]
@@ -10,10 +11,17 @@
 - MapFactory will reset a path if it gets stuck (soft reset)
 - MapFactory will now reset the whole board and start over if a path cannot be restarted
   successfully (hard reset)
+- TowerManager has all tower types in the old map for upgrades and any empty tile can
+  be "upgraded" into any of the four basic types
 
 ###Fixed
 - EventType not saving the address passed as its type [@andrewkatson][https://github.com/andrewkatson]
 - MapFactory no longer crashes or fails to generate a board
+- Random seg fault with event manager is avoided by remaking the game logic in the event
+  we get one. seg fault seemed to be caused by sfml
+
+###Known Issues
+- Segfault occurs randomly after board creation. It is unknown what causes this.
 
 [0.0.3] - 2018 - 10 - 27
 
@@ -47,7 +55,7 @@
 - NormalyFryUnit, SpicyFryUnit, WaffleFryUnit, CrinkleFryUnit have default values
 - All RangeTower types now are initialized with their own projectiles
 - Projectile class holds an id for every projectile and a vector describing its direction
- 
+
 ###Fixed
 - MapFactory no longer endlessely loops when it gets stuck. (removes a wall)
 
@@ -88,7 +96,9 @@
 - UserView psuedocode
 - Button constructor includes order for positioning (untested)
 - Main Menu skeleton (UserView)
-- Fixed compile-time erros in UserView and CompView classes[@jeremyelkayam][https://github.com/jeremyelkayam]
+
+###Fixed
+- compile-time erros in UserView and CompView classes[@jeremyelkayam][https://github.com/jeremyelkayam]
 
 ### Removed
 - Unused methods from MapFactory [@andrewkatson][https://github.com/andrewkatson]

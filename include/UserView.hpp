@@ -6,6 +6,7 @@
 #include "EventManager.hpp"
 #include "UserInputManager.hpp"
 #include "Button.hpp"
+#include "Screen.hpp"
 #include "GameLogic.hpp"
 
 
@@ -26,16 +27,20 @@ private:
   shared_ptr<EventManager> eventManager;
   //receives user input through keys or mouse
   unique_ptr<UserInputManager> userInputManager;
+  //logic of the game. handles mechanics
+  shared_ptr<GameLogic> gameLogic;
   //the render window that the game is drawn on
   sf::RenderWindow *game;
+  //the vector of screens
+  vector<shared_ptr<Screen>> screens;
+  //index of the current screen
+  int screen;
 
   sf::Font font;
   sf::Text title;
 
-
-  unique_ptr<Button> playButton,optionButton,exitButton,backButton;
 public:
-  UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game, shared_ptr<TextLoader> textLoader);
+  UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
 
   ~UserView();
 

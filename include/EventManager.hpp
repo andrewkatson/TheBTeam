@@ -49,7 +49,6 @@ public:
 
   void processEvent();
 
-private:
   void triggerEvent(const EventInterface& event);
 
 //  int find(event_delegates &eventDelegateList,  const EventDelegate& toFind);

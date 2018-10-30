@@ -18,10 +18,25 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
   this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader));
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
+  this -> registerEvents();
   this -> registerDelegates();
+
   this -> windowX = windowX;
   this -> windowY = windowY;
 }
+
+/*
+ * any events created by this class must be registered with the
+ * Event Manager
+ */
+ void GameLogic::registerEvents(){
+   //make a generic tower creation event, get its type, and register it
+   TowerCreationEvent towerCreationEvent = TowerCreationEvent();
+   EventType towerCreationEventType = towerCreationEvent.getEventType();
+
+   this -> eventManager -> registerEvent(towerCreationEventType);
+
+ }
 
 /*
  * Register the delegate method for this class
@@ -36,7 +51,6 @@ void GameLogic::registerDelegates(){
   EventType keyPressEventType = keyPressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_GLD_KP")),keyPressEventType);
-
   //bind our delegate function for mouse presses
   EventManager::EventDelegate mousePressDelegate = std::bind(&GameLogic::handleMousePress, this, _1);
 

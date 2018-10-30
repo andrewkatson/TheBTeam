@@ -35,13 +35,14 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices){
 void MapFactory::generateDimensions(){
   int xDim = mapCustomizationChoices -> cafeteriaChoice * 6;
   int yDim = mapCustomizationChoices -> cafeteriaChoice * 6;
+  minimumInvisibleObstacles =  (xDim*yDim)/10;
 
   //checks to ensure that the dimensions are never negative or 0
   if(xDim <= 0){
-    xDim = 6;
+    xDim = 10;
   }
   if(yDim <= 0){
-    yDim = 6;
+    yDim = 10;
   }
   this -> xDim = xDim;
   this -> yDim = yDim;
@@ -52,8 +53,10 @@ void MapFactory::generateDimensions(){
  * with the appropriate values
  */
 void MapFactory::generateMap(){
+  softReset = 0;
+  hardReset = 0;
   for(int i = 0; i < 1; i++){
-
+    numObstaclesRemoved = 0;
     //try to make a map
     bool makeMap = false;
 
@@ -73,7 +76,10 @@ void MapFactory::generateMap(){
     //them on the board to help with interpretation
     putEmptyEntriesOnBoard();
     resetEverything();
+    //cout << "num obstacles " << numObstaclesRemoved << endl;
   }
+  //cout << "Hard Resets " << hardReset << endl;
+  //cout << "Soft Resets " << softReset << endl;
 }
 
 /*
@@ -119,6 +125,8 @@ bool MapFactory::tryAMap(){
       tryingPathMade++;
       //if we repeatedly fail we admit defeat and start over
       if(tryingPathMade>5){
+        //printError(string("Hard Reset"));
+        hardReset++;
         return false;
       }
     }
@@ -139,7 +147,6 @@ void MapFactory::initGridArrays(){
       this -> distances.push_back(vector<int>(this -> xDim, -1));
       this -> floorGrid.push_back(vector<int>(this -> xDim, -1));
       this -> aboveFloorGrid.push_back(vector<int>(this -> xDim, -1));
-      this -> markPathSoFar.push_back(vector<int>(this -> xDim, -1));
   }
 }
 /*
@@ -663,7 +670,6 @@ void MapFactory::makeDistances(){
  */
 bool MapFactory::makePath(int pathNumber){
   s.str("");
-  s << " path number " << pathNumber<<  endl;
 
   //grab the starting row and column
   int currRowNum = entryPos.at(2*(pathNumber - 1) + 1);
@@ -736,17 +742,21 @@ bool MapFactory::makePath(int pathNumber){
 
         //get the next posssible steps the path can take
         nextSteps = calcNextShortestStep(currRowNum, currColNum);
-        s << "next steps" << endl;
-        for(int i = 0; i < nextSteps.size(); i++){
-          s << nextSteps.at(i) << " ";
+        s << " next steps " << endl;
+        s << currRowNum << " " << currColNum << endl;
+        for (int i = 0; i < nextSteps.size(); i++){
+          s << exitDirection.directionToInt(nextSteps.at(i)) << endl;
         }
-        s << endl;
+
         //if there are no steps try to remove an obstacle
         if(timesAround > 1 && nextSteps.size() == 0){
           removeObstacleInShortestStep(currRowNum, currColNum);
           //if we have looped too many times it means we are stuck
           //so we walk back the changes and start over
           if(timesAround > 5){
+          //  cout << s.str();
+            //printError(string("Soft Reset"));
+            softReset++;
             return false;
           }
         }
@@ -762,8 +772,6 @@ bool MapFactory::makePath(int pathNumber){
       //add this direction to our directions we have steped in
       allStepsSoFar.push_back(expandInto);
 
-      s << "choose " << exitDirection.intToDirection(expandInto) << endl;
-
       //store the last row and column we came from
       lastRow = currRowNum;
       lastCol = currColNum;
@@ -772,8 +780,7 @@ bool MapFactory::makePath(int pathNumber){
       currRowNum = expandInRow(currRowNum, expandInto);
       //update the column to the exapnded direction
       currColNum = expandInCol(currColNum, expandInto);
-      s << currRowNum << endl;
-      s << currColNum << endl;
+
       //update the last shortest distance to be the distance of the current space
       lastShortestDistance = distances.at(currRowNum).at(currColNum);
 
@@ -946,8 +953,6 @@ bool MapFactory::connectedWithExit(int row, int col){
     int addExtraTopDist = 0;
     int addExtraBottomDist = 0;
 
-    s << "looking at " << row << " " << col << endl;
-
     //the numeric indicator of the path
     int path = paths.at(row).at(col);
 
@@ -958,10 +963,8 @@ bool MapFactory::connectedWithExit(int row, int col){
     if(col - 1 >= 0){
       //make sure that there is no obstacle here and that this is not on the current path
       if(aboveFloorGrid.at(row).at(col - 1) > -2 && paths.at(row).at(col-1) != path){
-        s << "we can go left " << endl;
         //if this space would make it impossible to move
         if(!surroundedWithSamePath(row, col -1, row, col, path)){
-          s << "we are not surrounded!" << endl;
           if(!connectedWithSamePath(row, col-1, row, col, path)){
             leftDist = distances.at(row).at(col - 1);
             //if this is not connected with another path we want to weight it
@@ -979,9 +982,7 @@ bool MapFactory::connectedWithExit(int row, int col){
     //check right
     if(col + 1 < xDim){
       if(aboveFloorGrid.at(row).at(col + 1) > -2 && paths.at(row).at(col+1) != path){
-        s << " we can go right " << endl;
         if(!surroundedWithSamePath(row, col+1, row, col, path)){
-          s << " we are not surrounded " << endl;
           if(!connectedWithSamePath(row, col+1, row, col, path)){
             rightDist = distances.at(row).at(col + 1);
             if(!connectedWithOtherPath(row, col + 1, row, col, path)){
@@ -997,9 +998,7 @@ bool MapFactory::connectedWithExit(int row, int col){
     //check top
     if(row - 1 >= 0){
       if(aboveFloorGrid.at(row - 1).at(col) > -2 && paths.at(row-1).at(col) != path){
-        s << " we can go top " << endl;
         if(!surroundedWithSamePath(row-1, col, row, col, path)){
-          s << " we are not surrouned " << endl;
           if(!connectedWithSamePath(row-1, col, row, col, path)){
             topDist = distances.at(row - 1).at(col);
             if(!connectedWithOtherPath(row - 1, col, row, col, path)){
@@ -1015,9 +1014,8 @@ bool MapFactory::connectedWithExit(int row, int col){
     //check bottom
     if(row + 1 < yDim){
       if(aboveFloorGrid.at(row + 1).at(col) > -2 && paths.at(row+1).at(col) != path){
-        s << " we can go bottom  " << endl;
+
         if(!surroundedWithSamePath(row+1, col, row, col, path)){
-          s << " we are not surrounded " << endl;
           if(!connectedWithSamePath(row+1, col, row, col, path)){
             bottomDist = distances.at(row + 1).at(col);
             if(!connectedWithOtherPath(row + 1, col, row, col, path)){
@@ -1045,28 +1043,44 @@ bool MapFactory::connectedWithExit(int row, int col){
     if(shortestDist == leftDist){
       shortestSteps.push_back(Direction::Left);
       while(addExtraLeftDist){
-        shortestSteps.push_back(Direction::Left);
+        //a chance of adding in an extra distance
+        int chance = (int)randomVariates ->Equilikely(0,5);
+        if(chance>4){
+          //shortestSteps.push_back(Direction::Left);
+        }
         addExtraLeftDist--;
       }
     }
     if(shortestDist == rightDist){
       shortestSteps.push_back(Direction::Right);
       while(addExtraRightDist){
-        shortestSteps.push_back(Direction::Right);
+        //a chance of adding in an extra distance
+        int chance = (int) randomVariates -> Equilikely(0,5);
+        if(chance>4){
+          //shortestSteps.push_back(Direction::Right);
+        }
         addExtraRightDist--;
       }
     }
     if(shortestDist == topDist){
       shortestSteps.push_back(Direction::Top);
       while(addExtraTopDist){
-        shortestSteps.push_back(Direction::Top);
+        //a chance of adding in an extra distance
+        int chance = (int)randomVariates ->Equilikely(0,5);
+        if(chance>4){
+          //shortestSteps.push_back(Direction::Top);
+        }
         addExtraTopDist--;
       }
     }
     if(shortestDist == bottomDist){
       shortestSteps.push_back(Direction::Bottom);
       while(addExtraBottomDist){
-        shortestSteps.push_back(Direction::Bottom);
+        //a chance of adding in an extra distance
+        int chance = (int) randomVariates ->Equilikely(0,5);
+        if(chance>4){
+          //shortestSteps.push_back(Direction::Bottom);
+        }
         addExtraBottomDist--;
       }
     }
@@ -1156,7 +1170,7 @@ bool MapFactory::connectedWithExit(int row, int col){
    * @return bool: whether the new row and column is completely surrounded by the same path
    */
   bool MapFactory::surroundedWithSamePath(int newrow, int newcol, int row, int col, int path){
-
+    return false;
     int rowMinusOne = row -1;
     int rowPlusOne = row +1;
     int colMinusOne = col -1;
@@ -1368,6 +1382,7 @@ void MapFactory::removeObstacleInShortestStep(int row, int col){
   if(shortestDist == bottomDist){
     aboveFloorGrid.at(rowPlusOne).at(col) = -1;
   }
+  numObstaclesRemoved++;
 }
 
  /*
@@ -1444,8 +1459,10 @@ void MapFactory::makeObstacles(){
     if(isInvisible > 2){
       aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
       unavailableSpots.at(randRowChosen).at(randColChosen) = 1;
+      vector<int> blockedSides(8);
+      setBlockedSides(blockedSides,10);
+      possiblePlacements = markUnavailableSpotsNearObstacle(randRowChosen, randColChosen, possiblePlacements, blockedSides, 10);
       placedInvisibleObstacles++;
-      possiblePlacements--;
       continue;
     }
 
@@ -1458,12 +1475,12 @@ void MapFactory::makeObstacles(){
     //and determines which sides around this obstacle can be blocked for future
     //placements (allows for multiple length or side obstacles)
     vector<int> blockedSides(8);
-    setBlockedSides(blockedSides);
+    setBlockedSides(blockedSides,6);
 
     //mark any spaces adjacient to the obstacle as unavaialble
     //for future path or entry or obstace placement
     //get the updated number of placement options
-    possiblePlacements = markUnavailableSpotsNearObstacle(randRowChosen, randColChosen, possiblePlacements, blockedSides);
+    possiblePlacements = markUnavailableSpotsNearObstacle(randRowChosen, randColChosen, possiblePlacements, blockedSides, 6);
 
     placedObstacles++;
   }
@@ -1589,14 +1606,15 @@ void MapFactory::makeObstacles(){
   * can be blocked for future placements  (paths, obstacles)
   * @param blockedSides: vector with all the sides that are blocked
   *                     for future obstacle placement
+  * @param maxVal: set what the maximum value generated for each tile being blocked
   */
-void MapFactory::setBlockedSides(vector<int> &blockedSides){
+void MapFactory::setBlockedSides(vector<int> &blockedSides, int maxVal){
 
-    int isBlocked = (int) randomVariates -> Equilikely(0,4);
+    int isBlocked = (int) randomVariates -> Equilikely(0,maxVal);
 
     for(auto it = blockedSides.begin(); it != blockedSides.end(); ++it){
       *it = isBlocked;
-      isBlocked = (int) randomVariates -> Equilikely(0,4);
+      isBlocked = (int) randomVariates -> Equilikely(0,maxVal);
     }
 
     random_shuffle(blockedSides.begin(), blockedSides.end());
@@ -1610,10 +1628,11 @@ void MapFactory::setBlockedSides(vector<int> &blockedSides){
  * @param col: col index (X)
  * @param currentOpenSpaces: the number of spaces for obstacles
  * @param blockedSides: all sides that could be blocked (each holds a die roll for the % chance they will be blocked)
+ * @param maxVal: the maximum value generated for a side to be blocked
  * @return int: the number of spots open left
  */
 
-int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides){
+int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides, int maxVal){
   //mark the spot as unavaiable for the placement of future obstacles
   // or paths
   unavailableSpots.at(row).at(col) = 1;
@@ -1624,27 +1643,32 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
   int colMinus = col - 1;
   int colPlus = col + 1;
 
+  //value that the blocked path has to be higher than for a horizontal or vertical to be blocked
+  int normalThreshold = (int) randomVariates -> Equilikely(0, maxVal/3);
+  //value tha the blocked path has to higher than for a diagonal to be blocked
+  int diagonalThreshold  = (int) randomVariates -> Equilikely(0, maxVal/6);
+
   //check all the directions
   //to see if they are in bounds and mark the spots as unavaiable
   //only checks marks them off if the passed value in
   //blockedSides vector is true (1)
   if(colMinus >= 0){
     //left
-    if(blockedSides.at(0)){
+    if(blockedSides.at(0) > normalThreshold){
       unavailableSpots.at(row).at(colMinus) = 1;
       currentOpenSpaces--;
     }
 
     //top left diagonal
     if(rowMinus >= 0){
-      if(blockedSides.at(4) > 3){
+      if(blockedSides.at(4) > diagonalThreshold){
         unavailableSpots.at(rowMinus).at(colMinus) = 1;
         currentOpenSpaces--;
       }
     }
     //bottom left diagonal
     if(rowPlus < yDim){
-      if(blockedSides.at(5) > 3){
+      if(blockedSides.at(5) > diagonalThreshold){
         unavailableSpots.at(rowPlus).at(colMinus) = 1;
         currentOpenSpaces--;
       }
@@ -1652,21 +1676,21 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
   }
   if(colPlus < xDim){
     //right
-    if(blockedSides.at(1)){
+    if(blockedSides.at(1) > normalThreshold){
       unavailableSpots.at(row).at(colPlus) = 1;
       currentOpenSpaces--;
     }
 
     //top right diagonal
     if(rowMinus >= 0){
-      if(blockedSides.at(6) > 3){
+      if(blockedSides.at(6) > diagonalThreshold){
         unavailableSpots.at(rowMinus).at(colPlus) = 1;
         currentOpenSpaces--;
       }
     }
     //bottom right diagonal
     if(rowPlus < yDim){
-      if(blockedSides.at(7) > 3){
+      if(blockedSides.at(7) > diagonalThreshold){
         unavailableSpots.at(rowPlus).at(colPlus) = 1;
         currentOpenSpaces--;
       }
@@ -1674,14 +1698,14 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
   }
   if(rowMinus >= 0){
     //top
-    if(blockedSides.at(2)){
+    if(blockedSides.at(2) > normalThreshold){
       unavailableSpots.at(rowMinus).at(col) = 1;
       currentOpenSpaces--;
     }
   }
   if(rowPlus < yDim){
     //bottom
-    if(blockedSides.at(3)){
+    if(blockedSides.at(3) > normalThreshold){
       unavailableSpots.at(rowPlus).at(col) = 1;
       currentOpenSpaces--;
     }
@@ -1712,7 +1736,9 @@ void MapFactory::placeRemainingInvisibleObstacles(int placedInvisibleObstacles,
     aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
     unavailableSpots.at(randRowChosen).at(randColChosen) = 1;
     placedInvisibleObstacles++;
-    possiblePlacements--;
+    vector<int> blockedSides(8);
+    setBlockedSides(blockedSides,10);
+    possiblePlacements = markUnavailableSpotsNearObstacle(randRowChosen, randColChosen, possiblePlacements, blockedSides, 10);
   }
 }
 
@@ -1796,6 +1822,29 @@ void MapFactory::printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo){
     }
     cout << endl;
   }
+}
+
+/*
+ * Print the paths, and the aboveFloorGrid with some explanation when
+ * an error occurs
+ * @param errorType: the string identifier of the error
+ */
+void MapFactory::printError(string errorType){
+  cout << errorType << endl << endl;
+
+  cout << "Paths grid " << endl;
+  cout << "0 is the exit " << endl;
+  cout << "Positive integers are paths " << endl;
+  cout << "Negative Integers indicate nothing is there " << endl;
+  printVector(paths);
+
+  cout << "Above Floor Grid " << endl;
+  cout << "Shows placed obstacles " << endl;
+  cout << "0 is the exit " << endl;
+  cout << "-1 is empty" << endl;
+  cout << "-2 is an invisible obstacle, so used only in map generation to make map twisting" << endl;
+  cout << "-3 or less is a visible obstacle that blocks tower and path" << endl;
+  printVector(aboveFloorGrid);
 }
 
 //------------------------------------------------------------------------------

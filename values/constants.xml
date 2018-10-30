@@ -9,8 +9,61 @@
   <constant value="100" id ="IDS_P_HP"> </constant>
   <constant value="100" id ="IDS_P_B"> </constant>
 
+  <!--Identifiers used for aboveFloorGrid-->
+  <!--Of the format "Type Level Branch"-->
+  <!--No Tower Tile-->
+  <constant value="-1" id="IDS_NT"> </constant>
+  <!--Exit Tile-->
+  <constant value="0" id="IDS_EXT"> </constant>
+
+  <!--CheesePizza-->
+  <constant value="111" id="IDS_CPT"> </constant>
+  <!--PepperoniPizza-->
+  <constant value="121" id="IDS_PPT"> </constant>
+  <!--DeepDish-->
+  <constant value="131" id="IDS_DDT"> </constant>
+  <!--MeatLovers-->
+  <constant value="132" id="IDS_MLT"> </constant>
+
+  <!--MiniM&Ms-->
+  <constant value="211" id="IDS_MMMT"> </constant>
+  <!--NormalM&Ms-->
+  <constant value="221" id="IDS_NMMT"> </constant>
+  <!--PeautButterM&Ms-->
+  <constant value="231" id="IDS_PBMMT"> </constant>
+  <!--PeanutM&Ms-->
+  <constant value="232" id="IDS_PMMT"> </constant>
+
+  <!--Soda-->
+  <constant value="311" id="IDS_SOT"> </constant>
+  <!--EnergyDrink-->
+  <constant value="321" id="IDS_EDT"> </constant>
+  <!--Gravy-->
+  <constant value="331" id="IDS_GT"> </constant>
+  <!--Slushie-->
+  <constant value="332" id="IDS_SLT"> </constant>
+
+  <!--NormalFry-->
+  <constant value="411" id="IDS_NFT"> </constant>
+  <!--CrinkleFry-->
+  <constant value="421" id="IDS_CFT"> </constant>
+  <!--SpicyFry-->
+  <constant value="431" id="IDS_SFT"> </constant>
+  <!--WaffleFry-->
+  <constant value="432" id="IDS_WFT"> </constant>
+
+  <!-- Cafeteria Table-->
+  <constant value="-3" id="IDS_CTO"> </constant>
+  <!--Trash Can -->
+  <constant value="-4" id="IDS_TCO"> </constant>
+
+
+
   <!--Total Number of Melee Units Per Tower-->
   <constant value="3" id="IDS_MT_MU"> </constant>
+
+
+  <!--STATISTICS-->
 
   <!--Melee Towers -->
   <!--Normal Fry Tower-->

@@ -13,6 +13,7 @@
 #include <iterator>
 #include <stdexcept>
 #include <sstream>
+#include <string>
 
 using std::vector;
 using std::unique_ptr;
@@ -28,6 +29,7 @@ using std::next;
 using std::begin;
 using std::out_of_range;
 using std::stringstream;
+using std::string;
 
 class MapFactory{
 private:
@@ -37,7 +39,7 @@ private:
 
   // a minimum number of invisible obstacles used to make
   //the path more windy. they do not block tower placement
-  int minimumInvisibleObstacles = 6;
+  int minimumInvisibleObstacles;
 
   //x dimension of board
   int xDim;
@@ -62,11 +64,6 @@ private:
 
   //array to keep track of which paths lead to exit. 0 is no and 1 is yes
   vector<int> entrysToExit;
-
-  /*
-   * 2d array used by recursive functions to mark where that path has gone before
-   */
-  vector<vector<int>> markPathSoFar;
 
   /*
    * 2d array where any index not related to a path tile
@@ -113,6 +110,10 @@ private:
    */
   unique_ptr<RandomVariates> randomVariates = unique_ptr<RandomVariates>(new RandomVariates());
 
+  int softReset;
+  int hardReset;
+  int numObstaclesRemoved;
+
   stringstream s;
 
   void generateDimensions();
@@ -157,8 +158,8 @@ private:
   void makeObstacles();
   int countPossibleObstaclePositions();
   bool completesWings(int row, int col);
-  void setBlockedSides(vector<int> &blockedSides);
-  int markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides);
+  void setBlockedSides(vector<int> &blockedSides, int maxVal);
+  int markUnavailableSpotsNearObstacle(int row, int col, int currentOpenSpaces, vector<int> &blockedSides, int maxVal);
   void placeRemainingInvisibleObstacles(int placedInvisibleObstacles, int possiblePlacements);
 
   void putEmptyEntriesOnBoard();
@@ -173,6 +174,7 @@ private:
   void printVector(vector<T> &v);
   template <class T, class T2>
   void printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo);
+  void printError(string errorType);
 
 public:
 

@@ -10,7 +10,7 @@
 
 GameState::GameState(shared_ptr<EventManager> eventManager){
   //potentially make an Init state in which the game initializes itself?
-  setState(State::Title);
+  setState(State::MainMenu);
 
   this -> eventManager = eventManager;
 }
@@ -18,6 +18,3 @@ GameState::GameState(shared_ptr<EventManager> eventManager){
 void GameState::setState(State newState){
   this->currentState=newState;
 }
-
-//handle events
-void GameState::delegateMethod(const EventInterface& event){}

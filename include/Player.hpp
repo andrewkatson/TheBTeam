@@ -38,7 +38,6 @@ public:
    */
   Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
-  void delegateMethod(const EventInterface& event);
 
   /*
     Return the player's currency balance as stored by the balance instance
