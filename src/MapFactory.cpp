@@ -53,16 +53,17 @@ void MapFactory::generateDimensions(){
  * with the appropriate values
  */
 void MapFactory::generateMap(){
-  softReset = 0;
-  hardReset = 0;
-  for(int i = 0; i < 1; i++){
-    numObstaclesRemoved = 0;
+  int fails = 0;
+  for(int i = 0; i < 100000; i++){
     //try to make a map
     bool makeMap = false;
 
     while(!makeMap){
       resetEverything();
       makeMap = tryAMap();
+      if(!makeMap){
+        fails++;
+      }
     }
 
     //TODO remove when done checking grids
@@ -76,10 +77,7 @@ void MapFactory::generateMap(){
     //them on the board to help with interpretation
     putEmptyEntriesOnBoard();
     resetEverything();
-    //cout << "num obstacles " << numObstaclesRemoved << endl;
   }
-  cout << "Hard Resets " << hardReset << endl;
-  cout << "Soft Resets " << softReset << endl;
 }
 
 /*
@@ -104,13 +102,8 @@ bool MapFactory::tryAMap(){
     // is the exit
     this -> makeEntry(e + 1);
   }
-  printVector(unavailableSpots);
   //place obstacles on the board
   this -> makeObstacles();
-
-
-  printVector(paths);
-  printVector(aboveFloorGrid);
 
   //initilize the array indicating whether an entry leads to the exit
   entrysToExit.resize(entryPos.size() /2);
@@ -118,26 +111,18 @@ bool MapFactory::tryAMap(){
 
   //place a path for each entry
   for(int p = 0; p < entryPos.size() / 2; p++){
-    // add one because the path number should always start at 1 since 0
-    // is the exit
-    //  bool pathMade = this -> makePath(p + 1);
-    bool pathMade = this -> makePathBFS(p+1);
 
-    return true;
+    //only do the path logic if we have not reached the exit
+    if(entrysToExit.at(p) != 1){
+      // add one because the path number should always start at 1 since 0
+      // is the exit
+      bool pathMade = this -> makePathBFS(p+1);
 
-    int tryingPathMade = 0;
-    //if the path could not be made we try again
-    while(!pathMade){
-      return false;
-      pathMade = this -> makePath(p+1);
-      tryingPathMade++;
-      //if we repeatedly fail we admit defeat and start over
-      if(tryingPathMade>5){
-        //printError(string("Hard Reset"));
-        hardReset++;
-        s.str("");
-        return false;
-      }
+    }
+
+    if(p < entrysToExit.size()){
+      //add this path to the list of paths to the exit
+      entrysToExit.at(p) = 1;
     }
   }
 
@@ -632,8 +617,8 @@ void MapFactory::setUnavailableSpotsFromEntry(int entryXPos, int entryYPos){
         }
         int currDistance = distances.at(row).at(col);
         int difference = abs(distanceForEntry - currDistance);
-        if(difference < 2){
-          unavailableSpots.at(row).at(col) = 0;
+        if(difference < 3){
+          unavailableSpots.at(row).at(col) = 1;
         }
       }
     }
@@ -682,6 +667,33 @@ void MapFactory::makeDistances(){
  * @param path: the path number identifier for this path
  */
 bool MapFactory::makePathBFS(int path){
+  //hold details for each tile
+  vector<vector<CellNode>> board (yDim, vector<CellNode>(xDim));
+  //hold the last position visited
+  vector<int> lastPos(2);
+  bool foundPath = getAStarDistances(board, path, lastPos);
+
+  //if we find no path return false
+  if(!foundPath){
+    return false;
+  }
+  //otherwise mark the path on the grids
+  else{
+    markPath(board, path, lastPos);
+    return true;
+  }
+
+}
+
+/*
+ * Iterate through the board and do an A*Search to find
+ * the true distance from the path entrance to the
+ * exit so that the path knows where to be generated
+ * @param board: grid with a struct with details on each board position
+ * @param path: the path identifier
+ * @param lastPos: the last position we were at (assumed connected to the exit)
+ */
+bool MapFactory::getAStarDistances(vector<vector<CellNode>>& board, int path, vector<int>& lastPos){
   //make a pair for the entry
   intPair entryPosPair(entryPos.at((2*(path-1)+1)),entryPos.at(2*(path-1)));
   //make a pair for the exit
@@ -696,20 +708,16 @@ bool MapFactory::makePathBFS(int path){
   //check that the exit is not an obstacle
   assert(aboveFloorGrid.at(exitPosPair.first).at(exitPosPair.second) > -2);
 
-
   //open list
   set<fPair> openList;
   //close list
   vector<vector<bool>> closedList(yDim, vector<bool>(xDim, false));
 
-  //hold details for each tile
-  vector<vector<CellNode>> board (yDim, vector<CellNode>(xDim));
-
   for(int i=0;i<yDim;i++){
     for(int j=0;j<xDim;j++){
-      board.at(i).at(j).f = 0xFFFFFFFF;
-      board.at(i).at(j).h = 0xFFFFFFFF;
-      board.at(i).at(j).g = 0xFFFFFFFF;
+      board.at(i).at(j).f =  numeric_limits<double>::max() ;
+      board.at(i).at(j).h =  numeric_limits<double>::max() ;
+      board.at(i).at(j).g =  numeric_limits<double>::max() ;
       board.at(i).at(j).rowParent = -1;
       board.at(i).at(j).colParent = -1;
     }
@@ -725,6 +733,13 @@ bool MapFactory::makePathBFS(int path){
   board.at(entryRow).at(entryCol).rowParent=entryRow;
   board.at(entryRow).at(entryCol).colParent=entryCol;
 
+  //if we are already connected with a path to the exit
+  if(connectedWithExitPath(entryRow, entryCol, path)){
+    lastPos.at(0) = entryRow;
+    lastPos.at(1) = entryCol;
+    return true;
+  }
+
   //put the starting cell on the open list
   openList.insert(make_pair(0.0,make_pair(entryRow, entryCol)));
 
@@ -732,7 +747,6 @@ bool MapFactory::makePathBFS(int path){
 
   //the directions we can go in
   vector<intPair> dirs = {make_pair(0,1), make_pair(0,-1),make_pair(1,0),make_pair(-1,0)};
-
   //while there are more cells to traverse
   while(!openList.empty()){
     //grabt the first thing in the set
@@ -743,7 +757,7 @@ bool MapFactory::makePathBFS(int path){
     //add the current row/tile to the closedList
     int closeRow = current.second.first;
     int closeCol = current.second.second;
-    closedList[closeRow][closeCol] = true;
+    closedList.at(closeRow).at(closeCol) = true;
 
     //for all four directions check if they are the destination
     //if not check if they have been visited before or
@@ -753,14 +767,15 @@ bool MapFactory::makePathBFS(int path){
       int newCol = dir.second+closeCol;
 
 
-      int foundExit = evaluateDirection(newRow,newCol,closeRow,closeCol, openList, closedList, board);
+      int foundExit = evaluateDirection(newRow,newCol,closeRow,closeCol,
+                      openList, closedList, board, path);
       if(foundExit){
+        lastPos.at(0) = newRow;
+        lastPos.at(1) = newCol;
         return true;
       }
     }
-
   }
-
   return true;
 }
 
@@ -769,189 +784,102 @@ bool MapFactory::makePathBFS(int path){
  * else return false and add the current position to the open list if it has
  * not been visited. if is on the open list but the current path is better than
  * replace it
+ * @param row: current row
+ * @param col: current col
+ * @param oldRow: the parent row
+ * @param oldCol: the parent col
+ * @param openList: the set of all nodes to visit
+ * @param closedList: the grid of all nodes we have visited
+ * @param board: a grid of with statistics on all the grids and their distances
+ * @param path: current path
  */
 bool MapFactory::evaluateDirection(int row, int col,int oldRow, int oldCol, set<fPair>& openList,
-              vector<vector<bool>>& closedList, vector<vector<CellNode>>& board){
+              vector<vector<bool>>& closedList, vector<vector<CellNode>>& board, int path){
 
   //only check if we are on the grid
   if(isInMap(row,col)){
     //if we are at the exit
-    if(paths.at(row).at(col) == 0){
+    //or are bordering a path that already leads to the exit
+    if(paths.at(row).at(col) == 0 || connectedWithExitPath(row, col, path)){
       board.at(row).at(col).rowParent=oldRow;
       board.at(row).at(col).colParent=oldCol;
       return true;
     }
     //if the tile has an obstacle or is on the list of visited nodes
     //ignore else do the following
-    else if(aboveFloorGrid.at(row).at(col) > -2 && closedList.at(row).at(col) != true){
-      double g = board.at(row).at(col).g + 1.0;
+    //or if there is an entrance already there
+    else if(aboveFloorGrid.at(row).at(col) > -2 && closedList.at(row).at(col) != true
+          &&!(isEntrance(row,col))){
+      double g = board.at(oldRow).at(oldCol).g + 1.0;
       double h = distances.at(row).at(col);
       double f = g + h;
-
-      
-
+      if(board.at(row).at(col).f == numeric_limits<double>::max() || board.at(row).at(col).f > f){
+        openList.insert(make_pair(f, make_pair(row,col)));
+        board.at(row).at(col).f=f;
+        board.at(row).at(col).g=g;
+        board.at(row).at(col).h=h;
+        board.at(row).at(col).rowParent=oldRow;
+        board.at(row).at(col).colParent=oldCol;
+      }
     }
   }
   return false;
 }
 
-
 /*
- * make a path for the specified path on the board
- * @param pathNumber: the numeric identifier for the path
- * @param bool: false if we could not make one
+ * True if the current row and column are an entrance
  */
-bool MapFactory::makePath(int pathNumber){
-
-
-  //grab the starting row and column
-  int currRowNum = entryPos.at(2*(pathNumber - 1) + 1);
-  int currColNum = entryPos.at(2*(pathNumber - 1));
-  int lastRow = -1;
-  int lastCol = -1;
-
-  //if the current path is drawn over by a differnt path we leave
-  if(paths.at(currRowNum).at(currColNum) != pathNumber){
-    paths.at(currRowNum).at(currColNum) = pathNumber;
-  }
-
-  //the direction the entry faces in
-  Direction::Directions entryDirection = entryDirections[pathNumber - 1].facing;
-  //the direction we cannot expand towards
-  Direction::Directions directionExpandedFrom = entryDirection;
-  //the directions we can expand towards
-  vector<Direction::Directions> directionsCanExpand = entryDirections[pathNumber -1].allOtherDirections(directionExpandedFrom);
-  //the direction opposite the exit (going this way will get the path to the exit the fastest)
-  Direction::Directions oppositeExit = exitDirection.oppositeDirection(exitDirection.facing);
-
-  //keep track of all non exit paths this path touches along the way to the exit
-  vector<int> allNonExitPaths;
-
-  //to keep track of the last shortest direction in case
-  // we get to a corner where the only way to the exit is by taking a side path
-  int lastShortestDistance = 0x1FFF;
-
-  //keep track of every decision so far
-  //if we hit a loop we restart!
-  vector<Direction::Directions> allStepsSoFar;
-
-  int restarts = 0;
-  //while we have not reached another path or the exit tile
-  while(paths.at(currRowNum).at(currColNum) < 0 || paths.at(currRowNum).at(currColNum) == pathNumber){
-
-      //if we connect with the exit we add the path to the list of exit paths
-      if(connectedWithExit(currRowNum, currColNum)){
-        //now this path leads to the exit
-        entrysToExit.at(pathNumber - 1) = 1;
-        break;
-      }
-      //if the newest path tile is touching a different path then we are done
-      //but only if that path leads to an exit
-        if(connectedWithExitPath(currRowNum, currColNum, pathNumber)){
-          //now this path leads to the exit
-          entrysToExit.at(pathNumber - 1) = 1;
-          break;
-        }
-      //if the newest path tile is touching a differnt path and it is not an
-      //exit path than we add it to the list of paths to exit because we can
-      //assume that this current path will reach the exit
-      vector<int> connectedNonExitPaths = connectedWithNonExitPath(currRowNum, currColNum, pathNumber);
-      if(connectedNonExitPaths.size() != 0){
-        for(int otherPath : connectedNonExitPaths){
-          allNonExitPaths.push_back(otherPath);
-        }
-      }
-
-      //get all the possible steps
-      vector<Direction::Directions> nextSteps;
-
-      //current space distance from the exit
-      int currDistance = distances.at(currRowNum).at(currColNum);
-
-      //count the number of times we look for a shortest step
-      int timesAround = 0;
-
-      while(nextSteps.size() == 0){
-
-        //get the next posssible steps the path can take
-        nextSteps = calcNextShortestStep(currRowNum, currColNum);
-        s << " next steps " << endl;
-        s << currRowNum << " " << currColNum << endl;
-        for (int i = 0; i < nextSteps.size(); i++){
-          s << exitDirection.directionToInt(nextSteps.at(i)) << endl;
-        }
-
-        //if there are no steps try to remove an obstacle
-        if(timesAround > 1 && nextSteps.size() == 0){
-          printVector(paths);
-          printVector(aboveFloorGrid);
-          cout << s.str();
-          s.str("");
-          return false;
-          removeObstacleInShortestStep(currRowNum, currColNum);
-          //if we have looped too many times it means we are stuck
-          //so we walk back the changes and start over
-          if(timesAround > 5){
-            printVector(paths);
-            cout << s.str();
-            //printError(string("Soft Reset"));
-            softReset++;
-            s.str("");
-            return false;
-          }
-        }
-        timesAround++;
-      }
-      //shuffle them
-      random_shuffle(nextSteps.begin(), nextSteps.end());
-      int randomStep = randomVariates -> Equilikely(0, nextSteps.size() - 1);
-
-      s << "CHOSE " << exitDirection.directionToInt(nextSteps.at(randomStep)) << endl;
-
-      //pick a random direction to step in from the possible options
-      Direction::Directions expandInto = nextSteps.at(randomStep);
-
-      //add this direction to our directions we have steped in
-      allStepsSoFar.push_back(expandInto);
-
-      //store the last row and column we came from
-      lastRow = currRowNum;
-      lastCol = currColNum;
-
-      //update the row to the exapnded direction
-      currRowNum = expandInRow(currRowNum, expandInto);
-      //update the column to the exapnded direction
-      currColNum = expandInCol(currColNum, expandInto);
-
-      //update the last shortest distance to be the distance of the current space
-      lastShortestDistance = distances.at(currRowNum).at(currColNum);
-
-      //place a path value at the current tile
-      paths.at(currRowNum).at(currColNum) = pathNumber;
-
-      //place the path indicator on the floor grid array used for textures
-      floorGrid.at(currRowNum).at(currColNum) = pathNumber;
-
-      //mark this spot as unavailable for use later
-      unavailableSpots.at(currRowNum).at(currRowNum) = 0;
-
-      //reset the direction we exaneded from
-      directionExpandedFrom = expandInto;
-
-      printVector(paths);
-      printVector(aboveFloorGrid);
-      printVector(distances);
-  }
-
-  //finally take all non exit paths we touched and mark them as exit paths
-  if(allNonExitPaths.size() != 0){
-    for(int nonExitPath : allNonExitPaths){
-      entrysToExit.at(nonExitPath - 1) = 1;
+bool MapFactory::isEntrance(int row, int col){
+  for(int pair = 0; pair < entryPos.size(); pair+=2){
+    int checkrow = entryPos.at(pair+1);
+    int checkcol = entryPos.at(pair);
+    if(row == checkrow && col == checkcol){
+      return true;
     }
   }
-  s.str("");
-  return true;
+  return false;
 }
+
+/*
+ * Follow the path to the exit and mark it on the grids
+ * @param board: the board with details on the distances
+ * @param path: the integer we will use to mark this path
+ */
+void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>& lastPos){
+    //start at the index of your last position (could be the exit or adjacent to some other path)
+    int currRow = lastPos.at(0);
+    int currCol = lastPos.at(1);
+
+    //if not at the exit poisiton mark the current space as a path
+    if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
+      paths.at(currRow).at(currCol) = path;
+    }
+
+    while(!(board.at(currRow).at(currCol).rowParent == currRow &&
+            board.at(currRow).at(currCol).colParent == currCol) ){
+
+      int tempRow = board.at(currRow).at(currCol).rowParent;
+      int tempCol = board.at(currRow).at(currCol).colParent;
+      currRow = tempRow;
+      currCol = tempCol;
+
+      //mark the space as the path if there is not already a path
+      if(!(paths.at(currRow).at(currCol) > -1)){
+        paths.at(currRow).at(currCol) = path;
+      }
+      //if we are adjacent to another path then we must mark that path as
+      //to the exit
+      vector<int> possibleConnections;
+      possibleConnections = connectedWithNonExitPath(currRow, currCol, path);
+      if(possibleConnections.size()!=0){
+        for(int nonExitPath : possibleConnections){
+          entrysToExit.at(nonExitPath - 1) = 1;
+        }
+      }
+    }
+}
+
+
 /*
  * return true if the passed tile is connected to the exit
  * @param row: row index (Y)
@@ -1077,147 +1005,6 @@ bool MapFactory::connectedWithExit(int row, int col){
     }
 
     return nonExitPaths;
-  }
-
- /*
-  * return the direction of the next shortest step
-  * add extra directions to the list if this direction is not touching another path
-  * add extra directions to the list if this direction is not on an edge
-  * @param row: row index (Y)
-  * @param col: column index (X)
-  * @return vector<Direction::Directions>: what directions are considered shortest steps
-  */
-  vector<Direction::Directions> MapFactory::calcNextShortestStep(int row, int col){
-    int topDist = 0x1FFF;
-    int bottomDist = 0x1FFF;
-    int leftDist = 0x1FFF;
-    int rightDist = 0x1FFF;
-
-    int addExtraLeftDist = 0;
-    int addExtraRightDist = 0;
-    int addExtraTopDist = 0;
-    int addExtraBottomDist = 0;
-
-    //the numeric indicator of the path
-    int path = paths.at(row).at(col);
-
-    vector<Direction::Directions> shortestSteps;
-
-    //get the distances in all direcitons that are not blocked
-    //check left
-    if(col - 1 >= 0){
-      //make sure that there is no obstacle here and that this is not on the current path
-      if(aboveFloorGrid.at(row).at(col - 1) > -2 && paths.at(row).at(col-1) != path){
-        //if this space would make it impossible to move
-            leftDist = distances.at(row).at(col - 1);
-            //if this is not connected with another path we want to weight it
-            if(!connectedWithOtherPath(row, col - 1, row, col, path)){
-              addExtraLeftDist++;
-            }
-            //if this is on an edge add an extra distance
-            if(col - 1 >0){
-              addExtraLeftDist++;
-            }
-      }
-    }
-    //check right
-    if(col + 1 < xDim){
-      if(aboveFloorGrid.at(row).at(col + 1) > -2 && paths.at(row).at(col+1) != path){
-
-            rightDist = distances.at(row).at(col + 1);
-            if(!connectedWithOtherPath(row, col + 1, row, col, path)){
-              addExtraRightDist++;
-            }
-            if(col + 1 < xDim -1){
-              addExtraRightDist++;
-            }
-
-      }
-    }
-    //check top
-    if(row - 1 >= 0){
-      if(aboveFloorGrid.at(row - 1).at(col) > -2 && paths.at(row-1).at(col) != path){
-
-            topDist = distances.at(row - 1).at(col);
-            if(!connectedWithOtherPath(row - 1, col, row, col, path)){
-              addExtraTopDist++;
-            }
-            if(row -1 >0){
-              addExtraTopDist++;
-            }
-
-      }
-    }
-    //check bottom
-    if(row + 1 < yDim){
-      if(aboveFloorGrid.at(row + 1).at(col) > -2 && paths.at(row+1).at(col) != path){
-            bottomDist = distances.at(row + 1).at(col);
-            if(!connectedWithOtherPath(row + 1, col, row, col, path)){
-              addExtraBottomDist++;
-            }
-            if(row + 1< yDim -1){
-              addExtraBottomDist++;
-            }
-      }
-    }
-
-
-    int shortestDist = min(leftDist, min(rightDist, min(topDist, bottomDist)));
-
-    //if there was no adequate direction to step in
-    if(shortestDist == 0x1FFF){
-      return shortestSteps;
-    }
-
-    //find out which distance is the shortest and add the distance correspoonding to it
-    //to the vector of the possible shortets distances
-    //add extra distances if we want to favor them
-    if(shortestDist == leftDist){
-      shortestSteps.push_back(Direction::Left);
-      while(addExtraLeftDist){
-        //a chance of adding in an extra distance
-        int chance = (int)randomVariates ->Equilikely(0,5);
-        if(chance>4){
-          //shortestSteps.push_back(Direction::Left);
-        }
-        addExtraLeftDist--;
-      }
-    }
-    if(shortestDist == rightDist){
-      shortestSteps.push_back(Direction::Right);
-      while(addExtraRightDist){
-        //a chance of adding in an extra distance
-        int chance = (int) randomVariates -> Equilikely(0,5);
-        if(chance>4){
-          //shortestSteps.push_back(Direction::Right);
-        }
-        addExtraRightDist--;
-      }
-    }
-    if(shortestDist == topDist){
-      shortestSteps.push_back(Direction::Top);
-      while(addExtraTopDist){
-        //a chance of adding in an extra distance
-        int chance = (int)randomVariates ->Equilikely(0,5);
-        if(chance>4){
-          //shortestSteps.push_back(Direction::Top);
-        }
-        addExtraTopDist--;
-      }
-    }
-    if(shortestDist == bottomDist){
-      shortestSteps.push_back(Direction::Bottom);
-      while(addExtraBottomDist){
-        //a chance of adding in an extra distance
-        int chance = (int) randomVariates ->Equilikely(0,5);
-        if(chance>4){
-          //shortestSteps.push_back(Direction::Bottom);
-        }
-        addExtraBottomDist--;
-      }
-    }
-
-    return shortestSteps;
   }
 
   /*
@@ -1387,135 +1174,6 @@ bool MapFactory::connectedWithExit(int row, int col){
    return false;
  }
 
-
-/*
- * If we have made a bad path. Walk back the changes to the starting position
- * @param stepsMade: all the steps we made to this point through the grid
- * @param allNonExitPaths: all the paths we were adjacent to
- * @param row: the row we are at
- * @param col: the col we are at
- * @param path: the numeric identifier of our current path
- */
-  void MapFactory::walkBack(vector<Direction::Directions>& stepsMade, vector<int>& allNonExitPaths,  int &row, int &col, int path){
-
-    //clear the list of non exit paths we touched because we are not longer touching them
-    allNonExitPaths.clear();
-
-    //recursviely follow the path from the entrance and flip all
-    //the spaces the path touched back to their starting values
-    resetPath(row, col, path);
-
-    //reset the row and column to the entry pos
-    row = entryPos.at(2*(path-1)+1);
-    col = entryPos.at(2*(path-1));
-  }
-
-/*
- * Recursively follow the path until we reach the entrance or a space no longer touching
- * our original path and flip the tile
- */
-void MapFactory::resetPath(int row, int col, int path){
-  //if we are outside the map return
-  if(row < 0 || row >= yDim || col < 0|| col >= xDim){
-    return;
-  }
-  int originalRow = entryPos.at(2*(path-1)+1);
-  int originalCol = entryPos.at(2*(path-1));
-  //if we are the original entrance return
-  if(row == originalRow && col == originalCol){
-    return;
-  }
-  //if we are not on the path anymore return
-  if(paths.at(row).at(col) != path){
-    return;
-  }
-  //reset all grids that we have changed
-  paths.at(row).at(col) = -1;
-  floorGrid.at(row).at(col) = -1;
-  unavailableSpots.at(row).at(col) = -1;
-
-  //make a vector of "directions" that we iterate through
-  // to explore the rest of this path recursively in all directions
-  vector<vector<int>> dirs = {{0,1}, {0,-1},{1,0},{-1,0}};
-  for(vector<int> dir : dirs){
-    int newrow = row + dir.at(0);
-    int newcol = col + dir.at(1);
-    resetPath(newrow, newcol, path);
-  }
-}
-
-
-/*
- * Remove the obstacle in the shortest distance direction where there is one
- * @param row: row index (Y)
- * @param col: col index (X)
- */
-void MapFactory::removeObstacleInShortestStep(int row, int col){
-  int rowMinusOne = row -1;
-  int rowPlusOne = row +1;
-  int colMinusOne = col -1;
-  int colPlusOne = col + 1;
-
-  bool rowMinusOneIn = rowIsInMap(rowMinusOne);
-  bool rowPlusOneIn = rowIsInMap(rowPlusOne);
-  bool colMinusOneIn = colIsInMap(colMinusOne);
-  bool colPlusOneIn = colIsInMap(colPlusOne);
-
-  int topDist = 0x1FFF;
-  int bottomDist = 0x1FFF;
-  int leftDist = 0x1FFF;
-  int rightDist = 0x1FFF;
-
-  //we do not want to remove obstacles that are touching the path
-  //because we cannot move there anyways
-  int currPath = paths.at(row).at(col);
-
-  if(rowMinusOneIn){
-    if(aboveFloorGrid.at(rowMinusOne).at(col) < -1){;
-      topDist = distances.at(rowMinusOne).at(col);
-    }
-  }
-  if(rowPlusOneIn){
-    if(aboveFloorGrid.at(rowPlusOne).at(col) < -1){
-      bottomDist = distances.at(rowPlusOne).at(col);
-    }
-  }
-  if(colMinusOneIn){
-    if(aboveFloorGrid.at(row).at(colMinusOne) < -1){
-      leftDist = distances.at(row).at(colMinusOne);
-    }
-  }
-  if(colPlusOneIn){
-    if(aboveFloorGrid.at(row).at(colPlusOne) < -1) {
-      rightDist = distances.at(row).at(colPlusOne);
-    }
-  }
-
-  int shortestDist = min(leftDist, min(rightDist, min(topDist, bottomDist)));
-
-  //if there is no shortest distance to remove an obstacle
-  //then we return false (should allow for the edges that were ignored before to
-  // be explored for a path)
-  if(shortestDist == 0x1FFF){
-    return;
-  }
-
-  //find out which distance is the shortest and remove the obstacle
-  if(shortestDist == leftDist){
-    aboveFloorGrid.at(row).at(colMinusOne) = -1;
-  }
-  if(shortestDist == rightDist){
-    aboveFloorGrid.at(row).at(colPlusOne) = -1;
-  }
-  if(shortestDist == topDist){
-    aboveFloorGrid.at(rowMinusOne).at(col) = -1;
-
-  }
-  if(shortestDist == bottomDist){
-    aboveFloorGrid.at(rowPlusOne).at(col) = -1;
-  }
-  numObstaclesRemoved++;
-}
 
  /*
   * return a new row number that is expanded in the specified direction
@@ -2011,6 +1669,16 @@ void MapFactory::printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo){
     cout << endl;
     s << endl;
   }
+}
+
+void MapFactory::printVectorCells(vector<vector<CellNode>>& board){
+  for(int i = 0; i < yDim; i++){
+    for(int j = 0; j < xDim; j++){
+      s << (board.at(i).at(j).f < 100 ? board.at(i).at(j).f : -1)  << " ";
+    }
+    s << endl;
+  }
+  s << endl;
 }
 
 /*

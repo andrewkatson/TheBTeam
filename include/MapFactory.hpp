@@ -17,6 +17,7 @@
 #include <utility>
 #include <assert.h>
 #include <set>
+#include <limits>
 
 using std::vector;
 using std::unique_ptr;
@@ -36,6 +37,7 @@ using std::string;
 using std::pair;
 using std::make_pair;
 using std::set;
+using std::numeric_limits;
 class MapFactory{
 private:
 
@@ -164,20 +166,20 @@ private:
   void makeFloor();
 
   bool makePathBFS(int path);
+  bool getAStarDistances(vector<vector<CellNode>>& board, int path,vector<int>& lastPos);
   bool evaluateDirection(int row, int col, int oldRow, int oldCol, set<fPair>& openList,
-              vector<vector<bool>>& closedList, vector<vector<CellNode>>& board);
+              vector<vector<bool>>& closedList, vector<vector<CellNode>>& board, int path);
+  bool isEntrance(int row, int col);
+  void markPath(vector<vector<CellNode>>& board, int path,vector<int>& lastPos);
 
-  bool makePath(int pathNumber);
+
   bool connectedWithExit(int row, int col);
   bool connectedWithExitPath(int row, int col , int path);
   vector<int> connectedWithNonExitPath(int row, int col, int path);
-  vector<Direction::Directions> calcNextShortestStep(int row, int col);
   bool connectedWithSamePath(int newrow, int newcol, int row, int col, int path);
   bool surroundedWithSamePath(int newrow, int newcol, int row, int col, int path);
   bool connectedWithOtherPath(int newrow, int newcol, int row, int col, int path);
-  void removeObstacleInShortestStep(int row, int col);
-  void walkBack(vector<Direction::Directions>& stepsMade, vector<int>& allNonExitPaths,  int &row, int &col, int path);
-  void resetPath(int row, int col, int path);
+
   int expandInRow(int row, Direction::Directions expandDirection);
   int expandInCol(int col, Direction::Directions expandDirection);
 
@@ -194,6 +196,7 @@ private:
   bool rowIsInMap(int row);
   bool colIsInMap(int col);
 
+  void printVectorCells(vector<vector<CellNode>>& board);
   template <class T>
   void printVector(vector<vector<T>> &v);
   template <class T>

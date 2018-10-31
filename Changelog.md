@@ -1,5 +1,11 @@
 [Unreleased]
 
+###Changed
+- MapFactory now uses an A* BFS to find paths through the
+  map [@andrewkatson][https://github.com/andrewkatson]
+
+[0.1.0]
+
 ###Added
 - MousePressEvent, MousePressEventData to regsiter mouse presses [@andrewkatson][https://github.com/andrewkatson]
 - MainMenuScreen, PlayingScreen, RestartScreen, OptionsMenuScreen, and RestartScreen

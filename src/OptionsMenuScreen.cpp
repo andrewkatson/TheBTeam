@@ -10,7 +10,7 @@ OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,share
   this -> textLoader = textLoader;
   this -> selectedItem = 0;
   int check = 0;
-  this -> registerDelegates();
+  //this -> registerDelegates();
   /*
 
   //Options Menu
