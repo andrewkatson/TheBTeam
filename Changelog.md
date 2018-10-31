@@ -2,6 +2,9 @@
 ##Addded
 - StateChangeEvent, StateChangeEventData[@andrewkatson][https://github.com/andrewkatson]
 
+###Added
+- ActorDestroyedEvent, ActorDestroyedEventData, ActorAttackEvent, ActorAttackEventData [@meisong1997][https://github.com/meisong1997]
+
 ###Changed
 - MapFactory now uses an A* BFS to find paths through the
   map [@andrewkatson][https://github.com/andrewkatson]
@@ -9,6 +12,7 @@
 
 ###Fixed
 - memory issue caused by improperly initialized shared pointers [@andrewkatson][https://github.com/andrewkatson]
+
 
 [0.1.0]
 
