@@ -23,7 +23,6 @@
 using std::shared_ptr;
 using std::unique_ptr;
 //allows you to use _1 and _2 etc... for binding
-using namespace std::placeholders;
 class UserView{
 private:
   //Store the textLoader to make requests for strings and constants
@@ -34,18 +33,18 @@ private:
   unique_ptr<UserInputManager> userInputManager;
   //logic of the game. handles mechanics
   shared_ptr<GameLogic> gameLogic;
-  //the render window that the game is drawn on
-  sf::RenderWindow *game;
   //the vector of screens
   vector<shared_ptr<Screen>> screens;
   //index of the current screen
   int screen;
+  bool shutDownGame;
 
   sf::Font font;
   sf::Text title;
+  int check;
 
 public:
-  UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
+  UserView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
 
   ~UserView();
 
@@ -62,7 +61,7 @@ public:
 
   void updateUserView(float deltaS, sf::RenderWindow &game);
 
-  void shutDown();
+  void shutDown(sf::RenderWindow &game);
 };
 
 #endif

@@ -1,11 +1,16 @@
 #include "OptionsMenuScreen.hpp"
 
 
-OptionsMenu::OptionsMenu(int windowX, int windowY, int numItems, sf::Font font) {
+OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems, sf::Font font) {
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> numItems = numItems;
   this -> font = font;
+  this -> eventManager = eventManager;
+  this -> textLoader = textLoader;
+  this -> selectedItem = 0;
+  int check = 0;
+  this -> registerDelegates();
   /*
 
   //Options Menu
@@ -45,11 +50,10 @@ OptionsMenu::OptionsMenu(int windowX, int windowY, int numItems, sf::Font font) 
     Screen[6].setString("Path Length");
     Screen[6].setPosition(sf::Vector2f(width / 4, height / (numItems + 1) * 7));
 
-    selectedItem = 0;
     */
 }
 
-  void OptionsMenu::moveUp()
+  void OptionsMenuScreen::moveUp()
 {
 	if (selectedItem - 1 >= 0)
 	{
@@ -59,7 +63,7 @@ OptionsMenu::OptionsMenu(int windowX, int windowY, int numItems, sf::Font font) 
 	}
 }
 
-void OptionsMenu::moveDown()
+void OptionsMenuScreen::moveDown()
 {
 	if (selectedItem + 1 < numItems)
 	{
@@ -70,6 +74,64 @@ void OptionsMenu::moveDown()
 
 }
 
-void OptionsMenu::draw(sf::RenderWindow &window){
+void OptionsMenuScreen::draw(sf::RenderWindow &window){
 
+}
+
+
+/*
+ * Register the delegate method for this class
+ * with any events it needs to know about
+ */
+void OptionsMenuScreen::registerDelegates(){
+
+  //bind our delegate function for key presses
+  EventManager::EventDelegate keyPressDelegate = std::bind(&OptionsMenuScreen::handleKeyPress, this, _1);
+
+  //make an event and get its type
+  KeyPressEvent keyPressEvent = KeyPressEvent();
+  EventType keyPressEventType = keyPressEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_OMSD_KP")),keyPressEventType);
+}
+
+/*
+ * Handle any key press from the user
+ * @param event: event of the key press
+ */
+void OptionsMenuScreen::handleKeyPress(const EventInterface& event){
+  cout << "options chek " << check << endl;
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * KeyPressEvent type which allows us to access variables and methods
+   * specific to KeyPressEvent
+   */
+  const KeyPressEvent* kpEvent = static_cast<const KeyPressEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a KeyPressEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  KeyPressEventData* kpEventData = static_cast<KeyPressEventData*>((kpEvent -> data).get());
+  //get the key string identifier from the data
+  string key = kpEventData -> keyID;
+
+  if(key == "Up"){
+
+  }
+  else if(key == "Down"){
+
+  }
+  else if(key == "Left"){
+
+  }
+  else if(key == "Right"){
+
+  }
+  else if(key == "Enter"){
+
+  }
+  else if(key == "B"){
+
+  }
 }

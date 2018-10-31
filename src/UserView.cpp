@@ -1,16 +1,16 @@
 #include "UserView.hpp"
 
 
-UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic){
+UserView::UserView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic){
 
   this -> textLoader = textLoader;
   this -> eventManager = eventManager;
   this -> userInputManager = unique_ptr<UserInputManager>(new UserInputManager(eventManager));
+  this -> shutDownGame = false;
   this -> registerDelegates();
   this -> registerEvents();
-  this -> game = &game;
   this -> gameLogic = gameLogic;
-
+  check = 10;
   string mainFontPath = textLoader -> getString(string("IDS_MFP"));
 
   if(!font.loadFromFile(mainFontPath)){
@@ -25,7 +25,7 @@ UserView::UserView(shared_ptr<EventManager> eventManager, sf::RenderWindow &game
 }
 
 UserView::~UserView(){
-  game = nullptr;
+
 }
 
 /*
@@ -68,18 +68,18 @@ void UserView::registerEvents(){
  */
 void UserView::initScreens(){
   //Main Menu Screen
-  shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(MainMenuScreen(windowX, windowY, 3, textLoader));
+  shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(MainMenuScreen(eventManager,windowX, windowY, 3, textLoader));
   //Options Menu Screen
-  //shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(OptionsMenuScreen(windowX, windowY, 7, font));
+  shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(OptionsMenuScreen(eventManager, textLoader, windowX, windowY, 7, font));
   //Playing Screen
-  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(PlayingScreen(windowX, windowY));
+  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(PlayingScreen(eventManager, textLoader,windowX, windowY));
   //Buy Tower Sreeen
-  shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(BuyTowerScreen(windowX, windowY));
+  shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(BuyTowerScreen(eventManager, textLoader,windowX, windowY));
   //Restart Screen
-  shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(RestartScreen(windowX, windowY));
+  shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(RestartScreen(eventManager, textLoader,windowX, windowY));
 
   screens.push_back(mainMenuScreen);
-  //screens.push_back(optionsMenuScreen);
+  screens.push_back(optionsMenuScreen);
   screens.push_back(playingScreen);
   screens.push_back(buyTowerScreen);
   screens.push_back(restartScreen);
@@ -100,6 +100,7 @@ void UserView::updateState(){
  * @param event: event of the key press
  */
 void UserView::handleKeyPress(const EventInterface& event){
+  cout << "check " << check << endl;
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * KeyPressEvent type which allows us to access variables and methods
@@ -114,11 +115,13 @@ void UserView::handleKeyPress(const EventInterface& event){
   KeyPressEventData* kpEventData = static_cast<KeyPressEventData*>((kpEvent -> data).get());
   //get the key string identifier from the data
   string key = kpEventData -> keyID;
+
+  cout << "key! " << key << endl;
   if(key == "CLOSE"){
-    shutDown();
+    shutDownGame = true;
   }
   else if(key == "Q"){
-    shutDown();
+    shutDownGame = true;
   }
 }
 
@@ -147,6 +150,9 @@ void UserView::handleMousePress(const EventInterface& event){
 }
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
+  if(shutDownGame){
+    shutDown(game);
+  }
   game.clear();
 
   this -> userInputManager -> processUserInput(game);
@@ -155,6 +161,6 @@ void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
   game.display();
 }
 
-void UserView::shutDown(){
-  game -> close();
+void UserView::shutDown(sf::RenderWindow &game){
+  game.close();
 }

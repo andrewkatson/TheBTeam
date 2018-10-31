@@ -3,6 +3,7 @@
 ###Added
 - MousePressEvent, MousePressEventData to regsiter mouse presses [@andrewkatson][https://github.com/andrewkatson]
 - MainMenuScreen, PlayingScreen, RestartScreen, OptionsMenuScreen, and RestartScreen
+- KeyPress checks for O, S, Enter, UpArrow,DownArrow,LeftArrow, RightArrow
 
 ###Changed
 - TowerInterface has a radius of attack for each tower[@andrewkatson][https://github.com/andrewkatson]
@@ -13,6 +14,8 @@
   successfully (hard reset)
 - TowerManager has all tower types in the old map for upgrades and any empty tile can
   be "upgraded" into any of the four basic types
+- MainMenuScreen and OptionsMenuScreen now take key presses
+
 
 ###Fixed
 - EventType not saving the address passed as its type [@andrewkatson][https://github.com/andrewkatson]

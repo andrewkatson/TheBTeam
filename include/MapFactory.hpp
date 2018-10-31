@@ -14,6 +14,9 @@
 #include <stdexcept>
 #include <sstream>
 #include <string>
+#include <utility>
+#include <assert.h>
+#include <set>
 
 using std::vector;
 using std::unique_ptr;
@@ -30,9 +33,28 @@ using std::begin;
 using std::out_of_range;
 using std::stringstream;
 using std::string;
-
+using std::pair;
+using std::make_pair;
+using std::set;
 class MapFactory{
 private:
+
+  //f = g + h
+  //g is the distance from the starting tile to the current tile
+  //h is the estimated (Manhattan) distance from the current tile to the end
+
+  //Used to hold row, col data for A* BFS
+  struct CellNode{
+    double f,g,h;
+    int rowParent;
+    int colParent;
+  };
+
+  //int pair (used to assocaite a row and col)
+  typedef pair<int,int> intPair;
+  //double - int int pair (used to associate f with a row col)
+  typedef pair<double, intPair> fPair;
+
 
   //a container class with customization options for this map
   unique_ptr<MapChoices> mapCustomizationChoices;
@@ -140,6 +162,10 @@ private:
   void setUnavailableSpotsFromEntry(int entryXPos, int entryYPos);
 
   void makeFloor();
+
+  bool makePathBFS(int path);
+  bool evaluateDirection(int row, int col, int oldRow, int oldCol, set<fPair>& openList,
+              vector<vector<bool>>& closedList, vector<vector<CellNode>>& board);
 
   bool makePath(int pathNumber);
   bool connectedWithExit(int row, int col);

@@ -5,9 +5,7 @@
 
   @author Mei-Ting Song, Andrew Katson
 */
-
-#ifndef EVENTMANAGER_H
-#define EVENTMANAGER_H
+#pragma once
 
 #include <functional>
 #include <memory>
@@ -16,6 +14,7 @@
 #include <unordered_map>
 #include <string>
 #include <queue>
+
 #include "EventInterface.hpp"
 
 using std::shared_ptr;
@@ -27,15 +26,16 @@ using std::unordered_map;
 using std::size_t;
 using std::queue;
 using std::string;
+
+
 class EventManager{
 public:
+
   typedef std::function<void(const EventInterface&)> EventDelegate;
   typedef std::queue<shared_ptr<EventInterface>> event_queue;
 
   typedef std::unordered_map<string,shared_ptr<EventDelegate>> event_delegates;
   typedef std::unordered_map<EventType, event_delegates> event_map;
-
-  int processQueueVal;
 
   EventManager();
   ~EventManager();
@@ -52,9 +52,10 @@ public:
 
   void triggerEvent(const EventInterface& event);
 
-//  int find(event_delegates &eventDelegateList,  const EventDelegate& toFind);
 
-  void clear(event_queue &q);
+  void clear(shared_ptr<event_queue> q);
+  void dumpErrors();
+
 
   std::vector<shared_ptr<event_queue>> queues;
   shared_ptr<event_queue> process_queue;
@@ -62,6 +63,5 @@ public:
 
   event_map EventDelegateMap;
 
-};
 
-#endif
+};

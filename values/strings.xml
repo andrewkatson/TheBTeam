@@ -8,7 +8,7 @@
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
     <!--GameLogic Delegates-->
-    <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD_MP"> </string>
+    <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD_KP"> </string>
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
@@ -19,6 +19,11 @@
     <!--Tower Manager Delegates-->
     <string value="TOWERMANAGERHANDLETOWERCREATION" id="IDS_TMD_TC"> </string>
     <string value="TOWERMANAGERHANDLETOWERREMOVE" id="IDS_TMD_TR"> </string>
+    <!--MainMenuScreen Delegates-->
+    <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
+    <!--OptionsMenuScreen Delegates-->
+    <string value="OPTIONSMENUSCREENHANDLEKEYPRESS" id="IDS_OMSD_KP"> </string>
+
     <!--TowerTypeIDS-->
     <!--No Tower -->
     <string value="NT" id="IDS_NT"> </string>

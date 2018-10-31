@@ -88,6 +88,48 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
 
      this -> eventManager -> queueEvent(qKey);
    }
+   //S used for start when you want to play the game (could have been p but distinction needs to be made between pressing on main
+   // menu and the game screen because p is also pause)
+   else if(event.key.code == sf::Keyboard::S){
+     shared_ptr<EventInterface> sKey = make_shared<KeyPressEvent>(KeyPressEvent(string("S"), nowInNano));
+
+     this -> eventManager -> queueEvent(sKey);
+   }
+   else if(event.key.code == sf::Keyboard::O){
+     shared_ptr<EventInterface> oKey = make_shared<KeyPressEvent>(KeyPressEvent(string("O"), nowInNano));
+
+     this -> eventManager -> queueEvent(oKey);
+   }
+   else if(event.key.code == sf::Keyboard::B){
+     shared_ptr<EventInterface> bKey = make_shared<KeyPressEvent>(KeyPressEvent(string("B"), nowInNano));
+
+     this -> eventManager -> queueEvent(bKey);
+   }
+   else if(event.key.code == sf::Keyboard::Left){
+     shared_ptr<EventInterface> leftArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Left"), nowInNano));
+
+     this -> eventManager -> queueEvent(leftArrow);
+   }
+   else if(event.key.code == sf::Keyboard::Right){
+     shared_ptr<EventInterface> rightArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Right"), nowInNano));
+
+     this -> eventManager -> queueEvent(rightArrow);
+   }
+   else if(event.key.code == sf::Keyboard::Up){
+     shared_ptr<EventInterface> upArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Up"), nowInNano));
+
+     this -> eventManager -> queueEvent(upArrow);
+   }
+   else if(event.key.code == sf::Keyboard::Down){
+     shared_ptr<EventInterface> downArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Down"), nowInNano));
+
+     this -> eventManager -> queueEvent(downArrow);
+   }
+   else if(event.key.code == sf::Keyboard::Return){
+     shared_ptr<EventInterface> enterKey = make_shared<KeyPressEvent>(KeyPressEvent(string("Enter"), nowInNano));
+
+     this -> eventManager -> queueEvent(enterKey);
+   }
  }
 
  /*

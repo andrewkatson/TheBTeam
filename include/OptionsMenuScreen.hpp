@@ -4,18 +4,25 @@
 
 using std::vector;
 
-class OptionsMenu : public Screen {
+class OptionsMenuScreen : public Screen {
 private:
   int numItems;
   int selectedItem;
   vector<sf::Text> screen;
   sf::Font font;
+  //event manager (used to register, deregister from events, and create them)
+  shared_ptr<EventManager> eventManager;
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
+  int check;
 public:
 
-  OptionsMenu(int windowX, int windowY, int numItems, sf::Font font);
+  OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems, sf::Font font);
 
   void moveUp();
   void moveDown();
   void draw(sf::RenderWindow &window);
+  void handleKeyPress(const EventInterface& event);
+  void registerDelegates();
   int getSelectedItem() {return selectedItem;}
 };
