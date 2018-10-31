@@ -25,6 +25,6 @@ void Soda::setProjectile(){
   //area of effect
   int sodaAR = textLoader -> getConstant(string("IDS_SO_AR"));
 
-  this-> currentProjectile = make_shared<SodaProjectile>(SodaProjectile(
-    sodaHP, sodaDM, sodaAM, sodaSP, sodaAP, sodaAR));
+  this-> currentProjectile = make_shared<SodaProjectile>(
+    sodaHP, sodaDM, sodaAM, sodaSP, sodaAP, sodaAR);
 }

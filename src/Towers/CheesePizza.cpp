@@ -25,6 +25,5 @@ void CheesePizza::setProjectile(){
   //area of effect
   int cheesePizzaAR = textLoader -> getConstant(string("IDS_CP_AR"));
 
-  this-> currentProjectile = make_shared<CheesePizzaProjectile>(CheesePizzaProjectile(
-    cheesePizzaHP, cheesePizzaDM, cheesePizzaAM, cheesePizzaSP, cheesePizzaAP, cheesePizzaAR));
+  this-> currentProjectile = make_shared<CheesePizzaProjectile>(cheesePizzaHP, cheesePizzaDM, cheesePizzaAM, cheesePizzaSP, cheesePizzaAP, cheesePizzaAR);
 }

@@ -11,10 +11,8 @@
 
 
 EventManager::EventManager(){
-  event_queue a;
-  event_queue b;
-  queues.push_back(make_shared<event_queue>(a));
-  queues.push_back(make_shared<event_queue>(b));
+  queues.push_back(make_shared<event_queue>());
+  queues.push_back(make_shared<event_queue>());
   process_queue = queues.at(0);
   register_queue = queues.at(1);
 }
@@ -25,8 +23,6 @@ EventManager::~EventManager(){
 
 //add an event to the queue of registered events
 void EventManager::queueEvent(shared_ptr<EventInterface> event){
-//  cout << "queue event  " << endl;
-//  cout << register_queue -> size() << endl;
   //in case we do not find the event type we add it
   //to the map
   event_map::const_iterator it = EventDelegateMap.find(event -> getEventType());
@@ -41,13 +37,10 @@ void EventManager::queueEvent(shared_ptr<EventInterface> event){
 //add an event to the map of events and their delegates
 void EventManager::registerEvent(const EventType &type){
 
-//  cout << register_queue -> size() << endl;
   event_delegates newdelegateList;
   event_map::const_iterator it = EventDelegateMap.find(type);
 
   if(it == EventDelegateMap.end()){
-    cout << "register event " << endl;
-    cout << type.eventWithin << endl;
     EventDelegateMap.insert({type, newdelegateList});
   }
 
@@ -55,10 +48,9 @@ void EventManager::registerEvent(const EventType &type){
 
 //register a delegate to an event type. Think of this like a person (class) is subscribing
 // to a particular magazine (EvenetType) and is sending their address (EventDelegate)
-void EventManager::registerDelegate(const EventDelegate& d, const string &eventDelegateIdentifier,const EventType &type){
-  cout << "register delegate " << endl;
-  cout << eventDelegateIdentifier << endl;
-  //cout << register_queue -> size() << endl;
+void EventManager::registerDelegate(const EventDelegate& d, const string &eventDelegateIdentifier,
+                  const EventType &type){
+
   //in case we do not find the event type we add it
   //to the map
   event_map::const_iterator it = EventDelegateMap.find(type);
@@ -69,10 +61,10 @@ void EventManager::registerDelegate(const EventDelegate& d, const string &eventD
   event_delegates eventDelegatesEventMap = EventDelegateMap.at(type);
   //if it is not we add it to the list of event delegates
   if(eventDelegatesEventMap.find(eventDelegateIdentifier) == eventDelegatesEventMap.end()){
+    //TODO the line below uses the copy constructor if there are issues with delegate
+    //calls this could be it
     shared_ptr<EventDelegate> ed = make_shared<EventDelegate>(d);
     EventDelegateMap.at(type).insert({eventDelegateIdentifier,ed});
-    cout << EventDelegateMap.at(type).size() << endl;
-    cout << "delegate registered! " << endl;
   }
 
 }
@@ -89,8 +81,6 @@ void EventManager::deregisterDelegate(const EventDelegate& d, const string &even
 
 void EventManager::triggerEvent(const EventInterface& event)
 {
-//  cout << "trigger event " << endl;
-//  cout << register_queue -> size() << endl;
   //search to see if this event is registered
   auto delegateList = EventDelegateMap.find(event.getEventType());
   if(delegateList == EventDelegateMap.end()){
@@ -110,8 +100,6 @@ void EventManager::triggerEvent(const EventInterface& event)
 
 //iterate through all registered events and trigger them
 void EventManager::processEvent(){
-//  cout << "process  event " << endl;
-//  cout << register_queue -> size() << endl;
   std::swap(*process_queue, *register_queue);
   clear(register_queue);
   while(!process_queue->empty()){

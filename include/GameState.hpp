@@ -46,6 +46,12 @@ public:
     @param newState The state to set the game's current state to.
    */
   void setState(State newState);
+  /*
+    Set the current state to the state specified.
+
+    @param newState The state to set the game's current state to.
+   */
+  void setState(int newState);
 
 
   /*

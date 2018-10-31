@@ -25,6 +25,6 @@ void DeepDish::setProjectile(){
   //area of effect
   int deepDishAR = textLoader -> getConstant(string("IDS_DD_AR"));
 
-  this-> currentProjectile = make_shared<DeepDishProjectile>(DeepDishProjectile(
-    deepDishHP, deepDishDM, deepDishAM, deepDishSP, deepDishAP, deepDishAR));
+  this-> currentProjectile = make_shared<DeepDishProjectile>(
+    deepDishHP, deepDishDM, deepDishAM, deepDishSP, deepDishAP, deepDishAR);
 }

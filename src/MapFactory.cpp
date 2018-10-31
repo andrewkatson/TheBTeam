@@ -54,7 +54,7 @@ void MapFactory::generateDimensions(){
  */
 void MapFactory::generateMap(){
   int fails = 0;
-  for(int i = 0; i < 100000; i++){
+  for(int i = 0; i < 1; i++){
     //try to make a map
     bool makeMap = false;
 

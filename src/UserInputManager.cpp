@@ -60,7 +60,7 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
       //the actual count in nanoseconds for the time
       auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
-      shared_ptr<EventInterface> closeKey = make_shared<KeyPressEvent>(KeyPressEvent(string("CLOSE"), nowInNano));
+      shared_ptr<EventInterface> closeKey = make_shared<KeyPressEvent>(string("CLOSE"), nowInNano);
 
       this -> eventManager -> queueEvent(closeKey);
 
@@ -84,49 +84,49 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
    //the actual count in nanoseconds for the time
    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
    if(event.key.code == sf::Keyboard::Q){
-     shared_ptr<EventInterface> qKey = make_shared<KeyPressEvent>(KeyPressEvent(string("Q"), nowInNano));
+     shared_ptr<EventInterface> qKey = make_shared<KeyPressEvent>(string("Q"), nowInNano);
 
      this -> eventManager -> queueEvent(qKey);
    }
    //S used for start when you want to play the game (could have been p but distinction needs to be made between pressing on main
    // menu and the game screen because p is also pause)
    else if(event.key.code == sf::Keyboard::S){
-     shared_ptr<EventInterface> sKey = make_shared<KeyPressEvent>(KeyPressEvent(string("S"), nowInNano));
+     shared_ptr<EventInterface> sKey = make_shared<KeyPressEvent>(string("S"), nowInNano);
 
      this -> eventManager -> queueEvent(sKey);
    }
    else if(event.key.code == sf::Keyboard::O){
-     shared_ptr<EventInterface> oKey = make_shared<KeyPressEvent>(KeyPressEvent(string("O"), nowInNano));
+     shared_ptr<EventInterface> oKey = make_shared<KeyPressEvent>(string("O"), nowInNano);
 
      this -> eventManager -> queueEvent(oKey);
    }
    else if(event.key.code == sf::Keyboard::B){
-     shared_ptr<EventInterface> bKey = make_shared<KeyPressEvent>(KeyPressEvent(string("B"), nowInNano));
+     shared_ptr<EventInterface> bKey = make_shared<KeyPressEvent>(string("B"), nowInNano);
 
      this -> eventManager -> queueEvent(bKey);
    }
    else if(event.key.code == sf::Keyboard::Left){
-     shared_ptr<EventInterface> leftArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Left"), nowInNano));
+     shared_ptr<EventInterface> leftArrow = make_shared<KeyPressEvent>(string("Left"), nowInNano);
 
      this -> eventManager -> queueEvent(leftArrow);
    }
    else if(event.key.code == sf::Keyboard::Right){
-     shared_ptr<EventInterface> rightArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Right"), nowInNano));
+     shared_ptr<EventInterface> rightArrow = make_shared<KeyPressEvent>(string("Right"), nowInNano);
 
      this -> eventManager -> queueEvent(rightArrow);
    }
    else if(event.key.code == sf::Keyboard::Up){
-     shared_ptr<EventInterface> upArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Up"), nowInNano));
+     shared_ptr<EventInterface> upArrow = make_shared<KeyPressEvent>(string("Up"), nowInNano);
 
      this -> eventManager -> queueEvent(upArrow);
    }
    else if(event.key.code == sf::Keyboard::Down){
-     shared_ptr<EventInterface> downArrow = make_shared<KeyPressEvent>(KeyPressEvent(string("Down"), nowInNano));
+     shared_ptr<EventInterface> downArrow = make_shared<KeyPressEvent>(string("Down"), nowInNano);
 
      this -> eventManager -> queueEvent(downArrow);
    }
    else if(event.key.code == sf::Keyboard::Return){
-     shared_ptr<EventInterface> enterKey = make_shared<KeyPressEvent>(KeyPressEvent(string("Enter"), nowInNano));
+     shared_ptr<EventInterface> enterKey = make_shared<KeyPressEvent>(string("Enter"), nowInNano);
 
      this -> eventManager -> queueEvent(enterKey);
    }
@@ -148,12 +148,12 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
 
    //Handle left mouse button
    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-     shared_ptr<EventInterface> leftMouse = make_shared<MousePressEvent>(MousePressEvent(string("Left"), mouseX, mouseY, nowInNano));
+     shared_ptr<EventInterface> leftMouse = make_shared<MousePressEvent>(string("Left"), mouseX, mouseY, nowInNano);
 
      this -> eventManager -> queueEvent(leftMouse);
    }
    else if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
-     shared_ptr<EventInterface> rightMouse = make_shared<MousePressEvent>(MousePressEvent(string("Right"), mouseX, mouseY, nowInNano));
+     shared_ptr<EventInterface> rightMouse = make_shared<MousePressEvent>(string("Right"), mouseX, mouseY, nowInNano);
 
      this -> eventManager -> queueEvent(rightMouse);
    }

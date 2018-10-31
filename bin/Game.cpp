@@ -12,7 +12,7 @@ int main(){
 
   //start game clock
   sf::Clock gameClock;
-
+  
   // create main window
   sf::RenderWindow game(sf::VideoMode(800,600,32),
     foodFight -> textLoader -> getString("IDS_GAMETITLE"), sf::Style::Close);

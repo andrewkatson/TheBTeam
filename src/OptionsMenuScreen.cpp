@@ -9,7 +9,6 @@ OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,share
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> selectedItem = 0;
-  int check = 0;
   //this -> registerDelegates();
   /*
 
@@ -100,7 +99,6 @@ void OptionsMenuScreen::registerDelegates(){
  * @param event: event of the key press
  */
 void OptionsMenuScreen::handleKeyPress(const EventInterface& event){
-  cout << "options chek " << check << endl;
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * KeyPressEvent type which allows us to access variables and methods

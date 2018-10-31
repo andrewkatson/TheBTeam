@@ -34,8 +34,8 @@ void WaffleFry::setUpUnits(){
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
-    shared_ptr<MeleeUnit> unitToAdd = make_shared<WaffleFryUnit>(WaffleFryUnit(
-      waffleFryHP, waffleFryDM, waffleFryAM, waffleFrySP, waffleFryAP, waffleFryAR, waffleFryLM));
+    shared_ptr<MeleeUnit> unitToAdd = make_shared<WaffleFryUnit>(
+      waffleFryHP, waffleFryDM, waffleFryAM, waffleFrySP, waffleFryAP, waffleFryAR, waffleFryLM);
     currentUnits.push_back(unitToAdd);
   }
 }

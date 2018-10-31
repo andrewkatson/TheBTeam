@@ -52,14 +52,14 @@ void WaveManager::setUpPossibleEnemies(){
   int fatKidAR = textLoader -> getConstant(string("IDS_FK_AR"));
   int fatKidLM = textLoader -> getConstant(string("IDS_FK_LM"));
 
-  shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(SkinnyKidUnit(
-    skinnyKidHP, skinnyKidDM, skinnyKidAM, skinnyKidSP, skinnyKidAP, skinnyKidAR, skinnyKidLM));
+  shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(
+    skinnyKidHP, skinnyKidDM, skinnyKidAM, skinnyKidSP, skinnyKidAP, skinnyKidAR, skinnyKidLM);
 
-  shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(AverageKidUnit(
-    averageKidHP, averageKidDM, averageKidAM, averageKidSP, averageKidAP, averageKidAR, averageKidLM));
+  shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(
+    averageKidHP, averageKidDM, averageKidAM, averageKidSP, averageKidAP, averageKidAR, averageKidLM);
 
-  shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(FatKidUnit(
-    fatKidHP, fatKidDM, fatKidAM, fatKidSP, fatKidAP, fatKidAR, fatKidLM));
+  shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(
+    fatKidHP, fatKidDM, fatKidAM, fatKidSP, fatKidAP, fatKidAR, fatKidLM);
 
   enemies.push_back(skinnyKid);
   enemies.push_back(averageKid);

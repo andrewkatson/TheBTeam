@@ -10,14 +10,13 @@ UserView::UserView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
   this -> registerDelegates();
   this -> registerEvents();
   this -> gameLogic = gameLogic;
-  check = 10;
   string mainFontPath = textLoader -> getString(string("IDS_MFP"));
 
   if(!font.loadFromFile(mainFontPath)){
     cout << "No font!" << endl;
   }
   else{
-    cout << "loaded font!" << endl;
+  //  cout << "loaded font!" << endl;
   }
 
   this -> initScreens();
@@ -41,6 +40,7 @@ void UserView::registerDelegates(){
   EventType keyPressEventType = keyPressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_UVD_KP")),keyPressEventType);
+
   //bind our delegate function for mouse presses
   EventManager::EventDelegate mousePressDelegate = std::bind(&UserView::handleMousePress, this, _1);
 
@@ -49,6 +49,16 @@ void UserView::registerDelegates(){
   EventType mousePressEventType = mousePressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_UVD_MP")),mousePressEventType);
+
+
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate stateChangeDelegate = std::bind(&UserView::handleStateChange, this, _1);
+
+  //make an event and get its type
+  StateChangeEvent stateChangeEvent = StateChangeEvent();
+  EventType stateChangeEventType = stateChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_UVD_SC")),stateChangeEventType);
 }
 
 //TODO MOVE TO GAMESCREEN WHEN IT IS MADE
@@ -68,15 +78,15 @@ void UserView::registerEvents(){
  */
 void UserView::initScreens(){
   //Main Menu Screen
-  shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(MainMenuScreen(eventManager,windowX, windowY, 3, textLoader));
+  shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(eventManager,windowX, windowY, 3, textLoader);
   //Options Menu Screen
-  shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(OptionsMenuScreen(eventManager, textLoader, windowX, windowY, 7, font));
+  shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(eventManager, textLoader, windowX, windowY, 7, font);
   //Playing Screen
-  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(PlayingScreen(eventManager, textLoader,windowX, windowY));
+  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(eventManager, textLoader,windowX, windowY);
   //Buy Tower Sreeen
-  shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(BuyTowerScreen(eventManager, textLoader,windowX, windowY));
+  shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(eventManager, textLoader,windowX, windowY);
   //Restart Screen
-  shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(RestartScreen(eventManager, textLoader,windowX, windowY));
+  shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(eventManager, textLoader,windowX, windowY);
 
   screens.push_back(mainMenuScreen);
   screens.push_back(optionsMenuScreen);
@@ -89,8 +99,7 @@ void UserView::initScreens(){
  * Update the state. Which will change the screen
  */
 void UserView::updateState(){
- State state = gameLogic -> getGameState();
- screen = (int)state;
+ screen = gameLogic -> getGameState();
 }
 
 
@@ -100,7 +109,6 @@ void UserView::updateState(){
  * @param event: event of the key press
  */
 void UserView::handleKeyPress(const EventInterface& event){
-  cout << "check " << check << endl;
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * KeyPressEvent type which allows us to access variables and methods
@@ -116,7 +124,6 @@ void UserView::handleKeyPress(const EventInterface& event){
   //get the key string identifier from the data
   string key = kpEventData -> keyID;
 
-  cout << "key! " << key << endl;
   if(key == "CLOSE"){
     shutDownGame = true;
   }
@@ -149,6 +156,29 @@ void UserView::handleMousePress(const EventInterface& event){
 
 }
 
+/*
+ * Handle a state change
+ * @param event: event of the state change (i.e. play to options )
+ */
+void UserView::handleStateChange(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * StateChangeEvent type which allows us to access variables and methods
+   * specific to StateChangeEvent
+   */
+  const StateChangeEvent* scEvent = static_cast<const StateChangeEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a StateChangeEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  StateChangeEventData* scEventData = static_cast<StateChangeEventData*>((scEvent -> data).get());
+  //get integer of the state change
+  State state = scEventData -> state;
+
+
+}
+
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
   if(shutDownGame){
     shutDown(game);
@@ -156,8 +186,8 @@ void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
   game.clear();
 
   this -> userInputManager -> processUserInput(game);
-  screens.at(screen) -> draw(game);
-
+  updateState();
+  screens.at((int)screen) -> draw(game);
   game.display();
 }
 

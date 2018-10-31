@@ -25,6 +25,6 @@ void EnergyDrink::setProjectile(){
   //area of effect
   int energyDrinkAR = textLoader -> getConstant(string("IDS_ED_AR"));
 
-  this-> currentProjectile = make_shared<EnergyDrinkProjectile>(EnergyDrinkProjectile(
-    energyDrinkHP, energyDrinkDM, energyDrinkAM, energyDrinkSP, energyDrinkAP, energyDrinkAR));
+  this-> currentProjectile = make_shared<EnergyDrinkProjectile>(
+    energyDrinkHP, energyDrinkDM, energyDrinkAM, energyDrinkSP, energyDrinkAP, energyDrinkAR);
 }

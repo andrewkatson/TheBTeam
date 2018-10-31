@@ -24,6 +24,6 @@ void MeatLovers::setProjectile(){
   //area of effect
   int meatLoversAR = textLoader -> getConstant(string("IDS_ML_AR"));
 
-  this-> currentProjectile = make_shared<MeatLoversProjectile>(MeatLoversProjectile(
-    meatLoversHP, meatLoversDM, meatLoversAM, meatLoversSP, meatLoversAP, meatLoversAR));
+  this-> currentProjectile = make_shared<MeatLoversProjectile>(
+    meatLoversHP, meatLoversDM, meatLoversAM, meatLoversSP, meatLoversAP, meatLoversAR);
 }

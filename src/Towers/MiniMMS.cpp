@@ -24,6 +24,6 @@ void MiniMMS::setProjectile(){
   //area of effect
   int miniMMSAR = textLoader -> getConstant(string("IDS_MMM_AR"));
 
-  this-> currentProjectile = make_shared<MiniMMSProjectile>(MiniMMSProjectile(
-    miniMMSHP, miniMMSDM, miniMMSAM, miniMMSSP, miniMMSAP, miniMMSAR));
+  this-> currentProjectile = make_shared<MiniMMSProjectile>(
+    miniMMSHP, miniMMSDM, miniMMSAM, miniMMSSP, miniMMSAP, miniMMSAR);
   }

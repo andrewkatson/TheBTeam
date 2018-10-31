@@ -50,10 +50,10 @@ void TowerManager::populateTowersToChoose(){
   string miniMMSID = textLoader -> getString(string("IDS_MMMT"));
 
   //first make a pointer to the first of the tower types for each tower tree
-  shared_ptr<RangeTower> cheesePizza = make_shared<CheesePizza>(CheesePizza(textLoader, cheesePizzaID));
-  shared_ptr<RangeTower> soda = make_shared<Soda>(Soda(textLoader, sodaID));
-  shared_ptr<MeleeTower> normalFry = make_shared<NormalFry>(NormalFry(textLoader, normalFryID,maxMeleeUnits));
-  shared_ptr<RangeTower> miniMMS = make_shared<MiniMMS>(MiniMMS(textLoader, miniMMSID));
+  shared_ptr<RangeTower> cheesePizza = make_shared<CheesePizza>(textLoader, cheesePizzaID);
+  shared_ptr<RangeTower> soda = make_shared<Soda>(textLoader, sodaID);
+  shared_ptr<MeleeTower> normalFry = make_shared<NormalFry>(textLoader, normalFryID,maxMeleeUnits);
+  shared_ptr<RangeTower> miniMMS = make_shared<MiniMMS>(textLoader, miniMMSID);
 
 
   //push all basic towers into a single vector (the vector for an empty tile)
@@ -98,10 +98,10 @@ void TowerManager::populateTowerUpgradesLvl1(int maxMeleeUnits){
   string normalMMSID = textLoader -> getString(string("IDS_NMMT"));
 
   //make a pointer to each type of object that the basic types can be upgraded to
-  shared_ptr<RangeTower> pepperoniPizza = make_shared<PepperoniPizza>(PepperoniPizza(textLoader, pepperoniPizzaID));
-  shared_ptr<RangeTower> energyDrink = make_shared<EnergyDrink>(EnergyDrink(textLoader, energyDrinkID));
-  shared_ptr<MeleeTower> crinkleFry = make_shared<CrinkleFry>(CrinkleFry(textLoader, crinkleFryID,maxMeleeUnits));
-  shared_ptr<RangeTower> normalMMS = make_shared<NormalMMS>(NormalMMS(textLoader, normalMMSID));
+  shared_ptr<RangeTower> pepperoniPizza = make_shared<PepperoniPizza>(textLoader, pepperoniPizzaID);
+  shared_ptr<RangeTower> energyDrink = make_shared<EnergyDrink>(textLoader, energyDrinkID);
+  shared_ptr<MeleeTower> crinkleFry = make_shared<CrinkleFry>(textLoader, crinkleFryID,maxMeleeUnits);
+  shared_ptr<RangeTower> normalMMS = make_shared<NormalMMS>(textLoader, normalMMSID);
 
   //push each tower into a vector of possible upgrades
   vector<shared_ptr<TowerInterface>> cheesePizzaUpgrades;
@@ -143,14 +143,14 @@ void TowerManager::populateTowerUpgradesLvl2(int maxMeleeUnits){
   string peanutMMSID = textLoader -> getString(string("IDS_PMMT"));
 
   //make a pointer to each type of object that the type 2 towers can be upgraded to
-  shared_ptr<RangeTower> deepDish = make_shared<DeepDish>(DeepDish(textLoader, deepDishID));
-  shared_ptr<RangeTower> meatLovers = make_shared<MeatLovers>(MeatLovers(textLoader, meatLoversID));
-  shared_ptr<MeleeTower> spicyFry = make_shared<SpicyFry>(SpicyFry(textLoader, spicyFryID,maxMeleeUnits));
-  shared_ptr<MeleeTower> waffleFry = make_shared<WaffleFry>(WaffleFry(textLoader, waffleFryID, maxMeleeUnits));
-  shared_ptr<RangeTower> slushie = make_shared<Slushie>(Slushie(textLoader, slushieID));
-  shared_ptr<RangeTower> gravy = make_shared<Gravy>(Gravy(textLoader, gravyID));
-  shared_ptr<RangeTower> peanutButterMMS = make_shared<PeanutButterMMS>(PeanutButterMMS(textLoader, peanutButterMMSID));
-  shared_ptr<RangeTower> peanutMMS = make_shared<PeanutMMS>(PeanutMMS(textLoader, peanutMMSID));
+  shared_ptr<RangeTower> deepDish = make_shared<DeepDish>(textLoader, deepDishID);
+  shared_ptr<RangeTower> meatLovers = make_shared<MeatLovers>(textLoader, meatLoversID);
+  shared_ptr<MeleeTower> spicyFry = make_shared<SpicyFry>(textLoader, spicyFryID,maxMeleeUnits);
+  shared_ptr<MeleeTower> waffleFry = make_shared<WaffleFry>(textLoader, waffleFryID, maxMeleeUnits);
+  shared_ptr<RangeTower> slushie = make_shared<Slushie>(textLoader, slushieID);
+  shared_ptr<RangeTower> gravy = make_shared<Gravy>(textLoader, gravyID);
+  shared_ptr<RangeTower> peanutButterMMS = make_shared<PeanutButterMMS>(textLoader, peanutButterMMSID);
+  shared_ptr<RangeTower> peanutMMS = make_shared<PeanutMMS>(textLoader, peanutMMSID);
 
   //push each tower into a vector of possible upgrades
   vector<shared_ptr<TowerInterface>> pepperoniPizzaUpgrades;

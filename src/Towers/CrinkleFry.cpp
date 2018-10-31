@@ -35,7 +35,8 @@ void CrinkleFry::setUpUnits(){
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
-    shared_ptr<MeleeUnit> unitToAdd = make_shared<CrinkleFryUnit>(CrinkleFryUnit(crinkleFryHP, crinkleFryDM, crinkleFryAM, crinkleFrySP, crinkleFryAP, crinkleFryAR, crinkleFryLM));
+    shared_ptr<MeleeUnit> unitToAdd = make_shared<CrinkleFryUnit>(crinkleFryHP,
+       crinkleFryDM, crinkleFryAM, crinkleFrySP, crinkleFryAP, crinkleFryAR, crinkleFryLM);
     currentUnits.push_back(unitToAdd);
   }
 }

@@ -25,6 +25,6 @@ void Gravy::setProjectile(){
   //area of effect
   int gravyAR = textLoader -> getConstant(string("IDS_G_AR"));
 
-  this-> currentProjectile = make_shared<GravyProjectile>(GravyProjectile(
-    gravyHP, gravyDM, gravyAM, gravySP, gravyAP, gravyAR));
+  this-> currentProjectile = make_shared<GravyProjectile>(
+    gravyHP, gravyDM, gravyAM, gravySP, gravyAP, gravyAR);
 }

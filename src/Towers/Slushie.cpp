@@ -25,6 +25,6 @@ void Slushie::setProjectile(){
   //area of effect
   int slushieAR = textLoader -> getConstant(string("IDS_SL_AR"));
 
-  this-> currentProjectile = make_shared<SlushieProjectile>(SlushieProjectile(
-    slushieHP, slushieDM, slushieAM, slushieSP, slushieAP, slushieAR));
+  this-> currentProjectile = make_shared<SlushieProjectile>(
+    slushieHP, slushieDM, slushieAM, slushieSP, slushieAP, slushieAR);
 }

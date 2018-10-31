@@ -7,9 +7,9 @@ MainMenuScreen::MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX
   this -> textLoader = textLoader;
   this -> eventManager = eventManager;
   this -> selectedItem = 0;
-  check= 10;
-  //this -> registerDelegates();
-  /*
+  this -> registerDelegates();
+  this -> registerEvents();
+
   //get the path for the main font
   string mainFontPath = textLoader -> getString(string("IDS_MFP"));
 
@@ -18,87 +18,81 @@ MainMenuScreen::MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX
     cout << "No font!" << endl;
   }
   else{
-    cout << "loaded font!" << endl;
+    //cout << "loaded font!" << endl;
   }
-  */
+
   this -> initText();
-
-
 }
 
 void MainMenuScreen::initText(){
+  screen.resize(3);
 
   //Main Menu
   if(numItems == 3){
-
-  //  screen.at(0).setFillColor(sf::Color::Red);
-    textStrings.push_back(string("Play"));
-    //screen.at(0).setCharacterSize(24);
-    //screen.at(0).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 1));
-
-    //screen.at(1).setFillColor(sf::Color::White);
-    textStrings.push_back(string("Options"));
-    //screen.at(1).setCharacterSize(24);
-    //screen.at(1).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 2));
-
-    //screen.at(2).setFillColor(sf::Color::White);
-    textStrings.push_back(string("Exit"));
-  ///  screen.at(2).setCharacterSize(24);
-    //screen.at(2).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 3));
-
+    screen.at(0).setString(string("Play"));
+    screen.at(0).setFillColor(sf::Color::Red);
+    screen.at(0).setCharacterSize(24);
+    screen.at(0).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 1));
+    screen.at(1).setString(string("Options"));
+    screen.at(1).setCharacterSize(24);
+    screen.at(1).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 2));
+    screen.at(1).setFillColor(sf::Color::White);
+    screen.at(2).setString(string("Exit"));
+    screen.at(2).setCharacterSize(24);
+    screen.at(2).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1)*3));
+    screen.at(2).setFillColor(sf::Color::White);
   }
-  cout << selectedItem << endl;
-
-  cout << textStrings.size() << endl;
 
 }
 
 void MainMenuScreen::draw(sf::RenderWindow &window){
   window.clear();
-  /*
+
   //need to set the fonts locally
-  text.setFont(font);
-  text.setCharacterSize(24);
-  text.setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 3));
-
   for(int i = 0; i < numItems; i++){
-    if(selectedItem == i){
-      text.setFillColor(sf::Color::Red);
-    }
-    else{
-      text.setFillColor(sf::Color::White);
-    }
-
-    window.draw(text);
+    screen.at(i).setFont(font);
+    window.draw(screen.at(i));
   }
-  */
+
+
   window.display();
 }
 void MainMenuScreen::moveUp()
 {
-  cout << "screen " << textStrings.size() << endl;
-  cout << "up " <<  selectedItem << endl;
-  cout  << numItems << endl;
   //make sure the selected item indicator can ever be outside of the
   //range of options
   selectedItem = selectedItem % numItems;
-  //screen.at(selectedItem).setFillColor(sf::Color::White);
+  screen.at(selectedItem).setFillColor(sf::Color::White);
   selectedItem--;
+  //the below line just ensures that if we are below 0 then we want to
+  //put selectedItem to a value above 0 with an equivalent modulus with
+  //numItems
+  selectedItem = selectedItem >= 0 ? selectedItem: numItems + selectedItem;
   selectedItem = selectedItem % numItems;
-  //screen.at(selectedItem).setFillColor(sf::Color::Red);
+  screen.at(selectedItem).setFillColor(sf::Color::Red);
 
 }
 
 void MainMenuScreen::moveDown()
 {
-  cout << "screen " << textStrings.size() << endl;
-  cout << "down " <<  selectedItem << endl;
+
   selectedItem = selectedItem % numItems;
-  //screen.at(selectedItem).setFillColor(sf::Color::White);
+  screen.at(selectedItem).setFillColor(sf::Color::White);
   selectedItem++;
   selectedItem = selectedItem % numItems;
-  //screen.at(selectedItem).setFillColor(sf::Color::Red);
+  screen.at(selectedItem).setFillColor(sf::Color::Red);
 
+}
+
+/*
+ * any events created by this class must be registered with the
+ * Event Manager
+ */
+void MainMenuScreen::registerEvents(){
+  //make a generic tower creation event, get its type, and register it
+  StateChangeEvent event = StateChangeEvent();
+  EventType type = event.getEventType();
+  this -> eventManager -> registerEvent(type);
 }
 
 /*
@@ -122,11 +116,6 @@ void MainMenuScreen::registerDelegates(){
  */
 void MainMenuScreen::handleKeyPress(const EventInterface& event){
 
-  cout << "handle key press " << endl;
-  cout << textStrings.size() << endl;
-  cout << numItems << endl;
-  cout << selectedItem << endl;
-  cout << " check 2 " << check << endl;
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * KeyPressEvent type which allows us to access variables and methods
@@ -142,13 +131,17 @@ void MainMenuScreen::handleKeyPress(const EventInterface& event){
   //get the key string identifier from the data
   string key = kpEventData -> keyID;
   if(key == "Up"){
-    //moveUp();
+    moveUp();
   }
   else if(key == "Down"){
-    cout << "down" << endl;
-    //moveDown();
+    moveDown();
   }
   else if(key == "Enter"){
-    eventManager -> dumpErrors();
+    //TODO code to select option
+    //use a game state change event to change it
+    //will need to update the gameLogic handleStateChange event if you
+    //want to implement it properly
+    //will also need to change userView handleStateChange event if you want
+    //that to also reflect a state change 
   }
 }

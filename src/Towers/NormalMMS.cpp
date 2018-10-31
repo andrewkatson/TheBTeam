@@ -25,6 +25,6 @@ void NormalMMS::setProjectile(){
   //area of effect
   int normalMMSAR = textLoader -> getConstant(string("IDS_NMM_AR"));
 
-  this-> currentProjectile = make_shared<NormalMMSProjectile>(NormalMMSProjectile(
-    normalMMSHP, normalMMSDM, normalMMSAM, normalMMSSP, normalMMSAP, normalMMSAR));
+  this-> currentProjectile = make_shared<NormalMMSProjectile>(
+    normalMMSHP, normalMMSDM, normalMMSAM, normalMMSSP, normalMMSAP, normalMMSAR);
 }

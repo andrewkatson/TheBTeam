@@ -24,6 +24,6 @@ void PepperoniPizza::setProjectile(){
   //area of effect
   int pepperoniPizzaAR = textLoader -> getConstant(string("IDS_PP_AR"));
 
-  this-> currentProjectile = make_shared<PepperoniPizzaProjectile>(PepperoniPizzaProjectile(
-    pepperoniPizzaHP, pepperoniPizzaDM, pepperoniPizzaAM, pepperoniPizzaSP, pepperoniPizzaAP, pepperoniPizzaAR));
+  this-> currentProjectile = make_shared<PepperoniPizzaProjectile>(
+    pepperoniPizzaHP, pepperoniPizzaDM, pepperoniPizzaAM, pepperoniPizzaSP, pepperoniPizzaAP, pepperoniPizzaAR);
 }

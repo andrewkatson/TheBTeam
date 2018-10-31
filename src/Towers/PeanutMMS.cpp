@@ -25,6 +25,6 @@ void PeanutMMS::setProjectile(){
   //area of effect
   int peanutMMSAR = textLoader -> getConstant(string("IDS_PMM_AR"));
 
-  this-> currentProjectile = make_shared<PeanutMMSProjectile>(PeanutMMSProjectile(
-    peanutMMSHP, peanutMMSDM, peanutMMSAM, peanutMMSSP, peanutMMSAP, peanutMMSAR));
+  this-> currentProjectile = make_shared<PeanutMMSProjectile>(
+    peanutMMSHP, peanutMMSDM, peanutMMSAM, peanutMMSSP, peanutMMSAP, peanutMMSAR);
 }

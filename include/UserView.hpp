@@ -14,7 +14,6 @@
 #include "PlayingScreen.hpp"
 #include "GameLogic.hpp"
 
-
 #define textNormal = 255, 255, 255
 #define textHighlight = 255, 200, 10
 #define windowX 800
@@ -36,7 +35,7 @@ private:
   //the vector of screens
   vector<shared_ptr<Screen>> screens;
   //index of the current screen
-  int screen;
+  State screen;
   bool shutDownGame;
 
   sf::Font font;
@@ -44,7 +43,8 @@ private:
   int check;
 
 public:
-  UserView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
+  UserView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,
+    shared_ptr<GameLogic> gameLogic);
 
   ~UserView();
 
@@ -58,6 +58,7 @@ public:
 
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
+  void handleStateChange(const EventInterface& event);
 
   void updateUserView(float deltaS, sf::RenderWindow &game);
 

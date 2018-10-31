@@ -19,6 +19,7 @@
 #include "EventManager.hpp"
 #include "../include/Events/KeyPressEvent.hpp"
 #include "../include/Events/MousePressEvent.hpp"
+#include "../include/Events/StateChangeEvent.hpp"
 #include "EventType.hpp"
 
 class GameLogic{
@@ -62,7 +63,7 @@ public:
 
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
-
+  void handleStateChange(const EventInterface& event);
   /*
     Called once every game loop. Updates the game's happenings according to the
     time since the last loop.
@@ -79,6 +80,7 @@ public:
   int getTowerPrice(int row, int col);
 
   State getGameState();
+
 
   void shutDown();
 };

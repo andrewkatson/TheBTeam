@@ -10,7 +10,7 @@
 //Constructor.
 GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY){
   this -> textLoader = textLoader;
-  this -> eventManager = make_shared<EventManager>(EventManager());
+  this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager));
   this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, boardManager -> getYDim(), boardManager -> getXDim()));
@@ -59,6 +59,15 @@ void GameLogic::registerDelegates(){
   EventType mousePressEventType = mousePressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_GLD_MP")),mousePressEventType);
+
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate stateChangeDelegate = std::bind(&GameLogic::handleStateChange, this, _1);
+
+  //make an event and get its type
+  StateChangeEvent stateChangeEvent = StateChangeEvent();
+  EventType stateChangeEventType = stateChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
 }
 
 
@@ -114,6 +123,29 @@ void GameLogic::handleMousePress(const EventInterface& event){
   float xPos = mpEventData -> x;
   //get the y position
   float yPos = mpEventData -> y;
+}
+
+/*
+ * Handle a state change
+ * @param event: event of the state change (i.e. play to options )
+ */
+void GameLogic::handleStateChange(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * StateChangeEvent type which allows us to access variables and methods
+   * specific to StateChangeEvent
+   */
+  const StateChangeEvent* scEvent = static_cast<const StateChangeEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a StateChangeEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  StateChangeEventData* scEventData = static_cast<StateChangeEventData*>((scEvent -> data).get());
+  //get integer of the state change
+  State state = scEventData -> state;
+
+
 }
 
 //return a reference to the event manager

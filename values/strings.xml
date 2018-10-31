@@ -10,9 +10,11 @@
     <!--GameLogic Delegates-->
     <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD_KP"> </string>
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
+    <string value="GAMELOGICHANDLESTATECHANGE" id="IDS_GLD_SC"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
     <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>
+    <string value="USERVIEWHANDLESTATECHANGE" id="IDS_UVD_SC"> </string>
     <!--Board Manager Delegates-->
     <string value="BOARDMANAGERHANDLETOWERCREATION" id="IDS_BMD_TC"> </string>
     <string value="BOARDMANAGERHANDLETOWERREMOVE" id="IDS_BMD_TR"> </string>

@@ -38,7 +38,8 @@ void NormalFry::setUpUnits(){
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
-    shared_ptr<MeleeUnit> unitToAdd = make_shared<NormalFryUnit>(NormalFryUnit(normalFryHP, normalFryDM, normalFryAM, normalFrySP, normalFryAP, normalFryAR, normalFryLM));
+    shared_ptr<MeleeUnit> unitToAdd = make_shared<NormalFryUnit>(normalFryHP, normalFryDM,
+      normalFryAM, normalFrySP, normalFryAP, normalFryAR, normalFryLM);
     currentUnits.push_back(unitToAdd);
   }
 }

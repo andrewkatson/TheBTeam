@@ -34,8 +34,8 @@ void SpicyFry::setUpUnits(){
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
-    shared_ptr<MeleeUnit> unitToAdd = make_shared<SpicyFryUnit>(SpicyFryUnit(
-      spicyFryHP, spicyFryDM, spicyFryAM, spicyFrySP, spicyFryAP, spicyFryAR, spicyFryLM));
+    shared_ptr<MeleeUnit> unitToAdd = make_shared<SpicyFryUnit>(
+      spicyFryHP, spicyFryDM, spicyFryAM, spicyFrySP, spicyFryAP, spicyFryAR, spicyFryLM);
     currentUnits.push_back(unitToAdd);
   }
 }
