@@ -1,11 +1,14 @@
 [Unreleased]
 ##Addded
-- StateChangeEvent, StateChangeEventData
+- StateChangeEvent, StateChangeEventData[@andrewkatson][https://github.com/andrewkatson]
 
 ###Changed
 - MapFactory now uses an A* BFS to find paths through the
   map [@andrewkatson][https://github.com/andrewkatson]
 - Now menu screen works and switches between the options [@KP-HB][https://github.com/KP-HB]
+
+###Fixed
+- memory issue caused by improperly initialized shared pointers [@andrewkatson][https://github.com/andrewkatson]
 
 [0.1.0]
 
