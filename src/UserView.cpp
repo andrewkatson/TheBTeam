@@ -82,7 +82,7 @@ void UserView::initScreens(){
   //Options Menu Screen
   shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(eventManager, textLoader, windowX, windowY, 7, font);
   //Playing Screen
-  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(eventManager, textLoader,windowX, windowY);
+  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(eventManager, textLoader,gameLogic, windowX, windowY);
   //Buy Tower Sreeen
   shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(eventManager, textLoader,windowX, windowY);
   //Restart Screen
@@ -176,6 +176,8 @@ void UserView::handleStateChange(const EventInterface& event){
   //get integer of the state change
   State state = scEventData -> state;
 
+  //change the screen to the current state
+  screen = state;
 
 }
 
@@ -184,9 +186,7 @@ void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
     shutDown(game);
   }
   game.clear();
-
   this -> userInputManager -> processUserInput(game);
-  updateState();
   screens.at((int)screen) -> draw(game);
   game.display();
 }

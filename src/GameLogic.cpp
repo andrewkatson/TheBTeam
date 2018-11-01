@@ -145,7 +145,8 @@ void GameLogic::handleStateChange(const EventInterface& event){
   //get integer of the state change
   State state = scEventData -> state;
 
-
+  //set the current state to be the state changed
+  gameState -> setState(state);
 }
 
 //return a reference to the event manager
@@ -190,4 +191,25 @@ State GameLogic::getGameState(){
  */
 void GameLogic::shutDown(){
 
+}
+
+/*
+ * Get the grid showing the floor
+ */
+const vector<vector<int>>& GameLogic::getFloor(){
+  return boardManager -> getFloor();
+}
+
+/*
+ * Get the grid showing anything placed above the floor (i.e. obstacles and towers)
+ */
+const vector<vector<int>>& GameLogic::getAboveFloor(){
+  return boardManager -> getAboveFloor();
+}
+
+/*
+ * Get the grid showing the distance from any cell to the exit
+ */
+const vector<vector<int>>& GameLogic::getDistances(){
+  return boardManager -> getDistances();
 }

@@ -76,7 +76,6 @@ void MapFactory::generateMap(){
     //some paths may be covered by the nature of the program so just set
     //them on the board to help with interpretation
     putEmptyEntriesOnBoard();
-    resetEverything();
   }
 }
 
@@ -853,6 +852,7 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
     //if not at the exit poisiton mark the current space as a path
     if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
       paths.at(currRow).at(currCol) = path;
+      floorGrid.at(currRow).at(currCol) = path;
     }
 
     while(!(board.at(currRow).at(currCol).rowParent == currRow &&
@@ -866,6 +866,7 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
       //mark the space as the path if there is not already a path
       if(!(paths.at(currRow).at(currCol) > -1)){
         paths.at(currRow).at(currCol) = path;
+        floorGrid.at(currRow).at(currCol) = path;
       }
       //if we are adjacent to another path then we must mark that path as
       //to the exit

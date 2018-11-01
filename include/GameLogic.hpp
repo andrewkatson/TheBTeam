@@ -52,6 +52,8 @@ private:
   //game events
   shared_ptr<EventManager> eventManager;
 
+  State currState;
+
 public:
   /*
     Constructor. Initialize game, setting up instance variables.
@@ -83,6 +85,11 @@ public:
 
 
   void shutDown();
+
+  const vector<vector<int>>& getFloor();
+  const vector<vector<int>>& getAboveFloor();
+  const vector<vector<int>>& getDistances();
+
 };
 
 #endif
