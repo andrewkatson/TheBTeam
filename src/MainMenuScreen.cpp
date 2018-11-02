@@ -59,6 +59,8 @@ void MainMenuScreen::draw(sf::RenderWindow &window){
 }
 void MainMenuScreen::moveUp()
 {
+  cout << "move down function\n";
+
   //make sure the selected item indicator can ever be outside of the
   //range of options
   selectedItem = selectedItem % numItems;
@@ -75,6 +77,7 @@ void MainMenuScreen::moveUp()
 
 void MainMenuScreen::moveDown()
 {
+  cout << "move down function\n";
 
   selectedItem = selectedItem % numItems;
   screen.at(selectedItem).setFillColor(sf::Color::White);
@@ -132,9 +135,11 @@ void MainMenuScreen::handleKeyPress(const EventInterface& event){
   string key = kpEventData -> keyID;
   if(key == "Up"){
     moveUp();
+    cout << "key press up\n";
   }
   else if(key == "Down"){
     moveDown();
+    cout << "key press down\n";
   }
   else if(key == "Enter"){
     //TODO code to select option
