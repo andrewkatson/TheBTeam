@@ -48,8 +48,6 @@ private:
   //A random device to pull from
   std::random_device rd;
 
-
-
   /*
    *
    * @return a wave filled with enemies according to the specifications in the class (level)
