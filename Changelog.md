@@ -9,7 +9,11 @@
   map [@andrewkatson][https://github.com/andrewkatson]
 - Playing Screen now writes the maps to console for testing 
 - Now menu screen works and switches between the options [@KP-HB][https://github.com/KP-HB]
-- Fully fleshed out generation of wave members [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Number of waves is generated with a normal distribution based on difficulty and level[@jeremyelkayam][https://github.com/jeremyelkayam]
+- Wave members have a random adjustment to their stats (adjustment increases as difficulty progresses)
+- Units are now determined by a wave weight (generated with a normal distribution) and weighted values for each unit
+- WaveManager constants moved to XML file
+
 
 
 ###Fixed
