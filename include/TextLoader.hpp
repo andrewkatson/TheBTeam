@@ -24,7 +24,7 @@ public:
 
   TextLoader();
   std::string getString(const std::string id);
-  int getConstant(const std::string id);
+  int getInteger(const std::string id);
 
 private:
   unordered_map<string, string> strings;

@@ -57,7 +57,7 @@ std::string TextLoader::getString(const std::string id){
   return "String not found";
 }
 
-int TextLoader::getConstant(const std::string id){
+int TextLoader::getInteger(const std::string id){
   if(constants.find(id) != constants.end()){
     return constants.at(id);
   }

@@ -38,7 +38,7 @@ void TowerManager::registerDelegates(){
 void TowerManager::populateTowersToChoose(){
 
   //get the maximum number of melee units allowed per melee tower
-  int maxMeleeUnits = textLoader -> getConstant(string("IDS_MT_MU"));
+  int maxMeleeUnits = textLoader->getInteger(string("IDS_MT_MU"));
 
   //get the identifier for no tower type chosen
   string noTowerAtTileID = textLoader -> getString("IDS_NT");
@@ -74,7 +74,7 @@ void TowerManager::populateTowersToChoose(){
  */
 void TowerManager::populateTowerUpgrades(){
   //get the maximum number of melee units allowed per melee tower
-  int maxMeleeUnits = textLoader -> getConstant(string("IDS_MT_MU"));
+  int maxMeleeUnits = textLoader->getInteger(string("IDS_MT_MU"));
 
   populateTowerUpgradesLvl1(maxMeleeUnits);
   populateTowerUpgradesLvl2(maxMeleeUnits);
