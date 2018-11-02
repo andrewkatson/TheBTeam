@@ -76,15 +76,11 @@ void WaveManager::setupWaves(int difficulty){
 
   std::normal_distribution<double> num_waves_rng(avg,avg*.4);
 
-  unsigned long num_waves=round(num_waves_rng(rnd_gen));
+  unsigned int num_waves = round(num_waves_rng(rnd_gen));
 
   if(num_waves<0) num_waves=1; //on the off-chance that we generated a negative or 0 value, round that shit
 
   numWaves=num_waves;
-
-  //waves = queue<queue<shared_ptr<ActorInterface>>>(std::deque<deque<shared_ptr<ActorInterface>>>(num_waves,NULL));
-
-  //TODO - initialize the queue of waves to have num_waves amount of empty waves
 
 }
 
@@ -133,29 +129,33 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
     enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
 
+    //TODO - give the enemy a spawn location
+
     result.push(enemy);
   }
   return result;
 }
 
-/*
+
 //handle events
 void WaveManager::delegateMethod(const EventInterface& event){
 
-}*/
+}
 
 void WaveManager::startNextWave() {
-  queue<shared_ptr<MeleeUnit>> next_wave = waves.front();
+  //TODO - body
 }
+
 
 void WaveManager::endCurrentWave() {
     //TODO - code to stop the wave
-    waves.pop();
+    numWaves--;
 }
 
 void WaveManager::spawnNextUnit() {
-    shared_ptr<ActorInterface> next_unit = enemies.front();
+    shared_ptr<ActorInterface> next_unit = currentWave.front();
     //TODO - spawn the unit
+    currentWave.pop();
 }
 
 void WaveManager::update(float deltaS) {
@@ -163,6 +163,4 @@ void WaveManager::update(float deltaS) {
 }
 
 
-queue <shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return waves.front();}
-
-queue <queue<shared_ptr < MeleeUnit>>>WaveManager::getWaves() {return waves;}
+queue <shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return currentWave;}
