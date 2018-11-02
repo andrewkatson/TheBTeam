@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <constants>
-
+  <ints>
   <!--Window-->
   <constant value="800" id="IDS_W_X"></constant>
   <constant value="600" id="IDS_W_Y"></constant>
@@ -8,12 +8,6 @@
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
   <constant value="100" id ="IDS_P_B"> </constant>
-
-  <!--Wave Generation Constants-->
-  <constant value=".2" id="IDS_STAT_MAX_SCALAR"> </constant>
-  <constant value="-.2" id="IDS_STAT_MIN_SCALAR"></constant>
-
-
 
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
@@ -300,4 +294,12 @@
   <constant value="4" id="IDS_SL_AP"> </constant>
   <constant value="60" id="IDS_SL_AR"> </constant>
 
+  </ints>
+  <floats>
+
+    <!--Wave Generation Constants-->
+    <constant value=".2" id="IDS_STAT_MAX_SCALAR"> </constant>
+    <constant value="-.2" id="IDS_STAT_MIN_SCALAR"></constant>
+
+  </floats>
 </constants>

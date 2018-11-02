@@ -11,7 +11,9 @@ TextLoader::TextLoader(){
 
   //doc.LoadFile( "../values/constants.xml" );
   //fill the constants map
-  loadConstants();
+  loadInts();
+
+  loadDoubles();
 }
 
 /*
@@ -32,10 +34,10 @@ void TextLoader::loadStrings(){
 /*
  * Load in the constants by the id
  */
-void TextLoader::loadConstants(){
+void TextLoader::loadInts(){
   tinyxml2::XMLDocument doc;
   doc.LoadFile( "../values/constants.xml" );
-  tinyxml2::XMLElement * root =  doc.FirstChildElement("constants");
+  tinyxml2::XMLElement * root =  doc.FirstChildElement("constants")->FirstChildElement("ints");
   stringstream strValue;
   int intValue;
 
@@ -45,7 +47,28 @@ void TextLoader::loadConstants(){
     strValue << node -> Attribute("value");
     strValue >> intValue;
 
-    constants.insert({s, intValue});
+    ints.insert({s, intValue});
+
+  }
+}
+
+/*
+ * Load in the double constants by the id
+ */
+void TextLoader::loadDoubles(){
+  tinyxml2::XMLDocument doc;
+  doc.LoadFile( "../values/constants.xml" );
+  tinyxml2::XMLElement * root =  doc.FirstChildElement("constants")->FirstChildElement("floats");
+  stringstream strValue;
+  double doubleValue;
+
+  for(tinyxml2::XMLElement* node = root->FirstChildElement("constant"); node != NULL; node= node->NextSiblingElement("constant")) {
+    string s(node->Attribute("id"));
+    //converting the string value from xml to an double
+    strValue << node -> Attribute("value");
+    strValue >> doubleValue;
+
+    doubles.insert({s, doubleValue});
 
   }
 }
@@ -58,8 +81,16 @@ std::string TextLoader::getString(const std::string id){
 }
 
 int TextLoader::getInteger(const std::string id){
-  if(constants.find(id) != constants.end()){
-    return constants.at(id);
+  if(ints.find(id) != ints.end()){
+    return ints.at(id);
+  }
+  return -1;
+}
+
+
+double TextLoader::getDouble(const std::string id){
+  if(doubles.find(id) != doubles.end()){
+    return doubles.at(id);
   }
   return -1;
 }
