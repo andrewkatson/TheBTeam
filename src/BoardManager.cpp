@@ -30,6 +30,8 @@ void BoardManager::newMap(){
   if(mapFactory != NULL){
       mapFactory -> generateMap();
   }
+  //set all inner boards to the newly generated ones
+  setMapBoards();
 }
 
 //generate a new random map with a differnet set of customization options
@@ -38,6 +40,15 @@ void BoardManager::newMap(MapChoices * newCustomization){
     mapFactory -> setMapCustomizationChoices(newCustomization);
     mapFactory -> generateMap();
   }
+  //set all inner boards to the newly generated ones
+  setMapBoards();
+}
+
+//record all the map boards for the board manager to use
+void BoardManager::setMapBoards(){
+  floorGrid = mapFactory -> getFloor();
+  aboveFloorGrid = mapFactory -> getAboveFloor();
+  distances = mapFactory -> getDistances();
 }
 
 /*

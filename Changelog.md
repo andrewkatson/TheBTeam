@@ -8,6 +8,7 @@
 ###Changed
 - MapFactory now uses an A* BFS to find paths through the
   map [@andrewkatson][https://github.com/andrewkatson]
+- Playing Screen now writes the maps to console for testing 
 - Now menu screen works and switches between the options [@KP-HB][https://github.com/KP-HB]
 
 ###Fixed

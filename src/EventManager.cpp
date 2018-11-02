@@ -107,7 +107,6 @@ void EventManager::processEvent(){
     process_queue->pop();
     triggerEvent(*event);
   }
-
 }
 
 //used to clear the queue efficiently

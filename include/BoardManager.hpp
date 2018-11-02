@@ -40,6 +40,8 @@ public:
   void newMap();
   void newMap(MapChoices * newCustomization);
 
+  void setMapBoards();
+
   void handleTowerCreation(const EventInterface& event);
 
   bool isTowerOrObstacle(int row, int col);

@@ -118,6 +118,11 @@ void MainMenuScreen::registerDelegates(){
  * @param event: event of the key press
  */
 void MainMenuScreen::handleKeyPress(const EventInterface& event){
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
 
   /*
    * cast the EventInterface reference to a CONST pointer to the
@@ -147,6 +152,11 @@ void MainMenuScreen::handleKeyPress(const EventInterface& event){
     //will need to update the gameLogic handleStateChange event if you
     //want to implement it properly
     //will also need to change userView handleStateChange event if you want
-    //that to also reflect a state change 
+    //that to also reflect a state change
+  }
+  else if(key == "S"){
+    shared_ptr<EventInterface> playState = make_shared<StateChangeEvent>(State::Playing, nowInNano);
+
+    this -> eventManager -> queueEvent(playState);
   }
 }
