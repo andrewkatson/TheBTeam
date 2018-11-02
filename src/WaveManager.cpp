@@ -93,7 +93,7 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
   queue<shared_ptr<MeleeUnit>>result;
 
-  double avg=difficulty*waveNumber*level*2.0;
+  double avg=difficulty*waveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
 
   std::normal_distribution<double> wave_weight_rng (avg,avg*.4);
 
@@ -110,30 +110,32 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
   std::uniform_real_distribution<double> percent_perturbation_rng(min_scale,max_scale);
 
-  unsigned int total_wave_weight=wave_weight_rng(rnd_gen);
+  double total_wave_weight=wave_weight_rng(rnd_gen);
 
-  for(int weight=0;weight<total_wave_weight;){
-    int randnum=enemy_type_rng(rnd_gen);
-    MeleeUnit enemy;
+  for(double weight=0;weight<total_wave_weight;){
+    double randnum=enemy_type_rng(rnd_gen);
+    shared_ptr<MeleeUnit> enemy;
     if(randnum<10){
-      enemy = static_cast<MeleeUnit>(*enemies[0].get());//add a skinny kid
-      weight+=2;
+      enemy = std::static_pointer_cast<MeleeUnit>(enemies[0]);//add a skinny kid
+      weight+=textLoader->getDouble("IDS_SKINNY_WEIGHT");
     }else if(randnum>=10 && randnum<20){
-      enemy = static_cast<MeleeUnit>(*enemies[1].get());//add a normal kid
-      weight+=1;
+      enemy = static_pointer_cast<MeleeUnit>(enemies[1]);//add a normal kid
+      weight+=textLoader->getDouble("IDS_AVERAGE_WEIGHT");
     }else if(randnum>=20){
-      enemy = static_cast<MeleeUnit>(*enemies[2].get());//add a fat kid
-      weight+=2;
+      enemy = static_pointer_cast<MeleeUnit>(enemies[2]);//add a fat kid
+      weight+=textLoader->getDouble("IDS_FAT_WEIGHT");
     }
-
     //Randomize this stuff to be +/- 20% of the default
 
-    enemy.setHitpoints(enemy.getHitpoints()+enemy.getHitpoints()*std::lround(percent_perturbation_rng(rnd_gen)));
+    enemy->setHitpoints(enemy->getHitpoints()+enemy->getHitpoints()*percent_perturbation_rng(rnd_gen));
 
-    enemy.setLunchMoney(enemy.getLunchMoney()+enemy.getLunchMoney()*std::lround(percent_perturbation_rng(rnd_gen)));
+    enemy->setLunchMoney(enemy->getLunchMoney()+enemy->getLunchMoney()*percent_perturbation_rng(rnd_gen));
 
-    enemy.setDamage(enemy.getDamage()+enemy.getDamage()*std::lround(percent_perturbation_rng(rnd_gen)));
+    enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
+
+    result.push(enemy);
   }
+  return result;
 }
 
 /*

@@ -298,8 +298,16 @@
   <floats>
 
     <!--Wave Generation Constants-->
-    <constant value=".2" id="IDS_STAT_MAX_SCALAR"> </constant>
-    <constant value="-.2" id="IDS_STAT_MIN_SCALAR"></constant>
+    <constant value=".2" id="IDS_STAT_MAX_SCALAR"/>
+    <constant value="-.2" id="IDS_STAT_MIN_SCALAR"/>
+
+    <constant value="2.0" id="IDS_WAVE_WEIGHT_AVG_SCALAR"/>
+    <constant value="2.0" id="IDS_SKINNY_WEIGHT"/>
+    <constant value="1.0" id="IDS_AVERAGE_WEIGHT"/>
+    <constant value="2.0" id="IDS_FAT_WEIGHT"/>
+
+
+
 
   </floats>
 </constants>
