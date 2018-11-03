@@ -4,9 +4,9 @@
 CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits) : MeleeTower(){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;
-  this -> respawnSpeed = textLoader -> getConstant(string("IDS_CFT_RS"));
-  this -> radius = textLoader -> getConstant(string("IDS_CFT_RA"));
-  this -> price = textLoader -> getConstant(string("IDS_CFT_PR"));
+  this -> respawnSpeed = textLoader->getInteger(string("IDS_CFT_RS"));
+  this -> radius = textLoader->getInteger(string("IDS_CFT_RA"));
+  this -> price = textLoader->getInteger(string("IDS_CFT_PR"));
   this -> towerTypeID = towerTypeID;
   this -> setUpUnits();
 }
@@ -19,19 +19,19 @@ void CrinkleFry::upgrade(){}
 void CrinkleFry::setUpUnits(){
   //constants for the Crinkle Fry
   //health
-  int crinkleFryHP = textLoader -> getConstant(string("IDS_CF_HP"));
+  int crinkleFryHP = textLoader->getInteger(string("IDS_CF_HP"));
   //damage
-  int crinkleFryDM = textLoader -> getConstant(string("IDS_CF_DM"));
+  int crinkleFryDM = textLoader->getInteger(string("IDS_CF_DM"));
   //armor
-  int crinkleFryAM = textLoader -> getConstant(string("IDS_CF_AM"));
+  int crinkleFryAM = textLoader->getInteger(string("IDS_CF_AM"));
   //speed
-  int crinkleFrySP = textLoader -> getConstant(string("IDS_CF_SP"));
+  int crinkleFrySP = textLoader->getInteger(string("IDS_CF_SP"));
   //armor penetration
-  int crinkleFryAP = textLoader -> getConstant(string("IDS_CF_AP"));
+  int crinkleFryAP = textLoader->getInteger(string("IDS_CF_AP"));
   //attack radius
-  int crinkleFryAR = textLoader -> getConstant(string("IDS_CF_AR"));
+  int crinkleFryAR = textLoader->getInteger(string("IDS_CF_AR"));
   //lunch money
-  int crinkleFryLM = textLoader -> getConstant(string("IDS_CF_LM"));
+  int crinkleFryLM = textLoader->getInteger(string("IDS_CF_LM"));
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){

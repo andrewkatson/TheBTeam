@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <constants>
-
+  <ints>
   <!--Window-->
   <constant value="800" id="IDS_W_X"></constant>
   <constant value="600" id="IDS_W_Y"></constant>
@@ -294,4 +294,20 @@
   <constant value="4" id="IDS_SL_AP"> </constant>
   <constant value="60" id="IDS_SL_AR"> </constant>
 
+  </ints>
+  <floats>
+
+    <!--Wave Generation Constants-->
+    <constant value=".2" id="IDS_STAT_MAX_SCALAR"/>
+    <constant value="-.2" id="IDS_STAT_MIN_SCALAR"/>
+
+    <constant value="2.0" id="IDS_WAVE_WEIGHT_AVG_SCALAR"/>
+    <constant value="2.0" id="IDS_SKINNY_WEIGHT"/>
+    <constant value="1.0" id="IDS_AVERAGE_WEIGHT"/>
+    <constant value="2.0" id="IDS_FAT_WEIGHT"/>
+
+
+
+
+  </floats>
 </constants>

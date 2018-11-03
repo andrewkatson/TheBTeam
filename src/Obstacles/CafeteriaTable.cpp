@@ -3,5 +3,5 @@
 CafeteriaTable::CafeteriaTable(shared_ptr<TextLoader> textLoader, string towerTypeID) : Obstacle(){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
-  this -> price = textLoader -> getConstant(string("IDS_CT_PR"));
+  this -> price = textLoader -> getInteger(string("IDS_CT_PR"));
 }

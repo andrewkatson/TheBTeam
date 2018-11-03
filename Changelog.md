@@ -1,8 +1,12 @@
 [Unreleased]
-##Addded
+
+
+[0.1.2]
+##Added
 - StateChangeEvent, StateChangeEventData[@andrewkatson][https://github.com/andrewkatson]
 - NotATower to indicate to stand for an empty space
 - ActorDestroyedEvent, ActorDestroyedEventData, ActorAttackEvent, ActorAttackEventData [@meisong1997][https://github.com/meisong1997]
+- Floating-point [double] loading in TextLoader [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 ###Changed
 - MapFactory now uses an A* BFS to find paths through the
@@ -19,9 +23,12 @@
 - BoardManager sets up all obstacles made at the start of the game
 - Now menu screen works and switches between the options
  [@KP-HB][https://github.com/KP-HB]
+ - Fully fleshed out generation of wave members [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 ###Fixed
 - memory issue caused by improperly initialized shared pointers [@andrewkatson][https://github.com/andrewkatson]
+- Improper random-number-generation in WaveManager::makeWave [@jeremyelkayam][https://github.com/jeremyelkayam]
+
 
 
 [0.1.0]

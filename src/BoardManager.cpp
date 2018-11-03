@@ -74,7 +74,7 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
   string towerTypeID = tcEventData -> towerTypeID;
 
   //get the numeric identifier for the tower type
-  int towerTypeNum = textLoader -> getConstant(string("IDS_"+towerTypeID));
+  int towerTypeNum = textLoader -> getInteger(string("IDS_"+towerTypeID));
 
   //decode the ID so that it is a row and column
   int row = towerPosID / getYDim();

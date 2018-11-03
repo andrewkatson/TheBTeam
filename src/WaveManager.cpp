@@ -20,37 +20,37 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
 void WaveManager::setUpPossibleEnemies(){
   //constants for the skinny kid
   //health
-  int skinnyKidHP = textLoader -> getConstant(string("IDS_SK_HP"));
+  int skinnyKidHP = textLoader->getInteger(string("IDS_SK_HP"));
   //damage
-  int skinnyKidDM = textLoader -> getConstant(string("IDS_SK_DM"));
+  int skinnyKidDM = textLoader->getInteger(string("IDS_SK_DM"));
   //armor
-  int skinnyKidAM = textLoader -> getConstant(string("IDS_SK_AM"));
+  int skinnyKidAM = textLoader->getInteger(string("IDS_SK_AM"));
   //speed
-  int skinnyKidSP = textLoader -> getConstant(string("IDS_SK_SP"));
+  int skinnyKidSP = textLoader->getInteger(string("IDS_SK_SP"));
   //armor  penetration
-  int skinnyKidAP = textLoader -> getConstant(string("IDS_SK_AP"));
+  int skinnyKidAP = textLoader->getInteger(string("IDS_SK_AP"));
   //attack radius
-  int skinnyKidAR = textLoader -> getConstant(string("IDS_SK_AR"));
+  int skinnyKidAR = textLoader->getInteger(string("IDS_SK_AR"));
   //lunch money
-  int skinnyKidLM = textLoader -> getConstant(string("IDS_SK_LM"));
+  int skinnyKidLM = textLoader->getInteger(string("IDS_SK_LM"));
 
   //constants for the average kid
-  int averageKidHP = textLoader -> getConstant(string("IDS_AK_HP"));
-  int averageKidDM = textLoader -> getConstant(string("IDS_AK_DM"));
-  int averageKidAM = textLoader -> getConstant(string("IDS_AK_AM"));
-  int averageKidSP = textLoader -> getConstant(string("IDS_AK_SP"));
-  int averageKidAP = textLoader -> getConstant(string("IDS_AK_AP"));
-  int averageKidAR = textLoader -> getConstant(string("IDS_AK_AR"));
-  int averageKidLM = textLoader -> getConstant(string("IDS_AK_LM"));
+  int averageKidHP = textLoader->getInteger(string("IDS_AK_HP"));
+  int averageKidDM = textLoader->getInteger(string("IDS_AK_DM"));
+  int averageKidAM = textLoader->getInteger(string("IDS_AK_AM"));
+  int averageKidSP = textLoader->getInteger(string("IDS_AK_SP"));
+  int averageKidAP = textLoader->getInteger(string("IDS_AK_AP"));
+  int averageKidAR = textLoader->getInteger(string("IDS_AK_AR"));
+  int averageKidLM = textLoader->getInteger(string("IDS_AK_LM"));
 
   //constants for the fat kid
-  int fatKidHP = textLoader -> getConstant(string("IDS_FK_HP"));
-  int fatKidDM = textLoader -> getConstant(string("IDS_FK_DM"));
-  int fatKidAM = textLoader -> getConstant(string("IDS_FK_AM"));
-  int fatKidSP = textLoader -> getConstant(string("IDS_FK_SP"));
-  int fatKidAP = textLoader -> getConstant(string("IDS_FK_AP"));
-  int fatKidAR = textLoader -> getConstant(string("IDS_FK_AR"));
-  int fatKidLM = textLoader -> getConstant(string("IDS_FK_LM"));
+  int fatKidHP = textLoader->getInteger(string("IDS_FK_HP"));
+  int fatKidDM = textLoader->getInteger(string("IDS_FK_DM"));
+  int fatKidAM = textLoader->getInteger(string("IDS_FK_AM"));
+  int fatKidSP = textLoader->getInteger(string("IDS_FK_SP"));
+  int fatKidAP = textLoader->getInteger(string("IDS_FK_AP"));
+  int fatKidAR = textLoader->getInteger(string("IDS_FK_AR"));
+  int fatKidLM = textLoader->getInteger(string("IDS_FK_LM"));
 
   shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(
     skinnyKidHP, skinnyKidDM, skinnyKidAM, skinnyKidSP, skinnyKidAP, skinnyKidAR, skinnyKidLM);
@@ -68,16 +68,19 @@ void WaveManager::setUpPossibleEnemies(){
 
 void WaveManager::setupWaves(int difficulty){
 
-  std::exponential_distribution<double> num_waves_rng (1+difficulty*level/2);
   std::mt19937 rnd_gen (rd ());
 
-  unsigned long num_waves=round(num_waves_rng(rnd_gen));
+  //average number of waves is the difficulty times the level, e.g. difficulty 3 on level 10: 30 waves
+
+  double avg=difficulty*level;
+
+  std::normal_distribution<double> num_waves_rng(avg,avg*.4);
+
+  unsigned int num_waves = round(num_waves_rng(rnd_gen));
+
+  if(num_waves<0) num_waves=1; //on the off-chance that we generated a negative or 0 value, round that shit
 
   numWaves=num_waves;
-
-  //waves = queue<queue<shared_ptr<ActorInterface>>>(std::deque<deque<shared_ptr<ActorInterface>>>(num_waves,NULL));
-
-  //TODO - initialize the queue of waves to have num_waves amount of empty waves
 
 }
 
@@ -86,57 +89,73 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
   queue<shared_ptr<MeleeUnit>>result;
 
-  //TODO - figure out why this won't work
-  //std::exponential_distribution<int> wave_weight_rng (difficulty*waveNumber*level*3);
+  double avg=difficulty*waveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
+
+  std::normal_distribution<double> wave_weight_rng (avg,avg*.4);
+
   std::mt19937 rnd_gen (rd ());
 
   //average 15, standard deviation 5
   std::normal_distribution<double> enemy_type_rng(15,5);
 
-  //TODO adjust this based on difficulty
-  std::uniform_real_distribution<double> percent_perturbation_rng(-.2,.2);
+  //At minimum, stats will be scaled down by 20%
+  double min_scale=textLoader->getDouble("IDS_STAT_MIN_SCALAR");
 
-  unsigned int total_wave_weight=100;//TODO - once you figure out how to declare wave weight rng, this should be generated by it
+  //At maximum, stats will be scaled up by 20% for difficulty 1, 40% for 2, etc.
+  double max_scale=textLoader->getDouble("IDS_STAT_MAX_SCALAR")*difficulty;
 
-  for(int weight=0;weight<total_wave_weight;){
-    int randnum=enemy_type_rng(rnd_gen);
-    MeleeUnit enemy;
-    if(randnum<10){//TODO - figure out how to ACTUALLY downcast this
-      enemy = static_cast<MeleeUnit>(*enemies[0].get());//add a skinny kid
+  std::uniform_real_distribution<double> percent_perturbation_rng(min_scale,max_scale);
+
+  double total_wave_weight=wave_weight_rng(rnd_gen);
+
+  for(double weight=0;weight<total_wave_weight;){
+    double randnum=enemy_type_rng(rnd_gen);
+    shared_ptr<MeleeUnit> enemy;
+    if(randnum<10){
+      enemy = std::static_pointer_cast<MeleeUnit>(enemies[0]);//add a skinny kid
+      weight+=textLoader->getDouble("IDS_SKINNY_WEIGHT");
     }else if(randnum>=10 && randnum<20){
-      enemy = static_cast<MeleeUnit>(*enemies[1].get());//add a normal kid
+      enemy = static_pointer_cast<MeleeUnit>(enemies[1]);//add a normal kid
+      weight+=textLoader->getDouble("IDS_AVERAGE_WEIGHT");
     }else if(randnum>=20){
-      enemy = static_cast<MeleeUnit>(*enemies[2].get());//add a fat kid
+      enemy = static_pointer_cast<MeleeUnit>(enemies[2]);//add a fat kid
+      weight+=textLoader->getDouble("IDS_FAT_WEIGHT");
     }
-
     //Randomize this stuff to be +/- 20% of the default
 
-    enemy.setHitpoints(enemy.getHitpoints()+enemy.getHitpoints()*std::lround(percent_perturbation_rng(rnd_gen)));
+    enemy->setHitpoints(enemy->getHitpoints()+enemy->getHitpoints()*percent_perturbation_rng(rnd_gen));
 
-    enemy.setLunchMoney(enemy.getLunchMoney()+enemy.getLunchMoney()*std::lround(percent_perturbation_rng(rnd_gen)));
+    enemy->setLunchMoney(enemy->getLunchMoney()+enemy->getLunchMoney()*percent_perturbation_rng(rnd_gen));
 
-    enemy.setDamage(enemy.getDamage()+enemy.getDamage()*std::lround(percent_perturbation_rng(rnd_gen)));
+    enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
+
+    //TODO - give the enemy a spawn location
+
+    result.push(enemy);
   }
+  return result;
 }
 
-/*
+
 //handle events
 void WaveManager::delegateMethod(const EventInterface& event){
 
-}*/
+}
 
 void WaveManager::startNextWave() {
-  queue<shared_ptr<MeleeUnit>> next_wave = waves.front();
+  //TODO - body
 }
+
 
 void WaveManager::endCurrentWave() {
     //TODO - code to stop the wave
-    waves.pop();
+    numWaves--;
 }
 
 void WaveManager::spawnNextUnit() {
-    shared_ptr<ActorInterface> next_unit = enemies.front();
+    shared_ptr<ActorInterface> next_unit = currentWave.front();
     //TODO - spawn the unit
+    currentWave.pop();
 }
 
 void WaveManager::update(float deltaS) {
@@ -144,6 +163,4 @@ void WaveManager::update(float deltaS) {
 }
 
 
-queue <shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return waves.front();}
-
-queue <queue<shared_ptr < MeleeUnit>>>WaveManager::getWaves() {return waves;}
+queue <shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return currentWave;}

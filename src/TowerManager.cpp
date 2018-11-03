@@ -75,7 +75,7 @@ void TowerManager::populateObstacles(){
 void TowerManager::populateTowersToChoose(){
 
   //get the maximum number of melee units allowed per melee tower
-  int maxMeleeUnits = textLoader -> getConstant(string("IDS_MT_MU"));
+  int maxMeleeUnits = textLoader->getInteger(string("IDS_MT_MU"));
 
   //get the identifier for no tower type chosen
   string noTowerAtTileID = textLoader -> getString("IDS_NT");
@@ -119,7 +119,7 @@ void TowerManager::populateTowersToChoose(){
  */
 void TowerManager::populateTowerUpgrades(){
   //get the maximum number of melee units allowed per melee tower
-  int maxMeleeUnits = textLoader -> getConstant(string("IDS_MT_MU"));
+  int maxMeleeUnits = textLoader->getInteger(string("IDS_MT_MU"));
 
   populateTowerUpgradesLvl1(maxMeleeUnits);
   populateTowerUpgradesLvl2(maxMeleeUnits);
@@ -472,7 +472,7 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type){
   shared_ptr<TowerInterface> retTower;
 
   //get the maximum number of melee units allowed per melee tower
-  int maxMeleeUnits = textLoader -> getConstant(string("IDS_MT_MU"));
+  int maxMeleeUnits = textLoader -> getInteger(string("IDS_MT_MU"));
 
   if(type == textLoader->getString(string("IDS_CPT"))){
     retTower = make_shared<CheesePizza>(textLoader, type);

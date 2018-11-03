@@ -3,9 +3,9 @@
 WaffleFry::WaffleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits) : MeleeTower(){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;
-  this -> respawnSpeed = textLoader -> getConstant(string("IDS_WFT_RS"));
-  this -> radius = textLoader -> getConstant(string("IDS_WFT_RA"));
-  this -> price = textLoader -> getConstant(string("IDS_WFT_PR"));
+  this -> respawnSpeed = textLoader->getInteger(string("IDS_WFT_RS"));
+  this -> radius = textLoader->getInteger(string("IDS_WFT_RA"));
+  this -> price = textLoader->getInteger(string("IDS_WFT_PR"));
   this -> towerTypeID = towerTypeID;
   this -> setUpUnits();
 }
@@ -18,19 +18,19 @@ void WaffleFry::upgrade(){}
 void WaffleFry::setUpUnits(){
   //constants for the Waffle Fry
   //health
-  int waffleFryHP = textLoader -> getConstant(string("IDS_WF_HP"));
+  int waffleFryHP = textLoader->getInteger(string("IDS_WF_HP"));
   //damage
-  int waffleFryDM = textLoader -> getConstant(string("IDS_WF_DM"));
+  int waffleFryDM = textLoader->getInteger(string("IDS_WF_DM"));
   //armor
-  int waffleFryAM = textLoader -> getConstant(string("IDS_WF_AM"));
+  int waffleFryAM = textLoader->getInteger(string("IDS_WF_AM"));
   //speed
-  int waffleFrySP = textLoader -> getConstant(string("IDS_WF_SP"));
+  int waffleFrySP = textLoader->getInteger(string("IDS_WF_SP"));
   //armor penetration
-  int waffleFryAP = textLoader -> getConstant(string("IDS_WF_AP"));
+  int waffleFryAP = textLoader->getInteger(string("IDS_WF_AP"));
   //attack radius
-  int waffleFryAR = textLoader -> getConstant(string("IDS_WF_AR"));
+  int waffleFryAR = textLoader->getInteger(string("IDS_WF_AR"));
   //lunch money
-  int waffleFryLM = textLoader -> getConstant(string("IDS_WF_LM"));
+  int waffleFryLM = textLoader->getInteger(string("IDS_WF_LM"));
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
