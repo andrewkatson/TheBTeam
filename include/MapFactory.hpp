@@ -70,6 +70,10 @@ private:
   //y dimension of board
   int yDim;
 
+  //a value for the absolute value of the last obstacle type that can be placed
+  //so if a -4 is the last obstacle (the other being -3) then this is 4
+  int maxObstacleVal;
+
   /* the side the exit is on
    * so if it is in the right hand column then
    * the direction is right

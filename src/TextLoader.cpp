@@ -36,17 +36,17 @@ void TextLoader::loadConstants(){
   tinyxml2::XMLDocument doc;
   doc.LoadFile( "../values/constants.xml" );
   tinyxml2::XMLElement * root =  doc.FirstChildElement("constants");
-  stringstream strValue;
+
   int intValue;
 
   for(tinyxml2::XMLElement* node = root->FirstChildElement("constant"); node != NULL; node= node->NextSiblingElement("constant")) {
     string s(node->Attribute("id"));
+    stringstream strValue;
     //converting the string value from xml to an int
     strValue << node -> Attribute("value");
     strValue >> intValue;
-
     constants.insert({s, intValue});
-
+    intValue = 0;
   }
 }
 

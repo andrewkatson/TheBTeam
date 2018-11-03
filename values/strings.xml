@@ -25,49 +25,72 @@
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->
     <string value="OPTIONSMENUSCREENHANDLEKEYPRESS" id="IDS_OMSD_KP"> </string>
+    <!--PlayingScreen Delegates-->
+    <string value="PLAYINGSCREENHANDLETOWERCREATION" id="IDS_PS_TC"> </string>
 
     <!--TowerTypeIDS-->
     <!--No Tower -->
     <string value="NT" id="IDS_NT"> </string>
+    <string value="NT" id="-1"> </string>
+    <!--Exit Tile-->
+    <string value="EXT" id="IDS_EXT"> </string>
+    <string value="0" id="IDS_EXT"> </string>
     <!--CheesePizza-->
     <string value="CPT" id="IDS_CPT"> </string>
-    <!--CrinkleFry-->
-    <string value="CFT" id="IDS_CFT"> </string>
-    <!--DeepDish-->
-    <string value="DDT" id="IDS_DDT"> </string>
-    <!--EnergyDrink-->
-    <string value="EDT" id="IDS_EDT"> </string>
-    <!--Gravy-->
-    <string value="GT" id="IDS_GT"> </string>
-    <!--MeatLovers-->
-    <string value="MLT" id="IDS_MLT"> </string>
-    <!--MiniM&Ms-->
-    <string value="MMMT" id="IDS_MMMT"> </string>
-    <!--NormalFry-->
-    <string value="NFT" id="IDS_NFT"> </string>
-    <!--NormalM&Ms-->
-    <string value="NMMT" id="IDS_NMMT"> </string>
-    <!--PeautButterM&Ms-->
-    <string value="PBMMT" id="IDS_PBMMT"> </string>
-    <!--PeanutM&Ms-->
-    <string value="PMMT" id="IDS_PMMT"> </string>
+    <string value="CPT" id="111"> </string>
     <!--PepperoniPizza-->
     <string value="PPT" id="IDS_PPT"> </string>
-    <!--Slushie-->
-    <string value="SLT" id="IDS_SLT"> </string>
+    <string value="PPT" id="121"> </string>
+    <!--DeepDish-->
+    <string value="DDT" id="IDS_DDT"> </string>
+    <string value="DDT" id="131"> </string>
+    <!--MeatLovers-->
+    <string value="MLT" id="IDS_MLT"> </string>
+    <string value="MLT" id="132"> </string>
+    <!--MiniM&Ms-->
+    <string value="MMMT" id="IDS_MMMT"> </string>
+    <string value="MMMT" id="211"> </string>
+    <!--NormalM&Ms-->
+    <string value="NMMT" id="IDS_NMMT"> </string>
+    <string value="NMMT" id="221"> </string>
+    <!--PeautButterM&Ms-->
+    <string value="PBMMT" id="IDS_PBMMT"> </string>
+    <string value="PBMMT" id="231"> </string>
+    <!--PeanutM&Ms-->
+    <string value="PMMT" id="IDS_PMMT"> </string>
+    <string value="PMMT" id="232"> </string>
     <!--Soda-->
     <string value="SOT" id="IDS_SOT"> </string>
+    <string value="SOT" id="311"> </string>
+    <!--EnergyDrink-->
+    <string value="EDT" id="IDS_EDT"> </string>
+    <string value="EDT" id="321"> </string>
+    <!--Gravy-->
+    <string value="GT" id="IDS_GT"> </string>
+    <string value="GT" id="331"> </string>
+    <!--Slushie-->
+    <string value="SLT" id="IDS_SLT"> </string>
+    <string value="SLT" id="332"> </string>
+    <!--NormalFry-->
+    <string value="NFT" id="IDS_NFT"> </string>
+    <string value="NFT" id="411"> </string>
+    <!--CrinkleFry-->
+    <string value="CFT" id="IDS_CFT"> </string>
+    <string value="CFT" id="421"> </string>
     <!--SpicyFry-->
     <string value="SFT" id="IDS_SFT"> </string>
+    <string value="SFT" id="431"> </string>
     <!--WaffleFry-->
     <string value="WFT" id="IDS_WFT"> </string>
+    <string value="WFT" id="432"> </string>
     <!-- Cafeteria Table-->
     <string value="CTO" id="IDS_CTO"> </string>
+    <string value="CTO" id="-3"> </string>
     <!--Trash Can -->
     <string value="TCO" id="IDS_TCO"> </string>
+    <string value="TCO" id="-4"> </string>
 
 
     <!--Option-->
     <!--TODO FILL IN -->
-    <string value="" id="IDS_TCO"> </string>
 </strings>

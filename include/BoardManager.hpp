@@ -5,10 +5,15 @@
 #include "TextLoader.hpp"
 #include "../include/Events/TowerCreationEvent.hpp"
 #include <functional>
+#include <assert.h>
 
 using namespace std::placeholders;
 class BoardManager{
 private:
+
+    //int pair (used to assocaite a row and col)
+    typedef pair<int,int> intPair;
+
     //Store the textLoader to make requests for strings and constants
     shared_ptr<TextLoader> textLoader;
     //random map generator
@@ -31,6 +36,11 @@ private:
     // are the path to the exit
     vector<vector<int>> floorGrid;
 
+    /*
+     * Holds every obstacle on the above floor grid
+     * keyed by their type with a value of their position
+     */
+    unordered_map<int, intPair> allObstacles;
 
 public:
   BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
@@ -44,7 +54,11 @@ public:
 
   void handleTowerCreation(const EventInterface& event);
 
+  bool hasMap();
   bool isTowerOrObstacle(int row, int col);
+  bool isExit(int row, int col);
+  bool isPath(int row, int col);
+  bool isObstacle(int row, int col);
 
   int getYDim();
   int getXDim();
@@ -69,7 +83,8 @@ public:
   vector<int>const & getFloorCol(int col);
   int getFloorRowCol(int row, int col);
 
-  vector<int> getEntryPositions();
+  vector<int>& getEntryPositions();
 
+  unordered_map<int,intPair>& getAllObstacles();
 };
 #endif

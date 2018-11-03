@@ -10,9 +10,13 @@
 #define TOWERINTERFACE_H
 #include <string>
 #include <memory>
+#include <utility>
+#include "TextLoader.hpp"
 
 using std::string;
 using std::make_shared;
+using std::shared_ptr;
+using std::pair;
 class TowerInterface{
 protected:
   //the tower type identifier that allows for its next upgrade to be pulled
@@ -32,6 +36,7 @@ protected:
 public:
   virtual void upgrade()=0;
   virtual int getPrice()=0;
+  virtual string getType()=0;
 
 };
 

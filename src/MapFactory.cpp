@@ -17,6 +17,8 @@
 MapFactory::MapFactory(MapChoices *mapCustomizationChoices){
   this -> mapCustomizationChoices = unique_ptr<MapChoices>(mapCustomizationChoices);
 
+  this -> maxObstacleVal = 4;
+
   //generate the dimensions of the board using the cafeteria size choice
   generateDimensions();
 
@@ -1258,8 +1260,11 @@ void MapFactory::makeObstacles(){
       continue;
     }
 
+    //roll a die to determine what type of obstacle will go here
+    int obstacleType = (-1) * (int) randomVariates->Equilikely(3,maxObstacleVal);
+
     //place an obstacle at the chosen row and column
-    aboveFloorGrid.at(randRowChosen).at(randColChosen) = -3;
+    aboveFloorGrid.at(randRowChosen).at(randColChosen) = obstacleType;
     unavailableSpots.at(randRowChosen).at(randColChosen) = 1;
 
     //vector where each index corresponds to a true (1) or false (1)
@@ -1436,15 +1441,15 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
   int colPlus = col + 1;
 
   //value that the blocked path has to be higher than for a horizontal or vertical to be blocked
-  int normalThreshold = (int) randomVariates -> Equilikely(0, maxVal/3);
+  int normalThreshold = (int) randomVariates -> Equilikely(0, maxVal);
   //value tha the blocked path has to higher than for a diagonal to be blocked
-  int diagonalThreshold  = (int) randomVariates -> Equilikely(0, maxVal/6);
+  int diagonalThreshold  = (int) randomVariates -> Equilikely(0, maxVal/2);
 
   //check all the directions
   //to see if they are in bounds and mark the spots as unavaiable
   //only checks marks them off if the passed value in
   //blockedSides vector is true (1)
-  /*
+
   if(colMinus >= 0){
     //left
     if(blockedSides.at(0) > normalThreshold){
@@ -1503,7 +1508,7 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
       currentOpenSpaces--;
     }
   }
-  */
+ /*
 
   if(colMinus >= 0){
     //left
@@ -1549,7 +1554,7 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
     unavailableSpots.at(rowPlus).at(col) = 1;
     currentOpenSpaces--;
   }
-
+  */
   return currentOpenSpaces;
 
 }

@@ -1,15 +1,24 @@
 [Unreleased]
 ##Addded
 - StateChangeEvent, StateChangeEventData[@andrewkatson][https://github.com/andrewkatson]
-
-###Added
+- NotATower to indicate to stand for an empty space
 - ActorDestroyedEvent, ActorDestroyedEventData, ActorAttackEvent, ActorAttackEventData [@meisong1997][https://github.com/meisong1997]
 
 ###Changed
 - MapFactory now uses an A* BFS to find paths through the
   map [@andrewkatson][https://github.com/andrewkatson]
-- Playing Screen now writes the maps to console for testing 
-- Now menu screen works and switches between the options [@KP-HB][https://github.com/KP-HB]
+- Playing Screen now writes the maps to console for testing
+- Tower Manager now keeps track of every kind of tower and obstacle
+  separate from their list of upgrdes (uses same objects as the upgrade map)
+- TowerManager adds obstacle objects to the towersPlaced as soon
+  as they are made when a new map is generated (facilitated by GameLogic)
+- GameLogic has the capacity to check if a particular tower can be purchased
+- GameLogic can return a vector of the upgrades for a tower given its tile
+- GameLogic can make a tower creation event (to be handled by board manager and tower manager)
+- GameLogic can be queried for an attempted purchase of a particular tower type
+- BoardManager sets up all obstacles made at the start of the game
+- Now menu screen works and switches between the options
+ [@KP-HB][https://github.com/KP-HB]
 
 ###Fixed
 - memory issue caused by improperly initialized shared pointers [@andrewkatson][https://github.com/andrewkatson]

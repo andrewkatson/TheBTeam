@@ -18,6 +18,8 @@ using std::shared_ptr;
 using std::make_shared;
 class MeleeTower : public TowerInterface{
 protected:
+  //int pair (used to assocaite a row and col)
+  typedef pair<int,int> intPair;
   //the total number of units that a melee tower can have
   int totalUnits;
   //the speed that dead units will respawn
@@ -26,14 +28,11 @@ protected:
   int xRally;
   //the y coordinate of the rally point for this tower
   int yRally;
-  //the specific tower of melee type this is
-  shared_ptr<MeleeTower> currentTower;
   //the specific units that are fighitng for this tower
   vector<shared_ptr<MeleeUnit>> currentUnits;
 
 public:
   MeleeTower();
-  MeleeTower(shared_ptr<MeleeTower> startingTower);
 
   virtual void upgrade();
   virtual void setUpUnits();
@@ -42,6 +41,11 @@ public:
    * @return the price of the tower
    */
   int getPrice();
+
+  string getType(){return towerTypeID;}
+
+  void setPos(intPair pos){row = pos.first; col=pos.second;}
+  void setPos(int row, int col) {this->row=row; this->col=col;}
 };
 
  #endif
