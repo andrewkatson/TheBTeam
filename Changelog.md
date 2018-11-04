@@ -4,6 +4,8 @@
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
 
 ###Changed
+- GameLogic now updates the balance of the player appropriately whether
+ you buy a tower, remove an obstacle, or remove a tower [@andrewkatson][https://github.com/andrewkatson]
 
 
 [0.1.2]

@@ -90,8 +90,13 @@ void GameLogic::updateGameLogic(float deltaS){
       if(allTowers.size() != 0){
         shared_ptr<TowerInterface> tower = allTowers.at(0);
         string towerType = tower -> getType();
-        if(canBuy(towerType)){
+        if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
           createATower(row,col,towerType);
+        }
+        else if(canBuy(towerType) && boardManager -> isObstacle(row,col)){
+          removeATower(row,col);
+          cout << "removed an obstacle" << endl;
+          test -=2;
         }
       }
     }
@@ -317,7 +322,23 @@ void GameLogic::createATower(int row, int col, string towerType){
 
   shared_ptr<EventInterface> tcEvent = make_shared<TowerCreationEvent>(combinedRowCol, towerType, nowInNano);
 
+  //handle the money change from buying this tower
+  createATowerMoney(towerType);
+
   this -> eventManager -> queueEvent(tcEvent);
+}
+
+/*
+ * When a tower/obstacle is purchased we deduct the monetary value
+ * from the player's total money
+ * @param tower: the tower created
+ */
+void GameLogic::createATowerMoney(string towerType){
+  //get the price of the tower
+  int price = towerManager -> getTowerPrice(towerType);
+
+  //remove money equal to the tower's price
+  player -> modifyBalance(price*-1);
 }
 
 /*
@@ -335,7 +356,55 @@ void GameLogic::removeATower(int row, int col){
 
   shared_ptr<EventInterface> trEvent = make_shared<TowerRemoveEvent>(combinedRowCol,  nowInNano);
 
+  //if we remove a tower then we have to return a percentage of the
+  //money from the tower to the player
+  if(boardManager -> isTower(row, col)){
+    removeATowerMoney(row, col);
+  }
+  //if the thing removed is an obstacle then
+  //we have to remove money equal to the obstalces price
+  else if(boardManager->isObstacle(row,col)){
+    removeAObstacleMoney(row,col);
+  }
+
+
   this -> eventManager -> queueEvent(trEvent);
+}
+
+/*
+ * If a tower is removed we return a percentage of the money to the player
+ * @param row: the row index of the tower
+ * @param col: the col index of the tower
+ */
+void GameLogic::removeATowerMoney(int row, int col){
+  //grab the tower at the position
+  shared_ptr<TowerInterface> tower = towerManager -> getTowerPlaced(row,col);
+
+  //get the price of the tower
+  int price = tower -> getPrice();
+
+  //get the percentage modifier for how much money is returned to the player
+  double percentage = textLoader -> getDouble(string("IDS_Percentage_Money_Returned_On_Sell_Tower"));
+
+  //add a percentage of this money back to the player's account
+  player -> modifyBalance(price*percentage);
+}
+
+/*
+ * If an obstacle is removed we take money from the player equal to the
+ * price of the obstacle
+ * @param row: the row index of the obstacle
+ * @param col: the col index of the obstacle
+ */
+void GameLogic::removeAObstacleMoney(int row, int col){
+  //grab the obstacle at the position
+  shared_ptr<TowerInterface> obstacle = towerManager -> getTowerPlaced(row,col);
+
+  //get the price of the tower
+  int price = obstacle -> getPrice();
+
+  //add a percentage of this money back to the player's account
+  player -> modifyBalance(price*-1);
 }
 
 /*```

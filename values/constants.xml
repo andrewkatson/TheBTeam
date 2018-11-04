@@ -306,7 +306,8 @@
     <constant value="1.0" id="IDS_AVERAGE_WEIGHT"/>
     <constant value="2.0" id="IDS_FAT_WEIGHT"/>
 
-
+    <!--Player Constants-->
+    <constant value="0.5" id="IDS_Percentage_Money_Returned_On_Sell_Tower"> </constant>
 
 
   </floats>
