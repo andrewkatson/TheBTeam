@@ -91,7 +91,18 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
   int col = towerPosID % getXDim();
 
   //place the tower value on the above floor grid
-  floorGrid.at(row).at(col) = towerTypeNum;
+  addTower(row,col,towerTypeNum);
+}
+
+/*
+ * Add a tower to the specified position to the board that represents placed
+ * towers and obstacles
+ * @param row: row index of the tower
+ * @param col: col index of the tower
+ * @param towerTypeNum: the number associated with the type of tower being built
+ */
+void BoardManager::addTower(int row, int col, int towerTypeNum){
+  aboveFloorGrid.at(row).at(col) = towerTypeNum;
 }
 
 /*
@@ -117,6 +128,19 @@ void BoardManager::handleTowerRemove(const EventInterface& event){
   //decode the ID so that it is a row and column
   int row = towerPosID / getYDim();
   int col = towerPosID % getXDim();
+
+  //remove the tower value on the above floor grid
+  clearTowerOrObstacle(row,col);
+
+}
+
+/*
+ * Clear the tile of the obstacle or tower currently there
+ * @param row: the row index for the obstacle/tower
+ * @param col: the col index for the obstacle/tower
+ */
+void BoardManager::clearTowerOrObstacle(int row, int col){
+  aboveFloorGrid.at(row).at(col) = emptyTile;
 }
 
 /*

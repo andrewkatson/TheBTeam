@@ -59,7 +59,7 @@ private:
   //game events
   shared_ptr<EventManager> eventManager;
 
-  bool test;
+  int test;
 
 public:
   /*

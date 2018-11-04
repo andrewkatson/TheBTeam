@@ -440,10 +440,11 @@ void TowerManager::handleTowerRemove(const EventInterface& event){
   TowerRemoveEventData* trEventData = static_cast<TowerRemoveEventData*>((trEvent -> data).get());
   //get the tower id
   int towerPosID = trEventData -> towerPosID;
-  
+
   //decode the ID so that it is a row and column
   int row = towerPosID / yDim;
   int col = towerPosID % xDim;
+
 }
 
 /*

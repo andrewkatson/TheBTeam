@@ -20,7 +20,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerEvents();
   this -> registerDelegates();
-  test = true;
+  test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
 }
@@ -81,27 +81,29 @@ void GameLogic::registerDelegates(){
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
 
-  if(boardManager -> hasMap() && test == true){
+  if(boardManager -> hasMap()){
     int row = 3;
     int col = 3;
-    vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
+    if(test == 2){
+      vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 
-    if(allTowers.size() != 0){
-      shared_ptr<TowerInterface> tower = allTowers.at(0);
-      string towerType = tower -> getType();
-      if(canBuy(towerType)){
-        createATower(row,col,towerType);
+      if(allTowers.size() != 0){
+        shared_ptr<TowerInterface> tower = allTowers.at(0);
+        string towerType = tower -> getType();
+        if(canBuy(towerType)){
+          createATower(row,col,towerType);
+        }
       }
-
+    }
+    if(test == 1){
       cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
+      cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
       if(boardManager -> isTower(row, col)){
         removeATower(row,col);
       }
     }
-
-    test = false;
+    test--;
   }
-
 }
 /*
  * Handle any key press from the user
@@ -324,7 +326,16 @@ void GameLogic::createATower(int row, int col, string towerType){
  * @param col: the col index of tower
  */
 void GameLogic::removeATower(int row, int col){
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
+  int combinedRowCol = row*(boardManager -> getXDim()) + col;
+
+  shared_ptr<EventInterface> trEvent = make_shared<TowerRemoveEvent>(combinedRowCol,  nowInNano);
+
+  this -> eventManager -> queueEvent(trEvent);
 }
 
 /*```

@@ -10,7 +10,10 @@
 
 using namespace std::placeholders;
 class BoardManager{
+
 private:
+    //value used to represnet an empty tile
+    int emptyTile = -1;
 
     //int pair (used to assocaite a row and col)
     typedef pair<int,int> intPair;
@@ -89,5 +92,9 @@ public:
   vector<int>& getEntryPositions();
 
   unordered_map<int,intPair>& getAllObstacles();
+
+private:
+  void addTower(int row, int col, int towerTypeNum);
+  void clearTowerOrObstacle(int row, int col);
 };
 #endif

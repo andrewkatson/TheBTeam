@@ -98,6 +98,7 @@ void PlayingScreen::handleTowerRemove(const EventInterface& event){
   TowerRemoveEventData* trEventData = static_cast<TowerRemoveEventData*>((trEvent -> data).get());
 
   somethingChanged = true;
+
 }
 
 template <class T>
