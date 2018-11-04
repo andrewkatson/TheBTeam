@@ -81,6 +81,7 @@ void GameLogic::registerDelegates(){
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
 
+  /* Test Code 
   if(boardManager -> hasMap()){
     int row = 3;
     int col = 3;
@@ -109,6 +110,7 @@ void GameLogic::updateGameLogic(float deltaS){
     }
     test--;
   }
+  */
 }
 /*
  * Handle any key press from the user

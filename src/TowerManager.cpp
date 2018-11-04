@@ -445,6 +445,9 @@ void TowerManager::handleTowerRemove(const EventInterface& event){
   int row = towerPosID / yDim;
   int col = towerPosID % xDim;
 
+  //remove the tower at the position specified
+  removeTower(row, col);
+
 }
 
 /*
@@ -583,11 +586,4 @@ void TowerManager::removeTower(int row, int col){
   if(towersPlaced.find(combinedRowCol) != towersPlaced.end()){
     towersPlaced.erase(combinedRowCol);
   }
-}
-
-void TowerManager::upgradeTower(int combinedRowCol){
-
-}
-void TowerManager::upgradeTower(int row, int col){
-
 }

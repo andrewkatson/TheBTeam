@@ -108,7 +108,5 @@ private:
   void removeTower(int combinedRowCol);
   void removeTower(int row, int col);
 
-  void upgradeTower(int combinedRowCol);
-  void upgradeTower(int row, int col);
 };
 #endif
