@@ -1,5 +1,7 @@
 [Unreleased]
 
+###Added
+- TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
 
 [0.1.2]
 ##Added
