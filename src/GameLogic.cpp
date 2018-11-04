@@ -311,7 +311,7 @@ void GameLogic::createATower(int row, int col, string towerType){
  * @param col: the col index of tower
  */
 void GameLogic::removeATower(int row, int col){
-
+  
 }
 
 /*```
