@@ -27,6 +27,7 @@
     <string value="OPTIONSMENUSCREENHANDLEKEYPRESS" id="IDS_OMSD_KP"> </string>
     <!--PlayingScreen Delegates-->
     <string value="PLAYINGSCREENHANDLETOWERCREATION" id="IDS_PS_TC"> </string>
+    <string value="PLAYINGSCREENHANDLETOWERREMOVE" id="IDS_PS_TR"> </string>
 
     <!--TowerTypeIDS-->
     <!--No Tower -->

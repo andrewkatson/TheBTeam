@@ -31,6 +31,7 @@
 #include "../include/Obstacles/TrashCan.hpp"
 #include "EventManager.hpp"
 #include "../include/Events/TowerCreationEvent.hpp"
+#include "../include/Events/TowerRemoveEvent.hpp"
 #include <vector>
 #include <unordered_map>
 #include <functional>
@@ -87,6 +88,7 @@ public:
   shared_ptr<TowerInterface> getObstacle(int row, int col);
 
   void handleTowerCreation(const EventInterface& event);
+  void handleTowerRemove(const EventInterface& event);
 
   void addObstacles(unordered_map<int, intPair>& allObstaclesToPlace);
 private:

@@ -4,6 +4,7 @@
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
 #include "../include/Events/TowerCreationEvent.hpp"
+#include "../include/Events/TowerRemoveEvent.hpp"
 #include <functional>
 #include <assert.h>
 
@@ -53,6 +54,7 @@ public:
   void setMapBoards();
 
   void handleTowerCreation(const EventInterface& event);
+  void handleTowerRemove(const EventInterface& event);
 
   bool hasMap();
   bool isTower(int row, int col);

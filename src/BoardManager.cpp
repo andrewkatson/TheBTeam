@@ -21,7 +21,17 @@ void BoardManager::registerDelegates(){
   EventType towerCreationEventType = towerCreationEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(towerCreationEventDelegate,
-     textLoader -> getString(string("IDS_BMD_TC")),towerCreationEventType);
+  textLoader -> getString(string("IDS_BMD_TC")),towerCreationEventType);
+
+  //bind our delegate function for tower remove events
+  EventManager::EventDelegate towerRemoveEventDelegate = std::bind(&BoardManager::handleTowerRemove, this, _1);
+
+  //make an event and get its type
+  TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
+  EventType towerRemoveEventType = towerRemoveEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(towerRemoveEventDelegate,
+  textLoader -> getString(string("IDS_BMD_TR")),towerRemoveEventType);
 }
 
 //genearte a new random map
@@ -82,6 +92,31 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
 
   //place the tower value on the above floor grid
   floorGrid.at(row).at(col) = towerTypeNum;
+}
+
+/*
+ * Handle a tower remove event
+ * @param event: the tower remove event
+ */
+void BoardManager::handleTowerRemove(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * TowerRemoveEvent type which allows us to access variables and methods
+   * specific to TowerRemoveEvent
+   */
+  const TowerRemoveEvent* trEvent = static_cast<const TowerRemoveEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a TowerRemoveEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  TowerRemoveEventData* trEventData = static_cast<TowerRemoveEventData*>((trEvent -> data).get());
+  //get the tower id
+  int towerPosID = trEventData -> towerPosID;
+
+  //decode the ID so that it is a row and column
+  int row = towerPosID / getYDim();
+  int col = towerPosID % getXDim();
 }
 
 /*

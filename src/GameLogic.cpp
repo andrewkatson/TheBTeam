@@ -36,6 +36,12 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
 
    this -> eventManager -> registerEvent(towerCreationEventType);
 
+   //make a generic tower remove event, get its type, and register it
+   TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
+   EventType towerRemoveEventType = towerRemoveEvent.getEventType();
+
+   this -> eventManager -> registerEvent(towerRemoveEventType);
+
  }
 
 /*

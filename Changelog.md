@@ -3,6 +3,9 @@
 ###Added
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
 
+###Changed
+
+
 [0.1.2]
 ##Added
 - StateChangeEvent, StateChangeEventData[@andrewkatson][https://github.com/andrewkatson]

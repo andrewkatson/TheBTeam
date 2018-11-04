@@ -22,6 +22,7 @@ public:
   void registerDelegates();
 
   void handleTowerCreation(const EventInterface& event);
+  void handleTowerRemove(const EventInterface& event);
   void draw(sf::RenderWindow& window);
   template <class T>
   void printVector(const vector<vector<T>> &v);
