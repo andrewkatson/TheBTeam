@@ -74,6 +74,28 @@ void GameLogic::registerDelegates(){
 //Called once every loop. Update according to elapsed time.
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
+
+  if(boardManager -> hasMap() && test == true){
+    int row = 3;
+    int col = 3;
+    vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
+
+    if(allTowers.size() != 0){
+      shared_ptr<TowerInterface> tower = allTowers.at(0);
+      string towerType = tower -> getType();
+      if(canBuy(towerType)){
+        createATower(row,col,towerType);
+      }
+
+      cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
+      if(boardManager -> isTower(row, col)){
+        removeATower(row,col);
+      }
+    }
+
+    test = false;
+  }
+
 }
 /*
  * Handle any key press from the user
@@ -281,6 +303,15 @@ void GameLogic::createATower(int row, int col, string towerType){
   shared_ptr<EventInterface> tcEvent = make_shared<TowerCreationEvent>(combinedRowCol, towerType, nowInNano);
 
   this -> eventManager -> queueEvent(tcEvent);
+}
+
+/*
+ * Sell tower at this position and create a removeTower event
+ * @param row: row index of tower
+ * @param col: the col index of tower
+ */
+void GameLogic::removeATower(int row, int col){
+
 }
 
 /*```

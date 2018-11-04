@@ -90,6 +90,15 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
 bool BoardManager::hasMap(){
   return floorGrid.size()!=0 || distances.size()!=0 || aboveFloorGrid.size()!=0;
 }
+
+/*
+ * @return true if the selected grid has a tower
+ */
+bool BoardManager::isTower(int row, int col){
+  assert(hasMap()==true);
+  return aboveFloorGrid.at(row).at(col) > 0;
+}
+
 /*
  * @return true if the selected grid has a tower or an obstacle
  */

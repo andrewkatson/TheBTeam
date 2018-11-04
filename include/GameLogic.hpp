@@ -93,6 +93,7 @@ public:
   bool canBuy(int row, int col);
   bool canBuy(string towerType);
   void createATower(int row, int col, string towerType);
+  void removeATower(int row, int col);
 
   State getGameState();
 

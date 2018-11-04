@@ -55,6 +55,7 @@ public:
   void handleTowerCreation(const EventInterface& event);
 
   bool hasMap();
+  bool isTower(int row, int col);
   bool isTowerOrObstacle(int row, int col);
   bool isExit(int row, int col);
   bool isPath(int row, int col);
