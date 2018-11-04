@@ -504,6 +504,8 @@ void TowerManager::addTower(string type, int row, int col){
 }
 
 /*
+ * Make a copy of one of the tower types and
+ * initialize them with their units/projectiles
  * @return a shared pointer to a copy of the tower type specified
  */
 shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type){
@@ -514,48 +516,62 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type){
 
   if(type == textLoader->getString(string("IDS_CPT"))){
     retTower = make_shared<CheesePizza>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_PPT"))){
     retTower = make_shared<PepperoniPizza>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_DDT"))){
     retTower = make_shared<DeepDish>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_MLT"))){
     retTower = make_shared<MeatLovers>(textLoader, type);
   }
   else if(type == textLoader->getString(string("IDS_MMMT"))){
     retTower = make_shared<MiniMMS>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_NMMT"))){
     retTower = make_shared<NormalMMS>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_PBMMT"))){
     retTower = make_shared<PeanutButterMMS>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_SOT"))){
     retTower = make_shared<PeanutMMS>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_EDT"))){
-    retTower = make_shared<EnergyDrink>(textLoader, type);
+    retTower = make_shared<EnergyDrink>(textLoader, type)
+    retTower -> setProjectile();;
   }
   else if(type == textLoader->getString(string("IDS_GT"))){
     retTower = make_shared<Gravy>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_SLT"))){
     retTower = make_shared<Slushie>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_NFT"))){
     retTower = make_shared<NormalFry>(textLoader, type, maxMeleeUnits);
+    retTower -> setUpUnits();
   }
   else if(type == textLoader->getString(string("IDS_CFT"))){
     retTower = make_shared<CrinkleFry>(textLoader, type, maxMeleeUnits);
+    retTower -> setUpUnits();
   }
   else if(type == textLoader->getString(string("IDS_SFT"))){
     retTower = make_shared<SpicyFry>(textLoader, type, maxMeleeUnits);
+    retTower -> setUpUnits();
   }
   else if(type == textLoader->getString(string("IDS_WFT"))){
     retTower = make_shared<WaffleFry>(textLoader, type, maxMeleeUnits);
+    retTower -> setUpUnits();
   }
   else if(type == textLoader->getString(string("IDS_CTO"))){
     retTower = make_shared<CafeteriaTable>(textLoader, type);
@@ -563,7 +579,9 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type){
   else if(type == textLoader->getString(string("IDS_TCO"))){
     retTower = make_shared<TrashCan>(textLoader, type);
   }
-  else
+  else{
+
+  }
   return retTower;
 }
 
