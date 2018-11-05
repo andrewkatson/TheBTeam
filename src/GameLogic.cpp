@@ -13,14 +13,14 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, boardManager -> getYDim(), boardManager -> getXDim()));
+  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
   this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader));
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerEvents();
   this -> registerDelegates();
-
+  test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
 }
@@ -35,6 +35,12 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
    EventType towerCreationEventType = towerCreationEvent.getEventType();
 
    this -> eventManager -> registerEvent(towerCreationEventType);
+
+   //make a generic tower remove event, get its type, and register it
+   TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
+   EventType towerRemoveEventType = towerRemoveEvent.getEventType();
+
+   this -> eventManager -> registerEvent(towerRemoveEventType);
 
  }
 
@@ -74,6 +80,37 @@ void GameLogic::registerDelegates(){
 //Called once every loop. Update according to elapsed time.
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
+
+  /* Test Code 
+  if(boardManager -> hasMap()){
+    int row = 3;
+    int col = 3;
+    if(test == 2){
+      vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
+
+      if(allTowers.size() != 0){
+        shared_ptr<TowerInterface> tower = allTowers.at(0);
+        string towerType = tower -> getType();
+        if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
+          createATower(row,col,towerType);
+        }
+        else if(canBuy(towerType) && boardManager -> isObstacle(row,col)){
+          removeATower(row,col);
+          cout << "removed an obstacle" << endl;
+          test -=2;
+        }
+      }
+    }
+    if(test == 1){
+      cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
+      cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
+      if(boardManager -> isTower(row, col)){
+        removeATower(row,col);
+      }
+    }
+    test--;
+  }
+  */
 }
 /*
  * Handle any key press from the user
@@ -147,11 +184,95 @@ void GameLogic::handleStateChange(const EventInterface& event){
 
   //set the current state to be the state changed
   gameState -> setState(state);
+
+  //if the state is playing we generate a new map
+  //only if one is not currently existing
+  if(!(boardManager -> hasMap()) && State::Playing == state){
+    makeNewMap();
+  }
 }
+
+/*
+ * Have a new map generated (callable by the UserView)
+ */
+ void GameLogic::makeNewMap(){
+   this -> boardManager -> newMap();
+   int xDim = boardManager -> getXDim();
+   int yDim = boardManager -> getYDim();
+   this -> towerManager -> setDimensions(xDim, yDim);
+   placeObstacles();
+ }
+
+/*
+ * Send the list of obstacles and their types from the
+ * board manager to the tower manager for their creation
+ */
+void GameLogic::placeObstacles(){
+  //an unordered map where the type of the obstacle is the key
+  //and the position is a pair
+  unordered_map<int, intPair> obstacleValueToPos;
+  obstacleValueToPos = boardManager -> getAllObstacles();
+
+  towerManager -> addObstacles(obstacleValueToPos);
+}
+
 
 //return a reference to the event manager
 shared_ptr<EventManager> GameLogic::getEventManager(){
   return this -> eventManager;
+}
+
+/*
+ * Return a vector with all the towers that can be used to upgrade
+ * @param row: the row of the tower
+ * @param col: the col of the tower
+ */
+vector<shared_ptr<TowerInterface>>& GameLogic::allUpgradesForTower(int row, int col){
+  static vector<shared_ptr<TowerInterface>> noTowers;
+  //return an empty vector if the space is a path, exit, or an obstacle
+  if(boardManager -> isExit(row,col)){
+    return noTowers;
+  }
+  if(boardManager -> isPath(row,col)){
+    return noTowers;
+  }
+  //if there is an obstacle here than we want the obstacle
+  //because we are just trying to remove it
+  if(boardManager -> isObstacle(row,col)){
+    return towerManager -> getObstacleAsVector(row,col);
+  }
+
+  shared_ptr<TowerInterface> tower = towerManager -> getTowerPlaced(row,col);
+
+  string towerID = tower -> getType();
+
+  return towerManager -> getUpgradesForTower(towerID);
+}
+
+/*
+ * Attempt a purchase of a tower at a particular location
+ * @param row: the row of the tile
+ * @param col: the col of the tile
+ * @param towerTypeID: the string identifier of the tower
+ * @return bool: whether they were successful or not
+ */
+bool GameLogic::attemptPurchaseTower(int row, int col, string towerTypeID){
+  //if we canbuy a tower/obstacle of this type
+  if(canBuy(towerTypeID)){
+    //create a tower if this is a tower
+    if(boardManager -> isTower(row,col)){
+      createATower(row, col, towerTypeID);
+    }
+    //use a remove tower event if this is an obstacle
+    if(boardManager -> isObstacle(row,col)){
+      removeATower(row,col);
+    }
+    return true;
+  }
+  //return false in case we want the buy tower screen to make an indication of failure
+  else{
+    return false;
+  }
 }
 
 /*
@@ -160,26 +281,135 @@ shared_ptr<EventManager> GameLogic::getEventManager(){
  * @return whether the user can buy the obstacle/tower at the space selected
  */
 bool GameLogic::canBuy(int row, int col){
-  bool obstacleOrTower = (boardManager -> isTowerOrObstacle(row,col));
-  //check if there is even a tower or obstacle at the position
-  if(!obstacleOrTower){
+  bool isExit = (boardManager -> isExit(row,col));
+  //check if this is not the exit
+  if(isExit){
     return false;
   }
 
+  bool isPath = (boardManager -> isPath(row,col));
+  //check if this is not on a path
+  if(isPath){
+    return false;
+  }
   //return whether the obstacle/tower at this position is too expensive
-  return getTowerPrice(row,col) <= player -> getBalance();
+  bool tooExpensive = towerManager -> getTowerPrice(row,col) <= player -> getBalance();
+
+  return tooExpensive;
 }
 
 /*
- * Return the price of a tower at the speicifed grid location
- * @param row: the row of the tower on the grid
- * @param col: the col of the tower on the grid
+ * @param towerType: the tower type to be created
+ * @return whether the user can buy the obstacle/tower at the space selected
  */
-int GameLogic::getTowerPrice(int row, int col){
-  return towerManager -> getTowerPrice(row, col);
+bool GameLogic::canBuy(string towerType){
+  //return whether the obstacle/tower at this position is too expensive
+  bool tooExpensive = towerManager -> getTowerPrice(towerType) <= player -> getBalance();
+  return tooExpensive;
 }
 
 /*
+ * make a tower creation event
+ * @param row: the row of the target
+ * @param col: the col of the target
+ * @param towerType: the type of the tower to be created
+ */
+void GameLogic::createATower(int row, int col, string towerType){
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  int combinedRowCol = row*(boardManager -> getXDim()) + col;
+
+  shared_ptr<EventInterface> tcEvent = make_shared<TowerCreationEvent>(combinedRowCol, towerType, nowInNano);
+
+  //handle the money change from buying this tower
+  createATowerMoney(towerType);
+
+  this -> eventManager -> queueEvent(tcEvent);
+}
+
+/*
+ * When a tower/obstacle is purchased we deduct the monetary value
+ * from the player's total money
+ * @param tower: the tower created
+ */
+void GameLogic::createATowerMoney(string towerType){
+  //get the price of the tower
+  int price = towerManager -> getTowerPrice(towerType);
+
+  //remove money equal to the tower's price
+  player -> modifyBalance(price*-1);
+}
+
+/*
+ * Sell tower at this position and create a removeTower event
+ * @param row: row index of tower
+ * @param col: the col index of tower
+ */
+void GameLogic::removeATower(int row, int col){
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  int combinedRowCol = row*(boardManager -> getXDim()) + col;
+
+  shared_ptr<EventInterface> trEvent = make_shared<TowerRemoveEvent>(combinedRowCol,  nowInNano);
+
+  //if we remove a tower then we have to return a percentage of the
+  //money from the tower to the player
+  if(boardManager -> isTower(row, col)){
+    removeATowerMoney(row, col);
+  }
+  //if the thing removed is an obstacle then
+  //we have to remove money equal to the obstalces price
+  else if(boardManager->isObstacle(row,col)){
+    removeAObstacleMoney(row,col);
+  }
+
+
+  this -> eventManager -> queueEvent(trEvent);
+}
+
+/*
+ * If a tower is removed we return a percentage of the money to the player
+ * @param row: the row index of the tower
+ * @param col: the col index of the tower
+ */
+void GameLogic::removeATowerMoney(int row, int col){
+  //grab the tower at the position
+  shared_ptr<TowerInterface> tower = towerManager -> getTowerPlaced(row,col);
+
+  //get the price of the tower
+  int price = tower -> getPrice();
+
+  //get the percentage modifier for how much money is returned to the player
+  double percentage = textLoader -> getDouble(string("IDS_Percentage_Money_Returned_On_Sell_Tower"));
+
+  //add a percentage of this money back to the player's account
+  player -> modifyBalance(price*percentage);
+}
+
+/*
+ * If an obstacle is removed we take money from the player equal to the
+ * price of the obstacle
+ * @param row: the row index of the obstacle
+ * @param col: the col index of the obstacle
+ */
+void GameLogic::removeAObstacleMoney(int row, int col){
+  //grab the obstacle at the position
+  shared_ptr<TowerInterface> obstacle = towerManager -> getTowerPlaced(row,col);
+
+  //get the price of the tower
+  int price = obstacle -> getPrice();
+
+  //add a percentage of this money back to the player's account
+  player -> modifyBalance(price*-1);
+}
+
+/*```
  * Return the current GameState
  */
 State GameLogic::getGameState(){

@@ -70,6 +70,10 @@ private:
   //y dimension of board
   int yDim;
 
+  //a value for the absolute value of the last obstacle type that can be placed
+  //so if a -4 is the last obstacle (the other being -3) then this is 4
+  int maxObstacleVal;
+
   /* the side the exit is on
    * so if it is in the right hand column then
    * the direction is right
@@ -192,13 +196,10 @@ private:
 
   void putEmptyEntriesOnBoard();
 
-  bool isInMap(int row, int col);
   bool rowIsInMap(int row);
   bool colIsInMap(int col);
 
   void printVectorCells(vector<vector<CellNode>>& board);
-  template <class T>
-  void printVector(vector<vector<T>> &v);
   template <class T>
   void printVector(vector<T> &v);
   template <class T, class T2>
@@ -217,12 +218,15 @@ public:
   vector<vector<int>>& getAboveFloor();
   int getXDim();
   int getYDim();
+  bool isInMap(int row, int col);
 
   void setMapCustomizationChoices(MapChoices * newCustomization);
   void setMapObstacleChoice(int obstacleChoice);
   void setMapCafeteriaChoice(int cafeteriaChoice);
   void setMapEntryChoice(int pathEntryChoice);
 
+  template <class T>
+  void printVector(vector<vector<T>> &v);
 };
 
 #endif

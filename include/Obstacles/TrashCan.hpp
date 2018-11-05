@@ -4,6 +4,7 @@
 
 class TrashCan : public Obstacle{
 public:
-    TrashCan(int row, int col, int price);
-
+    TrashCan(shared_ptr<TextLoader> textLoader, string towerTypeID);
+    void setProjectile(){}
+    void setUpUnits(){}
 };

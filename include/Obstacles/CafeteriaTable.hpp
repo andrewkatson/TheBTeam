@@ -4,5 +4,8 @@
 
 class CafeteriaTable : public Obstacle{
 public:
-  CafeteriaTable(int row, int col, int price);
+  CafeteriaTable(shared_ptr<TextLoader> textLoader, string towerTypeID);
+
+  void setProjectile(){}
+  void setUpUnits(){}
 };

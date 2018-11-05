@@ -1,9 +1,15 @@
 #pragma once
+
+/*
+ * A stand in for a tile without a tower
+ * @author Andrew Katson
+ */
+
 #include "RangeTower.hpp"
-#include "../include/Projectiles/PepperoniPizzaProjectile.hpp"
-class PepperoniPizza : public RangeTower{
+#include "../include/Projectiles/CheesePizzaProjectile.hpp"
+class NotATower : public RangeTower{
 public:
-  PepperoniPizza(shared_ptr<TextLoader> textLoader, string towerTypeID);
+  NotATower(string towerTypeID);
 
   void upgrade();
 

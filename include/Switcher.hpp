@@ -10,4 +10,11 @@ class Switcher{
 private:
   int id;
   std::vector<int> v;
+  int len;
+
+public:
+  void changeSelected();
+  void getSelected();
+  void getID();
+  void draw();
 };

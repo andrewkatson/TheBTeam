@@ -21,9 +21,16 @@
 #include "../include/Events/MousePressEvent.hpp"
 #include "../include/Events/StateChangeEvent.hpp"
 #include "EventType.hpp"
+#include <chrono>
+#include <random>
 
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::nanoseconds;
 class GameLogic{
 private:
+  //int pair (used to assocaite a row and col)
+  typedef pair<int,int> intPair;
   //x dimension of the render window
   int windowX;
   //y dimension of the render window
@@ -52,7 +59,7 @@ private:
   //game events
   shared_ptr<EventManager> eventManager;
 
-  State currState;
+  int test;
 
 public:
   /*
@@ -75,11 +82,21 @@ public:
    */
   void updateGameLogic(float deltaS);
 
+  void makeNewMap();
+  void placeObstacles();
+
   shared_ptr<EventManager> getEventManager();
 
-  bool canBuy(int row, int col);
+  bool attemptPurchaseTower(int row, int col, string towerTypeID);
+  vector<shared_ptr<TowerInterface>>& allUpgradesForTower(int row, int col);
 
-  int getTowerPrice(int row, int col);
+  bool canBuy(int row, int col);
+  bool canBuy(string towerType);
+  void createATower(int row, int col, string towerType);
+  void createATowerMoney(string towerType);
+  void removeATower(int row, int col);
+  void removeATowerMoney(int row, int col);
+  void removeAObstacleMoney(int row, int col);
 
   State getGameState();
 

@@ -42,11 +42,21 @@ void MainMenuScreen::initText(){
     screen.at(2).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1)*3));
     screen.at(2).setFillColor(sf::Color::White);
   }
-
 }
 
 void MainMenuScreen::draw(sf::RenderWindow &window){
   window.clear();
+
+  /*
+
+  cout << "selected item:" << selectedItem;
+
+  cout << "\noption 0 color:" << std::to_string(screen.at(0).getFillColor().r) << " " << std::to_string(screen.at(0).getFillColor().g) << " " << std::to_string(screen.at(0).getFillColor().b) << " ";
+
+  cout << "\noption 1 color:" << std::to_string(screen.at(1).getFillColor().r) << " " << std::to_string(screen.at(1).getFillColor().g) << " " << std::to_string(screen.at(1).getFillColor().b) << " ";
+
+  cout << "\noption 2 color:" << std::to_string(screen.at(2).getFillColor().r) << " " << std::to_string(screen.at(2).getFillColor().g) << " " << std::to_string(screen.at(2).getFillColor().b) << " " << "\n";
+*/
 
   //need to set the fonts locally
   for(int i = 0; i < numItems; i++){
@@ -59,6 +69,8 @@ void MainMenuScreen::draw(sf::RenderWindow &window){
 }
 void MainMenuScreen::moveUp()
 {
+  cout << "move down function\n";
+
   //make sure the selected item indicator can ever be outside of the
   //range of options
   selectedItem = selectedItem % numItems;
@@ -75,6 +87,7 @@ void MainMenuScreen::moveUp()
 
 void MainMenuScreen::moveDown()
 {
+  cout << "move down function\n";
 
   selectedItem = selectedItem % numItems;
   screen.at(selectedItem).setFillColor(sf::Color::White);
