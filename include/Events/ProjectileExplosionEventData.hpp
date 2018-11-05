@@ -10,5 +10,5 @@ public:
   string projectileID;
   float timeStamp;
 
-  ActorAttackEventData(string projectileID, float timeStamp);
+  ProjectileExplosionEventData(string projectileID, float timeStamp);
 };
