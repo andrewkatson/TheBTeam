@@ -2,6 +2,7 @@
 
 ###Added
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
+- OptionSelectedEvent, OptionSelectedEventData [@meisong1997][https://github.com/meisong1997]
 
 ###Changed
 - GameLogic now updates the balance of the player appropriately whether
