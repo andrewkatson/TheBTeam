@@ -15,12 +15,13 @@ private:
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   int check;
-public:
 
+public:
   OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems, sf::Font font);
   void initText();
   void moveUp();
   void moveDown();
+  void moveRight();
   void draw(sf::RenderWindow &window);
   void handleKeyPress(const EventInterface& event);
   void registerDelegates();
