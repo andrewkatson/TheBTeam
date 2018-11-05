@@ -12,8 +12,59 @@ OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,share
   //this -> registerDelegates();
   /*
 
+  //get the path for the main font
+  string mainFontPath = textLoader -> getString(string("IDS_MFP"));
+
+  //load the main font
+  if(!font.loadFromFile(mainFontPath)){
+    cout << "No font!" << endl;
+  }
+  else{
+    //cout << "loaded font" <<endl;
+  }
+
+  this -> initText();
+}
+
+void OptionsMenuScreen::initText(){
+  screen.resize(3);
   //Options Menu
-  if(numItems == 7){
+    if(numItems == 7){
+    screen.at(0).setString(string("School"));
+    screen.at(0).setFillColor(sf::Color::Red);
+    screen.at(0).setCharacterSize(24);
+    screen.at(0).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 1));
+
+    screen.at(1).setString(string("Population"));
+    screen.at(1).setFillColor(sf::Color::White);
+    screen.at(1).setCharacterSize(24);
+    screen.at(1).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 2));
+
+    screen.at(2).setString(string("Obstacles"));
+    screen.at(2).setFillColor(sf::Color::White);
+    screen.at(2).setCharacterSize(24);
+    screen.at(2).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 3));
+
+    screen.at(3).setString(string("Waves"));
+    screen.at(3).setFillColor(sf::Color::White);
+    screen.at(3).setCharacterSize(24);
+    screen.at(3).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 4));
+
+    screen.at(4).setString(string("Start Money"));
+    screen.at(4).setFillColor(sf::Color::White);
+    screen.at(4).setCharacterSize(24);
+    screen.at(4).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 5));
+
+    screen.at(5).setString(string("Cafeteria Size"));
+    screen.at(5).setFillColor(sf::Color::White);
+    screen.at(5).setCharacterSize(24);
+    screen.at(5).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 6));
+
+    screen.at(6).setString(string("Path Length"));
+    screen.at(6).setFillColor(sf::Color::White);
+    screen.at(6).setCharacterSize(24);
+    screen.at(6).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 7));
+
     Screen[0].setFont(font);
     Screen[0].setFillColor(sf::Color::Red);
     Screen[0].setString("School");
