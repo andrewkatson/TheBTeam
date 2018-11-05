@@ -1,7 +1,8 @@
 #include "../include/Events/ActorAttackEventData.hpp"
 
-ActorAttackEventData::ActorAttackEventData(string actorID, float timeStamp){
+ActorAttackEventData::ActorAttackEventData(string actorAttackingID, string actorDefendingID, float timeStamp){
   this -> timeStamp = timeStamp;
-  this -> actorID = actorID;
+  this -> actorAttackingID = actorAttackingID;
+  this -> actorDefendingID = actorDefendingID;
 
 }

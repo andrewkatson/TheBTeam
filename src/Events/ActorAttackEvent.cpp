@@ -6,8 +6,8 @@ const EventType ActorAttackEvent::eventType = EventType(&ActorAttackEvent::event
 ActorAttackEvent::ActorAttackEvent(){
 
 }
-ActorAttackEvent::ActorAttackEvent(string actorID, float timeStamp){
-  this -> data = unique_ptr<ActorAttackEventData>(new ActorAttackEventData(actorID, timeStamp));
+ActorAttackEvent::ActorAttackEvent(string actorAttackingID, string actorDefendingID, float timeStamp){
+  this -> data = unique_ptr<ActorAttackEventData>(new ActorAttackEventData(actorAttackingID, actorDefendingID, timeStamp));
 }
 
 const EventType& ActorAttackEvent::getEventType() const{
