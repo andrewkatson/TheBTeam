@@ -2,6 +2,9 @@
 
 ###Added
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
+- Storage of entry positions and distance vector within WaveManager [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Function to reformat distance vector to get distances for each entrance position
+- Normalization of distances based on furthest distance in vector
 
 ###Changed
 - GameLogic now updates the balance of the player appropriately whether
@@ -11,6 +14,7 @@
 - BoardManager walks through all paths and assigns them new distances
   so that each distance on the path reflects the number of tiles between that tile and the exit
 - optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
+
 
 
 

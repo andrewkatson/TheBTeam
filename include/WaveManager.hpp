@@ -13,6 +13,7 @@ using namespace std;
 #include <memory>
 #include <queue>
 #include <random>
+#include <map>
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "TextLoader.hpp"
@@ -23,6 +24,9 @@ using namespace std;
 class WaveManager{
 
 private:
+  //int pair (used to assocaite a row and col)
+  typedef pair<int,int> intPair;
+
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //event manager (used to register, deregister from events, and create them)
@@ -46,11 +50,33 @@ private:
   //A random device to pull from
   std::random_device rd;
 
+  //A 2D vector storing the distances from exit for each square in the board
+  vector<vector<int>> distances;
+
+  //A vector storing the coordinates of each entry point in the board's path
+  vector<int> entryPositions;
+
+  map<int,vector<intPair>>distancesFromEntryPositions;
+private:
+
   /*
    *
    * @return a wave filled with enemies according to the specifications in the class (level)
    */
   queue<shared_ptr<MeleeUnit>> makeWave(int difficulty, int waveNumber);
+
+  /*
+   * Create and return a vector listing the distance from exit for every entry point in the entrypoints
+   * vector.
+   */
+  void buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<int>>& distances);
+
+  /*
+   * Normalize the distances in z based on their distance from the maximum distance value.
+   * E.g. for a vector { 3, 6, 2, 4, 1 }; the maximum is 5, therefore the vector would be
+   * converted to { 3, 0, 4, 2, 5 }.
+   */
+  map<int,vector<intPair>>& getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
 
 public:
   /*
@@ -99,6 +125,18 @@ public:
   void setupWaves(int difficulty);
 
   void delegateMethod(const EventInterface& event);
+
+  /*
+   * Set the distance from exit for each path space on the current board. Should be set
+   * with data pulled from BoardManager.
+   */
+  void setDistances(vector<vector<int>>& dists);
+
+  /*
+   * Set the entry points of the current board's path. Again, this needs to be set using
+   * BoardManager data.
+   */
+  void setEntryPoints(vector<int>& entries);
 };
 
 #endif

@@ -106,6 +106,10 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
   std::uniform_real_distribution<double> percent_perturbation_rng(min_scale,max_scale);
 
+  buildDistanceEntryMap(entryPositions,distances);
+
+  distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
+
   double total_wave_weight=wave_weight_rng(rnd_gen);
 
   for(double weight=0;weight<total_wave_weight;){
@@ -129,9 +133,8 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
     enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
 
-    //TODO - give the enemy a spawn location
 
-    result.push(enemy);
+
   }
   return result;
 }
@@ -160,6 +163,58 @@ void WaveManager::spawnNextUnit() {
 
 void WaveManager::update(float deltaS) {
     //TODO - implement
+}
+
+void WaveManager::setDistances(vector<vector<int>>& dists) {
+  distances=dists;
+}
+
+void WaveManager::setEntryPoints(vector<int>& entries) {
+  entryPositions=entries;
+}
+
+void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<int>>& distances) {
+
+  /*
+   * for every entrance point in the map
+   * get its distance
+   * if it's not a key, add it as a key
+   * make a new intpair with row and col
+   * push_back the intpair to the end of the vector that the distance points to
+   */
+
+  for(int z=0;z<entrypoints.size();z+=2){
+
+
+    intPair rowcol;
+    int col=entrypoints[z];
+    int row=entrypoints[z+1];//remember, it's stored here as "col, row, col, row"
+    int distance=distances[row][col];
+
+    rowcol.first=row;
+    rowcol.second=col;
+
+    //works regardless of whether or not the key exists because it instantiates the key
+    //and the vector
+    distancesFromEntryPositions[distance].push_back(rowcol);
+  }
+}
+
+map<int,vector<WaveManager::intPair>>& WaveManager::getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions){
+  map<int,vector<intPair>> result;
+
+  int min=distancesFromEntryPositions.begin()->first;
+
+  int max=(--distancesFromEntryPositions.end())->first;
+
+  for( auto it = distancesFromEntryPositions.begin(); it != distancesFromEntryPositions.end(); it++ )
+  {
+    int oldkey=it->first;
+    int newkey=max-(it->first);
+
+    result[newkey]=it->second;
+  }
+  return result;
 }
 
 
