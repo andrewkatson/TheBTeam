@@ -7,8 +7,8 @@ using std::string;
 
 class OptionSelectedEventData : public EventDataInterface{
 public:
-  string optionID;
+  int optionID;
   float timeStamp;
 
-  OptionSelectedEventData(string optionID, float timeStamp);
+  OptionSelectedEventData(int optionID, float timeStamp);
 };
