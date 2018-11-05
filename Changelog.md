@@ -2,6 +2,7 @@
 
 ###Added
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
+- OptionSelectedEvent, OptionSelectedEventData, LoseHitpointsEvent, LoseHitpointsEventData, WaveChangeEvent, WaveChangeEventData [@meisong1997][https://github.com/meisong1997]
 
 ###Changed
 - GameLogic now updates the balance of the player appropriately whether
@@ -10,9 +11,16 @@
   if the path crosses an exit path at any point then we do not draw over it
 - BoardManager walks through all paths and assigns them new distances
   so that each distance on the path reflects the number of tiles between that tile and the exit
+<<<<<<< HEAD
 - All Projectiles, Units, and Towers have access to eventManager and textLoader
 - Melee Towers now handle respawning units and actor destroyed events
 - All Units and projectiles have access to getters and setters for their position (in euclidean coordinates and in row-col)
+=======
+- optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
+- Changed OptionSelected event data type from string to integer [@meisong1997][https://github.com/meisong1997]
+
+
+>>>>>>> 7a97589688daa7f1115a91450adc2baacc1b8911
 
 [0.1.2]
 ##Added

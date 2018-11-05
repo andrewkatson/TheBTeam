@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   ActorAttackEvent();
-  ActorAttackEvent(long long actorID, float timeStamp);
+  ActorAttackEvent(long long actorAttackingID, long long actorDefendingID, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;
