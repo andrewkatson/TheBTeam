@@ -9,8 +9,10 @@
 - MapFactory allows for paths to take whatever is their shortest path to exit
   if the path crosses an exit path at any point then we do not draw over it
 - BoardManager walks through all paths and assigns them new distances
-  so that each distance on the path reflects the number of tiles between that tile and the exit 
-
+  so that each distance on the path reflects the number of tiles between that tile and the exit
+- All Projectiles, Units, and Towers have access to eventManager and textLoader
+- Melee Towers now handle respawning units and actor destroyed events
+- All Units and projectiles have access to getters and setters for their position (in euclidean coordinates and in row-col)
 
 [0.1.2]
 ##Added

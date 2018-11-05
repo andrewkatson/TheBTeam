@@ -78,8 +78,6 @@ void BoardManager::setPathDistanceToReflectRealDistance(){
 
   //recursively walk back from the exit and keep track of the distance traveled
   walkBackToEntries(exitRow, exitCol, 0, traveled);
-
-  mapFactory -> printVector(distances);
 }
 
 /*

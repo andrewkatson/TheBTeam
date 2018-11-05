@@ -41,6 +41,7 @@ protected:
 
 public:
 
+  void update(float delta);
 
   int getLunchMoney() const;
 
@@ -63,7 +64,7 @@ public:
   /*
    * Default constructor
    */
-  MeleeUnit();
+  MeleeUnit(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
 
   /*
    * Return the amount of hitpoints the unit has
@@ -119,7 +120,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  void move(float deltaS);
+  void move(float delta);
 
   /*
     Determine whether or not the object's collision box is colliding with the

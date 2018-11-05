@@ -1,6 +1,6 @@
 #include "../include/Towers/PeanutMMS.hpp"
 
-PeanutMMS::PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
+PeanutMMS::PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_PMMT_ROF"));
@@ -11,20 +11,6 @@ PeanutMMS::PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID) : Ra
 void PeanutMMS::upgrade(){}
 
 void PeanutMMS::setProjectile(){
-  //constants for the PeanutMMS
-  //health
-  int peanutMMSHP = textLoader->getInteger(string("IDS_PMM_HP"));
-  //damage
-  int peanutMMSDM = textLoader->getInteger(string("IDS_PMM_DM"));
-  //armor
-  int peanutMMSAM = textLoader->getInteger(string("IDS_PMM_AM"));
-  //speed
-  int peanutMMSSP = textLoader->getInteger(string("IDS_PMM_SP"));
-  //armor penetration
-  int peanutMMSAP = textLoader->getInteger(string("IDS_PMM_AP"));
-  //area of effect
-  int peanutMMSAR = textLoader->getInteger(string("IDS_PMM_AR"));
 
-  this-> currentProjectile = make_shared<PeanutMMSProjectile>(
-    peanutMMSHP, peanutMMSDM, peanutMMSAM, peanutMMSSP, peanutMMSAP, peanutMMSAR);
+  this-> currentProjectile = make_shared<PeanutMMSProjectile>(textLoader, eventManager);
 }

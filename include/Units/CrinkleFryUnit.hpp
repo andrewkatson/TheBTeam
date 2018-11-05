@@ -7,7 +7,7 @@ private:
 
 public:
 
-  CrinkleFryUnit(int hitpoint, int damage, int armor, int speed, int armorPenetration, int attackRadius, int lunchMoney);
-
-
+  CrinkleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager);
+  void move(float delta){MeleeUnit::move(delta);}
+  void update(float delta){MeleeUnit::update(delta);}
 };

@@ -20,6 +20,14 @@ void TowerManager::setDimensions(int xDim, int yDim){
   this -> xDim = xDim;
   this -> yDim = yDim;
 }
+/*
+ * Set the x size in pixels of a grid space
+ * Set they size in pixels of a grid space
+ */
+void TowerManager::setGridDimensions(int xGrid, int yGrid){
+  this -> xGrid = xGrid;
+  this -> yGrid = yGrid;
+}
 
 /*
  * Register the delegate method for this class
@@ -56,8 +64,8 @@ void TowerManager::populateObstacles(){
   string trashCanID = textLoader -> getString("IDS_TCO");
 
   //make a pointer to each type of obstacle
-  shared_ptr<Obstacle> cafeteriaTable = make_shared<CafeteriaTable>(textLoader, cafeteriaTableID);
-  shared_ptr<Obstacle> trashCan = make_shared<TrashCan>(textLoader, trashCanID);
+  shared_ptr<Obstacle> cafeteriaTable = make_shared<CafeteriaTable>(textLoader, cafeteriaTableID, eventManager);
+  shared_ptr<Obstacle> trashCan = make_shared<TrashCan>(textLoader, trashCanID, eventManager);
 
   //all the obstacles serve as their own upgrade
   //used to give obstacles compatability in situations where
@@ -96,10 +104,10 @@ void TowerManager::populateTowersToChoose(){
   string miniMMSID = textLoader -> getString(string("IDS_MMMT"));
 
   //first make a pointer to the first of the tower types for each tower tree
-  shared_ptr<RangeTower> cheesePizza = make_shared<CheesePizza>(textLoader, cheesePizzaID);
-  shared_ptr<RangeTower> soda = make_shared<Soda>(textLoader, sodaID);
-  shared_ptr<MeleeTower> normalFry = make_shared<NormalFry>(textLoader, normalFryID,maxMeleeUnits);
-  shared_ptr<RangeTower> miniMMS = make_shared<MiniMMS>(textLoader, miniMMSID);
+  shared_ptr<RangeTower> cheesePizza = make_shared<CheesePizza>(textLoader, cheesePizzaID, eventManager);
+  shared_ptr<RangeTower> soda = make_shared<Soda>(textLoader, sodaID, eventManager);
+  shared_ptr<MeleeTower> normalFry = make_shared<NormalFry>(textLoader, normalFryID,maxMeleeUnits, eventManager);
+  shared_ptr<RangeTower> miniMMS = make_shared<MiniMMS>(textLoader, miniMMSID, eventManager);
 
 
   //push all basic towers into a single vector (the vector for an empty tile)
@@ -153,10 +161,10 @@ void TowerManager::populateTowerUpgradesLvl1(int maxMeleeUnits){
   string normalMMSID = textLoader -> getString(string("IDS_NMMT"));
 
   //make a pointer to each type of object that the basic types can be upgraded to
-  shared_ptr<RangeTower> pepperoniPizza = make_shared<PepperoniPizza>(textLoader, pepperoniPizzaID);
-  shared_ptr<RangeTower> energyDrink = make_shared<EnergyDrink>(textLoader, energyDrinkID);
-  shared_ptr<MeleeTower> crinkleFry = make_shared<CrinkleFry>(textLoader, crinkleFryID,maxMeleeUnits);
-  shared_ptr<RangeTower> normalMMS = make_shared<NormalMMS>(textLoader, normalMMSID);
+  shared_ptr<RangeTower> pepperoniPizza = make_shared<PepperoniPizza>(textLoader, pepperoniPizzaID, eventManager);
+  shared_ptr<RangeTower> energyDrink = make_shared<EnergyDrink>(textLoader, energyDrinkID, eventManager);
+  shared_ptr<MeleeTower> crinkleFry = make_shared<CrinkleFry>(textLoader, crinkleFryID,maxMeleeUnits, eventManager);
+  shared_ptr<RangeTower> normalMMS = make_shared<NormalMMS>(textLoader, normalMMSID, eventManager);
 
   //push each tower into a vector of possible upgrades
   vector<shared_ptr<TowerInterface>> cheesePizzaUpgrades;
@@ -203,14 +211,14 @@ void TowerManager::populateTowerUpgradesLvl2(int maxMeleeUnits){
   string peanutMMSID = textLoader -> getString(string("IDS_PMMT"));
 
   //make a pointer to each type of object that the type 2 towers can be upgraded to
-  shared_ptr<RangeTower> deepDish = make_shared<DeepDish>(textLoader, deepDishID);
-  shared_ptr<RangeTower> meatLovers = make_shared<MeatLovers>(textLoader, meatLoversID);
-  shared_ptr<MeleeTower> spicyFry = make_shared<SpicyFry>(textLoader, spicyFryID,maxMeleeUnits);
-  shared_ptr<MeleeTower> waffleFry = make_shared<WaffleFry>(textLoader, waffleFryID, maxMeleeUnits);
-  shared_ptr<RangeTower> slushie = make_shared<Slushie>(textLoader, slushieID);
-  shared_ptr<RangeTower> gravy = make_shared<Gravy>(textLoader, gravyID);
-  shared_ptr<RangeTower> peanutButterMMS = make_shared<PeanutButterMMS>(textLoader, peanutButterMMSID);
-  shared_ptr<RangeTower> peanutMMS = make_shared<PeanutMMS>(textLoader, peanutMMSID);
+  shared_ptr<RangeTower> deepDish = make_shared<DeepDish>(textLoader, deepDishID, eventManager);
+  shared_ptr<RangeTower> meatLovers = make_shared<MeatLovers>(textLoader, meatLoversID, eventManager);
+  shared_ptr<MeleeTower> spicyFry = make_shared<SpicyFry>(textLoader, spicyFryID,maxMeleeUnits, eventManager);
+  shared_ptr<MeleeTower> waffleFry = make_shared<WaffleFry>(textLoader, waffleFryID, maxMeleeUnits, eventManager);
+  shared_ptr<RangeTower> slushie = make_shared<Slushie>(textLoader, slushieID, eventManager);
+  shared_ptr<RangeTower> gravy = make_shared<Gravy>(textLoader, gravyID, eventManager);
+  shared_ptr<RangeTower> peanutButterMMS = make_shared<PeanutButterMMS>(textLoader, peanutButterMMSID, eventManager);
+  shared_ptr<RangeTower> peanutMMS = make_shared<PeanutMMS>(textLoader, peanutMMSID, eventManager);
 
   //push each tower into a vector of possible upgrades
   vector<shared_ptr<TowerInterface>> pepperoniPizzaUpgrades;
@@ -344,7 +352,7 @@ unordered_map<int, shared_ptr<TowerInterface>>& TowerManager::getTowersPlaced(){
 shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int combinedRowCol){
   if(towersPlaced.find(combinedRowCol) == towersPlaced.end()){
     string noTowerID = textLoader -> getString("IDS_NT");
-    shared_ptr<TowerInterface> noTower = make_shared<NotATower>(noTowerID);
+    shared_ptr<TowerInterface> noTower = make_shared<NotATower>(textLoader,noTowerID, eventManager);
     return noTower;
   }
   return towersPlaced.at(combinedRowCol);
@@ -358,7 +366,7 @@ shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int combinedRowCol){
 shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int row, int col){
   if(towersPlaced.find(row*xDim+col) == towersPlaced.end()){
     string noTowerID = textLoader -> getString("IDS_NT");
-    shared_ptr<TowerInterface> noTower = make_shared<NotATower>(noTowerID);
+    shared_ptr<TowerInterface> noTower = make_shared<NotATower>(textLoader,noTowerID, eventManager);
     return noTower;
   }
   return towersPlaced.at(row*xDim + col);
@@ -384,7 +392,7 @@ vector<shared_ptr<TowerInterface>>& TowerManager::getObstacleAsVector(int row, i
 shared_ptr<TowerInterface> TowerManager::getObstacle(int row, int col){
   if(towersPlaced.find(row*xDim+col) == towersPlaced.end()){
     string noTowerID = textLoader -> getString("IDS_NT");
-    shared_ptr<TowerInterface> noTower = make_shared<NotATower>(noTowerID);
+    shared_ptr<TowerInterface> noTower = make_shared<NotATower>(textLoader,noTowerID, eventManager);
     return noTower;
   }
   return towersPlaced.at(row*xDim + col);
@@ -414,7 +422,7 @@ void TowerManager::handleTowerCreation(const EventInterface& event){
   string towerTypeID = tcEventData -> towerTypeID;
 
   //decode the ID so that it is a row and column
-  int row = towerPosID / yDim;
+  int row = towerPosID / xDim;
   int col = towerPosID % xDim;
 
   //and add it
@@ -442,7 +450,7 @@ void TowerManager::handleTowerRemove(const EventInterface& event){
   int towerPosID = trEventData -> towerPosID;
 
   //decode the ID so that it is a row and column
-  int row = towerPosID / yDim;
+  int row = towerPosID / xDim;
   int col = towerPosID % xDim;
 
   //remove the tower at the position specified
@@ -464,10 +472,11 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
       //the obstacle we will place
       shared_ptr<TowerInterface> obstacle;
 
-      obstacle = copyOfTowerType(obstacleType);
       //grab the position of the obstacle
       int row = ((*it).second).first;
       int col = ((*it).second).second;
+
+      obstacle = copyOfTowerType(obstacleType, row, col);
 
       towersPlaced.insert({row*xDim+col, obstacle});
   }
@@ -480,7 +489,7 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
  */
 void TowerManager::addTower(string type, int combinedRowCol){
   //an tower of the desired type
-  shared_ptr<TowerInterface> aTower = copyOfTowerType(type);
+  shared_ptr<TowerInterface> aTower = copyOfTowerType(type, combinedRowCol / xDim, combinedRowCol % xDim);
 
   //remove the current tower position if there is one
   removeTower(combinedRowCol);
@@ -495,7 +504,7 @@ void TowerManager::addTower(string type, int combinedRowCol){
 void TowerManager::addTower(string type, int row, int col){
 
   //an tower of the desired type
-  shared_ptr<TowerInterface> aTower = copyOfTowerType(type);
+  shared_ptr<TowerInterface> aTower = copyOfTowerType(type, row, col);
 
   //remove the current tower position if there is one
   removeTower(row, col);
@@ -508,80 +517,83 @@ void TowerManager::addTower(string type, int row, int col){
  * initialize them with their units/projectiles
  * @return a shared pointer to a copy of the tower type specified
  */
-shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type){
+shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, int col){
   shared_ptr<TowerInterface> retTower;
 
   //get the maximum number of melee units allowed per melee tower
   int maxMeleeUnits = textLoader -> getInteger(string("IDS_MT_MU"));
 
   if(type == textLoader->getString(string("IDS_CPT"))){
-    retTower = make_shared<CheesePizza>(textLoader, type);
+    retTower = make_shared<CheesePizza>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_PPT"))){
-    retTower = make_shared<PepperoniPizza>(textLoader, type);
+    retTower = make_shared<PepperoniPizza>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_DDT"))){
-    retTower = make_shared<DeepDish>(textLoader, type);
+    retTower = make_shared<DeepDish>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_MLT"))){
-    retTower = make_shared<MeatLovers>(textLoader, type);
+    retTower = make_shared<MeatLovers>(textLoader, type, eventManager);
   }
   else if(type == textLoader->getString(string("IDS_MMMT"))){
-    retTower = make_shared<MiniMMS>(textLoader, type);
+    retTower = make_shared<MiniMMS>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_NMMT"))){
-    retTower = make_shared<NormalMMS>(textLoader, type);
+    retTower = make_shared<NormalMMS>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_PBMMT"))){
-    retTower = make_shared<PeanutButterMMS>(textLoader, type);
+    retTower = make_shared<PeanutButterMMS>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_SOT"))){
-    retTower = make_shared<PeanutMMS>(textLoader, type);
+    retTower = make_shared<PeanutMMS>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_EDT"))){
-    retTower = make_shared<EnergyDrink>(textLoader, type);
+    retTower = make_shared<EnergyDrink>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_GT"))){
-    retTower = make_shared<Gravy>(textLoader, type);
+    retTower = make_shared<Gravy>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_SLT"))){
-    retTower = make_shared<Slushie>(textLoader, type);
+    retTower = make_shared<Slushie>(textLoader, type, eventManager);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_NFT"))){
-    retTower = make_shared<NormalFry>(textLoader, type, maxMeleeUnits);
+    retTower = make_shared<NormalFry>(textLoader, type, maxMeleeUnits, eventManager);
     retTower -> setUpUnits();
   }
   else if(type == textLoader->getString(string("IDS_CFT"))){
-    retTower = make_shared<CrinkleFry>(textLoader, type, maxMeleeUnits);
+    retTower = make_shared<CrinkleFry>(textLoader, type, maxMeleeUnits, eventManager);
     retTower -> setUpUnits();
   }
   else if(type == textLoader->getString(string("IDS_SFT"))){
-    retTower = make_shared<SpicyFry>(textLoader, type, maxMeleeUnits);
+    retTower = make_shared<SpicyFry>(textLoader, type, maxMeleeUnits, eventManager);
     retTower -> setUpUnits();
   }
   else if(type == textLoader->getString(string("IDS_WFT"))){
-    retTower = make_shared<WaffleFry>(textLoader, type, maxMeleeUnits);
+    retTower = make_shared<WaffleFry>(textLoader, type, maxMeleeUnits, eventManager);
     retTower -> setUpUnits();
   }
+
   else if(type == textLoader->getString(string("IDS_CTO"))){
-    retTower = make_shared<CafeteriaTable>(textLoader, type);
+    retTower = make_shared<CafeteriaTable>(textLoader, type, eventManager);
   }
   else if(type == textLoader->getString(string("IDS_TCO"))){
-    retTower = make_shared<TrashCan>(textLoader, type);
+    retTower = make_shared<TrashCan>(textLoader, type, eventManager);
   }
-  else{
 
-  }
+  //set the dimensions and location of the tower
+  retTower -> setPos(row,col);
+  retTower -> setXCoordinate(col * xGrid + (xGrid/2));
+  retTower -> setYCoordinate(row * yGrid + (yGrid/2));
   return retTower;
 }
 

@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   ActorDestroyedEvent();
-  ActorDestroyedEvent(string actorID, float timeStamp);
+  ActorDestroyedEvent(long long actorID, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;

@@ -65,6 +65,12 @@ int xDim;
 
 //ydim of map(rows)
 int yDim;
+
+//x dimension in pixels of a grid space
+int xGrid;
+//y dimension in pixels of a grid space
+int yGrid;
+
 //int pair (used to assocaite a row and col)
 typedef pair<int,int> intPair;
 
@@ -72,7 +78,8 @@ public:
   TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
   void setDimensions(int xDim, int yDim);
-
+  void setGridDimensions(int xGrid, int yGrid);
+  
   int getTowerPrice(int row, int col);
   int getTowerPrice(string towerTypeID);
 
@@ -104,7 +111,8 @@ private:
   void addTower(string type, int combinedRowCol);
   void addTower(string type, int row, int col);
 
-  shared_ptr<TowerInterface> copyOfTowerType(string type);
+  shared_ptr<TowerInterface> copyOfTowerType(string type, int row, int col);
+
   void removeTower(int combinedRowCol);
   void removeTower(int row, int col);
 

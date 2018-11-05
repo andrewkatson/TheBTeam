@@ -1,9 +1,9 @@
 #include "../include/Projectiles/GravyProjectile.hpp"
-GravyProjectile::GravyProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect){
-  this -> hitpoints = hitpoint;
-  this -> damage = damage;
-  this -> armor = armor;
-  this -> speed = speed;
-  this -> armorPenetration = armorPenetration;
-  this -> areaOfEffect = areaOfEffect;
+GravyProjectile::GravyProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
+  this -> hitpoints = textLoader->getInteger(string("IDS_G_HP"));;
+  this -> damage = textLoader->getInteger(string("IDS_G_DM"));;
+  this -> armor = textLoader->getInteger(string("IDS_G_AM"));;
+  this -> speed = textLoader->getInteger(string("IDS_G_SP"));;
+  this -> armorPenetration = textLoader->getInteger(string("IDS_G_AP"));;
+  this -> areaOfEffect = textLoader->getInteger(string("IDS_G_AR"));;
 }

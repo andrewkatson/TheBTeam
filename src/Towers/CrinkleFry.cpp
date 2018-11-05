@@ -1,7 +1,7 @@
 #include "../include/Towers/CrinkleFry.hpp"
 
 
-CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits) : MeleeTower(){
+CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits, shared_ptr<EventManager> eventManager) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;
   this -> respawnSpeed = textLoader->getInteger(string("IDS_CFT_RS"));
@@ -17,26 +17,10 @@ void CrinkleFry::upgrade(){}
  * Initialize the vector of units that spawn from this tower
  */
 void CrinkleFry::setUpUnits(){
-  //constants for the Crinkle Fry
-  //health
-  int crinkleFryHP = textLoader->getInteger(string("IDS_CF_HP"));
-  //damage
-  int crinkleFryDM = textLoader->getInteger(string("IDS_CF_DM"));
-  //armor
-  int crinkleFryAM = textLoader->getInteger(string("IDS_CF_AM"));
-  //speed
-  int crinkleFrySP = textLoader->getInteger(string("IDS_CF_SP"));
-  //armor penetration
-  int crinkleFryAP = textLoader->getInteger(string("IDS_CF_AP"));
-  //attack radius
-  int crinkleFryAR = textLoader->getInteger(string("IDS_CF_AR"));
-  //lunch money
-  int crinkleFryLM = textLoader->getInteger(string("IDS_CF_LM"));
 
   //create the maximum number of possible units
   for(int i = 0; i < totalUnits; i++){
-    shared_ptr<MeleeUnit> unitToAdd = make_shared<CrinkleFryUnit>(crinkleFryHP,
-       crinkleFryDM, crinkleFryAM, crinkleFrySP, crinkleFryAP, crinkleFryAR, crinkleFryLM);
+    shared_ptr<MeleeUnit> unitToAdd = make_shared<CrinkleFryUnit>(textLoader, eventManager);
     currentUnits.push_back(unitToAdd);
   }
 }
