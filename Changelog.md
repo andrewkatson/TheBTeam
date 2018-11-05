@@ -9,7 +9,9 @@
 - MapFactory allows for paths to take whatever is their shortest path to exit
   if the path crosses an exit path at any point then we do not draw over it
 - BoardManager walks through all paths and assigns them new distances
-  so that each distance on the path reflects the number of tiles between that tile and the exit 
+  so that each distance on the path reflects the number of tiles between that tile and the exit
+- optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
+
 
 
 [0.1.2]
