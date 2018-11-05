@@ -58,7 +58,61 @@ void BoardManager::setMapBoards(){
   floorGrid = mapFactory -> getFloor();
   aboveFloorGrid = mapFactory -> getAboveFloor();
   distances = mapFactory -> getDistances();
+
+  //correct the distances for each path to reflect the distance to the exit
+  //accounting only for the length of the path from the path tile to the exit
+  //rather than the manhattan distance
+  setPathDistanceToReflectRealDistance();
 }
+
+/*
+ * Set the distance for each path tile  to reflect the distance  to the exit
+ */
+void BoardManager::setPathDistanceToReflectRealDistance(){
+
+  //start with the position of the exit
+  vector<int> exitPos = getExitPositions();
+  int exitRow = exitPos.at(1);
+  int exitCol = exitPos.at(0);
+  vector<vector<int>> traveled (distances.size(), vector<int>(distances.at(0).size(),0));
+
+  //recursively walk back from the exit and keep track of the distance traveled
+  walkBackToEntries(exitRow, exitCol, 0, traveled);
+
+  mapFactory -> printVector(distances);
+}
+
+/*
+ * Recursively follow back from the pased row and col
+ * and mark any path spaces with the correct distance
+ */
+ void BoardManager::walkBackToEntries(int row, int col, int distanceSoFar, vector<vector<int>> traveled){
+   if(isInMap(row,col)){
+     //mark the current position as having been visited
+     traveled.at(row).at(col) = 1;
+
+     for(vector<int> dir : dirs){
+       int newRow = row + dir.at(0);
+       int newCol = col + dir.at(1);
+       //if this is not the direction we came from
+       if(!(newRow == row && newCol == col)){
+         //if this is still in the map
+         if(isInMap(newRow, newCol)){
+           //if this is a path
+           if(isPath(newRow, newCol)){
+             //if we have not gone here before
+             //and the current marked distance is less
+             if(traveled.at(newRow).at(newCol) == 0){
+               walkBackToEntries(newRow, newCol, distanceSoFar+1, traveled);
+             }
+           }
+         }
+       }
+     }
+     //update the distance
+     distances.at(row).at(col) = distanceSoFar;
+   }
+ }
 
 /*
  * Handle any tower creation
@@ -151,6 +205,13 @@ bool BoardManager::hasMap(){
 }
 
 /*
+ * @return true if this position is in the map
+ */
+bool BoardManager::isInMap(int row, int col){
+  return mapFactory -> isInMap(row, col);
+}
+
+/*
  * @return true if the selected grid has a tower
  */
 bool BoardManager::isTower(int row, int col){
@@ -165,6 +226,23 @@ bool BoardManager::isTowerOrObstacle(int row, int col){
   assert(hasMap()== true);
   return aboveFloorGrid.at(row).at(col) > 0 || aboveFloorGrid.at(row).at(col) < -1;
 }
+/*
+ * @return true if the selected grid has an entrance
+ */
+bool BoardManager::isEntrance(int row, int col){
+  vector<int> entrances = getEntryPositions();
+
+  for(int pair = 0; pair < entrances.size(); pair+=2){
+    int pairRow = entrances.at(pair+1);
+    int pairCol = entrances.at(pair);
+
+    if(pairRow == row && pairCol == col){
+      return true;
+    }
+  }
+  return false;
+}
+
 /*
  * @return true if the selected grid has an exit
  */
@@ -277,6 +355,11 @@ vector<int>const & BoardManager::getFloorCol(int col){
 int BoardManager::getFloorRowCol(int row, int col){
   assert(hasMap()== true);
   return floorGrid.at(row).at(col);
+}
+
+vector<int>& BoardManager::getExitPositions(){
+  assert(hasMap()==true);
+  return mapFactory->getExitPos();
 }
 
 vector<int>& BoardManager::getEntryPositions(){

@@ -800,8 +800,7 @@ bool MapFactory::evaluateDirection(int row, int col,int oldRow, int oldCol, set<
   //only check if we are on the grid
   if(isInMap(row,col)){
     //if we are at the exit
-    //or are bordering a path that already leads to the exit
-    if(paths.at(row).at(col) == 0 || connectedWithExitPath(row, col, path)){
+    if(paths.at(row).at(col) == 0){
       board.at(row).at(col).rowParent=oldRow;
       board.at(row).at(col).colParent=oldCol;
       return true;
@@ -843,6 +842,7 @@ bool MapFactory::isEntrance(int row, int col){
 
 /*
  * Follow the path to the exit and mark it on the grids
+ * once it reaches the exit or a path leading to the exit we stop
  * @param board: the board with details on the distances
  * @param path: the integer we will use to mark this path
  */
@@ -853,8 +853,12 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
 
     //if not at the exit poisiton mark the current space as a path
     if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
-      paths.at(currRow).at(currCol) = path;
-      floorGrid.at(currRow).at(currCol) = path;
+      //mark the space ass a path if it is not touching an exit path
+      //and is not touching the exit itself
+      if(!connectedWithExitPath(currRow, currCol, path) && !connectedWithExit(currRow, currCol)){
+        paths.at(currRow).at(currCol) = path;
+        floorGrid.at(currRow).at(currCol) = path;
+      }
     }
 
     while(!(board.at(currRow).at(currCol).rowParent == currRow &&
@@ -862,13 +866,27 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
 
       int tempRow = board.at(currRow).at(currCol).rowParent;
       int tempCol = board.at(currRow).at(currCol).colParent;
+
+      //if not at the exit poisiton
+      if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
+        //if the next tile is not connected with an exit path but the current one is
+        //we do actually mark it to make sure they are connected
+        if(connectedWithExitPath(currRow, currCol, path) && !connectedWithExitPath(tempRow, tempCol, path)){
+          paths.at(currRow).at(currCol) = path;
+          floorGrid.at(currRow).at(currCol) = path;
+        }
+      }
+
       currRow = tempRow;
       currCol = tempCol;
 
       //mark the space as the path if there is not already a path
       if(!(paths.at(currRow).at(currCol) > -1)){
-        paths.at(currRow).at(currCol) = path;
-        floorGrid.at(currRow).at(currCol) = path;
+        //mark the space ass a path if it is not touching an exit path
+        if(!connectedWithExitPath(currRow, currCol, path)){
+          paths.at(currRow).at(currCol) = path;
+          floorGrid.at(currRow).at(currCol) = path;
+        }
       }
       //if we are adjacent to another path then we must mark that path as
       //to the exit
@@ -1638,18 +1656,18 @@ void MapFactory::printVector(vector<vector<T>> &v){
   for(vector<int> vec : v){
     for(auto it = vec.begin(); it != vec.end(); ++it){
       if(*it < 0){
-      //  cout << *it << " ";
+        cout << *it << " ";
         s << *it << " ";
       }
       else{
-        //cout << *it << "  ";
+        cout << *it << "  ";
         s << *it << "  ";
       }
     }
-  //  cout << endl;
+    cout << endl;
     s << endl;
   }
-//  cout <<endl;
+  cout <<endl;
   s << endl;
 }
 

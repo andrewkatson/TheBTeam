@@ -25,5 +25,8 @@ public:
   int getPrice(){return price;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
+
+  void setProjectile(){}
+  void setUpUnits(){}
 };
  #endif

@@ -37,6 +37,8 @@ public:
   virtual void upgrade()=0;
   virtual int getPrice()=0;
   virtual string getType()=0;
+  virtual void setProjectile()=0;
+  virtual void setUpUnits()=0;
 
 };
 

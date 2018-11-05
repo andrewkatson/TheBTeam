@@ -546,8 +546,8 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type){
     retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_EDT"))){
-    retTower = make_shared<EnergyDrink>(textLoader, type)
-    retTower -> setProjectile();;
+    retTower = make_shared<EnergyDrink>(textLoader, type);
+    retTower -> setProjectile();
   }
   else if(type == textLoader->getString(string("IDS_GT"))){
     retTower = make_shared<Gravy>(textLoader, type);

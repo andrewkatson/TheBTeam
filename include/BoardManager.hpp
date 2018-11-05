@@ -46,6 +46,11 @@ private:
      */
     unordered_map<int, intPair> allObstacles;
 
+    /*
+     * Vector to iterate through to explore each cardinal direction
+     */
+    vector<vector<int>> dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+
 public:
   BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
@@ -55,13 +60,17 @@ public:
   void newMap(MapChoices * newCustomization);
 
   void setMapBoards();
+  void setPathDistanceToReflectRealDistance();
+  void walkBackToEntries(int row, int col, int distanceSoFar,vector<vector<int>> traveled);
 
   void handleTowerCreation(const EventInterface& event);
   void handleTowerRemove(const EventInterface& event);
 
   bool hasMap();
+  bool isInMap(int row, int col);
   bool isTower(int row, int col);
   bool isTowerOrObstacle(int row, int col);
+  bool isEntrance(int row, int col);
   bool isExit(int row, int col);
   bool isPath(int row, int col);
   bool isObstacle(int row, int col);
@@ -89,6 +98,7 @@ public:
   vector<int>const & getFloorCol(int col);
   int getFloorRowCol(int row, int col);
 
+  vector<int>& getExitPositions();
   vector<int>& getEntryPositions();
 
   unordered_map<int,intPair>& getAllObstacles();
