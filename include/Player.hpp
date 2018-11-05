@@ -59,14 +59,19 @@ public:
 
     @param balance The new balance value for the player.
    */
-  int updateBalance(int balance){this->balance=balance;}
+  void updateBalance(int balance){this->balance=balance;}
+
+  /*
+   * Add the passed value to the balance
+   */
+  void modifyBalance(int modifyBy){this->balance+=modifyBy;}
 
   /*
     Set the player's current hit-points to the given value.
 
     @param points The new hit-point value for the player.
    */
-  int updateHitpoints(int points){this->hitpoints=points;}
+  void updateHitpoints(int points){this->hitpoints=points;}
 
 };
 

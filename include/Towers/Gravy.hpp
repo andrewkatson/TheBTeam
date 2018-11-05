@@ -11,4 +11,5 @@ public:
    * this projectile will be fired from
    */
   void setProjectile();
+  void setUpUnits(){}
 };

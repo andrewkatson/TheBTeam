@@ -16,8 +16,9 @@
 using std::shared_ptr;
 class RangeTower : public TowerInterface{
 protected:
-//the specific type of tower this rangetower is
-shared_ptr<RangeTower> currentTower;
+
+//int pair (used to assocaite a row and col)
+typedef pair<int,int> intPair;
 //the specfic type of projectile shot by this tower
 shared_ptr<Projectile> currentProjectile;
 //Store the textLoader to make requests for strings and constants
@@ -26,8 +27,6 @@ shared_ptr<TextLoader> textLoader;
 int rateOfFire;
 public:
   RangeTower();
-  RangeTower(shared_ptr<RangeTower> startingTower);
-
   virtual void upgrade();
 
   /*
@@ -41,6 +40,11 @@ public:
    */
   int getPrice();
 
+  string getType(){return towerTypeID;}
+  void setPos(intPair pos){row = pos.first; col=pos.second;}
+  void setPos(int row, int col) {this->row=row; this->col=col;}
+
+  void setUpUnits(){}
 };
 
  #endif

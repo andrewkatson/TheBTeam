@@ -38,15 +38,14 @@ void TextLoader::loadInts(){
   tinyxml2::XMLDocument doc;
   doc.LoadFile( "../values/constants.xml" );
   tinyxml2::XMLElement * root =  doc.FirstChildElement("constants")->FirstChildElement("ints");
-  stringstream strValue;
   int intValue;
 
   for(tinyxml2::XMLElement* node = root->FirstChildElement("constant"); node != NULL; node= node->NextSiblingElement("constant")) {
     string s(node->Attribute("id"));
+    stringstream strValue;
     //converting the string value from xml to an int
     strValue << node -> Attribute("value");
     strValue >> intValue;
-
     ints.insert({s, intValue});
 
   }
@@ -59,11 +58,12 @@ void TextLoader::loadDoubles(){
   tinyxml2::XMLDocument doc;
   doc.LoadFile( "../values/constants.xml" );
   tinyxml2::XMLElement * root =  doc.FirstChildElement("constants")->FirstChildElement("floats");
-  stringstream strValue;
+
   double doubleValue;
 
   for(tinyxml2::XMLElement* node = root->FirstChildElement("constant"); node != NULL; node= node->NextSiblingElement("constant")) {
     string s(node->Attribute("id"));
+    stringstream strValue;
     //converting the string value from xml to an double
     strValue << node -> Attribute("value");
     strValue >> doubleValue;

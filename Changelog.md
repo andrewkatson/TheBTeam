@@ -1,6 +1,21 @@
 [Unreleased]
+
+###Added
+- TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
+
+###Changed
+- GameLogic now updates the balance of the player appropriately whether
+ you buy a tower, remove an obstacle, or remove a tower [@andrewkatson][https://github.com/andrewkatson]
+- MapFactory allows for paths to take whatever is their shortest path to exit
+  if the path crosses an exit path at any point then we do not draw over it
+- BoardManager walks through all paths and assigns them new distances
+  so that each distance on the path reflects the number of tiles between that tile and the exit 
+
+
+[0.1.2]
 ##Added
 - StateChangeEvent, StateChangeEventData[@andrewkatson][https://github.com/andrewkatson]
+- NotATower to indicate to stand for an empty space
 - ActorDestroyedEvent, ActorDestroyedEventData, ActorAttackEvent, ActorAttackEventData [@meisong1997][https://github.com/meisong1997]
 - Floating-point [double] loading in TextLoader [@jeremyelkayam][https://github.com/jeremyelkayam]
 
@@ -8,12 +23,20 @@
 - MapFactory now uses an A* BFS to find paths through the
   map [@andrewkatson][https://github.com/andrewkatson]
 - Playing Screen now writes the maps to console for testing 
+- Tower Manager now keeps track of every kind of tower and obstacle
+  separate from their list of upgrdes (uses same objects as the upgrade map)
+- TowerManager adds obstacle objects to the towersPlaced as soon
+  as they are made when a new map is generated (facilitated by GameLogic)
+- GameLogic has the capacity to check if a particular tower can be purchased
+- GameLogic can return a vector of the upgrades for a tower given its tile
+- GameLogic can make a tower creation event (to be handled by board manager and tower manager)
+- GameLogic can be queried for an attempted purchase of a particular tower type
+- BoardManager sets up all obstacles made at the start of the game
 - Now menu screen works and switches between the options [@KP-HB][https://github.com/KP-HB]
 - Number of waves is generated with a normal distribution based on difficulty and level[@jeremyelkayam][https://github.com/jeremyelkayam]
 - Wave members have a random adjustment to their stats (adjustment increases as difficulty progresses)
 - Units are now determined by a wave weight (generated with a normal distribution) and weighted values for each unit
 - WaveManager constants moved to XML file
-
 
 
 ###Fixed

@@ -13,6 +13,8 @@
 #include "../include/Events/KeyPressEvent.hpp"
 #include "../include/Events/MousePressEvent.hpp"
 #include "../include/Events/StateChangeEvent.hpp"
+#include "../include/Events/TowerCreationEvent.hpp"
+#include "../include/Events/TowerRemoveEvent.hpp"
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;

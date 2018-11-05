@@ -11,4 +11,5 @@ public:
 
   virtual void upgrade();
   virtual void setUpUnits();
+  void setProjectile(){}
 };

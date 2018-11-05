@@ -19,7 +19,10 @@ private:
 public:
   PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
 
+  void registerDelegates();
 
+  void handleTowerCreation(const EventInterface& event);
+  void handleTowerRemove(const EventInterface& event);
   void draw(sf::RenderWindow& window);
   template <class T>
   void printVector(const vector<vector<T>> &v);
