@@ -2,7 +2,7 @@
 
 ###Added
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
-- OptionSelectedEvent, OptionSelectedEventData [@meisong1997][https://github.com/meisong1997]
+- OptionSelectedEvent, OptionSelectedEventData, LoseHitpointsEvent, LoseHitpointsEventData, WaveChangeEvent, WaveChangeEventData [@meisong1997][https://github.com/meisong1997]
 
 ###Changed
 - GameLogic now updates the balance of the player appropriately whether
@@ -12,6 +12,7 @@
 - BoardManager walks through all paths and assigns them new distances
   so that each distance on the path reflects the number of tiles between that tile and the exit
 - optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
+- Changed OptionSelected event data type from string to integer [@meisong1997][https://github.com/meisong1997]
 
 
 
