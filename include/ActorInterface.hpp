@@ -54,24 +54,7 @@ protected:
 
   //The coordinates of the actor.
   double x,y;
-public:
-  double getX() const;
 
-  void setX(double x);
-
-  double getY() const;
-
-  void setY(double y);
-
-  int getRow() const;
-
-  void setRow(int row);
-
-  int getCol() const;
-
-  void setCol(int col);
-
-protected:
 
   //Row and column of the actor on the world grid.
   int row,col;
