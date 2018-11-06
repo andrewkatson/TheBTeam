@@ -89,7 +89,7 @@ void OptionsMenuScreen::moveDown()
 
 }
 
-void OptionsMenuScreen:moveRight()
+void OptionsMenuScreen::moveRight()
 {
   /* psuedocode:
   switcher[selectedItem].increment

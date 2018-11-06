@@ -26,7 +26,8 @@ shared_ptr<TextLoader> textLoader;
 //the rate that this tower can fire projectiles at
 int rateOfFire;
 public:
-  RangeTower();
+  RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+  void update(float delta);
   virtual void upgrade();
 
   /*
@@ -43,8 +44,15 @@ public:
   string getType(){return towerTypeID;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
+  int getXCoordinate(){return xCoordinate;}
+  int getYCoordinate(){return yCoordinate;}
+  void setXCoordinate(int xCor){xCoordinate = xCor;}
+  void setYCoordinate(int yCor){yCoordinate = yCor;}
 
   void setUpUnits(){}
+
+  bool canAttack();
+  void attack(shared_ptr<ActorInterface> enemyInRange);
 };
 
  #endif

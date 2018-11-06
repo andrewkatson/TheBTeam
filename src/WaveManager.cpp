@@ -19,48 +19,11 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
 
 
 void WaveManager::setUpPossibleEnemies(){
-  //constants for the skinny kid
-  //health
-  int skinnyKidHP = textLoader->getInteger(string("IDS_SK_HP"));
-  //damage
-  int skinnyKidDM = textLoader->getInteger(string("IDS_SK_DM"));
-  //armor
-  int skinnyKidAM = textLoader->getInteger(string("IDS_SK_AM"));
-  //speed
-  int skinnyKidSP = textLoader->getInteger(string("IDS_SK_SP"));
-  //armor  penetration
-  int skinnyKidAP = textLoader->getInteger(string("IDS_SK_AP"));
-  //attack radius
-  int skinnyKidAR = textLoader->getInteger(string("IDS_SK_AR"));
-  //lunch money
-  int skinnyKidLM = textLoader->getInteger(string("IDS_SK_LM"));
+  shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(textLoader, eventManager);
 
-  //constants for the average kid
-  int averageKidHP = textLoader->getInteger(string("IDS_AK_HP"));
-  int averageKidDM = textLoader->getInteger(string("IDS_AK_DM"));
-  int averageKidAM = textLoader->getInteger(string("IDS_AK_AM"));
-  int averageKidSP = textLoader->getInteger(string("IDS_AK_SP"));
-  int averageKidAP = textLoader->getInteger(string("IDS_AK_AP"));
-  int averageKidAR = textLoader->getInteger(string("IDS_AK_AR"));
-  int averageKidLM = textLoader->getInteger(string("IDS_AK_LM"));
+  shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(textLoader, eventManager);
 
-  //constants for the fat kid
-  int fatKidHP = textLoader->getInteger(string("IDS_FK_HP"));
-  int fatKidDM = textLoader->getInteger(string("IDS_FK_DM"));
-  int fatKidAM = textLoader->getInteger(string("IDS_FK_AM"));
-  int fatKidSP = textLoader->getInteger(string("IDS_FK_SP"));
-  int fatKidAP = textLoader->getInteger(string("IDS_FK_AP"));
-  int fatKidAR = textLoader->getInteger(string("IDS_FK_AR"));
-  int fatKidLM = textLoader->getInteger(string("IDS_FK_LM"));
-
-  shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(
-    skinnyKidHP, skinnyKidDM, skinnyKidAM, skinnyKidSP, skinnyKidAP, skinnyKidAR, skinnyKidLM);
-
-  shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(
-    averageKidHP, averageKidDM, averageKidAM, averageKidSP, averageKidAP, averageKidAR, averageKidLM);
-
-  shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(
-    fatKidHP, fatKidDM, fatKidAM, fatKidSP, fatKidAP, fatKidAR, fatKidLM);
+  shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(textLoader, eventManager);
 
   enemies.push_back(skinnyKid);
   enemies.push_back(averageKid);

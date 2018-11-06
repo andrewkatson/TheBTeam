@@ -1,6 +1,6 @@
 #include "../include/Towers/CheesePizza.hpp"
 
-CheesePizza::CheesePizza(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower() {
+CheesePizza::CheesePizza(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader) {
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_CPT_ROF"));
@@ -11,19 +11,5 @@ CheesePizza::CheesePizza(shared_ptr<TextLoader> textLoader, string towerTypeID) 
 void CheesePizza::upgrade(){}
 
 void CheesePizza::setProjectile(){
-  //constants for the CheesePizza
-  //health
-  int cheesePizzaHP = textLoader->getInteger(string("IDS_CP_HP"));
-  //damage
-  int cheesePizzaDM = textLoader->getInteger(string("IDS_CP_DM"));
-  //armor
-  int cheesePizzaAM = textLoader->getInteger(string("IDS_CP_AM"));
-  //speed
-  int cheesePizzaSP = textLoader->getInteger(string("IDS_CP_SP"));
-  //armor penetration
-  int cheesePizzaAP = textLoader->getInteger(string("IDS_CP_AP"));
-  //area of effect
-  int cheesePizzaAR = textLoader->getInteger(string("IDS_CP_AR"));
-
-  this-> currentProjectile = make_shared<CheesePizzaProjectile>(cheesePizzaHP, cheesePizzaDM, cheesePizzaAM, cheesePizzaSP, cheesePizzaAP, cheesePizzaAR);
+  this-> currentProjectile = make_shared<CheesePizzaProjectile>(textLoader, eventManager);
 }

@@ -1,11 +1,11 @@
 #include "../include/Projectiles/CheesePizzaProjectile.hpp"
 
 
-CheesePizzaProjectile::CheesePizzaProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect){
-  this -> hitpoints = hitpoint;
-  this -> damage = damage;
-  this -> armor = armor;
-  this -> speed = speed;
-  this -> armorPenetration = armorPenetration;
-  this -> areaOfEffect = areaOfEffect;
+CheesePizzaProjectile::CheesePizzaProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
+  this -> hitpoints = textLoader->getInteger(string("IDS_CP_HP"));;
+  this -> damage = textLoader->getInteger(string("IDS_CP_DM"));;
+  this -> armor = textLoader->getInteger(string("IDS_CP_AM"));;
+  this -> speed = textLoader->getInteger(string("IDS_CP_SP"));;
+  this -> armorPenetration = textLoader->getInteger(string("IDS_CP_AP"));;
+  this -> areaOfEffect = textLoader->getInteger(string("IDS_CP_AR"));;
 }

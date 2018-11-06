@@ -1,6 +1,6 @@
 #include "../include/Towers/Slushie.hpp"
 
-Slushie::Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower(){
+Slushie::Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_SLT_ROF"));
@@ -11,20 +11,5 @@ Slushie::Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeT
 void Slushie::upgrade(){}
 
 void Slushie::setProjectile(){
-  //constants for the Slushie
-  //health
-  int slushieHP = textLoader->getInteger(string("IDS_SL_HP"));
-  //damage
-  int slushieDM = textLoader->getInteger(string("IDS_SL_DM"));
-  //armor
-  int slushieAM = textLoader->getInteger(string("IDS_SL_AM"));
-  //speed
-  int slushieSP = textLoader->getInteger(string("IDS_SL_SP"));
-  //armor penetration
-  int slushieAP = textLoader->getInteger(string("IDS_SL_AP"));
-  //area of effect
-  int slushieAR = textLoader->getInteger(string("IDS_SL_AR"));
-
-  this-> currentProjectile = make_shared<SlushieProjectile>(
-    slushieHP, slushieDM, slushieAM, slushieSP, slushieAP, slushieAR);
+  this-> currentProjectile = make_shared<SlushieProjectile>(textLoader, eventManager);
 }

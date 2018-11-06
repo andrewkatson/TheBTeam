@@ -1,9 +1,9 @@
 #include "../include/Projectiles/NormalMMSProjectile.hpp"
-NormalMMSProjectile::NormalMMSProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect){
-  this -> hitpoints = hitpoint;
-  this -> damage = damage;
-  this -> armor = armor;
-  this -> speed = speed;
-  this -> armorPenetration = armorPenetration;
-  this -> areaOfEffect = areaOfEffect;
+NormalMMSProjectile::NormalMMSProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
+  this -> hitpoints = textLoader->getInteger(string("IDS_NMM_HP"));;
+  this -> damage = textLoader->getInteger(string("IDS_NMM_DM"));;
+  this -> armor = textLoader->getInteger(string("IDS_NMM_AM"));;
+  this -> speed = textLoader->getInteger(string("IDS_NMM_SP"));;
+  this -> armorPenetration = textLoader->getInteger(string("IDS_NMM_AP"));;
+  this -> areaOfEffect = textLoader->getInteger(string("IDS_NMM_AR"));;
 }

@@ -2,5 +2,7 @@
 #include "Projectile.hpp"
 class DeepDishProjectile : public Projectile{
   public:
-  DeepDishProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect);
+  DeepDishProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager);
+  void move(float delta){Projectile::move(delta);}
+  void update(float delta){Projectile::update(delta);}
 };

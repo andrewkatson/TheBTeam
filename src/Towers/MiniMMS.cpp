@@ -1,5 +1,5 @@
 #include "../include/Towers/MiniMMS.hpp"
-MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeTower() {
+MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader) {
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_MMMT_ROF"));
@@ -10,20 +10,7 @@ MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID) : RangeT
 void MiniMMS::upgrade(){}
 
 void MiniMMS::setProjectile(){
-  //constants for the MiniMMS
-  //health
-  int miniMMSHP = textLoader->getInteger(string("IDS_MMM_HP"));
-  //damage
-  int miniMMSDM = textLoader->getInteger(string("IDS_MMM_DM"));
-  //armor
-  int miniMMSAM = textLoader->getInteger(string("IDS_MMM_AM"));
-  //speed
-  int miniMMSSP = textLoader->getInteger(string("IDS_MMM_SP"));
-  //armor penetration
-  int miniMMSAP = textLoader->getInteger(string("IDS_MMM_AP"));
-  //area of effect
-  int miniMMSAR = textLoader->getInteger(string("IDS_MMM_AR"));
 
-  this-> currentProjectile = make_shared<MiniMMSProjectile>(
-    miniMMSHP, miniMMSDM, miniMMSAM, miniMMSSP, miniMMSAP, miniMMSAR);
+
+  this-> currentProjectile = make_shared<MiniMMSProjectile>(textLoader, eventManager);
   }

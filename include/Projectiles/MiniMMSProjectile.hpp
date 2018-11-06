@@ -2,5 +2,7 @@
 #include "Projectile.hpp"
 class MiniMMSProjectile : public Projectile{
 public:
-  MiniMMSProjectile(int hitpoint, int damage, int armor, int speed, int armorPenetration, int areaOfEffect);
+  MiniMMSProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager);
+  void move(float delta){Projectile::move(delta);}
+  void update(float delta){Projectile::update(delta);}
 };

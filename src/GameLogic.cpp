@@ -23,6 +23,8 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
+
+  cout << this;
 }
 
 /*
@@ -81,7 +83,7 @@ void GameLogic::registerDelegates(){
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
 
-  /* Test Code 
+  /* Test Code
   if(boardManager -> hasMap()){
     int row = 3;
     int col = 3;
@@ -196,10 +198,19 @@ void GameLogic::handleStateChange(const EventInterface& event){
  * Have a new map generated (callable by the UserView)
  */
  void GameLogic::makeNewMap(){
+   //make the new map
    this -> boardManager -> newMap();
+
+   //set the dimensions (x are cols, y are rows of the map)
    int xDim = boardManager -> getXDim();
    int yDim = boardManager -> getYDim();
    this -> towerManager -> setDimensions(xDim, yDim);
+
+   //set the x and y in pixel length
+   this -> gridX = windowX / boardManager -> getXDim();
+   this -> gridY = windowY / boardManager -> getYDim();
+   this-> towerManager -> setGridDimensions(gridX, gridY);
+
    placeObstacles();
  }
 

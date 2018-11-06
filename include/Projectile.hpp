@@ -27,6 +27,7 @@ protected:
   int projectileID;
 
 public:
+  Projectile(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
 
   /*
    * Return the amount that this projectile penetrates the armor of a given unit
@@ -45,7 +46,7 @@ public:
   /*
    * Move the projectile based on its speed and direction.
    */
-  void move(float deltaS);
+  void move(float delta);
 
   /*
    * set the vector for movement (defined by an x and y)
@@ -59,6 +60,8 @@ public:
    * @param projectileID: the integer identifier (probably the address)
    */
   void setProjectileID(int ID);
+
+  void update(float delta);
 
 };
 

@@ -10,12 +10,23 @@
 #define ACTORINTERFACE_H
 
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include "EventManager.hpp"
+#include "TextLoader.hpp"
 
+using std::shared_ptr;
+using std::addressof;
 class ActorInterface{
 
 protected:
+  //event manager (used to register, deregister from events, and create them)
+  shared_ptr<EventManager> eventManager;
+
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
+
   //The unique identifier for the actor.
-  int id;
+  long long  id;
 
   //The sprite corresponding to the actor.
   sf::Sprite sprite;
@@ -25,6 +36,9 @@ protected:
 
   //The actor's hispoints
   int hitpoints;
+
+  //Used to reset the actor's hit points
+  int maxHitpoints;
 
   //The actor's damage
   int damage;
@@ -64,9 +78,15 @@ protected:
 
 public:
 
+  ActorInterface();
   /*
     TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
    */
+
+  /*
+   * Reset the hitpoints back to the max (for respawning allied units)
+   */
+  void resetHealth(){hitpoints = maxHitpoints;}
 
   /*
     Returns the unique identifier for the actor.
@@ -88,7 +108,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  virtual void move(float deltaS)=0;
+  virtual void move(float delta)=0;
 
   /*
     Determine whether or not the object's collision box is colliding with the
@@ -100,7 +120,42 @@ public:
    */
   bool isCollision(sf::FloatRect colliding_with);
 
-
+  /*
+   * update the position, check if it hit its target
+   */
+  virtual void update(float delta)=0;
+  /*
+   * get the x coordinate of the actor
+   */
+  double getXCoordinate(){return x;}
+  /*
+   * get the y coordinate of the actor
+   */
+  double getYCoordinate(){return y;}
+  /*
+   * get the row of fthe actor
+   */
+  int getRow(){return row;}
+  /*
+   * get the col of the actor
+   */
+  int getCol(){return col;}
+  /*
+   * set the x coordinate of the actor
+   */
+  void setXCoordinate(double x){this -> x = x;}
+  /*
+   * set the y coordinate of the actor
+   */
+  void setYCoordinate(double y){this -> y = y;}
+  /*
+   * set the row of the actor
+   */
+  void setRow(int row){this -> row = row;}
+  /*
+   * set the col of the actor
+   */
+  void setCol(int col){this -> col = col;}
 };
 
 #endif

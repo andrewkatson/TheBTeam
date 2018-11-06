@@ -35,6 +35,10 @@ private:
   int windowX;
   //y dimension of the render window
   int windowY;
+  //x dimension in pixels of a grid space
+  int gridX;
+  //y dimension in pixels of a grid space
+  int gridY;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //Store the game's instance of the BoardManager class that the game logic

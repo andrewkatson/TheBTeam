@@ -7,7 +7,14 @@
  */
 #include "MeleeUnit.hpp"
 
-MeleeUnit::MeleeUnit(){}
+MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) : ActorInterface(){
+  this -> eventManager = eventManager;
+  this -> textLoader = textLoader;
+}
+
+void MeleeUnit::update(float delta){
+
+}
 
 void MeleeUnit::updateHitpoints(int damage){
   hitpoints-=damage;
@@ -32,7 +39,7 @@ HitpointBar MeleeUnit::getHpBar() {
   return this->hpBar;
 }
 
-void MeleeUnit::move(float deltaS=0){
+void MeleeUnit::move(float delta=0){
 
 }
 

@@ -7,8 +7,8 @@ using std::string;
 
 class ActorDestroyedEventData : public EventDataInterface{
 public:
-  string actorID;
+  long long  actorID;
   float timeStamp;
 
-  ActorDestroyedEventData(string actorID, float timeStamp);
+  ActorDestroyedEventData(long long actorID, float timeStamp);
 };

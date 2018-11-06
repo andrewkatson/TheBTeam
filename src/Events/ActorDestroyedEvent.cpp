@@ -6,7 +6,7 @@ const EventType ActorDestroyedEvent::eventType = EventType(&ActorDestroyedEvent:
 ActorDestroyedEvent::ActorDestroyedEvent(){
 
 }
-ActorDestroyedEvent::ActorDestroyedEvent(string actorID, float timeStamp){
+ActorDestroyedEvent::ActorDestroyedEvent(long long actorID, float timeStamp){
   this -> data = unique_ptr<ActorDestroyedEventData>(new ActorDestroyedEventData(actorID, timeStamp));
 }
 

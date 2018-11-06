@@ -26,7 +26,7 @@ using std::unordered_map;
 using std::size_t;
 using std::queue;
 using std::string;
-
+using namespace std::placeholders;
 
 class EventManager{
 public:

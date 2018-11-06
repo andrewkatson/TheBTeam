@@ -14,10 +14,8 @@ class Obstacle : public TowerInterface{
 protected:
   //int pair (used to assocaite a row and col)
   typedef pair<int,int> intPair;
-  //Store the textLoader to make requests for strings and constants
-  shared_ptr<TextLoader> textLoader;
 public:
-  Obstacle();
+  Obstacle(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
 
   void upgrade();
 
@@ -25,8 +23,15 @@ public:
   int getPrice(){return price;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
-
+  int getXCoordinate(){return xCoordinate;}
+  int getYCoordinate(){return yCoordinate;}
+  void setXCoordinate(int xCor){xCoordinate = xCor;}
+  void setYCoordinate(int yCor){yCoordinate = yCor;}
+  bool canAttack(){return false;}
+  void attack(shared_ptr<ActorInterface> enemyInRange){}
   void setProjectile(){}
   void setUpUnits(){}
+
+  void update(float delta);
 };
  #endif

@@ -2,6 +2,7 @@
 
 ###Added
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
+- OptionSelectedEvent, OptionSelectedEventData, LoseHitpointsEvent, LoseHitpointsEventData, WaveChangeEvent, WaveChangeEventData [@meisong1997][https://github.com/meisong1997]
 - Storage of entry positions and distance vector within WaveManager [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Function to reformat distance vector to get distances for each entrance position
 - Normalization of distances based on furthest distance in vector
@@ -15,7 +16,11 @@
   if the path crosses an exit path at any point then we do not draw over it
 - BoardManager walks through all paths and assigns them new distances
   so that each distance on the path reflects the number of tiles between that tile and the exit
+- All Projectiles, Units, and Towers have access to eventManager and textLoader
+- Melee Towers now handle respawning units and actor destroyed events
+- All Units and projectiles have access to getters and setters for their position (in euclidean coordinates and in row-col)
 - optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
+- Changed OptionSelected event data type from string to integer [@meisong1997][https://github.com/meisong1997]
 - makeWave now sets enemy coordinates at one of the map's entrances [@jeremyelkayam][https://github.com/jeremyelkayam]
  - This choice is random but biased toward far entrances when a level begins
  - As a level progresses and more waves arrive, the choice becomes more biased toward closer entrances
