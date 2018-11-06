@@ -51,7 +51,7 @@ void WaveManager::setupWaves(int difficulty){
 }
 
 
-queue<shared_ptr<MeleeUnit>>& WaveManager::makeWave(int difficulty, int waveNumber) {
+queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumber) {
 
   queue<shared_ptr<MeleeUnit>>result;
 
@@ -207,7 +207,7 @@ void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<
   }
 }
 
-map<int,vector<WaveManager::intPair>>& WaveManager::getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions){
+map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions){
   map<int,vector<intPair>> result;
 
   int min=distancesFromEntryPositions.begin()->first;

@@ -64,7 +64,7 @@ private:
    *
    * @return a wave filled with enemies according to the specifications in the class (level, wave number)
    */
-  queue<shared_ptr<MeleeUnit>>& makeWave(int difficulty, int waveNumber);
+  queue<shared_ptr<MeleeUnit>> makeWave(int difficulty, int waveNumber);
 
   /*
    * Create and return a vector listing the distance from exit for every entry point in the entrypoints
@@ -77,7 +77,7 @@ private:
    * E.g. for a vector { 3, 6, 2, 4, 1 }; the maximum is 5, therefore the vector would be
    * converted to { 3, 0, 4, 2, 5 }.
    */
-  map<int,vector<intPair>>& getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
+  map<int,vector<intPair>> getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
 
 public:
   /*
