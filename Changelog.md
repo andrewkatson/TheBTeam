@@ -5,6 +5,8 @@
 - Storage of entry positions and distance vector within WaveManager [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Function to reformat distance vector to get distances for each entrance position
 - Normalization of distances based on furthest distance in vector
+- Sorted map storing distances and entrances in WaveManager
+- Set/getters for world and board coordinates of ActorInterfaces (xcor,ycor,row,col)
 
 ###Changed
 - GameLogic now updates the balance of the player appropriately whether
@@ -14,6 +16,10 @@
 - BoardManager walks through all paths and assigns them new distances
   so that each distance on the path reflects the number of tiles between that tile and the exit
 - optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
+- makeWave now sets enemy coordinates at one of the map's entrances [@jeremyelkayam][https://github.com/jeremyelkayam]
+ - This choice is random but biased toward far entrances when a level begins
+ - As a level progresses and more waves arrive, the choice becomes more biased toward closer entrances
+ - This took a lot of work to figure out how to do
 
 
 

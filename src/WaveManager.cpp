@@ -13,6 +13,7 @@
 WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> currentWaveNumber = 0;
   this -> setUpPossibleEnemies();
 }
 
@@ -68,6 +69,8 @@ void WaveManager::setUpPossibleEnemies(){
 
 void WaveManager::setupWaves(int difficulty){
 
+  currentWaveNumber = 0;
+
   std::mt19937 rnd_gen (rd ());
 
   //average number of waves is the difficulty times the level, e.g. difficulty 3 on level 10: 30 waves
@@ -85,7 +88,7 @@ void WaveManager::setupWaves(int difficulty){
 }
 
 
-queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumber) {
+queue<shared_ptr<MeleeUnit>>& WaveManager::makeWave(int difficulty, int waveNumber) {
 
   queue<shared_ptr<MeleeUnit>>result;
 
@@ -110,6 +113,10 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
 
+  double range=(--distancesFromEntryPositions.end())->first;
+
+  std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
+
   double total_wave_weight=wave_weight_rng(rnd_gen);
 
   for(double weight=0;weight<total_wave_weight;){
@@ -133,8 +140,44 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
     enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
 
+    double spawn_distance;
+    do{
+      spawn_distance=spawn_location_rng(rnd_gen);
+    }while(0<spawn_distance && spawn_distance<range);
+    //a shitty solution... let's try and figure out something else
 
+    int roundedKey;
 
+    //iterate through every key in the map
+    for(auto iterator=(distancesFromEntryPositions.begin());iterator!=distancesFromEntryPositions.end();iterator++){
+      //current and next keys in the map
+      double current=iterator->first;
+      double next=(++iterator)->first;
+      iterator--;
+
+      //if we're between the current and next keys, we need to figure out which one we're closer to. then we round
+      if(current < spawn_distance && spawn_distance < next){
+        double average=(current+next)/2;
+        //if closer to current, round to it. else round to next
+        spawn_distance<average ? roundedKey=current : roundedKey=next;
+        //we're done with this loop since we found the right key so just break out of it
+        break;
+      }
+      roundedKey=iterator->first;
+    }
+
+    //now that we have our distance key, we can get all of the entry positions with that distance
+    vector<intPair> chosenEntrances=distancesFromEntryPositions[roundedKey];
+
+    //pick a random intPair from the vector
+    uniform_int_distribution<int> entrance_chooser_rng(0,chosenEntrances.size());
+    intPair entryPoint=chosenEntrances[entrance_chooser_rng(rnd_gen)];
+
+    //set the intPair to the enemy's starting point on the board grid
+    enemy->setRow(entryPoint.first);
+    enemy->setCol(entryPoint.second);
+
+    result.push(enemy);
   }
   return result;
 }
@@ -146,6 +189,7 @@ void WaveManager::delegateMethod(const EventInterface& event){
 }
 
 void WaveManager::startNextWave() {
+  currentWaveNumber++;
   //TODO - body
 }
 

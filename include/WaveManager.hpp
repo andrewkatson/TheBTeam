@@ -47,6 +47,8 @@ private:
   //The number of waves in the current level.
   unsigned int numWaves;
 
+  unsigned int currentWaveNumber;
+
   //A random device to pull from
   std::random_device rd;
 
@@ -57,13 +59,12 @@ private:
   vector<int> entryPositions;
 
   map<int,vector<intPair>>distancesFromEntryPositions;
-private:
 
   /*
    *
-   * @return a wave filled with enemies according to the specifications in the class (level)
+   * @return a wave filled with enemies according to the specifications in the class (level, wave number)
    */
-  queue<shared_ptr<MeleeUnit>> makeWave(int difficulty, int waveNumber);
+  queue<shared_ptr<MeleeUnit>>& makeWave(int difficulty, int waveNumber);
 
   /*
    * Create and return a vector listing the distance from exit for every entry point in the entrypoints
@@ -129,12 +130,16 @@ public:
   /*
    * Set the distance from exit for each path space on the current board. Should be set
    * with data pulled from BoardManager.
+   *
+   * SHOULD BE CALLED WHENEVER A NEW BOARD IS GENERATED.
    */
   void setDistances(vector<vector<int>>& dists);
 
   /*
    * Set the entry points of the current board's path. Again, this needs to be set using
    * BoardManager data.
+   *
+   * SHOULD BE CALLED WHENEVER A NEW BOARD IS GENERATED.
    */
   void setEntryPoints(vector<int>& entries);
 };
