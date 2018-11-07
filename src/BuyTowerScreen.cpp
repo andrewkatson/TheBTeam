@@ -5,9 +5,46 @@ BuyTowerScreen::BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<
   this -> windowY = windowY;
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+
+  //unused because it was causing issues
+  //this -> initText();
+}
+
+/*
+ * Initialize any parts of the text that will not change
+ */
+void BuyTowerScreen::initText(){
+
 }
 
 void BuyTowerScreen::draw(sf::RenderWindow &window){
+  //used to make the font local
+  string secondaryFontPath = textLoader -> getString(string("IDS_SFP"));
+
+  //locally load the font
+  if(!font.loadFromFile(secondaryFontPath)){
+    cout << "No font!" << endl;
+  }
+  else{
+  //  cout << "loaded font!" << endl;
+  }
+  sf::Text title;
+
+  // select the font
+  title.setFont(font); // font is a sf::Font
+
+  string titleTextString = this->textLoader->getString(string("IDS_Buy_Tower_Title_Text"));
+  title.setString(titleTextString);
+
+  int titleTextSize = this->textLoader->getInteger(string("IDS_Buy_Tower_Title_Text_Size"));
+  title.setCharacterSize(titleTextSize);
+  title.setPosition(this->windowX /3 + title.getCharacterSize(),
+                      this->windowY/8 - title.getCharacterSize());
+  sf::Color color (this->textLoader -> getInteger(string("IDS_Buy_Tower_Title_Text_Fill_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Buy_Tower_Title_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Title_Text_Fill_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Buy_Tower_Title_Text_Fill_Color_Alpha")));
+  title.setFillColor(color);
+  window.draw(title);
 
 }
 /*

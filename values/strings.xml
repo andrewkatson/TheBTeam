@@ -4,6 +4,10 @@
     <!--Font Paths -->
     <!--Main Font Path -->
     <string value="../Fonts/PWYummyDonuts.ttf" id="IDS_MFP"> </string>
+    <!--Secondary Font Path -->
+    <string value="../Fonts/chocolatebar.otf" id="IDS_SFP"> </string>
+    <!--Tertiary Font Path-->
+    <string value="../Fonts/chocolatebar.otf" id="IDS_TFP"> </string>
 
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
@@ -102,8 +106,12 @@
     <!--Option-->
     <!--TODO FILL IN -->
 
-    <!--Button Messages (what is written on them)-->
-    <!--Buy Tower -->
+    <!--PlayingScreen-->
+    <!--Buy Tower Button-->
     <string value="Buy Tower" id="IDS_Buy_Tower_Button_Message"> </string>
+
+    <!--BuyTower Screen-->
+    <!--Buy Tower Title-->
+    <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text"> </string>
 
 </strings>

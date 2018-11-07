@@ -294,8 +294,9 @@
   <constant value="4" id="IDS_SL_AP"> </constant>
   <constant value="60" id="IDS_SL_AR"> </constant>
 
-  <!--Settings for Buttons -->
+  <!--Settings for Screens -->
 
+  <!--Playing Screen -->
   <!--Buy Tower Button-->
   <!--Buy Tower Button Colors -->
   <constant value="178" id="IDS_Buy_Tower_Fill_Color_Red"> </constant>
@@ -321,6 +322,14 @@
   <constant value="2" id="IDS_Buy_Tower_Text_Outline_Thickness"> </constant>
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
+
+  <!--BuyTower Screen-->
+  <!--BuyTower Title-->
+  <constant value="30" id="IDS_Buy_Tower_Title_Text_Size"> </constant>
+  <constant value="210" id="IDS_Buy_Tower_Title_Text_Fill_Color_Red"> </constant>
+  <constant value="105" id="IDS_Buy_Tower_Title_Text_Fill_Color_Blue"> </constant>
+  <constant value="30" id="IDS_Buy_Tower_Title_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Title_Text_Fill_Color_Alpha"> </constant>
 
 
   </ints>

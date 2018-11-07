@@ -15,6 +15,8 @@
 - Melee Towers now handle respawning units and actor destroyed events
 - All Units and projectiles have access to getters and setters for their position (in euclidean coordinates and in row-col)
 - Buttons can now be set to visible or non visible (visible by default)
+- UserView registers and then deregisters the delegates of whatever screen it is switching to
+- Buy Tower screen can be navigated to from Playing Screen (and it can return as well)
 - optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
 - Changed OptionSelected event data type from string to integer [@meisong1997][https://github.com/meisong1997]
 
