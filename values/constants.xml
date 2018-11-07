@@ -294,6 +294,35 @@
   <constant value="4" id="IDS_SL_AP"> </constant>
   <constant value="60" id="IDS_SL_AR"> </constant>
 
+  <!--Settings for Buttons -->
+
+  <!--Buy Tower Button-->
+  <!--Buy Tower Button Colors -->
+  <constant value="178" id="IDS_Buy_Tower_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Buy_Tower_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Buy_Tower_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Outline_Color_Green"> </constant>
+  <constant value="125" id="IDS_Buy_Tower_Outline_Color_Alpha"> </constant>
+  <!--Buy Tower Button Text Colors -->
+  <constant value="0" id="IDS_Buy_Tower_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Text_Outline_Color_Alpha"> </constant>
+  <!--Buy Tower Outline Thickness-->
+  <constant value="1" id="IDS_Buy_Tower_Outline_Thickness"> </constant>
+  <!--Buy Tower Outline Text Thickness-->
+  <constant value="2" id="IDS_Buy_Tower_Text_Outline_Thickness"> </constant>
+  <!--Buy Tower Text Size-->
+  <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
+
+
   </ints>
   <floats>
 

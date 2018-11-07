@@ -96,4 +96,9 @@
 
     <!--Option-->
     <!--TODO FILL IN -->
+
+    <!--Button Messages (what is written on them)-->
+    <!--Buy Tower -->
+    <string value="Buy Tower" id="IDS_Buy_Tower_Button_Message"> </string>
+
 </strings>
