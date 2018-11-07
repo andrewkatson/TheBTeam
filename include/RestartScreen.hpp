@@ -12,4 +12,6 @@ public:
   RestartScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY);
 
   void draw(sf::RenderWindow& window);
+  void registerDelegates();
+  void deregisterDelegates();
 };

@@ -46,7 +46,7 @@ public:
 
   void registerDelegate(const EventDelegate& d, const string &eventDelegateIdentifier, const EventType& type);
 
-  void deregisterDelegate(const EventDelegate& d, const string &eventDelegateIdentifier,  const EventType& type);
+  void deregisterDelegate(const string &eventDelegateIdentifier,  const EventType& type);
 
   void processEvent();
 

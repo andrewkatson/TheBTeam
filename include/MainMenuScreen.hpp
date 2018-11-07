@@ -26,6 +26,7 @@ public:
   void moveDown();
   void registerEvents();
   void registerDelegates();
+  void deregisterDelegates();
   void handleKeyPress(const EventInterface& event);
   void anyFunction();
 

@@ -9,7 +9,6 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> gameLogic = gameLogic;
   this -> buyTower = Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Button_Message")), textLoader);
   somethingChanged = true;
-  this -> registerDelegates();
   this -> setDrawingMaterials();
 }
 
@@ -38,7 +37,59 @@ void PlayingScreen::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(towerRemoveEventDelegate,
   textLoader -> getString(string("IDS_PS_TR")),towerRemoveEventType);
+
+  //bind our delegate function for key presses
+  EventManager::EventDelegate keyPressDelegate = std::bind(&PlayingScreen::handleKeyPress, this, _1);
+
+  //make an event and get its type
+  KeyPressEvent keyPressEvent = KeyPressEvent();
+  EventType keyPressEventType = keyPressEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_PS_KP")),keyPressEventType);
+
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate mousePressDelegate = std::bind(&PlayingScreen::handleMousePress, this, _1);
+
+  //make an event and get its type
+  MousePressEvent mousePressEvent = MousePressEvent();
+  EventType mousePressEventType = mousePressEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_PS_MP")),mousePressEventType);
 }
+
+/*
+ * Deregister the delegated methods for this class
+ * so they are not called when we switch off this screen
+ */
+void PlayingScreen::deregisterDelegates(){
+  //make an event and get its type
+  TowerCreationEvent towerCreationEvent = TowerCreationEvent();
+  EventType towerCreationEventType = towerCreationEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PS_TC"))
+                                          ,towerCreationEventType);
+
+  //make an event and get its type
+  TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
+  EventType towerRemoveEventType = towerRemoveEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PS_TR"))
+                                          ,towerRemoveEventType);
+
+  //make an event and get its type
+  KeyPressEvent keyPressEvent = KeyPressEvent();
+  EventType keyPressEventType = keyPressEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PS_KP")),keyPressEventType);
+
+  //make an event and get its type
+  MousePressEvent mousePressEvent = MousePressEvent();
+  EventType mousePressEventType = mousePressEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PS_MP")),mousePressEventType);
+
+}
+
 
 /*
  * Initialize all the things used for drawing (shapes, fonts)
@@ -121,6 +172,63 @@ void PlayingScreen::handleTowerRemove(const EventInterface& event){
 
 }
 
+/*
+ * Handle any key press from the user
+ * @param event: event of the key press
+ */
+void PlayingScreen::handleKeyPress(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * KeyPressEvent type which allows us to access variables and methods
+   * specific to KeyPressEvent
+   */
+  const KeyPressEvent* kpEvent = static_cast<const KeyPressEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a KeyPressEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  KeyPressEventData* kpEventData = static_cast<KeyPressEventData*>((kpEvent -> data).get());
+  //get the key string identifier from the data
+  string key = kpEventData -> keyID;
+
+}
+
+/*
+ * Handle any mouse press from the user
+ * @param event: event of the mouse press
+ */
+void PlayingScreen::handleMousePress(const EventInterface& event){
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * MousePressEvent type which allows us to access variables and methods
+   * specific to MousePressEvent
+   */
+  const MousePressEvent* mpEvent = static_cast<const MousePressEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a KeyPressEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
+  //get the xposition
+  float xPos = mpEventData -> x;
+  //get the y position
+  float yPos = mpEventData -> y;
+
+  //check if BuyTower button is being clicked
+  bool buyTowerClicked = (this->buyTower).isSelected(xPos,yPos);
+  if(buyTowerClicked){
+    shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, nowInNano);
+
+    this -> eventManager -> queueEvent(buyTowerState);
+  }
+
+}
 
 void PlayingScreen::draw(sf::RenderWindow &window){
   //TODO change into real code for drawing the map!

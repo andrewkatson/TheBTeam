@@ -69,7 +69,7 @@ void EventManager::registerDelegate(const EventDelegate& d, const string &eventD
 
 }
 //deregister a delegate to an event type
-void EventManager::deregisterDelegate(const EventDelegate& d, const string &eventDelegateIdentifier, const EventType& type){
+void EventManager::deregisterDelegate(const string &eventDelegateIdentifier, const EventType& type){
   //look for the delegate to see if it is already in the list
   event_delegates eventDelegatesEventMap = EventDelegateMap.at(type);
   if(!(eventDelegatesEventMap.find(eventDelegateIdentifier) == eventDelegatesEventMap.end())){

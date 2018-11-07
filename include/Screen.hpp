@@ -28,8 +28,8 @@ protected:
   int windowX;
   int windowY;
 public:
-  Screen();
-
   virtual void draw(sf::RenderWindow &window)=0;
+  virtual void registerDelegates()=0;
+  virtual void deregisterDelegates()=0;
 
 };

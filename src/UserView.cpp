@@ -79,6 +79,9 @@ void UserView::registerEvents(){
 void UserView::initScreens(){
   //Main Menu Screen
   shared_ptr<Screen> mainMenuScreen = make_shared<MainMenuScreen>(eventManager,windowX, windowY, 3, textLoader);
+  //main menu is the defualt screen so its delegates are registered by default
+  mainMenuScreen -> registerDelegates();
+
   //Options Menu Screen
   shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(eventManager, textLoader, windowX, windowY, 7, font);
   //Playing Screen
@@ -176,9 +179,14 @@ void UserView::handleStateChange(const EventInterface& event){
   //get integer of the state change
   State state = scEventData -> state;
 
+  //deregister all the delegates for the old state
+  (this->screens).at((int)screen) -> deregisterDelegates();
+
   //change the screen to the current state
   screen = state;
 
+  //register all the delegagtes for the new state
+  (this->screens).at((int)screen) -> registerDelegates();
 }
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){

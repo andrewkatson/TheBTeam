@@ -7,7 +7,6 @@ MainMenuScreen::MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX
   this -> textLoader = textLoader;
   this -> eventManager = eventManager;
   this -> selectedItem = 0;
-  this -> registerDelegates();
   this -> registerEvents();
 
   //get the path for the main font
@@ -121,6 +120,19 @@ void MainMenuScreen::registerDelegates(){
   EventType keyPressEventType = keyPressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_MMSD_KP")),keyPressEventType);
+
+}
+
+/*
+ * Deregisetr the delegated methods for this class
+ * so they are not called when we switch off this screen
+ */
+void MainMenuScreen::deregisterDelegates(){
+  //make an event and get its type
+  KeyPressEvent keyPressEvent = KeyPressEvent();
+  EventType keyPressEventType = keyPressEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_MMSD_KP")),keyPressEventType);
 }
 
 /*
@@ -146,6 +158,7 @@ void MainMenuScreen::handleKeyPress(const EventInterface& event){
    * raw pointer inside of it for this
    */
   KeyPressEventData* kpEventData = static_cast<KeyPressEventData*>((kpEvent -> data).get());
+
   //get the key string identifier from the data
   string key = kpEventData -> keyID;
   if(key == "Up"){

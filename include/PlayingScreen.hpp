@@ -29,10 +29,13 @@ public:
   PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
 
   void registerDelegates();
+  void deregisterDelegates();
   void setDrawingMaterials();
 
   void handleTowerCreation(const EventInterface& event);
   void handleTowerRemove(const EventInterface& event);
+  void handleKeyPress(const EventInterface& event);
+  void handleMousePress(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
   void drawBuyTowerButton(sf::RenderWindow& window);

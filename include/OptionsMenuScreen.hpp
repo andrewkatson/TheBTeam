@@ -25,5 +25,6 @@ public:
   void draw(sf::RenderWindow &window);
   void handleKeyPress(const EventInterface& event);
   void registerDelegates();
+  void deregisterDelegates();
   int getSelectedItem() {return selectedItem;}
 };

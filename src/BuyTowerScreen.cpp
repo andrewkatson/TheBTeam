@@ -10,3 +10,17 @@ BuyTowerScreen::BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<
 void BuyTowerScreen::draw(sf::RenderWindow &window){
 
 }
+/*
+ * Register the delegate method for this class
+ * with any events it needs to know about
+ */
+void BuyTowerScreen::registerDelegates(){
+
+}
+/*
+ * Deregisetr the delegated methods for this class
+ * so they are not called when we switch off this screen
+ */
+void BuyTowerScreen::deregisterDelegates(){
+
+}
