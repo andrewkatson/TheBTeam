@@ -14,4 +14,6 @@ public:
   void draw(sf::RenderWindow& window);
   void registerDelegates();
   void deregisterDelegates();
+  void handleKeyPress(const EventInterface& event);
+  void handleMousePress(const EventInterface& event);
 };

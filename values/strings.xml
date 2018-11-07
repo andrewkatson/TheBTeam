@@ -30,6 +30,9 @@
     <string value="PLAYINGSCREENHANDLETOWERREMOVE" id="IDS_PS_TR"> </string>
     <string value="PLAYINGSCREENHANDLEMOUSEPRESS" id="IDS_PS_MP"> </string>
     <string value="PLAYINGSCREENHANDLEKEYPRESS" id="IDS_PS_KP"> </string>
+    <!--BuyTowerScreen Delegates-->
+    <string value="BUYTOWERSCREENMOUSEPRESS" id="IDS_BTS_MP"> </string>
+    <string value="BUYTOWERSCREENHANDLEKEYPRESS" id="IDS_BTS_KP"> </string>
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
