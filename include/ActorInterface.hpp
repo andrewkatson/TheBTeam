@@ -55,6 +55,7 @@ protected:
   //The coordinates of the actor.
   double x,y;
 
+
   //Row and column of the actor on the world grid.
   int row,col;
 

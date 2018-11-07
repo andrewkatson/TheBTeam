@@ -1,8 +1,15 @@
 [Unreleased]
 
+
+[0.1.5] 2018-11-7
 ###Added
 - TowerRemoveEvent, TowerRemveEventData [@andrewkatson][https://github.com/andrewkatson]
 - OptionSelectedEvent, OptionSelectedEventData, LoseHitpointsEvent, LoseHitpointsEventData, WaveChangeEvent, WaveChangeEventData [@meisong1997][https://github.com/meisong1997]
+- Storage of entry positions and distance vector within WaveManager [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Function to reformat distance vector to get distances for each entrance position
+- Normalization of distances based on furthest distance in vector
+- Sorted map storing distances and entrances in WaveManager
+- Set/getters for world and board coordinates of ActorInterfaces (xcor,ycor,row,col)
 
 ###Changed
 - GameLogic now updates the balance of the player appropriately whether
@@ -19,9 +26,13 @@
 - Buy Tower screen can be navigated to from Playing Screen (and it can return as well)
 - optionsMenuScreen moveRight, Switcher.hpp len and public functions [@KP-HB][https://github.com/KP-HB]
 - Changed OptionSelected event data type from string to integer [@meisong1997][https://github.com/meisong1997]
+- makeWave now sets enemy coordinates at one of the map's entrances [@jeremyelkayam][https://github.com/jeremyelkayam]
+ - This choice is random but biased toward far entrances when a level begins
+ - As a level progresses and more waves arrive, the choice becomes more biased toward closer entrances
+ - This took a lot of work to figure out how to do
 
 
->>>>>>> 7a97589688daa7f1115a91450adc2baacc1b8911
+
 
 [0.1.2]
 ##Added
@@ -43,9 +54,12 @@
 - GameLogic can make a tower creation event (to be handled by board manager and tower manager)
 - GameLogic can be queried for an attempted purchase of a particular tower type
 - BoardManager sets up all obstacles made at the start of the game
-- Now menu screen works and switches between the options
- [@KP-HB][https://github.com/KP-HB]
- - Fully fleshed out generation of wave members [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Now menu screen works and switches between the options [@KP-HB][https://github.com/KP-HB]
+- Number of waves is generated with a normal distribution based on difficulty and level[@jeremyelkayam][https://github.com/jeremyelkayam]
+- Wave members have a random adjustment to their stats (adjustment increases as difficulty progresses)
+- Units are now determined by a wave weight (generated with a normal distribution) and weighted values for each unit
+- WaveManager constants moved to XML file
+
 
 ###Fixed
 - memory issue caused by improperly initialized shared pointers [@andrewkatson][https://github.com/andrewkatson]
