@@ -9,7 +9,7 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> gameLogic = gameLogic;
   this -> buyTower = Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Button_Message")), textLoader);
   somethingChanged = true;
-  this -> setDrawingMaterials();
+  this -> initDrawingMaterials();
 }
 
 /*
@@ -94,7 +94,14 @@ void PlayingScreen::deregisterDelegates(){
 /*
  * Initialize all the things used for drawing (shapes, fonts)
  */
-void PlayingScreen::setDrawingMaterials(){
+void PlayingScreen::initDrawingMaterials(){
+  initBuyTowerButton();
+}
+
+/*
+ * Initialize the data for the BuyTower button
+ */
+void PlayingScreen::initBuyTowerButton(){
   // set the fill color for the button rectangle
   this -> buyTower.setFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Green")),
@@ -127,6 +134,9 @@ void PlayingScreen::setDrawingMaterials(){
 
   //rescale the button and reset it
   (this -> buyTower).setButtonPosition( TOPRIGHT);
+
+  //make the button invisible to begin with
+  (this->buyTower).flipVisibility();
 }
 
 /*
@@ -268,6 +278,11 @@ void PlayingScreen::draw(sf::RenderWindow &window){
  */
 void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
 
+  //if the button is invisible do not draw it
+  if(!buyTower.isCurrentlyVisible()){
+    return;
+  }
+
   //used to make the font local
   string mainFontPath = textLoader -> getString(string("IDS_Black_Berry_Jam"));
 
@@ -290,6 +305,43 @@ void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
  * @param window: the game window to draw on
  */
 void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
+  //the 2d grid with ASCII representations of each tile
+  const vector<vector<int>> floorGrid = gameLogic -> getFloor();
+
+  assert(floorGrid.size()!=0);
+
+  //the size of each tile in x direction
+  const int xTileSize = gameLogic -> getTileXSize();
+  //the size of each tile in y direction
+  const int yTileSize = gameLogic -> getTileYSize();
+
+  //iterate through the 2d grid
+  for(int row = 0; row < floorGrid.size(); row++){
+    for(int col = 0; col < floorGrid.at(0).size(); col++){
+      int floorValue = floorGrid.at(row).at(col);
+      //if this is a path
+      if(floorValue > 0){
+        drawFloorPath(window, row, col, yTileSize, xTileSize, floorValue);
+      }
+      //if this is a floor
+      else if(floorValue < 0){
+        drawFloorTile(window, row, col, yTileSize, xTileSize, floorValue);
+      }
+      //if this is the exit
+      else if(floorGrid.at(row).at(col) == 0){
+        drawFloorExit(window, row, col, yTileSize, xTileSize);
+      }
+    }
+  }
+}
+
+void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int pathValue){
+
+}
+void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int tileValue){
+
+}
+void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize){
 
 }
 

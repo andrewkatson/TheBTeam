@@ -30,7 +30,8 @@ public:
 
   void registerDelegates();
   void deregisterDelegates();
-  void setDrawingMaterials();
+  void initDrawingMaterials();
+  void initBuyTowerButton();
 
   void handleTowerCreation(const EventInterface& event);
   void handleTowerRemove(const EventInterface& event);
@@ -40,6 +41,9 @@ public:
   void draw(sf::RenderWindow& window);
   void drawBuyTowerButton(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);
+  void drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int pathValue);
+  void drawFloorTile(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int tileValue);
+  void drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize);
 
   template <class T>
   void printVector(const vector<vector<T>> &v);

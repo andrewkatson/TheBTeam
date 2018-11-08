@@ -454,3 +454,24 @@ const vector<vector<int>>& GameLogic::getAboveFloor(){
 const vector<vector<int>>& GameLogic::getDistances(){
   return boardManager -> getDistances();
 }
+
+/*
+ * Get the x size of a tile on the map
+ */
+const int GameLogic::getTileXSize(){
+  return gridX;
+}
+
+/*
+ * Get the y size of a tile on the map
+ */
+const int GameLogic::getTileYSize(){
+  return gridY;
+}
+
+/*
+ * @return MapChoices: all customizaton options for this map
+ */
+const MapChoices& GameLogic::getMapCustomizationChoices(){
+  return boardManager -> getMapCustomizationChoices();
+}

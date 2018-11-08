@@ -111,6 +111,11 @@ public:
   const vector<vector<int>>& getAboveFloor();
   const vector<vector<int>>& getDistances();
 
+  const int getTileXSize();
+  const int getTileYSize();
+
+  const MapChoices& getMapCustomizationChoices();
+
 };
 
 #endif

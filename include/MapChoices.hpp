@@ -1,6 +1,7 @@
 #ifndef MAPCHOICES_H
 #define MAPCHOICES_H
 
+enum class cafeteria {Elementary, Middle, High};
 class MapChoices {
 public:
   //number of obstacles on the board

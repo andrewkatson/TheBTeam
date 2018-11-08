@@ -272,6 +272,14 @@ int BoardManager::getXDim(){
   assert(hasMap()== true);
   return mapFactory -> getXDim();
 }
+
+/*
+ * @return MapChoices: all customizaton options for this map
+ */
+MapChoices&  BoardManager::getMapCustomizationChoices(){
+  return mapFactory -> getMapCustomizationChoices();
+}
+
 void BoardManager::setMapCustomizationChoices(MapChoices * newCustomization){
   mapFactory -> setMapCustomizationChoices(newCustomization);
 }

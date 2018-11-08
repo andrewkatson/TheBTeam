@@ -218,6 +218,8 @@ public:
   vector<vector<int>>& getAboveFloor();
   int getXDim();
   int getYDim();
+  MapChoices& getMapCustomizationChoices();
+
   bool isInMap(int row, int col);
 
   void setMapCustomizationChoices(MapChoices * newCustomization);

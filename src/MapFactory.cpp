@@ -1751,6 +1751,13 @@ int MapFactory::getYDim(){
   return yDim;
 }
 
+/*
+ * @return MapChoices: all customizaton options for this map
+ */
+MapChoices& MapFactory::getMapCustomizationChoices(){
+  return *(mapCustomizationChoices.get());
+}
+
 void MapFactory::setMapCustomizationChoices(MapChoices * newCustomization){
   this -> mapCustomizationChoices.reset(newCustomization);
 }

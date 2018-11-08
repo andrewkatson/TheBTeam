@@ -78,6 +78,8 @@ public:
   int getYDim();
   int getXDim();
 
+  MapChoices& getMapCustomizationChoices();
+
   void setMapCustomizationChoices(MapChoices * newCustomization);
   void setMapObstacleChoice(int obstacleChoice);
   void setMapCafeteriaChoice(int cafeteriaChoice);
