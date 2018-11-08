@@ -315,32 +315,38 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
   //the size of each tile in y direction
   const int yTileSize = gameLogic -> getTileYSize();
 
+  //set the rectangle used to draw to be these dimensions
+  sf::RectangleShape floorRect(sf::Vector2f((float)xTileSize,(float) yTileSize));
+
   //iterate through the 2d grid
   for(int row = 0; row < floorGrid.size(); row++){
     for(int col = 0; col < floorGrid.at(0).size(); col++){
       int floorValue = floorGrid.at(row).at(col);
       //if this is a path
       if(floorValue > 0){
-        drawFloorPath(window, row, col, yTileSize, xTileSize, floorValue);
+        drawFloorPath(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
       }
       //if this is a floor
       else if(floorValue < 0){
-        drawFloorTile(window, row, col, yTileSize, xTileSize, floorValue);
+        drawFloorTile(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
       }
       //if this is the exit
       else if(floorGrid.at(row).at(col) == 0){
-        drawFloorExit(window, row, col, yTileSize, xTileSize);
+        drawFloorExit(window, row, col, yTileSize, xTileSize, floorRect);
       }
     }
   }
 }
 
-void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int pathValue){
+void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col,
+  int yTileSize, int xTileSize, int pathValue, sf::RectangleShape& floorRect){
 
 
 
 }
-void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int tileValue){
+void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
+   int yTileSize, int xTileSize, int tileValue, sf::RectangleShape& floorRect){
+
   //the cafeteria choice
   const MapChoices choices = gameLogic -> getMapCustomizationChoices();
   cafeteria cafeteriaChoice =  choices.cafeteriaChoice;
@@ -383,9 +389,22 @@ void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col, in
     alphaComponent = textLoader -> getInteger(string("IDS_1_Floor_Tile_0_Fill_Color_Alpha"));
   }
 
+  //the x and y position of this rectangle
+  float xPos = col * xTileSize;
+  float yPos = row * yTileSize;
 
+  //set the position of the rectangle
+  floorRect.setPosition(xPos, yPos);
+
+  //set the color of the rectangle
+  sf::Color color(redComponent, greenComponent, blueComponent, alphaComponent);
+  floorRect.setFillColor(color);
+
+  //draw the rectangle
+  window.draw(floorRect);
 }
-void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize){
+void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
+   int yTileSize, int xTileSize, sf::RectangleShape& floorRect){
 
 }
 

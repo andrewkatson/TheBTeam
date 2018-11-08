@@ -13,8 +13,6 @@ private:
   //logic of the game. handles mechanics
   //use to access frequently required data (i.e. towers, obstacles, board, units)
   shared_ptr<GameLogic> gameLogic;
-  //rectangle shape used for drawing on the map
-  sf::RectangleShape floorRect;
   //the button to allow us to buy a tower
   Button buyTower;
   //the main font of the game
@@ -41,9 +39,12 @@ public:
   void draw(sf::RenderWindow& window);
   void drawBuyTowerButton(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);
-  void drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int pathValue);
-  void drawFloorTile(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int tileValue);
-  void drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize);
+  void drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize,
+    int xTileSize, int pathValue, sf::RectangleShape& floorRect);
+  void drawFloorTile(sf::RenderWindow& window, int row, int col, int yTileSize,
+     int xTileSize, int tileValue, sf::RectangleShape& floorRect);
+  void drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize,
+     int xTileSize, sf::RectangleShape& floorRect);
 
   template <class T>
   void printVector(const vector<vector<T>> &v);
