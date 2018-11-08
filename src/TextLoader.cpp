@@ -21,7 +21,7 @@ TextLoader::TextLoader(){
  */
 void TextLoader::loadStrings(){
   tinyxml2::XMLDocument doc;
-  doc.LoadFile( "../values/strings.xml" );
+  doc.LoadFile( "../resources/values/strings.xml" );
   tinyxml2::XMLElement * root =  doc.FirstChildElement("strings");
 
   for(tinyxml2::XMLElement* node = root->FirstChildElement("string"); node != NULL; node= node->NextSiblingElement("string")) {
@@ -36,7 +36,7 @@ void TextLoader::loadStrings(){
  */
 void TextLoader::loadInts(){
   tinyxml2::XMLDocument doc;
-  doc.LoadFile( "../values/constants.xml" );
+  doc.LoadFile( "../resources/values/constants.xml" );
   tinyxml2::XMLElement * root =  doc.FirstChildElement("constants")->FirstChildElement("ints");
   int intValue;
 
@@ -56,7 +56,7 @@ void TextLoader::loadInts(){
  */
 void TextLoader::loadDoubles(){
   tinyxml2::XMLDocument doc;
-  doc.LoadFile( "../values/constants.xml" );
+  doc.LoadFile( "../resources/values/constants.xml" );
   tinyxml2::XMLElement * root =  doc.FirstChildElement("constants")->FirstChildElement("floats");
 
   double doubleValue;
