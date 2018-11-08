@@ -2,12 +2,19 @@
 <strings>
 
     <!--Font Paths -->
+    <!--Title Font Path-->
+    <string value="../Fonts/CafВ FranЗoise.otf" id="IDS_Title_Font_Path"> </string>
     <!--Main Font Path -->
-    <string value="../Fonts/PWYummyDonuts.ttf" id="IDS_MFP"> </string>
+    <string value="../Fonts/CookieDough.otf" id="IDS_MFP"> </string>
     <!--Secondary Font Path -->
     <string value="../Fonts/chocolatebar.otf" id="IDS_SFP"> </string>
     <!--Tertiary Font Path-->
     <string value="../Fonts/chocolatebar.otf" id="IDS_TFP"> </string>
+    <!--BlackBerry Jam-->
+    <string value="../Fonts/BlackberryJam.ttf" id="IDS_Black_Berry_Jam"> </string>
+
+    <!--Textures Path-->
+    <string value="../Textures/foodfightmainpic.png" id="IDS_Main_Title_Pic"> </string>
 
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
@@ -105,6 +112,10 @@
 
     <!--Option-->
     <!--TODO FILL IN -->
+
+    <!--MainMenuScreen-->
+    <!--Main Menu Title Text-->
+    <string value="Food Fight" id="IDS_Main_Menu_Title_Text_String"> </string>
 
     <!--PlayingScreen-->
     <!--Buy Tower Button-->

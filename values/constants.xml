@@ -296,6 +296,9 @@
 
   <!--Settings for Screens -->
 
+  <!--Main Menu Screen-->
+  <constant value="60" id="IDS_Main_Menu_Title_Text_Size"> </constant>
+
   <!--Playing Screen -->
   <!--Buy Tower Button-->
   <!--Buy Tower Button Colors -->
@@ -319,7 +322,7 @@
   <!--Buy Tower Outline Thickness-->
   <constant value="1" id="IDS_Buy_Tower_Outline_Thickness"> </constant>
   <!--Buy Tower Outline Text Thickness-->
-  <constant value="2" id="IDS_Buy_Tower_Text_Outline_Thickness"> </constant>
+  <constant value="1" id="IDS_Buy_Tower_Text_Outline_Thickness"> </constant>
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
 

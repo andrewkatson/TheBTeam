@@ -14,6 +14,10 @@ private:
   int numItems;
   vector<sf::Text> screen;
   sf::Font font;
+  sf::Texture mainPicture;
+  sf::Font titleFont;
+  sf::Text title;
+
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //event manager (used to register, deregister from events, and create them)

@@ -1,0 +1,381 @@
+                          FAQ
+
+               Frequently Asked Questions
+
+This document outlines
+----------------------
+
+1 - The nature of shareware
+2 - Support
+3 - Limited warranties
+4 - ASP Ombudsman
+5 - Technical questions, and the answers/tips we came up with
+
+                         -=<*>=-
+
+1 - DEFINITION OF SHAREWARE
+
+Shareware distribution gives users a chance to try software
+before buying it. If you try a Shareware program and continue
+using it, you are expected to register. Individual programs
+differ on details -- some request registration while others
+require it, some specify a maximum trial period. With
+registration, you get anything from the simple right to continue
+using the software to an updated program with printed manual.
+
+Copyright laws apply to both Shareware and commercial software,
+and the copyright holder retains all rights, with a few specific
+exceptions as stated below. Shareware authors are accomplished
+programmers, just like commercial authors, and the programs are
+of comparable quality. (In both cases, there are good programs
+and bad ones!) The main difference is in the method of
+distribution. The author specifically grants the right to copy
+and distribute the software, either to all and sundry or to a
+specific group. For example, some authors require written
+permission before a commercial disk vendor may copy their
+Shareware.
+
+Shareware is a distribution method, not a type of software. You
+should find software that suits your needs and pocketbook,
+whether it's commercial or Shareware. The Shareware system makes
+fitting your needs easier, because you can try before you buy.
+And because the overhead is low, prices are low also. Shareware
+has the ultimate money-back guarantee -- if you don't use the
+product, you don't pay for it.
+
+DISCLAIMER - AGREEMENT
+
+Users of the fonts placed on this disk must accept this disclaimer
+of warranty: "These fonts are supplied as is.  The author disclaims
+all warranties, expressed or implied, including, without limitation,
+the warranties of merchantability and of fitness for any purpose.
+The author assumes no liability for damages, direct or conse-
+quential, which may result from the use of these fonts."
+
+The fonts placed on this disk are registered versions, and should 
+under no circumstance be passed around. They are reserved to your 
+own use, or the company who acquired them.
+
+If you feel like sharing your enthusiasm for our font products, 
+please pass around our shareware evaluation packages, which you can 
+find on Compsuerve, America Online, major BBS, ASP shareware 
+vendors, and on our web site : http://members.aol.com/MatchSoft.
+
+2 - SUPPORT
+
+While we do our best to make sure you enjoy our fonts to their
+fullest, please remember that they are both technical, and artistic
+creations. We will gladly provide support for technical questions. 
+Requests for artistic changes will be taken as suggestions, which 
+implies one should not expect aesthetic touches as part of a normal 
+support. Nevertheless, artistic point of views and suggestions are 
+always welcome, and appreciated.
+
+Before contacting us, please make sure you have read the end of this
+document. It has been written, based on questions asked very
+frequently, by users who requested support. Finding the answer in
+this document will save you time and aggravation.
+
+For practical and financial reasons, we cannot provide phone 
+technical support. You may, however, report any problem at
+(213) 656-4244. We will usually follow-up within 24 hours, 
+by email or fax.
+
+You can also contact us by fax at (310) 338-0908, or by email at
+support@matchfonts.com. Please try to be as specific as possible, 
+in order to get appropriate help. Remind us the name of the font 
+you are using, on which platform (Mac, Windows or OS/2), and the 
+exact nature of the problem. Depending on the complexity of the 
+question, you will receive a reply, usually within 24 hours.
+
+Reported technical bugs will be fixed as rapidly as possible.
+However, given the necessity for tests and verifications, it is
+impossible to give standard time limit. In general, past experiences
+have shown an average response in less than a week. When completed,
+font updates will be sent to the customer who has reported the bug
+by email (or regular mail, if no email is available).
+
+3 - LIMITED WARRANTY
+
+If for any reason the registered version of the font/program was
+provided to you directly by Match Software on a defective media
+(disk), it will be exchanged for a new one at no cost.
+
+If you have suggestions for improving this font/program, we 
+appreciate your comments. It does not mean we will fix or modify the
+font in the way you wish in a given time, or that we must do it in
+any way. However, if we feel the suggestion is appropriate, next
+version of the font may be inspired from these advises.
+
+We decline any responsibility if for any reason this font/program is
+put to bad use in any way. It worked fine on a regular
+configuration, and on a regular printer, with the most usual
+software packages. If, for any reason, it could not work on your
+specific configuration, Match Software cannot be held responsible. 
+As technical combinations are almost infinite, and because systems 
+evolve in ways we cannot predict, it might happen a new system, or a 
+particular configuration, does not work with a font. For instance, 
+because a new version of the system requires a new font format. In 
+general, we will try to keep up with the system versions, and 
+eventually offer upgrades, if possible, but it does not constitute
+an obligation, nor would it be the case if you acquired a set of
+seats cover for your specific car, and require they fit any new car
+you may decide to buy later on.
+
+4 - ASP OMBUDSMAN
+
+This program is produced by a member of the Association of Shareware
+Professionals (ASP).  ASP wants to make sure that the shareware
+principle works for you. If you are unable to resolve a
+shareware-related problem with an ASP member by contacting the
+member directly, ASP may be able to help. The ASP Ombudsman can help
+you resolve a dispute or problem with an ASP member, but does not
+provide technical support for members' products.
+
+Please write to
+     ASP Ombudsman
+     545 Grover Road,
+     Muskegon, MI 49442-9427
+     USA
+     FAX 616-788-2765
+     or send a message to ASP Ombudsman
+     - via CompuServe mail 70007,3536
+     - email 70007.3536@compuserve.com
+
+5 - TECHNICAL QUESTIONS/ANSWERS/TIPS
+
+Here are some questions frequently asked about our fonts, and the 
+answers we where able to come up at the time. You may also want to 
+read the answers, even if you experienced no problem with the 
+present font. As a matter of fact, we have come up with some 
+solutions of our own, which may help you get better results with all 
+your fonts. This list of questions and answers will be regularly 
+updated, in order to spare as much as possible aggravation for our 
+customers. After reading them, please contact us, if anything was
+still bothering you. We will do what we can to help you the best way
+we can. Thank-you for all your reports.
+
+Q: I downloaded your font, but Windows does not want it. It does not
+want to install BABY_TT.ZIP.
+
+A: Before using our shareware packages, you must unpack them with
+the appropriate program. You may find WINZIP on most shareware 
+sites. After unpacking the archive, you will find the BABYFACE.TTF 
+file, which Windows will accept as its own.
+
+Q: How do I install TrueType fonts under Windows ?
+
+A : Open the "Fonts" control pannel, and click "Add". Then, look for 
+the font files (extension *.TTF) where you copied or unpacked them. 
+Select them, and click OK. You may install several fonts at the same
+time, simply by selecting them.  Windows 95 requires a slightly
+different procedure. Open the "Fonts" folder you will find in the
+Control Panel located within "My Computer" icon. Then, simply copy
+the TrueType font into it.
+
+
+Q : I do not find the *.FOT files to install the *.TTF TrueType fonts.
+
+A : this type of file is generated by Windows 3.xx when a new font 
+is installed. In other words, if you use the correct Control Panel 
+procedure to install a new *.TTF file, Windows 3.xx will 
+automatically create the corresponding *.FOT file. Windows 95 does
+not use this type of file at all, and directly takes advantage of
+*.TTF fonts.
+
+
+Q: How do I install PostScript fonts under Windows ?
+
+A : PostScript fonts come with the extension *.PFB and *.PFM, one of 
+each for each font. In order to use them, you first must install 
+Adobe Type Manager (ATM) for Windows. Then, copy *.PFB files in the 
+WINDOWS\PSFONTS directory, and the *.PFM in the WINDOWS\PSFONTS\PFM 
+directory. Then, use the ATM control panel to install the fonts. 
+PostScript fonts offer lots of advantages over their TrueType 
+Windows counterpart, as kerning and more precise printing. If you 
+are serious about desktop publishing, you may want to acquire ATM 
+Windows.  This install process may have changed with newer versions
+of ATM. please refer to the manual of that utility for more details.
+
+Q : Some complex characters do not display normaly with ATM fonts
+
+A : This phenomenon has been reported most often when ATM Type 1 
+fonts of complex character shapes are used with Windows 95. The 
+characters appear on top of each other, and are difficult to read on 
+the screen. They do print perfectly, though. The only way we have 
+found to circumvent this glitch seems to be to first enter the text 
+in a simpler shaped font, for instance Arial, and after entries have
+been verified, select the text you want, and bring it to the desired
+font and attributes.
+
+Q : Under Windows, some characters of a given font do not print at
+all sizes, or show only on screen, or the opposite. This happens
+most often with complex fonts, such as DinosoType, Bujardet
+Vignettes of Nahkt Hieroglyphs. Some characters print as squares,
+when they appear fine on the screen, or the opposite, or both. It
+happens most often when the output is to be made on  a dot-matrix
+printer, would it be impact or ink-jet. It does happen, sometimes,
+though, with laser printers, as well.
+
+A : The problem seems to reside within Windows itself, and the way 
+TrueType is handled. We where unable to get any explanation from 
+Microsoft which could help us understand how to solve the problem.  
+However, as in general this type of fonts are most used on isolated 
+basis (letterheads, titles, etc.), it is possible to use another
+approach :
+- Create a new document under Windows Paint
+- With the TEXT tool, enter the appropriate message
+- Copy the image, and paste it into your word processor or desktop
+publishing software. Of course, if you use more sophisticated tools
+than Windows Paint, like Corel Draw on the PC, the result may be
+better.  Although TrueType fonts may pose this problem, PostScript
+Type 1, even extremely complex, do display and work perfectly under
+Windows with Adobe Type Manager (ATM). If you want do do any type of 
+serious desktop publishing, we strongly recommend you use ATM and 
+PostScript fonts.
+
+
+Q : I do not find the accented characters, or the punctuations. They 
+are not available through my regular keyboard. Why is that ?
+
+A : The free evaluation fonts do not contain punctuations, nor the
+upper-ascii characters, including the accented characters. If you need
+these characters, simply register for the font, and you will receive 
+the registered version, which contains the full set of characters.
+You can register on line on our site, and immediately download the
+registered version, at http://www.matchfonts.com. 
+
+Q : I need a font in a language not yet available.
+
+A : Creating fonts for new languages is not only challenging, it is 
+also culturally very rewarding, very inspiring. We do not always 
+know the language you plan to use. But if you provide us with the 
+proper information, we will use it to create a new font. It is 
+fairly simple : we only need the best representation of the 
+alphabet, character by characters, and eventually it's 
+pronounciation, if it is not a Roman set of letters (Japanese, for
+instance, or Russian are in that case). Call us for more details.
+
+
+Q : I want a font made according to my specifications.
+
+A : If you already have a printout of the desired font, or any 
+graphic representation that we can use to draw the characters, our 
+regular price for designing a new font is very reasonable. If you
+want a creation from scratch, it will be more difficult. Please call
+us for a quotation.
+
+
+Q : How can I obtain a printout of all of your fonts ?
+
+A : Just send us your complete address, and we will gladly send you 
+a documentation showing the diversity of Match Software fonts. You 
+can already find a pretty good representation of our offering, on
+our web site :
+http://members.aol.com/MatchSoft
+
+Q : You must provide thorough phone hot line support for any brand
+and type of computer. If Adobe and others can, why not you ? You
+should be able to be reached 24 hours a day, 7 days a week !
+
+A : We are sorry, with our small operation, not to be able to 
+compete with giants who see more money in 10 minutes than we may be 
+able to earn in one year. However, our prices are lower beyond 
+comparison.  That is also because you are not paying for million 
+dollars advertisement, and plethoric staffs. Besides, we are 
+prepared to fix glitches if any, and gladly accept advises from our 
+customers. Remember, however, that a font is somewhat equivalent to 
+a bumper sticker to an automobile. Please do not ask us to solve the 
+problems generated by your system, no more than you would think 
+about requiring driving lessons from a stickers publisher. We do our 
+best for our fonts to work properly on STANDARD configurations,  
+including STANDARD printers, STANDARD system versions, STANDARD  
+applications, when our fonts are installed through STANDARD 
+procedures.  All that said, we do want to help you benefit from our 
+software products. You can contact us by phone at (213) 656-4244, 
+and leave a message on the voice mail if unfortunately we where not
+able to answer immediately. You can also reach us at any of our
+e-mail address matchsoft@aol.com or on Compuserve 73267,1701.
+
+
+Q : In your Martian font, you placed a dot above the glipnol 
+character, and forgot to put an accent above the weirdoo. It is 
+unforgettable. I am furious and you are just as stupid as a bunch of 
+lunar dogs ! You should be whipped, and give me my money back, too, 
+plus maybe a little extra, because I suffered incredible damage to
+my much sophisticated sense of intellectual properness and inherent
+graceful sophistication.
+
+A : We are sorry not to know Martian as well as such a refined 
+literate as your highness.  Please do not blow your desintegrator at 
+us, poor ridiculous clumsy uneducated filthy computer groomers. More 
+seriously, please consider that ignorance may not be such a crime, 
+after all, and have mercy for the less taught. We all learn all our 
+lives new concepts and new ways. If for any reason we committed a 
+mistake in transcribing your native language, be assured it is not 
+intentional. Please courteously provide us with the proper 
+information, and we will try to make appropriate updates are made, 
+if they are technically possible and logical. All we know of, as 
+humble and insignificant artisans, is the fonts craftsmanship. It is 
+not our fault, then, if the subtleties of a foreign language do not 
+strike us like light over the saint's head.  However, we are bending 
+our knees to the more educated. Thank you for helping us improve.  
+At the present time, our foreign fonts have been thoroughly review 
+d, so they satisfy our customers. Some have helped perfect already 
+very nice fonts. But we will appreciate any additional help !  Any
+report or suggestion is taken very seriously, and usualy fixes are
+carried out through regular updates. All the more reason to
+register, to be able to benefit from these improvements.
+
+
+Q : When I use too many fonts, my printer crashes.
+
+A : Try setting the option "Print TrueType fonts as graphics" in the
+Windows Printer Control panel.
+
+Q : Why do you ask for money for your fonts ? They should be free !
+
+A : There is a strange curse around computer software, these days. 
+Nobody would ever consider getting a movie for nothing, or walking
+into a book store and require a sample for free. For programs,
+however, the matter is quite different. So many people consider
+computer software piracy as a light little mistake, that eventually,
+some may indeed start considering software authors as thieves,
+because they pretend to get a small reward for their job. Some
+luminaries (noticeably around GNU project, or some Internet
+ayatollahs) even have the nerve to play with the very strange notion
+that computer software should only come free, and that any
+commercial distribution, including shareware, has some analogy to a
+rip-off. Fine and good, then, but why do they at the same time
+insist to get paid for their conferencing, or to get royalties from
+their books ? Match Software is a small business based on shareware
+distribution. Anyone can browse at our productions in the same way a
+reader could read book as many times and as completely as wished,
+before actually paying for it. Please do not pirate us. If you feel
+a font is really of use, please register. That small usage fee will
+help us continue creating new original, exclusive and fine fonts for
+you. We sincerely thank all users who have, through their
+registration, helped pay the rent, the phone, and the electricity 
+which powers our equipment to create all these fonts. Please 
+continue to support the shareware concept. It is the only way out of 
+the commercial monopolies. Small software companies are as much a 
+liberty warrant as small book publishers are : without them, big 
+companies would have their way, culturally and financially. Nobody 
+would ever want that to happen !
+
+
+Match Software
+
+8205 Santa Monica Blvd #1-205
+West Hollywood, CA 90046-5912
+(213) 656-4244
+Internet : MatchSoft@aol.com
+Compuserve : 73267,1701
+America Online : MatchSoft
+
+
+
+Acknoledgement : "Match Software" is intellectual property of Match 
+Software. All other intellectual properties, such as Trademark and 
+Brand Names mentionned in this document, belong to their respective 
+holders.

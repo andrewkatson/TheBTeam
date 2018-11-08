@@ -20,6 +20,24 @@ MainMenuScreen::MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX
     //cout << "loaded font!" << endl;
   }
 
+  //get the path for the title font
+  string titleFontPath = textLoader -> getString(string("IDS_Title_Font_Path"));
+
+  //load a font for the title
+  if(!titleFont.loadFromFile(titleFontPath)){
+    cout << "no title font!" << endl;
+  }
+  else{
+
+  }
+
+  //load the main menu picture
+  string titlePicTexturePath = textLoader -> getString(string("IDS_Main_Title_Pic"));
+  if (!mainPicture.loadFromFile(titlePicTexturePath))
+  {
+    cout << "main title not loaded!" << endl;
+  }
+
   this -> initText();
 }
 
@@ -31,20 +49,40 @@ void MainMenuScreen::initText(){
     screen.at(0).setString(string("Play"));
     screen.at(0).setFillColor(sf::Color::Red);
     screen.at(0).setCharacterSize(24);
-    screen.at(0).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 1));
+    screen.at(0).setPosition(sf::Vector2f((windowX / 10)*7, windowY / (numItems + 1) * 1));
     screen.at(1).setString(string("Options"));
     screen.at(1).setCharacterSize(24);
-    screen.at(1).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 2));
+    screen.at(1).setPosition(sf::Vector2f((windowX / 10)*7, windowY / (numItems + 1) * 2));
     screen.at(1).setFillColor(sf::Color::White);
     screen.at(2).setString(string("Exit"));
     screen.at(2).setCharacterSize(24);
-    screen.at(2).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1)*3));
+    screen.at(2).setPosition(sf::Vector2f((windowX / 10)*7, windowY / (numItems + 1)*3));
     screen.at(2).setFillColor(sf::Color::White);
   }
+
+  string mainMenuTitleTextString = textLoader -> getString(string("IDS_Main_Menu_Title_Text_String"));
+  int mainMenuTitleTextSize = textLoader -> getInteger(string("IDS_Main_Menu_Title_Text_Size"));
+
+  //Main Menu Title
+  title.setString(mainMenuTitleTextString);
+  title.setCharacterSize(mainMenuTitleTextSize);
+  title.setPosition(sf::Vector2f((windowX / 20.0)*13.5, windowY / (numItems + 8)));
+  title.setFillColor(sf::Color::White);
 }
 
 void MainMenuScreen::draw(sf::RenderWindow &window){
   window.clear();
+
+  //Draws the main picture
+  sf::RectangleShape mainPictureRect(sf::Vector2f((this->windowX/10)*6, (this->windowY/10)*9));
+  mainPictureRect.setPosition((this->windowX)/35, (this->windowY)/25);
+  mainPictureRect.setTexture(&mainPicture);
+  window.draw(mainPictureRect);
+
+
+  //Write the title text
+  title.setFont(titleFont);
+  window.draw(title);
 
   /*
 
