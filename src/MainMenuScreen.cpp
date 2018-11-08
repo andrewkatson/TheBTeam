@@ -106,7 +106,6 @@ void MainMenuScreen::draw(sf::RenderWindow &window){
 }
 void MainMenuScreen::moveUp()
 {
-  cout << "move down function\n";
 
   //make sure the selected item indicator can ever be outside of the
   //range of options
@@ -124,8 +123,7 @@ void MainMenuScreen::moveUp()
 
 void MainMenuScreen::moveDown()
 {
-  cout << "move down function\n";
-
+  
   selectedItem = selectedItem % numItems;
   screen.at(selectedItem).setFillColor(sf::Color::White);
   selectedItem++;

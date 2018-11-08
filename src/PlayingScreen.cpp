@@ -177,6 +177,10 @@ void PlayingScreen::handleTowerRemove(const EventInterface& event){
  * @param event: event of the key press
  */
 void PlayingScreen::handleKeyPress(const EventInterface& event){
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * KeyPressEvent type which allows us to access variables and methods
@@ -192,6 +196,11 @@ void PlayingScreen::handleKeyPress(const EventInterface& event){
   //get the key string identifier from the data
   string key = kpEventData -> keyID;
 
+  if(key == "B"){
+    shared_ptr<EventInterface> mainMenuState = make_shared<StateChangeEvent>(State::MainMenu, nowInNano);
+
+    this -> eventManager -> queueEvent(mainMenuState);
+  }
 }
 
 /*
