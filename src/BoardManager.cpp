@@ -2,7 +2,7 @@
 
 BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   this -> textLoader = textLoader;
-  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,1,10)));
+  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,10)));
   this -> eventManager = eventManager;
   this -> registerDelegates();
 
@@ -286,7 +286,7 @@ void BoardManager::setMapCustomizationChoices(MapChoices * newCustomization){
 void BoardManager::setMapObstacleChoice(int obstacleChoice){
   mapFactory -> setMapObstacleChoice(obstacleChoice);
 }
-void BoardManager::setMapCafeteriaChoice(int cafeteriaChoice){
+void BoardManager::setMapCafeteriaChoice(cafeteria cafeteriaChoice){
   mapFactory -> setMapCafeteriaChoice(cafeteriaChoice);
 }
 void BoardManager::setMapEntryChoice(int pathEntryChoice){

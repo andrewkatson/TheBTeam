@@ -325,40 +325,44 @@
   <constant value="1" id="IDS_Buy_Tower_Text_Outline_Thickness"> </constant>
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
+
   <!--Floor Tiles-->
+  <!--Number of Types of Floor Tile For Each School -->
+  <constant value="2" id="IDS_Cafeteria_Tile_Types"> </constant>
+
   <!--Floor Tiles 1 in Elementary School-->
-  <constant value="238" id="IDS_1_Floor_Tile_1_Fill_Color_Green"> </constant>
-  <constant value="246" id="IDS_1_Floor_Tile_1_Fill_Color_Red"> </constant>
-  <constant value="238" id="IDS_1_Floor_Tile_1_Fill_Color_Blue"> </constant>
-  <constant value="255" id="IDS_1_Floor_Tile_1_Fill_Color_Alpha"> </constant>
+  <constant value="238" id="IDS_1_Floor_Tile_0_Fill_Color_Red"> </constant>
+  <constant value="246" id="IDS_1_Floor_Tile_0_Fill_Color_Green"> </constant>
+  <constant value="238" id="IDS_1_Floor_Tile_0_Fill_Color_Blue"> </constant>
+  <constant value="255" id="IDS_1_Floor_Tile_0_Fill_Color_Alpha"> </constant>
   <!--Floor Tile 2 in Elementary School-->
-  <constant value="217" id="IDS_1_Floor_Tile_2_Fill_Color_Red"> </constant>
-  <constant value="211" id="IDS_1_Floor_Tile_2_Fill_Color_Green"> </constant>
-  <constant value="223" id="IDS_1_Floor_Tile_2_Fill_Color_Blue"> </constant>
-  <constant value="255" id="IDS_1_Floor_Tile_2_Fill_Color_Alpha"> </constant>
+  <constant value="217" id="IDS_1_Floor_Tile_1_Fill_Color_Red"> </constant>
+  <constant value="211" id="IDS_1_Floor_Tile_1_Fill_Color_Green"> </constant>
+  <constant value="223" id="IDS_1_Floor_Tile_1_Fill_Color_Blue"> </constant>
+  <constant value="255" id="IDS_1_Floor_Tile_1_Fill_Color_Alpha"> </constant>
   <!--Floor Tile 1 in Middle School-->
-  <constant value="243" id="IDS_2_Floor_Tile_1_Fill_Color_Red"> </constant>
-  <constant value="205" id="IDS_2_Floor_Tile_1_Fill_Color_Green"> </constant>
-  <constant value="233" id="IDS_2_Floor_Tile_1_Fill_Color_Blue"> </constant>
-  <constant value="255" id="IDS_2_Floor_Tile_1_Fill_Color_Alpha"> </constant>
+  <constant value="243" id="IDS_2_Floor_Tile_0_Fill_Color_Red"> </constant>
+  <constant value="205" id="IDS_2_Floor_Tile_0_Fill_Color_Green"> </constant>
+  <constant value="233" id="IDS_2_Floor_Tile_0_Fill_Color_Blue"> </constant>
+  <constant value="255" id="IDS_2_Floor_Tile_0_Fill_Color_Alpha"> </constant>
 
   <!--Floor Tile 2 in Middle School-->
-  <constant value="208" id="IDS_2_Floor_Tile_2_Fill_Color_Red"> </constant>
-  <constant value="208" id="IDS_2_Floor_Tile_2_Fill_Color_Green"> </constant>
-  <constant value="208" id="IDS_2_Floor_Tile_2_Fill_Color_Blue"> </constant>
-  <constant value="255" id="IDS_2_Floor_Tile_2_Fill_Color_Alpha"> </constant>
+  <constant value="208" id="IDS_2_Floor_Tile_1_Fill_Color_Red"> </constant>
+  <constant value="208" id="IDS_2_Floor_Tile_1_Fill_Color_Green"> </constant>
+  <constant value="208" id="IDS_2_Floor_Tile_1_Fill_Color_Blue"> </constant>
+  <constant value="255" id="IDS_2_Floor_Tile_1_Fill_Color_Alpha"> </constant>
 
   <!--Floor Tile 1 in High School -->
-  <constant value="183" id="IDS_3_Floor_Tile_1_Fill_Color_Red"> </constant>
-  <constant value="219" id="IDS_3_Floor_Tile_1_Fill_Color_Green"> </constant>
-  <constant value="200" id="IDS_3_Floor_Tile_1_Fill_Color_Blue"> </constant>
-  <constant value="255" id="IDS_3_Floor_Tile_1_Fill_Color_Alpha"> </constant>
+  <constant value="183" id="IDS_3_Floor_Tile_0_Fill_Color_Red"> </constant>
+  <constant value="219" id="IDS_3_Floor_Tile_0_Fill_Color_Green"> </constant>
+  <constant value="200" id="IDS_3_Floor_Tile_0_Fill_Color_Blue"> </constant>
+  <constant value="255" id="IDS_3_Floor_Tile_0_Fill_Color_Alpha"> </constant>
 
   <!--Floor Tile 2 in High School-->
-  <constant value="245" id="IDS_3_Floor_Tile_2_Fill_Color_Red"> </constant>
-  <constant value="239" id="IDS_3_Floor_Tile_2_Fill_Color_Green"> </constant>
-  <constant value="226" id="IDS_3_Floor_Tile_2_Fill_Color_Blue"> </constant>
-  <constant value="255" id="IDS_3_Floor_Tile_2_Fill_Color_Alpha"> </constant>
+  <constant value="245" id="IDS_3_Floor_Tile_1_Fill_Color_Red"> </constant>
+  <constant value="239" id="IDS_3_Floor_Tile_1_Fill_Color_Green"> </constant>
+  <constant value="226" id="IDS_3_Floor_Tile_1_Fill_Color_Blue"> </constant>
+  <constant value="255" id="IDS_3_Floor_Tile_1_Fill_Color_Alpha"> </constant>
   <!--Path Tiles-->
   <!--Path Tile 1 -->
   <constant value="118" id="IDS_Path_Tile_1_Fill_Color_Red"> </constant>

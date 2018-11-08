@@ -337,8 +337,52 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
 
 void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int pathValue){
 
+
+
 }
 void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize, int tileValue){
+  //the cafeteria choice
+  const MapChoices choices = gameLogic -> getMapCustomizationChoices();
+  cafeteria cafeteriaChoice =  choices.cafeteriaChoice;
+
+  //the number of tile types for each cafeteria level
+  int numTileTypes = textLoader -> getInteger(string("IDS_Cafeteria_Tile_Types"));
+
+  assert(numTileTypes != -1);
+
+  //the remainder will determine which version of a tile we look for
+  int tileVersion = ((-1)*tileValue)%numTileTypes;
+
+  assert(tileVersion >=0);
+
+  //the string built from the cafeteria choice and tile version
+  string tileTypeBase = "IDS_" + to_string((int)cafeteriaChoice) + "_Floor_Tile_" + to_string(tileVersion) + "_Fill_Color_";
+
+
+  //check if the tile exists
+  int checkTileColorValue = textLoader -> getInteger(tileTypeBase +string("Red"));
+
+  //hold our rgba values for this tile
+  int redComponent;
+  int greenComponent;
+  int blueComponent;
+  int alphaComponent;
+
+  //if this was an actual tile version
+  if(checkTileColorValue != -1){
+    redComponent = textLoader -> getInteger(tileTypeBase + string("Red"));
+    greenComponent = textLoader -> getInteger(tileTypeBase + string("Green"));
+    blueComponent = textLoader -> getInteger(tileTypeBase + string("Blue"));
+    alphaComponent = textLoader -> getInteger(tileTypeBase + string("Alpha"));
+  }
+  //otherwise we assume the default settings for a tile
+  else{
+    redComponent = textLoader -> getInteger(string("IDS_1_Floor_Tile_0_Fill_Color_Red"));
+    greenComponent = textLoader -> getInteger(string("IDS_1_Floor_Tile_0_Fill_Color_Green"));
+    blueComponent = textLoader -> getInteger(string("IDS_1_Floor_Tile_0_Fill_Color_Blue"));
+    alphaComponent = textLoader -> getInteger(string("IDS_1_Floor_Tile_0_Fill_Color_Alpha"));
+  }
+
 
 }
 void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize, int xTileSize){

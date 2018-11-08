@@ -224,7 +224,7 @@ public:
 
   void setMapCustomizationChoices(MapChoices * newCustomization);
   void setMapObstacleChoice(int obstacleChoice);
-  void setMapCafeteriaChoice(int cafeteriaChoice);
+  void setMapCafeteriaChoice(cafeteria cafeteriaChoice);
   void setMapEntryChoice(int pathEntryChoice);
 
   template <class T>

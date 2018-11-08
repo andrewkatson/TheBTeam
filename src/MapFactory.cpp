@@ -35,9 +35,9 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices){
  * the minimum size is 6x6
  */
 void MapFactory::generateDimensions(){
-  int xDim = mapCustomizationChoices -> cafeteriaChoice * 6;
-  int yDim = mapCustomizationChoices -> cafeteriaChoice * 6;
-  minimumInvisibleObstacles =  (xDim*yDim)/10;
+  int xDim = (int)(mapCustomizationChoices -> cafeteriaChoice) * 6;
+  int yDim = (int)(mapCustomizationChoices -> cafeteriaChoice) * 6;
+  minimumInvisibleObstacles =  (xDim*yDim)/5;
 
   //checks to ensure that the dimensions are never negative or 0
   if(xDim <= 0){
@@ -70,7 +70,7 @@ void MapFactory::generateMap(){
 
     //TODO remove when done checking grids
     //this -> printVector(this -> paths);
-    //this -> printVector(this -> unavailableSpots);
+    this -> printVector(this -> unavailableSpots);
     //this -> printVector(this -> distances);
     //this -> printVector(this -> floorGrid);
     //this -> printVector(this -> aboveFloorGrid);
@@ -635,10 +635,10 @@ void MapFactory::makeFloor(){
     for(int col = 0; col < xDim; col++){
       if(floorGrid.at(row).at(col) != 0){
         if(col % 2 == 0){
-          floorGrid.at(row).at(col) = 2 * (mapCustomizationChoices -> cafeteriaChoice - 1) - 1;
+          floorGrid.at(row).at(col) = 2 * ((int)(mapCustomizationChoices -> cafeteriaChoice) - 1) - 1;
         }
         else{
-          floorGrid.at(row).at(col) = 2 * (mapCustomizationChoices -> cafeteriaChoice - 1) - 2;
+          floorGrid.at(row).at(col) = 2 * ((int)(mapCustomizationChoices -> cafeteriaChoice) - 1) - 2;
         }
       }
     }
@@ -1245,8 +1245,8 @@ void MapFactory::makeObstacles(){
   int placedInvisibleObstacles = 0;
   int possiblePlacements = countPossibleObstaclePositions();
 
-  int randRowChosen = (int) randomVariates -> Equilikely(1, yDim-2);
-  int randColChosen = (int) randomVariates -> Equilikely(1, xDim-2);
+  int randRowChosen = (int) randomVariates -> Equilikely(0, yDim-1);
+  int randColChosen = (int) randomVariates -> Equilikely(0, xDim-1);
 
   //place obstacles until we have hit the specified number
   //or there are no more spaces
@@ -1254,8 +1254,8 @@ void MapFactory::makeObstacles(){
         placedObstacles < possiblePlacements){
 
     while(unavailableSpots.at(randRowChosen).at(randColChosen) == 1){
-      randRowChosen = (int) randomVariates -> Equilikely(1, yDim-2);
-      randColChosen = (int) randomVariates -> Equilikely(1, xDim-2);
+      randRowChosen = (int) randomVariates -> Equilikely(0, yDim-1);
+      randColChosen = (int) randomVariates -> Equilikely(0, xDim-1);
     }
 
     //if there is already an obstacle there then do not place one
@@ -1311,8 +1311,8 @@ void MapFactory::makeObstacles(){
  */
  int MapFactory::countPossibleObstaclePositions(){
    int count = 0;
-   for(int row = 1; row < yDim-1; row++){
-     for(int col = 1; col < xDim-1; col++){
+   for(int row = 0; row < yDim; row++){
+     for(int col = 0; col < xDim; col++){
        if(unavailableSpots.at(row).at(col) != 1){
          count++;
        }
@@ -1453,13 +1453,14 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
   unavailableSpots.at(row).at(col) = 1;
   currentOpenSpaces--;
 
+
   int rowMinus = row - 1;
   int rowPlus = row + 1;
   int colMinus = col - 1;
   int colPlus = col + 1;
 
   //value that the blocked path has to be higher than for a horizontal or vertical to be blocked
-  int normalThreshold = (int) randomVariates -> Equilikely(0, maxVal);
+  int normalThreshold = (int) randomVariates -> Equilikely(0, maxVal/2);
   //value tha the blocked path has to higher than for a diagonal to be blocked
   int diagonalThreshold  = (int) randomVariates -> Equilikely(0, maxVal/2);
 
@@ -1470,21 +1471,21 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
 
   if(colMinus >= 0){
     //left
-    if(blockedSides.at(0) > normalThreshold){
+    if(blockedSides.at(0) > normalThreshold && unavailableSpots.at(row).at(colMinus) != 1){
       unavailableSpots.at(row).at(colMinus) = 1;
       currentOpenSpaces--;
     }
 
     //top left diagonal
     if(rowMinus >= 0){
-      if(blockedSides.at(4) > diagonalThreshold){
+      if(blockedSides.at(4) > diagonalThreshold && unavailableSpots.at(rowMinus).at(colMinus) != 1){
         unavailableSpots.at(rowMinus).at(colMinus) = 1;
         currentOpenSpaces--;
       }
     }
     //bottom left diagonal
     if(rowPlus < yDim){
-      if(blockedSides.at(5) > diagonalThreshold){
+      if(blockedSides.at(5) > diagonalThreshold && unavailableSpots.at(rowPlus).at(colMinus) != 1){
         unavailableSpots.at(rowPlus).at(colMinus) = 1;
         currentOpenSpaces--;
       }
@@ -1492,21 +1493,21 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
   }
   if(colPlus < xDim){
     //right
-    if(blockedSides.at(1) > normalThreshold){
+    if(blockedSides.at(1) > normalThreshold && unavailableSpots.at(row).at(colPlus) != 1){
       unavailableSpots.at(row).at(colPlus) = 1;
       currentOpenSpaces--;
     }
 
     //top right diagonal
     if(rowMinus >= 0){
-      if(blockedSides.at(6) > diagonalThreshold){
+      if(blockedSides.at(6) > diagonalThreshold && unavailableSpots.at(rowMinus).at(colPlus) != 1){
         unavailableSpots.at(rowMinus).at(colPlus) = 1;
         currentOpenSpaces--;
       }
     }
     //bottom right diagonal
     if(rowPlus < yDim){
-      if(blockedSides.at(7) > diagonalThreshold){
+      if(blockedSides.at(7) > diagonalThreshold && unavailableSpots.at(rowPlus).at(colPlus) != 1){
         unavailableSpots.at(rowPlus).at(colPlus) = 1;
         currentOpenSpaces--;
       }
@@ -1514,14 +1515,14 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
   }
   if(rowMinus >= 0){
     //top
-    if(blockedSides.at(2) > normalThreshold){
+    if(blockedSides.at(2) > normalThreshold && unavailableSpots.at(rowMinus).at(col) != 1){
       unavailableSpots.at(rowMinus).at(col) = 1;
       currentOpenSpaces--;
     }
   }
   if(rowPlus < yDim){
     //bottom
-    if(blockedSides.at(3) > normalThreshold){
+    if(blockedSides.at(3) > normalThreshold && unavailableSpots.at(rowPlus).at(col) != 1){
       unavailableSpots.at(rowPlus).at(col) = 1;
       currentOpenSpaces--;
     }
@@ -1586,14 +1587,14 @@ int MapFactory::markUnavailableSpotsNearObstacle(int row, int col, int currentOp
  */
 void MapFactory::placeRemainingInvisibleObstacles(int placedInvisibleObstacles,
                                                 int possiblePlacements){
-  int randRowChosen = (int) randomVariates -> Equilikely(1, yDim-2);
-  int randColChosen = (int) randomVariates -> Equilikely(1, xDim-2);
+  int randRowChosen = (int) randomVariates -> Equilikely(0, yDim-1);
+  int randColChosen = (int) randomVariates -> Equilikely(0, xDim-1);
   //if there are still spots on the board to place obstacles and
   //we still have more invisible obstacles to place
   while(placedInvisibleObstacles < minimumInvisibleObstacles && possiblePlacements > 0){
     while(unavailableSpots.at(randRowChosen).at(randColChosen) == 1){
-      randRowChosen = (int) randomVariates -> Equilikely(1, yDim-2);
-      randColChosen = (int) randomVariates -> Equilikely(1, xDim-2);
+      randRowChosen = (int) randomVariates -> Equilikely(0, yDim-1);
+      randColChosen = (int) randomVariates -> Equilikely(0, xDim-1);
     }
     aboveFloorGrid.at(randRowChosen).at(randColChosen) = -2;
     unavailableSpots.at(randRowChosen).at(randColChosen) = 1;
@@ -1764,7 +1765,7 @@ void MapFactory::setMapCustomizationChoices(MapChoices * newCustomization){
 void MapFactory::setMapObstacleChoice(int obstacleChoice){
   mapCustomizationChoices -> obstacleChoice = obstacleChoice;
 }
-void MapFactory::setMapCafeteriaChoice(int cafeteriaChoice){
+void MapFactory::setMapCafeteriaChoice(cafeteria cafeteriaChoice){
   mapCustomizationChoices -> cafeteriaChoice = cafeteriaChoice;
 }
 void MapFactory::setMapEntryChoice(int pathEntryChoice){
