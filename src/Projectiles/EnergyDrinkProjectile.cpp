@@ -1,4 +1,4 @@
-#include "../include/Projectiles/EnergyDrinkProjectile.hpp"
+#include "Projectiles/EnergyDrinkProjectile.hpp"
 
 EnergyDrinkProjectile::EnergyDrinkProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_ED_HP"));;

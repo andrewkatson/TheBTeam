@@ -1,4 +1,4 @@
-#include "../include/Units/WaffleFryUnit.hpp"
+#include "Units/WaffleFryUnit.hpp"
 
 WaffleFryUnit::WaffleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : MeleeUnit(eventManager, textLoader){
   this->hitpoints=textLoader->getInteger(string("IDS_WF_HP"));;

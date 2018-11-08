@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/SlushieProjectile.hpp"
+#include "../Projectiles/SlushieProjectile.hpp"
 class Slushie : public RangeTower{
 public:
   Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

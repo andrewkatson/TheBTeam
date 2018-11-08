@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/MiniMMSProjectile.hpp"
+#include "../Projectiles/MiniMMSProjectile.hpp"
 class MiniMMS : public RangeTower{
 public:
   MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

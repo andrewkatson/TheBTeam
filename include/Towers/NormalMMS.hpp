@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/NormalMMSProjectile.hpp"
+#include "../Projectiles/NormalMMSProjectile.hpp"
 class NormalMMS : public RangeTower{
 public:
   NormalMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

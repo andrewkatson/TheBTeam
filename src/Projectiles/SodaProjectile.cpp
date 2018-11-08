@@ -1,4 +1,4 @@
-#include "../include/Projectiles/SodaProjectile.hpp"
+#include "Projectiles/SodaProjectile.hpp"
 
 SodaProjectile::SodaProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints =  textLoader->getInteger(string("IDS_SO_HP"));;

@@ -1,5 +1,5 @@
 
-#include "../include/Events/OptionSelectedEvent.hpp"
+#include "Events/OptionSelectedEvent.hpp"
 
 const EventType OptionSelectedEvent::eventType = EventType(&OptionSelectedEvent::eventType, string("OptionSelectedEvent"));
 

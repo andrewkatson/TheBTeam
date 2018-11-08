@@ -1,5 +1,5 @@
 
-#include "../include/Events/WaveChangeEvent.hpp"
+#include "Events/WaveChangeEvent.hpp"
 
 const EventType WaveChangeEvent::eventType = EventType(&WaveChangeEvent::eventType, string("WaveChangeEvent"));
 

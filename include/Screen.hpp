@@ -10,11 +10,11 @@
 #include "EventManager.hpp"
 #include "GameState.hpp"
 #include "GameLogic.hpp"
-#include "../include/Events/KeyPressEvent.hpp"
-#include "../include/Events/MousePressEvent.hpp"
-#include "../include/Events/StateChangeEvent.hpp"
-#include "../include/Events/TowerCreationEvent.hpp"
-#include "../include/Events/TowerRemoveEvent.hpp"
+#include "Events/KeyPressEvent.hpp"
+#include "Events/MousePressEvent.hpp"
+#include "Events/StateChangeEvent.hpp"
+#include "Events/TowerCreationEvent.hpp"
+#include "Events/TowerRemoveEvent.hpp"
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;

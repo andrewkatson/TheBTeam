@@ -1,4 +1,4 @@
-#include "../include/Events/TowerCreationEventData.hpp"
+#include "Events/TowerCreationEventData.hpp"
 /*
  * container for the data held by a tower creation event
  * @author Andrew Katson

@@ -1,7 +1,7 @@
 #pragma once
 #include "TextLoader.hpp"
 #include "MeleeTower.hpp"
-#include "../include/Units/NormalFryUnit.hpp"
+#include "../Units/NormalFryUnit.hpp"
 
 class NormalFry : public MeleeTower{
 private:

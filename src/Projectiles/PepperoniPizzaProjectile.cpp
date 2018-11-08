@@ -1,4 +1,4 @@
-#include "../include/Projectiles/PepperoniPizzaProjectile.hpp"
+#include "Projectiles/PepperoniPizzaProjectile.hpp"
 PepperoniPizzaProjectile::PepperoniPizzaProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_PP_HP"));;
   this -> damage = textLoader->getInteger(string("IDS_PP_DM"));;

@@ -1,4 +1,4 @@
-#include "../include/Towers/EnergyDrink.hpp"
+#include "Towers/EnergyDrink.hpp"
 
 EnergyDrink::EnergyDrink(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader) {
   this -> towerTypeID = towerTypeID;

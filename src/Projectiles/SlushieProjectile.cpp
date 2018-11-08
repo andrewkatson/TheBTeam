@@ -1,4 +1,4 @@
-#include "../include/Projectiles/SlushieProjectile.hpp"
+#include "Projectiles/SlushieProjectile.hpp"
 
 SlushieProjectile::SlushieProjectile(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_SL_HP"));;

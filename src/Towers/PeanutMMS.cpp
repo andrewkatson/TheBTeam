@@ -1,4 +1,4 @@
-#include "../include/Towers/PeanutMMS.hpp"
+#include "Towers/PeanutMMS.hpp"
 
 PeanutMMS::PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;

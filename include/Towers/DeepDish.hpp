@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/DeepDishProjectile.hpp"
+#include "../Projectiles/DeepDishProjectile.hpp"
 class DeepDish : public RangeTower{
 public:
   DeepDish(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

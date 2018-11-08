@@ -1,4 +1,4 @@
-#include "../include/Projectiles/MiniMMSProjectile.hpp"
+#include "Projectiles/MiniMMSProjectile.hpp"
 
 MiniMMSProjectile::MiniMMSProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_MMM_HP"));;

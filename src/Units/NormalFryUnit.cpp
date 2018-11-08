@@ -1,4 +1,4 @@
-#include "../include/Units/NormalFryUnit.hpp"
+#include "Units/NormalFryUnit.hpp"
 NormalFryUnit::NormalFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : MeleeUnit(eventManager, textLoader){
   this->hitpoints=textLoader->getInteger(string("IDS_NF_HP"));;
   this -> maxHitpoints=hitpoints;

@@ -1,4 +1,4 @@
-#include "../include/Events/TowerRemoveEventData.hpp"
+#include "Events/TowerRemoveEventData.hpp"
 
 /*
  * container for the data held by a tower remove event

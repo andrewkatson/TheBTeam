@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/PepperoniPizzaProjectile.hpp"
+#include "../Projectiles/PepperoniPizzaProjectile.hpp"
 class PepperoniPizza : public RangeTower{
 public:
   PepperoniPizza(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

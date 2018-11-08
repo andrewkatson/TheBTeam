@@ -10,28 +10,28 @@
 #define TOWERMANAGER_H
 #include "TowerInterface.hpp"
 #include "TextLoader.hpp"
-#include "../include/Towers/CheesePizza.hpp"
-#include "../include/Towers/CrinkleFry.hpp"
-#include "../include/Towers/DeepDish.hpp"
-#include "../include/Towers/EnergyDrink.hpp"
-#include "../include/Towers/Gravy.hpp"
-#include "../include/Towers/MeatLovers.hpp"
-#include "../include/Towers/MiniMMS.hpp"
-#include "../include/Towers/NormalFry.hpp"
-#include "../include/Towers/NormalMMS.hpp"
-#include "../include/Towers/PeanutButterMMS.hpp"
-#include "../include/Towers/PeanutMMS.hpp"
-#include "../include/Towers/PepperoniPizza.hpp"
-#include "../include/Towers/Slushie.hpp"
-#include "../include/Towers/Soda.hpp"
-#include "../include/Towers/SpicyFry.hpp"
-#include "../include/Towers/WaffleFry.hpp"
-#include "../include/Towers/NotATower.hpp"
-#include "../include/Obstacles/CafeteriaTable.hpp"
-#include "../include/Obstacles/TrashCan.hpp"
+#include "Towers/CheesePizza.hpp"
+#include "Towers/CrinkleFry.hpp"
+#include "Towers/DeepDish.hpp"
+#include "Towers/EnergyDrink.hpp"
+#include "Towers/Gravy.hpp"
+#include "Towers/MeatLovers.hpp"
+#include "Towers/MiniMMS.hpp"
+#include "Towers/NormalFry.hpp"
+#include "Towers/NormalMMS.hpp"
+#include "Towers/PeanutButterMMS.hpp"
+#include "Towers/PeanutMMS.hpp"
+#include "Towers/PepperoniPizza.hpp"
+#include "Towers/Slushie.hpp"
+#include "Towers/Soda.hpp"
+#include "Towers/SpicyFry.hpp"
+#include "Towers/WaffleFry.hpp"
+#include "Towers/NotATower.hpp"
+#include "Obstacles/CafeteriaTable.hpp"
+#include "Obstacles/TrashCan.hpp"
 #include "EventManager.hpp"
-#include "../include/Events/TowerCreationEvent.hpp"
-#include "../include/Events/TowerRemoveEvent.hpp"
+#include "Events/TowerCreationEvent.hpp"
+#include "Events/TowerRemoveEvent.hpp"
 #include <vector>
 #include <unordered_map>
 #include <functional>
@@ -79,7 +79,7 @@ public:
 
   void setDimensions(int xDim, int yDim);
   void setGridDimensions(int xGrid, int yGrid);
-  
+
   int getTowerPrice(int row, int col);
   int getTowerPrice(string towerTypeID);
 

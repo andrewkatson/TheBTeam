@@ -3,8 +3,8 @@
 #include "MapFactory.hpp"
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
-#include "../include/Events/TowerCreationEvent.hpp"
-#include "../include/Events/TowerRemoveEvent.hpp"
+#include "Events/TowerCreationEvent.hpp"
+#include "Events/TowerRemoveEvent.hpp"
 #include <functional>
 #include <assert.h>
 

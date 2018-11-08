@@ -1,4 +1,4 @@
-#include "../include/Towers/CrinkleFry.hpp"
+#include "Towers/CrinkleFry.hpp"
 
 
 CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits, shared_ptr<EventManager> eventManager) : MeleeTower(eventManager, textLoader){

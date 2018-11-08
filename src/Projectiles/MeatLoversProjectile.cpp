@@ -1,4 +1,4 @@
-#include "../include/Projectiles/MeatLoversProjectile.hpp"
+#include "Projectiles/MeatLoversProjectile.hpp"
 MeatLoversProjectile::MeatLoversProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager,textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_ML_HP"));;
   this -> damage = textLoader->getInteger(string("IDS_ML_DM"));;

@@ -1,4 +1,4 @@
-#include "../include/Events/KeyPressEvent.hpp"
+#include "Events/KeyPressEvent.hpp"
 /*
  *  Event generated when a key is pressed by the user
  * @author Andrew Katson

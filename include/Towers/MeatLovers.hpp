@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/MeatLoversProjectile.hpp"
+#include "../Projectiles/MeatLoversProjectile.hpp"
 class MeatLovers : public RangeTower{
 public:
   MeatLovers(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

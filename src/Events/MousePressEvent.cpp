@@ -1,4 +1,4 @@
-#include "../include/Events/MousePressEvent.hpp"
+#include "Events/MousePressEvent.hpp"
 /*
  *  Event generated when the mouse is pressed by the user
  * @author Andrew Katson

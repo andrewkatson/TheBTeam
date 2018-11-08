@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/EnergyDrinkProjectile.hpp"
+#include "../Projectiles/EnergyDrinkProjectile.hpp"
 class EnergyDrink : public RangeTower{
 public:
   EnergyDrink(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

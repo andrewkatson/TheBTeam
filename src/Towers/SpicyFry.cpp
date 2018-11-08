@@ -1,4 +1,4 @@
-#include "../include/Towers/SpicyFry.hpp"
+#include "Towers/SpicyFry.hpp"
 SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits, shared_ptr<EventManager> eventManager) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;

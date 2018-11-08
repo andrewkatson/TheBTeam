@@ -1,4 +1,4 @@
-#include "../include/Towers/Gravy.hpp"
+#include "Towers/Gravy.hpp"
 
 Gravy::Gravy(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;

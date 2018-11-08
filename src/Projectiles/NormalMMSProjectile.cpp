@@ -1,4 +1,4 @@
-#include "../include/Projectiles/NormalMMSProjectile.hpp"
+#include "Projectiles/NormalMMSProjectile.hpp"
 NormalMMSProjectile::NormalMMSProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_NMM_HP"));;
   this -> damage = textLoader->getInteger(string("IDS_NMM_DM"));;

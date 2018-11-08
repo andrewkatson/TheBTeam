@@ -16,7 +16,7 @@
 #include "EventInterface.hpp"
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
-#include "../include/Events/ActorDestroyedEvent.hpp"
+#include "Events/ActorDestroyedEvent.hpp"
 
 using std::string;
 using std::make_shared;

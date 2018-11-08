@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/SodaProjectile.hpp"
+#include "../Projectiles/SodaProjectile.hpp"
 class Soda : public RangeTower{
 public:
   Soda(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

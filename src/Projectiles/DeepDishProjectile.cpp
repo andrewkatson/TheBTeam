@@ -1,4 +1,4 @@
-#include "../include/Projectiles/DeepDishProjectile.hpp"
+#include "Projectiles/DeepDishProjectile.hpp"
 
 DeepDishProjectile::DeepDishProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_DD_HP"));;

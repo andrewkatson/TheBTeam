@@ -1,5 +1,5 @@
 
-#include "../include/Events/ActorAttackEvent.hpp"
+#include "Events/ActorAttackEvent.hpp"
 
 const EventType ActorAttackEvent::eventType = EventType(&ActorAttackEvent::eventType, string("ActorAttackEvent"));
 

@@ -1,5 +1,5 @@
 
-#include "../include/Events/LoseHitpointsEvent.hpp"
+#include "Events/LoseHitpointsEvent.hpp"
 
 const EventType LoseHitpointsEvent::eventType = EventType(&LoseHitpointsEvent::eventType, string("LoseHitpointsEvent"));
 

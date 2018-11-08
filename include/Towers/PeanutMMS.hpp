@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RangeTower.hpp"
-#include "../include/Projectiles/PeanutMMSProjectile.hpp"
+#include "../Projectiles/PeanutMMSProjectile.hpp"
 class PeanutMMS : public RangeTower{
 public:
   PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

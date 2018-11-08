@@ -1,4 +1,4 @@
-#include "../include/Units/SpicyFryUnit.hpp"
+#include "Units/SpicyFryUnit.hpp"
 SpicyFryUnit::SpicyFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : MeleeUnit(eventManager, textLoader){
   this->hitpoints=textLoader->getInteger(string("IDS_SF_HP"));;
   this -> maxHitpoints=hitpoints;

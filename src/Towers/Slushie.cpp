@@ -1,4 +1,4 @@
-#include "../include/Towers/Slushie.hpp"
+#include "Towers/Slushie.hpp"
 
 Slushie::Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;

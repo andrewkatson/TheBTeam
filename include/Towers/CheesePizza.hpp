@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RangeTower.hpp"
-#include "../include/Projectiles/CheesePizzaProjectile.hpp"
+#include "../Projectiles/CheesePizzaProjectile.hpp"
 class CheesePizza : public RangeTower{
 public:
   CheesePizza(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

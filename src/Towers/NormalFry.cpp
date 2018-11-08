@@ -1,4 +1,4 @@
-#include "../include/Towers/NormalFry.hpp"
+#include "Towers/NormalFry.hpp"
 
 
 

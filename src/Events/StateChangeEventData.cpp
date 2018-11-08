@@ -1,4 +1,4 @@
-#include "../include/Events/StateChangeEventData.hpp"
+#include "Events/StateChangeEventData.hpp"
 
 /*
  * container for the data held by a mouse press event

@@ -1,4 +1,4 @@
-#include "../include/Events/StateChangeEvent.hpp"
+#include "Events/StateChangeEvent.hpp"
 /*
  *  Event generated when the mouse is pressed by the user
  * @author Andrew Katson

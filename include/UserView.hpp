@@ -52,6 +52,7 @@ public:
 
   void registerEvents();
 
+  void initText();
   void initScreens();
 
   void updateState();

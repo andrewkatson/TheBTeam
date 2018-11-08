@@ -17,9 +17,9 @@
 #include "WaveManager.hpp"
 #include "ProjectileManager.hpp"
 #include "EventManager.hpp"
-#include "../include/Events/KeyPressEvent.hpp"
-#include "../include/Events/MousePressEvent.hpp"
-#include "../include/Events/StateChangeEvent.hpp"
+#include "Events/KeyPressEvent.hpp"
+#include "Events/MousePressEvent.hpp"
+#include "Events/StateChangeEvent.hpp"
 #include "EventType.hpp"
 #include <chrono>
 #include <random>

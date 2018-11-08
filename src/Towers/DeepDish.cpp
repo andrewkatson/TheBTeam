@@ -1,4 +1,4 @@
-#include "../include/Towers/DeepDish.hpp"
+#include "Towers/DeepDish.hpp"
 
 DeepDish::DeepDish(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader) {
   this -> towerTypeID = towerTypeID;

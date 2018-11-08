@@ -1,4 +1,4 @@
-#include "../include/Events/MousePressEventData.hpp"
+#include "Events/MousePressEventData.hpp"
 
 /*
  * container for the data held by a mouse press event

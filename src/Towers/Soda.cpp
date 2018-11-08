@@ -1,4 +1,4 @@
-#include "../include/Towers/Soda.hpp"
+#include "Towers/Soda.hpp"
 
 Soda::Soda(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;

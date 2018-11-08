@@ -9,6 +9,12 @@ MainMenuScreen::MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX
   this -> selectedItem = 0;
   this -> registerEvents();
 
+
+
+  this -> initText();
+}
+
+void MainMenuScreen::initText(){
   //get the path for the main font
   string mainFontPath = textLoader -> getString(string("IDS_MFP"));
 
@@ -37,11 +43,6 @@ MainMenuScreen::MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX
   {
     cout << "main title not loaded!" << endl;
   }
-
-  this -> initText();
-}
-
-void MainMenuScreen::initText(){
   screen.resize(3);
 
   //Main Menu
@@ -123,7 +124,7 @@ void MainMenuScreen::moveUp()
 
 void MainMenuScreen::moveDown()
 {
-  
+
   selectedItem = selectedItem % numItems;
   screen.at(selectedItem).setFillColor(sf::Color::White);
   selectedItem++;

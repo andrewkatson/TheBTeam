@@ -2,7 +2,7 @@
 // Created by jeremy on 10/26/18.
 //
 
-#include "../include/Units/FatKidUnit.hpp"
+#include "Units/FatKidUnit.hpp"
 
 FatKidUnit::FatKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : MeleeUnit(eventManager, textLoader){
   this->hitpoints=textLoader->getInteger(string("IDS_FK_HP"));;

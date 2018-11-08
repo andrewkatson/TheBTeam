@@ -1,6 +1,6 @@
 #pragma once
 #include "RangeTower.hpp"
-#include "../include/Projectiles/GravyProjectile.hpp"
+#include "../Projectiles/GravyProjectile.hpp"
 class Gravy : public RangeTower{
 public:
   Gravy(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);

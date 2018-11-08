@@ -1,4 +1,4 @@
-#include "../include/Projectiles/CheesePizzaProjectile.hpp"
+#include "Projectiles/CheesePizzaProjectile.hpp"
 
 
 CheesePizzaProjectile::CheesePizzaProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){

@@ -1,4 +1,4 @@
-#include "../include/Towers/MeatLovers.hpp"
+#include "Towers/MeatLovers.hpp"
 MeatLovers::MeatLovers(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;

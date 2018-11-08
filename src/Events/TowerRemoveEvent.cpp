@@ -1,4 +1,4 @@
-#include "../include/Events/TowerRemoveEvent.hpp"
+#include "Events/TowerRemoveEvent.hpp"
 /*
  *  Event generated when a tower is removed (includes obstacles) by the user
  * @author Andrew Katson

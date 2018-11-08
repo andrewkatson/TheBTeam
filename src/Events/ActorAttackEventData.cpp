@@ -1,4 +1,4 @@
-#include "../include/Events/ActorAttackEventData.hpp"
+#include "Events/ActorAttackEventData.hpp"
 
 ActorAttackEventData::ActorAttackEventData(long long actorAttackingID, long long actorDefendingID, float timeStamp){
   this -> timeStamp = timeStamp;

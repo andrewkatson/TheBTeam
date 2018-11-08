@@ -1,5 +1,5 @@
 
-#include "../include/Events/ProjectileExplosionEvent.hpp"
+#include "Events/ProjectileExplosionEvent.hpp"
 
 const EventType ProjectileExplosionEvent::eventType = EventType(&ProjectileExplosionEvent::eventType, string("ProjectileExplosionEvent"));
 

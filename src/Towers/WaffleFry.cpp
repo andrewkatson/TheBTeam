@@ -1,4 +1,4 @@
-#include "../include/Towers/WaffleFry.hpp"
+#include "Towers/WaffleFry.hpp"
 
 WaffleFry::WaffleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits, shared_ptr<EventManager> eventManager) : MeleeTower( eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;

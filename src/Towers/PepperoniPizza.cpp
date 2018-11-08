@@ -1,4 +1,4 @@
-#include "../include/Towers/PepperoniPizza.hpp"
+#include "Towers/PepperoniPizza.hpp"
 PepperoniPizza::PepperoniPizza(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;

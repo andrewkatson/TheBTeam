@@ -1,4 +1,4 @@
-#include "../include/Projectiles/PeanutButterMMSProjectile.hpp"
+#include "Projectiles/PeanutButterMMSProjectile.hpp"
 
 PeanutButterMMSProjectile::PeanutButterMMSProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager, textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_PBMM_HP"));;

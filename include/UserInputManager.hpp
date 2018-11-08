@@ -1,8 +1,8 @@
 #ifndef USERINPUTMANAGER_H
 #define USERINPUTMANAGER_H
 #include "EventManager.hpp"
-#include "../include/Events/KeyPressEvent.hpp"
-#include "../include/Events/MousePressEvent.hpp"
+#include "Events/KeyPressEvent.hpp"
+#include "Events/MousePressEvent.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <memory>

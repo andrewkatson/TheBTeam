@@ -1,4 +1,4 @@
-#include "../include/Towers/MiniMMS.hpp"
+#include "Towers/MiniMMS.hpp"
 MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader) {
   this -> towerTypeID = towerTypeID;
   this -> textLoader = textLoader;

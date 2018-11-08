@@ -10,15 +10,6 @@ UserView::UserView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
   this -> registerDelegates();
   this -> registerEvents();
   this -> gameLogic = gameLogic;
-  string mainFontPath = textLoader -> getString(string("IDS_MFP"));
-
-  if(!font.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
-  }
-  else{
-  //  cout << "loaded font!" << endl;
-  }
-
   this -> initScreens();
   this -> updateState();
 }
@@ -96,6 +87,21 @@ void UserView::initScreens(){
   screens.push_back(playingScreen);
   screens.push_back(buyTowerScreen);
   screens.push_back(restartScreen);
+}
+
+/*
+ * Initlaize any data related to font
+ */
+void UserView::initText(){
+  string mainFontPath = textLoader -> getString(string("IDS_MFP"));
+
+  if(!font.loadFromFile(mainFontPath)){
+    cout << "No font!" << endl;
+  }
+  else{
+  //  cout << "loaded font!" << endl;
+  }
+
 }
 
 /*

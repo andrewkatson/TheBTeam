@@ -1,4 +1,4 @@
-#include "../include/Events/TowerCreationEvent.hpp"
+#include "Events/TowerCreationEvent.hpp"
 /*
  *  Event generated when a tower is created (bought) by the user
  * @author Andrew Katson

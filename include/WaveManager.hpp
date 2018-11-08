@@ -17,9 +17,9 @@ using namespace std;
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "TextLoader.hpp"
-#include "../include/Units/AverageKidUnit.hpp"
-#include "../include/Units/SkinnyKidUnit.hpp"
-#include "../include/Units/FatKidUnit.hpp"
+#include "Units/AverageKidUnit.hpp"
+#include "Units/SkinnyKidUnit.hpp"
+#include "Units/FatKidUnit.hpp"
 
 class WaveManager{
 

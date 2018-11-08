@@ -6,7 +6,7 @@
  */
 
 #include "RangeTower.hpp"
-#include "../include/Projectiles/CheesePizzaProjectile.hpp"
+#include "../Projectiles/CheesePizzaProjectile.hpp"
 class NotATower : public RangeTower{
 public:
   NotATower(shared_ptr<TextLoader> textLoader,string towerTypeID, shared_ptr<EventManager> eventManager);

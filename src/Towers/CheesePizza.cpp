@@ -1,4 +1,4 @@
-#include "../include/Towers/CheesePizza.hpp"
+#include "Towers/CheesePizza.hpp"
 
 CheesePizza::CheesePizza(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader) {
   this -> towerTypeID = towerTypeID;
