@@ -260,7 +260,7 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
 
   //used to make the font local
-  string mainFontPath = textLoader -> getString(string("IDS_MFP"));
+  string mainFontPath = textLoader -> getString(string("IDS_Black_Berry_Jam"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
     cout << "No font!" << endl;
