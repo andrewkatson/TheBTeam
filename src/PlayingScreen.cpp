@@ -600,6 +600,25 @@ void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
 void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
    int yTileSize, int xTileSize, sf::RectangleShape& floorRect){
 
+     int redComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Red"));
+     int greenComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Green"));
+     int blueComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Blue"));
+     int alphaComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Alpha"));
+
+     //the x and y position of this rectangle
+     float xPos = col * xTileSize;
+     float yPos = row * yTileSize;
+
+     //set the position of the rectangle
+     floorRect.setPosition(xPos, yPos);
+
+     //set the color of the rectangle
+     sf::Color color(redComponent, greenComponent, blueComponent, alphaComponent);
+     floorRect.setFillColor(color);
+
+     //draw the rectangle
+     window.draw(floorRect);
+
 }
 
 template <class T>

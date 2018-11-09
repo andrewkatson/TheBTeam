@@ -374,7 +374,7 @@
   <constant value="5" id="IDS_Path_Tile_Green_Shift_Random_Range"> </constant>
   <!--Blue Shift Random Value For Paths -->
   <constant value="5" id="IDS_Path_Tile_Blue_Shift_Random_Range"> </constant>
-  
+
   <!--Path Tile 1 -->
   <constant value="118" id="IDS_Path_Tile_1_Fill_Color_Red"> </constant>
   <constant value="97" id="IDS_Path_Tile_1_Fill_Color_Green"> </constant>
@@ -426,10 +426,10 @@
   <constant value="9" id="IDS_Path_Tile_10_Fill_Color_Blue"> </constant>
   <constant value="255" id="IDS_Path_Tile_10_Fill_Color_Alpha"> </constant>
   <!--Exit Tile-->
-  <constant value="0" id="IDS_Buy_Tower_Text_Fill_Color_Red"> </constant>
-  <constant value="0" id="IDS_Buy_Tower_Text_Fill_Color_Blue"> </constant>
-  <constant value="255" id="IDS_Buy_Tower_Text_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Buy_Tower_Text_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Exit_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Exit_Fill_Color_Blue"> </constant>
+  <constant value="255" id="IDS_Exit_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Exit_Fill_Color_Alpha"> </constant>
 
 
   <!--BuyTower Screen-->

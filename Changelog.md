@@ -1,13 +1,15 @@
 [Unreleased]
 
+###Added
+- MapGeneratedEvent and MapGeneratedEventData
+
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]
 - access to the map customization options through gameLogic
 - access to the tile sizes through gamelogic
 - all redundant include strings
 - all resources loaded in constructors moved to init methods
-- all tiles have their colors shifted by small amounts (to make it look more diverse)
-
+- all tiles have their colors shifted by small amounts (to make it look more diverse
 
 [0.1.5] 2018-11-7
 ###Added
