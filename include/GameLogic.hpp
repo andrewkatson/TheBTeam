@@ -20,6 +20,7 @@
 #include "Events/KeyPressEvent.hpp"
 #include "Events/MousePressEvent.hpp"
 #include "Events/StateChangeEvent.hpp"
+#include "Events/MapGeneratedEvent.hpp"
 #include "EventType.hpp"
 #include <chrono>
 #include <random>
@@ -113,6 +114,8 @@ public:
 
   const int getTileXSize();
   const int getTileYSize();
+  const int getRows();
+  const int getCols();
 
   const MapChoices& getMapCustomizationChoices();
 

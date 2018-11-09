@@ -6,6 +6,7 @@
 - access to the tile sizes through gamelogic
 - all redundant include strings
 - all resources loaded in constructors moved to init methods
+- all tiles have their colors shifted by small amounts (to make it look more diverse)
 
 
 [0.1.5] 2018-11-7

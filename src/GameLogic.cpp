@@ -44,6 +44,11 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
 
    this -> eventManager -> registerEvent(towerRemoveEventType);
 
+   //make a generic map generated event, get its type, and register it
+   MapGeneratedEvent mapGeneratedEvent = MapGeneratedEvent();
+   EventType mapGeneratedEventType = mapGeneratedEvent.getEventType();
+
+   this -> eventManager -> registerEvent(mapGeneratedEventType);
  }
 
 /*
@@ -210,6 +215,16 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> gridX = windowX / boardManager -> getXDim();
    this -> gridY = windowY / boardManager -> getYDim();
    this-> towerManager -> setGridDimensions(gridX, gridY);
+
+   //make a map generated event
+   //the time object of the class
+   auto now = high_resolution_clock::now();
+   //the actual count in nanoseconds for the time
+   auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+   shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano);
+
+   this -> eventManager -> queueEvent(mapGenerated);
 
    placeObstacles();
  }
@@ -467,6 +482,20 @@ const int GameLogic::getTileXSize(){
  */
 const int GameLogic::getTileYSize(){
   return gridY;
+}
+
+/*
+ * Get the rows on the board
+ */
+const int GameLogic::getRows(){
+  return boardManager -> getYDim();
+}
+
+/*
+ * Get the cols on the board
+ */
+const int GameLogic::getCols(){
+  return boardManager -> getXDim();
 }
 
 /*

@@ -3,7 +3,12 @@
 #include "Screen.hpp"
 #include "GameLogic.hpp"
 #include "Button.hpp"
+#include <random>
+#include <tuple>
 
+using std::tuple;
+using std::make_tuple;
+using std::get;
 class PlayingScreen : public Screen {
 private:
   //event manager (used to register, deregister from events, and create them)
@@ -19,6 +24,20 @@ private:
   sf::Font mainFont;
   //text object used to write with
   sf::Text text;
+  //random number generator (seeded in the constructor)
+  std::mt19937 mt;
+  //a tuple for rgb int values
+  typedef tuple<int,int,int> rgb;
+  //a 2d grid of tuples (r,g,b) shift values so that all the colors will not be exactly their
+  //exact color on file (used for the floor)
+  vector<vector<rgb>> floorColorShifts;
+  //a 2d grid of tuples (r,g,b) shift values so that all the colors will not be exactly their exact
+  //color on file (used for the paths)
+  vector<vector<rgb>> pathColorShifts;
+  //cannot initialize the colors until we have a map made
+  //so we use this bool to set the color shift vector once
+  bool haveSetColorShift;
+
 
   //testing variable TODO remove when finished rendering
   bool somethingChanged;
@@ -30,7 +49,11 @@ public:
   void deregisterDelegates();
   void initDrawingMaterials();
   void initBuyTowerButton();
+  void initColorShifts();
+  void initColorShiftsForFloor();
+  void initColorShiftsForPath();
 
+  void handleMapGenerated(const EventInterface& event);
   void handleTowerCreation(const EventInterface& event);
   void handleTowerRemove(const EventInterface& event);
   void handleKeyPress(const EventInterface& event);

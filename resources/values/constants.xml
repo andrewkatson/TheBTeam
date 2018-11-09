@@ -329,6 +329,12 @@
   <!--Floor Tiles-->
   <!--Number of Types of Floor Tile For Each School -->
   <constant value="2" id="IDS_Cafeteria_Tile_Types"> </constant>
+  <!--Red Shift Random Value For Tiles -->
+  <constant value="5" id="IDS_Floor_Tile_Red_Shift_Random_Range"> </constant>
+  <!--Green Shift Random Value For Tiles -->
+  <constant value="5" id="IDS_Floor_Tile_Green_Shift_Random_Range"> </constant>
+  <!--Blue Shift Random Value For Tiles -->
+  <constant value="5" id="IDS_Floor_Tile_Blue_Shift_Random_Range"> </constant>
 
   <!--Floor Tiles 1 in Elementary School-->
   <constant value="238" id="IDS_1_Floor_Tile_0_Fill_Color_Red"> </constant>
@@ -345,25 +351,30 @@
   <constant value="205" id="IDS_2_Floor_Tile_0_Fill_Color_Green"> </constant>
   <constant value="233" id="IDS_2_Floor_Tile_0_Fill_Color_Blue"> </constant>
   <constant value="255" id="IDS_2_Floor_Tile_0_Fill_Color_Alpha"> </constant>
-
   <!--Floor Tile 2 in Middle School-->
   <constant value="208" id="IDS_2_Floor_Tile_1_Fill_Color_Red"> </constant>
   <constant value="208" id="IDS_2_Floor_Tile_1_Fill_Color_Green"> </constant>
   <constant value="208" id="IDS_2_Floor_Tile_1_Fill_Color_Blue"> </constant>
   <constant value="255" id="IDS_2_Floor_Tile_1_Fill_Color_Alpha"> </constant>
-
   <!--Floor Tile 1 in High School -->
   <constant value="183" id="IDS_3_Floor_Tile_0_Fill_Color_Red"> </constant>
   <constant value="219" id="IDS_3_Floor_Tile_0_Fill_Color_Green"> </constant>
   <constant value="200" id="IDS_3_Floor_Tile_0_Fill_Color_Blue"> </constant>
   <constant value="255" id="IDS_3_Floor_Tile_0_Fill_Color_Alpha"> </constant>
-
   <!--Floor Tile 2 in High School-->
   <constant value="245" id="IDS_3_Floor_Tile_1_Fill_Color_Red"> </constant>
   <constant value="239" id="IDS_3_Floor_Tile_1_Fill_Color_Green"> </constant>
   <constant value="226" id="IDS_3_Floor_Tile_1_Fill_Color_Blue"> </constant>
   <constant value="255" id="IDS_3_Floor_Tile_1_Fill_Color_Alpha"> </constant>
+
   <!--Path Tiles-->
+  <!--Red Shift Random Value For Paths -->
+  <constant value="5" id="IDS_Path_Tile_Red_Shift_Random_Range"> </constant>
+  <!--Green Shift Random Value For Paths -->
+  <constant value="5" id="IDS_Path_Tile_Green_Shift_Random_Range"> </constant>
+  <!--Blue Shift Random Value For Paths -->
+  <constant value="5" id="IDS_Path_Tile_Blue_Shift_Random_Range"> </constant>
+  
   <!--Path Tile 1 -->
   <constant value="118" id="IDS_Path_Tile_1_Fill_Color_Red"> </constant>
   <constant value="97" id="IDS_Path_Tile_1_Fill_Color_Green"> </constant>
