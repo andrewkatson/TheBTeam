@@ -8,7 +8,7 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
-  this -> buyTower = Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Button_Message")), textLoader);
+  this -> buyTower = unique_ptr<Button>(new Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Button_Message")), textLoader));
   somethingChanged = true;
   haveSetColorShift=false;
   this -> initDrawingMaterials();
@@ -123,40 +123,40 @@ void PlayingScreen::initDrawingMaterials(){
  */
 void PlayingScreen::initBuyTowerButton(){
   // set the fill color for the button rectangle
-  this -> buyTower.setFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Red")),
+  this -> buyTower -> setFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Alpha")));
 
   // set the outline color for the button
-  this -> buyTower.setOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Red")),
+  this -> buyTower -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Alpha")));
 
   //set the button outline thickness
-  //this->buyTower.setOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Thickness")));
+  //this->buyTower -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Thickness")));
 
   //set the fill color for the button text
-  this -> buyTower.setTextFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Red")),
+  this -> buyTower -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Alpha")));
 
 
   //set the outline color for the text
-  this -> buyTower.setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Red")),
+  this -> buyTower -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Alpha")));
 
   //set the button text outline thickness
-  this->buyTower.setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Thickness")));
+  this->buyTower -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Thickness")));
 
   //set the text character size
-  this->buyTower.setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Buy_Tower_Text_Size")));
+  this->buyTower -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Buy_Tower_Text_Size")));
 
   //rescale the button and reset it
-  (this -> buyTower).setButtonPosition( TOPRIGHT);
+  (this -> buyTower) -> setButtonPosition( TOPRIGHT);
 
   //make the button invisible to begin with
-  (this->buyTower).flipVisibility();
+  //(this->buyTower) -> flipVisibility();
 }
 
 /*
@@ -373,7 +373,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   float yPos = mpEventData -> y;
 
   //check if BuyTower button is being clicked
-  bool buyTowerClicked = (this->buyTower).isSelected(xPos,yPos);
+  bool buyTowerClicked = (this->buyTower) -> isSelected(xPos,yPos);
   if(buyTowerClicked){
     shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, nowInNano);
 
@@ -406,9 +406,9 @@ void PlayingScreen::draw(sf::RenderWindow &window){
     initColorShifts();
     haveSetColorShift=true;
   }
-
-  drawBuyTowerButton(window);
   drawFloorMap(window);
+  drawBuyTowerButton(window);
+
 
 }
 
@@ -419,7 +419,7 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
 
   //if the button is invisible do not draw it
-  if(!buyTower.isCurrentlyVisible()){
+  if(!buyTower -> isCurrentlyVisible()){
     return;
   }
 
@@ -433,10 +433,10 @@ void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
   //  cout << "loaded font!" << endl;
   }
 
-  text = buyTower.getButtonText();
+  text = buyTower -> getButtonText();
   text.setFont(mainFont);
 
-  window.draw(buyTower.getButtonRect());
+  window.draw(buyTower -> getButtonRect());
   window.draw(text);
 }
 

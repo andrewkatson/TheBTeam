@@ -12,7 +12,6 @@ TextLoader::TextLoader(){
   //doc.LoadFile( "../values/constants.xml" );
   //fill the constants map
   loadInts();
-
   loadDoubles();
 }
 

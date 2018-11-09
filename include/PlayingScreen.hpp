@@ -19,7 +19,7 @@ private:
   //use to access frequently required data (i.e. towers, obstacles, board, units)
   shared_ptr<GameLogic> gameLogic;
   //the button to allow us to buy a tower
-  Button buyTower;
+  unique_ptr<Button> buyTower;
   //the main font of the game
   sf::Font mainFont;
   //text object used to write with
