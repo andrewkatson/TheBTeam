@@ -472,6 +472,27 @@ const vector<vector<int>>& GameLogic::getDistances(){
 }
 
 /*
+ * @return if the row, col passed has a tower
+ */
+bool GameLogic::isTower(int row, int col){
+  return boardManager -> isTower(row,col);
+}
+
+/*
+ * @return if the row, col passed has an obstacle
+ */
+bool GameLogic::isObstacle(int row, int col){
+  return boardManager -> isObstacle(row, col);
+}
+
+/*
+ * @return if the row, col is an empty space (no path, or exit)
+ */
+bool GameLogic::isEmptySpace(int row, int col){
+  return boardManager->isEmptySpace(row, col);
+}
+
+/*
  * Get the x size of a tile on the map
  */
 const int GameLogic::getTileXSize(){

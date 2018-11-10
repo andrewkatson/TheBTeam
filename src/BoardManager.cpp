@@ -222,7 +222,7 @@ bool BoardManager::isTower(int row, int col){
  */
 bool BoardManager::isTowerOrObstacle(int row, int col){
   assert(hasMap()== true);
-  return aboveFloorGrid.at(row).at(col) > 0 || aboveFloorGrid.at(row).at(col) < -1;
+  return aboveFloorGrid.at(row).at(col) > 0 || aboveFloorGrid.at(row).at(col) < -2;
 }
 /*
  * @return true if the selected grid has an entrance
@@ -260,7 +260,15 @@ bool BoardManager::isPath(int row, int col){
  */
 bool BoardManager::isObstacle(int row, int col){
   assert(hasMap()== true);
-  return aboveFloorGrid.at(row).at(col) < -1 ;
+  return aboveFloorGrid.at(row).at(col) < -2 ;
+}
+
+/*
+ * @return true if the selected grid has nothing on it
+ */
+bool BoardManager::isEmptySpace(int row, int col){
+  assert(hasMap()==true);
+  return !(isObstacle(row,col) || isExit(row,col) || isPath(row,col) || isTower(row,col) );
 }
 
 

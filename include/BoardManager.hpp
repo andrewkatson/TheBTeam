@@ -74,6 +74,7 @@ public:
   bool isExit(int row, int col);
   bool isPath(int row, int col);
   bool isObstacle(int row, int col);
+  bool isEmptySpace(int row, int col);
 
   int getYDim();
   int getXDim();

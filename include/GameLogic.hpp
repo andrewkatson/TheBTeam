@@ -116,6 +116,10 @@ public:
   const vector<vector<int>>& getAboveFloor();
   const vector<vector<int>>& getDistances();
 
+  bool isTower(int row, int col);
+  bool isObstacle(int row, int col);
+  bool isEmptySpace(int row, int col);
+
   const int getTileXSize();
   const int getTileYSize();
   const int getRows();

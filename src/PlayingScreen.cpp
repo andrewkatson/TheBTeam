@@ -378,8 +378,31 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
     shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, nowInNano);
 
     this -> eventManager -> queueEvent(buyTowerState);
+    return;
   }
 
+  //get the size of a tile in the x
+  int xTileSize = gameLogic -> getTileXSize();
+  //get the size of a tile in the y
+  int yTileSize = gameLogic -> getTileYSize();
+
+  //what row is being clicked
+  int row = yPos / yTileSize;
+  //what col is being clicked
+  int col = xPos / xTileSize;
+
+  //if this is a tower
+  if(gameLogic -> isTower(row,col)){
+
+  }
+  //if this is an obstacle
+  else if(gameLogic-> isObstacle(row,col)){
+
+  }
+  //if this is an empty tile (neither path nor exit)
+  else if(gameLogic->isEmptySpace(row,col)){
+
+  }
 }
 
 void PlayingScreen::draw(sf::RenderWindow &window){
@@ -666,7 +689,7 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
  * @param window: the game window to draw
  */
 void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window){
-  //TODO implementation 
+  //TODO implementation
 }
 
 
