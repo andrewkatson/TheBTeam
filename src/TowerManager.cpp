@@ -61,8 +61,8 @@ void TowerManager::registerDelegates(){
  */
 void TowerManager::populateObstacles(){
   //get the identifier for each type of obstacle
-  string cafeteriaTableID = textLoader ->  getString("IDS_CTO");
-  string trashCanID = textLoader -> getString("IDS_TCO");
+  string cafeteriaTableID = textLoader ->  getTypeID("IDS_CTO");
+  string trashCanID = textLoader -> getTypeID("IDS_TCO");
 
   //make a pointer to each type of obstacle
   shared_ptr<Obstacle> cafeteriaTable = make_shared<CafeteriaTable>(textLoader, eventManager, textureLoader);
@@ -96,13 +96,13 @@ void TowerManager::populateTowersToChoose(){
   int maxMeleeUnits = textLoader->getInteger(string("IDS_MT_MU"));
 
   //get the identifier for no tower type chosen
-  string noTowerAtTileID = textLoader -> getString("IDS_NT");
+  string noTowerAtTileID = textLoader -> getTypeID("IDS_NT");
 
   //get the identifier for each basic type of tower
-  string cheesePizzaID = textLoader -> getString(string("IDS_CPT"));
-  string sodaID = textLoader -> getString(string("IDS_SOT"));
-  string normalFryID = textLoader -> getString(string("IDS_NFT"));
-  string miniMMSID = textLoader -> getString(string("IDS_MMMT"));
+  string cheesePizzaID = textLoader -> getTypeID(string("IDS_CPT"));
+  string sodaID = textLoader -> getTypeID(string("IDS_SOT"));
+  string normalFryID = textLoader -> getTypeID(string("IDS_NFT"));
+  string miniMMSID = textLoader -> getTypeID(string("IDS_MMMT"));
 
   //first make a pointer to the first of the tower types for each tower tree
   shared_ptr<RangeTower> cheesePizza = make_shared<CheesePizza>(textLoader, eventManager, textureLoader);
@@ -150,16 +150,16 @@ void TowerManager::populateTowerUpgrades(){
  */
 void TowerManager::populateTowerUpgradesLvl1(int maxMeleeUnits){
   //get the identifier for each basic type of tower
-  string cheesePizzaID = textLoader -> getString(string("IDS_CPT"));
-  string sodaID = textLoader -> getString(string("IDS_SOT"));
-  string normalFryID = textLoader -> getString(string("IDS_NFT"));
-  string miniMMSID = textLoader -> getString(string("IDS_MMMT"));
+  string cheesePizzaID = textLoader -> getTypeID(string("IDS_CPT"));
+  string sodaID = textLoader -> getTypeID(string("IDS_SOT"));
+  string normalFryID = textLoader -> getTypeID(string("IDS_NFT"));
+  string miniMMSID = textLoader -> getTypeID(string("IDS_MMMT"));
 
   //get the identifier for each level 2 type of tower
-  string pepperoniPizzaID = textLoader -> getString(string("IDS_PPT"));
-  string energyDrinkID = textLoader -> getString(string("IDS_EDT"));
-  string crinkleFryID = textLoader -> getString(string("IDS_CFT"));
-  string normalMMSID = textLoader -> getString(string("IDS_NMMT"));
+  string pepperoniPizzaID = textLoader -> getTypeID(string("IDS_PPT"));
+  string energyDrinkID = textLoader -> getTypeID(string("IDS_EDT"));
+  string crinkleFryID = textLoader -> getTypeID(string("IDS_CFT"));
+  string normalMMSID = textLoader -> getTypeID(string("IDS_NMMT"));
 
   //make a pointer to each type of object that the basic types can be upgraded to
   shared_ptr<RangeTower> pepperoniPizza = make_shared<PepperoniPizza>(textLoader,  eventManager, textureLoader);
@@ -196,20 +196,20 @@ void TowerManager::populateTowerUpgradesLvl1(int maxMeleeUnits){
  */
 void TowerManager::populateTowerUpgradesLvl2(int maxMeleeUnits){
   //get the identifier for each level 2 type of tower
-  string pepperoniPizzaID = textLoader -> getString(string("IDS_PPT"));
-  string energyDrinkID = textLoader -> getString(string("IDS_EDT"));
-  string crinkleFryID = textLoader -> getString(string("IDS_CFT"));
-  string normalMMSID = textLoader -> getString(string("IDS_NMMT"));
+  string pepperoniPizzaID = textLoader -> getTypeID(string("IDS_PPT"));
+  string energyDrinkID = textLoader -> getTypeID(string("IDS_EDT"));
+  string crinkleFryID = textLoader -> getTypeID(string("IDS_CFT"));
+  string normalMMSID = textLoader -> getTypeID(string("IDS_NMMT"));
 
   //get the identifier for each level 3 type of tower
-  string deepDishID = textLoader -> getString(string("IDS_DDT"));
-  string meatLoversID = textLoader -> getString(string("IDS_MLT"));
-  string spicyFryID = textLoader -> getString(string("IDS_SFT"));
-  string waffleFryID = textLoader -> getString(string("IDS_WFT"));
-  string slushieID = textLoader -> getString(string("IDS_SLT"));
-  string gravyID = textLoader -> getString(string("IDS_GT"));
-  string peanutButterMMSID = textLoader -> getString(string("IDS_PBMMT"));
-  string peanutMMSID = textLoader -> getString(string("IDS_PMMT"));
+  string deepDishID = textLoader -> getTypeID(string("IDS_DDT"));
+  string meatLoversID = textLoader -> getTypeID(string("IDS_MLT"));
+  string spicyFryID = textLoader -> getTypeID(string("IDS_SFT"));
+  string waffleFryID = textLoader -> getTypeID(string("IDS_WFT"));
+  string slushieID = textLoader -> getTypeID(string("IDS_SLT"));
+  string gravyID = textLoader -> getTypeID(string("IDS_GT"));
+  string peanutButterMMSID = textLoader -> getTypeID(string("IDS_PBMMT"));
+  string peanutMMSID = textLoader -> getTypeID(string("IDS_PMMT"));
 
   //make a pointer to each type of object that the type 2 towers can be upgraded to
   shared_ptr<RangeTower> deepDish = make_shared<DeepDish>(textLoader, eventManager, textureLoader);
@@ -259,14 +259,14 @@ void TowerManager::populateTowerUpgradesLvl2(int maxMeleeUnits){
  */
 void TowerManager::populateTowerUpgradesLvl3(int maxMeleeUnits){
   //get the identifier for each level 3 type of tower
-  string deepDishID = textLoader -> getString(string("IDS_DDT"));
-  string meatLoversID = textLoader -> getString(string("IDS_MLT"));
-  string spicyFryID = textLoader -> getString(string("IDS_SFT"));
-  string waffleFryID = textLoader -> getString(string("IDS_WFT"));
-  string slushieID = textLoader -> getString(string("IDS_SLT"));
-  string gravyID = textLoader -> getString(string("IDS_GT"));
-  string peanutButterMMSID = textLoader -> getString(string("IDS_PBMMT"));
-  string peanutMMSID = textLoader -> getString(string("IDS_PMMT"));
+  string deepDishID = textLoader -> getTypeID(string("IDS_DDT"));
+  string meatLoversID = textLoader -> getTypeID(string("IDS_MLT"));
+  string spicyFryID = textLoader -> getTypeID(string("IDS_SFT"));
+  string waffleFryID = textLoader -> getTypeID(string("IDS_WFT"));
+  string slushieID = textLoader -> getTypeID(string("IDS_SLT"));
+  string gravyID = textLoader -> getTypeID(string("IDS_GT"));
+  string peanutButterMMSID = textLoader -> getTypeID(string("IDS_PBMMT"));
+  string peanutMMSID = textLoader -> getTypeID(string("IDS_PMMT"));
 
   //push each tower into a vector of possible upgrades
   //there are none since this is the last level of towers
@@ -301,7 +301,7 @@ int TowerManager::getTowerPrice(int row, int col){
   //if there is no tower here
   if(towersPlaced.find(row*xDim+col) == towersPlaced.end()){
     //get the identifier for no tower type chosen
-    towerID = textLoader -> getString("IDS_NT");
+    towerID = textLoader -> getTypeID("IDS_NT");
 
   }else{
      auto tower = towersPlaced.at(row*xDim+col);
@@ -352,7 +352,7 @@ unordered_map<int, shared_ptr<TowerInterface>>& TowerManager::getTowersPlaced(){
  */
 shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int combinedRowCol){
   if(towersPlaced.find(combinedRowCol) == towersPlaced.end()){
-    string noTowerID = textLoader -> getString("IDS_NT");
+    string noTowerID = textLoader -> getTypeID("IDS_NT");
     shared_ptr<TowerInterface> noTower = make_shared<NotATower>(textLoader, eventManager, textureLoader);
     return noTower;
   }
@@ -366,7 +366,7 @@ shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int combinedRowCol){
  */
 shared_ptr<TowerInterface> TowerManager::getTowerPlaced(int row, int col){
   if(towersPlaced.find(row*xDim+col) == towersPlaced.end()){
-    string noTowerID = textLoader -> getString("IDS_NT");
+    string noTowerID = textLoader -> getTypeID("IDS_NT");
     shared_ptr<TowerInterface> noTower = make_shared<NotATower>(textLoader, eventManager, textureLoader);
     return noTower;
   }
@@ -392,7 +392,7 @@ vector<shared_ptr<TowerInterface>>& TowerManager::getObstacleAsVector(int row, i
  */
 shared_ptr<TowerInterface> TowerManager::getObstacle(int row, int col){
   if(towersPlaced.find(row*xDim+col) == towersPlaced.end()){
-    string noTowerID = textLoader -> getString("IDS_NT");
+    string noTowerID = textLoader -> getTypeID("IDS_NT");
     shared_ptr<TowerInterface> noTower = make_shared<NotATower>(textLoader, eventManager, textureLoader);
     return noTower;
   }
@@ -469,7 +469,10 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
       //grab the number stored at the position to indicate the type of obstacle
       int typeNum = (*it).first;
       //grab the string identifier of this type of obstacle
-      string obstacleType = textLoader -> getString(std::to_string(typeNum));
+      string obstacleType = textLoader -> getTypeID(std::to_string(typeNum));
+
+      cout << obstacleType << endl;
+
       //the obstacle we will place
       shared_ptr<TowerInterface> obstacle;
 
@@ -478,6 +481,8 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
       int col = ((*it).second).second;
 
       obstacle = copyOfTowerType(obstacleType, row, col);
+
+      cout << obstacle -> getType() << endl;
 
       towersPlaced.insert({row*xDim+col, obstacle});
   }
@@ -524,69 +529,69 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
   //get the maximum number of melee units allowed per melee tower
   int maxMeleeUnits = textLoader -> getInteger(string("IDS_MT_MU"));
 
-  if(type == textLoader->getString(string("IDS_CPT"))){
+  if(type == textLoader->getTypeID(string("IDS_CPT"))){
     retTower = make_shared<CheesePizza>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_PPT"))){
+  else if(type == textLoader->getTypeID(string("IDS_PPT"))){
     retTower = make_shared<PepperoniPizza>(textLoader,eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_DDT"))){
+  else if(type == textLoader->getTypeID(string("IDS_DDT"))){
     retTower = make_shared<DeepDish>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_MLT"))){
+  else if(type == textLoader->getTypeID(string("IDS_MLT"))){
     retTower = make_shared<MeatLovers>(textLoader, eventManager, textureLoader);
   }
-  else if(type == textLoader->getString(string("IDS_MMMT"))){
+  else if(type == textLoader->getTypeID(string("IDS_MMMT"))){
     retTower = make_shared<MiniMMS>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_NMMT"))){
+  else if(type == textLoader->getTypeID(string("IDS_NMMT"))){
     retTower = make_shared<NormalMMS>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_PBMMT"))){
+  else if(type == textLoader->getTypeID(string("IDS_PBMMT"))){
     retTower = make_shared<PeanutButterMMS>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_SOT"))){
+  else if(type == textLoader->getTypeID(string("IDS_SOT"))){
     retTower = make_shared<PeanutMMS>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_EDT"))){
+  else if(type == textLoader->getTypeID(string("IDS_EDT"))){
     retTower = make_shared<EnergyDrink>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_GT"))){
+  else if(type == textLoader->getTypeID(string("IDS_GT"))){
     retTower = make_shared<Gravy>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_SLT"))){
+  else if(type == textLoader->getTypeID(string("IDS_SLT"))){
     retTower = make_shared<Slushie>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getString(string("IDS_NFT"))){
+  else if(type == textLoader->getTypeID(string("IDS_NFT"))){
     retTower = make_shared<NormalFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
     retTower -> setUpUnits();
   }
-  else if(type == textLoader->getString(string("IDS_CFT"))){
+  else if(type == textLoader->getTypeID(string("IDS_CFT"))){
     retTower = make_shared<CrinkleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
     retTower -> setUpUnits();
   }
-  else if(type == textLoader->getString(string("IDS_SFT"))){
+  else if(type == textLoader->getTypeID(string("IDS_SFT"))){
     retTower = make_shared<SpicyFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
     retTower -> setUpUnits();
   }
-  else if(type == textLoader->getString(string("IDS_WFT"))){
+  else if(type == textLoader->getTypeID(string("IDS_WFT"))){
     retTower = make_shared<WaffleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
     retTower -> setUpUnits();
   }
-  else if(type == textLoader->getString(string("IDS_CTO"))){
+  else if(type == textLoader->getTypeID(string("IDS_CTO"))){
     retTower = make_shared<CafeteriaTable>(textLoader, eventManager, textureLoader);
   }
-  else if(type == textLoader->getString(string("IDS_TCO"))){
+  else if(type == textLoader->getTypeID(string("IDS_TCO"))){
     retTower = make_shared<TrashCan>(textLoader, eventManager, textureLoader);
   }
 

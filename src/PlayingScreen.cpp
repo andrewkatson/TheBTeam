@@ -600,6 +600,61 @@ void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
  */
 void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
   const unordered_map<int, shared_ptr<TowerInterface>> towersPlaced = gameLogic -> getTowersPlaced();
+
+  //the number of rows
+  const int rows = gameLogic->getRows();
+  //the number of cols
+  const int cols = gameLogic->getCols();
+
+  //the size of each tile in x direction
+  const int xTileSize = gameLogic -> getTileXSize();
+  //the size of each tile in y direction
+  const int yTileSize = gameLogic -> getTileYSize();
+
+  //iterate through the towers/obstacles placed on the board
+  for(auto iterator : towersPlaced){
+    //the position of the tower/obstacle
+    int combinedRowCol = (iterator).first;
+    //the row of the tower/obstacle
+    int row = combinedRowCol / cols;
+    //the col of the tower/obstacle
+    int col = combinedRowCol % cols;
+
+    //the current tower/obstacle
+    shared_ptr<TowerInterface> current = (iterator).second;
+
+    //cout << current -> getType() << endl;
+
+    //get the sprite to be drawn
+    sf::Sprite currentSprite = current -> getSprite();
+
+    //the position in xCoordinates
+    float xPos = (float) xTileSize * (float) col;
+    //the position in yCoordiantes
+    float yPos = (float) yTileSize * (float) row;
+
+    //the bounding rectangle will give us the dimensions of the sprite
+    sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+    //the x dimension of the box
+    int xDim = boundingBox.width;
+    //the ydimension of the box
+    int yDim = boundingBox.height;
+
+    //the scale in the x direction
+    float xScale = (float) xTileSize / (float) xDim;
+    //the scale in the y direction
+    float yScale = (float) yTileSize / (float) yDim;
+
+    //set the scale for the tower/obstalce to fill up the square
+    currentSprite.setScale(xScale, yScale);
+
+    //set the position of the sprite to the top left of the rectangle
+    currentSprite.setPosition(xPos, yPos);
+
+    //finally draw the sprite
+    window.draw(currentSprite);
+
+  }
 }
 
 /*
