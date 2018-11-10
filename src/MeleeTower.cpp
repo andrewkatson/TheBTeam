@@ -9,6 +9,7 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> yRally = 0xFFFFFFFF;
   this -> e = 0.00001;
   this -> timeOfDeath = {-1.0, -1.0, -1.0};
+  this -> isMelee = true;
   this -> registerDelegates();
 }
 

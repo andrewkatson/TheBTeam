@@ -6,7 +6,7 @@ const EventType ProjectileExplosionEvent::eventType = EventType(&ProjectileExplo
 ProjectileExplosionEvent::ProjectileExplosionEvent(){
 
 }
-ProjectileExplosionEvent::ProjectileExplosionEvent(string projectileID, float timeStamp){
+ProjectileExplosionEvent::ProjectileExplosionEvent(long long  projectileID, float timeStamp){
   this -> data = unique_ptr<ProjectileExplosionEventData>(new ProjectileExplosionEventData(projectileID, timeStamp));
 }
 

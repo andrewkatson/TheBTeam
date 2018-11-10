@@ -408,9 +408,10 @@ void PlayingScreen::draw(sf::RenderWindow &window){
   }
   drawFloorMap(window);
   drawTowersAndObstacles(window);
+  //to avoid looping twice we draw all the units of the towers in the
+  //same method as drawing the towers
+  drawEnemyUnits(window);
   drawBuyTowerButton(window);
-
-
 }
 
 /*
@@ -623,8 +624,6 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //the current tower/obstacle
     shared_ptr<TowerInterface> current = (iterator).second;
 
-    //cout << current -> getType() << endl;
-
     //get the sprite to be drawn
     sf::Sprite currentSprite = current -> getSprite();
 
@@ -654,6 +653,33 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //finally draw the sprite
     window.draw(currentSprite);
 
+    if(current -> isMelee){
+      //if this is a meleeType then we need to draw its units
+      drawTowerUnits(current, window);
+    }
+  }
+}
+
+/*
+ * Draw all the units for the melee tower to the screen
+ * @param meleeTower: the current tower
+ * @param window: the game window to draw
+ */
+void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window){
+  //TODO implementation 
+}
+
+
+/*
+ * Draw all the enemy units on the screen
+ * @param window: the game window to draw on
+ */
+void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
+  vector<shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
+
+  //loop through all enemies on the board
+  for(auto iterator : allEnemyUnits){
+    //TODO implement
   }
 }
 

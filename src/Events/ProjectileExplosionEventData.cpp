@@ -1,6 +1,6 @@
 #include "Events/ProjectileExplosionEventData.hpp"
 
-ProjectileExplosionEventData::ProjectileExplosionEventData(string projectileID, float timeStamp){
+ProjectileExplosionEventData::ProjectileExplosionEventData(long long  projectileID, float timeStamp){
   this -> timeStamp = timeStamp;
   this -> projectileID = projectileID;
 }

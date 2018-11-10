@@ -124,6 +124,7 @@ public:
   const MapChoices& getMapCustomizationChoices();
 
   const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
+  const vector<shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 
 };
 

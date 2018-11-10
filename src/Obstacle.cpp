@@ -4,6 +4,7 @@
 Obstacle::Obstacle(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> isMelee = false;
 }
 
 /*

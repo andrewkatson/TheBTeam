@@ -52,7 +52,10 @@ protected:
   int yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
+
 public:
+  //boolean used to tell if this is a melee tower without casting
+  bool isMelee;
   virtual void upgrade()=0;
   virtual int getPrice()=0;
   virtual string getType()=0;

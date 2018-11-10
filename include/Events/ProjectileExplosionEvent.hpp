@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   ProjectileExplosionEvent();
-  ProjectileExplosionEvent(string projectileID, float timeStamp);
+  ProjectileExplosionEvent(long long  projectileID, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;
