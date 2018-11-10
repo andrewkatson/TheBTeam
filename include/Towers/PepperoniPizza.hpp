@@ -3,7 +3,7 @@
 #include "../Projectiles/PepperoniPizzaProjectile.hpp"
 class PepperoniPizza : public RangeTower{
 public:
-  PepperoniPizza(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  PepperoniPizza(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
 

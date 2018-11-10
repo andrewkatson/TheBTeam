@@ -13,6 +13,7 @@
 #include <memory>
 #include <utility>
 #include "TextLoader.hpp"
+#include "TextureLoader.hpp"
 #include "EventInterface.hpp"
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
@@ -26,10 +27,16 @@ class TowerInterface{
 protected:
   //int pair (used to assocaite a row and col)
   typedef pair<int,int> intPair;
+  //all the textures for this actor
+  shared_ptr<vector<sf::Texture>> textures;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
+  //Store the textureLoader to get the textures for this tower and pass to
+  //any dependent units or projectiles
+  shared_ptr<TextureLoader> textureLoader;
+
   //the tower type identifier that allows for its next upgrade to be pulled
   string towerTypeID;
   //the price of the tower (cost to remove in the case of an obstacle)

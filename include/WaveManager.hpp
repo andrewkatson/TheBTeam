@@ -31,6 +31,9 @@ private:
   shared_ptr<TextLoader> textLoader;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
+  //Store the textureLoader to get the textures for this tower and pass to
+  //any dependent units or projectiles
+  shared_ptr<TextureLoader> textureLoader;
 
   //Vector storing every enemy type that can be spawned.
   vector<shared_ptr<MeleeUnit>> enemies;
@@ -84,7 +87,7 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
 
   /*
    * Setup the possible enemies that can spawn

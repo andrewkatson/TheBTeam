@@ -149,12 +149,12 @@
     <string value="../resources/sprites/unit/skinnykidunit/standing.png" id="IDS_Skinny_Kid_Unit_2"> </string>
     <string value="../resources/sprites/unit/skinnykidunit/walk0.png" id="IDS_Skinny_Kid_Unit_3"> </string>
     <string value="../resources/sprites/unit/skinnykidunit/walk1.png" id="IDS_Skinny_Kid_Unit_4"> </string>
-    <!--NormalKidUnit-->
-    <string value="../resources/sprites/unit/normalkidunit/punchleft.png" id="IDS_Normal_Fry_Unit_0"> </string>
-    <string value="../resources/sprites/unit/normalkidunit/punchright.png" id="IDS_Normal_Fry_Unit_1"> </string>
-    <string value="../resources/sprites/unit/normalkidunit/standing.png" id="IDS_Normal_Fry_Unit_2"> </string>
-    <string value="../resources/sprites/unit/normalkidunit/walk0.png" id="IDS_Normal_Fry_Unit_3"> </string>
-    <string value="../resources/sprites/unit/normalkidunit/walk1.png" id="IDS_Normal_Fry_Unit_4"> </string>
+    <!--AverageKidUnit-->
+    <string value="../resources/sprites/unit/averagekidunit/punchleft.png" id="IDS_Average_Kid_Unit_0"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/punchright.png" id="IDS_Average_Kid_Unit_1"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/standing.png" id="IDS_Average_Kid_Unit_2"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/walk0.png" id="IDS_Average_Kid_Unit_3"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/walk1.png" id="IDS_Average_Kid_Unit_4"> </string>
     <!--FatKidUnit-->
     <string value="../resources/sprites/unit/fatkidunit/punchleft.png" id="IDS_Fat_Fry_Unit_0"> </string>
     <string value="../resources/sprites/unit/fatkidunit/punchright.png" id="IDS_Fat_Fry_Unit_1"> </string>
@@ -223,67 +223,6 @@
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
-    <!--TowerTypeIDS-->
-    <!--No Tower -->
-    <string value="NT" id="IDS_NT"> </string>
-    <string value="NT" id="-1"> </string>
-    <!--Exit Tile-->
-    <string value="EXT" id="IDS_EXT"> </string>
-    <string value="0" id="IDS_EXT"> </string>
-    <!--CheesePizza-->
-    <string value="CPT" id="IDS_CPT"> </string>
-    <string value="CPT" id="111"> </string>
-    <!--PepperoniPizza-->
-    <string value="PPT" id="IDS_PPT"> </string>
-    <string value="PPT" id="121"> </string>
-    <!--DeepDish-->
-    <string value="DDT" id="IDS_DDT"> </string>
-    <string value="DDT" id="131"> </string>
-    <!--MeatLovers-->
-    <string value="MLT" id="IDS_MLT"> </string>
-    <string value="MLT" id="132"> </string>
-    <!--MiniM&Ms-->
-    <string value="MMMT" id="IDS_MMMT"> </string>
-    <string value="MMMT" id="211"> </string>
-    <!--NormalM&Ms-->
-    <string value="NMMT" id="IDS_NMMT"> </string>
-    <string value="NMMT" id="221"> </string>
-    <!--PeautButterM&Ms-->
-    <string value="PBMMT" id="IDS_PBMMT"> </string>
-    <string value="PBMMT" id="231"> </string>
-    <!--PeanutM&Ms-->
-    <string value="PMMT" id="IDS_PMMT"> </string>
-    <string value="PMMT" id="232"> </string>
-    <!--Soda-->
-    <string value="SOT" id="IDS_SOT"> </string>
-    <string value="SOT" id="311"> </string>
-    <!--EnergyDrink-->
-    <string value="EDT" id="IDS_EDT"> </string>
-    <string value="EDT" id="321"> </string>
-    <!--Gravy-->
-    <string value="GT" id="IDS_GT"> </string>
-    <string value="GT" id="331"> </string>
-    <!--Slushie-->
-    <string value="SLT" id="IDS_SLT"> </string>
-    <string value="SLT" id="332"> </string>
-    <!--NormalFry-->
-    <string value="NFT" id="IDS_NFT"> </string>
-    <string value="NFT" id="411"> </string>
-    <!--CrinkleFry-->
-    <string value="CFT" id="IDS_CFT"> </string>
-    <string value="CFT" id="421"> </string>
-    <!--SpicyFry-->
-    <string value="SFT" id="IDS_SFT"> </string>
-    <string value="SFT" id="431"> </string>
-    <!--WaffleFry-->
-    <string value="WFT" id="IDS_WFT"> </string>
-    <string value="WFT" id="432"> </string>
-    <!-- Cafeteria Table-->
-    <string value="CTO" id="IDS_CTO"> </string>
-    <string value="CTO" id="-3"> </string>
-    <!--Trash Can -->
-    <string value="TCO" id="IDS_TCO"> </string>
-    <string value="TCO" id="-4"> </string>
 
 
     <!--Option-->
@@ -302,3 +241,111 @@
     <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text"> </string>
 
 </strings>
+
+<typeids>
+  <!--TowerTypeIDS-->
+  <!--No Tower -->
+  <typeid value="No_Tower" id="IDS_NT"> </typeid>
+  <typeid value="No_Tower" id="-1"> </typeid>
+  <!--Exit Tile-->
+  <typeid value="Exit" id="IDS_EXT"> </typeid>
+  <typeid value="Exit" id="0"> </typeid>
+  <!--CheesePizza-->
+  <typeid value="Cheese_Pizza_Tower" id="IDS_CPT"> </typeid>
+  <typeid value="Cheese_Pizza_Tower" id="111"> </typeid>
+  <!--PepperoniPizza-->
+  <typeid value="Pepperoni_Pizza_Tower" id="IDS_PPT"> </typeid>
+  <typeid value="Pepperoni_Pizza_Tower" id="121"> </typeid>
+  <!--DeepDish-->
+  <typeid value="Deep_Dish_Tower" id="IDS_DDT"> </typeid>
+  <typeid value="Deep_Dish_Tower" id="131"> </typeid>
+  <!--MeatLovers-->
+  <typeid value="Meat_Lovers_Tower" id="IDS_MLT"> </typeid>
+  <typeid value="Meat_Lovers_Tower" id="132"> </typeid>
+  <!--MiniM&Ms-->
+  <typeid value="Mini_MMS_Tower" id="IDS_MMMT"> </typeid>
+  <typeid value="Mini_MMS_Tower" id="211"> </typeid>
+  <!--NormalM&Ms-->
+  <typeid value="Normal_MMS_Tower" id="IDS_NMMT"> </typeid>
+  <typeid value="Normal_MMS_Tower" id="221"> </typeid>
+  <!--PeautButterM&Ms-->
+  <typeid value="Peanut_Butter_MMS_Tower" id="IDS_PBMMT"> </typeid>
+  <typeid value="Peanut_Butter_MMS_Tower" id="231"> </typeid>
+  <!--PeanutM&Ms-->
+  <typeid value="Peanut_MMS_Tower" id="IDS_PMMT"> </typeid>
+  <typeid value="Peanut_MMS_Tower" id="232"> </typeid>
+  <!--Soda-->
+  <typeid value="Soda_Tower" id="IDS_SOT"> </typeid>
+  <typeid value="Soda_Tower" id="311"> </typeid>
+  <!--EnergyDrink-->
+  <typeid value="Energy_Drink_Tower" id="IDS_EDT"> </typeid>
+  <typeid value="Energy_Drink_Tower" id="321"> </typeid>
+  <!--Gravy-->
+  <typeid value="Gravy_Tower" id="IDS_GT"> </typeid>
+  <typeid value="Gravy_Tower" id="331"> </typeid>
+  <!--Slushie-->
+  <typeid value="Slushie_Tower" id="IDS_SLT"> </typeid>
+  <typeid value="Slushie_Tower" id="332"> </typeid>
+  <!--NormalFry-->
+  <typeid value="Normal_Fry_Tower" id="IDS_NFT"> </typeid>
+  <typeid value="Normal_Fry_Tower" id="411"> </typeid>
+  <!--CrinkleFry-->
+  <typeid value="Crinkle_Fry_Tower" id="IDS_CFT"> </typeid>
+  <typeid value="Crinkle_Fry_Tower" id="421"> </typeid>
+  <!--SpicyFry-->
+  <typeid value="Spicy_Fry_Tower" id="IDS_SFT"> </typeid>
+  <typeid value="Spicy_Fry_Tower" id="431"> </typeid>
+  <!--WaffleFry-->
+  <typeid value="Waffle_Fry_Tower" id="IDS_WFT"> </typeid>
+  <typeid value="Waffle_Fry_Tower" id="432"> </typeid>
+
+  <!--ObstacleTypeIDs-->
+  <!-- Cafeteria Table-->
+  <typeid value="Cafeteria_Table_Obstacle" id="IDS_CTO"> </typeid>
+  <typeid value="Cafeteria_Table_Obstacle" id="-3"> </typeid>
+  <!--Trash Can -->
+  <typeid value="Trash_Can_Obstacle" id="IDS_TCO"> </typeid>
+  <typeid value="Trash_Can_Obstacle" id="-4"> </typeid>
+
+  <!--ProjectileTypeIDs-->
+  <!--CheesePizza Projectile-->
+  <typeid value="Cheese_Pizza_Projectile" id="IDS_CPP"> </typeid>
+  <!--PepperoniPizza Projectile-->
+  <typeid value="Pepperoni_Pizza_Projectile" id="IDS_PPP"> </typeid>
+  <!--DeepDish Projectile-->
+  <typeid value="Deep_Dish_Projectile" id="IDS_DDP"> </typeid>
+  <!--MeatLovers Projectile-->
+  <typeid value="Meat_Lovers_Projectile" id="IDS_MLP"> </typeid>
+  <!--MiniM&Ms Projectile-->
+  <typeid value="Mini_MMS_Projectile" id="IDS_MMMP"> </typeid>
+  <!--NormalM&Ms Projectile-->
+  <typeid value="Normal_MMS_Projectile" id="IDS_NMMP"> </typeid>
+  <!--PeautButterM&Ms Projectile-->
+  <typeid value="Peanut_Butter_MMS_Projectile" id="IDS_PBMMP"> </typeid>
+  <!--PeanutM&Ms Projectile-->
+  <typeid value="Peanut_MMS_Projectile" id="IDS_PMMP"> </typeid>
+  <!--Soda Projectile-->
+  <typeid value="Soda_Projectile" id="IDS_SOP"> </typeid>
+  <!--EnergyDrink Projectile-->
+  <typeid value="Energy_Drink_Projectile" id="IDS_EDP"> </typeid>
+  <!--Gravy Projectile-->
+  <typeid value="Gravy_Projectile" id="IDS_GP"> </typeid>
+  <!--Slushie Projectile-->
+  <typeid value="Slushie_Projectile" id="IDS_SLP"> </typeid>
+
+  <!--UnitTypeIDs-->
+  <!--NormalFry Unit-->
+  <typeid value="Normal_Fry_Unit" id="IDS_NFU"> </typeid>
+  <!--CrinkleFry Unit-->
+  <typeid value="Crinkle_Fry_Unit" id="IDS_CFU"> </typeid>
+  <!--SpicyFry Unit-->
+  <typeid value="Spicy_Fry_Unit" id="IDS_SFU"> </typeid>
+  <!--WaffleFry Unit-->
+  <typeid value="Waffle_Fry_Unit" id="IDS_WFU"> </typeid>
+  <!--SkinnyKid Unit-->
+  <typeid value="Skinny_Kid_Unit" id="IDS_SKU"> </typeid>
+  <!--AverageKid Unit-->
+  <typeid value="Average_Kid_Unit" id="IDS_AKU"> </typeid>
+  <!--FatKid Unit-->
+  <typeid value="Fat_Kid_Unit" id="IDS_FKU"> </typeid>
+</typeids>

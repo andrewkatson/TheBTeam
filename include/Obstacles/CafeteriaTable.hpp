@@ -3,8 +3,10 @@
 #include "Obstacle.hpp"
 
 class CafeteriaTable : public Obstacle{
+private:
+
 public:
-  CafeteriaTable(shared_ptr<TextLoader> textLoader, string towerTypeID,shared_ptr<EventManager> eventManager);
+  CafeteriaTable(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void setProjectile(){}
   void setUpUnits(){}

@@ -4,7 +4,7 @@
 #include "../Projectiles/PeanutButterMMSProjectile.hpp"
 class PeanutButterMMS : public RangeTower{
 public:
-  PeanutButterMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  PeanutButterMMS(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
   /*

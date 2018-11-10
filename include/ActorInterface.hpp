@@ -11,11 +11,14 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <vector>
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
+#include "TextureLoader.hpp"
 
 using std::shared_ptr;
 using std::addressof;
+using std::vector;
 class ActorInterface{
 
 protected:
@@ -28,8 +31,14 @@ protected:
   //The unique identifier for the actor.
   long long  id;
 
+  //the string identifier for the type of actor (specific to each type of actor)
+  string actorTypeID;
+
   //The sprite corresponding to the actor.
   sf::Sprite sprite;
+
+  //all the textures for this actor
+  shared_ptr<vector<sf::Texture>> textures;
 
   //The actor's movement speed in [units]. [pixels per millisecond? microsecond?]
   float speed;
@@ -102,6 +111,11 @@ public:
             false otherwise.
    */
   bool isCollision(sf::FloatRect colliding_with);
+
+  /*
+   * Return actor type ID
+   */
+  string getType(){return actorTypeID;}
 
   /*
    * update the position, check if it hit its target

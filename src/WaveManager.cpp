@@ -10,20 +10,21 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> textureLoader = textureLoader;
   this -> currentWaveNumber = 0;
   this -> setUpPossibleEnemies();
 }
 
 
 void WaveManager::setUpPossibleEnemies(){
-  shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(textLoader, eventManager);
+  shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(textLoader, eventManager, textureLoader);
 
-  shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(textLoader, eventManager);
+  shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(textLoader, eventManager, textureLoader);
 
-  shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(textLoader, eventManager);
+  shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(textLoader, eventManager, textureLoader);
 
   enemies.push_back(skinnyKid);
   enemies.push_back(averageKid);

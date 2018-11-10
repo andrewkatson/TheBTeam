@@ -3,7 +3,7 @@
 #include "../Projectiles/EnergyDrinkProjectile.hpp"
 class EnergyDrink : public RangeTower{
 public:
-  EnergyDrink(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  EnergyDrink(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
   /*

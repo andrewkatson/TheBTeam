@@ -5,7 +5,7 @@
 class WaffleFry : public MeleeTower{
 private:
 public:
-  WaffleFry(shared_ptr<TextLoader> textLoader, string towerTypeID, int maxMeleeUnits, shared_ptr<EventManager> eventManager);
+  WaffleFry(shared_ptr<TextLoader> textLoader,  int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   virtual void upgrade();
   virtual void setUpUnits();

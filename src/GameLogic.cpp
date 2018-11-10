@@ -8,15 +8,16 @@
 #include "GameLogic.hpp"
 
 //Constructor.
-GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY){
+GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader){
   this -> textLoader = textLoader;
+  this -> textureLoader = textureLoader;
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader));
+  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
-  this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader));
+  this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader, textureLoader));
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerEvents();
   this -> registerDelegates();

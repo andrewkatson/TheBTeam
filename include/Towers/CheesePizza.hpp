@@ -4,7 +4,7 @@
 #include "../Projectiles/CheesePizzaProjectile.hpp"
 class CheesePizza : public RangeTower{
 public:
-  CheesePizza(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  CheesePizza(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
 

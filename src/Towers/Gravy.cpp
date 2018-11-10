@@ -1,15 +1,17 @@
 #include "Towers/Gravy.hpp"
 
-Gravy::Gravy(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader){
-  this -> towerTypeID = towerTypeID;
+Gravy::Gravy(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
+  this -> towerTypeID = textLoader->getTypeID(string("IDS_GT"));
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_GT_ROF"));
   this -> radius = textLoader->getInteger(string("IDS_GT_RA"));
   this -> price = textLoader->getInteger(string("IDS_GT_PR"));
+  this -> textureLoader = textureLoader;
+  this -> setProjectile();
 }
 
 void Gravy::upgrade(){}
 
 void Gravy::setProjectile(){
-  this-> currentProjectile = make_shared<GravyProjectile>(textLoader, eventManager);
+  this-> currentProjectile = make_shared<GravyProjectile>(textLoader, eventManager, textureLoader);
 }

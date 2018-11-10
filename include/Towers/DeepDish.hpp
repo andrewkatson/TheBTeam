@@ -3,7 +3,7 @@
 #include "../Projectiles/DeepDishProjectile.hpp"
 class DeepDish : public RangeTower{
 public:
-  DeepDish(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  DeepDish(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
   /*

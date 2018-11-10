@@ -7,7 +7,7 @@ private:
 
 public:
 
-  CrinkleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager);
+  CrinkleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
   void move(float delta){MeleeUnit::move(delta);}
   void update(float delta){MeleeUnit::update(delta);}
 };

@@ -3,7 +3,7 @@
 #include "../Projectiles/MeatLoversProjectile.hpp"
 class MeatLovers : public RangeTower{
 public:
-  MeatLovers(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  MeatLovers(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
   /*

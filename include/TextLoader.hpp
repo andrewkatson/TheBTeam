@@ -24,15 +24,20 @@ public:
 
   TextLoader();
   std::string getString(const std::string id);
+  std::string getTypeID(const std::string id);
   int getInteger(const std::string id);
   double getDouble(const std::string id);
 
+  unordered_map<string, string>& getAllTypeIDS();
+
 private:
   unordered_map<string, string> strings;
+  unordered_map<string, string> typeids;
   unordered_map<string, int> ints;
   unordered_map<string, double> doubles;
 
   void loadStrings();
+  void loadTypeIDS();
   void loadInts();
   void loadDoubles();
 };

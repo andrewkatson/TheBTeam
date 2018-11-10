@@ -1,15 +1,17 @@
 #include "Towers/EnergyDrink.hpp"
 
-EnergyDrink::EnergyDrink(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager) : RangeTower(eventManager, textLoader) {
-  this -> towerTypeID = towerTypeID;
+EnergyDrink::EnergyDrink(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader) {
+  this -> towerTypeID = textLoader->getTypeID(string("IDS_EDT"));
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_EDT_ROF"));
   this -> radius = textLoader->getInteger(string("IDS_EDT_RA"));
   this -> price = textLoader->getInteger(string("IDS_EDT_PR"));
+  this -> textureLoader = textureLoader;
+  this -> setProjectile();
 }
 
 void EnergyDrink::upgrade(){}
 
 void EnergyDrink::setProjectile(){
-  this-> currentProjectile = make_shared<EnergyDrinkProjectile>(textLoader, eventManager);
+  this-> currentProjectile = make_shared<EnergyDrinkProjectile>(textLoader, eventManager, textureLoader);
 }

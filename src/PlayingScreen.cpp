@@ -156,7 +156,7 @@ void PlayingScreen::initBuyTowerButton(){
   (this -> buyTower) -> setButtonPosition( TOPRIGHT);
 
   //make the button invisible to begin with
-  //(this->buyTower) -> flipVisibility();
+  (this->buyTower) -> flipVisibility();
 }
 
 /*

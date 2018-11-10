@@ -3,7 +3,7 @@
 #include "../Projectiles/SodaProjectile.hpp"
 class Soda : public RangeTower{
 public:
-  Soda(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  Soda(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
 
