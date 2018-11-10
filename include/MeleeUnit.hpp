@@ -43,6 +43,8 @@ public:
 
   void update(float delta);
 
+  void initSprite();
+
   int getLunchMoney() const;
 
   void setLunchMoney(int lunchMoney);

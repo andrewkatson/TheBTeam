@@ -8,6 +8,7 @@ PepperoniPizza::PepperoniPizza(shared_ptr<TextLoader> textLoader,shared_ptr<Even
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void PepperoniPizza::upgrade(){}

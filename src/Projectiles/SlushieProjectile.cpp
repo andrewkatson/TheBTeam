@@ -9,4 +9,5 @@ SlushieProjectile::SlushieProjectile(shared_ptr<TextLoader> textLoader,  shared_
   this -> areaOfEffect = textLoader->getInteger(string("IDS_SL_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_SLP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

@@ -9,4 +9,5 @@ SodaProjectile::SodaProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this -> areaOfEffect = textLoader->getInteger(string("IDS_SO_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_SOP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

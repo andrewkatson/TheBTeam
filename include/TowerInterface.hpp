@@ -36,7 +36,8 @@ protected:
   //Store the textureLoader to get the textures for this tower and pass to
   //any dependent units or projectiles
   shared_ptr<TextureLoader> textureLoader;
-
+  //The sprite corresponding to the tower.
+  sf::Sprite sprite;
   //the tower type identifier that allows for its next upgrade to be pulled
   string towerTypeID;
   //the price of the tower (cost to remove in the case of an obstacle)
@@ -69,6 +70,14 @@ public:
    * update the position, check if it hit its target
    */
   virtual void update(float delta)=0;
+
+  /*
+    Returns the actor's sprite.
+
+    @return the Sprite object that the interface contains.
+   */
+  sf::Sprite& getSprite(){return sprite;}//PEOPLE WHO KNOW MORE THAN ME: SHOULD THIS RETURN A REFERENCE?
+
 
 };
 

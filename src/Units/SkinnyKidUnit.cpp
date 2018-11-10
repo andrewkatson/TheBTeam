@@ -14,4 +14,5 @@ SkinnyKidUnit::SkinnyKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->lunchMoney=textLoader->getInteger(string("IDS_SK_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_SKU"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

@@ -9,6 +9,7 @@ Soda::Soda(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventMana
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void Soda::upgrade(){}

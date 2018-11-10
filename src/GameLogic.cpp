@@ -505,3 +505,10 @@ const int GameLogic::getCols(){
 const MapChoices& GameLogic::getMapCustomizationChoices(){
   return boardManager -> getMapCustomizationChoices();
 }
+
+/*
+ * @return the unordered map of all the towers placed on the board
+ */
+const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced(){
+  return towerManager -> getTowersPlaced();
+}

@@ -9,4 +9,5 @@ PeanutMMSProjectile::PeanutMMSProjectile(shared_ptr<TextLoader> textLoader, shar
   this -> areaOfEffect = textLoader->getInteger(string("IDS_PMM_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_PMMP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

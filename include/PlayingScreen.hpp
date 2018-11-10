@@ -60,7 +60,6 @@ public:
   void handleMousePress(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
-  void drawBuyTowerButton(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);
   void drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize,
     int xTileSize, int pathValue, sf::RectangleShape& floorRect);
@@ -68,6 +67,9 @@ public:
      int xTileSize, int tileValue, sf::RectangleShape& floorRect);
   void drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize,
      int xTileSize, sf::RectangleShape& floorRect);
+  void drawTowersAndObstacles(sf::RenderWindow& window);
+  void drawBuyTowerButton(sf::RenderWindow& window);
+
 
   template <class T>
   void printVector(const vector<vector<T>> &v);

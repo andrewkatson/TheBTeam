@@ -8,4 +8,5 @@ NormalMMSProjectile::NormalMMSProjectile(shared_ptr<TextLoader> textLoader, shar
   this -> areaOfEffect = textLoader->getInteger(string("IDS_NMM_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_NMMP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

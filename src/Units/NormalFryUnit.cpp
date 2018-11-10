@@ -10,4 +10,5 @@ NormalFryUnit::NormalFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->lunchMoney=textLoader->getInteger(string("IDS_NF_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_NFU"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

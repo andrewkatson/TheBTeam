@@ -35,6 +35,13 @@ void MeleeTower::upgrade(){}
 void MeleeTower::setUpUnits(){}
 
 /*
+ * Initliaze the texture for the sprite to be the first texture of the textures vector
+ */
+void MeleeTower::initSprite(){
+  (this->sprite).setTexture(textures -> at(0));
+}
+
+/*
  * Set the point where the melee units attached to this tower will go back to
  * when they are not fighting
  * @param x: the x coordinate

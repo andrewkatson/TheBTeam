@@ -9,4 +9,5 @@ EnergyDrinkProjectile::EnergyDrinkProjectile(shared_ptr<TextLoader> textLoader, 
   this -> areaOfEffect = textLoader->getInteger(string("IDS_ED_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_EDP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

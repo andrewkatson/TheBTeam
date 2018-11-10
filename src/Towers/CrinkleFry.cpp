@@ -11,6 +11,7 @@ CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, sha
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setUpUnits();
+  this -> initSprite();
 }
 
 void CrinkleFry::upgrade(){}

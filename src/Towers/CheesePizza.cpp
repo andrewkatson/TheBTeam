@@ -9,6 +9,7 @@ CheesePizza::CheesePizza(shared_ptr<TextLoader> textLoader, shared_ptr<EventMana
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void CheesePizza::upgrade(){}

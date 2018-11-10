@@ -9,6 +9,7 @@ NormalMMS::NormalMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager>
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void NormalMMS::upgrade(){}

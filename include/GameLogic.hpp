@@ -123,6 +123,8 @@ public:
 
   const MapChoices& getMapCustomizationChoices();
 
+  const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
+
 };
 
 #endif

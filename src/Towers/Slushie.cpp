@@ -9,6 +9,7 @@ Slushie::Slushie(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> even
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this-> setProjectile();
+  this -> initSprite();
 }
 
 void Slushie::upgrade(){}

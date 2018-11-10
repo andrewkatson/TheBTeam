@@ -8,6 +8,7 @@ MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eve
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void MiniMMS::upgrade(){}

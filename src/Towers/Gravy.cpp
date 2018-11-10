@@ -9,6 +9,7 @@ Gravy::Gravy(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventMan
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void Gravy::upgrade(){}

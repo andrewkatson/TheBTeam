@@ -407,37 +407,10 @@ void PlayingScreen::draw(sf::RenderWindow &window){
     haveSetColorShift=true;
   }
   drawFloorMap(window);
+  drawTowersAndObstacles(window);
   drawBuyTowerButton(window);
 
 
-}
-
-/*
- * Draw the buy tower button
- * @param window: the game window to draw on
- */
-void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
-
-  //if the button is invisible do not draw it
-  if(!buyTower -> isCurrentlyVisible()){
-    return;
-  }
-
-  //used to make the font local
-  string mainFontPath = textLoader -> getString(string("IDS_Black_Berry_Jam"));
-
-  if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
-  }
-  else{
-  //  cout << "loaded font!" << endl;
-  }
-
-  text = buyTower -> getButtonText();
-  text.setFont(mainFont);
-
-  window.draw(buyTower -> getButtonRect());
-  window.draw(text);
 }
 
 /*
@@ -466,7 +439,7 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
       if(floorValue > 0){
         drawFloorPath(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
       }
-      //if this is a floor
+      //if this is a floor tile
       else if(floorValue < 0){
         drawFloorTile(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
       }
@@ -497,7 +470,7 @@ void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col,
     //if this was an actual path version
     if(checkPathColorValue != -1){
 
-      //weird tuple syntax but it just grabs the r in the tuple for this row, col
+      //weird tuple syntax but it just grabs the color shift in the tuple for this row, col
       int redShift = get<0>(pathColorShifts.at(row).at(col));
       int greenShift = get<1>(pathColorShifts.at(row).at(col));
       int blueShift = get<2>(pathColorShifts.at(row).at(col));
@@ -564,7 +537,7 @@ void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
   //if this was an actual tile version
   if(checkTileColorValue != -1){
 
-    //weird tuple syntax but it just grabs the r in the tuple for this row, col
+    //weird tuple syntax but it just grabs the color shift in the tuple for this row, col
     int redShift = get<0>(pathColorShifts.at(row).at(col));
     int greenShift = get<1>(pathColorShifts.at(row).at(col));
     int blueShift = get<2>(pathColorShifts.at(row).at(col));
@@ -619,6 +592,42 @@ void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
      //draw the rectangle
      window.draw(floorRect);
 
+}
+
+/*
+ * Draw the Towers and Obstacles currently placed on the board
+ * @param window: the game window to draw on
+ */
+void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
+  const unordered_map<int, shared_ptr<TowerInterface>> towersPlaced = gameLogic -> getTowersPlaced();
+}
+
+/*
+ * Draw the buy tower button
+ * @param window: the game window to draw on
+ */
+void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
+
+  //if the button is invisible do not draw it
+  if(!buyTower -> isCurrentlyVisible()){
+    return;
+  }
+
+  //used to make the font local
+  string mainFontPath = textLoader -> getString(string("IDS_Black_Berry_Jam"));
+
+  if(!mainFont.loadFromFile(mainFontPath)){
+    cout << "No font!" << endl;
+  }
+  else{
+  //  cout << "loaded font!" << endl;
+  }
+
+  text = buyTower -> getButtonText();
+  text.setFont(mainFont);
+
+  window.draw(buyTower -> getButtonRect());
+  window.draw(text);
 }
 
 template <class T>

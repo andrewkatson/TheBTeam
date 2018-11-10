@@ -10,6 +10,7 @@ WaffleFry::WaffleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, share
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setUpUnits();
+  this -> initSprite();
 }
 
 void WaffleFry::upgrade(){}

@@ -9,4 +9,5 @@ DeepDishProjectile::DeepDishProjectile(shared_ptr<TextLoader> textLoader, shared
   this -> areaOfEffect = textLoader->getInteger(string("IDS_DD_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_DDP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

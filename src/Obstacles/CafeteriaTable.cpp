@@ -4,4 +4,6 @@ CafeteriaTable::CafeteriaTable(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this -> towerTypeID = textLoader -> getTypeID(string("IDS_CTO"));
   this -> price = textLoader -> getInteger(string("IDS_CT_PR"));
   this -> textures = textureLoader -> getTexture(towerTypeID);
+
+  this -> initSprite();
 }

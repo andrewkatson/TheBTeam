@@ -9,6 +9,7 @@ SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setUpUnits();
+  this -> initSprite();
 }
 
 void SpicyFry::upgrade(){}

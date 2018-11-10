@@ -14,4 +14,5 @@ FatKidUnit::FatKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManage
   this->lunchMoney=textLoader->getInteger(string("IDS_FK_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_FKU"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

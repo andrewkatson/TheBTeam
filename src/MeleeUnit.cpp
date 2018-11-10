@@ -16,6 +16,13 @@ void MeleeUnit::update(float delta){
 
 }
 
+/*
+ * Initliaze the texture for the sprite to be the first texture of the textures vector
+ */
+void MeleeUnit::initSprite(){
+  (this->sprite).setTexture(textures -> at(0));
+}
+
 void MeleeUnit::updateHitpoints(int damage){
   hitpoints-=damage;
 }

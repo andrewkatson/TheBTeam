@@ -9,6 +9,7 @@ EnergyDrink::EnergyDrink(shared_ptr<TextLoader> textLoader,  shared_ptr<EventMan
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void EnergyDrink::upgrade(){}

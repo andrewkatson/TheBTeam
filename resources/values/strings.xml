@@ -156,11 +156,11 @@
     <string value="../resources/sprites/unit/averagekidunit/walk0.png" id="IDS_Average_Kid_Unit_3"> </string>
     <string value="../resources/sprites/unit/averagekidunit/walk1.png" id="IDS_Average_Kid_Unit_4"> </string>
     <!--FatKidUnit-->
-    <string value="../resources/sprites/unit/fatkidunit/punchleft.png" id="IDS_Fat_Fry_Unit_0"> </string>
-    <string value="../resources/sprites/unit/fatkidunit/punchright.png" id="IDS_Fat_Fry_Unit_1"> </string>
-    <string value="../resources/sprites/unit/fatkidunit/standing.png" id="IDS_Fat_Fry_Unit_2"> </string>
-    <string value="../resources/sprites/unit/fatkidunit/walk0.png" id="IDS_Fat_Fry_Unit_3"> </string>
-    <string value="../resources/sprites/unit/fatkidunit/walk1.png" id="IDS_Fat_Fry_Unit_4"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/punchleft.png" id="IDS_Fat_Kid_Unit_0"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/punchright.png" id="IDS_Fat_Kid_Unit_1"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/standing.png" id="IDS_Fat_Kid_Unit_2"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/walk0.png" id="IDS_Fat_Kid_Unit_3"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/walk1.png" id="IDS_Fat_Kid_Unit_4"> </string>
     <!--NormalFryUnit-->
     <string value="../resources/sprites/unit/normalfryguy/punchleft.png" id="IDS_Normal_Fry_Unit_0"> </string>
     <string value="../resources/sprites/unit/normalfryguy/punchright.png" id="IDS_Normal_Fry_Unit_1"> </string>

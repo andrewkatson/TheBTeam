@@ -8,6 +8,7 @@ PeanutButterMMS::PeanutButterMMS(shared_ptr<TextLoader> textLoader, shared_ptr<E
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
+  this -> initSprite();
 }
 
 void PeanutButterMMS::upgrade(){}
