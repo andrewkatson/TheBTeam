@@ -7,4 +7,5 @@ MeatLoversProjectile::MeatLoversProjectile(shared_ptr<TextLoader> textLoader, sh
   this -> armorPenetration = textLoader->getInteger(string("IDS_ML_AP"));;
   this -> areaOfEffect = textLoader->getInteger(string("IDS_ML_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_MLP"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

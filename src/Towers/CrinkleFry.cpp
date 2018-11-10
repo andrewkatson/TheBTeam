@@ -9,6 +9,7 @@ CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, sha
   this -> price = textLoader->getInteger(string("IDS_CFT_PR"));
   this -> towerTypeID = textLoader->getTypeID(string("IDS_CFT"));
   this -> textureLoader = textureLoader;
+  this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setUpUnits();
 }
 

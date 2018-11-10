@@ -7,4 +7,5 @@ GravyProjectile::GravyProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<E
   this -> armorPenetration = textLoader->getInteger(string("IDS_G_AP"));;
   this -> areaOfEffect = textLoader->getInteger(string("IDS_G_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_GP"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

@@ -10,6 +10,7 @@ NormalFry::NormalFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, share
   this -> price = textLoader->getInteger(string("IDS_NFT_PR"));
   this -> towerTypeID = textLoader->getTypeID(string("IDS_NFT"));
   this -> textureLoader = textureLoader;
+  this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setUpUnits();
 }
 

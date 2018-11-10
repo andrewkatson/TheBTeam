@@ -9,4 +9,5 @@ SpicyFryUnit::SpicyFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventMa
   this->attackRadius= textLoader->getInteger(string("IDS_SF_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_SF_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_SFU"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

@@ -8,4 +8,5 @@ MiniMMSProjectile::MiniMMSProjectile(shared_ptr<TextLoader> textLoader, shared_p
   this -> armorPenetration = textLoader->getInteger(string("IDS_MMM_AP"));;
   this -> areaOfEffect = textLoader->getInteger(string("IDS_MMM_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_MMMP"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

@@ -13,4 +13,5 @@ AverageKidUnit::AverageKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this->attackRadius=textLoader->getInteger(string("IDS_AK_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_AK_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_AKU"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

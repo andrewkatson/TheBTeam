@@ -6,6 +6,7 @@ PepperoniPizza::PepperoniPizza(shared_ptr<TextLoader> textLoader,shared_ptr<Even
   this -> radius = textLoader->getInteger(string("IDS_PPT_RA"));
   this -> price = textLoader->getInteger(string("IDS_PPT_PR"));
   this -> textureLoader = textureLoader;
+  this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
 }
 

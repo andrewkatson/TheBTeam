@@ -9,4 +9,5 @@ CheesePizzaProjectile::CheesePizzaProjectile(shared_ptr<TextLoader> textLoader, 
   this -> armorPenetration = textLoader->getInteger(string("IDS_CP_AP"));;
   this -> areaOfEffect = textLoader->getInteger(string("IDS_CP_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_CPP"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

@@ -39,10 +39,9 @@ void TextLoader::loadTypeIDS(){
   doc.LoadFile( "../resources/values/strings.xml" );
   tinyxml2::XMLElement * root =  doc.FirstChildElement("typeids");
 
-  for(tinyxml2::XMLElement* node = root->FirstChildElement("typeid"); node != NULL; node= node->NextSiblingElement("string")) {
+  for(tinyxml2::XMLElement* node = root->FirstChildElement("typeid"); node != NULL; node= node->NextSiblingElement("typeid")) {
     string s(node->Attribute("id"));
     typeids.insert({s, node -> Attribute("value")});
-
   }
 }
 

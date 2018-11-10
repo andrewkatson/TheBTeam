@@ -41,7 +41,6 @@ void TextureLoader::initTextures(){
       //ex: ../resources/sprites/projectile/cheezpizz/slice.png
       // using IDS_Cheese_Pizza_Projectile_0
       texturePathString = textLoader->getString(baseTypeIDString + string(to_string(texturePathCounter)));
-
       //if this is not a valid path we break
       if(texturePathString == "String not found"){
         break;
@@ -52,6 +51,8 @@ void TextureLoader::initTextures(){
       textureToAdd.loadFromFile(texturePathString);
       //add it to the vector of textures for the current type
       allTextures.at(currentTypeID) -> push_back(textureToAdd);
+      //increment to the next texture path
+      texturePathCounter++;
     }
   }
 }
@@ -62,10 +63,9 @@ void TextureLoader::initTextures(){
  * @return a pointer to a vector of all the textures used by a class
  */
 shared_ptr<vector<sf::Texture>> TextureLoader::getTexture(string typeID){
-
   //if the typeID has textures
   if(allTextures.find(typeID) != allTextures.end()){
     return allTextures.at(typeID);
   }
-
+  return NULL;
 }

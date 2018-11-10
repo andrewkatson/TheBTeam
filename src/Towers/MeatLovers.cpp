@@ -6,6 +6,7 @@ MeatLovers::MeatLovers(shared_ptr<TextLoader> textLoader, shared_ptr<EventManage
   this -> radius = textLoader->getInteger(string("IDS_MLT_RA"));
   this -> price = textLoader->getInteger(string("IDS_MLT_PR"));
   this -> textureLoader = textureLoader;
+  this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
 }
 

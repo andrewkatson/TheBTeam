@@ -9,4 +9,5 @@ CrinkleFryUnit::CrinkleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this->attackRadius=textLoader->getInteger(string("IDS_CF_AR"));;;
   this->lunchMoney= textLoader->getInteger(string("IDS_CF_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_CFU"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

@@ -3,6 +3,8 @@
 ###Added
 - MapGeneratedEvent and MapGeneratedEventData [@andrewkatson][https://github.com/andrewkatson]
 - TextureLoader
+- Textures for cafeteriatable and trashcan
+- Blank textures for all the type of tower until they are finished 
 
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]

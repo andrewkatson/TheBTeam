@@ -10,4 +10,5 @@ WaffleFryUnit::WaffleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->attackRadius=textLoader->getInteger(string("IDS_WF_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_WF_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_WFU"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
 }

@@ -6,6 +6,7 @@ MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eve
   this -> radius = textLoader->getInteger(string("IDS_MMMT_RA"));
   this -> price = textLoader->getInteger(string("IDS_MMMT_PR"));
   this -> textureLoader = textureLoader;
+  this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
 }
 

@@ -7,6 +7,7 @@ Gravy::Gravy(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventMan
   this -> radius = textLoader->getInteger(string("IDS_GT_RA"));
   this -> price = textLoader->getInteger(string("IDS_GT_PR"));
   this -> textureLoader = textureLoader;
+  this -> textures = textureLoader -> getTexture(towerTypeID);
   this -> setProjectile();
 }
 
