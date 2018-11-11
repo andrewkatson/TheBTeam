@@ -1,20 +1,27 @@
 #include "BuyTowerScreen.hpp"
 
-BuyTowerScreen::BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY){
+BuyTowerScreen::BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,int windowX, int windowY){
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> gameLogic = gameLogic;
 
-  //unused because it was causing issues
-  //this -> initText();
+  this -> initText();
 }
 
 /*
  * Initialize any parts of the text that will not change
  */
 void BuyTowerScreen::initText(){
+    this -> currentTitle = textLoader->getString(string("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+}
 
+/*
+ * Change the title of the buy tower screen text
+ */
+void BuyTowerScreen::changeTitleString(string newTitle){
+  this -> currentTitle =newTitle;
 }
 
 void BuyTowerScreen::draw(sf::RenderWindow &window){
@@ -32,9 +39,7 @@ void BuyTowerScreen::draw(sf::RenderWindow &window){
 
   // select the font
   title.setFont(font); // font is a sf::Font
-
-  string titleTextString = this->textLoader->getString(string("IDS_Buy_Tower_Title_Text"));
-  title.setString(titleTextString);
+  title.setString(currentTitle);
 
   int titleTextSize = this->textLoader->getInteger(string("IDS_Buy_Tower_Title_Text_Size"));
   title.setCharacterSize(titleTextSize);

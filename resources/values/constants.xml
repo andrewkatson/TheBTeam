@@ -10,7 +10,8 @@
   <constant value="100" id ="IDS_P_B"> </constant>
 
   <!--General Button-->
-  <constant value="10" id="IDS_Button_Padding"> </constant>
+  <constant value="10" id="IDS_Button_Position_Padding"> </constant>
+  <constant value="15" id="IDS_Button_Size_Padding"> </constant>
 
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->

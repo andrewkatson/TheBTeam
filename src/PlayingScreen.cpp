@@ -2,13 +2,15 @@
 
 
 
-PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic, int windowX, int windowY) : mt(std::random_device()()){
+PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic, shared_ptr<Screen> buyTowerScreen, int windowX, int windowY) : mt(std::random_device()()){
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
-  this -> buyTower = unique_ptr<Button>(new Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Button_Message")), textLoader));
+  this -> buyTowerScreen = buyTowerScreen;
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  this -> buyTower = unique_ptr<Button>(new Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Empty_Space")), textLoader, fontpath));
   somethingChanged = true;
   haveSetColorShift=false;
   this -> initDrawingMaterials();
@@ -151,6 +153,10 @@ void PlayingScreen::initBuyTowerButton(){
 
   //set the text character size
   this->buyTower -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Buy_Tower_Text_Size")));
+
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->buyTower) -> setFont(fontpath);
 
   //rescale the button and reset it
   (this -> buyTower) -> setButtonPosition( TOPRIGHT);
@@ -391,17 +397,45 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   //what col is being clicked
   int col = xPos / xTileSize;
 
+  //treat the buytowerscreen as itself and not a generic screen
+  BuyTowerScreen* trueBuyTowerScreen = dynamic_cast<BuyTowerScreen*>((this->buyTowerScreen).get());
+
   //if this is a tower
   if(gameLogic -> isTower(row,col)){
-
+    //change what the button says
+    (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Tower"));
+    //reset the button (scales it)
+    (this -> buyTower) -> setButtonPosition( TOPRIGHT);
+    //change what the title for the buyTowerScreen will say
+    trueBuyTowerScreen -> changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
   }
   //if this is an obstacle
   else if(gameLogic-> isObstacle(row,col)){
-
+    (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
+    trueBuyTowerScreen -> changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existig_Obstacle"));
+    (this -> buyTower) -> setButtonPosition( TOPRIGHT);
   }
   //if this is an empty tile (neither path nor exit)
   else if(gameLogic->isEmptySpace(row,col)){
+    (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Empty_Space"));
+    trueBuyTowerScreen -> changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+    (this -> buyTower) -> setButtonPosition( TOPRIGHT);
+  }
+  else{
+    if((this->buyTower)->isCurrentlyVisible()){
+      (this->buyTower)->flipVisibility();
+    }
+    return;
+  }
 
+  //if we have selected the same row and col as the last click then we
+  //flip the visibility of the button
+  if(row == rowSelected && colSelected == col){
+    (this->buyTower)->flipVisibility();
+  }
+  else{
+    rowSelected = row;
+    colSelected = col;
   }
 }
 
@@ -718,7 +752,7 @@ void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
   }
 
   //used to make the font local
-  string mainFontPath = textLoader -> getString(string("IDS_Black_Berry_Jam"));
+  string mainFontPath = textLoader -> getString(string("IDS_FFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
     cout << "No font!" << endl;
