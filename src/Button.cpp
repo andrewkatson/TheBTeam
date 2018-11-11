@@ -189,8 +189,8 @@ bool Button::isSelected(int mousePressX, int mousePressY){
   int xDim = rectDim.x;
   int yDim = rectDim.y;
 
-  if(xPos <= mousePressX && xPos <= xPos + xDim){
-    if(yPos <= mousePressY && yPos <= yPos + yDim){
+  if(xPos <= mousePressX && mousePressX <= xPos + xDim){
+    if(yPos <= mousePressY && mousePressY <= yPos + yDim){
       return true;
     }
   }
