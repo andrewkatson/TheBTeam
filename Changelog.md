@@ -5,6 +5,7 @@
 - TextureLoader
 - Textures for cafeteriatable and trashcan
 - Blank textures for all the type of tower until they are finished
+- XML tags for the OptionsMenu Switchers [kp-hb][https://github.com/kp-hb]
 
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]
