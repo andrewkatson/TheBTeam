@@ -4,7 +4,7 @@
 
 class TrashCan : public Obstacle{
 public:
-    TrashCan(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+    TrashCan(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
     void setProjectile(){}
     void setUpUnits(){}
     void setPos(intPair pos){this->row=pos.first;this->col=pos.second;}

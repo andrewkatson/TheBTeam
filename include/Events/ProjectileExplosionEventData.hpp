@@ -10,5 +10,5 @@ public:
   string projectileID;
   float timeStamp;
 
-  ProjectileExplosionEventData(string projectileID, float timeStamp);
+  ProjectileExplosionEventData(long long  projectileID, float timeStamp);
 };

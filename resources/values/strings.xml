@@ -1,6 +1,8 @@
 <?xml version ="1.0" encoding="UTF-8"?>
 <strings>
 
+    <!--Resource Paths-->
+
     <!--Font Paths -->
     <!--Title Font Path-->
     <string value="../resources/fonts/CafВ FranЗoise.otf" id="IDS_Title_Font_Path"> </string>
@@ -11,10 +13,184 @@
     <!--Tertiary Font Path-->
     <string value="../resources/fonts/chocolatebar.otf" id="IDS_TFP"> </string>
     <!--BlackBerry Jam-->
-    <string value="../resources/fonts/BlackberryJam.ttf" id="IDS_Black_Berry_Jam"> </string>
-
+    <string value="../resources/fonts/BlackberryJam.ttf" id="IDS_FFP"> </string>
     <!--Textures Path-->
     <string value="../resources/textures/foodfightmainpic.png" id="IDS_Main_Title_Pic"> </string>
+
+    <!--Sprites Paths-->
+
+    <!--Projectile Paths-->
+    <!--CheesePizzaProjectile-->
+    <string value="../resources/sprites/projectile/cheezpizz/slice.png" id="IDS_Cheese_Pizza_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/cheezpizz/slice.png" id="IDS_Cheese_Pizza_Projectile_1"> </string>
+    <!--PepperoniPizzaProjectile-->
+    <string value="../resources/sprites/projectile/pepperonipizza/slice.png" id="IDS_Pepperoni_Pizza_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/pepperonipizza/slice.png" id="IDS_Pepperoni_Pizza_Projectile_1"> </string>
+    <!--DeepDishProjectile-->
+    <string value="../resources/sprites/projectile/deepdish/slice.png" id="IDS_Deep_Dish_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/deepdish/slice.png" id="IDS_Deep_Dish_Projectile_1"> </string>
+    <!--MeatLoversProjectile-->
+    <string value="../resources/sprites/projectile/meatlovers/slice.png" id="IDS_Meat_Lovers_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/meatlovers/slice.png" id="IDS_Meat_Lovers_Projectile_1"> </string>
+    <!--SodaProjectile-->
+    <string value="../resources/sprites/projectile/colacan/projectile.png" id="IDS_Soda_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/colacan/projectile.png" id="IDS_Soda_Projectile_1"> </string>
+    <!--EnergyDrinkProjectile-->
+    <string value="../resources/sprites/projectile/energydrink/projectile.png" id="IDS_Energy_Drink_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/energydrink/projectile.png" id="IDS_Energy_Drink_Projectile_1"> </string>
+    <!--SlushieProjectile-->
+    <string value="../resources/sprites/projectile/slushie/projectile.png" id="IDS_Slushie_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/slushie/projectile.png" id="IDS_Slushie_Projectile_1"> </string>
+    <!--GravyProjectile-->
+    <string value="../resources/sprites/projectile/gravy/projectile.png" id="IDS_Gravy_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/gravy/projectile.png" id="IDS_Gravy_Projectile_1"> </string>
+    <!--MiniMMSProjectile-->
+    <string value="../resources/sprites/projectile/minimnm/blue.png" id="IDS_Mini_MMS_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/minimnm/brown.png" id="IDS_Mini_MMS_Projectile_1"> </string>
+    <string value="../resources/sprites/projectile/minimnm/green.png" id="IDS_Mini_MMS_Projectile_2"> </string>
+    <string value="../resources/sprites/projectile/minimnm/orange.png" id="IDS_Mini_MMS_Projectile_3"> </string>
+    <string value="../resources/sprites/projectile/minimnm/red.png" id="IDS_Mini_MMS_Projectile_4"> </string>
+    <string value="../resources/sprites/projectile/minimnm/yellow.png" id="IDS_Mini_MMS_Projectile_5"> </string>
+    <string value="../resources/sprites/projectile/minimnm/blue.png" id="IDS_Mini_MMS_Projectile_6"> </string>
+    <string value="../resources/sprites/projectile/minimnm/brown.png" id="IDS_Mini_MMS_Projectile_7"> </string>
+    <string value="../resources/sprites/projectile/minimnm/green.png" id="IDS_Mini_MMS_Projectile_8"> </string>
+    <string value="../resources/sprites/projectile/minimnm/orange.png" id="IDS_Mini_MMS_Projectile_9"> </string>
+    <string value="../resources/sprites/projectile/minimnm/red.png" id="IDS_Mini_MMS_Projectile_10"> </string>
+    <string value="../resources/sprites/projectile/minimnm/yellow.png" id="IDS_Mini_MMS_Projectile_11"> </string>
+    <!--NormalMMSProjectile-->
+    <string value="../resources/sprites/projectile/normalmnm/blue.png" id="IDS_Normal_MMS_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/brown.png" id="IDS_Normal_MMS_Projectile_1"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/green.png" id="IDS_Normal_MMS_Projectile_2"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/orange.png" id="IDS_Normal_MMS_Projectile_3"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/red.png" id="IDS_Normal_MMS_Projectile_4"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/yellow.png" id="IDS_Normal_MMS_Projectile_5"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/blue.png" id="IDS_Normal_MMS_Projectile_6"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/brown.png" id="IDS_Normal_MMS_Projectile_7"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/green.png" id="IDS_Normal_MMS_Projectile_8"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/orange.png" id="IDS_Normal_MMS_Projectile_9"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/red.png" id="IDS_Normal_MMS_Projectile_10"> </string>
+    <string value="../resources/sprites/projectile/normalmnm/yellow.png" id="IDS_Normal_MMS_Projectile_11"> </string>
+
+    <!--PeanutButterMMSProjectile-->
+    <string value="../resources/sprites/projectile/peanutbuttermnm/blue.png" id="IDS_Peanut_Butter_MMS_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/brown.png" id="IDS_Peanut_Butter_MMS_Projectile_1"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/green.png" id="IDS_Peanut_Butter_MMS_Projectile_2"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/orange.png" id="IDS_Peanut_Butter_MMS_Projectile_3"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/red.png" id="IDS_Peanut_Butter_MMS_Projectile_4"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/yellow.png" id="IDS_Peanut_Butter_MMS_Projectile_5"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/blue.png" id="IDS_Peanut_Butter_MMS_Projectile_6"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/brown.png" id="IDS_Peanut_Butter_MMS_Projectile_7"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/green.png" id="IDS_Peanut_Butter_MMS_Projectile_8"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/orange.png" id="IDS_Peanut_Butter_MMS_Projectile_9"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/red.png" id="IDS_Peanut_Butter_MMS_Projectile_10"> </string>
+    <string value="../resources/sprites/projectile/peanutbuttermnm/yellow.png" id="IDS_Peanut_Butter_MMS_Projectile_11"> </string>
+
+    <!--PeanutMMSPRojectile-->
+    <string value="../resources/sprites/projectile/peanutmnm/blue.png" id="IDS_Peanut_MMS_Projectile_0"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/brown.png" id="IDS_Peanut_MMS_Projectile_1"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/green.png" id="IDS_Peanut_MMS_Projectile_2"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/orange.png" id="IDS_Peanut_MMS_Projectile_3"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/red.png" id="IDS_Peanut_MMS_Projectile_4"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/yellow.png" id="IDS_Peanut_MMS_Projectile_5"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/blue.png" id="IDS_Peanut_MMS_Projectile_6"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/brown.png" id="IDS_Peanut_MMS_Projectile_7"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/green.png" id="IDS_Peanut_MMS_Projectile_8"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/orange.png" id="IDS_Peanut_MMS_Projectile_9"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/red.png" id="IDS_Peanut_MMS_Projectile_10"> </string>
+    <string value="../resources/sprites/projectile/peanutmnm/yellow.png" id="IDS_Peanut_MMS_Projectile_11"> </string>
+
+
+    <!--Tower Paths-->
+    <!--CheesePizzaTower-->
+    <string value="../resources/sprites/tower/cheezpizz/open.png" id="IDS_Cheese_Pizza_Tower_0"> </string>
+    <string value="../resources/sprites/tower/cheezpizz/closed.png" id="IDS_Cheese_Pizza_Tower_1"> </string>
+    <!--PepperoniPizzaTower-->
+    <string value="../resources/sprites/tower/pepperonipizza/open.png" id="IDS_Pepperoni_Pizza_Tower_0"> </string>
+    <string value="../resources/sprites/tower/pepperonipizza/closed.png" id="IDS_Pepperoni_Pizza_Tower_1"> </string>
+    <!--DeepDishTower-->
+    <string value="../resources/sprites/tower/deepdish/open.png" id="IDS_Deep_Dish_Tower_0"> </string>
+    <string value="../resources/sprites/tower/deepdish/closed.png" id="IDS_Deep_Dish_Tower_1"> </string>
+    <!--MeatLoversTower-->
+    <string value="../resources/sprites/tower/meatlovers/open.png" id="IDS_Meat_Lovers_Tower_0"> </string>
+    <string value="../resources/sprites/tower/meatlovers/closed.png" id="IDS_Meat_Lovers_Tower_1"> </string>
+    <!--SodaTower-->
+    <string value="../resources/sprites/tower/colacan/can.png" id="IDS_Soda_Tower_0"> </string>
+    <!--EnergyDrinkTower-->
+    <string value="../resources/sprites/tower/energydrink/can.png" id="IDS_Energy_Drink_Tower_0"> </string>
+    <!--SlushieTower-->
+    <string value="../resources/sprites/tower/slushie/can.png" id="IDS_Slushie_Tower_0"> </string>
+    <!--GravyTower-->
+    <string value="../resources/sprites/tower/gravy/can.png" id="IDS_Gravy_Tower_0"> </string>
+    <!--MiniMMSTower-->
+    <string value="../resources/sprites/tower/minimnm/open.png" id="IDS_Mini_MMS_Tower_0"> </string>
+    <string value="../resources/sprites/tower/minimnm/closed.png" id="IDS_Mini_MMS_Tower_1"> </string>
+    <!--NormalMMSTower-->
+    <string value="../resources/sprites/tower/normalmnm/open.png" id="IDS_Normal_MMS_Tower_0"> </string>
+    <string value="../resources/sprites/tower/normalmnm/closed.png" id="IDS_Normal_MMS_Tower_1"> </string>
+    <!--PeanutButterMMSTower-->
+    <string value="../resources/sprites/tower/peanutbuttermnm/open.png" id="IDS_Peanut_Butter_MMS_Tower_0"> </string>
+    <string value="../resources/sprites/tower/peanutbuttermnm/closed.png" id="IDS_Peanut_Butter_MMS_Tower_1"> </string>
+    <!--PeanutMMSTower-->
+    <string value="../resources/sprites/tower/peanutmnm/open.png" id="IDS_Peanut_MMS_Tower_0"> </string>
+    <string value="../resources/sprites/tower/peanutmnm/closed.png" id="IDS_Peanut_MMS_Tower_1"> </string>
+    <!--NormalFryTower-->
+    <string value="../resources/sprites/tower/normalfrycontainer/normal.png" id="IDS_Normal_Fry_Tower_0"> </string>
+    <!--CrinkleFryTower-->
+    <string value="../resources/sprites/tower/crinklefrycontainer/normal.png" id="IDS_Crinkle_Fry_Tower_0"> </string>
+    <!--SpicyFryTower-->
+    <string value="../resources/sprites/tower/spicyfrycontainer/normal.png" id="IDS_Spicy_Fry_Tower_0"> </string>
+    <!--WaffleFryTower-->
+    <string value="../resources/sprites/tower/wafflefrycontainer/normal.png" id="IDS_Waffle_Fry_Tower_0"> </string>
+
+    <!--Unit Paths-->
+    <!--SkinnyKidUnit-->
+    <string value="../resources/sprites/unit/skinnykidunit/punchleft.png" id="IDS_Skinny_Kid_Unit_3"> </string>
+    <string value="../resources/sprites/unit/skinnykidunit/punchright.png" id="IDS_Skinny_Kid_Unit_4"> </string>
+    <string value="../resources/sprites/unit/skinnykidunit/standing.png" id="IDS_Skinny_Kid_Unit_2"> </string>
+    <string value="../resources/sprites/unit/skinnykidunit/walk0.png" id="IDS_Skinny_Kid_Unit_0"> </string>
+    <string value="../resources/sprites/unit/skinnykidunit/walk1.png" id="IDS_Skinny_Kid_Unit_1"> </string>
+    <!--AverageKidUnit-->
+    <string value="../resources/sprites/unit/averagekidunit/punchleft.png" id="IDS_Average_Kid_Unit_3"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/punchright.png" id="IDS_Average_Kid_Unit_4"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/standing.png" id="IDS_Average_Kid_Unit_2"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/walk0.png" id="IDS_Average_Kid_Unit_0"> </string>
+    <string value="../resources/sprites/unit/averagekidunit/walk1.png" id="IDS_Average_Kid_Unit_1"> </string>
+    <!--FatKidUnit-->
+    <string value="../resources/sprites/unit/fatkidunit/punchleft.png" id="IDS_Fat_Kid_Unit_3"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/punchright.png" id="IDS_Fat_Kid_Unit_4"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/standing.png" id="IDS_Fat_Kid_Unit_2"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/walk0.png" id="IDS_Fat_Kid_Unit_0"> </string>
+    <string value="../resources/sprites/unit/fatkidunit/walk1.png" id="IDS_Fat_Kid_Unit_1"> </string>
+    <!--NormalFryUnit-->
+    <string value="../resources/sprites/unit/normalfryguy/punchleft.png" id="IDS_Normal_Fry_Unit_3"> </string>
+    <string value="../resources/sprites/unit/normalfryguy/punchright.png" id="IDS_Normal_Fry_Unit_4"> </string>
+    <string value="../resources/sprites/unit/normalfryguy/standing.png" id="IDS_Normal_Fry_Unit_2"> </string>
+    <string value="../resources/sprites/unit/normalfryguy/walk0.png" id="IDS_Normal_Fry_Unit_0"> </string>
+    <string value="../resources/sprites/unit/normalfryguy/walk1.png" id="IDS_Normal_Fry_Unit_1"> </string>
+    <!--CrinkleFryUnit-->
+    <string value="../resources/sprites/unit/crinklefryguy/punchleft.png" id="IDS_Crinkle_Fry_Unit_3"> </string>
+    <string value="../resources/sprites/unit/crinklefryguy/punchright.png" id="IDS_Crinkle_Fry_Unit_4"> </string>
+    <string value="../resources/sprites/unit/crinklefryguy/standing.png" id="IDS_Crinkle_Fry_Unit_2"> </string>
+    <string value="../resources/sprites/unit/crinklefryguy/walk0.png" id="IDS_Crinkle_Fry_Unit_0"> </string>
+    <string value="../resources/sprites/unit/crinklefryguy/walk1.png" id="IDS_Crinkle_Fry_Unit_1"> </string>
+    <!--SpicyFryUnit-->
+    <string value="../resources/sprites/unit/spicyfryguy/punchleft.png" id="IDS_Spicy_Fry_Unit_3"> </string>
+    <string value="../resources/sprites/unit/spicyfryguy/punchright.png" id="IDS_Spicy_Fry_Unit_4"> </string>
+    <string value="../resources/sprites/unit/spicyfryguy/standing.png" id="IDS_Spicy_Fry_Unit_2"> </string>
+    <string value="../resources/sprites/unit/spicyfryguy/walk0.png" id="IDS_Spicy_Fry_Unit_0"> </string>
+    <string value="../resources/sprites/unit/spicyfryguy/walk1.png" id="IDS_Spicy_Fry_Unit_1"> </string>
+    <!--WaffleFryUnit-->
+    <string value="../resources/sprites/unit/wafflefryguy/punchleft.png" id="IDS_Waffle_Fry_Unit_3"> </string>
+    <string value="../resources/sprites/unit/wafflefryguy/punchright.png" id="IDS_Waffle_Fry_Unit_4"> </string>
+    <string value="../resources/sprites/unit/wafflefryguy/standing.png" id="IDS_Waffle_Fry_Unit_2"> </string>
+    <string value="../resources/sprites/unit/wafflefryguy/walk0.png" id="IDS_Waffle_Fry_Unit_0"> </string>
+    <string value="../resources/sprites/unit/wafflefryguy/walk1.png" id="IDS_Waffle_Fry_Unit_1"> </string>
+
+    <!--Obstacle Paths-->
+    <!--CafeteriaTableObstacle-->
+    <string value="../resources/sprites/obstacle/cafeteriatable/table.png" id="IDS_Cafeteria_Table_Obstacle_0"> </string>
+    <!--TrashCanObstacle-->
+    <string value="../resources/sprites/obstacle/trashcan/can.png" id="IDS_Trash_Can_Obstacle_0"> </string>
 
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
@@ -47,67 +223,6 @@
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
-    <!--TowerTypeIDS-->
-    <!--No Tower -->
-    <string value="NT" id="IDS_NT"> </string>
-    <string value="NT" id="-1"> </string>
-    <!--Exit Tile-->
-    <string value="EXT" id="IDS_EXT"> </string>
-    <string value="0" id="IDS_EXT"> </string>
-    <!--CheesePizza-->
-    <string value="CPT" id="IDS_CPT"> </string>
-    <string value="CPT" id="111"> </string>
-    <!--PepperoniPizza-->
-    <string value="PPT" id="IDS_PPT"> </string>
-    <string value="PPT" id="121"> </string>
-    <!--DeepDish-->
-    <string value="DDT" id="IDS_DDT"> </string>
-    <string value="DDT" id="131"> </string>
-    <!--MeatLovers-->
-    <string value="MLT" id="IDS_MLT"> </string>
-    <string value="MLT" id="132"> </string>
-    <!--MiniM&Ms-->
-    <string value="MMMT" id="IDS_MMMT"> </string>
-    <string value="MMMT" id="211"> </string>
-    <!--NormalM&Ms-->
-    <string value="NMMT" id="IDS_NMMT"> </string>
-    <string value="NMMT" id="221"> </string>
-    <!--PeautButterM&Ms-->
-    <string value="PBMMT" id="IDS_PBMMT"> </string>
-    <string value="PBMMT" id="231"> </string>
-    <!--PeanutM&Ms-->
-    <string value="PMMT" id="IDS_PMMT"> </string>
-    <string value="PMMT" id="232"> </string>
-    <!--Soda-->
-    <string value="SOT" id="IDS_SOT"> </string>
-    <string value="SOT" id="311"> </string>
-    <!--EnergyDrink-->
-    <string value="EDT" id="IDS_EDT"> </string>
-    <string value="EDT" id="321"> </string>
-    <!--Gravy-->
-    <string value="GT" id="IDS_GT"> </string>
-    <string value="GT" id="331"> </string>
-    <!--Slushie-->
-    <string value="SLT" id="IDS_SLT"> </string>
-    <string value="SLT" id="332"> </string>
-    <!--NormalFry-->
-    <string value="NFT" id="IDS_NFT"> </string>
-    <string value="NFT" id="411"> </string>
-    <!--CrinkleFry-->
-    <string value="CFT" id="IDS_CFT"> </string>
-    <string value="CFT" id="421"> </string>
-    <!--SpicyFry-->
-    <string value="SFT" id="IDS_SFT"> </string>
-    <string value="SFT" id="431"> </string>
-    <!--WaffleFry-->
-    <string value="WFT" id="IDS_WFT"> </string>
-    <string value="WFT" id="432"> </string>
-    <!-- Cafeteria Table-->
-    <string value="CTO" id="IDS_CTO"> </string>
-    <string value="CTO" id="-3"> </string>
-    <!--Trash Can -->
-    <string value="TCO" id="IDS_TCO"> </string>
-    <string value="TCO" id="-4"> </string>
 
 
     <!--Option-->
@@ -119,10 +234,121 @@
 
     <!--PlayingScreen-->
     <!--Buy Tower Button-->
-    <string value="Buy Tower" id="IDS_Buy_Tower_Button_Message"> </string>
+    <string value="Buy Tower" id="IDS_Buy_Tower_Empty_Space"> </string>
+    <string value="Upgrade Tower" id="IDS_Buy_Tower_Existing_Tower"> </string>
+    <string value="Remove Obstacle" id="IDS_Buy_Tower_Existing_Obstacle"> </string>
 
     <!--BuyTower Screen-->
     <!--Buy Tower Title-->
-    <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text"> </string>
+    <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"> </string>
+    <string value="Remove Obstacle?" id="IDS_Buy_Tower_Title_Text_Existig_Obstacle"> </string>
 
 </strings>
+
+<typeids>
+  <!--TowerTypeIDS-->
+  <!--No Tower -->
+  <typeid value="No_Tower" id="IDS_NT"> </typeid>
+  <typeid value="No_Tower" id="-1"> </typeid>
+  <!--Exit Tile-->
+  <typeid value="Exit" id="IDS_EXT"> </typeid>
+  <typeid value="Exit" id="0"> </typeid>
+  <!--CheesePizza-->
+  <typeid value="Cheese_Pizza_Tower" id="IDS_CPT"> </typeid>
+  <typeid value="Cheese_Pizza_Tower" id="111"> </typeid>
+  <!--PepperoniPizza-->
+  <typeid value="Pepperoni_Pizza_Tower" id="IDS_PPT"> </typeid>
+  <typeid value="Pepperoni_Pizza_Tower" id="121"> </typeid>
+  <!--DeepDish-->
+  <typeid value="Deep_Dish_Tower" id="IDS_DDT"> </typeid>
+  <typeid value="Deep_Dish_Tower" id="131"> </typeid>
+  <!--MeatLovers-->
+  <typeid value="Meat_Lovers_Tower" id="IDS_MLT"> </typeid>
+  <typeid value="Meat_Lovers_Tower" id="132"> </typeid>
+  <!--MiniM&Ms-->
+  <typeid value="Mini_MMS_Tower" id="IDS_MMMT"> </typeid>
+  <typeid value="Mini_MMS_Tower" id="211"> </typeid>
+  <!--NormalM&Ms-->
+  <typeid value="Normal_MMS_Tower" id="IDS_NMMT"> </typeid>
+  <typeid value="Normal_MMS_Tower" id="221"> </typeid>
+  <!--PeautButterM&Ms-->
+  <typeid value="Peanut_Butter_MMS_Tower" id="IDS_PBMMT"> </typeid>
+  <typeid value="Peanut_Butter_MMS_Tower" id="231"> </typeid>
+  <!--PeanutM&Ms-->
+  <typeid value="Peanut_MMS_Tower" id="IDS_PMMT"> </typeid>
+  <typeid value="Peanut_MMS_Tower" id="232"> </typeid>
+  <!--Soda-->
+  <typeid value="Soda_Tower" id="IDS_SOT"> </typeid>
+  <typeid value="Soda_Tower" id="311"> </typeid>
+  <!--EnergyDrink-->
+  <typeid value="Energy_Drink_Tower" id="IDS_EDT"> </typeid>
+  <typeid value="Energy_Drink_Tower" id="321"> </typeid>
+  <!--Gravy-->
+  <typeid value="Gravy_Tower" id="IDS_GT"> </typeid>
+  <typeid value="Gravy_Tower" id="331"> </typeid>
+  <!--Slushie-->
+  <typeid value="Slushie_Tower" id="IDS_SLT"> </typeid>
+  <typeid value="Slushie_Tower" id="332"> </typeid>
+  <!--NormalFry-->
+  <typeid value="Normal_Fry_Tower" id="IDS_NFT"> </typeid>
+  <typeid value="Normal_Fry_Tower" id="411"> </typeid>
+  <!--CrinkleFry-->
+  <typeid value="Crinkle_Fry_Tower" id="IDS_CFT"> </typeid>
+  <typeid value="Crinkle_Fry_Tower" id="421"> </typeid>
+  <!--SpicyFry-->
+  <typeid value="Spicy_Fry_Tower" id="IDS_SFT"> </typeid>
+  <typeid value="Spicy_Fry_Tower" id="431"> </typeid>
+  <!--WaffleFry-->
+  <typeid value="Waffle_Fry_Tower" id="IDS_WFT"> </typeid>
+  <typeid value="Waffle_Fry_Tower" id="432"> </typeid>
+
+  <!--ObstacleTypeIDs-->
+  <!-- Cafeteria Table-->
+  <typeid value="Cafeteria_Table_Obstacle" id="IDS_CTO"> </typeid>
+  <typeid value="Cafeteria_Table_Obstacle" id="-3"> </typeid>
+  <!--Trash Can -->
+  <typeid value="Trash_Can_Obstacle" id="IDS_TCO"> </typeid>
+  <typeid value="Trash_Can_Obstacle" id="-4"> </typeid>
+
+  <!--ProjectileTypeIDs-->
+  <!--CheesePizza Projectile-->
+  <typeid value="Cheese_Pizza_Projectile" id="IDS_CPP"> </typeid>
+  <!--PepperoniPizza Projectile-->
+  <typeid value="Pepperoni_Pizza_Projectile" id="IDS_PPP"> </typeid>
+  <!--DeepDish Projectile-->
+  <typeid value="Deep_Dish_Projectile" id="IDS_DDP"> </typeid>
+  <!--MeatLovers Projectile-->
+  <typeid value="Meat_Lovers_Projectile" id="IDS_MLP"> </typeid>
+  <!--MiniM&Ms Projectile-->
+  <typeid value="Mini_MMS_Projectile" id="IDS_MMMP"> </typeid>
+  <!--NormalM&Ms Projectile-->
+  <typeid value="Normal_MMS_Projectile" id="IDS_NMMP"> </typeid>
+  <!--PeautButterM&Ms Projectile-->
+  <typeid value="Peanut_Butter_MMS_Projectile" id="IDS_PBMMP"> </typeid>
+  <!--PeanutM&Ms Projectile-->
+  <typeid value="Peanut_MMS_Projectile" id="IDS_PMMP"> </typeid>
+  <!--Soda Projectile-->
+  <typeid value="Soda_Projectile" id="IDS_SOP"> </typeid>
+  <!--EnergyDrink Projectile-->
+  <typeid value="Energy_Drink_Projectile" id="IDS_EDP"> </typeid>
+  <!--Gravy Projectile-->
+  <typeid value="Gravy_Projectile" id="IDS_GP"> </typeid>
+  <!--Slushie Projectile-->
+  <typeid value="Slushie_Projectile" id="IDS_SLP"> </typeid>
+
+  <!--UnitTypeIDs-->
+  <!--NormalFry Unit-->
+  <typeid value="Normal_Fry_Unit" id="IDS_NFU"> </typeid>
+  <!--CrinkleFry Unit-->
+  <typeid value="Crinkle_Fry_Unit" id="IDS_CFU"> </typeid>
+  <!--SpicyFry Unit-->
+  <typeid value="Spicy_Fry_Unit" id="IDS_SFU"> </typeid>
+  <!--WaffleFry Unit-->
+  <typeid value="Waffle_Fry_Unit" id="IDS_WFU"> </typeid>
+  <!--SkinnyKid Unit-->
+  <typeid value="Skinny_Kid_Unit" id="IDS_SKU"> </typeid>
+  <!--AverageKid Unit-->
+  <typeid value="Average_Kid_Unit" id="IDS_AKU"> </typeid>
+  <!--FatKid Unit-->
+  <typeid value="Fat_Kid_Unit" id="IDS_FKU"> </typeid>
+</typeids>

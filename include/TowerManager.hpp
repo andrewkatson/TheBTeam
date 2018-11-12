@@ -10,6 +10,7 @@
 #define TOWERMANAGER_H
 #include "TowerInterface.hpp"
 #include "TextLoader.hpp"
+#include "TextureLoader.hpp"
 #include "Towers/CheesePizza.hpp"
 #include "Towers/CrinkleFry.hpp"
 #include "Towers/DeepDish.hpp"
@@ -47,6 +48,9 @@ class TowerManager{
 shared_ptr<TextLoader> textLoader;
 //event manager (used to register, deregister from events, and create them)
 shared_ptr<EventManager> eventManager;
+//Store the textureLoader to get the textures for this tower and pass to
+//any dependent units or projectiles
+shared_ptr<TextureLoader> textureLoader;
 
 //map of every tower that can be used to copy a tower type once
 //it is created
@@ -75,7 +79,7 @@ int yGrid;
 typedef pair<int,int> intPair;
 
 public:
-  TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+  TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
 
   void setDimensions(int xDim, int yDim);
   void setGridDimensions(int xGrid, int yGrid);

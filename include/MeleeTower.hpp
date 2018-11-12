@@ -42,6 +42,8 @@ public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   void update(float delta);
 
+  void initSprite();
+
   void registerDelegates();
 
   virtual void upgrade();

@@ -1,5 +1,7 @@
 #include "Obstacles/TrashCan.hpp"
-TrashCan::TrashCan(shared_ptr<TextLoader> textLoader, string towerTypeID,shared_ptr<EventManager> eventManager) : Obstacle(eventManager, textLoader){
-  this -> towerTypeID = towerTypeID;
+TrashCan::TrashCan(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : Obstacle(eventManager, textLoader){
+  this -> towerTypeID = textLoader -> getTypeID(string("IDS_TCO"));
   this -> price = textLoader -> getInteger(string("IDS_TC_PR"));
+  this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> initSprite();
 }

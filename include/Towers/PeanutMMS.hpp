@@ -4,7 +4,7 @@
 #include "../Projectiles/PeanutMMSProjectile.hpp"
 class PeanutMMS : public RangeTower{
 public:
-  PeanutMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  PeanutMMS(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
   /*

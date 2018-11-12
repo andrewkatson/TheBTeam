@@ -63,6 +63,10 @@ private:
   //Store the Event Manger for the game that receives and distributes irregular
   //game events
   shared_ptr<EventManager> eventManager;
+  //Store the textureLoader to get the textures for this tower and pass to
+  //any dependent units or projectiles
+  shared_ptr<TextureLoader> textureLoader;
+
 
   int test;
 
@@ -70,7 +74,7 @@ public:
   /*
     Constructor. Initialize game, setting up instance variables.
    */
-  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY);
+  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader);
 
   void registerEvents();
   void registerDelegates();
@@ -112,12 +116,19 @@ public:
   const vector<vector<int>>& getAboveFloor();
   const vector<vector<int>>& getDistances();
 
+  bool isTower(int row, int col);
+  bool isObstacle(int row, int col);
+  bool isEmptySpace(int row, int col);
+
   const int getTileXSize();
   const int getTileYSize();
   const int getRows();
   const int getCols();
 
   const MapChoices& getMapCustomizationChoices();
+
+  const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
+  const vector<shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 
 };
 

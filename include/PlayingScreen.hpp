@@ -3,6 +3,7 @@
 #include "Screen.hpp"
 #include "GameLogic.hpp"
 #include "Button.hpp"
+#include "BuyTowerScreen.hpp"
 #include <random>
 #include <tuple>
 
@@ -15,11 +16,13 @@ private:
   shared_ptr<EventManager> eventManager;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
+  //the reference to the buyTowerScreen
+  shared_ptr<Screen> buyTowerScreen;
   //logic of the game. handles mechanics
   //use to access frequently required data (i.e. towers, obstacles, board, units)
   shared_ptr<GameLogic> gameLogic;
   //the button to allow us to buy a tower
-  Button buyTower;
+  unique_ptr<Button> buyTower;
   //the main font of the game
   sf::Font mainFont;
   //text object used to write with
@@ -37,13 +40,17 @@ private:
   //cannot initialize the colors until we have a map made
   //so we use this bool to set the color shift vector once
   bool haveSetColorShift;
+  //the current row selected
+  int rowSelected;
+  //the current col selected
+  int colSelected;
 
 
   //testing variable TODO remove when finished rendering
   bool somethingChanged;
 
 public:
-  PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
+  PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic, shared_ptr<Screen> buyTowerScreen, int windowX, int windowY);
 
   void registerDelegates();
   void deregisterDelegates();
@@ -60,7 +67,6 @@ public:
   void handleMousePress(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
-  void drawBuyTowerButton(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);
   void drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize,
     int xTileSize, int pathValue, sf::RectangleShape& floorRect);
@@ -68,6 +74,11 @@ public:
      int xTileSize, int tileValue, sf::RectangleShape& floorRect);
   void drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize,
      int xTileSize, sf::RectangleShape& floorRect);
+  void drawTowersAndObstacles(sf::RenderWindow& window);
+  void drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window);
+  void drawEnemyUnits(sf::RenderWindow& window);
+  void drawBuyTowerButton(sf::RenderWindow& window);
+
 
   template <class T>
   void printVector(const vector<vector<T>> &v);

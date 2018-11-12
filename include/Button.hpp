@@ -9,12 +9,14 @@
 using std::cout;
 using std::string;
 using std::shared_ptr;
-
+using std::unique_ptr;
 enum Position {TOPRIGHT, BOTTOMRIGHT, TOPLEFT, BOTTOMLEFT, CENTER};
 class Button{
 private:
   sf::Text text;
   sf::RectangleShape rect;
+  //to load the font when drawing the box
+  string fontPath;
   int windowX;
   int windowY;
   //the number of characters in the message for this button
@@ -25,9 +27,9 @@ private:
   shared_ptr<TextLoader> textLoader;
 public:
   Button();
-  Button(int windowX, int windowY, int order, string message,shared_ptr<TextLoader> textLoader);
-  Button(int windowX, int windowY, Position position, string message,shared_ptr<TextLoader> textLoader);
-  Button(int windowX, int windowY, float xPos, float yPos, string message,shared_ptr<TextLoader> textLoader);
+  Button(int windowX, int windowY, int order, string message,shared_ptr<TextLoader> textLoader, string fontpath);
+  Button(int windowX, int windowY, Position position, string message,shared_ptr<TextLoader> textLoader, string fontpath);
+  Button(int windowX, int windowY, float xPos, float yPos, string message,shared_ptr<TextLoader> textLoader, string fontpath);
 
   void setWindowSize(int windowX, int windowY);
 
@@ -42,6 +44,9 @@ public:
   bool isCurrentlyVisible();
 
   void flipVisibility();
+
+  void setString(string newString);
+  void setFont(string fontPath);
 
   void setFillColor(int redComponent, int blueComponent, int greenComponent, int alpha=255);
   void setOutlineColor(int redComponent, int blueComponent, int greenComponent, int alpha=255);

@@ -1,9 +1,12 @@
 #include "Projectiles/MeatLoversProjectile.hpp"
-MeatLoversProjectile::MeatLoversProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager) : Projectile(eventManager,textLoader){
+MeatLoversProjectile::MeatLoversProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : Projectile(eventManager,textLoader){
   this -> hitpoints = textLoader->getInteger(string("IDS_ML_HP"));;
   this -> damage = textLoader->getInteger(string("IDS_ML_DM"));;
   this -> armor = textLoader->getInteger(string("IDS_ML_AM"));;
   this -> speed = textLoader->getInteger(string("IDS_ML_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_ML_AP"));;
   this -> areaOfEffect = textLoader->getInteger(string("IDS_ML_AR"));;
+  this -> actorTypeID = textLoader->getTypeID(string("IDS_MLP"));
+  this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> initSprite();
 }

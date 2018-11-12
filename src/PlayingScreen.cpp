@@ -2,13 +2,15 @@
 
 
 
-PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic, int windowX, int windowY) : mt(std::random_device()()){
+PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic, shared_ptr<Screen> buyTowerScreen, int windowX, int windowY) : mt(std::random_device()()){
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
-  this -> buyTower = Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Button_Message")), textLoader);
+  this -> buyTowerScreen = buyTowerScreen;
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  this -> buyTower = unique_ptr<Button>(new Button(windowX, windowY, TOPRIGHT, textLoader -> getString(string("IDS_Buy_Tower_Empty_Space")), textLoader, fontpath));
   somethingChanged = true;
   haveSetColorShift=false;
   this -> initDrawingMaterials();
@@ -123,40 +125,44 @@ void PlayingScreen::initDrawingMaterials(){
  */
 void PlayingScreen::initBuyTowerButton(){
   // set the fill color for the button rectangle
-  this -> buyTower.setFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Red")),
+  this -> buyTower -> setFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Fill_Color_Alpha")));
 
   // set the outline color for the button
-  this -> buyTower.setOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Red")),
+  this -> buyTower -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Color_Alpha")));
 
   //set the button outline thickness
-  //this->buyTower.setOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Thickness")));
+  //this->buyTower -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Outline_Thickness")));
 
   //set the fill color for the button text
-  this -> buyTower.setTextFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Red")),
+  this -> buyTower -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Fill_Color_Alpha")));
 
 
   //set the outline color for the text
-  this -> buyTower.setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Red")),
+  this -> buyTower -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Color_Alpha")));
 
   //set the button text outline thickness
-  this->buyTower.setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Thickness")));
+  this->buyTower -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Text_Outline_Thickness")));
 
   //set the text character size
-  this->buyTower.setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Buy_Tower_Text_Size")));
+  this->buyTower -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Buy_Tower_Text_Size")));
+
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->buyTower) -> setFont(fontpath);
 
   //rescale the button and reset it
-  (this -> buyTower).setButtonPosition( TOPRIGHT);
+  (this -> buyTower) -> setButtonPosition( TOPRIGHT);
 
   //make the button invisible to begin with
-  (this->buyTower).flipVisibility();
+  (this->buyTower) -> flipVisibility();
 }
 
 /*
@@ -373,13 +379,64 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   float yPos = mpEventData -> y;
 
   //check if BuyTower button is being clicked
-  bool buyTowerClicked = (this->buyTower).isSelected(xPos,yPos);
+  bool buyTowerClicked = (this->buyTower) -> isSelected(xPos,yPos);
   if(buyTowerClicked){
     shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, nowInNano);
 
     this -> eventManager -> queueEvent(buyTowerState);
+    return;
   }
 
+  //get the size of a tile in the x
+  int xTileSize = gameLogic -> getTileXSize();
+  //get the size of a tile in the y
+  int yTileSize = gameLogic -> getTileYSize();
+
+  //what row is being clicked
+  int row = yPos / yTileSize;
+  //what col is being clicked
+  int col = xPos / xTileSize;
+
+  //treat the buytowerscreen as itself and not a generic screen
+  BuyTowerScreen* trueBuyTowerScreen = dynamic_cast<BuyTowerScreen*>((this->buyTowerScreen).get());
+
+  //if this is a tower
+  if(gameLogic -> isTower(row,col)){
+    //change what the button says
+    (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Tower"));
+    //reset the button (scales it)
+    (this -> buyTower) -> setButtonPosition( TOPRIGHT);
+    //change what the title for the buyTowerScreen will say
+    trueBuyTowerScreen -> changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+  }
+  //if this is an obstacle
+  else if(gameLogic-> isObstacle(row,col)){
+    (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
+    trueBuyTowerScreen -> changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existig_Obstacle"));
+    (this -> buyTower) -> setButtonPosition( TOPRIGHT);
+  }
+  //if this is an empty tile (neither path nor exit)
+  else if(gameLogic->isEmptySpace(row,col)){
+    (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Empty_Space"));
+    trueBuyTowerScreen -> changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+    (this -> buyTower) -> setButtonPosition( TOPRIGHT);
+  }
+  else{
+    if((this->buyTower)->isCurrentlyVisible()){
+      (this->buyTower)->flipVisibility();
+    }
+    return;
+  }
+
+  //if we have selected the same row and col as the last click then we
+  //flip the visibility of the button
+  if(row == rowSelected && colSelected == col){
+    (this->buyTower)->flipVisibility();
+  }
+  else{
+    rowSelected = row;
+    colSelected = col;
+  }
 }
 
 void PlayingScreen::draw(sf::RenderWindow &window){
@@ -406,38 +463,12 @@ void PlayingScreen::draw(sf::RenderWindow &window){
     initColorShifts();
     haveSetColorShift=true;
   }
-
-  drawBuyTowerButton(window);
   drawFloorMap(window);
-
-}
-
-/*
- * Draw the buy tower button
- * @param window: the game window to draw on
- */
-void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
-
-  //if the button is invisible do not draw it
-  if(!buyTower.isCurrentlyVisible()){
-    return;
-  }
-
-  //used to make the font local
-  string mainFontPath = textLoader -> getString(string("IDS_Black_Berry_Jam"));
-
-  if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
-  }
-  else{
-  //  cout << "loaded font!" << endl;
-  }
-
-  text = buyTower.getButtonText();
-  text.setFont(mainFont);
-
-  window.draw(buyTower.getButtonRect());
-  window.draw(text);
+  drawTowersAndObstacles(window);
+  //to avoid looping twice we draw all the units of the towers in the
+  //same method as drawing the towers
+  drawEnemyUnits(window);
+  drawBuyTowerButton(window);
 }
 
 /*
@@ -466,7 +497,7 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
       if(floorValue > 0){
         drawFloorPath(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
       }
-      //if this is a floor
+      //if this is a floor tile
       else if(floorValue < 0){
         drawFloorTile(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
       }
@@ -497,7 +528,7 @@ void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col,
     //if this was an actual path version
     if(checkPathColorValue != -1){
 
-      //weird tuple syntax but it just grabs the r in the tuple for this row, col
+      //weird tuple syntax but it just grabs the color shift in the tuple for this row, col
       int redShift = get<0>(pathColorShifts.at(row).at(col));
       int greenShift = get<1>(pathColorShifts.at(row).at(col));
       int blueShift = get<2>(pathColorShifts.at(row).at(col));
@@ -564,7 +595,7 @@ void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
   //if this was an actual tile version
   if(checkTileColorValue != -1){
 
-    //weird tuple syntax but it just grabs the r in the tuple for this row, col
+    //weird tuple syntax but it just grabs the color shift in the tuple for this row, col
     int redShift = get<0>(pathColorShifts.at(row).at(col));
     int greenShift = get<1>(pathColorShifts.at(row).at(col));
     int blueShift = get<2>(pathColorShifts.at(row).at(col));
@@ -619,6 +650,122 @@ void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
      //draw the rectangle
      window.draw(floorRect);
 
+}
+
+/*
+ * Draw the Towers and Obstacles currently placed on the board
+ * @param window: the game window to draw on
+ */
+void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
+  const unordered_map<int, shared_ptr<TowerInterface>> towersPlaced = gameLogic -> getTowersPlaced();
+
+  //the number of rows
+  const int rows = gameLogic->getRows();
+  //the number of cols
+  const int cols = gameLogic->getCols();
+
+  //the size of each tile in x direction
+  const int xTileSize = gameLogic -> getTileXSize();
+  //the size of each tile in y direction
+  const int yTileSize = gameLogic -> getTileYSize();
+
+  //iterate through the towers/obstacles placed on the board
+  for(auto iterator : towersPlaced){
+    //the position of the tower/obstacle
+    int combinedRowCol = (iterator).first;
+    //the row of the tower/obstacle
+    int row = combinedRowCol / cols;
+    //the col of the tower/obstacle
+    int col = combinedRowCol % cols;
+
+    //the current tower/obstacle
+    shared_ptr<TowerInterface> current = (iterator).second;
+
+    //get the sprite to be drawn
+    sf::Sprite currentSprite = current -> getSprite();
+
+    //the position in xCoordinates
+    float xPos = (float) xTileSize * (float) col;
+    //the position in yCoordiantes
+    float yPos = (float) yTileSize * (float) row;
+
+    //the bounding rectangle will give us the dimensions of the sprite
+    sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+    //the x dimension of the box
+    int xDim = boundingBox.width;
+    //the ydimension of the box
+    int yDim = boundingBox.height;
+
+    //the scale in the x direction
+    float xScale = (float) xTileSize / (float) xDim;
+    //the scale in the y direction
+    float yScale = (float) yTileSize / (float) yDim;
+
+    //set the scale for the tower/obstalce to fill up the square
+    currentSprite.setScale(xScale, yScale);
+
+    //set the position of the sprite to the top left of the rectangle
+    currentSprite.setPosition(xPos, yPos);
+
+    //finally draw the sprite
+    window.draw(currentSprite);
+
+    if(current -> isMelee){
+      //if this is a meleeType then we need to draw its units
+      drawTowerUnits(current, window);
+    }
+  }
+}
+
+/*
+ * Draw all the units for the melee tower to the screen
+ * @param meleeTower: the current tower
+ * @param window: the game window to draw
+ */
+void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window){
+  //TODO implementation
+}
+
+
+/*
+ * Draw all the enemy units on the screen
+ * @param window: the game window to draw on
+ */
+void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
+  vector<shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
+
+  //loop through all enemies on the board
+  for(auto iterator : allEnemyUnits){
+    //TODO implement
+  }
+}
+
+/*
+ * Draw the buy tower button
+ * @param window: the game window to draw on
+ */
+void PlayingScreen::drawBuyTowerButton(sf::RenderWindow& window){
+
+  //if the button is invisible do not draw it
+  if(!buyTower -> isCurrentlyVisible()){
+    return;
+  }
+
+  //used to make the font local
+  string mainFontPath = textLoader -> getString(string("IDS_FFP"));
+
+  if(!mainFont.loadFromFile(mainFontPath)){
+    cout << "No font!" << endl;
+  }
+  else{
+  //  cout << "loaded font!" << endl;
+  }
+
+  text = buyTower -> getButtonText();
+  text.setFont(mainFont);
+
+  window.draw(buyTower -> getButtonRect());
+  window.draw(text);
 }
 
 template <class T>

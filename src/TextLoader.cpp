@@ -8,11 +8,11 @@ TextLoader::TextLoader(){
   //doc.LoadFile( "../values/strings.xml" );
   //fill the strings map
   loadStrings();
+  loadTypeIDS();
 
   //doc.LoadFile( "../values/constants.xml" );
   //fill the constants map
   loadInts();
-
   loadDoubles();
 }
 
@@ -27,6 +27,20 @@ void TextLoader::loadStrings(){
   for(tinyxml2::XMLElement* node = root->FirstChildElement("string"); node != NULL; node= node->NextSiblingElement("string")) {
     string s(node->Attribute("id"));
     strings.insert({s, node -> Attribute("value")});
+  }
+}
+
+/*
+ * Load in the class typeids by their id
+ */
+void TextLoader::loadTypeIDS(){
+  tinyxml2::XMLDocument doc;
+  doc.LoadFile( "../resources/values/strings.xml" );
+  tinyxml2::XMLElement * root =  doc.FirstChildElement("typeids");
+
+  for(tinyxml2::XMLElement* node = root->FirstChildElement("typeid"); node != NULL; node= node->NextSiblingElement("typeid")) {
+    string s(node->Attribute("id"));
+    typeids.insert({s, node -> Attribute("value")});
   }
 }
 
@@ -79,6 +93,13 @@ std::string TextLoader::getString(const std::string id){
   return "String not found";
 }
 
+std::string TextLoader::getTypeID(const std::string id){
+  if(typeids.find(id) != typeids.end()){
+    return typeids.at(id);
+  }
+  return "TypeID not found";
+}
+
 int TextLoader::getInteger(const std::string id){
   if(ints.find(id) != ints.end()){
     return ints.at(id);
@@ -91,5 +112,12 @@ double TextLoader::getDouble(const std::string id){
   if(doubles.find(id) != doubles.end()){
     return doubles.at(id);
   }
-  return -1;
+  return -1.0;
+}
+
+/*
+ * @return a reference to the unordered_map with all the typeids in it
+ */
+unordered_map<string, string>& TextLoader::getAllTypeIDS(){
+  return typeids;
 }

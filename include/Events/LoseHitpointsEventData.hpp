@@ -10,5 +10,5 @@ public:
   string actorID;
   float timeStamp;
 
-  LoseHitpointsEventData(string actorID, float timeStamp);
+  LoseHitpointsEventData(long long  actorID, float timeStamp);
 };

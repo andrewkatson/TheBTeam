@@ -4,8 +4,9 @@ Button::Button(){
 
 }
 
-Button::Button(int windowX, int windowY, int order, string message,shared_ptr<TextLoader> textLoader){
-
+Button::Button(int windowX, int windowY, int order, string message,shared_ptr<TextLoader> textLoader, string fontpath){
+  this -> textLoader = textLoader;
+  this -> fontPath = fontpath;
   (this -> text).setString(message);
   (this -> numChars) = message.length();
   (this -> rect).setFillColor(sf::Color::Transparent);
@@ -18,7 +19,9 @@ Button::Button(int windowX, int windowY, int order, string message,shared_ptr<Te
   this -> setWindowSize(windowX, windowY);
   this -> scaleButton();
 }
-Button::Button(int windowX, int windowY, Position position, string message,shared_ptr<TextLoader> textLoader){
+Button::Button(int windowX, int windowY, Position position, string message,shared_ptr<TextLoader> textLoader, string fontpath){
+    this -> textLoader = textLoader;
+    this -> fontPath = fontpath;
     this -> setWindowSize(windowX, windowY);
     (this -> text).setString(message);
     (this -> numChars) = message.length();
@@ -31,7 +34,9 @@ Button::Button(int windowX, int windowY, Position position, string message,share
     this -> setButtonPosition(position);
 }
 
-Button::Button(int windowX, int windowY, float xPos, float yPos, string message,shared_ptr<TextLoader> textLoader){
+Button::Button(int windowX, int windowY, float xPos, float yPos, string message,shared_ptr<TextLoader> textLoader, string fontpath){
+  this -> textLoader = textLoader;
+  this -> fontPath = fontpath;
   this -> setWindowSize(windowX, windowY);
   (this -> text).setString(message);
   (this -> numChars) = message.length();
@@ -55,13 +60,32 @@ void Button::setWindowSize(int windowX, int windowY){
  *@param position: the string identifier for the position
  */
 void Button::setButtonPosition(Position position){
+  sf::Font font;
+  //we use this to get a proper scaling of the button
+  if(font.loadFromFile(fontPath)){
+    text.setFont(font);
+  }
+
+  //get the bounding box for this text
+  sf::FloatRect boundingBox = (this->text).getGlobalBounds();
+  //the xPosition of bounding box
+  float boundingBoxXPos = boundingBox.left;
+  //the yPosition of bounding box
+  float boundingBoxYPos = boundingBox.top;
+  //the width of the bounding box
+  float boundingBoxXDim = boundingBox.width;
+  //the height of the bounding box
+  float boundingBoxYDim = boundingBox.height;
+
+  //the padding used for each side of the bounding box dimensions
+  //that we will use for the rectagle surrounding the button
+  int padding = textLoader -> getInteger(string("IDS_Button_Position_Padding"));
 
   int xPos;
   int yPos;
 
-  unsigned int characterSize = (this->text).getCharacterSize();
-  int distanceFromXAxis = characterSize;
-  int distanceFromYAxis = numChars * characterSize;
+  int distanceFromXAxis = padding;
+  int distanceFromYAxis = padding + boundingBoxXDim;
   if(position == TOPRIGHT){
     xPos = windowX - distanceFromYAxis;
     yPos = 0 + distanceFromXAxis;
@@ -86,31 +110,70 @@ void Button::setButtonPosition(Position position){
 }
 
 void Button::scaleButton(){
+  sf::Font font;
+  //we use this to get a proper scaling of the button
+  if(font.loadFromFile(fontPath)){
+    text.setFont(font);
+  }
+
   unsigned int textSize = (this ->text).getCharacterSize();
 
   (this -> text).setPosition((this -> windowX / 3) * 2,
             (this ->  windowY - (textSize) * 3) * order);
-  int xDim = (textSize) * this -> numChars;
-  int yDim = (textSize) * 2.5;
 
-  (this -> rect).setPosition((this -> windowX / 3) * 2 - 25,
-            (this ->  windowY - (textSize) * 3 - 12) * order);
-  (this -> rect).setSize(sf::Vector2f(xDim, yDim));
+  //get the bounding box for this text
+  sf::FloatRect boundingBox = (this->text).getGlobalBounds();
+  //the xPosition of bounding box
+  float boundingBoxXPos = boundingBox.left;
+  //the yPosition of bounding box
+  float boundingBoxYPos = boundingBox.top;
+  //the width of the bounding box
+  float boundingBoxXDim = boundingBox.width;
+  //the height of the bounding box
+  float boundingBoxYDim = boundingBox.height;
+  //the padding used for each position of the bounding box dimensions
+  //that we will use for the rectagle surrounding the button
+  int padding = textLoader -> getInteger(string("IDS_Button_Position_Padding"));
+  //the padding used for the dimensions of the rectangle
+  int boundingpadding = textLoader -> getInteger(string("IDS_Button_Size_Padding"));
+
+  (this -> rect).setPosition((int)(boundingBoxXPos)-padding, ((int)(boundingBoxYPos)-padding)* order);
+  (this -> rect).setSize(sf::Vector2f((int)(boundingBoxXDim)+boundingpadding,(int)(boundingBoxYDim)+boundingpadding ));
 
 }
 
 void Button::scaleButton(float xPos, float yPos){
+  sf::Font font;
+  //we use this to get a proper scaling of the button
+  if(font.loadFromFile(fontPath)){
+    text.setFont(font);
+  }
 
   unsigned int textSize = (this ->text).getCharacterSize();
 
   (this -> text).setPosition(xPos,
             (yPos));
-  int xDim = (textSize) * this -> numChars;
-  int yDim = (textSize) * 2.5;
 
-  (this -> rect).setPosition(xPos - 25,
-            (yPos - 12));
-  (this -> rect).setSize(sf::Vector2f(xDim, yDim));
+  //get the bounding box for this text
+  sf::FloatRect boundingBox = (this->text).getGlobalBounds();
+  //the xPosition of bounding box
+  float boundingBoxXPos = boundingBox.left;
+  //the yPosition of bounding box
+  float boundingBoxYPos = boundingBox.top;
+  //the width of the bounding box
+  float boundingBoxXDim = boundingBox.width;
+  //the height of the bounding box
+  float boundingBoxYDim = boundingBox.height;
+
+  //the padding used for each position of the bounding box dimensions
+  //that we will use for the rectagle surrounding the button
+  int padding = textLoader -> getInteger(string("IDS_Button_Position_Padding"));
+  //the padding used for the dimensions of the rectangle
+  int boundingpadding = textLoader -> getInteger(string("IDS_Button_Size_Padding"));
+
+  (this -> rect).setPosition((int)(boundingBoxXPos)-padding, ((int)(boundingBoxYPos)-padding));
+  (this -> rect).setSize(sf::Vector2f((int)(boundingBoxXDim)+boundingpadding,(int)(boundingBoxYDim)+boundingpadding ));
+
 }
 
 bool Button::isSelected(int mousePressX, int mousePressY){
@@ -126,8 +189,8 @@ bool Button::isSelected(int mousePressX, int mousePressY){
   int xDim = rectDim.x;
   int yDim = rectDim.y;
 
-  if(xPos <= mousePressX && xPos <= xPos + xDim){
-    if(yPos <= mousePressY && yPos <= yPos + yDim){
+  if(xPos <= mousePressX && mousePressX <= xPos + xDim){
+    if(yPos <= mousePressY && mousePressY <= yPos + yDim){
       return true;
     }
   }
@@ -153,6 +216,21 @@ bool Button::isCurrentlyVisible(){
  */
 void Button::flipVisibility(){
   isVisible = isVisible == true ? false : true;
+}
+
+/*
+ * Set a new string for the button
+ */
+void Button::setString(string newString){
+  (this->text).setString(newString);
+  this->numChars = newString.length();
+}
+
+/*
+ * Set the font for the current text
+ */
+void Button::setFont(string fontPath){
+  this ->  fontPath = fontPath;
 }
 
 /*

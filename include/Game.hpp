@@ -4,6 +4,7 @@
 #include "UserView.hpp"
 #include "CompView.hpp"
 #include "TextLoader.hpp"
+#include "TextureLoader.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -22,6 +23,7 @@ unique_ptr<UserView> userView;
 unique_ptr<CompView> compView;
 public:
   shared_ptr<TextLoader> textLoader;
+  shared_ptr<TextureLoader> textureLoader;
   Game();
 
   void setUpTextLoader();

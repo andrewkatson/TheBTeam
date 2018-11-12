@@ -29,6 +29,8 @@ protected:
 public:
   Projectile(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
 
+  void initSprite();
+
   /*
    * Return the amount that this projectile penetrates the armor of a given unit
    *

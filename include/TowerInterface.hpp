@@ -13,6 +13,7 @@
 #include <memory>
 #include <utility>
 #include "TextLoader.hpp"
+#include "TextureLoader.hpp"
 #include "EventInterface.hpp"
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
@@ -26,10 +27,17 @@ class TowerInterface{
 protected:
   //int pair (used to assocaite a row and col)
   typedef pair<int,int> intPair;
+  //all the textures for this actor
+  shared_ptr<vector<sf::Texture>> textures;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
+  //Store the textureLoader to get the textures for this tower and pass to
+  //any dependent units or projectiles
+  shared_ptr<TextureLoader> textureLoader;
+  //The sprite corresponding to the tower.
+  sf::Sprite sprite;
   //the tower type identifier that allows for its next upgrade to be pulled
   string towerTypeID;
   //the price of the tower (cost to remove in the case of an obstacle)
@@ -44,7 +52,10 @@ protected:
   int yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
+
 public:
+  //boolean used to tell if this is a melee tower without casting
+  bool isMelee;
   virtual void upgrade()=0;
   virtual int getPrice()=0;
   virtual string getType()=0;
@@ -62,6 +73,14 @@ public:
    * update the position, check if it hit its target
    */
   virtual void update(float delta)=0;
+
+  /*
+    Returns the actor's sprite.
+
+    @return the Sprite object that the interface contains.
+   */
+  sf::Sprite& getSprite(){return sprite;}//PEOPLE WHO KNOW MORE THAN ME: SHOULD THIS RETURN A REFERENCE?
+
 
 };
 

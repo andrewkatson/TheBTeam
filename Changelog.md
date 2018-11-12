@@ -1,6 +1,10 @@
 [Unreleased]
 
 ###Added
+- MapGeneratedEvent and MapGeneratedEventData [@andrewkatson][https://github.com/andrewkatson]
+- TextureLoader
+- Textures for cafeteriatable and trashcan
+- Blank textures for all the type of tower until they are finished
 - MapGeneratedEvent and MapGeneratedEventData
 - Textures for AverageKidUnit [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Textures for NormalFryUnit
@@ -17,6 +21,12 @@
 - all redundant include strings
 - all resources loaded in constructors moved to init methods
 - all tiles have their colors shifted by small amounts (to make it look more diverse
+- all projectiles, towers, units, and obstacles load their respective textures from
+  the textures file
+- Towers and Obstacles no longer are passed their own type id
+- Towers, Obstacles, Projectiles, and Units all load their own type ids in their constructors
+- TextLoader now treats any typeID as distinct from a normal string
+- Towers draw to screen when placed 
 
 [0.1.5] 2018-11-7
 ###Added

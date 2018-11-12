@@ -3,7 +3,7 @@
 #include "../Projectiles/NormalMMSProjectile.hpp"
 class NormalMMS : public RangeTower{
 public:
-  NormalMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  NormalMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
   /*

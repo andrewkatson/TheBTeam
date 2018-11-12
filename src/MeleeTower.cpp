@@ -9,6 +9,7 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> yRally = 0xFFFFFFFF;
   this -> e = 0.00001;
   this -> timeOfDeath = {-1.0, -1.0, -1.0};
+  this -> isMelee = true;
   this -> registerDelegates();
 }
 
@@ -33,6 +34,13 @@ void MeleeTower::upgrade(){}
  * Initialize all the units that will spawn for this tower
  */
 void MeleeTower::setUpUnits(){}
+
+/*
+ * Initliaze the texture for the sprite to be the first texture of the textures vector
+ */
+void MeleeTower::initSprite(){
+  (this->sprite).setTexture(textures -> at(0));
+}
 
 /*
  * Set the point where the melee units attached to this tower will go back to

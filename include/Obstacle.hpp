@@ -19,6 +19,8 @@ public:
 
   void upgrade();
 
+  void initSprite();
+
   string getType(){return towerTypeID;}
   int getPrice(){return price;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}

@@ -31,6 +31,9 @@ private:
   shared_ptr<TextLoader> textLoader;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
+  //Store the textureLoader to get the textures for this tower and pass to
+  //any dependent units or projectiles
+  shared_ptr<TextureLoader> textureLoader;
 
   //Vector storing every enemy type that can be spawned.
   vector<shared_ptr<MeleeUnit>> enemies;
@@ -39,6 +42,14 @@ private:
    * A queue storing every enemy in the current wave.
    */
   queue<shared_ptr<MeleeUnit>> currentWave;
+
+  /*
+   * A vector storing the enemy units from the current wave that have been spawned
+   * NOTE: if you did your own version i only used this for the getCurrentWave method
+   * so that gameLogic can send it to the playingscreen for drawing. just replace that and
+   * it should be fine
+   */
+  vector<shared_ptr<MeleeUnit>> spawnedCurrentWave;
 
   //The current level the user is at in the game.
   //TODO - pull this from gamelogic
@@ -84,7 +95,7 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
 
   /*
    * Setup the possible enemies that can spawn
@@ -142,6 +153,11 @@ public:
    * SHOULD BE CALLED WHENEVER A NEW BOARD IS GENERATED.
    */
   void setEntryPoints(vector<int>& entries);
+
+  /*
+   * @return the enemies that have been spawned in the current wave
+   */
+  vector<shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 };
 
 #endif

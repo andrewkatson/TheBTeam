@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   LoseHitpointsEvent();
-  LoseHitpointsEvent(string actorID, float timeStamp);
+  LoseHitpointsEvent(long long actorID, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;

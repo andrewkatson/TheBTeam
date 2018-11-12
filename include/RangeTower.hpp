@@ -27,6 +27,8 @@ shared_ptr<TextLoader> textLoader;
 int rateOfFire;
 public:
   RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+
+  void initSprite();
   void update(float delta);
   virtual void upgrade();
 

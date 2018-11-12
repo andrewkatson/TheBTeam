@@ -3,7 +3,7 @@
 #include "../Projectiles/MiniMMSProjectile.hpp"
 class MiniMMS : public RangeTower{
 public:
-  MiniMMS(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  MiniMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
   /*

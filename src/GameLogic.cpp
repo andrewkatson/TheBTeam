@@ -8,15 +8,16 @@
 #include "GameLogic.hpp"
 
 //Constructor.
-GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY){
+GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader){
   this -> textLoader = textLoader;
+  this -> textureLoader = textureLoader;
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader));
+  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
-  this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader));
+  this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader, textureLoader));
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerEvents();
   this -> registerDelegates();
@@ -471,6 +472,27 @@ const vector<vector<int>>& GameLogic::getDistances(){
 }
 
 /*
+ * @return if the row, col passed has a tower
+ */
+bool GameLogic::isTower(int row, int col){
+  return boardManager -> isTower(row,col);
+}
+
+/*
+ * @return if the row, col passed has an obstacle
+ */
+bool GameLogic::isObstacle(int row, int col){
+  return boardManager -> isObstacle(row, col);
+}
+
+/*
+ * @return if the row, col is an empty space (no path, or exit)
+ */
+bool GameLogic::isEmptySpace(int row, int col){
+  return boardManager->isEmptySpace(row, col);
+}
+
+/*
  * Get the x size of a tile on the map
  */
 const int GameLogic::getTileXSize(){
@@ -503,4 +525,18 @@ const int GameLogic::getCols(){
  */
 const MapChoices& GameLogic::getMapCustomizationChoices(){
   return boardManager -> getMapCustomizationChoices();
+}
+
+/*
+ * @return the unordered map of all the towers placed on the board
+ */
+const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced(){
+  return towerManager -> getTowersPlaced();
+}
+
+/*
+ * @return the vector with all the currently spawned enemy units on the board
+ */
+const vector<shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
+  return waveManager -> getSpawnedEnemyUnits();
 }

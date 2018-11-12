@@ -3,7 +3,7 @@
 #include "../Projectiles/SlushieProjectile.hpp"
 class Slushie : public RangeTower{
 public:
-  Slushie(shared_ptr<TextLoader> textLoader, string towerTypeID, shared_ptr<EventManager> eventManager);
+  Slushie(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   void upgrade();
 

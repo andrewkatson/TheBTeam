@@ -6,7 +6,7 @@
 class NormalFry : public MeleeTower{
 private:
 public:
-  NormalFry(shared_ptr<TextLoader> textLoader, string towerTypeID,int maxMeleeUnits, shared_ptr<EventManager> eventManager);
+  NormalFry(shared_ptr<TextLoader> textLoader,int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
   virtual void upgrade();
   virtual void setUpUnits();

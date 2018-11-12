@@ -9,6 +9,10 @@
   <constant value="100" id ="IDS_P_HP"> </constant>
   <constant value="100" id ="IDS_P_B"> </constant>
 
+  <!--General Button-->
+  <constant value="10" id="IDS_Button_Position_Padding"> </constant>
+  <constant value="15" id="IDS_Button_Size_Padding"> </constant>
+
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
   <!--No Tower Tile-->
@@ -202,8 +206,6 @@
   <constant value="1" id="IDS_SF_AP"> </constant>
   <constant value="5" id="IDS_SF_AR"> </constant>
   <constant value="0" id ="IDS_SF_LM"> </constant>
-
-
 
 
 
