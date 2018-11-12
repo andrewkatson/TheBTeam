@@ -164,8 +164,6 @@ void WaveManager::endCurrentWave() {
 }
 
 void WaveManager::spawnNextUnit() {
-  shared_ptr<ActorInterface> next_unit = currentWave.front();
-  currentWave.pop();
     shared_ptr<MeleeUnit> next_unit = currentWave.front();
     //TODO - spawn the unit
     currentWave.pop();
