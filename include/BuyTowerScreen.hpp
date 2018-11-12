@@ -17,12 +17,21 @@ private:
   vector<sf::Text> texts;
   //the current string for the title
   string currentTitle;
+  //int row clicked on
+  int row;
+  //int col clicked on
+  int col;
+
 public:
   BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
   void initText();
   void changeTitleString(string newTitle);
 
+  void setSelectedTile(int row, int col);
+  void setTextToNewTile();
+
   void draw(sf::RenderWindow& window);
+  void drawTitle(sf::RenderWindow& window);
   void registerDelegates();
   void deregisterDelegates();
   void handleKeyPress(const EventInterface& event);

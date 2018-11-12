@@ -5,6 +5,9 @@
 - TextureLoader
 - Textures for cafeteriatable and trashcan
 - Blank textures for all the type of tower until they are finished
+- PlayingScreenHeader to draw the information about the current play ontop of the
+  playingScreen
+- LevelChangeEvent, LevelChangeEventData, BalanceChangeEvent, BalanceChangeEventData
 
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]
@@ -18,7 +21,8 @@
 - Towers and Obstacles no longer are passed their own type id
 - Towers, Obstacles, Projectiles, and Units all load their own type ids in their constructors
 - TextLoader now treats any typeID as distinct from a normal string
-- Towers draw to screen when placed 
+- Towers draw to screen when placed
+- actors have an id that is the same as their address
 
 [0.1.5] 2018-11-7
 ###Added

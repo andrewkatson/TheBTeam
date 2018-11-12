@@ -21,8 +21,12 @@ private:
     balance: amount of currency the player currently possesses
 
     hitpoints: number of hit-points the player still has left
+
+    wave: the current wave number
+
+    level: the current level number
    */
-  int balance,hitpoints;
+  int balance,hitpoints, wave, level;
 
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
@@ -55,6 +59,17 @@ public:
   int getHitpoints(){return hitpoints;}
 
   /*
+    @return the player's wave as stored by the wave variable
+.
+   */
+  int getWave(){return wave;}
+
+  /*
+    @return the current level .
+   */
+  int getLevel(){return level;}
+
+  /*
     Set the balance to the given value.
 
     @param balance The new balance value for the player.
@@ -72,6 +87,16 @@ public:
     @param points The new hit-point value for the player.
    */
   void updateHitpoints(int points){this->hitpoints=points;}
+
+  /*
+   * Set the wave to be the passed wave number
+   */
+  void updateWave(int wave){this->wave=wave;}
+
+  /*
+   * Set the level to be the passed wave number
+   */
+  void updateLevel(int level){this->level=level;}
 
 };
 

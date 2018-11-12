@@ -6,8 +6,8 @@ const EventType OptionSelectedEvent::eventType = EventType(&OptionSelectedEvent:
 OptionSelectedEvent::OptionSelectedEvent(){
 
 }
-OptionSelectedEvent::OptionSelectedEvent(int optionID, float timeStamp){
-  this -> data = unique_ptr<OptionSelectedEventData>(new OptionSelectedEventData(optionID, timeStamp));
+OptionSelectedEvent::OptionSelectedEvent(int optionID, int newValue, float timeStamp){
+  this -> data = unique_ptr<OptionSelectedEventData>(new OptionSelectedEventData(optionID, newValue, timeStamp));
 }
 
 const EventType& OptionSelectedEvent::getEventType() const{

@@ -2,7 +2,7 @@
 
 #include "EventType.hpp"
 #include "EventDataInterface.hpp"
-#include "OptionSelectedEventData.hpp"
+#include "BalanceChangeEventData.hpp"
 #include "EventInterface.hpp"
 #include <memory>
 #include <string>
@@ -11,13 +11,13 @@ using std::string;
 using std::unique_ptr;
 
 
-class OptionSelectedEvent : public EventInterface{
+class BalanceChangeEvent : public EventInterface{
 public:
   unique_ptr<EventDataInterface> data;
   static const EventType eventType;
 
-  OptionSelectedEvent();
-  OptionSelectedEvent(int optionID, int newValue, float timeStamp);
+  BalanceChangeEvent();
+  BalanceChangeEvent(int balanceChange, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;

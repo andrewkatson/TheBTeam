@@ -9,3 +9,10 @@
    this ->state = state;
    this -> timeStamp = timeStamp;
  }
+
+ StateChangeEventData::StateChangeEventData(State state, int row, int col, float timeStamp){
+   this ->state = state;
+   this ->row = row;
+   this ->col = col;
+   this -> timeStamp = timeStamp;
+ }

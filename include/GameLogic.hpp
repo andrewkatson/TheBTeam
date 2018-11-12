@@ -28,6 +28,7 @@
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
+using std::addressof;
 class GameLogic{
 private:
   //int pair (used to assocaite a row and col)
@@ -109,7 +110,6 @@ public:
 
   State getGameState();
 
-
   void shutDown();
 
   const vector<vector<int>>& getFloor();
@@ -119,11 +119,17 @@ public:
   bool isTower(int row, int col);
   bool isObstacle(int row, int col);
   bool isEmptySpace(int row, int col);
+  bool isExit(int row, int col);
+  bool isPath(int row, int col);
 
   const int getTileXSize();
   const int getTileYSize();
   const int getRows();
   const int getCols();
+  const int getWindowY();
+  const int getWindowX();
+
+  const Player& getPlayer();
 
   const MapChoices& getMapCustomizationChoices();
 

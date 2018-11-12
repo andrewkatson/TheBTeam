@@ -13,6 +13,9 @@
   <constant value="10" id="IDS_Button_Position_Padding"> </constant>
   <constant value="15" id="IDS_Button_Size_Padding"> </constant>
 
+  <!--Playing Screen Header-->
+  <constant value="5" id="IDS_Playing_Screen_Header_Padding"> </constant>
+
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
   <!--No Tower Tile-->
