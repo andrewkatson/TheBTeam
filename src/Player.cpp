@@ -12,6 +12,8 @@ Player::Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> tex
 {
   balance= textLoader->getInteger(string("IDS_P_HP"));
   hitpoints= textLoader->getInteger(string("IDS_P_B"));
+  wave=textLoader->getInteger(string("IDS_Default_Wave"));
+  level=textLoader->getInteger(string("IDS_Default_Level"));
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
 }

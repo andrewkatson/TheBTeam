@@ -24,6 +24,8 @@ private:
   shared_ptr<GameLogic> gameLogic;
   //the button to allow us to buy a tower
   unique_ptr<Button> buyTower;
+  //all the buttons in the header (not pressable)
+  vector<Button> headerVariables;
   //the vector of strings that will be drawn to the screen
   //and their value
   vector<HeaderValue> allStrings;
@@ -44,6 +46,10 @@ public:
 
   void initDrawingMaterials();
   void initBuyTowerButton();
+  void initHitpointsButton();
+  void initBalanceButton();
+  void initLevelButton();
+  void initWaveButton();
 
   float getMaximumY();
 

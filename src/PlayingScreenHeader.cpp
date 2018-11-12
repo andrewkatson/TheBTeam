@@ -10,6 +10,7 @@ PlayingScreenHeader::PlayingScreenHeader(shared_ptr<EventManager> eventManager, 
   string fontpath = textLoader -> getString(string("IDS_FFP"));
   this -> buyTower = unique_ptr<Button>(new Button(windowX, windowY, TOPRIGHT,
     textLoader -> getString(string("IDS_Buy_Tower_Empty_Space")), textLoader, fontpath));
+
   visible = true;
   initDrawingMaterials();
 
@@ -21,6 +22,10 @@ PlayingScreenHeader::PlayingScreenHeader(shared_ptr<EventManager> eventManager, 
  */
 void PlayingScreenHeader::initDrawingMaterials(){
   initBuyTowerButton();
+  initHitpointsButton();
+  initBalanceButton();
+  initLevelButton();
+  initWaveButton();
 }
 
 /*
@@ -66,6 +71,34 @@ void PlayingScreenHeader::initBuyTowerButton(){
 
   //make the button invisible to begin with
   (this->buyTower) -> flipVisibility();
+}
+
+/*
+ * Initalize the hitpoints button to be displayed in the header
+ */
+void PlayingScreenHeader::initHitpointsButton(){
+
+}
+
+/*
+ * Initalize the balance button to be displayed in the header
+ */
+void PlayingScreenHeader::initBalanceButton(){
+
+}
+
+/*
+ * Initalize the level button to be displayed in the header
+ */
+void PlayingScreenHeader::initLevelButton(){
+
+}
+
+/*
+ * Initalize the wave button to be displayed in the header
+ */
+void PlayingScreenHeader::initWaveButton(){
+
 }
 
 /*
