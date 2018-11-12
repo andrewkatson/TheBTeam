@@ -60,11 +60,6 @@ void OptionsMenuScreen::initText(){
     screen.at(5).setCharacterSize(20);
     screen.at(5).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 6));
 
-    screen.at(6).setString(string("Path Length"));
-    screen.at(6).setFillColor(sf::Color::White);
-    screen.at(6).setCharacterSize(20);
-    screen.at(6).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 7));
-
     */
 }
 
@@ -152,10 +147,10 @@ void OptionsMenuScreen::handleKeyPress(const EventInterface& event){
   string key = kpEventData -> keyID;
 
   if(key == "Up"){
-
+      moveUp();
   }
   else if(key == "Down"){
-
+      moveDown();
   }
   else if(key == "Left"){
 
