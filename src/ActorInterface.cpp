@@ -9,9 +9,9 @@
 #include "ActorInterface.hpp"
 
 ActorInterface::ActorInterface(){
+  //the id is the address of the current object
+  id = (long long) this;
 
-  void *address = this;
-  
 }
 bool ActorInterface::isCollision(sf::FloatRect colliding_with)
 {

@@ -3,7 +3,7 @@
 #include "Screen.hpp"
 #include "GameLogic.hpp"
 #include "Button.hpp"
-#include "BuyTowerScreen.hpp"
+#include "PlayingScreenHeader.hpp"
 #include <random>
 #include <tuple>
 
@@ -16,13 +16,11 @@ private:
   shared_ptr<EventManager> eventManager;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
-  //the reference to the buyTowerScreen
-  shared_ptr<Screen> buyTowerScreen;
   //logic of the game. handles mechanics
   //use to access frequently required data (i.e. towers, obstacles, board, units)
   shared_ptr<GameLogic> gameLogic;
-  //the button to allow us to buy a tower
-  unique_ptr<Button> buyTower;
+  //encapsulates the header on the top of the screen with information on the player
+  unique_ptr<PlayingScreenHeader> playingScreenHeader;
   //the main font of the game
   sf::Font mainFont;
   //text object used to write with
@@ -50,7 +48,7 @@ private:
   bool somethingChanged;
 
 public:
-  PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic, shared_ptr<Screen> buyTowerScreen, int windowX, int windowY);
+  PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic, int windowX, int windowY);
 
   void registerDelegates();
   void deregisterDelegates();

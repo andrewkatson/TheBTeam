@@ -5,7 +5,9 @@
 - TextureLoader
 - Textures for cafeteriatable and trashcan
 - Blank textures for all the type of tower until they are finished
-- MapGeneratedEvent and MapGeneratedEventData
+- PlayingScreenHeader to draw the information about the current play ontop of the
+  playingScreen
+- LevelChangeEvent, LevelChangeEventData, BalanceChangeEvent, BalanceChangeEventData
 - Textures for AverageKidUnit [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Textures for NormalFryUnit
 - Textures for CheesePizza tower
@@ -14,6 +16,7 @@
 - Textures for NormalFry tower
 - Textures for projectiles of all above towers
 - XML tags for the OptionsMenu Switchers [kp-hb][https://github.com/kp-hb]
+
 
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]
@@ -27,7 +30,8 @@
 - Towers and Obstacles no longer are passed their own type id
 - Towers, Obstacles, Projectiles, and Units all load their own type ids in their constructors
 - TextLoader now treats any typeID as distinct from a normal string
-- Towers draw to screen when placed 
+- Towers draw to screen when placed
+- actors have an id that is the same as their address
 - Enemy waves are now stored in a map with key uniqueID [@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnits switch their walking sprite every half-second to "animate" crudely
 

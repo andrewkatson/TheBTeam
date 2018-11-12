@@ -24,8 +24,6 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   //test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
-
-  cout << this;
 }
 
 /*
@@ -493,6 +491,20 @@ bool GameLogic::isEmptySpace(int row, int col){
 }
 
 /*
+ * @return if the row, col is an exit
+ */
+bool GameLogic::isExit(int row, int col){
+  return boardManager -> isExit(row,col);
+}
+
+/*
+ * @return if row, col is a path tile
+ */
+bool GameLogic::isPath(int row, int col){
+  return boardManager -> isPath(row, col);
+}
+
+/*
  * Get the x size of a tile on the map
  */
 const int GameLogic::getTileXSize(){
@@ -519,6 +531,28 @@ const int GameLogic::getRows(){
 const int GameLogic::getCols(){
   return boardManager -> getXDim();
 }
+
+/*
+ * Get the size in the x direction of the window
+ */
+const int GameLogic::getWindowX(){
+  return windowX;
+}
+
+/*
+ * Get the size in the y direction of the window
+ */
+const int GameLogic::getWindowY(){
+  return windowY;
+}
+
+/*
+ * @return Player: the current statistics of the player
+ */
+const Player& GameLogic::getPlayer(){
+  return *(player.get());
+}
+
 
 /*
  * @return MapChoices: all customizaton options for this map

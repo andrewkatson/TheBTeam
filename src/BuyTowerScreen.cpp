@@ -21,10 +21,44 @@ void BuyTowerScreen::initText(){
  * Change the title of the buy tower screen text
  */
 void BuyTowerScreen::changeTitleString(string newTitle){
-  this -> currentTitle =newTitle;
+  this -> currentTitle = newTitle;
 }
 
+/*
+ * Set the selected tile for this buyTowerScreen
+ */
+void BuyTowerScreen::setSelectedTile(int row, int col){
+  this -> row = row;
+  this -> col = col;
+
+  setTextToNewTile();
+}
+
+/*
+ * Set the current title text to reflect what is located at the
+ * selected tile position
+ */
+ void BuyTowerScreen::setTextToNewTile(){
+   //change what the buyTower button says depending on the what is at the tile
+   if(gameLogic->isTower(row,col)){
+     changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+   }
+   else if(gameLogic->isObstacle(row,col)){
+     changeTitleString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
+   }
+   else if(gameLogic->isEmptySpace(row,col)){
+     changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+   }
+ }
+
 void BuyTowerScreen::draw(sf::RenderWindow &window){
+  drawTitle(window);
+}
+
+/*
+ * Draw the title for the screen
+ */
+void BuyTowerScreen::drawTitle(sf::RenderWindow& window){
   //used to make the font local
   string secondaryFontPath = textLoader -> getString(string("IDS_SFP"));
 
@@ -50,8 +84,8 @@ void BuyTowerScreen::draw(sf::RenderWindow &window){
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Title_Text_Fill_Color_Alpha")));
   title.setFillColor(color);
   window.draw(title);
-
 }
+
 /*
  * Register the delegate method for this class
  * with any events it needs to know about

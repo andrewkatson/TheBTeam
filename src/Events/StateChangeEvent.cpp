@@ -23,6 +23,18 @@ StateChangeEvent::StateChangeEvent(){
 StateChangeEvent::StateChangeEvent(State state, float timeStamp){
   this -> data = unique_ptr<StateChangeEventData>(new StateChangeEventData(state, timeStamp));
 }
+
+/*
+ * constructor a key press event
+ * @param state: the enum for the state
+ * @param row: the current row selected
+ * @param col: the current col selected
+ * @param timeStamp: the timestamp of the creation of this event
+ */
+StateChangeEvent::StateChangeEvent(State state, int row, int col, float timeStamp){
+  this -> data = unique_ptr<StateChangeEventData>(new StateChangeEventData(state, row, col, timeStamp));
+}
+
 /*
  * return the event type
  */

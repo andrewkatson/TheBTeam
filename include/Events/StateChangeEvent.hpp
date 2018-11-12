@@ -20,6 +20,7 @@ public:
 
   StateChangeEvent();
   StateChangeEvent(State state, float timeStamp);
+  StateChangeEvent(State state, int row, int col, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;
