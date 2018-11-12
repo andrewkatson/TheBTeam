@@ -28,6 +28,7 @@
 - Towers, Obstacles, Projectiles, and Units all load their own type ids in their constructors
 - TextLoader now treats any typeID as distinct from a normal string
 - Towers draw to screen when placed 
+- Enemy waves are now stored in a map with key uniqueID [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 [0.1.5] 2018-11-7
 ###Added

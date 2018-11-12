@@ -21,7 +21,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerEvents();
   this -> registerDelegates();
-  test = 2;
+  //test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
 
@@ -537,6 +537,6 @@ const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced
 /*
  * @return the vector with all the currently spawned enemy units on the board
  */
-const vector<shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
+const unordered_map<int,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
   return waveManager -> getSpawnedEnemyUnits();
 }

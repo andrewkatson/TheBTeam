@@ -44,12 +44,10 @@ private:
   queue<shared_ptr<MeleeUnit>> currentWave;
 
   /*
-   * A vector storing the enemy units from the current wave that have been spawned
-   * NOTE: if you did your own version i only used this for the getCurrentWave method
-   * so that gameLogic can send it to the playingscreen for drawing. just replace that and
-   * it should be fine
+   * A map storing the enemy units from the current wave that have been spawned
+   * key: the unique id of the unit [its memory address]
    */
-  vector<shared_ptr<MeleeUnit>> spawnedCurrentWave;
+  unordered_map<int,shared_ptr<MeleeUnit>> spawnedCurrentWave;
 
   //The current level the user is at in the game.
   //TODO - pull this from gamelogic
@@ -157,7 +155,7 @@ public:
   /*
    * @return the enemies that have been spawned in the current wave
    */
-  vector<shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
+  unordered_map<int,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 };
 
 #endif
