@@ -169,7 +169,8 @@ void WaveManager::spawnNextUnit() {
     currentWave.pop();
 
     //add the unit to the vector of currently spawned units
-    spawnedCurrentWave.push_back(next_unit);
+    //use the ID
+    spawnedCurrentWave[next_unit->getID()]=next_unit;
 }
 
 void WaveManager::update(float deltaS) {
@@ -229,6 +230,6 @@ map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<
 }
 
 
-queue <shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return currentWave;}
+queue<shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return currentWave;}
 
-vector<shared_ptr<MeleeUnit>>& WaveManager::getSpawnedEnemyUnits(){return spawnedCurrentWave;}
+unordered_map<int,shared_ptr<MeleeUnit>>& WaveManager::getSpawnedEnemyUnits(){return spawnedCurrentWave;}

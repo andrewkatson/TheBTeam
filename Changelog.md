@@ -8,6 +8,15 @@
 - PlayingScreenHeader to draw the information about the current play ontop of the
   playingScreen
 - LevelChangeEvent, LevelChangeEventData, BalanceChangeEvent, BalanceChangeEventData
+- Textures for AverageKidUnit [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Textures for NormalFryUnit
+- Textures for CheesePizza tower
+- Texture for Soda tower
+- Textures for Mini M&M tower
+- Textures for NormalFry tower
+- Textures for projectiles of all above towers
+- XML tags for the OptionsMenu Switchers [kp-hb][https://github.com/kp-hb]
+
 
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]
@@ -23,6 +32,7 @@
 - TextLoader now treats any typeID as distinct from a normal string
 - Towers draw to screen when placed
 - actors have an id that is the same as their address
+- Enemy waves are now stored in a map with key uniqueID [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 [0.1.5] 2018-11-7
 ###Added

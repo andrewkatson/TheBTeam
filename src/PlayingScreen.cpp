@@ -644,7 +644,7 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::Re
  * @param window: the game window to draw on
  */
 void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
-  vector<shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
+  unordered_map<int,shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
 
   //loop through all enemies on the board
   for(auto iterator : allEnemyUnits){

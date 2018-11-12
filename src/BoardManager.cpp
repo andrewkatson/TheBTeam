@@ -396,3 +396,11 @@ unordered_map<int,pair<int,int>>& BoardManager::getAllObstacles(){
   }
   return allObstacles;
 }
+
+const vector<shared_ptr<MeleeUnit>> &BoardManager::getEnemyUnitsInPlay() const {
+  return enemyUnitsInPlay;
+}
+
+void BoardManager::addUnit(shared_ptr<MeleeUnit> unit){
+  enemyUnitsInPlay.push_back(unit);
+}

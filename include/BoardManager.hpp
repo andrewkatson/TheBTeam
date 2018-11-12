@@ -5,6 +5,7 @@
 #include "TextLoader.hpp"
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
+#include "MeleeUnit.hpp"
 #include <functional>
 #include <assert.h>
 
@@ -51,7 +52,16 @@ private:
      */
     vector<vector<int>> dirs = {{0,1},{0,-1},{1,0},{-1,0}};
 
+    /*
+     * Vector storing all enemy melee units currently in play.
+     */
+    vector<shared_ptr<MeleeUnit>>enemyUnitsInPlay;
+
 public:
+  const vector<shared_ptr<MeleeUnit>> &getEnemyUnitsInPlay() const;
+
+  void addUnit(shared_ptr<MeleeUnit> unit);
+
   BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
   void registerDelegates();
