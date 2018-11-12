@@ -2,6 +2,13 @@
 
 ###Added
 - MapGeneratedEvent and MapGeneratedEventData
+- Textures for AverageKidUnit [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Textures for NormalFryUnit
+- Textures for CheesePizza tower
+- Texture for Soda tower
+- Textures for Mini M&M tower
+- Textures for NormalFry tower
+- Textures for projectiles of all above towers
 
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]

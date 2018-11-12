@@ -163,11 +163,10 @@ void WaveManager::endCurrentWave() {
 }
 
 void WaveManager::spawnNextUnit() {
-    shared_ptr<ActorInterface> next_unit = currentWave.front();
-    //TODO - spawn the unit
-    currentWave.pop();
-}
+  shared_ptr<ActorInterface> next_unit = currentWave.front();
+  currentWave.pop();
 
+}
 void WaveManager::update(float deltaS) {
     //TODO - implement
 }
