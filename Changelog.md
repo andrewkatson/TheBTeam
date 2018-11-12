@@ -29,6 +29,7 @@
 - TextLoader now treats any typeID as distinct from a normal string
 - Towers draw to screen when placed 
 - Enemy waves are now stored in a map with key uniqueID [@jeremyelkayam][https://github.com/jeremyelkayam]
+- MeleeUnits switch their walking sprite every half-second to "animate" crudely
 
 [0.1.5] 2018-11-7
 ###Added

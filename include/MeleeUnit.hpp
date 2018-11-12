@@ -39,6 +39,13 @@ protected:
   //The bar for rendering the unit's HP
   HitpointBar hpBar;
 
+  //Seconds elapsed since the last change in sprite.
+  float s_elapsed;
+
+  //The index of the sprite that the actor is currently using.
+  int current_sprite;
+
+
 public:
 
   void update(float delta);
