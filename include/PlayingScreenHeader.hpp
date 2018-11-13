@@ -24,6 +24,8 @@ private:
   shared_ptr<GameLogic> gameLogic;
   //the button to allow us to buy a tower
   unique_ptr<Button> buyTower;
+  //the button to allow us to sell a tower
+  unique_ptr<Button> sellTower;
   //all the buttons in the header (not pressable)
   vector<Button> headerVariables;
   //the vector of strings that will be drawn to the screen
@@ -46,6 +48,7 @@ public:
 
   void initDrawingMaterials();
   void initBuyTowerButton();
+  void initSellTowerButton();
   void initHitpointsButton();
   void initBalanceButton();
   void initLevelButton();
@@ -69,5 +72,6 @@ public:
 
   void draw(sf::RenderWindow& window);
   void drawBuyTowerButton(sf::RenderWindow& window);
+  void drawSellTowerButton(sf::RenderWindow& window);
   void drawHeaderButtons(sf::RenderWindow& window);
 };

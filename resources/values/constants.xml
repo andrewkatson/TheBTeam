@@ -7,7 +7,7 @@
 
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
-  <constant value="100" id ="IDS_P_B"> </constant>
+  <constant value="20" id ="IDS_P_B"> </constant>
   <constant value="0" id="IDS_Default_Wave"> </constant>
   <constant value="1" id="IDS_Default_Level"> </constant>
 
@@ -16,7 +16,8 @@
   <constant value="15" id="IDS_Button_Size_Padding"> </constant>
 
   <!--Playing Screen Header-->
-  <constant value="5" id="IDS_Playing_Screen_Header_Padding"> </constant>
+  <constant value="5" id="IDS_Playing_Screen_Header_Padding_Y"> </constant>
+  <constant value="20" id="IDS_Playing_Screen_Header_Padding_X"> </constant>
 
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
@@ -333,6 +334,32 @@
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
 
+  <!--Sell Tower Button-->
+  <!--Sell Tower Button Colors -->
+  <constant value="178" id="IDS_Sell_Tower_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Sell_Tower_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Sell_Tower_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Sell_Tower_Outline_Color_Green"> </constant>
+  <constant value="125" id="IDS_Sell_Tower_Outline_Color_Alpha"> </constant>
+  <!--Sell Tower Button Text Colors -->
+  <constant value="0" id="IDS_Sell_Tower_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Sell_Tower_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Sell_Tower_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Sell_Tower_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Sell_Tower_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Text_Outline_Color_Alpha"> </constant>
+  <!--Sell Tower Outline Thickness-->
+  <constant value="1" id="IDS_Sell_Tower_Outline_Thickness"> </constant>
+  <!--Sell Tower Outline Text Thickness-->
+  <constant value="1" id="IDS_Sell_Tower_Text_Outline_Thickness"> </constant>
+  <!--Sell Tower Text Size-->
+  <constant value="45" id="IDS_Sell_Tower_Text_Size"> </constant>
+
   <!--Hitpoints Button-->
   <!--Hitpoints Button Colors-->
   <constant value="178" id="IDS_Hitpoints_Fill_Color_Red"> </constant>
@@ -370,7 +397,7 @@
   <constant value="0" id="IDS_Balance_Outline_Color_Green"> </constant>
   <constant value="0" id="IDS_Balance_Outline_Color_Alpha"> </constant>
   <!--Balance Text Colors-->
-  <constant value="0" id="IDS_Balance_Text_Fill_Color_Red"> </constant>
+  <constant value="204" id="IDS_Balance_Text_Fill_Color_Red"> </constant>
   <constant value="0" id="IDS_Balance_Text_Fill_Color_Blue"> </constant>
   <constant value="0" id="IDS_Balance_Text_Fill_Color_Green"> </constant>
   <constant value="255" id="IDS_Balance_Text_Fill_Color_Alpha"> </constant>
@@ -396,9 +423,9 @@
   <constant value="0" id="IDS_Level_Outline_Color_Green"> </constant>
   <constant value="0" id="IDS_Level_Outline_Color_Alpha"> </constant>
   <!--Level Text Colors-->
-  <constant value="49" id="IDS_Level_Text_Fill_Color_Red"> </constant>
-  <constant value="225" id="IDS_Level_Text_Fill_Color_Blue"> </constant>
-  <constant value="119" id="IDS_Level_Text_Fill_Color_Green"> </constant>
+  <constant value="204" id="IDS_Level_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Level_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Level_Text_Fill_Color_Green"> </constant>
   <constant value="255" id="IDS_Level_Text_Fill_Color_Alpha"> </constant>
   <constant value="255" id="IDS_Level_Text_Outline_Color_Red"> </constant>
   <constant value="250" id="IDS_Level_Text_Outline_Color_Blue"> </constant>
@@ -422,7 +449,7 @@
   <constant value="0" id="IDS_Wave_Outline_Color_Green"> </constant>
   <constant value="0" id="IDS_Wave_Outline_Color_Alpha"> </constant>
   <!--Wave Text Colors-->
-  <constant value="0" id="IDS_Wave_Text_Fill_Color_Red"> </constant>
+  <constant value="204" id="IDS_Wave_Text_Fill_Color_Red"> </constant>
   <constant value="0" id="IDS_Wave_Text_Fill_Color_Blue"> </constant>
   <constant value="0" id="IDS_Wave_Text_Fill_Color_Green"> </constant>
   <constant value="255" id="IDS_Wave_Text_Fill_Color_Alpha"> </constant>
