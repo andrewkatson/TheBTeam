@@ -69,4 +69,5 @@ public:
 
   void draw(sf::RenderWindow& window);
   void drawBuyTowerButton(sf::RenderWindow& window);
+  void drawHeaderButtons(sf::RenderWindow& window);
 };

@@ -95,8 +95,8 @@ void Button::setButtonPosition(Position position){
     yPos = windowY - distanceFromXAxis;
   }
   else if(position == TOPLEFT){
-    xPos = 0 + distanceFromYAxis;
-    yPos = 0 + distanceFromXAxis;
+    xPos = 0 + padding * 2;
+    yPos = 0 + distanceFromXAxis + padding/2;
   }
   else if(position == BOTTOMLEFT){
     xPos = 0 + distanceFromYAxis;

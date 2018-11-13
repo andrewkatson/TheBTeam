@@ -129,7 +129,7 @@ public:
   const int getWindowY();
   const int getWindowX();
 
-  const Player& getPlayer();
+  Player& getPlayer();
 
   const MapChoices& getMapCustomizationChoices();
 

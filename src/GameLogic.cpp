@@ -549,7 +549,7 @@ const int GameLogic::getWindowY(){
 /*
  * @return Player: the current statistics of the player
  */
-const Player& GameLogic::getPlayer(){
+Player& GameLogic::getPlayer(){
   return *(player.get());
 }
 

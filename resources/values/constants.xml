@@ -338,13 +338,13 @@
   <constant value="178" id="IDS_Hitpoints_Fill_Color_Red"> </constant>
   <constant value="34" id="IDS_Hitpoints_Fill_Color_Blue"> </constant>
   <constant value="34" id="IDS_Hitpoints_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Hitpoints_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Fill_Color_Alpha"> </constant>
   <constant value="255" id="IDS_Hitpoints_Outline_Color_Red"> </constant>
   <constant value="255" id="IDS_Hitpoints_Outline_Color_Blue"> </constant>
   <constant value="0" id="IDS_Hitpoints_Outline_Color_Green"> </constant>
   <constant value="0" id="IDS_Hitpoints_Outline_Color_Alpha"> </constant>
   <!--Hitpoints Text Colors-->
-  <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Red"> </constant>
+  <constant value="204" id="IDS_Hitpoints_Text_Fill_Color_Red"> </constant>
   <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Blue"> </constant>
   <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Green"> </constant>
   <constant value="255" id="IDS_Hitpoints_Text_Fill_Color_Alpha"> </constant>
@@ -364,7 +364,7 @@
   <constant value="178" id="IDS_Balance_Fill_Color_Red"> </constant>
   <constant value="34" id="IDS_Balance_Fill_Color_Blue"> </constant>
   <constant value="34" id="IDS_Balance_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Balance_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Balance_Fill_Color_Alpha"> </constant>
   <constant value="255" id="IDS_Balance_Outline_Color_Red"> </constant>
   <constant value="255" id="IDS_Balance_Outline_Color_Blue"> </constant>
   <constant value="0" id="IDS_Balance_Outline_Color_Green"> </constant>
@@ -390,15 +390,15 @@
   <constant value="178" id="IDS_Level_Fill_Color_Red"> </constant>
   <constant value="34" id="IDS_Level_Fill_Color_Blue"> </constant>
   <constant value="34" id="IDS_Level_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Level_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Level_Fill_Color_Alpha"> </constant>
   <constant value="255" id="IDS_Level_Outline_Color_Red"> </constant>
   <constant value="255" id="IDS_Level_Outline_Color_Blue"> </constant>
   <constant value="0" id="IDS_Level_Outline_Color_Green"> </constant>
   <constant value="0" id="IDS_Level_Outline_Color_Alpha"> </constant>
   <!--Level Text Colors-->
-  <constant value="0" id="IDS_Level_Text_Fill_Color_Red"> </constant>
-  <constant value="0" id="IDS_Level_Text_Fill_Color_Blue"> </constant>
-  <constant value="0" id="IDS_Level_Text_Fill_Color_Green"> </constant>
+  <constant value="49" id="IDS_Level_Text_Fill_Color_Red"> </constant>
+  <constant value="225" id="IDS_Level_Text_Fill_Color_Blue"> </constant>
+  <constant value="119" id="IDS_Level_Text_Fill_Color_Green"> </constant>
   <constant value="255" id="IDS_Level_Text_Fill_Color_Alpha"> </constant>
   <constant value="255" id="IDS_Level_Text_Outline_Color_Red"> </constant>
   <constant value="250" id="IDS_Level_Text_Outline_Color_Blue"> </constant>
@@ -416,7 +416,7 @@
   <constant value="178" id="IDS_Wave_Fill_Color_Red"> </constant>
   <constant value="34" id="IDS_Wave_Fill_Color_Blue"> </constant>
   <constant value="34" id="IDS_Wave_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Wave_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Wave_Fill_Color_Alpha"> </constant>
   <constant value="255" id="IDS_Wave_Outline_Color_Red"> </constant>
   <constant value="255" id="IDS_Wave_Outline_Color_Blue"> </constant>
   <constant value="0" id="IDS_Wave_Outline_Color_Green"> </constant>

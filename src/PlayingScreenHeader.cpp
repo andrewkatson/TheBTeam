@@ -77,9 +77,58 @@ void PlayingScreenHeader::initBuyTowerButton(){
  * Initalize the hitpoints button to be displayed in the header
  */
 void PlayingScreenHeader::initHitpointsButton(){
-  string fontpath = textLoader -> getString(string("IDS_FFP"));
-  Button hitpoints = Button(windowX, windowY, TOPRIGHT,
-    textLoader -> getString(string("IDS_Hitpoints_Button_Text")), textLoader, fontpath);
+
+  //get the starting hitpoints
+  Player player = gameLogic -> getPlayer();
+
+  int startingHitpoints = player.getHitpoints();
+
+
+  cout << startingHitpoints << endl;
+
+  string fontpath = textLoader -> getString(string("IDS_TFP"));
+  Button hitpoints = Button(windowX, windowY, TOPLEFT,
+    textLoader -> getString(string("IDS_Hitpoints_Button_Text")) + " " + to_string(startingHitpoints),
+      textLoader, fontpath);
+
+  // set the fill color for the button rectangle
+  hitpoints.setFillColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  hitpoints.setOutlineColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  this->buyTower -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Thickness")));
+
+  //set the fill color for the button text
+  hitpoints.setTextFillColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Alpha")));
+
+
+  //set the outline color for the text
+  hitpoints.setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Alpha")));
+
+  //set the button text outline thickness
+  hitpoints.setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Thickness")));
+
+  //set the text character size
+  hitpoints.setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Hitpoints_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  hitpoints.setFont(fontpath);
+
+  //rescale the button and reset it
+  hitpoints.setButtonPosition(TOPLEFT);
+
+  //push this button into the vector of buttons to be drawn
+  headerVariables.push_back(hitpoints);
 }
 
 /*
@@ -169,15 +218,6 @@ void PlayingScreenHeader::deregisterDelegates(){
 void PlayingScreenHeader::setSelectedTile(int row, int col){
   this->rowSelected = row;
   this->colSelected = col;
-}
-
-void PlayingScreenHeader::draw(sf::RenderWindow &window){
-  //handle the buy tower button separately
-  drawBuyTowerButton(window);
-  //draw the rest of the header if it is visible
-  if(visible){
-
-  }
 }
 
 /*
@@ -339,6 +379,16 @@ float PlayingScreenHeader::getYOffSet(){
   return ySize;
 }
 
+void PlayingScreenHeader::draw(sf::RenderWindow &window){
+  //handle the buy tower button separately
+  drawBuyTowerButton(window);
+  //draw the rest of the header if it is visible
+  if(visible){
+    drawHeaderButtons(window);
+  }
+}
+
+
 /*
  * Draw the buy tower button
  * @param window: the game window to draw on
@@ -365,4 +415,27 @@ void PlayingScreenHeader::drawBuyTowerButton(sf::RenderWindow& window){
 
   window.draw(buyTower -> getButtonRect());
   window.draw(text);
+}
+
+/*
+ * Draw all the buttons in the header (hitpoints, balance, level, wave)
+ * @param window: the game window to draw on
+ */
+void PlayingScreenHeader::drawHeaderButtons(sf::RenderWindow& window){
+  //used to make the font local
+  string mainFontPath = textLoader -> getString(string("IDS_TFP"));
+
+  if(!mainFont.loadFromFile(mainFontPath)){
+    cout << "No font!" << endl;
+  }
+  else{
+  //  cout << "loaded font!" << endl;
+  }
+  for(Button toDraw : headerVariables){
+    text = toDraw.getButtonText();
+    text.setFont(mainFont);
+
+    window.draw(toDraw.getButtonRect());
+    window.draw(text);
+  }
 }
