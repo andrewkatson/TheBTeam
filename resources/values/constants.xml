@@ -333,6 +333,110 @@
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
 
+  <!--Hitpoints Button-->
+  <!--Hitpoints Button Colors-->
+  <constant value="178" id="IDS_Hitpoints_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Hitpoints_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Hitpoints_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Outline_Color_Alpha"> </constant>
+  <!--Hitpoints Text Colors-->
+  <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Hitpoints_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Hitpoints_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Text_Outline_Color_Alpha"> </constant>
+  <!--Hitpoints Button Outline Thickness-->
+  <constant value="1" id="IDS_Hitpoints_Outline_Thickness"> </constant>
+  <!--Hitpoints Text Outline Thickness-->
+  <constant value="1" id="IDS_Hitpoints_Text_Outline_Thickness"> </constant>
+  <!--Hitpoints Text Size -->
+  <constant value="45" id="IDS_Hitpoints_Text_Size"> </constant>
+
+  <!--Balance Button-->
+  <!--Balance Button Colors-->
+  <constant value="178" id="IDS_Balance_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Balance_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Balance_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Balance_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Balance_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Balance_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Balance_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Balance_Outline_Color_Alpha"> </constant>
+  <!--Balance Text Colors-->
+  <constant value="0" id="IDS_Balance_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Balance_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Balance_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Balance_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Balance_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Balance_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Balance_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Balance_Text_Outline_Color_Alpha"> </constant>
+  <!--Balance Button Outline Thickness-->
+  <constant value="1" id="IDS_Balance_Outline_Thickness"> </constant>
+  <!--Balance Text Outline Thickness-->
+  <constant value="1" id="IDS_Balance_Text_Outline_Thickness"> </constant>
+  <!--Balance Text Size -->
+  <constant value="45" id="IDS_Balance_Text_Size"> </constant>
+
+  <!--Level Button-->
+  <!--Level Button Colors-->
+  <constant value="178" id="IDS_Level_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Level_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Level_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Level_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Level_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Level_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Level_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Level_Outline_Color_Alpha"> </constant>
+  <!--Level Text Colors-->
+  <constant value="0" id="IDS_Level_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Level_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Level_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Level_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Level_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Level_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Level_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Level_Text_Outline_Color_Alpha"> </constant>
+  <!--Level Button Outline Thickness-->
+  <constant value="1" id="IDS_Level_Outline_Thickness"> </constant>
+  <!--Level Text Outline Thickness-->
+  <constant value="1" id="IDS_Level_Text_Outline_Thickness"> </constant>
+  <!--Level Text Size -->
+  <constant value="45" id="IDS_Level_Text_Size"> </constant>
+
+  <!--Wave Button-->
+  <!--Wave Button Colors-->
+  <constant value="178" id="IDS_Wave_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Wave_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Wave_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Wave_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Wave_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Wave_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Wave_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Wave_Outline_Color_Alpha"> </constant>
+  <!--Wave Text Colors-->
+  <constant value="0" id="IDS_Wave_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Wave_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Wave_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Wave_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Wave_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Wave_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Wave_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Wave_Text_Outline_Color_Alpha"> </constant>
+  <!--Wave Button Outline Thickness-->
+  <constant value="1" id="IDS_Wave_Outline_Thickness"> </constant>
+  <!--Wave Text Outline Thickness-->
+  <constant value="1" id="IDS_Wave_Text_Outline_Thickness"> </constant>
+  <!--Wave Text Size -->
+  <constant value="45" id="IDS_Wave_Text_Size"> </constant>
+
   <!--Floor Tiles-->
   <!--Number of Types of Floor Tile For Each School -->
   <constant value="2" id="IDS_Cafeteria_Tile_Types"> </constant>

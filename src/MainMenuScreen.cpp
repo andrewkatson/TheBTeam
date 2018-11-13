@@ -205,12 +205,21 @@ void MainMenuScreen::handleKeyPress(const EventInterface& event){
     moveDown();
   }
   else if(key == "Enter"){
-    //TODO code to select option
-    //use a game state change event to change it
-    //will need to update the gameLogic handleStateChange event if you
-    //want to implement it properly
-    //will also need to change userView handleStateChange event if you want
-    //that to also reflect a state change
+    if(selectedItem == (int) Choices::Play){
+      shared_ptr<EventInterface> playState = make_shared<StateChangeEvent>(State::Playing, nowInNano);
+
+      this -> eventManager -> queueEvent(playState);
+    }
+    else if(selectedItem == (int) Choices::Options){
+      shared_ptr<EventInterface> optionsState = make_shared<StateChangeEvent>(State::OptionsMenu, nowInNano);
+
+      this -> eventManager -> queueEvent(optionsState);
+    }
+    else if(selectedItem == (int) Choices::Quit){
+      shared_ptr<EventInterface> quit = make_shared<KeyPressEvent>(string("Q"), nowInNano);
+
+      this -> eventManager -> queueEvent(quit);
+    }
   }
   else if(key == "S"){
     shared_ptr<EventInterface> playState = make_shared<StateChangeEvent>(State::Playing, nowInNano);

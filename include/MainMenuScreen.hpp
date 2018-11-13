@@ -10,6 +10,7 @@ using std::endl;
 using std::vector;
 class MainMenuScreen : public Screen{
 private:
+  enum class Choices {Play=0, Options=1, Quit=2};
   int selectedItem;
   int numItems;
   vector<sf::Text> screen;
@@ -23,7 +24,8 @@ private:
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
 public:
-  MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX, int windowY, int numItems,shared_ptr<TextLoader> textLoader);
+  MainMenuScreen(shared_ptr<EventManager> eventManager,int windowX, int windowY,
+    int numItems,shared_ptr<TextLoader> textLoader);
   void initText();
   void draw(sf::RenderWindow& window);
   void moveUp();

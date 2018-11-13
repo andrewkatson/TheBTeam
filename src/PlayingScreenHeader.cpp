@@ -77,28 +77,36 @@ void PlayingScreenHeader::initBuyTowerButton(){
  * Initalize the hitpoints button to be displayed in the header
  */
 void PlayingScreenHeader::initHitpointsButton(){
-
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  Button hitpoints = Button(windowX, windowY, TOPRIGHT,
+    textLoader -> getString(string("IDS_Hitpoints_Button_Text")), textLoader, fontpath);
 }
 
 /*
  * Initalize the balance button to be displayed in the header
  */
 void PlayingScreenHeader::initBalanceButton(){
-
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  Button balance = Button(windowX, windowY, TOPRIGHT,
+    textLoader -> getString(string("IDS_Balance_Button_Text")), textLoader, fontpath);
 }
 
 /*
  * Initalize the level button to be displayed in the header
  */
 void PlayingScreenHeader::initLevelButton(){
-
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  Button level = Button(windowX, windowY, TOPRIGHT,
+    textLoader -> getString(string("IDS_Level_Button_Text")), textLoader, fontpath);
 }
 
 /*
  * Initalize the wave button to be displayed in the header
  */
 void PlayingScreenHeader::initWaveButton(){
-
+  string fontpath = textLoader -> getString(string("IDS_FFP"));
+  Button wave = Button(windowX, windowY, TOPRIGHT,
+    textLoader -> getString(string("IDS_Wave_Button_Text")), textLoader, fontpath);
 }
 
 /*

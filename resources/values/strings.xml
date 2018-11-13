@@ -12,8 +12,10 @@
     <string value="../resources/fonts/chocolatebar.otf" id="IDS_SFP"> </string>
     <!--Tertiary Font Path-->
     <string value="../resources/fonts/chocolatebar.otf" id="IDS_TFP"> </string>
-    <!--BlackBerry Jam-->
+    <!--Fourth Font Path-->
     <string value="../resources/fonts/BlackberryJam.ttf" id="IDS_FFP"> </string>
+    <!--Fifth Font Path-->
+    <string value="../resources/fonts/amoremio.ttf" id="IDS_Fifth_Font_Path"> </string>
     <!--Textures Path-->
     <string value="../resources/textures/foodfightmainpic.png" id="IDS_Main_Title_Pic"> </string>
 
@@ -275,6 +277,14 @@
     <string value="Buy Tower" id="IDS_Buy_Tower_Empty_Space"> </string>
     <string value="Upgrade Tower" id="IDS_Buy_Tower_Existing_Tower"> </string>
     <string value="Remove Obstacle" id="IDS_Buy_Tower_Existing_Obstacle"> </string>
+    <!--Hitpoints Button-->
+    <string value="Hitpoints: " id="IDS_Hitpoints_Button_Text"> </string>
+    <!--Balance Button-->
+    <string value="Balance: " id="IDS_Balance_Button_Text"> </string>
+    <!--Level Button-->
+    <string value="Level: " id="IDS_Level_Button_Text"> </string>
+    <!--Wave Button-->
+    <string value="Wave: " id="IDS_Wave_Button_Text"> </string>
 
     <!--BuyTower Screen-->
     <!--Buy Tower Title-->
