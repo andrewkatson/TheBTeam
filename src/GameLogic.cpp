@@ -17,15 +17,13 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
-  this -> waveManager = unique_ptr<WaveManager>(new WaveManager(eventManager, textLoader, textureLoader));
+  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader);
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerEvents();
   this -> registerDelegates();
   test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
-
-  cout << this;
 }
 
 /*
@@ -89,7 +87,6 @@ void GameLogic::registerDelegates(){
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
 
-  /* Test Code
   if(boardManager -> hasMap()){
     int row = 3;
     int col = 3;
@@ -109,7 +106,7 @@ void GameLogic::updateGameLogic(float deltaS){
         }
       }
     }
-    if(test == 1){
+    if(test == 4){
       cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
       cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
       if(boardManager -> isTower(row, col)){
@@ -118,7 +115,7 @@ void GameLogic::updateGameLogic(float deltaS){
     }
     test--;
   }
-  */
+
 }
 /*
  * Handle any key press from the user
@@ -213,8 +210,8 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> towerManager -> setDimensions(xDim, yDim);
 
    //set the x and y in pixel length
-   this -> gridX = windowX / boardManager -> getXDim();
-   this -> gridY = windowY / boardManager -> getYDim();
+   this -> gridX = (float) windowX / boardManager -> getXDim();
+   this -> gridY = (float) windowY / boardManager -> getYDim();
    this-> towerManager -> setGridDimensions(gridX, gridY);
 
    //make a map generated event
@@ -358,7 +355,7 @@ void GameLogic::createATower(int row, int col, string towerType){
 }
 
 /*
- * When a tower/obstacle is purchased we deduct the monetary value
+ * When a tower is purchased we deduct the monetary value
  * from the player's total money
  * @param tower: the tower created
  */
@@ -368,6 +365,7 @@ void GameLogic::createATowerMoney(string towerType){
 
   //remove money equal to the tower's price
   player -> modifyBalance(price*-1);
+
 }
 
 /*
@@ -493,16 +491,30 @@ bool GameLogic::isEmptySpace(int row, int col){
 }
 
 /*
+ * @return if the row, col is an exit
+ */
+bool GameLogic::isExit(int row, int col){
+  return boardManager -> isExit(row,col);
+}
+
+/*
+ * @return if row, col is a path tile
+ */
+bool GameLogic::isPath(int row, int col){
+  return boardManager -> isPath(row, col);
+}
+
+/*
  * Get the x size of a tile on the map
  */
-const int GameLogic::getTileXSize(){
+const float GameLogic::getTileXSize(){
   return gridX;
 }
 
 /*
  * Get the y size of a tile on the map
  */
-const int GameLogic::getTileYSize(){
+const float GameLogic::getTileYSize(){
   return gridY;
 }
 
@@ -521,6 +533,28 @@ const int GameLogic::getCols(){
 }
 
 /*
+ * Get the size in the x direction of the window
+ */
+const int GameLogic::getWindowX(){
+  return windowX;
+}
+
+/*
+ * Get the size in the y direction of the window
+ */
+const int GameLogic::getWindowY(){
+  return windowY;
+}
+
+/*
+ * @return Player: the current statistics of the player
+ */
+Player& GameLogic::getPlayer(){
+  return *(player.get());
+}
+
+
+/*
  * @return MapChoices: all customizaton options for this map
  */
 const MapChoices& GameLogic::getMapCustomizationChoices(){
@@ -537,6 +571,6 @@ const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced
 /*
  * @return the vector with all the currently spawned enemy units on the board
  */
-const vector<shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
+const unordered_map<int,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
   return waveManager -> getSpawnedEnemyUnits();
 }

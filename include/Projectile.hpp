@@ -48,7 +48,7 @@ public:
   /*
    * Move the projectile based on its speed and direction.
    */
-  void move(float delta);
+  void move(float delta,int xmult=0, int ymult=0);
 
   /*
    * set the vector for movement (defined by an x and y)

@@ -5,7 +5,19 @@
 - TextureLoader
 - Textures for cafeteriatable and trashcan
 - Blank textures for all the type of tower until they are finished
+- PlayingScreenHeader to draw the information about the current play ontop of the
+  playingScreen
+- LevelChangeEvent, LevelChangeEventData, BalanceChangeEvent, BalanceChangeEventData
+- SellTower Button for the playing screen  
+- Textures for AverageKidUnit [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Textures for NormalFryUnit
+- Textures for CheesePizza tower
+- Texture for Soda tower
+- Textures for Mini M&M tower
+- Textures for NormalFry tower
+- Textures for projectiles of all above towers
 - XML tags for the OptionsMenu Switchers [kp-hb][https://github.com/kp-hb]
+
 
 ###Changed
 - color constants for tiles on the floor of a map (path, school, and exit) [@andrewkatson][https://github.com/andrewkatson]
@@ -20,9 +32,19 @@
 - Towers, Obstacles, Projectiles, and Units all load their own type ids in their constructors
 - TextLoader now treats any typeID as distinct from a normal string
 - Towers draw to screen when placed
+<<<<<<< HEAD
 - Userview call for options Screen from 7 to 6 [kp-hb][https://github.com/kp-hb]
 - OptionsMenuScreen screen has 6 options, dimensions changed
 - Switcher has textloader 
+=======
+- actors have an id that is the same as their address
+- Header displays wave, level, balance, and hitpoints. will update with events changing any of those (can be hidden)
+- Player now creates events when the level, balance, hitpoints, or wave are changed
+- Map Factory uses a slight randomness to generate the board size using the cafeteria choice
+- Enemy waves are now stored in a map with key uniqueID
+ [@jeremyelkayam][https://github.com/jeremyelkayam]
+- MeleeUnits switch their walking sprite every half-second to "animate" crudely
+>>>>>>> b4c3155ce2552cd0f554f3ab62c01b1875407140
 
 [0.1.5] 2018-11-7
 ###Added

@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   OptionSelectedEvent();
-  OptionSelectedEvent(int optionID, float timeStamp);
+  OptionSelectedEvent(int optionID, int newValue, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;

@@ -11,9 +11,11 @@
     <!--Secondary Font Path -->
     <string value="../resources/fonts/chocolatebar.otf" id="IDS_SFP"> </string>
     <!--Tertiary Font Path-->
-    <string value="../resources/fonts/chocolatebar.otf" id="IDS_TFP"> </string>
-    <!--BlackBerry Jam-->
+    <string value="../resources/fonts/freshcream.otf" id="IDS_TFP"> </string>
+    <!--Fourth Font Path-->
     <string value="../resources/fonts/BlackberryJam.ttf" id="IDS_FFP"> </string>
+    <!--Fifth Font Path-->
+    <string value="../resources/fonts/amoremio.ttf" id="IDS_Fifth_Font_Path"> </string>
     <!--Textures Path-->
     <string value="../resources/textures/foodfightmainpic.png" id="IDS_Main_Title_Pic"> </string>
 
@@ -217,15 +219,25 @@
     <string value="PLAYINGSCREENHANDLETOWERREMOVE" id="IDS_PS_TR"> </string>
     <string value="PLAYINGSCREENHANDLEMOUSEPRESS" id="IDS_PS_MP"> </string>
     <string value="PLAYINGSCREENHANDLEKEYPRESS" id="IDS_PS_KP"> </string>
+    <!--PlayingScreenHeader Delegates-->
+    <string value="Playing_Screen_Header_Key_Press" id="IDS_PSH_KP"> </string>
+    <string value="Playing_Screen_Header_Mouse_Press" id="IDS_PSH_MP"> </string>
+    <string value="Playing_Screen_Header_Lose_Hitpoints" id="IDS_PSH_LHP"> </string>
+    <string value="Playing_Screen_Header_Balance_Changed" id="IDS_PSH_BC"> </string>
+    <string value="Playing_Screen_Header_Level_Change" id="IDS_PSH_LC"> </string>
+    <string value="Playing_Screen_Header_Wave_Change" id="IDS_PSH_WC"> </string>
     <!--BuyTowerScreen Delegates-->
     <string value="BUYTOWERSCREENMOUSEPRESS" id="IDS_BTS_MP"> </string>
     <string value="BUYTOWERSCREENHANDLEKEYPRESS" id="IDS_BTS_KP"> </string>
+    <string value="Buy_Tower_Screen_Handle_State_Change" id="IDS_BTS_SC"> </string>
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
+<<<<<<< HEAD
 
 
     <!--OptionsMenuScreen-->
+    
     <!--School Switcher-->
     <!--Increment by 1 for gl-->
     <string value="Elementary School" id="IDS_Switcher_School_0"> </string>
@@ -261,8 +273,6 @@
     <string value="Large" id="IDS_Switcher_Cafeteria_Size_2"> </string>
 
 
-
-
     <!--MainMenuScreen-->
     <!--Main Menu Title Text-->
     <string value="Food Fight" id="IDS_Main_Menu_Title_Text_String"> </string>
@@ -272,12 +282,22 @@
     <string value="Buy Tower" id="IDS_Buy_Tower_Empty_Space"> </string>
     <string value="Upgrade Tower" id="IDS_Buy_Tower_Existing_Tower"> </string>
     <string value="Remove Obstacle" id="IDS_Buy_Tower_Existing_Obstacle"> </string>
+    <!--Sell Tower Button-->
+    <string value="Sell Tower" id="IDS_Sell_Tower"> </string>
+    <!--Hitpoints Button-->
+    <string value="Hitpoints:   " id="IDS_Hitpoints_Button_Text"> </string>
+    <!--Balance Button-->
+    <string value="Balance:   " id="IDS_Balance_Button_Text"> </string>
+    <!--Level Button-->
+    <string value="Level:   " id="IDS_Level_Button_Text"> </string>
+    <!--Wave Button-->
+    <string value="Wave:   " id="IDS_Wave_Button_Text"> </string>
 
     <!--BuyTower Screen-->
     <!--Buy Tower Title-->
     <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"> </string>
     <string value="Remove Obstacle?" id="IDS_Buy_Tower_Title_Text_Existig_Obstacle"> </string>
-
+    <string value="Sell Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_To_Sell"> </string>
 </strings>
 
 <typeids>

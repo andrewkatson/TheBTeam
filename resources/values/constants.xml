@@ -7,61 +7,91 @@
 
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
-  <constant value="100" id ="IDS_P_B"> </constant>
+  <constant value="20" id ="IDS_P_B"> </constant>
+  <constant value="1" id="IDS_Default_Wave"> </constant>
+  <constant value="1" id="IDS_Default_Level"> </constant>
 
   <!--General Button-->
   <constant value="10" id="IDS_Button_Position_Padding"> </constant>
   <constant value="15" id="IDS_Button_Size_Padding"> </constant>
 
+  <!--Playing Screen Header-->
+  <constant value="5" id="IDS_Playing_Screen_Header_Padding_Y"> </constant>
+  <constant value="20" id="IDS_Playing_Screen_Header_Padding_X"> </constant>
+
+  <!--Map Factory Settings -->
+  <constant value="10" id="IDS_Cafeteria_Size_Modifier"> </constant>
+  <constant value="5" id="IDS_Max_X_Y_Disparity"> </constant>
+  <constant value="6" id="IDS_Minimum_Board_Dimensions"> </constant>
+  <constant value="5" id="IDS_Invisible_Obstacle_Modifier"> </constant>
+
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
   <!--No Tower Tile-->
   <constant value="-1" id="IDS_NT"> </constant>
+  <constant value="-1" id="IDS_No_Tower"> </constant>
   <!--Exit Tile-->
   <constant value="0" id="IDS_EXT"> </constant>
+  <constant value="0" id="IDS_Exit"> </constant>
 
   <!--CheesePizza-->
   <constant value="111" id="IDS_CPT"> </constant>
+  <constant value="111" id="IDS_Cheese_Pizza_Tower"> </constant>
   <!--PepperoniPizza-->
   <constant value="121" id="IDS_PPT"> </constant>
+  <constant value="121" id="IDS_Pepperoni_Pizza_Tower"> </constant>
   <!--DeepDish-->
   <constant value="131" id="IDS_DDT"> </constant>
+  <constant value="131" id="IDS_Deep_Dish_Tower"> </constant>
   <!--MeatLovers-->
   <constant value="132" id="IDS_MLT"> </constant>
+  <constant value="132" id="IDS_Meat_Lovers_Tower"> </constant>
 
   <!--MiniM&Ms-->
   <constant value="211" id="IDS_MMMT"> </constant>
+  <constant value="211" id="IDS_Mini_MMS_Tower"> </constant>
   <!--NormalM&Ms-->
   <constant value="221" id="IDS_NMMT"> </constant>
+  <constant value="221" id="IDS_Normal_MMS_Tower"> </constant>
   <!--PeautButterM&Ms-->
   <constant value="231" id="IDS_PBMMT"> </constant>
+  <constant value="231" id="IDS_Peanut_Butter_MMS_Tower"> </constant>
   <!--PeanutM&Ms-->
   <constant value="232" id="IDS_PMMT"> </constant>
+  <constant value="232" id="IDS_Peanut_MMS_Tower"> </constant>
 
   <!--Soda-->
   <constant value="311" id="IDS_SOT"> </constant>
+  <constant value="311" id="IDS_Soda_Tower"> </constant>
   <!--EnergyDrink-->
   <constant value="321" id="IDS_EDT"> </constant>
+  <constant value="321" id="IDS_Energy_Drink_Tower"> </constant>
   <!--Gravy-->
   <constant value="331" id="IDS_GT"> </constant>
+  <constant value="331" id="IDS_Gravy_Tower"> </constant>
   <!--Slushie-->
   <constant value="332" id="IDS_SLT"> </constant>
+  <constant value="332" id="IDS_Slushie_Tower"> </constant>
 
   <!--NormalFry-->
   <constant value="411" id="IDS_NFT"> </constant>
+  <constant value="411" id="IDS_Normal_Fry_Tower"> </constant>
   <!--CrinkleFry-->
   <constant value="421" id="IDS_CFT"> </constant>
+  <constant value="421" id="IDS_Crinkle_Fry_Tower"> </constant>
   <!--SpicyFry-->
   <constant value="431" id="IDS_SFT"> </constant>
+  <constant value="431" id="IDS_Spicy_Fry_Tower"> </constant>
   <!--WaffleFry-->
   <constant value="432" id="IDS_WFT"> </constant>
+  <constant value="432" id="IDS_Waffle_Fry_Tower"> </constant>
 
   <!-- Cafeteria Table-->
   <constant value="-3" id="IDS_CTO"> </constant>
+  <constant value="-3" id="IDS_Cafeteria_Table_Obstacle"> </constant>
   <!--Trash Can -->
   <constant value="-4" id="IDS_TCO"> </constant>
-
-
+  <constant value="-4" id="IDS_Trash_Can_Obstacle"> </constant>
 
   <!--Total Number of Melee Units Per Tower-->
   <constant value="3" id="IDS_MT_MU"> </constant>
@@ -327,6 +357,136 @@
   <constant value="1" id="IDS_Buy_Tower_Text_Outline_Thickness"> </constant>
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
+
+  <!--Sell Tower Button-->
+  <!--Sell Tower Button Colors -->
+  <constant value="178" id="IDS_Sell_Tower_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Sell_Tower_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Sell_Tower_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Sell_Tower_Outline_Color_Green"> </constant>
+  <constant value="125" id="IDS_Sell_Tower_Outline_Color_Alpha"> </constant>
+  <!--Sell Tower Button Text Colors -->
+  <constant value="0" id="IDS_Sell_Tower_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Sell_Tower_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Sell_Tower_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Sell_Tower_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Sell_Tower_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Sell_Tower_Text_Outline_Color_Alpha"> </constant>
+  <!--Sell Tower Outline Thickness-->
+  <constant value="1" id="IDS_Sell_Tower_Outline_Thickness"> </constant>
+  <!--Sell Tower Outline Text Thickness-->
+  <constant value="1" id="IDS_Sell_Tower_Text_Outline_Thickness"> </constant>
+  <!--Sell Tower Text Size-->
+  <constant value="45" id="IDS_Sell_Tower_Text_Size"> </constant>
+
+  <!--Hitpoints Button-->
+  <!--Hitpoints Button Colors-->
+  <constant value="178" id="IDS_Hitpoints_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Hitpoints_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Hitpoints_Fill_Color_Green"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Outline_Color_Alpha"> </constant>
+  <!--Hitpoints Text Colors-->
+  <constant value="204" id="IDS_Hitpoints_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Hitpoints_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Hitpoints_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Hitpoints_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Hitpoints_Text_Outline_Color_Alpha"> </constant>
+  <!--Hitpoints Button Outline Thickness-->
+  <constant value="1" id="IDS_Hitpoints_Outline_Thickness"> </constant>
+  <!--Hitpoints Text Outline Thickness-->
+  <constant value="1" id="IDS_Hitpoints_Text_Outline_Thickness"> </constant>
+  <!--Hitpoints Text Size -->
+  <constant value="60" id="IDS_Hitpoints_Text_Size"> </constant>
+
+  <!--Balance Button-->
+  <!--Balance Button Colors-->
+  <constant value="178" id="IDS_Balance_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Balance_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Balance_Fill_Color_Green"> </constant>
+  <constant value="0" id="IDS_Balance_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Balance_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Balance_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Balance_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Balance_Outline_Color_Alpha"> </constant>
+  <!--Balance Text Colors-->
+  <constant value="204" id="IDS_Balance_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Balance_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Balance_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Balance_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Balance_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Balance_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Balance_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Balance_Text_Outline_Color_Alpha"> </constant>
+  <!--Balance Button Outline Thickness-->
+  <constant value="1" id="IDS_Balance_Outline_Thickness"> </constant>
+  <!--Balance Text Outline Thickness-->
+  <constant value="1" id="IDS_Balance_Text_Outline_Thickness"> </constant>
+  <!--Balance Text Size -->
+  <constant value="60" id="IDS_Balance_Text_Size"> </constant>
+
+  <!--Level Button-->
+  <!--Level Button Colors-->
+  <constant value="178" id="IDS_Level_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Level_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Level_Fill_Color_Green"> </constant>
+  <constant value="0" id="IDS_Level_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Level_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Level_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Level_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Level_Outline_Color_Alpha"> </constant>
+  <!--Level Text Colors-->
+  <constant value="204" id="IDS_Level_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Level_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Level_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Level_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Level_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Level_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Level_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Level_Text_Outline_Color_Alpha"> </constant>
+  <!--Level Button Outline Thickness-->
+  <constant value="1" id="IDS_Level_Outline_Thickness"> </constant>
+  <!--Level Text Outline Thickness-->
+  <constant value="1" id="IDS_Level_Text_Outline_Thickness"> </constant>
+  <!--Level Text Size -->
+  <constant value="60" id="IDS_Level_Text_Size"> </constant>
+
+  <!--Wave Button-->
+  <!--Wave Button Colors-->
+  <constant value="178" id="IDS_Wave_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Wave_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Wave_Fill_Color_Green"> </constant>
+  <constant value="0" id="IDS_Wave_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Wave_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Wave_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Wave_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Wave_Outline_Color_Alpha"> </constant>
+  <!--Wave Text Colors-->
+  <constant value="204" id="IDS_Wave_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Wave_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Wave_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Wave_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Wave_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Wave_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Wave_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Wave_Text_Outline_Color_Alpha"> </constant>
+  <!--Wave Button Outline Thickness-->
+  <constant value="1" id="IDS_Wave_Outline_Thickness"> </constant>
+  <!--Wave Text Outline Thickness-->
+  <constant value="1" id="IDS_Wave_Text_Outline_Thickness"> </constant>
+  <!--Wave Text Size -->
+  <constant value="60" id="IDS_Wave_Text_Size"> </constant>
 
   <!--Floor Tiles-->
   <!--Number of Types of Floor Tile For Each School -->

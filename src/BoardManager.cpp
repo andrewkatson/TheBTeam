@@ -2,7 +2,7 @@
 
 BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   this -> textLoader = textLoader;
-  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,10)));
+  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,10), textLoader));
   this -> eventManager = eventManager;
   this -> registerDelegates();
 
@@ -142,6 +142,8 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
   int row = towerPosID / getYDim();
   int col = towerPosID % getXDim();
 
+
+  cout << towerTypeNum << endl;
   //place the tower value on the above floor grid
   addTower(row,col,towerTypeNum);
 }
@@ -395,4 +397,12 @@ unordered_map<int,pair<int,int>>& BoardManager::getAllObstacles(){
     }
   }
   return allObstacles;
+}
+
+const vector<shared_ptr<MeleeUnit>> &BoardManager::getEnemyUnitsInPlay() const {
+  return enemyUnitsInPlay;
+}
+
+void BoardManager::addUnit(shared_ptr<MeleeUnit> unit){
+  enemyUnitsInPlay.push_back(unit);
 }

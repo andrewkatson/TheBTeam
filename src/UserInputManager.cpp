@@ -105,6 +105,11 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
 
      this -> eventManager -> queueEvent(bKey);
    }
+   else if(event.key.code == sf::Keyboard::H){
+     shared_ptr<EventInterface> hKey = make_shared<KeyPressEvent>(string("H"), nowInNano);
+
+     this -> eventManager -> queueEvent(hKey);
+   }
    else if(event.key.code == sf::Keyboard::Left){
      shared_ptr<EventInterface> leftArrow = make_shared<KeyPressEvent>(string("Left"), nowInNano);
 

@@ -27,7 +27,6 @@ void TextLoader::loadStrings(){
   for(tinyxml2::XMLElement* node = root->FirstChildElement("string"); node != NULL; node= node->NextSiblingElement("string")) {
     string s(node->Attribute("id"));
     strings.insert({s, node -> Attribute("value")});
-
   }
 }
 

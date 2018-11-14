@@ -10,17 +10,41 @@
 MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) : ActorInterface(){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> s_elapsed = 0;
+  this ->current_sprite = 0;
 }
 
 void MeleeUnit::update(float delta){
 
+  if(speed==0 && current_sprite!=2){
+
+    current_sprite=2;
+    this->sprite.setTexture(textures->at(current_sprite));
+    
+  }else {
+
+    s_elapsed += delta;
+
+    if (s_elapsed > .5) {
+      s_elapsed = 0;
+
+      if (current_sprite == 0) {
+        current_sprite = 1;
+      } else {
+        current_sprite = 0;
+      }
+
+      this->sprite.setTexture(textures->at(current_sprite));
+
+    }
+  }
 }
 
 /*
  * Initliaze the texture for the sprite to be the first texture of the textures vector
  */
 void MeleeUnit::initSprite(){
-  (this->sprite).setTexture(textures -> at(0));
+  (this->sprite).setTexture(textures -> at(current_sprite));
 }
 
 void MeleeUnit::updateHitpoints(int damage){
@@ -46,7 +70,9 @@ HitpointBar MeleeUnit::getHpBar() {
   return this->hpBar;
 }
 
-void MeleeUnit::move(float delta=0){
+void MeleeUnit::move(float deltaS, int xmult, int ymult){
+  this->x+=(speed*deltaS)*(double)xmult;
+  this->y+=(speed*deltaS)*(double)ymult;
 
 }
 

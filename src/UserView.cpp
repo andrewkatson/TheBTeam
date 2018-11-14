@@ -78,7 +78,7 @@ void UserView::initScreens(){
   //Buy Tower Sreeen
   shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(eventManager, textLoader,gameLogic, windowX, windowY);
   //Playing Screen
-  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(eventManager, textLoader,gameLogic, buyTowerScreen, windowX, windowY);
+  shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(eventManager, textLoader,gameLogic, windowX, windowY);
   //Restart Screen
   shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(eventManager, textLoader,windowX, windowY);
 

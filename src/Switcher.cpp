@@ -4,6 +4,7 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 Switcher::Switcher(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,int windowX, int windowY, int id, int len){
     this -> windowX = windowX;
     this -> windowY = windowY;
@@ -73,3 +74,8 @@ void Switcher::draw(){
 
 
 }
+=======
+//Switcher::Switcher
+//similar to how he menu currently works, except having a move left/right option that will pull from a vector of choices
+//which one should be displayed and then pass that to the selection manager so that all apropriate starting qualities are passed.
+>>>>>>> b4c3155ce2552cd0f554f3ab62c01b1875407140

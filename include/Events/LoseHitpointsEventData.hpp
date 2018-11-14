@@ -7,8 +7,8 @@ using std::string;
 
 class LoseHitpointsEventData : public EventDataInterface{
 public:
-  string actorID;
+  int lostHitpoints;
   float timeStamp;
 
-  LoseHitpointsEventData(long long  actorID, float timeStamp);
+  LoseHitpointsEventData(int lostHitpoints, float timeStamp);
 };

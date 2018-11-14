@@ -28,6 +28,7 @@
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
+using std::addressof;
 class GameLogic{
 private:
   //int pair (used to assocaite a row and col)
@@ -37,9 +38,9 @@ private:
   //y dimension of the render window
   int windowY;
   //x dimension in pixels of a grid space
-  int gridX;
+  float gridX;
   //y dimension in pixels of a grid space
-  int gridY;
+  float gridY;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //Store the game's instance of the BoardManager class that the game logic
@@ -56,7 +57,7 @@ private:
   //Store any sounds/music used by the game and play/stop when necessary
   unique_ptr<SoundManager> soundManager;
   //Store the waves of ai enemies to be spawned and handle where/when each wave starts
-  unique_ptr<WaveManager> waveManager;
+  shared_ptr<WaveManager> waveManager;
   //Store the projectiles that can be fired by the defensive towers and handle their
   //creation, path, and destruction
   unique_ptr<ProjectileManager> projectileManager;
@@ -109,7 +110,6 @@ public:
 
   State getGameState();
 
-
   void shutDown();
 
   const vector<vector<int>>& getFloor();
@@ -119,16 +119,24 @@ public:
   bool isTower(int row, int col);
   bool isObstacle(int row, int col);
   bool isEmptySpace(int row, int col);
+  bool isExit(int row, int col);
+  bool isPath(int row, int col);
 
-  const int getTileXSize();
-  const int getTileYSize();
+  const float getTileXSize();
+  const float getTileYSize();
   const int getRows();
   const int getCols();
+  const int getWindowY();
+  const int getWindowX();
+
+  Player& getPlayer();
 
   const MapChoices& getMapCustomizationChoices();
 
   const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
-  const vector<shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
+  const unordered_map<int,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
+
+  shared_ptr<WaveManager> getWaveManager(){return waveManager;};
 
 };
 
