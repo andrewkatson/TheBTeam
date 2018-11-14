@@ -74,7 +74,7 @@ void UserView::initScreens(){
   mainMenuScreen -> registerDelegates();
 
   //Options Menu Screen
-  shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(eventManager, textLoader, windowX, windowY, 7, font);
+  shared_ptr<Screen> optionsMenuScreen = make_shared<OptionsMenuScreen>(eventManager, textLoader, windowX, windowY, 6, font);
   //Buy Tower Sreeen
   shared_ptr<Screen> buyTowerScreen = make_shared<BuyTowerScreen>(eventManager, textLoader,gameLogic, windowX, windowY);
   //Playing Screen

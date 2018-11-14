@@ -19,7 +19,10 @@
 - Towers and Obstacles no longer are passed their own type id
 - Towers, Obstacles, Projectiles, and Units all load their own type ids in their constructors
 - TextLoader now treats any typeID as distinct from a normal string
-- Towers draw to screen when placed 
+- Towers draw to screen when placed
+- Userview call for options Screen from 7 to 6 [kp-hb][https://github.com/kp-hb]
+- OptionsMenuScreen screen has 6 options, dimensions changed
+- Switcher has textloader 
 
 [0.1.5] 2018-11-7
 ###Added

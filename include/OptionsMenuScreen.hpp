@@ -22,6 +22,7 @@ public:
   void moveUp();
   void moveDown();
   void moveRight();
+  void moveLeft();
   void draw(sf::RenderWindow &window);
   void handleKeyPress(const EventInterface& event);
   void registerDelegates();
