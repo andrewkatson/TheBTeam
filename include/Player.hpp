@@ -10,9 +10,17 @@
 #define PLAYER_H
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
+#include "Events/LoseHitpointsEvent.hpp"
+#include "Events/WaveChangeEvent.hpp"
+#include "Events/LevelChangeEvent.hpp"
+#include "Events/BalanceChangeEvent.hpp"
 #include <memory>
+#include <chrono>
 
 using std::shared_ptr;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::nanoseconds;
 class Player{
 
 private:
@@ -42,6 +50,7 @@ public:
    */
   Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
+  void registerEvents();
 
   /*
     Return the player's currency balance as stored by the balance instance
@@ -74,29 +83,36 @@ public:
 
     @param balance The new balance value for the player.
    */
-  void updateBalance(int balance){this->balance=balance;}
+  void updateBalance(int balance);
 
   /*
    * Add the passed value to the balance
+   * and create an event
    */
-  void modifyBalance(int modifyBy){this->balance+=modifyBy;}
+  void modifyBalance(int modifyBy);
 
   /*
     Set the player's current hit-points to the given value.
 
     @param points The new hit-point value for the player.
    */
-  void updateHitpoints(int points){this->hitpoints=points;}
+  void updateHitpoints(int points);
+
+  /*
+   * Subtract the passed value to the hitpoints
+   */
+  void modifyHitpoints(int pointsToDeduct);
 
   /*
    * Set the wave to be the passed wave number
    */
-  void updateWave(int wave){this->wave=wave;}
+  void updateWave(int wave);
 
   /*
    * Set the level to be the passed wave number
    */
-  void updateLevel(int level){this->level=level;}
+  void updateLevel(int level);
+
 
 };
 

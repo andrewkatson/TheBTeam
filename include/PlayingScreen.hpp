@@ -66,12 +66,12 @@ public:
 
   void draw(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);
-  void drawFloorPath(sf::RenderWindow& window, int row, int col, int yTileSize,
-    int xTileSize, int pathValue, sf::RectangleShape& floorRect);
-  void drawFloorTile(sf::RenderWindow& window, int row, int col, int yTileSize,
-     int xTileSize, int tileValue, sf::RectangleShape& floorRect);
-  void drawFloorExit(sf::RenderWindow& window, int row, int col, int yTileSize,
-     int xTileSize, sf::RectangleShape& floorRect);
+  void drawFloorPath(sf::RenderWindow& window, int row, int col, float yTileSize,
+    float xTileSize, int pathValue, sf::RectangleShape& floorRect);
+  void drawFloorTile(sf::RenderWindow& window, int row, int col, float yTileSize,
+     float xTileSize, int tileValue, sf::RectangleShape& floorRect);
+  void drawFloorExit(sf::RenderWindow& window, int row, int col, float yTileSize,
+     float xTileSize, sf::RectangleShape& floorRect);
   void drawTowersAndObstacles(sf::RenderWindow& window);
   void drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window);
   void drawEnemyUnits(sf::RenderWindow& window);

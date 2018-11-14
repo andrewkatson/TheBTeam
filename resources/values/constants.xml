@@ -8,7 +8,7 @@
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
   <constant value="20" id ="IDS_P_B"> </constant>
-  <constant value="0" id="IDS_Default_Wave"> </constant>
+  <constant value="1" id="IDS_Default_Wave"> </constant>
   <constant value="1" id="IDS_Default_Level"> </constant>
 
   <!--General Button-->
@@ -23,51 +23,69 @@
   <!--Of the format "Type Level Branch"-->
   <!--No Tower Tile-->
   <constant value="-1" id="IDS_NT"> </constant>
+  <constant value="-1" id="IDS_No_Tower"> </constant>
   <!--Exit Tile-->
   <constant value="0" id="IDS_EXT"> </constant>
+  <constant value="0" id="IDS_Exit"> </constant>
 
   <!--CheesePizza-->
   <constant value="111" id="IDS_CPT"> </constant>
+  <constant value="111" id="IDS_Cheese_Pizza_Tower"> </constant>
   <!--PepperoniPizza-->
   <constant value="121" id="IDS_PPT"> </constant>
+  <constant value="121" id="IDS_Pepperoni_Pizza_Tower"> </constant>
   <!--DeepDish-->
   <constant value="131" id="IDS_DDT"> </constant>
+  <constant value="131" id="IDS_Deep_Dish_Tower"> </constant>
   <!--MeatLovers-->
   <constant value="132" id="IDS_MLT"> </constant>
+  <constant value="132" id="IDS_Meat_Lovers_Tower"> </constant>
 
   <!--MiniM&Ms-->
   <constant value="211" id="IDS_MMMT"> </constant>
+  <constant value="211" id="IDS_Mini_MMS_Tower"> </constant>
   <!--NormalM&Ms-->
   <constant value="221" id="IDS_NMMT"> </constant>
+  <constant value="221" id="IDS_Normal_MMS_Tower"> </constant>
   <!--PeautButterM&Ms-->
   <constant value="231" id="IDS_PBMMT"> </constant>
+  <constant value="231" id="IDS_Peanut_Butter_MMS_Tower"> </constant>
   <!--PeanutM&Ms-->
   <constant value="232" id="IDS_PMMT"> </constant>
+  <constant value="232" id="IDS_Peanut_MMS_Tower"> </constant>
 
   <!--Soda-->
   <constant value="311" id="IDS_SOT"> </constant>
+  <constant value="311" id="IDS_Soda_Tower"> </constant>
   <!--EnergyDrink-->
   <constant value="321" id="IDS_EDT"> </constant>
+  <constant value="321" id="IDS_Energy_Drink_Tower"> </constant>
   <!--Gravy-->
   <constant value="331" id="IDS_GT"> </constant>
+  <constant value="331" id="IDS_Gravy_Tower"> </constant>
   <!--Slushie-->
   <constant value="332" id="IDS_SLT"> </constant>
+  <constant value="332" id="IDS_Slushie_Tower"> </constant>
 
   <!--NormalFry-->
   <constant value="411" id="IDS_NFT"> </constant>
+  <constant value="411" id="IDS_Normal_Fry_Tower"> </constant>
   <!--CrinkleFry-->
   <constant value="421" id="IDS_CFT"> </constant>
+  <constant value="421" id="IDS_Crinkle_Fry_Tower"> </constant>
   <!--SpicyFry-->
   <constant value="431" id="IDS_SFT"> </constant>
+  <constant value="431" id="IDS_Spicy_Fry_Tower"> </constant>
   <!--WaffleFry-->
   <constant value="432" id="IDS_WFT"> </constant>
+  <constant value="432" id="IDS_Waffle_Fry_Tower"> </constant>
 
   <!-- Cafeteria Table-->
   <constant value="-3" id="IDS_CTO"> </constant>
+  <constant value="-3" id="IDS_Cafeteria_Table_Obstacle"> </constant>
   <!--Trash Can -->
   <constant value="-4" id="IDS_TCO"> </constant>
-
-
+  <constant value="-4" id="IDS_Trash_Can_Obstacle"> </constant>
 
   <!--Total Number of Melee Units Per Tower-->
   <constant value="3" id="IDS_MT_MU"> </constant>
@@ -384,7 +402,7 @@
   <!--Hitpoints Text Outline Thickness-->
   <constant value="1" id="IDS_Hitpoints_Text_Outline_Thickness"> </constant>
   <!--Hitpoints Text Size -->
-  <constant value="45" id="IDS_Hitpoints_Text_Size"> </constant>
+  <constant value="60" id="IDS_Hitpoints_Text_Size"> </constant>
 
   <!--Balance Button-->
   <!--Balance Button Colors-->
@@ -410,7 +428,7 @@
   <!--Balance Text Outline Thickness-->
   <constant value="1" id="IDS_Balance_Text_Outline_Thickness"> </constant>
   <!--Balance Text Size -->
-  <constant value="45" id="IDS_Balance_Text_Size"> </constant>
+  <constant value="60" id="IDS_Balance_Text_Size"> </constant>
 
   <!--Level Button-->
   <!--Level Button Colors-->
@@ -436,7 +454,7 @@
   <!--Level Text Outline Thickness-->
   <constant value="1" id="IDS_Level_Text_Outline_Thickness"> </constant>
   <!--Level Text Size -->
-  <constant value="45" id="IDS_Level_Text_Size"> </constant>
+  <constant value="60" id="IDS_Level_Text_Size"> </constant>
 
   <!--Wave Button-->
   <!--Wave Button Colors-->
@@ -462,7 +480,7 @@
   <!--Wave Text Outline Thickness-->
   <constant value="1" id="IDS_Wave_Text_Outline_Thickness"> </constant>
   <!--Wave Text Size -->
-  <constant value="45" id="IDS_Wave_Text_Size"> </constant>
+  <constant value="60" id="IDS_Wave_Text_Size"> </constant>
 
   <!--Floor Tiles-->
   <!--Number of Types of Floor Tile For Each School -->

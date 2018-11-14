@@ -379,9 +379,9 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
   assert(floorGrid.size()!=0);
 
   //the size of each tile in x direction
-  const int xTileSize = playingScreenHeader -> getTrueXTileSize();
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
-  const int yTileSize = playingScreenHeader -> getTrueYTileSize();
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
 
   //set the rectangle used to draw to be these dimensions
   sf::RectangleShape floorRect(sf::Vector2f((float)xTileSize,(float) yTileSize));
@@ -407,7 +407,7 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
 }
 
 void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col,
-  int yTileSize, int xTileSize, int pathValue, sf::RectangleShape& floorRect){
+  float yTileSize, float xTileSize, int pathValue, sf::RectangleShape& floorRect){
 
     //the string built from path tile value
     string pathTypeBase = "IDS_Path_Tile_" + to_string(pathValue) + "_Fill_Color_";
@@ -464,7 +464,7 @@ void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col,
 
 }
 void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
-   int yTileSize, int xTileSize, int tileValue, sf::RectangleShape& floorRect){
+   float yTileSize, float xTileSize, int tileValue, sf::RectangleShape& floorRect){
 
   //the cafeteria choice
   const MapChoices choices = gameLogic -> getMapCustomizationChoices();
@@ -534,7 +534,7 @@ void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
   window.draw(floorRect);
 }
 void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
-   int yTileSize, int xTileSize, sf::RectangleShape& floorRect){
+   float yTileSize, float xTileSize, sf::RectangleShape& floorRect){
 
      int redComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Red"));
      int greenComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Green"));

@@ -8,6 +8,7 @@
 - PlayingScreenHeader to draw the information about the current play ontop of the
   playingScreen
 - LevelChangeEvent, LevelChangeEventData, BalanceChangeEvent, BalanceChangeEventData
+- SellTower Button for the playing screen  
 - Textures for AverageKidUnit [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Textures for NormalFryUnit
 - Textures for CheesePizza tower
@@ -32,7 +33,10 @@
 - TextLoader now treats any typeID as distinct from a normal string
 - Towers draw to screen when placed
 - actors have an id that is the same as their address
-- Enemy waves are now stored in a map with key uniqueID [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Header displays wave, level, balance, and hitpoints. will update with events changing any of those (can be hidden)
+- Player now creates events when the level, balance, hitpoints, or wave are changed
+- Enemy waves are now stored in a map with key uniqueID
+ [@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnits switch their walking sprite every half-second to "animate" crudely
 
 [0.1.5] 2018-11-7

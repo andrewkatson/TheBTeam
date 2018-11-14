@@ -191,21 +191,6 @@ void UserView::handleStateChange(const EventInterface& event){
   //change the screen to the current state
   screen = state;
 
-  //we have to check the row and col if this is the buyTowerScreen
-  if(state == State::BuyTower){
-    int row = scEventData -> row;
-    int col = scEventData -> col;
-    assert(row < gameLogic->getRows());
-    assert(row >= 0);
-    assert(col < gameLogic->getCols());
-    assert(col >=0);
-
-    //cast the screen selected(which should be buy tower)
-    BuyTowerScreen* buyTowerScreen = dynamic_cast<BuyTowerScreen*>(((this->screens).at((int)screen)).get());
-
-    buyTowerScreen -> setSelectedTile(row,col);
-  }
-
   //register all the delegagtes for the new state
   (this->screens).at((int)screen) -> registerDelegates();
 }

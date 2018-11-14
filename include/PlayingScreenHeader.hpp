@@ -5,6 +5,10 @@
  */
  #include "GameLogic.hpp"
  #include "Button.hpp"
+ #include "Events/LoseHitpointsEvent.hpp"
+ #include "Events/WaveChangeEvent.hpp"
+ #include "Events/LevelChangeEvent.hpp"
+ #include "Events/BalanceChangeEvent.hpp"
 class PlayingScreenHeader{
 private:
   struct HeaderValue{
@@ -28,6 +32,8 @@ private:
   unique_ptr<Button> sellTower;
   //all the buttons in the header (not pressable)
   vector<Button> headerVariables;
+  //all the values for each button
+  vector<int> headerVariableValues;
   //the vector of strings that will be drawn to the screen
   //and their value
   vector<HeaderValue> allStrings;
@@ -42,6 +48,8 @@ private:
   //the size of the window
   int windowX;
   int windowY;
+  //true when a button is made visible or invisible (will cause an auto recalculation of the header size)
+  bool recaculateHeader;
 public:
 
   PlayingScreenHeader(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
@@ -54,6 +62,12 @@ public:
   void initLevelButton();
   void initWaveButton();
 
+  void resetButtons();
+  void resetHitpointButton();
+  void resetBalanceButton();
+  void resetLevelButton();
+  void resetWaveButton();
+
   float getMaximumY();
 
   void registerDelegates();
@@ -61,6 +75,10 @@ public:
 
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
+  void handleLoseHitpoints(const EventInterface& event);
+  void handleBalanceChange(const EventInterface& event);
+  void handleLevelChange(const EventInterface& event);
+  void handleWaveChange(const EventInterface& event);
 
   void flipVisibility();
   float getTrueXTileSize();

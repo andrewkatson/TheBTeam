@@ -6,8 +6,8 @@ const EventType LoseHitpointsEvent::eventType = EventType(&LoseHitpointsEvent::e
 LoseHitpointsEvent::LoseHitpointsEvent(){
 
 }
-LoseHitpointsEvent::LoseHitpointsEvent(long long  actorID, float timeStamp){
-  this -> data = unique_ptr<LoseHitpointsEventData>(new LoseHitpointsEventData(actorID, timeStamp));
+LoseHitpointsEvent::LoseHitpointsEvent(int lostHitpoints, float timeStamp){
+  this -> data = unique_ptr<LoseHitpointsEventData>(new LoseHitpointsEventData(lostHitpoints, timeStamp));
 }
 
 const EventType& LoseHitpointsEvent::getEventType() const{

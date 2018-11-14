@@ -1,7 +1,7 @@
 #include "Events/WaveChangeEventData.hpp"
 
-WaveChangeEventData::WaveChangeEventData(int waveID, float timeStamp){
+WaveChangeEventData::WaveChangeEventData(int waveNum, float timeStamp){
   this -> timeStamp = timeStamp;
-  this -> waveID = waveID;
+  this -> waveNum = waveNum;
 
 }

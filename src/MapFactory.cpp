@@ -37,6 +37,7 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices){
 void MapFactory::generateDimensions(){
   int xDim = (int)(mapCustomizationChoices -> cafeteriaChoice) * 6;
   int yDim = (int)(mapCustomizationChoices -> cafeteriaChoice) * 6;
+  cout << "FIX THE DIMENSIONS " << endl;
   minimumInvisibleObstacles =  (xDim*yDim)/5;
 
   //checks to ensure that the dimensions are never negative or 0

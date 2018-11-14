@@ -142,6 +142,8 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
   int row = towerPosID / getYDim();
   int col = towerPosID % getXDim();
 
+
+  cout << towerTypeNum << endl;
   //place the tower value on the above floor grid
   addTower(row,col,towerTypeNum);
 }

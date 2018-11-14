@@ -21,7 +21,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
   this -> registerEvents();
   this -> registerDelegates();
-  //test = 2;
+  test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
 }
@@ -87,7 +87,6 @@ void GameLogic::registerDelegates(){
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
 
-  /* Test Code
   if(boardManager -> hasMap()){
     int row = 3;
     int col = 3;
@@ -107,7 +106,7 @@ void GameLogic::updateGameLogic(float deltaS){
         }
       }
     }
-    if(test == 1){
+    if(test == 4){
       cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
       cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
       if(boardManager -> isTower(row, col)){
@@ -116,7 +115,7 @@ void GameLogic::updateGameLogic(float deltaS){
     }
     test--;
   }
-  */
+
 }
 /*
  * Handle any key press from the user
@@ -211,8 +210,8 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> towerManager -> setDimensions(xDim, yDim);
 
    //set the x and y in pixel length
-   this -> gridX = windowX / boardManager -> getXDim();
-   this -> gridY = windowY / boardManager -> getYDim();
+   this -> gridX = (float) windowX / boardManager -> getXDim();
+   this -> gridY = (float) windowY / boardManager -> getYDim();
    this-> towerManager -> setGridDimensions(gridX, gridY);
 
    //make a map generated event
@@ -356,7 +355,7 @@ void GameLogic::createATower(int row, int col, string towerType){
 }
 
 /*
- * When a tower/obstacle is purchased we deduct the monetary value
+ * When a tower is purchased we deduct the monetary value
  * from the player's total money
  * @param tower: the tower created
  */
@@ -366,6 +365,7 @@ void GameLogic::createATowerMoney(string towerType){
 
   //remove money equal to the tower's price
   player -> modifyBalance(price*-1);
+
 }
 
 /*
@@ -507,14 +507,14 @@ bool GameLogic::isPath(int row, int col){
 /*
  * Get the x size of a tile on the map
  */
-const int GameLogic::getTileXSize(){
+const float GameLogic::getTileXSize(){
   return gridX;
 }
 
 /*
  * Get the y size of a tile on the map
  */
-const int GameLogic::getTileYSize(){
+const float GameLogic::getTileYSize(){
   return gridY;
 }
 

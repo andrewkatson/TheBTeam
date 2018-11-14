@@ -38,9 +38,9 @@ private:
   //y dimension of the render window
   int windowY;
   //x dimension in pixels of a grid space
-  int gridX;
+  float gridX;
   //y dimension in pixels of a grid space
-  int gridY;
+  float gridY;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //Store the game's instance of the BoardManager class that the game logic
@@ -122,8 +122,8 @@ public:
   bool isExit(int row, int col);
   bool isPath(int row, int col);
 
-  const int getTileXSize();
-  const int getTileYSize();
+  const float getTileXSize();
+  const float getTileYSize();
   const int getRows();
   const int getCols();
   const int getWindowY();

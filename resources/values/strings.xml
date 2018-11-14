@@ -11,7 +11,7 @@
     <!--Secondary Font Path -->
     <string value="../resources/fonts/chocolatebar.otf" id="IDS_SFP"> </string>
     <!--Tertiary Font Path-->
-    <string value="../resources/fonts/chocolatebar.otf" id="IDS_TFP"> </string>
+    <string value="../resources/fonts/freshcream.otf" id="IDS_TFP"> </string>
     <!--Fourth Font Path-->
     <string value="../resources/fonts/BlackberryJam.ttf" id="IDS_FFP"> </string>
     <!--Fifth Font Path-->
@@ -222,13 +222,16 @@
     <!--PlayingScreenHeader Delegates-->
     <string value="Playing_Screen_Header_Key_Press" id="IDS_PSH_KP"> </string>
     <string value="Playing_Screen_Header_Mouse_Press" id="IDS_PSH_MP"> </string>
+    <string value="Playing_Screen_Header_Lose_Hitpoints" id="IDS_PSH_LHP"> </string>
+    <string value="Playing_Screen_Header_Balance_Changed" id="IDS_PSH_BC"> </string>
+    <string value="Playing_Screen_Header_Level_Change" id="IDS_PSH_LC"> </string>
+    <string value="Playing_Screen_Header_Wave_Change" id="IDS_PSH_WC"> </string>
     <!--BuyTowerScreen Delegates-->
     <string value="BUYTOWERSCREENMOUSEPRESS" id="IDS_BTS_MP"> </string>
     <string value="BUYTOWERSCREENHANDLEKEYPRESS" id="IDS_BTS_KP"> </string>
+    <string value="Buy_Tower_Screen_Handle_State_Change" id="IDS_BTS_SC"> </string>
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
-
-
 
     <!--Option-->
     <!--School Switcher-->
@@ -266,8 +269,6 @@
     <string value="Large" id="IDS_Switcher_Cafeteria_Size_2"> </string>
 
 
-
-
     <!--MainMenuScreen-->
     <!--Main Menu Title Text-->
     <string value="Food Fight" id="IDS_Main_Menu_Title_Text_String"> </string>
@@ -292,7 +293,7 @@
     <!--Buy Tower Title-->
     <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"> </string>
     <string value="Remove Obstacle?" id="IDS_Buy_Tower_Title_Text_Existig_Obstacle"> </string>
-
+    <string value="Sell Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_To_Sell"> </string>
 </strings>
 
 <typeids>

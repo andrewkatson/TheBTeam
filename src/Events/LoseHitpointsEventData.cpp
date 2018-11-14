@@ -1,7 +1,7 @@
 #include "Events/LoseHitpointsEventData.hpp"
 
-LoseHitpointsEventData::LoseHitpointsEventData(long long  actorID, float timeStamp){
+LoseHitpointsEventData::LoseHitpointsEventData(int lostHitpoints, float timeStamp){
   this -> timeStamp = timeStamp;
-  this -> actorID = actorID;
+  this -> lostHitpoints = lostHitpoints;
 
 }
