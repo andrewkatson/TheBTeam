@@ -126,10 +126,14 @@ public:
   /*
     Move the actor according to its speed and the actor's innate properties.
 
+    @param delta Time elapsed since the last game loop.
+    @param xmult Either 1, 0, or -1. Determines the x-direction the unit is moving in.
+    @param ymult Same as above but for y direction.
+
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  void move(float delta);
+  void move(float delta,int xmult, int ymult);
 
   /*
     Determine whether or not the object's collision box is colliding with the

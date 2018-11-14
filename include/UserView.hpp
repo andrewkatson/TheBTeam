@@ -12,6 +12,7 @@
 #include "RestartScreen.hpp"
 #include "BuyTowerScreen.hpp"
 #include "PlayingScreen.hpp"
+#include "PlayingScreenHeader.hpp"
 #include "GameLogic.hpp"
 
 #define textNormal = 255, 255, 255
@@ -64,6 +65,8 @@ public:
   void updateUserView(float deltaS, sf::RenderWindow &game);
 
   void shutDown(sf::RenderWindow &game);
+
+  shared_ptr<PlayingScreenHeader> getHeader(){ return std::static_pointer_cast<PlayingScreen>(screens[2])->getHeader();};
 };
 
 #endif

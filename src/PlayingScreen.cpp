@@ -8,7 +8,7 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
-  this -> playingScreenHeader = unique_ptr<PlayingScreenHeader>(new PlayingScreenHeader(eventManager, textLoader, gameLogic));
+  this -> playingScreenHeader = make_shared<PlayingScreenHeader>(eventManager, textLoader, gameLogic);
   somethingChanged = true;
   haveSetColorShift=false;
   this -> initDrawingMaterials();

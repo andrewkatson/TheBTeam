@@ -57,7 +57,7 @@ private:
   //Store any sounds/music used by the game and play/stop when necessary
   unique_ptr<SoundManager> soundManager;
   //Store the waves of ai enemies to be spawned and handle where/when each wave starts
-  unique_ptr<WaveManager> waveManager;
+  shared_ptr<WaveManager> waveManager;
   //Store the projectiles that can be fired by the defensive towers and handle their
   //creation, path, and destruction
   unique_ptr<ProjectileManager> projectileManager;
@@ -135,6 +135,8 @@ public:
 
   const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
   const unordered_map<int,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
+
+  shared_ptr<WaveManager> getWaveManager(){return waveManager;};
 
 };
 

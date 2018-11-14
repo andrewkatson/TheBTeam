@@ -20,7 +20,7 @@ private:
   //use to access frequently required data (i.e. towers, obstacles, board, units)
   shared_ptr<GameLogic> gameLogic;
   //encapsulates the header on the top of the screen with information on the player
-  unique_ptr<PlayingScreenHeader> playingScreenHeader;
+  shared_ptr<PlayingScreenHeader> playingScreenHeader;
   //the main font of the game
   sf::Font mainFont;
   //text object used to write with
@@ -80,4 +80,6 @@ public:
 
   template <class T>
   void printVector(const vector<vector<T>> &v);
+
+  shared_ptr<PlayingScreenHeader> getHeader(){return playingScreenHeader;};
 };
