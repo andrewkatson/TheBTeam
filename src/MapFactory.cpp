@@ -62,8 +62,6 @@ void MapFactory::generateDimensions(){
     }
   }
 
-  cout << "XDIM " << xDim << endl;
-  cout << "YDIM " << yDim << endl;
   //checks to ensure that the dimensions are never negative or 0
   if(xDim <= minimumDimensions){
     xDim = minimumDimensions;

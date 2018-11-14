@@ -17,37 +17,6 @@ void BuyTowerScreen::initText(){
     this -> currentTitle = textLoader->getString(string("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
 }
 
-/*
- * Change the title of the buy tower screen text
- */
-void BuyTowerScreen::changeTitleString(string newTitle){
-  this -> currentTitle = newTitle;
-}
-
-/*
- * Set the current title text to reflect what is located at the
- * selected tile position
- */
- void BuyTowerScreen::setTextToNewTile(){
-   cout << row << " " << col << endl;
-
-   //change what the buyTower button says depending on the what is at the tile
-   if(gameLogic->isTower(row,col)){
-     //if we are currently buying the tower then we set differnet text than if we are selling one
-     if(areBuying){
-          changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
-     }
-     else{
-          changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_To_Sell"));
-     }
-   }
-   else if(gameLogic->isObstacle(row,col)){
-     changeTitleString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
-   }
-   else if(gameLogic->isEmptySpace(row,col)){
-     changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
-   }
- }
 
 void BuyTowerScreen::draw(sf::RenderWindow &window){
   drawTitle(window);
@@ -235,5 +204,54 @@ void BuyTowerScreen::handleStateChange(const EventInterface& event){
   //i.e. is this a tower we are upgrading or selling, is this an obstacle we are
   //removing
   setTextToNewTile();
+
+  //get the tower(s) or obstacles we can buy/sell at this position
+  //and populate the options with them
+  populateOptionsVector();
+
+}
+
+/*
+ * Set the current title text to reflect what is located at the
+ * selected tile position
+ */
+ void BuyTowerScreen::setTextToNewTile(){
+
+   //change what the buyTower button says depending on the what is at the tile
+   if(gameLogic->isTower(row,col)){
+     //if we are currently buying the tower then we set differnet text than if we are selling one
+     if(areBuying){
+          changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+     }
+     else{
+          changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_To_Sell"));
+     }
+   }
+   else if(gameLogic->isObstacle(row,col)){
+     changeTitleString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
+   }
+   else if(gameLogic->isEmptySpace(row,col)){
+     changeTitleString(textLoader->getString("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
+   }
+ }
+
+ /*
+  * Change the title of the buy tower screen text
+  */
+ void BuyTowerScreen::changeTitleString(string newTitle){
+   this -> currentTitle = newTitle;
+ }
+
+
+/*
+ * Generate a tower option to correspond to each tower interface generated
+ * for the current row and col selected (i.e. if you are upgrading a tower you
+ * get all its upgrade options)
+ */
+void BuyTowerScreen::populateOptionsVector(){
+
+  vector<shared_ptr<TowerInterface>> towerOptions = gameLogic -> allUpgradesForTower(row,col);
+
+  cout << "Size " << towerOptions.size() << endl;
 
 }

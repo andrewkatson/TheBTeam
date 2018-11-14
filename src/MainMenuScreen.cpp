@@ -85,17 +85,6 @@ void MainMenuScreen::draw(sf::RenderWindow &window){
   title.setFont(titleFont);
   window.draw(title);
 
-  /*
-
-  cout << "selected item:" << selectedItem;
-
-  cout << "\noption 0 color:" << std::to_string(screen.at(0).getFillColor().r) << " " << std::to_string(screen.at(0).getFillColor().g) << " " << std::to_string(screen.at(0).getFillColor().b) << " ";
-
-  cout << "\noption 1 color:" << std::to_string(screen.at(1).getFillColor().r) << " " << std::to_string(screen.at(1).getFillColor().g) << " " << std::to_string(screen.at(1).getFillColor().b) << " ";
-
-  cout << "\noption 2 color:" << std::to_string(screen.at(2).getFillColor().r) << " " << std::to_string(screen.at(2).getFillColor().g) << " " << std::to_string(screen.at(2).getFillColor().b) << " " << "\n";
-*/
-
   //need to set the fonts locally
   for(int i = 0; i < numItems; i++){
     screen.at(i).setFont(font);

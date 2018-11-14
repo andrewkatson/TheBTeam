@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Screen.hpp"
+#include "BuyTowerOption.hpp"
+#include "Button.hpp"
 
 class BuyTowerScreen : public Screen {
 private:
@@ -23,13 +25,12 @@ private:
   int col;
   //whether we are buying or selling (only applies when there is a tower)
   bool areBuying;
+  //all the tiles of options to show on the screen
+  vector<BuyTowerOption> options;
 
 public:
   BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
   void initText();
-  void changeTitleString(string newTitle);
-
-  void setTextToNewTile();
 
   void draw(sf::RenderWindow& window);
   void drawTitle(sf::RenderWindow& window);
@@ -39,4 +40,10 @@ public:
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
   void handleStateChange(const EventInterface& event);
+
+  void changeTitleString(string newTitle);
+
+  void setTextToNewTile();
+
+  void populateOptionsVector();
 };

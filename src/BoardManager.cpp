@@ -2,7 +2,7 @@
 
 BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   this -> textLoader = textLoader;
-  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,10), textLoader));
+  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,5), textLoader));
   this -> eventManager = eventManager;
   this -> registerDelegates();
 
@@ -142,8 +142,6 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
   int row = towerPosID / getYDim();
   int col = towerPosID % getXDim();
 
-
-  cout << towerTypeNum << endl;
   //place the tower value on the above floor grid
   addTower(row,col,towerTypeNum);
 }

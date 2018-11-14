@@ -806,25 +806,54 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
     return;
   }
 
+  //if the selected row and column is not the same as the old ones
+  //and/or the selected row col is not an existing tower
+  //then we hide the sell tower button
+  if(row==rowSelected && colSelected == col &&  gameLogic ->isTower(row,col)){
+    (this->sellTower)->flipVisibility();
+    recaculateHeader = true;
+  }
+  else if(!(gameLogic->isTower(row,col))){
+    if((this->sellTower)->isCurrentlyVisible()){
+      (this->sellTower)->flipVisibility();
+      recaculateHeader = true;
+    }
+  }
+
+  //if we have selected the same row and col as the last click then we
+  //flip the visibility of the button
+  if(row == rowSelected && colSelected == col){
+    (this->buyTower)->flipVisibility();
+    recaculateHeader = true;
+  }
+  else{
+    if((this->buyTower)->isCurrentlyVisible()){
+      (this->buyTower)->flipVisibility();
+      recaculateHeader = true;
+    }
+    rowSelected = row;
+    colSelected = col;
+  }
+
 
   //only check if we are clickinga tile when the cursor is within the game
   //area, subtracting the offset will render some clicks outside
   if(xPos >= 0 && yPos >= 0){
     //change what the buyTower button says depending on the what is at the tile
-    if(gameLogic->isTower(row,col)){
+    if(gameLogic->isTower(rowSelected,colSelected)){
       (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Tower"));
       (this->buyTower) -> setButtonPosition(TOPRIGHT);
     }
-    else if(gameLogic->isObstacle(row,col)){
+    else if(gameLogic->isObstacle(rowSelected,colSelected)){
       (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
       (this->buyTower) -> setButtonPosition(TOPRIGHT);
     }
-    else if(gameLogic->isEmptySpace(row,col)){
+    else if(gameLogic->isEmptySpace(rowSelected,colSelected)){
       (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Empty_Space"));
       (this->buyTower) -> setButtonPosition(TOPRIGHT);
     }
     //if the tile is a path or exit tile and the button is visible turn it off
-    else if(gameLogic->isExit(row,col) || gameLogic -> isPath(row,col)) {
+    else if(gameLogic->isExit(rowSelected,colSelected) || gameLogic -> isPath(rowSelected,colSelected)) {
       if((this->buyTower)->isCurrentlyVisible()){
           (this->buyTower)->flipVisibility();
           recaculateHeader = true;
@@ -832,35 +861,6 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
       rowSelected = row;
       colSelected = col;
       return;
-    }
-
-    //if the selected row and column is not the same as the old ones
-    //and/or the selected row col is not an existing tower
-    //then we hide the sell tower button
-    if(row==rowSelected && colSelected == col &&  gameLogic ->isTower(row,col)){
-      (this->sellTower)->flipVisibility();
-      recaculateHeader = true;
-    }
-    else if(!(gameLogic->isTower(row,col))){
-      if((this->sellTower)->isCurrentlyVisible()){
-        (this->sellTower)->flipVisibility();
-        recaculateHeader = true;
-      }
-    }
-
-    //if we have selected the same row and col as the last click then we
-    //flip the visibility of the button
-    if(row == rowSelected && colSelected == col){
-      (this->buyTower)->flipVisibility();
-      recaculateHeader = true;
-    }
-    else{
-      if((this->buyTower)->isCurrentlyVisible()){
-        (this->buyTower)->flipVisibility();
-        recaculateHeader = true;
-      }
-      rowSelected = row;
-      colSelected = col;
     }
   }
 }
