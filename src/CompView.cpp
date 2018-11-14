@@ -1,4 +1,5 @@
 #include "CompView.hpp"
+#include "GameState.hpp"
 
 CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,shared_ptr<PlayingScreenHeader> playingScreenHeader){
   this -> textLoader = textLoader;
@@ -9,7 +10,9 @@ CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
 }
 
 void CompView::updateCompView(float deltaS){
-  moveUnits(deltaS);
+  if(gameLogic->getGameState()==State::Playing){
+    moveUnits(deltaS);
+  }
 }
 
 void CompView::attackEnemies(){}
