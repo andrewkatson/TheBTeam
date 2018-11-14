@@ -3,6 +3,7 @@
 #include "Direction.hpp"
 #include "MapChoices.hpp"
 #include "RandomVariates.hpp"
+#include "TextLoader.hpp"
 #include <vector>
 #include <memory>
 #include <time.h>
@@ -18,9 +19,11 @@
 #include <assert.h>
 #include <set>
 #include <limits>
+#include <random>
 
 using std::vector;
 using std::unique_ptr;
+using std::shared_ptr;
 using std::abs;
 using std::min;
 using std::random_shuffle;
@@ -57,6 +60,11 @@ private:
   //double - int int pair (used to associate f with a row col)
   typedef pair<double, intPair> fPair;
 
+  //random number generator (seeded in the constructor)
+  std::mt19937 mt;
+
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
 
   //a container class with customization options for this map
   unique_ptr<MapChoices> mapCustomizationChoices;
@@ -208,7 +216,7 @@ private:
 
 public:
 
-  MapFactory(MapChoices *mapCustomizationChoices);
+  MapFactory(MapChoices *mapCustomizationChoices, shared_ptr<TextLoader> textLoader);
 
   void generateMap();
   vector<int>& getExitPos();

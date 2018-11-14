@@ -35,6 +35,7 @@
 - actors have an id that is the same as their address
 - Header displays wave, level, balance, and hitpoints. will update with events changing any of those (can be hidden)
 - Player now creates events when the level, balance, hitpoints, or wave are changed
+- Map Factory uses a slight randomness to generate the board size using the cafeteria choice
 - Enemy waves are now stored in a map with key uniqueID
  [@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnits switch their walking sprite every half-second to "animate" crudely

@@ -2,7 +2,7 @@
 
 BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   this -> textLoader = textLoader;
-  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,10)));
+  this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,10), textLoader));
   this -> eventManager = eventManager;
   this -> registerDelegates();
 

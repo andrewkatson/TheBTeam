@@ -19,6 +19,12 @@
   <constant value="5" id="IDS_Playing_Screen_Header_Padding_Y"> </constant>
   <constant value="20" id="IDS_Playing_Screen_Header_Padding_X"> </constant>
 
+  <!--Map Factory Settings -->
+  <constant value="10" id="IDS_Cafeteria_Size_Modifier"> </constant>
+  <constant value="5" id="IDS_Max_X_Y_Disparity"> </constant>
+  <constant value="6" id="IDS_Minimum_Board_Dimensions"> </constant>
+  <constant value="5" id="IDS_Invisible_Obstacle_Modifier"> </constant>
+
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
   <!--No Tower Tile-->

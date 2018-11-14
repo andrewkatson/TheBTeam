@@ -14,9 +14,9 @@
  * Initialize a map factory
  * @param mapCustomizationChoices: container with customization options for generation
  */
-MapFactory::MapFactory(MapChoices *mapCustomizationChoices){
+MapFactory::MapFactory(MapChoices *mapCustomizationChoices, shared_ptr<TextLoader> textLoader) : mt(std::random_device()()) {
   this -> mapCustomizationChoices = unique_ptr<MapChoices>(mapCustomizationChoices);
-
+  this -> textLoader = textLoader;
   this -> maxObstacleVal = 4;
 
   //generate the dimensions of the board using the cafeteria size choice
@@ -35,18 +35,48 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices){
  * the minimum size is 6x6
  */
 void MapFactory::generateDimensions(){
-  int xDim = (int)(mapCustomizationChoices -> cafeteriaChoice) * 6;
-  int yDim = (int)(mapCustomizationChoices -> cafeteriaChoice) * 6;
-  cout << "FIX THE DIMENSIONS " << endl;
-  minimumInvisibleObstacles =  (xDim*yDim)/5;
+  int modifier = textLoader -> getInteger(string("IDS_Cafeteria_Size_Modifier"));
 
+  //the cafeteria choice serves as the primer for our dimensions
+  int primerNum = (int) mapCustomizationChoices -> cafeteriaChoice * modifier;
+
+  //the distribution we generate numbers for
+  std::uniform_int_distribution<int> dist((-1)*primerNum, primerNum);
+
+  //the minimum dimensions of the board
+  int minimumDimensions = textLoader->getInteger(string("IDS_Minimum_Board_Dimensions"));
+
+  int xDim = (int) (abs(dist(mt))) + minimumDimensions;
+  int yDim = (int) (abs(dist(mt)))  + minimumDimensions;
+
+  //the maximum allowed difference between an x and a y dimension
+  int maxDisparity = textLoader->getInteger(string("IDS_Max_X_Y_Disparity"));
+
+  //we decrement the larger dimension until the disparity is fixed
+  while(abs(xDim - yDim >= maxDisparity)){
+    if(xDim > yDim){
+      xDim--;
+    }
+    else{
+      yDim--;
+    }
+  }
+
+  cout << "XDIM " << xDim << endl;
+  cout << "YDIM " << yDim << endl;
   //checks to ensure that the dimensions are never negative or 0
-  if(xDim <= 0){
-    xDim = 10;
+  if(xDim <= minimumDimensions){
+    xDim = minimumDimensions;
   }
-  if(yDim <= 0){
-    yDim = 10;
+  if(yDim <= minimumDimensions){
+    yDim = minimumDimensions;
   }
+
+  //the divisor that determines the number of invisible obstacles
+  int minimumInvisibleObstacleModifier = textLoader -> getInteger(string("IDS_Invisible_Obstacle_Modifier"));
+
+  minimumInvisibleObstacles =  (xDim*yDim)/minimumInvisibleObstacleModifier;
+
   this -> xDim = xDim;
   this -> yDim = yDim;
 }
