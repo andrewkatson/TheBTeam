@@ -82,4 +82,6 @@ public:
 
   template <class T>
   void printVector(const vector<vector<T>> &v);
+
+  shared_ptr<PlayingScreenHeader> getHeader(){return playingScreenHeader;};
 };

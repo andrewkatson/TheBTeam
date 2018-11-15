@@ -60,8 +60,8 @@ void Game::initGame(sf::RenderWindow  &game){
   shared_ptr<EventManager> eventManager = this -> gameLogic -> getEventManager();
   //initialize the User View
   this -> userView = unique_ptr<UserView>(new UserView(eventManager, textLoader, gameLogic));
-  //initlaize the Computer View
-  this -> compView = unique_ptr<CompView>(new CompView(eventManager, textLoader, gameLogic));
+  //initialize the Computer View
+  this -> compView = unique_ptr<CompView>(new CompView(eventManager, textLoader, gameLogic, userView->getHeader()));
 }
 
 

@@ -1,7 +1,7 @@
 #pragma once
 /*
- * Loads in the vector of options for each selectable option in the OptionsMEnuScreen similar
- * to how the texture laoder goes about it.
+ * Loads in the vector of options for each selectable option in the OptionsMenuScreen similar
+ * to how the texture loader goes about it.
  *
  */
 #include "SFML/Graphics.hpp"
@@ -17,13 +17,20 @@ using std::make_shared;
 using std::vector;
 class Switcher{
 private:
-  int id;
-  std::vector<int> v;
-  int len;
-
+    sf::Font font;
+    sf::Text text;
+    int id;
+    std::vector<string> options;
+    int len;
+    int selected;
+protected:
+    int windowX;
+    int windowY;
 public:
-  void changeSelected();
-  void getSelected();
-  void getID();
-  void draw();
+    Switcher(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,int windowX, int windowY, sf::Font font, int id, int len);
+    void initText();
+    void changeSelected(int direction);
+    void getSelected();
+    void getID();
+    void draw();
 };

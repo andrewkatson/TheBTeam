@@ -1,5 +1,6 @@
 #include "OptionsMenuScreen.hpp"
-
+#include "Switcher.hpp"
+#include "SelectionManager.hpp"
 
 OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems, sf::Font font) {
   this -> windowX = windowX;
@@ -10,7 +11,7 @@ OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,share
   this -> textLoader = textLoader;
   this -> selectedItem = 0;
 
-  /*
+
 
   //get the path for the main font
   string mainFontPath = textLoader -> getString(string("IDS_MFP"));
@@ -27,40 +28,40 @@ OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,share
 }
 
 void OptionsMenuScreen::initText(){
-  screen.resize();
+  screen.resize(6);
   //Options Menu
-    if(numItems == 7){
+    if(numItems == 6){
     screen.at(0).setString(string("School"));
     screen.at(0).setFillColor(sf::Color::Red);
     screen.at(0).setCharacterSize(20);
-    screen.at(0).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 1));
+    screen.at(0).setPosition(sf::Vector2f(windowX / 4, windowY / (numItems + 1) * 1));
 
     screen.at(1).setString(string("Population"));
     screen.at(1).setFillColor(sf::Color::White);
     screen.at(1).setCharacterSize(20);
-    screen.at(1).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 2));
+    screen.at(1).setPosition(sf::Vector2f(windowX / 4, windowY / (numItems + 1) * 2));
 
     screen.at(2).setString(string("Obstacles"));
     screen.at(2).setFillColor(sf::Color::White);
     screen.at(2).setCharacterSize(20);
-    screen.at(2).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 3));
+    screen.at(2).setPosition(sf::Vector2f(windowX / 4, windowY / (numItems + 1) * 3));
 
     screen.at(3).setString(string("Waves"));
     screen.at(3).setFillColor(sf::Color::White);
     screen.at(3).setCharacterSize(20);
-    screen.at(3).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 4));
+    screen.at(3).setPosition(sf::Vector2f(windowX / 4, windowY / (numItems + 1) * 4));
 
     screen.at(4).setString(string("Start Money"));
     screen.at(4).setFillColor(sf::Color::White);
     screen.at(4).setCharacterSize(20);
-    screen.at(4).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 5));
+    screen.at(4).setPosition(sf::Vector2f(windowX / 4, windowY / (numItems + 1) * 5));
 
     screen.at(5).setString(string("Cafeteria Size"));
     screen.at(5).setFillColor(sf::Color::White);
     screen.at(5).setCharacterSize(20);
-    screen.at(5).setPosition(sf::Vector2f(windowX / 2, windowY / (numItems + 1) * 6));
+    screen.at(5).setPosition(sf::Vector2f(windowX / 4, windowY / (numItems + 1) * 6));
 
-    */
+
 }
 
   void OptionsMenuScreen::moveUp()
@@ -89,6 +90,13 @@ void OptionsMenuScreen::moveRight()
   /* psuedocode:
   switcher[selectedItem].increment
   */
+}
+
+void OptionsMenuScreen::moveLeft()
+{
+    /* psuedocode:
+    switcher[selectedItem].increment
+    */
 }
 
 void OptionsMenuScreen::draw(sf::RenderWindow &window){
