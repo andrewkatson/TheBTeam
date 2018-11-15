@@ -4,7 +4,7 @@
 RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
-  this -> isMelee = true;
+  this -> isMelee = false;
 }
 
 void RangeTower::update(float delta){
@@ -32,4 +32,22 @@ bool RangeTower::canAttack(){
 
 void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
 
+}
+
+/*
+ * Return basic statistics about this type of tower
+ */
+shared_ptr<vector<int>>  RangeTower::getStatistics(){
+  shared_ptr<vector<int>> stats = make_shared<vector<int>>();
+
+  //push back the projectile damage
+  stats->push_back(currentProjectile -> getDamage());
+  //push back the projectile armor penetration
+  stats->push_back(currentProjectile -> getArmorPenetration());
+  //area of effect
+  stats->push_back(currentProjectile -> areaOfEffect);
+  //rate of fire of tower
+  stats->push_back(rateOfFire);
+
+  return stats;
 }

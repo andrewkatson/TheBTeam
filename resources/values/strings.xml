@@ -294,6 +294,23 @@
     <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"> </string>
     <string value="Remove Obstacle?" id="IDS_Buy_Tower_Title_Text_Existig_Obstacle"> </string>
     <string value="Sell Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_To_Sell"> </string>
+    <!--Buy Tower Option Tile Buttons-->
+    <string value="Purchase: " id="IDS_Buy_Tower_Option_Tile_Button_Buy_Or_Sell"> </string>
+
+    <!--Buy Tower Option Tile Statistic Buttons-->
+    <string value="Damage: " id="IDS_Buy_Tower_Option_Tile_Button_Range_Tower_0"> </string>
+    <string value="Armor Penetration: " id="IDS_Buy_Tower_Option_Tile_Button_Range_Tower_1"> </string>
+    <string value="AOE: " id="IDS_Buy_Tower_Option_Tile_Button_Range_Tower_2"> </string>
+    <string value="ROF: " id="IDS_Buy_Tower_Option_Tile_Button_Range_Tower_3"> </string>
+
+    <string value="Hitpoints: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_0"> </string>
+    <string value="Damage: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_1"> </string>
+    <string value="Armor: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_2"> </string>
+    <string value="Speed: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_3"> </string>
+    <string value="Armor Penetration: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_4"> </string>
+    <string value="Respawn Speed: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_5"> </string>
+
+
 </strings>
 
 <typeids>

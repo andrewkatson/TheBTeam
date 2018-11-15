@@ -72,6 +72,8 @@ public:
   void respawnUnits();
   bool canAttack();
   void attack(shared_ptr<ActorInterface> enemyInRange);
+
+  shared_ptr<vector<int>>  getStatistics();
 };
 
  #endif

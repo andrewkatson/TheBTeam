@@ -562,6 +562,13 @@ const MapChoices& GameLogic::getMapCustomizationChoices(){
 }
 
 /*
+ * @return a pointer to the tower placed at the specified position on the board
+ */
+const shared_ptr<TowerInterface> GameLogic::getTowerPlaced(int row, int col){
+  return towerManager->getTowerPlaced(row,col);
+}
+
+/*
  * @return the unordered map of all the towers placed on the board
  */
 const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced(){

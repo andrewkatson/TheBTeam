@@ -23,4 +23,6 @@ public:
   bool canAttack(){return RangeTower::canAttack();}
   void attack(shared_ptr<ActorInterface> enemyInRange){RangeTower::attack(enemyInRange);}
   void update(float delta){RangeTower::update(delta);}
+
+  shared_ptr<vector<int>>  getStatistics(){return RangeTower::getStatistics();}
 };

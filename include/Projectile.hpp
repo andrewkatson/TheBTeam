@@ -15,9 +15,6 @@ class Projectile : public ActorInterface {
 
 protected:
 
-  //Area on the board that this projectile effects.
-  int areaOfEffect;
-
   //the x of the vector of movement
   int x;
   //the y of the vector of movement
@@ -27,6 +24,8 @@ protected:
   int projectileID;
 
 public:
+  //Area on the board that this projectile effects.
+  int areaOfEffect;
   Projectile(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
 
   void initSprite();

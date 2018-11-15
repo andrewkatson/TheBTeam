@@ -133,6 +133,7 @@ public:
 
   const MapChoices& getMapCustomizationChoices();
 
+  const shared_ptr<TowerInterface> getTowerPlaced(int row, int col);
   const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
   const unordered_map<int,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 

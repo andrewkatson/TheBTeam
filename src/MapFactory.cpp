@@ -35,6 +35,11 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices, shared_ptr<TextLoade
  * the minimum size is 6x6
  */
 void MapFactory::generateDimensions(){
+  cout << "MAKE VERIFIER FOR ALL ENTRIES TO EXIT OTHERWISE REMAKE" << endl;
+  cout << "IF ALL ENTRIES TO EXIT MARK AS YOU GO AND THEN REMOVE UNMARKED PATH ELEMENTS" << endl;
+  cout << "FIX WEIRD OUT OF RANGE EXCEPTION" << endl;
+  cout << "ALSO DEVELOP A METRIC FOR % BOARD COVERED (I.E. OBSTACLES OR PATH) " << endl;
+
   int modifier = textLoader -> getInteger(string("IDS_Cafeteria_Size_Modifier"));
 
   //the cafeteria choice serves as the primer for our dimensions
@@ -636,8 +641,8 @@ void MapFactory::setUnavailableSpotsFromEntry(int entryXPos, int entryYPos){
 
   //loop over up to two rows above the entry and
   //the two rows below the entry to mark off any spots as unavaiable for placement
-  for(int row = entryYPos - 2; row < entryYPos + 2; row++){
-    for(int col = entryXPos - 2; col < entryXPos + 2; col++){
+  for(int row = entryYPos - 4; row < entryYPos + 4; row++){
+    for(int col = entryXPos - 4; col < entryXPos + 4; col++){
       //if the position we are checking is within bounds
       if(row >= 0  && col >= 0 && col < xDim && row <yDim){
 

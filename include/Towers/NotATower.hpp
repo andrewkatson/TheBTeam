@@ -27,5 +27,6 @@ public:
   void setYCoordinate(int yCor){yCoordinate = yCor;}
   bool canAttack(){return false;}
   void attack(shared_ptr<ActorInterface> enemyInRange){}
-  void update(float delta){RangeTower::update(delta);;}
+  void update(float delta){}
+  shared_ptr<vector<int>> getStatistics(){return RangeTower::getStatistics();}
 };

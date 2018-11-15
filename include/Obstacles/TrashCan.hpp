@@ -16,4 +16,5 @@ public:
     bool canAttack(){return false;}
     void attack(shared_ptr<ActorInterface> enemyInRange){}
     void update(float delta){Obstacle::update(delta);}
+    shared_ptr<vector<int>>  getStatistics(){return Obstacle::getStatistics();}
 };

@@ -15,6 +15,8 @@ PlayingScreenHeader::PlayingScreenHeader(shared_ptr<EventManager> eventManager, 
   initDrawingMaterials();
   recaculateHeader = false;
   ySize = getMaximumY();
+  rowSelected = 0;
+  colSelected = 0;
 }
 
 /*
@@ -174,45 +176,45 @@ void PlayingScreenHeader::initHitpointsButton(){
   float yPos = headerButtonPaddingY;
 
   string fontpath = textLoader -> getString(string("IDS_TFP"));
-  Button hitpoints = Button(windowX, windowY, xPos, yPos,
+  shared_ptr<Button> hitpoints = make_shared<Button>(windowX, windowY, xPos, yPos,
     textLoader -> getString(string("IDS_Hitpoints_Button_Text"))  + to_string(startingHitpoints),
       textLoader, fontpath);
 
   // set the fill color for the button rectangle
-  hitpoints.setFillColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Red")),
+  hitpoints->setFillColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Fill_Color_Alpha")));
 
   // set the outline color for the button
-  hitpoints.setOutlineColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Red")),
+  hitpoints->setOutlineColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Color_Alpha")));
 
   //set the button outline thickness
-  this->buyTower -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Thickness")));
+  hitpoints -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Hitpoints_Outline_Thickness")));
 
   //set the fill color for the button text
-  hitpoints.setTextFillColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Red")),
+  hitpoints->setTextFillColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Fill_Color_Alpha")));
 
 
   //set the outline color for the text
-  hitpoints.setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Red")),
+  hitpoints->setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Color_Alpha")));
 
   //set the button text outline thickness
-  hitpoints.setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Thickness")));
+  hitpoints->setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Hitpoints_Text_Outline_Thickness")));
 
   //set the text character size
-  hitpoints.setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Hitpoints_Text_Size")));
+  hitpoints->setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Hitpoints_Text_Size")));
 
   //set the font inside the button so it can be used to calculate a bounds
-  hitpoints.setFont(fontpath);
+  hitpoints->setFont(fontpath);
 
   //rescale the button and reset it
-  hitpoints.scaleButton(xPos, yPos);
+  hitpoints->scaleButton(xPos, yPos);
 
   //push this button into the vector of buttons to be drawn
   headerVariables.push_back(hitpoints);
@@ -235,7 +237,7 @@ void PlayingScreenHeader::initBalanceButton(){
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));
 
   //the bounding rectangle for the rectangle around the balance button
-  sf::RectangleShape offSetRect = headerVariables.at(0).getButtonRect();
+  sf::RectangleShape offSetRect = headerVariables.at(0) -> getButtonRect();
 
   //position
   sf::Vector2f pos = offSetRect.getPosition();
@@ -249,44 +251,44 @@ void PlayingScreenHeader::initBalanceButton(){
 
 
   string fontpath = textLoader -> getString(string("IDS_TFP"));
-  Button balance = Button(windowX, windowY, xPos, yPos,
+  shared_ptr<Button> balance = make_shared<Button>(windowX, windowY, xPos, yPos,
     textLoader -> getString(string("IDS_Balance_Button_Text")) + to_string(startingBalance), textLoader, fontpath);
 
   // set the fill color for the button rectangle
-  balance.setFillColor(this->textLoader -> getInteger(string("IDS_Balance_Fill_Color_Red")),
+  balance->setFillColor(this->textLoader -> getInteger(string("IDS_Balance_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Balance_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Balance_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Balance_Fill_Color_Alpha")));
 
   // set the outline color for the button
-  balance.setOutlineColor(this->textLoader -> getInteger(string("IDS_Balance_Outline_Color_Red")),
+  balance->setOutlineColor(this->textLoader -> getInteger(string("IDS_Balance_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Balance_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Balance_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Balance_Outline_Color_Alpha")));
 
   //set the button outline thickness
-  this->buyTower -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Balance_Outline_Thickness")));
+  balance -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Balance_Outline_Thickness")));
 
   //set the fill color for the button text
-  balance.setTextFillColor(this->textLoader -> getInteger(string("IDS_Balance_Text_Fill_Color_Red")),
+  balance->setTextFillColor(this->textLoader -> getInteger(string("IDS_Balance_Text_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Balance_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Balance_Text_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Balance_Text_Fill_Color_Alpha")));
 
 
   //set the outline color for the text
-  balance.setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Balance_Text_Outline_Color_Red")),
+  balance->setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Balance_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Balance_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Balance_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Balance_Text_Outline_Color_Alpha")));
 
   //set the button text outline thickness
-  balance.setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Balance_Text_Outline_Thickness")));
+  balance->setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Balance_Text_Outline_Thickness")));
 
   //set the text character size
-  balance.setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Balance_Text_Size")));
+  balance->setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Balance_Text_Size")));
 
   //set the font inside the button so it can be used to calculate a bounds
-  balance.setFont(fontpath);
+  balance->setFont(fontpath);
 
   //rescale the button and reset it
-  balance.scaleButton(xPos, yPos);
+  balance->scaleButton(xPos, yPos);
 
   //push this button into the vector of buttons to be drawn
   headerVariables.push_back(balance);
@@ -308,7 +310,7 @@ void PlayingScreenHeader::initLevelButton(){
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));
 
   //the bounding rectangle for the rectangle around the level button
-  sf::RectangleShape offSetRect = headerVariables.at(1).getButtonRect();
+  sf::RectangleShape offSetRect = headerVariables.at(1) -> getButtonRect();
 
   //position
   sf::Vector2f pos = offSetRect.getPosition();
@@ -322,44 +324,44 @@ void PlayingScreenHeader::initLevelButton(){
 
 
   string fontpath = textLoader -> getString(string("IDS_TFP"));
-  Button level = Button(windowX, windowY, xPos, yPos,
+  shared_ptr<Button> level = make_shared<Button>(windowX, windowY, xPos, yPos,
     textLoader -> getString(string("IDS_Level_Button_Text")) + to_string(startingLevel), textLoader, fontpath);
 
   // set the fill color for the button rectangle
-  level.setFillColor(this->textLoader -> getInteger(string("IDS_Level_Fill_Color_Red")),
+  level->setFillColor(this->textLoader -> getInteger(string("IDS_Level_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Level_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Level_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Level_Fill_Color_Alpha")));
 
   // set the outline color for the button
-  level.setOutlineColor(this->textLoader -> getInteger(string("IDS_Level_Outline_Color_Red")),
+  level->setOutlineColor(this->textLoader -> getInteger(string("IDS_Level_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Level_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Level_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Level_Outline_Color_Alpha")));
 
   //set the button outline thickness
-  this->buyTower -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Level_Outline_Thickness")));
+  level -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Level_Outline_Thickness")));
 
   //set the fill color for the button text
-  level.setTextFillColor(this->textLoader -> getInteger(string("IDS_Level_Text_Fill_Color_Red")),
+  level->setTextFillColor(this->textLoader -> getInteger(string("IDS_Level_Text_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Level_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Level_Text_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Level_Text_Fill_Color_Alpha")));
 
 
   //set the outline color for the text
-  level.setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Level_Text_Outline_Color_Red")),
+  level->setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Level_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Level_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Level_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Level_Text_Outline_Color_Alpha")));
 
   //set the button text outline thickness
-  level.setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Level_Text_Outline_Thickness")));
+  level->setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Level_Text_Outline_Thickness")));
 
   //set the text character size
-  level.setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Level_Text_Size")));
+  level->setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Level_Text_Size")));
 
   //set the font inside the button so it can be used to calculate a bounds
-  level.setFont(fontpath);
+  level->setFont(fontpath);
 
   //rescale the button and reset it
-  level.scaleButton(xPos, yPos);
+  level->scaleButton(xPos, yPos);
 
   //push this button into the vector of buttons to be drawn
   headerVariables.push_back(level);
@@ -375,13 +377,12 @@ void PlayingScreenHeader::initWaveButton(){
   //get the starting wave
   Player player = gameLogic -> getPlayer();
   int startingWave = player.getWave();
-
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));
 
   //the bounding rectangle for the rectangle around the wave button
-  sf::RectangleShape offSetRect = headerVariables.at(2).getButtonRect();
+  sf::RectangleShape offSetRect = headerVariables.at(2) -> getButtonRect();
 
   //position
   sf::Vector2f pos = offSetRect.getPosition();
@@ -393,46 +394,46 @@ void PlayingScreenHeader::initWaveButton(){
   //the yPosition is the
   float yPos =  headerButtonPaddingY;
 
-
   string fontpath = textLoader -> getString(string("IDS_TFP"));
-  Button wave = Button(windowX, windowY, xPos, yPos,
+  shared_ptr<Button> wave = make_shared<Button>(windowX, windowY, xPos, yPos,
     textLoader -> getString(string("IDS_Wave_Button_Text")) + to_string(startingWave), textLoader, fontpath);
 
   // set the fill color for the button rectangle
-  wave.setFillColor(this->textLoader -> getInteger(string("IDS_Wave_Fill_Color_Red")),
+  wave->setFillColor(this->textLoader -> getInteger(string("IDS_Wave_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Wave_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Wave_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Wave_Fill_Color_Alpha")));
 
   // set the outline color for the button
-  wave.setOutlineColor(this->textLoader -> getInteger(string("IDS_Wave_Outline_Color_Red")),
+  wave->setOutlineColor(this->textLoader -> getInteger(string("IDS_Wave_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Wave_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Wave_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Wave_Outline_Color_Alpha")));
 
   //set the button outline thickness
-  this->buyTower -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Wave_Outline_Thickness")));
+  wave -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Wave_Outline_Thickness")));
 
   //set the fill color for the button text
-  wave.setTextFillColor(this->textLoader -> getInteger(string("IDS_Wave_Text_Fill_Color_Red")),
+  wave->setTextFillColor(this->textLoader -> getInteger(string("IDS_Wave_Text_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Wave_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Wave_Text_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Wave_Text_Fill_Color_Alpha")));
 
 
   //set the outline color for the text
-  wave.setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Wave_Text_Outline_Color_Red")),
+  wave->setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Wave_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Wave_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Wave_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Wave_Text_Outline_Color_Alpha")));
 
   //set the button text outline thickness
-  wave.setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Wave_Text_Outline_Thickness")));
+  wave->setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Wave_Text_Outline_Thickness")));
 
   //set the text character size
-  wave.setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Wave_Text_Size")));
+  wave->setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Wave_Text_Size")));
 
   //set the font inside the button so it can be used to calculate a bounds
-  wave.setFont(fontpath);
+  wave->setFont(fontpath);
 
   //rescale the button and reset it
-  wave.scaleButton(xPos, yPos);
+  wave->scaleButton(xPos, yPos);
+
 
   //push this button into the vector of buttons to be drawn
   headerVariables.push_back(wave);
@@ -446,7 +447,6 @@ void PlayingScreenHeader::initWaveButton(){
  * one of their values has been updated
  */
 void PlayingScreenHeader::resetButtons(){
-
   resetHitpointButton();
   resetBalanceButton();
   resetLevelButton();
@@ -469,10 +469,10 @@ void PlayingScreenHeader::resetHitpointButton(){
     float yPos = headerButtonPaddingY;
 
     //set the string
-    headerVariables.at(0).setString(textLoader -> getString("IDS_Hitpoints_Button_Text") + to_string(headerVariableValues.at(0)));
+    headerVariables.at(0) -> setString(textLoader -> getString("IDS_Hitpoints_Button_Text") + to_string(headerVariableValues.at(0)));
 
     //rescale the button and reset it
-    headerVariables.at(0).scaleButton(xPos, yPos);
+    headerVariables.at(0) -> scaleButton(xPos, yPos);
 
 }
 
@@ -481,7 +481,7 @@ void PlayingScreenHeader::resetHitpointButton(){
  */
 void PlayingScreenHeader::resetBalanceButton(){
     //the bounding rectangle for the rectangle around the balance button
-    sf::RectangleShape offSetRect = headerVariables.at(0).getButtonRect();
+    sf::RectangleShape offSetRect = headerVariables.at(0) -> getButtonRect();
 
     //position
     sf::Vector2f pos = offSetRect.getPosition();
@@ -498,10 +498,10 @@ void PlayingScreenHeader::resetBalanceButton(){
     float yPos =  headerButtonPaddingY;
 
     //set the string
-    headerVariables.at(1).setString(textLoader -> getString("IDS_Balance_Button_Text") + to_string(headerVariableValues.at(1)));
+    headerVariables.at(1) -> setString(textLoader -> getString("IDS_Balance_Button_Text") + to_string(headerVariableValues.at(1)));
 
     //rescale the button and reset it
-    headerVariables.at(1).scaleButton(xPos, yPos);
+    headerVariables.at(1) -> scaleButton(xPos, yPos);
 
 }
 
@@ -510,7 +510,7 @@ void PlayingScreenHeader::resetBalanceButton(){
  */
 void PlayingScreenHeader::resetLevelButton(){
     //the bounding rectangle for the rectangle around the wave button
-    sf::RectangleShape offSetRect = headerVariables.at(1).getButtonRect();
+    sf::RectangleShape offSetRect = headerVariables.at(1) -> getButtonRect();
 
     //position
     sf::Vector2f pos = offSetRect.getPosition();
@@ -527,10 +527,10 @@ void PlayingScreenHeader::resetLevelButton(){
     float yPos =  headerButtonPaddingY;
 
     //set the string
-    headerVariables.at(2).setString(textLoader -> getString("IDS_Level_Button_Text") + to_string(headerVariableValues.at(2)));
+    headerVariables.at(2) -> setString(textLoader -> getString("IDS_Level_Button_Text") + to_string(headerVariableValues.at(2)));
 
     //rescale the button and reset it
-    headerVariables.at(2).scaleButton(xPos, yPos);
+    headerVariables.at(2) -> scaleButton(xPos, yPos);
 
 }
 
@@ -544,7 +544,7 @@ void PlayingScreenHeader::resetWaveButton(){
     int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));
 
     //the bounding rectangle for the rectangle around the level button
-    sf::RectangleShape offSetRect = headerVariables.at(2).getButtonRect();
+    sf::RectangleShape offSetRect = headerVariables.at(2) -> getButtonRect();
 
     //position
     sf::Vector2f pos = offSetRect.getPosition();
@@ -558,10 +558,10 @@ void PlayingScreenHeader::resetWaveButton(){
 
 
     //set the string
-    headerVariables.at(3).setString(textLoader -> getString("IDS_Wave_Button_Text") + to_string(headerVariableValues.at(3)));
+    headerVariables.at(3) -> setString(textLoader -> getString("IDS_Wave_Button_Text") + to_string(headerVariableValues.at(3)));
 
     //rescale the button and reset it
-    headerVariables.at(3).scaleButton(xPos, yPos);
+    headerVariables.at(3) -> scaleButton(xPos, yPos);
 
 }
 
@@ -601,7 +601,7 @@ float PlayingScreenHeader::getMaximumY(){
   }
   */
   //using a normal header for now since the resizing is looking weird
-  sf::RectangleShape rect = headerVariables.at(0).getButtonRect();
+  sf::RectangleShape rect = headerVariables.at(0) -> getButtonRect();
   sf::Vector2f size = rect.getSize();
 
   int playingScreenHeaderPaddingY = textLoader->getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));
@@ -1102,11 +1102,10 @@ void PlayingScreenHeader::drawHeaderButtons(sf::RenderWindow& window){
   else{
   //  cout << "loaded font!" << endl;
   }
-  for(Button toDraw : headerVariables){
-    text = toDraw.getButtonText();
+  for(shared_ptr<Button> toDraw : headerVariables){
+    text = toDraw -> getButtonText();
     text.setFont(mainFont);
-
-    window.draw(toDraw.getButtonRect());
+    window.draw(toDraw -> getButtonRect());
     window.draw(text);
   }
 }

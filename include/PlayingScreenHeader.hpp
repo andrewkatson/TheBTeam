@@ -31,12 +31,12 @@ private:
   //the button to allow us to sell a tower
   unique_ptr<Button> sellTower;
   //all the buttons in the header (not pressable)
-  vector<Button> headerVariables;
+  vector<shared_ptr<Button>> headerVariables;
   //all the values for each button
   vector<int> headerVariableValues;
   //the vector of strings that will be drawn to the screen
   //and their value
-  vector<HeaderValue> allStrings;
+  vector<shared_ptr<HeaderValue>> allStrings;
   //the current row selected
   int rowSelected;
   //the current col selected

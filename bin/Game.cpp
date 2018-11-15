@@ -53,14 +53,11 @@ void Game::initGame(sf::RenderWindow  &game){
 
   //initlaize the texture loader
   this -> textureLoader = make_shared<TextureLoader>(textLoader);
-
   //initialize the Game Logic
   this -> gameLogic = make_shared<GameLogic>(textLoader, windowXSize, windowYSize, textureLoader);
-
   //get the event manager from the game logic so it can be passed to the user View
   //and comp view
   shared_ptr<EventManager> eventManager = this -> gameLogic -> getEventManager();
-
   //initialize the User View
   this -> userView = unique_ptr<UserView>(new UserView(eventManager, textLoader, gameLogic));
   //initlaize the Computer View

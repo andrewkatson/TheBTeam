@@ -158,6 +158,28 @@ void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange){
 
 }
 
+/*
+ * Return basic statistics about this type of tower
+ */
+shared_ptr<vector<int>>  MeleeTower::getStatistics(){
+  shared_ptr<vector<int>> stats = make_shared<vector<int>>();
+
+  //push nacl the unit hitpoints
+  stats->push_back(currentUnits.at(0) -> getHitpoints());
+  //push back the unit damage
+  stats->push_back(currentUnits.at(0) -> getDamage());
+  //push back the unit armor
+  stats->push_back(currentUnits.at(0) -> getArmor());
+  //push back the unit speed
+  stats->push_back(currentUnits.at(0) -> getSpeed());
+  //push back the unit armor penetration
+  stats->push_back(currentUnits.at(0) -> getArmorPenetration());
+  //push back the respawn speed
+  stats->push_back(respawnSpeed);
+
+  return stats;
+}
+
 
 void MeleeTower::update(float delta){
 

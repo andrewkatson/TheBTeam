@@ -26,7 +26,7 @@ private:
   //whether we are buying or selling (only applies when there is a tower)
   bool areBuying;
   //all the tiles of options to show on the screen
-  vector<BuyTowerOption> options;
+  vector<shared_ptr<BuyTowerOption>> options;
 
 public:
   BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
@@ -46,4 +46,6 @@ public:
   void setTextToNewTile();
 
   void populateOptionsVector();
+  void identifyDifferentialsInStatistics(vector<int>& meleeTowerMaxStats, vector<int>& rangeTowerMaxStats,
+     vector<shared_ptr<TowerInterface>> towerOptions);
 };

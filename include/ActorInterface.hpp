@@ -64,7 +64,6 @@ protected:
   //The coordinates of the actor.
   double x,y;
 
-
   //Row and column of the actor on the world grid.
   int row,col;
 
@@ -153,6 +152,17 @@ public:
    * set the col of the actor
    */
   void setCol(int col){this -> col = col;}
+
+  float getSpeed(){return this->speed;}
+
+  int getHitpoints(){return this->hitpoints;}
+
+  int getDamage(){return this->damage;}
+
+  int getArmor(){return this->armor;}
+
+  int getArmorPenetration(){return this->armorPenetration;}
+
 };
 
 #endif

@@ -20,6 +20,11 @@ void BuyTowerScreen::initText(){
 
 void BuyTowerScreen::draw(sf::RenderWindow &window){
   drawTitle(window);
+
+  //iterate through the options on the screen and draw them one by one
+  for(shared_ptr<BuyTowerOption>  towerOption : options){
+    towerOption -> draw(window);
+  }
 }
 
 /*
@@ -249,9 +254,130 @@ void BuyTowerScreen::handleStateChange(const EventInterface& event){
  * get all its upgrade options)
  */
 void BuyTowerScreen::populateOptionsVector(){
+  //whether we show the statistics of the option or not
+  //set to false for obstacle
+  bool showStats = !(gameLogic->isObstacle(row,col));
 
-  vector<shared_ptr<TowerInterface>> towerOptions = gameLogic -> allUpgradesForTower(row,col);
+  vector<shared_ptr<TowerInterface>> towerOptions;
+  //if the current space is empty
+  if(gameLogic->isEmptySpace(row,col)){
+    towerOptions = gameLogic -> allUpgradesForTower(row,col);
+  }
+  //if the current space is a tower
+  else if(gameLogic->isTower(row,col)){
+    //if we are upgrading the tower
+    if(areBuying){
+      towerOptions = gameLogic -> allUpgradesForTower(row,col);
+    }
+    //if we are selling the tower
+    else{
+      towerOptions.push_back(gameLogic -> getTowerPlaced(row,col));
+    }
+  }
+  //if we are removing an obstacle
+  else if(gameLogic->isObstacle(row,col)){
+    towerOptions.push_back(gameLogic -> getTowerPlaced(row,col));
+  }
+  else{
+    cout << "Should never reach here!" << endl;
+    assert(true == false);
+  }
 
-  cout << "Size " << towerOptions.size() << endl;
+  //the font path that will be shared for all the tower options
+  string fontPath = textLoader -> getString(string("IDS_SFP"));
 
+  //padding in the x and y direction for the options
+  float yPadding = (float) textLoader -> getInteger(string("IDS_Buy_Tower_Screen_Options_Padding_Y"));
+  float xPadding = (float) textLoader -> getInteger(string("IDS_Buy_Tower_Screen_Options_Padding_X"));
+
+  //the index of the tower option we are currently drawing
+  int indexTowerOption = 0;
+
+  //clear the current vector of tower options
+  options.clear();
+
+  //the ySize of tower Option
+  float ySize = (gameLogic->getWindowY()/(towerOptions.size()*2+1));
+  //the xSize of a tower Option
+  float xSize = (gameLogic->getWindowX()/(towerOptions.size()*2+1));
+
+  //the xPos of the last tower Option
+  float xPos = (indexTowerOption)*xSize + xPadding *(indexTowerOption+1);
+  //the yPos of the last tower Option
+  float yPos = (gameLogic->getWindowY())/3;
+
+  //vector to hold the maximum value for every MeleeTower
+  vector<int> meleeTowerMaxStats(6,0);
+  //vector to hold the maximum value for every RangeTower
+  vector<int> rangeTowerMaxStats(4,0);
+
+  //make buy tower option object for every tower
+  //and gather the statistics
+  for(shared_ptr<TowerInterface> tower : towerOptions){
+
+    xPos = (2*indexTowerOption+1)*xSize;
+
+    shared_ptr<BuyTowerOption> newOption = make_shared<BuyTowerOption>(textLoader, xPos, yPos, xSize, ySize,
+    fontPath, tower, showStats,  windowX, windowY, areBuying);
+
+    if(showStats){
+      //get the statistics for the tower being drawn as an option
+      shared_ptr<vector<int>> towerStats = tower -> getStatistics();
+      //iterate through the statstics and store them if they are larger than the current max
+      for(int index = 0; index < towerStats->size(); index++){
+        //store different statistics if this is a melee or ranged tower
+        if(tower->isMelee){
+          if(towerStats->at(index) > meleeTowerMaxStats.at(index)){
+            meleeTowerMaxStats.at(index) = towerStats->at(index);
+          }
+        }
+        else{
+          if(towerStats->at(index) > rangeTowerMaxStats.at(index)){
+            rangeTowerMaxStats.at(index) = towerStats->at(index);
+          }
+        }
+      }
+    }
+
+    options.push_back(newOption);
+
+    indexTowerOption++;
+  }
+
+  if(showStats){
+    //finally identify and highlight any differentials between the maximum stat in each category
+    // and each tower of the same type
+    identifyDifferentialsInStatistics(meleeTowerMaxStats, rangeTowerMaxStats, towerOptions);
+  }
+}
+
+/*
+ * Iterate through the tower optons and identify and highlight differentials between the maximum
+ * in each category and all the other towers of the same type
+ * @param meleeTowerMaxStats: the stored max stats of all the melee towers
+ * @param rangeTowerMaxStats: the stored max stats of all the ranged towers
+ * @param towerOptions: the tower options on this screen
+ */
+ void BuyTowerScreen::identifyDifferentialsInStatistics(vector<int>& meleeTowerMaxStats, vector<int>& rangeTowerMaxStats,
+   vector<shared_ptr<TowerInterface>> towerOptions){
+
+  for(int towerOption = 0; towerOption < towerOptions.size(); towerOption++){
+    //get the statistics for the tower being drawn as an option
+    shared_ptr<vector<int>> towerStats = towerOptions.at(towerOption) -> getStatistics();
+
+    //iterate through the statstics and store them if they are larger than the current max
+    for(int index = 0; index < towerStats->size(); index++){
+      //store different statistics if this is a melee or ranged tower
+      if(towerOptions.at(towerOption)->isMelee){
+        int differential =  towerStats->at(index) - meleeTowerMaxStats.at(index);
+        options.at(towerOption) -> indicateStatDifferential(index, differential);
+      }
+      else{
+        int differential = towerStats->at(index) - rangeTowerMaxStats.at(index);
+        options.at(towerOption) -> indicateStatDifferential(index, differential);
+      }
+    }
+    //realign the buttons once we have edited their text
+    options.at(towerOption) -> realignStatButtons();
+  }
 }

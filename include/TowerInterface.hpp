@@ -69,6 +69,7 @@ public:
   virtual int getYCoordinate()=0;
   virtual void setXCoordinate(int xCor)=0;
   virtual void setYCoordinate(int yCor)=0;
+  virtual shared_ptr<vector<int>> getStatistics()=0;
   /*
    * update the position, check if it hit its target
    */

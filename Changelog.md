@@ -9,6 +9,7 @@
   playingScreen
 - LevelChangeEvent, LevelChangeEventData, BalanceChangeEvent, BalanceChangeEventData
 - SellTower Button for the playing screen  
+- BuyTowerOption class to encapsulate the option draw to the screen on the buy tower screen
 - Textures for AverageKidUnit [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Textures for NormalFryUnit
 - Textures for CheesePizza tower
@@ -37,6 +38,8 @@
 - Player now creates events when the level, balance, hitpoints, or wave are changed
 - Map Factory uses a slight randomness to generate the board size using the cafeteria choice
 - Enemy waves are now stored in a map with key uniqueID
+- Buy Tower Screen now draws the options available to the screen
+- Buy Tower Screen displays all tower possibilities 
  [@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnits switch their walking sprite every half-second to "animate" crudely
 

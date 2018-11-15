@@ -19,4 +19,5 @@ public:
   bool canAttack(){return MeleeTower::canAttack();}
   void attack(shared_ptr<ActorInterface> enemyInRange){MeleeTower::attack(enemyInRange);}
   void update(float delta){MeleeTower::update(delta);}
+  shared_ptr<vector<int>> getStatistics(){return MeleeTower::getStatistics();}
 };

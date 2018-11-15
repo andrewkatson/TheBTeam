@@ -156,6 +156,7 @@ void Button::scaleButton(float xPos, float yPos){
 
   //get the bounding box for this text
   sf::FloatRect boundingBox = (this->text).getGlobalBounds();
+
   //the xPosition of bounding box
   float boundingBoxXPos = boundingBox.left;
   //the yPosition of bounding box
@@ -164,13 +165,11 @@ void Button::scaleButton(float xPos, float yPos){
   float boundingBoxXDim = boundingBox.width;
   //the height of the bounding box
   float boundingBoxYDim = boundingBox.height;
-
   //the padding used for each position of the bounding box dimensions
   //that we will use for the rectagle surrounding the button
   int padding = textLoader -> getInteger(string("IDS_Button_Position_Padding"));
   //the padding used for the dimensions of the rectangle
   int boundingpadding = textLoader -> getInteger(string("IDS_Button_Size_Padding"));
-
   (this -> rect).setPosition((int)(boundingBoxXPos)-padding, ((int)(boundingBoxYPos)-padding));
   (this -> rect).setSize(sf::Vector2f((int)(boundingBoxXDim)+boundingpadding,(int)(boundingBoxYDim)+boundingpadding ));
 

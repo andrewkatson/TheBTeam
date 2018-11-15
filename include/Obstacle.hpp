@@ -35,5 +35,6 @@ public:
   void setUpUnits(){}
 
   void update(float delta);
+  shared_ptr<vector<int>>  getStatistics(){shared_ptr<vector<int>> emptyVec = make_shared<vector<int>>(); return emptyVec;}
 };
  #endif

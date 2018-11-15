@@ -19,6 +19,12 @@
   <constant value="5" id="IDS_Playing_Screen_Header_Padding_Y"> </constant>
   <constant value="20" id="IDS_Playing_Screen_Header_Padding_X"> </constant>
 
+  <!--BuyTower Screen Options-->
+  <constant value="15" id="IDS_Buy_Tower_Screen_Options_Padding_Y"> </constant>
+  <constant value="40" id="IDS_Buy_Tower_Screen_Options_Padding_X"> </constant>
+  <constant value="10" id="IDS_Buy_Tower_Option_Tile_Button_Padding_X"> </constant>
+  <constant value="15" id="IDS_Buy_Tower_Option_Tile_Button_Padding_Y"> </constant>
+
   <!--Map Factory Settings -->
   <constant value="5" id="IDS_Cafeteria_Size_Modifier"> </constant>
   <constant value="5" id="IDS_Max_X_Y_Disparity"> </constant>
@@ -488,6 +494,32 @@
   <!--Wave Text Size -->
   <constant value="60" id="IDS_Wave_Text_Size"> </constant>
 
+  <!--Buy_Tower_Option Button-->
+  <!--Buy_Tower_Option Button Colors-->
+  <constant value="178" id="IDS_Buy_Tower_Option_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Buy_Tower_Option_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Buy_Tower_Option_Fill_Color_Green"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Outline_Color_Alpha"> </constant>
+  <!--Buy_Tower_Option Text Colors-->
+  <constant value="204" id="IDS_Buy_Tower_Option_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Option_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Option_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Text_Outline_Color_Alpha"> </constant>
+  <!--Buy_Tower_Option Button Outline Thickness-->
+  <constant value="1" id="IDS_Buy_Tower_Option_Outline_Thickness"> </constant>
+  <!--Buy_Tower_Option Text Outline Thickness-->
+  <constant value="1" id="IDS_Buy_Tower_Option_Text_Outline_Thickness"> </constant>
+  <!--Buy_Tower_Option Text Size -->
+  <constant value="60" id="IDS_Buy_Tower_Option_Text_Size"> </constant>
+
   <!--Floor Tiles-->
   <!--Number of Types of Floor Tile For Each School -->
   <constant value="2" id="IDS_Cafeteria_Tile_Types"> </constant>
@@ -553,9 +585,9 @@
   <constant value="59" id="IDS_Path_Tile_3_Fill_Color_Blue"> </constant>
   <constant value="255" id="IDS_Path_Tile_3_Fill_Color_Alpha"> </constant>
   <!--Path Tile 4-->
-  <constant value="192" id="IDS_Path_Tile_4_Fill_Color_Red"> </constant>
-  <constant value="134" id="IDS_Path_Tile_4_Fill_Color_Green"> </constant>
-  <constant value="0" id="IDS_Path_Tile_4_Fill_Color_Blue"> </constant>
+  <constant value="122" id="IDS_Path_Tile_4_Fill_Color_Red"> </constant>
+  <constant value="92" id="IDS_Path_Tile_4_Fill_Color_Green"> </constant>
+  <constant value="40" id="IDS_Path_Tile_4_Fill_Color_Blue"> </constant>
   <constant value="255" id="IDS_Path_Tile_4_Fill_Color_Alpha"> </constant>
   <!--Path Tile 5-->
   <constant value="124" id="IDS_Path_Tile_5_Fill_Color_Red"> </constant>
@@ -602,11 +634,81 @@
   <constant value="30" id="IDS_Buy_Tower_Title_Text_Fill_Color_Green"> </constant>
   <constant value="255" id="IDS_Buy_Tower_Title_Text_Fill_Color_Alpha"> </constant>
 
+  <!--BuyTower Option Tile-->
+  <!-- BuyTower Option Tile Background  Colors-->
+  <constant value="192" id="IDS_Buy_Tower_Option_Tile_Background_Fill_Color_Red"> </constant>
+  <constant value="192" id="IDS_Buy_Tower_Option_Tile_Background_Fill_Color_Blue"> </constant>
+  <constant value="192" id="IDS_Buy_Tower_Option_Tile_Background_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Background_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Background_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Background_Outline_Color_Blue"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Background_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Background_Outline_Color_Alpha"> </constant>
+  <!--BuyTower Option Outline Thickness-->
+  <constant value="1" id="IDS_Buy_Tower_Option_Tile_Background_Outline_Thickness"> </constant>
+
+
+  <!--Buy Tower Purchase Button -->
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Alpha"> </constant>
+  <constant value="35" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Size"> </constant>
+
+  <!--BuyTower Option Tile Buttons-->
+  <constant value="192" id="IDS_Buy_Tower_Option_Tile_Button_Fill_Color_Red"> </constant>
+  <constant value="192" id="IDS_Buy_Tower_Option_Tile_Button_Fill_Color_Blue"> </constant>
+  <constant value="192" id="IDS_Buy_Tower_Option_Tile_Button_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Outline_Color_Blue"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Outline_Color_Alpha"> </constant>
+  <!--BuyTower Option Text Colors-->
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Text_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Text_Outline_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Text_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Text_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Text_Outline_Color_Alpha"> </constant>
+  <!--BuyTower Option Outline Thickness-->
+  <constant value="1" id="IDS_Buy_Tower_Option_Tile_Button_Outline_Thickness"> </constant>
+  <!--BuyTower Option Outline Thickness-->
+  <constant value="1" id="IDS_Buy_Tower_Option_Tile_Button_Text_Outline_Thickness"> </constant>
+  <!--BuyTower Option Size -->
+  <constant value="70" id="IDS_Buy_Tower_Option_Tile_Button_Text_Size"> </constant>
+
+
+  <!--BuyTower Option Text Color For Positive Differentials-->
+  <constant value="102" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Fill_Color_Blue"> </constant>
+  <constant value="204" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Outline_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Positive_Text_Outline_Color_Alpha"> </constant>
+
+  <!--BuyTower Option Text Color For Negative Differentials-->
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Outline_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Button_Negative_Text_Outline_Color_Alpha"> </constant>
 
   </ints>
   <floats>
 
-    <!--Wave Generation Constants-->
+    <!--Buy_Tower_Option Generation Constants-->
     <constant value=".2" id="IDS_STAT_MAX_SCALAR"/>
     <constant value="-.2" id="IDS_STAT_MIN_SCALAR"/>
 
