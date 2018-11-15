@@ -1,5 +1,7 @@
 [Unreleased]
 
+
+[0.4.0] 2018-11-15
 ###Added
 - MapGeneratedEvent and MapGeneratedEventData [@andrewkatson][https://github.com/andrewkatson]
 - TextureLoader
@@ -39,7 +41,7 @@
 - Map Factory uses a slight randomness to generate the board size using the cafeteria choice
 - Enemy waves are now stored in a map with key uniqueID
 - Buy Tower Screen now draws the options available to the screen
-- Buy Tower Screen displays all tower possibilities 
+- Buy Tower Screen displays all tower possibilities
  [@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnits switch their walking sprite every half-second to "animate" crudely
 
