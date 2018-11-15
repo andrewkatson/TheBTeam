@@ -35,11 +35,9 @@
 - Towers, Obstacles, Projectiles, and Units all load their own type ids in their constructors
 - TextLoader now treats any typeID as distinct from a normal string
 - Towers draw to screen when placed
-<<<<<<< HEAD
 - Userview call for options Screen from 7 to 6 [kp-hb][https://github.com/kp-hb]
 - OptionsMenuScreen screen has 6 options, dimensions changed
 - Switcher has textloader
-=======
 - actors have an id that is the same as their address
 - Header displays wave, level, balance, and hitpoints. will update with events changing any of those (can be hidden)
 - Player now creates events when the level, balance, hitpoints, or wave are changed
@@ -49,7 +47,6 @@
 - Buy Tower Screen displays all tower possibilities
  [@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnits switch their walking sprite every half-second to "animate" crudely
->>>>>>> b4c3155ce2552cd0f554f3ab62c01b1875407140
 
 [0.1.5] 2018-11-7
 ###Added

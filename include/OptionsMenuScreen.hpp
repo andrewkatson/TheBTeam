@@ -1,5 +1,7 @@
 #pragma once
 #include "Screen.hpp"
+#include "Switcher.hpp"
+#include "SelectionManager.hpp"
 #include <vector>
 
 using std::vector;

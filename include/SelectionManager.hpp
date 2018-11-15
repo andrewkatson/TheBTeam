@@ -6,10 +6,10 @@
 #include <string>
 #include <iostream>
 
-using std::out;
+using std::cout;
 using std::unique_ptr;
 
-class SelectionManager :
+class SelectionManager{
 private:
   Switcher school;
   Switcher population;
@@ -24,3 +24,4 @@ public:
   void chooseNextOption();
 
   void draw();
+};

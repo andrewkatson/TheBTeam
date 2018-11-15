@@ -9,6 +9,7 @@
 #include<vector>
 #include<iostream>
 #include "TextLoader.hpp"
+#include "EventManager.hpp"
 
 using std::to_string;
 using std::shared_ptr;
@@ -23,6 +24,7 @@ private:
     std::vector<string> options;
     int len;
     int selected;
+    shared_ptr<TextLoader> textLoader;
 protected:
     int windowX;
     int windowY;
@@ -30,7 +32,7 @@ public:
     Switcher(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,int windowX, int windowY, sf::Font font, int id, int len);
     void initText();
     void changeSelected(int direction);
-    void getSelected();
-    void getID();
+    int getSelected();
+    int getID();
     void draw();
 };

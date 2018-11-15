@@ -1,6 +1,4 @@
 #include "OptionsMenuScreen.hpp"
-#include "Switcher.hpp"
-#include "SelectionManager.hpp"
 
 OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems, sf::Font font) {
   this -> windowX = windowX;
@@ -61,7 +59,7 @@ void OptionsMenuScreen::initText(){
     screen.at(5).setCharacterSize(20);
     screen.at(5).setPosition(sf::Vector2f(windowX / 4, windowY / (numItems + 1) * 6));
 
-
+  }
 }
 
   void OptionsMenuScreen::moveUp()

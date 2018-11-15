@@ -4,13 +4,12 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-Switcher::Switcher(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,int windowX, int windowY, int id, int len){
+Switcher::Switcher(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,int windowX, int windowY, sf::Font font, int id, int len){
     this -> windowX = windowX;
     this -> windowY = windowY;
     this -> id = id;
     this -> selected = 0;
-
+    this -> textLoader = textLoader;
     this -> initText();
 }
 
@@ -31,17 +30,18 @@ void Switcher::initText(){
     string path = "";
 
     switch(id) {
-        case 0: string path = "IDS_Switcher_School_";
-        case 1: string path = "IDS_Switcher_Population_";
-        case 2: string path = "IDS_Switcher_Obstacles_";
-        case 3: string path = "IDS_Switcher_Waves_";
-        case 4: string path = "IDS_Switcher_Start_Money_";
-        case 5: string path = "IDS_Switcher_Cafeteria_Size_";
+        case 0:  path = "IDS_Switcher_School_";
+        case 1:  path = "IDS_Switcher_Population_";
+        case 2:  path = "IDS_Switcher_Obstacles_";
+        case 3:  path = "IDS_Switcher_Waves_";
+        case 4:  path = "IDS_Switcher_Start_Money_";
+        case 5:  path = "IDS_Switcher_Cafeteria_Size_";
     }
 
     //Iterate through the xml to populate the vector
-    int i = 0;for(i < len){
-                string option = textLoader -> getString(string(path + std::to_string(i))
+    int i = 0;
+    for(;i < len;i++){
+                string option = textLoader -> getString(string(path + std::to_string(i)));
                 options.push_back(option);
     }
 }
@@ -59,23 +59,18 @@ void Switcher::changeSelected(int direction){
         selected = selected >= 0 ? selected: len + selected;
         selected = selected % len;
     }
-    switcher::draw();
+    draw();
 }
-void Switcher::getSelected(){
+int Switcher::getSelected(){
     return selected;
 }
-void Switcher::getID(){
+int Switcher::getID(){
     return id;
 }
 void Switcher::draw(){
     getSelected();
-    text.setString(options(selected))
-    text.setPostion(sf::Vector2f((windowX / 4) * 3, (windowY / 7) * (id + 1)))
+    text.setString(options.at(selected));
+    text.setPosition(sf::Vector2f((windowX / 4) * 3, (windowY / 7) * (id + 1)));
 
 
 }
-=======
-//Switcher::Switcher
-//similar to how he menu currently works, except having a move left/right option that will pull from a vector of choices
-//which one should be displayed and then pass that to the selection manager so that all apropriate starting qualities are passed.
->>>>>>> b4c3155ce2552cd0f554f3ab62c01b1875407140
