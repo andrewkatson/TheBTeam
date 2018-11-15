@@ -98,6 +98,7 @@ public:
   shared_ptr<EventManager> getEventManager();
 
   bool attemptPurchaseTower(int row, int col, string towerTypeID);
+  bool attemptSellTower(int row, int col);
   vector<shared_ptr<TowerInterface>>& allUpgradesForTower(int row, int col);
 
   bool canBuy(int row, int col);

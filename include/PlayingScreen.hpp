@@ -51,6 +51,7 @@ public:
   PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic, int windowX, int windowY);
 
   void registerDelegates();
+  void registerPersistentDelegates();
   void deregisterDelegates();
   void initDrawingMaterials();
   void initBuyTowerButton();
@@ -63,6 +64,7 @@ public:
   void handleTowerRemove(const EventInterface& event);
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
+  void handleStateChange(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);

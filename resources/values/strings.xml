@@ -219,6 +219,7 @@
     <string value="PLAYINGSCREENHANDLETOWERREMOVE" id="IDS_PS_TR"> </string>
     <string value="PLAYINGSCREENHANDLEMOUSEPRESS" id="IDS_PS_MP"> </string>
     <string value="PLAYINGSCREENHANDLEKEYPRESS" id="IDS_PS_KP"> </string>
+    <string value="Playing_Screen_Handle_State_Change" id="IDS_PS_SC"> </string>
     <!--PlayingScreenHeader Delegates-->
     <string value="Playing_Screen_Header_Key_Press" id="IDS_PSH_KP"> </string>
     <string value="Playing_Screen_Header_Mouse_Press" id="IDS_PSH_MP"> </string>
@@ -226,6 +227,7 @@
     <string value="Playing_Screen_Header_Balance_Changed" id="IDS_PSH_BC"> </string>
     <string value="Playing_Screen_Header_Level_Change" id="IDS_PSH_LC"> </string>
     <string value="Playing_Screen_Header_Wave_Change" id="IDS_PSH_WC"> </string>
+
     <!--BuyTowerScreen Delegates-->
     <string value="BUYTOWERSCREENMOUSEPRESS" id="IDS_BTS_MP"> </string>
     <string value="BUYTOWERSCREENHANDLEKEYPRESS" id="IDS_BTS_KP"> </string>

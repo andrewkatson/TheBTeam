@@ -47,14 +47,16 @@ private:
   int windowY;
   //whether we are buying or not
   bool areBuying;
+  //whether this can even be clicked (i.e. if the player does not have enough money )
+  bool isClickable;
+
+public:
   //the tower we are going to represent here
   shared_ptr<TowerInterface> towerToShow;
 
-public:
-
   BuyTowerOption(shared_ptr<TextLoader> textLoader, float xPos, float yPos,
     float xSize, float ySize, string fontPath, shared_ptr<TowerInterface> towerToShow,
-    bool showStats, int windowX, int windowY, bool areBuying);
+    bool showStats, int windowX, int windowY, bool areBuying, bool isClickable);
 
   void initDrawingMaterials();
   void initPictureRectangle();

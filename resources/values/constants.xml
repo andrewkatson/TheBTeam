@@ -649,14 +649,22 @@
 
 
   <!--Buy Tower Purchase Button -->
-  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Red"> </constant>
-  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Blue"> </constant>
-  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Alpha"> </constant>
-  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Red"> </constant>
-  <constant value="250" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Blue"> </constant>
-  <constant value="250" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Green"> </constant>
-  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Green"> </constant>
+  <constant value="100" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Alpha"> </constant>
+  <constant value="160" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Fill_Color_Red"> </constant>
+  <constant value="160" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Fill_Color_Blue"> </constant>
+  <constant value="160" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Outline_Color_Red"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Outline_Color_Green"> </constant>
+  <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Unlickable_Text_Outline_Color_Alpha"> </constant>
   <constant value="35" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Size"> </constant>
 
   <!--BuyTower Option Tile Buttons-->

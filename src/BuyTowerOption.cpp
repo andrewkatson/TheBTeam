@@ -3,7 +3,7 @@
 
 BuyTowerOption::BuyTowerOption(shared_ptr<TextLoader> textLoader, float xPos, float yPos,
   float xSize, float ySize, string fontPath, shared_ptr<TowerInterface> towerToShow,
-  bool showStats, int windowX, int windowY, bool areBuying){
+  bool showStats, int windowX, int windowY, bool areBuying, bool isClickable){
   this -> textLoader = textLoader;
   this -> xPos = xPos;
   this -> yPos = yPos;
@@ -15,6 +15,7 @@ BuyTowerOption::BuyTowerOption(shared_ptr<TextLoader> textLoader, float xPos, fl
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> areBuying = areBuying;
+  this -> isClickable = isClickable;
   initDrawingMaterials();
 }
 
@@ -82,6 +83,35 @@ void BuyTowerOption::initChooseButton(){
   this -> buyOrSell = unique_ptr<Button>(new Button(windowX, windowY, xPos, yPos,
     fullPurchaseString, textLoader, fontpath));
 
+  //if the purchase option is not valid the button is greyed out
+  if(isClickable){
+
+      //set the fill color for the button text
+      this -> buyOrSell -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Red")),
+      this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Green")),
+      this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Alpha")));
+
+
+      //set the outline color for the text
+      this -> buyOrSell -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Red")),
+      this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Green")),
+      this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Outline_Color_Alpha")));
+
+  }
+  else{
+    //set the fill color for the button text
+    this -> buyOrSell -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Fill_Color_Red")),
+    this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Fill_Color_Green")),
+    this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Fill_Color_Alpha")));
+
+
+    //set the outline color for the text
+    this -> buyOrSell -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Outline_Color_Red")),
+    this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Outline_Color_Green")),
+    this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_UnClickable_Text_Outline_Color_Alpha")));
+
+  }
+
   // set the fill color for the button rectangle
   this -> buyOrSell -> setFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Button_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Button_Fill_Color_Green")),
@@ -94,17 +124,6 @@ void BuyTowerOption::initChooseButton(){
 
   //set the button outline thickness
   //this->buyOrSell -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Button_Outline_Thickness")));
-
-  //set the fill color for the button text
-  this -> buyOrSell -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Red")),
-  this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Green")),
-  this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Fill_Color_Alpha")));
-
-
-  //set the outline color for the text
-  this -> buyOrSell -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Red")),
-  this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Green")),
-  this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Purchase_Button_Text_Outline_Color_Alpha")));
 
   //set the button text outline thickness
   this->buyOrSell -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Buy_Tower_Option_Tile_Button_Text_Outline_Thickness")));
@@ -403,6 +422,10 @@ void BuyTowerOption::drawStatisticsButtons(sf::RenderWindow& window){
  * Whether the button to buy/sell has been clicked
  */
 bool BuyTowerOption::isClicked(float xPos, float yPos){
+  if(!isClickable){
+    return false;
+  }
+
   return buyOrSell -> isSelected(xPos, yPos);
 }
 

@@ -173,6 +173,37 @@ void BuyTowerScreen::handleMousePress(const EventInterface& event){
   //get the y position
   float yPos = mpEventData -> y;
 
+  //if true then we return to the playing screen
+  bool boughtSomething = false;
+
+  //check for every option if it is selected
+  //if it is then we send that data to the gameLogic
+  for(shared_ptr<BuyTowerOption> towerOption : options){
+    if(towerOption->isClicked(xPos, yPos)){
+      //attempt to purchase the tower type at the location
+      //if this is an obstacle it will be removed
+      if(areBuying){
+        boughtSomething = gameLogic -> attemptPurchaseTower(row, col, towerOption -> towerToShow -> getType());
+        break;
+      }
+      else{
+        boughtSomething = gameLogic -> attemptSellTower(row, col);
+        break;
+      }
+    }
+  }
+
+  if(boughtSomething){
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    shared_ptr<EventInterface> playGameState = make_shared<StateChangeEvent>(State::Playing,nowInNano);
+
+    this -> eventManager -> queueEvent(playGameState);
+  }
+
 }
 
 /*
@@ -254,6 +285,10 @@ void BuyTowerScreen::handleStateChange(const EventInterface& event){
  * get all its upgrade options)
  */
 void BuyTowerScreen::populateOptionsVector(){
+
+  //the amount of money the player has
+  int balance = (gameLogic -> getPlayer()).getBalance();
+
   //whether we show the statistics of the option or not
   //set to false for obstacle
   bool showStats = !(gameLogic->isObstacle(row,col));
@@ -306,6 +341,9 @@ void BuyTowerScreen::populateOptionsVector(){
   //the yPos of the last tower Option
   float yPos = (gameLogic->getWindowY())/3;
 
+
+
+
   //vector to hold the maximum value for every MeleeTower
   vector<int> meleeTowerMaxStats(6,0);
   //vector to hold the maximum value for every RangeTower
@@ -317,8 +355,12 @@ void BuyTowerScreen::populateOptionsVector(){
 
     xPos = (2*indexTowerOption+1)*xSize;
 
+    //whether this is a valid option (i.e. enough mooney)
+    //if we are selling then it is always valid
+    bool isClickable = !(areBuying) ?  !(areBuying) :  balance >= tower -> getPrice() ? true : false;
+
     shared_ptr<BuyTowerOption> newOption = make_shared<BuyTowerOption>(textLoader, xPos, yPos, xSize, ySize,
-    fontPath, tower, showStats,  windowX, windowY, areBuying);
+    fontPath, tower, showStats,  windowX, windowY, areBuying, isClickable);
 
     if(showStats){
       //get the statistics for the tower being drawn as an option

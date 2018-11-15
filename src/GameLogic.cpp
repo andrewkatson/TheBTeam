@@ -281,10 +281,11 @@ vector<shared_ptr<TowerInterface>>& GameLogic::allUpgradesForTower(int row, int 
  * @return bool: whether they were successful or not
  */
 bool GameLogic::attemptPurchaseTower(int row, int col, string towerTypeID){
+
   //if we canbuy a tower/obstacle of this type
   if(canBuy(towerTypeID)){
     //create a tower if this is a tower
-    if(boardManager -> isTower(row,col)){
+    if(boardManager -> isTower(row,col) || boardManager -> isEmptySpace(row,col)){
       createATower(row, col, towerTypeID);
     }
     //use a remove tower event if this is an obstacle
@@ -298,6 +299,26 @@ bool GameLogic::attemptPurchaseTower(int row, int col, string towerTypeID){
     return false;
   }
 }
+
+/*
+ * Attempt a sale of a tower at a particular location
+ * @param row: the row of the tile
+ * @param col: the col of the tile
+ * @return bool: whether they were successful or not
+ */
+bool GameLogic::attemptSellTower(int row, int col){
+
+   if(boardManager -> isTower(row,col)){
+      removeATower(row, col);
+      return true;
+  }
+
+  //return false in case we want the buy tower screen to make an indication of failure
+  else{
+    return false;
+  }
+}
+
 
 /*
  * @param row: the row of the target

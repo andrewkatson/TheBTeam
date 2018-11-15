@@ -17,6 +17,7 @@ PlayingScreenHeader::PlayingScreenHeader(shared_ptr<EventManager> eventManager, 
   ySize = getMaximumY();
   rowSelected = 0;
   colSelected = 0;
+  registerPersistentDelegates();
 }
 
 /*
@@ -566,6 +567,21 @@ void PlayingScreenHeader::resetWaveButton(){
 }
 
 /*
+ * Reset the header so that no buttons are visisble
+ * and the row and col selected are reset
+ */
+void PlayingScreenHeader::softReset(){
+  if(buyTower -> isCurrentlyVisible()){
+    buyTower -> flipVisibility();
+  }
+  if(sellTower -> isCurrentlyVisible()){
+    sellTower -> flipVisibility();
+  }
+  rowSelected = 0;
+  colSelected = 0;
+}
+
+/*
  * @return the maximum y dimension of any object in the header
  */
 float PlayingScreenHeader::getMaximumY(){
@@ -642,17 +658,6 @@ void PlayingScreenHeader::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(lostHitpointsDelegate, textLoader -> getString(string("IDS_PSH_LHP")),loseHitpointsEventType);
 
-
-  //bind our delegate function for balance change
-  EventManager::EventDelegate balanceChangeDelegate = std::bind(&PlayingScreenHeader::handleBalanceChange, this, _1);
-
-  //make an event and get its type
-  BalanceChangeEvent balanceChangeEvent = BalanceChangeEvent();
-  EventType balanceChangeEventType = balanceChangeEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> registerDelegate(balanceChangeDelegate, textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
-
-
   //bind our delegate function for level change
   EventManager::EventDelegate levelChangeDelegate = std::bind(&PlayingScreenHeader::handleLevelChange, this, _1);
 
@@ -675,11 +680,25 @@ void PlayingScreenHeader::registerDelegates(){
 }
 
 /*
+ * Register events that need to be always registered
+ */
+void PlayingScreenHeader::registerPersistentDelegates(){
+  //bind our delegate function for balance change
+  EventManager::EventDelegate balanceChangeDelegate = std::bind(&PlayingScreenHeader::handleBalanceChange, this, _1);
+
+  //make an event and get its type
+  BalanceChangeEvent balanceChangeEvent = BalanceChangeEvent();
+  EventType balanceChangeEventType = balanceChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(balanceChangeDelegate, textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
+
+}
+
+/*
  * Deregister the delegated methods for this class
  * so they are not called when we switch off this screen
  */
 void PlayingScreenHeader::deregisterDelegates(){
-
   //make an event and get its type
   KeyPressEvent keyPressEvent = KeyPressEvent();
   EventType keyPressEventType = keyPressEvent.getEventType();
@@ -697,13 +716,6 @@ void PlayingScreenHeader::deregisterDelegates(){
   EventType loseHitpointsEventType = loseHitpointsEvent.getEventType();
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_PSH_LHP")),loseHitpointsEventType);
-
-  //make an event and get its type
-  BalanceChangeEvent balanceChangeEvent = BalanceChangeEvent();
-  EventType balanceChangeEventType = balanceChangeEvent.getEventType();
-  //deregister the delegate and its type
-  this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
-
   //make an event and get its type
   LevelChangeEvent levelChangeEvent = LevelChangeEvent();
   EventType levelChangeEventType = levelChangeEvent.getEventType();
@@ -909,6 +921,8 @@ void PlayingScreenHeader::handleBalanceChange(const EventInterface& event){
   BalanceChangeEventData* bcEventData = static_cast<BalanceChangeEventData*>((bcEvent -> data).get());
   //get the balance change
   int balanceChange = bcEventData -> balanceChange;
+
+  assert(headerVariableValues.size() > 1);
 
   headerVariableValues.at(1) += balanceChange;
 

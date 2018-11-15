@@ -556,8 +556,12 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
     retTower = make_shared<PeanutButterMMS>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
-  else if(type == textLoader->getTypeID(string("IDS_SOT"))){
+  else if(type == textLoader->getTypeID(string("IDS_PMMT"))){
     retTower = make_shared<PeanutMMS>(textLoader, eventManager, textureLoader);
+    retTower -> setProjectile();
+  }
+  else if(type == textLoader->getTypeID(string("IDS_SOT"))){
+    retTower = make_shared<Soda>(textLoader, eventManager, textureLoader);
     retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_EDT"))){

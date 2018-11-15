@@ -11,6 +11,7 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> playingScreenHeader = make_shared<PlayingScreenHeader>(eventManager, textLoader, gameLogic);
   somethingChanged = true;
   haveSetColorShift=false;
+  this -> registerPersistentDelegates();
   this -> initDrawingMaterials();
 }
 
@@ -72,6 +73,24 @@ void PlayingScreen::registerDelegates(){
   //register delegates for the header
   playingScreenHeader -> registerDelegates();
 }
+
+/*
+ * Register the delegate methods for this class
+ * with any events it needs to know about
+ * used for any delegate methods that should never be deregistered
+ */
+void PlayingScreen::registerPersistentDelegates(){
+
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate stateChangeDelegate = std::bind(&PlayingScreen::handleStateChange, this, _1);
+
+  //make an event and get its type
+  StateChangeEvent stateChangeEvent = StateChangeEvent();
+  EventType stateChangeEventType = stateChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_PS_SC")),stateChangeEventType);
+}
+
 
 /*
  * Deregister the delegated methods for this class
@@ -333,6 +352,38 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
 
 }
+
+/*
+ * Handle a state change
+ * @param event: event of the state change
+ */
+void PlayingScreen::handleStateChange(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * StateChangeEvent type which allows us to access variables and methods
+   * specific to StateChangeEvent
+   */
+  const StateChangeEvent* scEvent = static_cast<const StateChangeEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a StateChangeEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  StateChangeEventData* scEventData = static_cast<StateChangeEventData*>((scEvent -> data).get());
+
+  State state = scEventData -> state;
+
+  //we will only care if the state is the current one
+  //because there will be data in it that we need
+  if(state != State::Playing){
+    return;
+  }
+
+  playingScreenHeader -> softReset();
+
+}
+
+
 
 void PlayingScreen::draw(sf::RenderWindow &window){
   //TODO change into real code for drawing the map!

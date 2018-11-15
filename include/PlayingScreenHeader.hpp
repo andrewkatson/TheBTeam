@@ -71,6 +71,7 @@ public:
   float getMaximumY();
 
   void registerDelegates();
+  void registerPersistentDelegates();
   void deregisterDelegates();
 
   void handleKeyPress(const EventInterface& event);
@@ -79,6 +80,8 @@ public:
   void handleBalanceChange(const EventInterface& event);
   void handleLevelChange(const EventInterface& event);
   void handleWaveChange(const EventInterface& event);
+
+  void softReset();
 
   void flipVisibility();
   float getTrueXTileSize();
