@@ -139,7 +139,7 @@ void BoardManager::handleTowerCreation(const EventInterface& event){
   int towerTypeNum = textLoader -> getInteger(string("IDS_"+towerTypeID));
 
   //decode the ID so that it is a row and column
-  int row = towerPosID / getYDim();
+  int row = towerPosID / getXDim();
   int col = towerPosID % getXDim();
 
   //place the tower value on the above floor grid

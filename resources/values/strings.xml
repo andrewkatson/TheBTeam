@@ -235,11 +235,8 @@
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
-<<<<<<< HEAD
-
-
     <!--OptionsMenuScreen-->
-    
+
     <!--School Switcher-->
     <!--Increment by 1 for gl-->
     <string value="Elementary School" id="IDS_Switcher_School_0"> </string>
