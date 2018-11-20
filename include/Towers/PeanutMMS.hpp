@@ -3,6 +3,8 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/PeanutMMSProjectile.hpp"
 class PeanutMMS : public RangeTower{
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   PeanutMMS(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

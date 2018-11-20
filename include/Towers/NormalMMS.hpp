@@ -2,6 +2,8 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/NormalMMSProjectile.hpp"
 class NormalMMS : public RangeTower{
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   NormalMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

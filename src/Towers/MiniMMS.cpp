@@ -14,7 +14,10 @@ MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eve
 void MiniMMS::upgrade(){}
 
 void MiniMMS::setProjectile(){
-
-
   this-> currentProjectile = make_shared<MiniMMSProjectile>(textLoader, eventManager, textureLoader);
-  }
+}
+
+shared_ptr<ActorInterface> MiniMMS::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<MiniMMSProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

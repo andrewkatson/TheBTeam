@@ -11,6 +11,7 @@
 #include "TowerInterface.hpp"
 #include "Projectile.hpp"
 #include "TextLoader.hpp"
+#include <assert.h>
 #include <memory>
 
 using std::shared_ptr;
@@ -25,6 +26,8 @@ shared_ptr<Projectile> currentProjectile;
 shared_ptr<TextLoader> textLoader;
 //the rate that this tower can fire projectiles at
 int rateOfFire;
+protected:
+  virtual shared_ptr<ActorInterface> createProjectile();
 public:
   RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
@@ -55,6 +58,7 @@ public:
 
   bool canAttack();
   void attack(shared_ptr<ActorInterface> enemyInRange);
+
 
   shared_ptr<vector<int>>  getStatistics();
 };

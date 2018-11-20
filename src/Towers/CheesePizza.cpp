@@ -17,3 +17,8 @@ void CheesePizza::upgrade(){}
 void CheesePizza::setProjectile(){
   this-> currentProjectile = make_shared<CheesePizzaProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> CheesePizza::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<CheesePizzaProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

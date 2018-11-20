@@ -6,6 +6,8 @@ BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
   this -> eventManager = eventManager;
   this -> registerDelegates();
 
+  //this->mapFactory -> generateMap();
+
 }
 
 /*

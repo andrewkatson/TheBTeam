@@ -108,6 +108,12 @@ private:
   vector<vector<int>> paths;
 
   /*
+   * 2d array that is used to verify that there are no extraneous tiles generated
+   * from paths
+   */
+  vector<vector<int>> extraneousPaths;
+
+  /*
    * 2d array where any index will be marked to indicate if an entry or obstacle can be
    * placed at that position ( 1 is no to anything, 0 is no to entries but yes to obstacles
    * , and -1 is anything can be placed);
@@ -156,6 +162,9 @@ private:
   bool tryAMap();
   void initGridArrays();
   void resetEverything();
+  bool allPathsToExit();
+  bool checkPathToExit(int row, int col);
+  int cleanupMap();
 
   void makeExit();
   int chooseIndexOfExit(int side);

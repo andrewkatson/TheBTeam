@@ -695,11 +695,57 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::Re
  * @param window: the game window to draw on
  */
 void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
-  unordered_map<int,shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
+  unordered_map<long long,shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
+
+  //the number of rows
+  const int rows = gameLogic->getRows();
+  //the number of cols
+  const int cols = gameLogic->getCols();
+
+  //the size of each tile in x direction
+  const int xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //the size of each tile in y direction
+  const int yTileSize = playingScreenHeader -> getTrueYTileSize();
 
   //loop through all enemies on the board
   for(auto iterator : allEnemyUnits){
-    //TODO implement
+    //the id of the actor
+    long long actorID = (iterator).first;
+
+    //the current actor
+    shared_ptr<ActorInterface> current = (iterator).second;
+
+    //get the sprite to be drawn
+    sf::Sprite currentSprite = current -> getSprite();
+
+    //the offset for the starting position if there is a header
+    float xOffSet = playingScreenHeader -> getXOffSet();
+    float yOffSet = playingScreenHeader -> getYOffSet();
+
+    //the x and y position of this rectangle
+    float xPos = current -> getXCoordinate() + xOffSet;
+    float yPos = current -> getYCoordinate() + yOffSet;
+
+    //the bounding rectangle will give us the dimensions of the sprite
+    sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+    //the x dimension of the box
+    int xDim = boundingBox.width;
+    //the ydimension of the box
+    int yDim = boundingBox.height;
+
+    //the scale in the x direction
+    float xScale = (float) xTileSize / (float) xDim;
+    //the scale in the y direction
+    float yScale = (float) yTileSize / (float) yDim;
+
+    //set the scale for the tower/obstalce to fill up the square
+    currentSprite.setScale(xScale, yScale);
+
+    //set the position of the sprite to the top left of the rectangle
+    currentSprite.setPosition(xPos, yPos);
+
+    //finally draw the sprite
+    window.draw(currentSprite);
   }
 }
 template <class T>

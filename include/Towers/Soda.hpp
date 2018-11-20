@@ -2,6 +2,8 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/SodaProjectile.hpp"
 class Soda : public RangeTower{
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   Soda(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

@@ -17,3 +17,7 @@ void NormalMMS::upgrade(){}
 void NormalMMS::setProjectile(){
   this-> currentProjectile = make_shared<NormalMMSProjectile>(textLoader, eventManager, textureLoader);
 }
+shared_ptr<ActorInterface> NormalMMS::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<NormalMMSProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

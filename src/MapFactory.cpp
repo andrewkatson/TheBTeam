@@ -35,10 +35,10 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices, shared_ptr<TextLoade
  * the minimum size is 6x6
  */
 void MapFactory::generateDimensions(){
-  cout << "MAKE VERIFIER FOR ALL ENTRIES TO EXIT OTHERWISE REMAKE" << endl;
-  cout << "IF ALL ENTRIES TO EXIT MARK AS YOU GO AND THEN REMOVE UNMARKED PATH ELEMENTS" << endl;
-  cout << "FIX WEIRD OUT OF RANGE EXCEPTION" << endl;
-  cout << "ALSO DEVELOP A METRIC FOR % BOARD COVERED (I.E. OBSTACLES OR PATH) " << endl;
+  //cout << "MAKE VERIFIER FOR ALL ENTRIES TO EXIT OTHERWISE REMAKE" << endl;
+  //cout << "IF ALL ENTRIES TO EXIT MARK AS YOU GO AND THEN REMOVE UNMARKED PATH ELEMENTS" << endl;
+  //cout << "FIX WEIRD OUT OF RANGE EXCEPTION" << endl;
+  //cout << "ALSO DEVELOP A METRIC FOR % BOARD COVERED (I.E. OBSTACLES OR PATH) " << endl;
 
   int modifier = textLoader -> getInteger(string("IDS_Cafeteria_Size_Modifier"));
 
@@ -89,8 +89,12 @@ void MapFactory::generateDimensions(){
  * with the appropriate values
  */
 void MapFactory::generateMap(){
+  cout << "here " << endl;
   int fails = 0;
+  int notAnExit = 0;
   for(int i = 0; i < 1; i++){
+    s.str("");
+    cout << "made map " << i << endl;
     //try to make a map
     bool makeMap = false;
 
@@ -99,6 +103,12 @@ void MapFactory::generateMap(){
       makeMap = tryAMap();
       if(!makeMap){
         fails++;
+      }
+      //if not every path led to the exit this is a failure
+      if(!allPathsToExit()){
+        makeMap = false;
+        fails++;
+        notAnExit++;
       }
     }
 
@@ -112,7 +122,13 @@ void MapFactory::generateMap(){
     //some paths may be covered by the nature of the program so just set
     //them on the board to help with interpretation
     putEmptyEntriesOnBoard();
+    int tilesCleaned = cleanupMap();
+    if(tilesCleaned){
+        cout << "Tiles Cleaned " << tilesCleaned << endl;
+    }
   }
+  cout << "Failures " << fails << endl;
+  cout << "Not An Exit " << notAnExit << endl;
 }
 
 /*
@@ -153,6 +169,10 @@ bool MapFactory::tryAMap(){
       // is the exit
       bool pathMade = this -> makePathBFS(p+1);
 
+      //if we fail to make a legitimate map
+      if(!pathMade){
+        return false;
+      }
     }
 
     if(p < entrysToExit.size()){
@@ -176,6 +196,7 @@ void MapFactory::initGridArrays(){
       this -> distances.push_back(vector<int>(this -> xDim, -1));
       this -> floorGrid.push_back(vector<int>(this -> xDim, -1));
       this -> aboveFloorGrid.push_back(vector<int>(this -> xDim, -1));
+      this -> extraneousPaths.push_back(vector<int>(this -> xDim, -1));
   }
 }
 /*
@@ -187,9 +208,104 @@ void MapFactory::resetEverything(){
   distances.clear();
   floorGrid.clear();
   aboveFloorGrid.clear();
+  extraneousPaths.clear();
   exitPos.clear();
   entryPos.clear();
   entryDirections.clear();
+}
+
+/*
+ * Walk from every entry to the end of the board
+ * and mark the path tile you took
+ * @return if you cannot go anywhere you have not already gone
+ */
+bool MapFactory::allPathsToExit(){
+
+  s.str("");
+  s << "checking paths " << endl;
+
+  int exitRow = exitPos.at(1);
+  int exitCol = exitPos.at(0);
+
+  //the directions we can go in
+  vector<intPair> dirs = {make_pair(0,1), make_pair(0,-1),make_pair(1,0),make_pair(-1,0)};
+
+  //places we cannot visit again
+  vector<vector<int>> closedList (yDim, vector<int>(xDim, -1));
+
+  //open list
+  set<intPair> openList;
+
+  //push the exit space
+  openList.insert(make_pair(exitRow, exitCol));
+
+  while(!openList.empty()){
+
+    intPair check = *openList.begin();
+    openList.erase(openList.begin());
+
+    closedList.at(check.first).at(check.second) = 1;
+    extraneousPaths.at(check.first).at(check.second) = 1;
+
+    for(intPair dir : dirs){
+      int newRow = check.first + dir.first;
+      int newCol = check.second + dir.second;
+
+      if(!isInMap(newRow, newCol)){
+        continue;
+      }
+      intPair newPair = make_pair(newRow, newCol);
+
+      if(openList.find(newPair) != openList.end() || closedList.at(newRow).at(newCol) != -1 || paths.at(newRow).at(newCol) < 0){
+        continue;
+      }
+      else{
+        openList.insert(newPair);
+      }
+    }
+  }
+
+  int pathNum = 0;
+  for(int entryPair = 0; entryPair < entryPos.size(); entryPair +=2){
+    int row = entryPos.at(entryPair+1);
+    int col = entryPos.at(entryPair);
+
+    bool check = checkPathToExit(row, col);
+    if(!check){
+      return false;
+    }
+    pathNum++;
+  }
+  return true;
+}
+
+/*
+ * check the row and col (should be an entry) if it has been visited
+ * @return true if this entry can be reached from the exit
+ */
+bool MapFactory::checkPathToExit(int row, int col){
+  if(extraneousPaths.at(row).at(col) != 1){
+    printVector(extraneousPaths);
+    return false;
+  }
+  return true;
+}
+
+/*
+ * Any path pieces unvisited will be marked back to nothing
+ * so that the paths do not make irregular jutting patterns
+ */
+int MapFactory::cleanupMap(){
+  int tilesCleaned = 0;
+  for(int row = 0; row < yDim; row++){
+    for(int col = 0; col < xDim; col++){
+      if(floorGrid.at(row).at(col) > 0 && extraneousPaths.at(row).at(col) == -1){
+        floorGrid.at(row).at(col) = -1;
+        tilesCleaned++;
+      }
+    }
+  }
+  return tilesCleaned;
 }
 
 /*
@@ -811,7 +927,7 @@ bool MapFactory::getAStarDistances(vector<vector<CellNode>>& board, int path, ve
       }
     }
   }
-  return true;
+  return false;
 }
 
 /*

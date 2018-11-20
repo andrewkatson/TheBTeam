@@ -16,3 +16,7 @@ void PeanutButterMMS::upgrade(){}
 void PeanutButterMMS::setProjectile(){
   this-> currentProjectile = make_shared<PeanutButterMMSProjectile>(textLoader, eventManager, textureLoader);
 }
+shared_ptr<ActorInterface> PeanutButterMMS::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<PeanutButterMMSProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

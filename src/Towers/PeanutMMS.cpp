@@ -18,3 +18,8 @@ void PeanutMMS::setProjectile(){
 
   this-> currentProjectile = make_shared<PeanutMMSProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> PeanutMMS::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<PeanutMMSProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

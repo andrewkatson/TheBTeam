@@ -17,3 +17,8 @@ void Slushie::upgrade(){}
 void Slushie::setProjectile(){
   this-> currentProjectile = make_shared<SlushieProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> Slushie::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<SlushieProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

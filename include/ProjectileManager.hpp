@@ -29,6 +29,15 @@ public:
    */
   ProjectileManager(shared_ptr<EventManager> eventManager);
 
+  /*
+   * Register delegate methods
+   */
+  void registerDelegates();
+
+  /*
+   * Register events that the projectile manager needs to listen for
+   */
+  void registerEvents();
 
   /*
    * Return the vector of projectiles stored by the class.

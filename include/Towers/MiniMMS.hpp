@@ -2,6 +2,8 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/MiniMMSProjectile.hpp"
 class MiniMMS : public RangeTower{
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   MiniMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

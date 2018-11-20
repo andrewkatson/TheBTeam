@@ -16,3 +16,8 @@ void MeatLovers::upgrade(){}
 void MeatLovers::setProjectile(){
   this-> currentProjectile = make_shared<MeatLoversProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> MeatLovers::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<MeatLoversProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

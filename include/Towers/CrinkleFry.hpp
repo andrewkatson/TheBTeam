@@ -4,6 +4,7 @@
 #include "../Units/CrinkleFryUnit.hpp"
 class CrinkleFry : public MeleeTower{
 private:
+
 public:
   CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

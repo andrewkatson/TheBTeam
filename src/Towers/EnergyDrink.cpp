@@ -17,3 +17,8 @@ void EnergyDrink::upgrade(){}
 void EnergyDrink::setProjectile(){
   this-> currentProjectile = make_shared<EnergyDrinkProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> EnergyDrink::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<EnergyDrinkProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

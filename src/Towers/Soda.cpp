@@ -17,3 +17,8 @@ void Soda::upgrade(){}
 void Soda::setProjectile(){
   this-> currentProjectile = make_shared<SodaProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> Soda::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<SodaProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

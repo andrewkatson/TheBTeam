@@ -2,6 +2,8 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/PepperoniPizzaProjectile.hpp"
 class PepperoniPizza : public RangeTower{
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   PepperoniPizza(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

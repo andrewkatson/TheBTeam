@@ -2,6 +2,8 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/DeepDishProjectile.hpp"
 class DeepDish : public RangeTower{
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   DeepDish(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

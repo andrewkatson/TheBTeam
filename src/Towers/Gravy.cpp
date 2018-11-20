@@ -17,3 +17,8 @@ void Gravy::upgrade(){}
 void Gravy::setProjectile(){
   this-> currentProjectile = make_shared<GravyProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> Gravy::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<GravyProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

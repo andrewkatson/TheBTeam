@@ -1,5 +1,10 @@
 [Unreleased]
+###Added
+- ActorCreatedEvent,ActorCreatedEventData [@andrewkatson][https://github.com/andrewkatson]
 
+###Changed
+- playing screen draws enemies to the screen
+- all range towers now have the capacity to create projectiles of their type when asked to attack 
 
 [0.4.0] 2018-11-15
 ###Added

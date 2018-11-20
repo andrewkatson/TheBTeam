@@ -3,6 +3,9 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/CheesePizzaProjectile.hpp"
 class CheesePizza : public RangeTower{
+
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   CheesePizza(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

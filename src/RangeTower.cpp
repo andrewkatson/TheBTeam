@@ -31,7 +31,15 @@ bool RangeTower::canAttack(){
 }
 
 void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
+  shared_ptr<ActorInterface> firedProjectile = createProjectile();
+  assert(firedProjectile != NULL);
+  assert(firedProjectile -> getType() == currentProjectile -> getType());
 
+  //set the row and col of the projetile created to be the same as the tower's
+  firedProjectile -> setRow(row);
+  firedProjectile -> setCol(col);
+
+  //Create ActorCreatedEvent and attach the created projectile
 }
 
 /*
@@ -50,4 +58,12 @@ shared_ptr<vector<int>>  RangeTower::getStatistics(){
   stats->push_back(rateOfFire);
 
   return stats;
+}
+
+/*
+ * Generic version of the way to create aprojectile
+ * should never be called so it returns NULL
+ */
+shared_ptr<ActorInterface> RangeTower::createProjectile(){
+  return NULL;
 }

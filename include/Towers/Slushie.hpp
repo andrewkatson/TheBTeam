@@ -2,6 +2,8 @@
 #include "RangeTower.hpp"
 #include "../Projectiles/SlushieProjectile.hpp"
 class Slushie : public RangeTower{
+private:
+  shared_ptr<ActorInterface> createProjectile();
 public:
   Slushie(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 

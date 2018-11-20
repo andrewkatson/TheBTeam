@@ -599,6 +599,6 @@ const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced
 /*
  * @return the vector with all the currently spawned enemy units on the board
  */
-const unordered_map<int,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
+const unordered_map<long long,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
   return waveManager -> getSpawnedEnemyUnits();
 }

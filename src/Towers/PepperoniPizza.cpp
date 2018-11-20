@@ -16,3 +16,8 @@ void PepperoniPizza::upgrade(){}
 void PepperoniPizza::setProjectile(){
   this-> currentProjectile = make_shared<PepperoniPizzaProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> PepperoniPizza::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<PepperoniPizzaProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

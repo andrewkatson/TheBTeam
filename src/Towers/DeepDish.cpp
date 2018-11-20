@@ -17,3 +17,8 @@ void DeepDish::upgrade(){}
 void DeepDish::setProjectile(){
   this-> currentProjectile = make_shared<DeepDishProjectile>(textLoader, eventManager, textureLoader);
 }
+
+shared_ptr<ActorInterface> DeepDish::createProjectile(){
+  shared_ptr<ActorInterface> newProjecitle = make_shared<DeepDishProjectile>(textLoader, eventManager, textureLoader);
+  return newProjecitle;
+}

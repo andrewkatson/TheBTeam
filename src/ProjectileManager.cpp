@@ -9,6 +9,20 @@
 
 #include "ProjectileManager.hpp"
 
+
+ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager) {
+  //initialize the projectile vector
+  this -> eventManager = eventManager;
+}
+
+void ProjectileManager::registerDelegates(){
+
+}
+
+void ProjectileManager::registerEvents(){
+  
+}
+
 vector<shared_ptr<ActorInterface>> ProjectileManager::getProjectiles(){
   return projectiles;
 }
@@ -23,9 +37,4 @@ void ProjectileManager::removeProjectile(int projectile_index){
 
 void ProjectileManager::update(float deltaS){
 
-}
-
-ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager) {
-  //initialize the projectile vector
-  this -> eventManager = eventManager;
 }

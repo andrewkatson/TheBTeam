@@ -68,7 +68,19 @@ void BuyTowerOption::initChooseButton(){
   int normalButtonXPadding = textLoader->getInteger(string("IDS_Button_Position_Padding"));
 
   //the full string for what the button will say
-  string fullPurchaseString = textLoader -> getString(string("IDS_Buy_Tower_Option_Tile_Button_Buy_Or_Sell"));
+  string fullPurchaseString;
+  if(areBuying){
+    if(showStats){
+      fullPurchaseString = textLoader -> getString(string("IDS_Buy_Tower_Option_Tile_Button_Buy"));
+    }
+    else{
+      fullPurchaseString = textLoader -> getString(string("IDS_Buy_Tower_Option_Tile_Button_Obstacle"));
+    }
+  }
+  else{
+    fullPurchaseString = textLoader -> getString(string("IDS_Buy_Tower_Option_Tile_Button_Sell"));
+  }
+
 
   //if we are buying than the number is negative
   if(areBuying){

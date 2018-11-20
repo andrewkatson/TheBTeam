@@ -47,7 +47,7 @@ private:
    * A map storing the enemy units from the current wave that have been spawned
    * key: the unique id of the unit [its memory address]
    */
-  unordered_map<int,shared_ptr<MeleeUnit>> spawnedCurrentWave;
+  unordered_map<long long,shared_ptr<MeleeUnit>> spawnedCurrentWave;
 
   //The current level the user is at in the game.
   //TODO - pull this from gamelogic
@@ -155,7 +155,7 @@ public:
   /*
    * @return the enemies that have been spawned in the current wave
    */
-  unordered_map<int,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
+  unordered_map<long long,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 };
 
 #endif
