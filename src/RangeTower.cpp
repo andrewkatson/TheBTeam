@@ -57,11 +57,13 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
  * Uses the speed, direction and distance to the enemy unit as a guide
  */
 void RangeTower::calcAttackVector(shared_ptr<ActorInterface> projectileToFire, shared_ptr<ActorInterface> enemyInRange){
-  float xvec = enemyInRange -> x - this -> xCoordinate;
-  float yvec = enemyInRange -> y - this -> yCoordinate;
+  float xvec = enemyInRange -> getXCoordinate() - this -> xCoordinate;
+  float yvec = enemyInRange -> getYCoordinate() - this -> yCoordinate;
 
-  projectileToFire -> setVector(xvec);
-  projectileToFire -> setVector(yvec);
+  //cast to projectile before calling set vector
+  Projectile* projectile = dynamic_cast<Projectile*>(projectileToFire.get());
+
+  projectile -> setVector(xvec,yvec);
 }
 
 /*

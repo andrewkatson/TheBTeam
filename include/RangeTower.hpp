@@ -11,10 +11,16 @@
 #include "TowerInterface.hpp"
 #include "Projectile.hpp"
 #include "TextLoader.hpp"
+#include "Events/ActorCreatedEvent.hpp"
 #include <assert.h>
 #include <memory>
+#include <chrono>
 
 using std::shared_ptr;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::nanoseconds;
+
 class RangeTower : public TowerInterface{
 protected:
 
@@ -58,7 +64,7 @@ public:
 
   bool canAttack();
   void attack(shared_ptr<ActorInterface> enemyInRange);
-  void calcAttackVector(shared_ptr<ActorInterface> projectileToFire, <ActorInterface> enemyInRange);
+  void calcAttackVector(shared_ptr<ActorInterface> projectileToFire, shared_ptr<ActorInterface> enemyInRange);
 
   shared_ptr<vector<int>>  getStatistics();
 };

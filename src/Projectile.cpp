@@ -28,7 +28,7 @@ void Projectile::move(float delta,int xmult, int ymult){
 
 }
 
-void Projectile::setVector(int x, int y){
+void Projectile::setVector(float x, float y){
   this -> x = x;
   this -> y = y;
 }
