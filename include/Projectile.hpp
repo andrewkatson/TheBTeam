@@ -16,9 +16,9 @@ class Projectile : public ActorInterface {
 protected:
 
   //the x of the vector of movement
-  int x;
+  float xVector;
   //the y of the vector of movement
-  int y;
+  float yVector;
 
   //the unique identifier for the projectile when it is spawned
   int projectileID;
@@ -54,7 +54,7 @@ public:
    * @param x: the x component of the vector
    * @param y: the y component of the vectors
    */
-  void setVector(int x, int y);
+  void setVector(float x, float y);
 
   /*
    * set the identifier for this projectile

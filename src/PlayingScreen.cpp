@@ -670,6 +670,11 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //set the position of the sprite to the top left of the rectangle
     currentSprite.setPosition(xPos, yPos);
 
+    //updates the coordinates of the tower in case it moved
+    //to always be the center of the tile it is placed at
+    current -> setXCoordinate((xPos+xDim)/2);
+    current -> setYCoordinate((yPos+yDim)/2);
+
     //finally draw the sprite
     window.draw(currentSprite);
 

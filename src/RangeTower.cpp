@@ -39,7 +39,29 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   firedProjectile -> setRow(row);
   firedProjectile -> setCol(col);
 
+  //set up the vector that the projectile will be fired on
+  calcAttackVector(firedProjectile, enemyInRange);
+
   //Create ActorCreatedEvent and attach the created projectile
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+  bool isProjectile = true;
+  shared_ptr<EventInterface> projectileFiredEvent = make_shared<ActorCreatedEvent>(firedProjectile, isProjectile, nowInNano);
+  this -> eventManager -> queueEvent(projectileFiredEvent);
+}
+
+/*
+ * Caclulates the x and y of the vector that the projectile will travel on.
+ * Uses the speed, direction and distance to the enemy unit as a guide
+ */
+void RangeTower::calcAttackVector(shared_ptr<ActorInterface> projectileToFire, shared_ptr<ActorInterface> enemyInRange){
+  float xvec = enemyInRange -> x - this -> xCoordinate;
+  float yvec = enemyInRange -> y - this -> yCoordinate;
+
+  projectileToFire -> setVector(xvec);
+  projectileToFire -> setVector(yvec);
 }
 
 /*

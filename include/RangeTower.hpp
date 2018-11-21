@@ -58,7 +58,7 @@ public:
 
   bool canAttack();
   void attack(shared_ptr<ActorInterface> enemyInRange);
-
+  void calcAttackVector(shared_ptr<ActorInterface> projectileToFire, <ActorInterface> enemyInRange);
 
   shared_ptr<vector<int>>  getStatistics();
 };
