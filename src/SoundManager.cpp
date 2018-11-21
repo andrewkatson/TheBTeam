@@ -8,7 +8,7 @@
 
 #include "SoundManager.hpp"
 
-SoundManager::SoundManager(shared_ptr<EventManager> eventManager){
+SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   /*
     pseudocode since we don't have any sounds or an xml storing our sound
     file paths
@@ -29,6 +29,7 @@ SoundManager::SoundManager(shared_ptr<EventManager> eventManager){
 
    */
    this -> eventManager = eventManager;
+   this -> textLoader = textLoader;
 }
 
 //handle new event

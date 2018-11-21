@@ -13,12 +13,12 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> textureLoader = textureLoader;
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
-  this -> gameState = unique_ptr<GameState>(new GameState(eventManager));
+  this -> gameState = unique_ptr<GameState>(new GameState(eventManager, textLoader));
   this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
-  this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager));
+  this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
   this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader);
-  this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager));
+  this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader));
   this -> registerEvents();
   this -> registerDelegates();
   test = 2;

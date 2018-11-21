@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include "EventManager.hpp"
+#include "TextLoader.hpp"
 
 using namespace std;
 
@@ -32,13 +33,15 @@ private:
 
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
 public:
 
   /*
     Constructor for the GameState class. Instantiate the current state to the
     game's starting state.
    */
-  GameState(shared_ptr<EventManager> eventManager);
+  GameState(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
   /*
     Set the current state to the state specified.

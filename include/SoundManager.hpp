@@ -11,6 +11,7 @@
 
 #include <SFML/Audio.hpp>
 #include "Player.hpp"
+#include "TextLoader.hpp"
 #include <memory>
 
 using namespace std;
@@ -26,7 +27,8 @@ private:
 
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
-
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
   /*
     A SoundBuffer to keep all of the game's sounds loaded into memory before
     they're played.
@@ -40,7 +42,7 @@ public:
     vectors with all their needed sounds and links the sounds to a central
     buffer.
    */
-  SoundManager(shared_ptr<EventManager> eventManager);
+  SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
   void delegateMethod(const EventInterface& event);
 

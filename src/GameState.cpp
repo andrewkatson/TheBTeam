@@ -8,11 +8,12 @@
  */
 #include "GameState.hpp"
 
-GameState::GameState(shared_ptr<EventManager> eventManager){
+GameState::GameState(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
   //potentially make an Init state in which the game initializes itself?
   State main = State::MainMenu;
   setState(main);
   this -> eventManager = eventManager;
+  this -> textLoader = textLoader;
 }
 
 void GameState::setState(State& newState){

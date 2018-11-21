@@ -15,11 +15,15 @@ using namespace std;
 #include <vector>
 #include "ActorInterface.hpp"
 #include "EventManager.hpp"
+#include "Events/ActorCreatedEvent.hpp"
+#include "TextLoader.hpp"
 
 class ProjectileManager {
 private:
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
+  //Store the textLoader to make requests for strings and constants
+  shared_ptr<TextLoader> textLoader;
   //Array storing the actors representing all projectiles.
   vector<shared_ptr<ActorInterface>> projectiles;
 public:
@@ -27,7 +31,7 @@ public:
   /*
    * Constructor. Initialize the projectile vector
    */
-  ProjectileManager(shared_ptr<EventManager> eventManager);
+  ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
 
   /*
    * Register delegate methods
@@ -45,6 +49,11 @@ public:
    * @return a vector containing all of the manager's projectiles
    */
   vector<shared_ptr<ActorInterface>> getProjectiles();
+
+  /*
+   * Handle an actor created event
+   */
+  void handleActorCreated(const EventInterface& event);
 
   /*
    * Appends the given projectile to the manager's vector.
