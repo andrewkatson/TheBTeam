@@ -88,6 +88,7 @@ public:
   float getTrueYTileSize();
   float getXOffSet();
   float getYOffSet();
+  bool headerRecalculated();
 
   void setSelectedTile(int row, int col);
 

@@ -414,6 +414,7 @@ void PlayingScreen::draw(sf::RenderWindow &window){
   //to avoid looping twice we draw all the units of the towers in the
   //same method as drawing the towers
   drawEnemyUnits(window);
+  drawProjectiles(window);
 
   //draw the header
   playingScreenHeader -> draw(window);
@@ -749,10 +750,81 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
     //set the position of the sprite to the top left of the rectangle
     currentSprite.setPosition(xPos, yPos);
 
+    //set the position of the actor to be the center of the bounding rectangle
+    current -> setXCoordinate((xPos+xDim)/2);
+    current -> setYCoordinate((yPos+yDim)/2);
+
     //finally draw the sprite
     window.draw(currentSprite);
   }
 }
+
+/*
+ * Draw all the projectiles on the screen
+ * @param window: the game window to draw on
+ */
+void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
+  vector<shared_ptr<ActorInterface>> allProjectiles = gameLogic -> getFiredProjectiles();
+
+  //the number of rows
+  const int rows = gameLogic->getRows();
+  //the number of cols
+  const int cols = gameLogic->getCols();
+
+  //the size of each tile in x direction
+  const int xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //the size of each tile in y direction
+  const int yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //loop through all enemies on the board
+  for(shared_ptr<ActorInterface> current : allProjectiles){
+
+    //get the sprite to be drawn
+    sf::Sprite currentSprite = current -> getSprite();
+
+    //the offset for the starting position if there is a header
+    float xOffSet = playingScreenHeader -> getXOffSet();
+    float yOffSet = playingScreenHeader -> getYOffSet();
+
+    //the x and y position of this rectangle
+    float xPos = current -> getXCoordinate() + xOffSet;
+    float yPos = current -> getYCoordinate() + yOffSet;
+
+    //the bounding rectangle will give us the dimensions of the sprite
+    sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+    //the x dimension of the box
+    int xDim = boundingBox.width;
+    //the ydimension of the box
+    int yDim = boundingBox.height;
+
+    //the scale in the x direction
+    float xScale = (float) xTileSize / (float) xDim;
+    //the scale in the y direction
+    float yScale = (float) yTileSize / (float) yDim;
+
+    //set the scale for the tower/obstalce to fill up the square
+    currentSprite.setScale(xScale, yScale);
+
+    //set the position of the sprite to the top left of the rectangle
+    currentSprite.setPosition(xPos, yPos);
+
+    //set the position of the actor to be the center of the bounding rectangle
+    current -> setXCoordinate((xPos+xDim)/2);
+    current -> setYCoordinate((yPos+yDim)/2);
+
+    //pass the scale of the screen to the header to modify its vector trajectory
+    if(playingScreenHeader -> headerRecalculated()){
+      //cast to projectile before calling set vector scale
+      Projectile* projectile = dynamic_cast<Projectile*>(current.get());
+
+      projectile -> setVectorScale(xScale,yScale);
+    }
+
+    //finally draw the sprite
+    window.draw(currentSprite);
+  }
+}
+
 template <class T>
 void PlayingScreen::printVector(const vector<vector<T>> &v){
   //cout << " here !" << endl;

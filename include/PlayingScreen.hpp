@@ -77,8 +77,7 @@ public:
   void drawTowersAndObstacles(sf::RenderWindow& window);
   void drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window);
   void drawEnemyUnits(sf::RenderWindow& window);
-  void drawBuyTowerButton(sf::RenderWindow& window);
-
+  void drawProjectiles(sf::RenderWindow& window);
 
   template <class T>
   void printVector(const vector<vector<T>> &v);

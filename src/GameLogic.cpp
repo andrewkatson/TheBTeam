@@ -602,3 +602,10 @@ const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced
 const unordered_map<long long,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
   return waveManager -> getSpawnedEnemyUnits();
 }
+
+/*
+ * @return the vector with all the currently fired projectiles
+ */
+vector<shared_ptr<ActorInterface>>& GameLogic::getFiredProjectiles(){
+  return projectileManager -> getAllProjectiles();
+}
