@@ -22,6 +22,8 @@
 #include "Events/StateChangeEvent.hpp"
 #include "Events/MapGeneratedEvent.hpp"
 #include "EventType.hpp"
+#include <Box2D/Box2D.h>
+#include <SFML/Graphics.hpp>
 #include <chrono>
 #include <random>
 
@@ -67,6 +69,10 @@ private:
   //Store the textureLoader to get the textures for this tower and pass to
   //any dependent units or projectiles
   shared_ptr<TextureLoader> textureLoader;
+  //Box2d World and Body
+  shared_ptr<b2World> world;
+  shared_ptr<b2Body> body;
+
 
 
   int test;
