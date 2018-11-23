@@ -108,70 +108,70 @@
   <!--Melee Towers -->
   <!--Normal Fry Tower-->
   <constant value="10" id ="IDS_NFT_RS"> </constant>
-  <constant value="5" id ="IDS_NFT_RA"> </constant>
+  <constant value="90" id ="IDS_NFT_RA"> </constant>
   <constant value="5" id ="IDS_NFT_PR"> </constant>
   <!--Crinkle Fry Tower-->
   <constant value="15" id ="IDS_CFT_RS"> </constant>
-  <constant value="10" id ="IDS_CFT_RA"> </constant>
+  <constant value="105" id ="IDS_CFT_RA"> </constant>
   <constant value="10" id ="IDS_CFT_PR"> </constant>
   <!--Spicy Fry Tower-->
   <constant value="5" id ="IDS_SFT_RS"> </constant>
-  <constant value="30" id ="IDS_SFT_RA"> </constant>
+  <constant value="140" id ="IDS_SFT_RA"> </constant>
   <constant value="15" id ="IDS_SFT_PR"> </constant>
   <!--Waffle Fry Tower-->
   <constant value="30" id ="IDS_WFT_RS"> </constant>
-  <constant value="15" id ="IDS_WFT_RA"> </constant>
+  <constant value="105" id ="IDS_WFT_RA"> </constant>
   <constant value="15" id ="IDS_WFT_PR"> </constant>
 
 
   <!--Range Towers -->
   <!--CheesePizza Tower-->
   <constant value="5" id ="IDS_CPT_ROF"> </constant>
-  <constant value="10" id ="IDS_CPT_RA"> </constant>
+  <constant value="100" id ="IDS_CPT_RA"> </constant>
   <constant value="5" id ="IDS_CPT_PR"> </constant>
   <!--PepperoniPizza Tower-->
   <constant value="7" id ="IDS_PPT_ROF"> </constant>
-  <constant value="12" id ="IDS_PPT_RA"> </constant>
+  <constant value="120" id ="IDS_PPT_RA"> </constant>
   <constant value="10" id ="IDS_PPT_PR"> </constant>
   <!--DeepDish Tower-->
   <constant value="3" id ="IDS_DDT_ROF"> </constant>
-  <constant value="20" id ="IDS_DDT_RA"> </constant>
+  <constant value="170" id ="IDS_DDT_RA"> </constant>
   <constant value="15" id ="IDS_DDT_PR"> </constant>
   <!--MeatLovers Tower-->
   <constant value="10" id ="IDS_MLT_ROF"> </constant>
-  <constant value="12" id ="IDS_MLT_RA"> </constant>
+  <constant value="120" id ="IDS_MLT_RA"> </constant>
   <constant value="15" id ="IDS_MLT_PR"> </constant>
   <!--MiniM&Ms Tower-->
   <constant value="100" id ="IDS_MMMT_ROF"> </constant>
-  <constant value="1" id ="IDS_MMMT_RA"> </constant>
+  <constant value="70" id ="IDS_MMMT_RA"> </constant>
   <constant value="5" id ="IDS_MMMT_PR"> </constant>
   <!--Normal M&Ms Tower-->
   <constant value="120" id ="IDS_NMMT_ROF"> </constant>
-  <constant value="3" id ="IDS_NMMT_RA"> </constant>
+  <constant value="80" id ="IDS_NMMT_RA"> </constant>
   <constant value="10" id ="IDS_NMMT_PR"> </constant>
   <!--PeanutButter M&Ms Tower-->
   <constant value="150" id ="IDS_PBMMT_ROF"> </constant>
-  <constant value="4" id ="IDS_PBMMT_RA"> </constant>
+  <constant value="90" id ="IDS_PBMMT_RA"> </constant>
   <constant value="15" id ="IDS_PBMMT_PR"> </constant>
   <!--Peanut M&Ms Tower-->
   <constant value="70" id ="IDS_PMMT_ROF"> </constant>
-  <constant value="6" id ="IDS_PMMT_RA"> </constant>
+  <constant value="100" id ="IDS_PMMT_RA"> </constant>
   <constant value="15" id ="IDS_PMMT_PR"> </constant>
   <!--Soda Tower-->
   <constant value="8" id ="IDS_SOT_ROF"> </constant>
-  <constant value="6" id ="IDS_SOT_RA"> </constant>
+  <constant value="95" id ="IDS_SOT_RA"> </constant>
   <constant value="5" id ="IDS_SOT_PR"> </constant>
   <!--EnergyDrink Tower-->
   <constant value="12" id ="IDS_EDT_ROF"> </constant>
-  <constant value="8" id ="IDS_EDT_RA"> </constant>
+  <constant value="110" id ="IDS_EDT_RA"> </constant>
   <constant value="10" id ="IDS_EDT_PR"> </constant>
   <!--Gravy Tower-->
   <constant value="3" id ="IDS_GT_ROF"> </constant>
-  <constant value="10" id ="IDS_GT_RA"> </constant>
+  <constant value="130" id ="IDS_GT_RA"> </constant>
   <constant value="15" id ="IDS_GT_PR"> </constant>
   <!-- Slushie Tower-->
   <constant value="16" id ="IDS_SLT_ROF"> </constant>
-  <constant value="15" id ="IDS_SLT_RA"> </constant>
+  <constant value="150" id ="IDS_SLT_RA"> </constant>
   <constant value="15" id ="IDS_SLT_PR"> </constant>
 
 
@@ -338,6 +338,12 @@
   <constant value="60" id="IDS_Main_Menu_Title_Text_Size"> </constant>
 
   <!--Playing Screen -->
+  <!--Radius Circle Shape-->
+  <constant value="104" id="IDS_Radius_Circle_Fill_Color_Red"> </constant>
+  <constant value="163" id="IDS_Radius_Circle_Fill_Color_Green"> </constant>
+  <constant value="250" id="IDS_Radius_Circle_Fill_Color_Blue"> </constant>
+  <constant value="100" id="IDS_Radius_Circle_Fill_Color_Alpha"> </constant>
+
   <!--Buy Tower Button-->
   <!--Buy Tower Button Colors -->
   <constant value="178" id="IDS_Buy_Tower_Fill_Color_Red"> </constant>
@@ -715,6 +721,9 @@
 
   </ints>
   <floats>
+    <!--Unit Scale -->
+    <constant value = "4.0" id="IDS_Unit_Size_Scale_X"/>
+    <constant value = "4.0" id="IDS_Unit_Size_Scale_Y"/>
 
     <!--Buy_Tower_Option Generation Constants-->
     <constant value=".2" id="IDS_STAT_MAX_SCALAR"/>

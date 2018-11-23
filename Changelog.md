@@ -3,8 +3,12 @@
 - ActorCreatedEvent,ActorCreatedEventData [@andrewkatson][https://github.com/andrewkatson]
 
 ###Changed
-- playing screen draws enemies to the screen
-- all range towers now have the capacity to create projectiles of their type when asked to attack 
+- playing screen draws enemies to the screen [@andrewkatson][https://github.com/andrewkatson]
+- all range towers now have the capacity to create projectiles of their type when asked to attack
+- units scale properly so they do not appear as large as towers
+- projectiles have a vector of attack based on the coordinates of the unit they target \
+- clicking on a tower will show its attack/spawn radius in light blue 
+
 
 [0.4.0] 2018-11-15
 ###Added

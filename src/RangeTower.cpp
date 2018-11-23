@@ -5,6 +5,7 @@ RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> isMelee = false;
+  this -> radiusVisible = false;
 }
 
 void RangeTower::update(float delta){

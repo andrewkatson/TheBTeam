@@ -194,6 +194,9 @@ void BoardManager::handleTowerRemove(const EventInterface& event){
  * @param col: the col index for the obstacle/tower
  */
 void BoardManager::clearTowerOrObstacle(int row, int col){
+  if(!isInMap(row,col)){
+    return;
+  }
   aboveFloorGrid.at(row).at(col) = emptyTile;
 }
 
@@ -208,6 +211,7 @@ bool BoardManager::hasMap(){
  * @return true if this position is in the map
  */
 bool BoardManager::isInMap(int row, int col){
+
   return mapFactory -> isInMap(row, col);
 }
 
@@ -216,6 +220,9 @@ bool BoardManager::isInMap(int row, int col){
  */
 bool BoardManager::isTower(int row, int col){
   assert(hasMap()==true);
+  if(!isInMap(row,col)){
+    return false;
+  }
   return aboveFloorGrid.at(row).at(col) > 0;
 }
 
@@ -224,12 +231,18 @@ bool BoardManager::isTower(int row, int col){
  */
 bool BoardManager::isTowerOrObstacle(int row, int col){
   assert(hasMap()== true);
+  if(!isInMap(row,col)){
+    return false;
+  }
   return aboveFloorGrid.at(row).at(col) > 0 || aboveFloorGrid.at(row).at(col) < -2;
 }
 /*
  * @return true if the selected grid has an entrance
  */
 bool BoardManager::isEntrance(int row, int col){
+  if(!isInMap(row,col)){
+    return false;
+  }
   vector<int> entrances = getEntryPositions();
 
   for(int pair = 0; pair < entrances.size(); pair+=2){
@@ -248,6 +261,9 @@ bool BoardManager::isEntrance(int row, int col){
  */
 bool BoardManager::isExit(int row, int col){
   assert(hasMap()== true);
+  if(!isInMap(row,col)){
+    return false;
+  }
   return aboveFloorGrid.at(row).at(col) == 0;
 }
 /*
@@ -255,6 +271,9 @@ bool BoardManager::isExit(int row, int col){
  */
 bool BoardManager::isPath(int row, int col){
   assert(hasMap()== true);
+  if(!isInMap(row,col)){
+    return false;
+  }
   return floorGrid.at(row).at(col) > 0 ;
 }
 /*
@@ -262,6 +281,9 @@ bool BoardManager::isPath(int row, int col){
  */
 bool BoardManager::isObstacle(int row, int col){
   assert(hasMap()== true);
+  if(!isInMap(row,col)){
+    return false;
+  }
   return aboveFloorGrid.at(row).at(col) < -2 ;
 }
 
@@ -270,6 +292,9 @@ bool BoardManager::isObstacle(int row, int col){
  */
 bool BoardManager::isEmptySpace(int row, int col){
   assert(hasMap()==true);
+  if(!isInMap(row,col)){
+    return false;
+  }
   return !(isObstacle(row,col) || isExit(row,col) || isPath(row,col) || isTower(row,col) );
 }
 

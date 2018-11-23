@@ -351,6 +351,45 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
    */
   MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
 
+  //get the xposition
+  float xPos = mpEventData -> x - playingScreenHeader -> getXOffSet();
+  //get the y position
+  float yPos = mpEventData -> y - playingScreenHeader -> getYOffSet();
+
+  //get the size of a tile in the x
+  float xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //get the size of a tile in the y
+  float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //what row is being clicked
+  int row = (int) yPos / yTileSize;
+  //what col is being clicked
+  int col = (int) xPos / xTileSize;
+
+  //if the row and col are the same as the last click
+  if(row == rowSelected && col == colSelected){
+    if(gameLogic -> isTower (row,col)){
+      const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+      int combinedRowCol = row*gameLogic->getCols() + col;
+      shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+      towerToSetVisibility -> flipRadiusVisibility();
+    }
+  }
+
+  //otherwise reset the pair after we check if we were just clicking on a tower
+  //if so flip its visible radius off
+  else{
+    if(gameLogic -> isTower(rowSelected,colSelected)){
+      const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+      int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+      shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+      if(towerToSetVisibility->isRadiusVisible()){
+        towerToSetVisibility -> flipRadiusVisibility();
+      }
+    }
+    rowSelected = row;
+    colSelected = col;
+  }
 }
 
 /*
@@ -630,6 +669,19 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
   //the size of each tile in y direction
   const int yTileSize = playingScreenHeader -> getTrueYTileSize();
 
+  //circle used to draw a radius around the tower
+  sf::CircleShape radiusCircle;
+
+  //the four components for a color
+  int redComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Red"));
+  int greenComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Green"));
+  int blueComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Blue"));
+  int alphaComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Alpha"));
+
+  //set the colors of the radius circle
+  sf::Color color (redComponent, greenComponent, blueComponent, alphaComponent);
+  radiusCircle.setFillColor(color);
+
   //iterate through the towers/obstacles placed on the board
   for(auto iterator : towersPlaced){
     //the position of the tower/obstacle
@@ -673,8 +725,8 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
 
     //updates the coordinates of the tower in case it moved
     //to always be the center of the tile it is placed at
-    current -> setXCoordinate((xPos+xDim)/2);
-    current -> setYCoordinate((yPos+yDim)/2);
+    current -> setXCoordinate((float)(xPos)+ (xDim)/2.0);
+    current -> setYCoordinate((float)(yPos) + (yDim)/2.0);
 
     //finally draw the sprite
     window.draw(currentSprite);
@@ -682,6 +734,16 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     if(current -> isMelee){
       //if this is a meleeType then we need to draw its units
       drawTowerUnits(current, window);
+    }
+    //if the radius of firing/spawning units is visible we draw it
+    if(current -> isRadiusVisible()){
+      float radius = (float) current -> getRadius();
+      radiusCircle.setRadius(radius);
+      radiusCircle.setScale(xScale, yScale);
+      //reset the origin so any position set refers to the center of the circle
+      radiusCircle.setOrigin(radius, radius);
+      radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+      window.draw(radiusCircle);
     }
   }
 }
@@ -739,10 +801,14 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
     //the ydimension of the box
     int yDim = boundingBox.height;
 
+    //the scaling used for the units so that they do not fill up an entire square
+    float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
+    float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
+
     //the scale in the x direction
-    float xScale = (float) xTileSize / (float) xDim;
+    float xScale = (float) xTileSize / ((float) xDim*unitScaleX);
     //the scale in the y direction
-    float yScale = (float) yTileSize / (float) yDim;
+    float yScale = (float) yTileSize / ((float) yDim*unitScaleY);
 
     //set the scale for the tower/obstalce to fill up the square
     currentSprite.setScale(xScale, yScale);

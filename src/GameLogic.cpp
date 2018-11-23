@@ -98,8 +98,8 @@ void GameLogic::updateGameLogic(float deltaS){
       waveManager -> spawnedCurrentWave.insert({fryGuy -> getID(), fryGuy});
 
       //set the x and y coordinates
-      fryGuy -> setXCoordinate(4 * gridX);
-      fryGuy -> setYCoordinate(3 * gridY);
+      fryGuy -> setXCoordinate(3 * gridX);
+      fryGuy -> setYCoordinate(2 * gridY);
 
 
       vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
