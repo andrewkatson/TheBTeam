@@ -52,6 +52,8 @@ protected:
   int yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
+  //whether the radius of shooting/spawning units is visible
+  bool radiusVisible;
 
 public:
   //boolean used to tell if this is a melee tower without casting
@@ -82,6 +84,9 @@ public:
    */
   sf::Sprite& getSprite(){return sprite;}//PEOPLE WHO KNOW MORE THAN ME: SHOULD THIS RETURN A REFERENCE?
 
+  int getRadius(){return radius;}
+  bool isRadiusVisible(){return radiusVisible;}
+  void flipRadiusVisibility(){radiusVisible = radiusVisible==true ? false : true;}
 
 };
 

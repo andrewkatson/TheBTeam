@@ -10,6 +10,7 @@
 #define ACTORINTERFACE_H
 
 #include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 #include <memory>
 #include <vector>
 #include "EventManager.hpp"
@@ -62,10 +63,14 @@ protected:
   sf::FloatRect collisionBox;
 
   //The coordinates of the actor.
-  double x,y;
+//  double x,y;
 
   //Row and column of the actor on the world grid.
   int row,col;
+
+  //Box2d World and Body
+  shared_ptr<b2World> world;
+  shared_ptr<b2Body> body;
 
 public:
 
@@ -73,6 +78,15 @@ public:
   /*
     TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
    */
+  ActorInterface(float x,float y, int radius);
+  int radius;
+  float x;
+  float y;
+
+  sf::Color color;
+
+  void setWorld(shared_ptr<b2World> world);
+  void updatePosition();
 
   /*
    * Reset the hitpoints back to the max (for respawning allied units)
@@ -84,7 +98,7 @@ public:
 
     @return an integer representing the actor's identity
    */
-  int getID(){return id;}
+  long long getID(){return id;}
 
   /*
     Returns the actor's sprite.
@@ -100,16 +114,6 @@ public:
     actors obviously have different movement patterns.
   */
   virtual void move(float delta, float xmult = 0, float ymult = 0)=0;
-
-  /*
-    Determine whether or not the object's collision box is colliding with the
-    given collision box. By default, this is determined by whether or not the
-    wo collision boxes intersect.
-
-    @return true if the actor's collision box is colliding with colliding_with,
-            false otherwise.
-   */
-  bool isCollision(sf::FloatRect colliding_with);
 
   /*
    * Return actor type ID
@@ -162,6 +166,8 @@ public:
   int getArmor(){return this->armor;}
 
   int getArmorPenetration(){return this->armorPenetration;}
+
+
 
 };
 

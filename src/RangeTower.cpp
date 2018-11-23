@@ -5,6 +5,7 @@ RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> isMelee = false;
+  this -> radiusVisible = false;
 }
 
 void RangeTower::update(float delta){
@@ -38,6 +39,9 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   //set the row and col of the projetile created to be the same as the tower's
   firedProjectile -> setRow(row);
   firedProjectile -> setCol(col);
+  //set the x and y coordinate of the projectile to the same as the firing tower's
+  firedProjectile -> setXCoordinate(this -> xCoordinate);
+  firedProjectile -> setYCoordinate(this -> yCoordinate);
 
   //set up the vector that the projectile will be fired on
   calcAttackVector(firedProjectile, enemyInRange);

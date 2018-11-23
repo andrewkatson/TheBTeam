@@ -45,7 +45,7 @@ void ProjectileManager::registerEvents(){
   this -> eventManager -> registerEvent(actorCreatedEventType);
 }
 
-vector<shared_ptr<ActorInterface>> ProjectileManager::getProjectiles(){
+vector<shared_ptr<ActorInterface>>& ProjectileManager::getAllProjectiles(){
   return projectiles;
 }
 

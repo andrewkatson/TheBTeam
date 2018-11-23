@@ -1028,6 +1028,13 @@ float PlayingScreenHeader::getYOffSet(){
   return ySize;
 }
 
+/*
+ * @return true if the header needs to be recalculated
+ */
+bool PlayingScreenHeader::headerRecalculated(){
+  return recaculateHeader;
+}
+
 void PlayingScreenHeader::draw(sf::RenderWindow &window){
   //if something has changed we need to resize the header
   if(recaculateHeader){

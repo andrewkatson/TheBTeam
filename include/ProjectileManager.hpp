@@ -48,7 +48,7 @@ public:
    *
    * @return a vector containing all of the manager's projectiles
    */
-  vector<shared_ptr<ActorInterface>> getProjectiles();
+  vector<shared_ptr<ActorInterface>>& getAllProjectiles();
 
   /*
    * Handle an actor created event

@@ -66,7 +66,6 @@ unordered_map<int, shared_ptr<TowerInterface>> towersPlaced;
 
 //xdim of map (cols)
 int xDim;
-
 //ydim of map(rows)
 int yDim;
 
@@ -74,6 +73,7 @@ int yDim;
 int xGrid;
 //y dimension in pixels of a grid space
 int yGrid;
+
 
 //int pair (used to assocaite a row and col)
 typedef pair<int,int> intPair;
@@ -102,6 +102,8 @@ public:
   void handleTowerRemove(const EventInterface& event);
 
   void addObstacles(unordered_map<int, intPair>& allObstaclesToPlace);
+
+
 private:
   void registerDelegates();
 

@@ -24,6 +24,10 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   test = 2;
   this -> windowX = windowX;
   this -> windowY = windowY;
+  //Intialize World
+  //have to take a parameter gravity because it is part of class paramters in Box2D library
+  b2Vec2 gravity(0.f, 1.0f);
+  this -> world = make_shared<b2World>(gravity);
 }
 
 /*
@@ -91,6 +95,17 @@ void GameLogic::updateGameLogic(float deltaS){
     int row = 3;
     int col = 3;
     if(test == 2){
+      //creates a unit for testing as well
+      shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+
+      //add to the current wave of spawned
+      waveManager -> spawnedCurrentWave.insert({fryGuy -> getID(), fryGuy});
+
+      //set the x and y coordinates
+      fryGuy -> setXCoordinate(3 * gridX);
+      fryGuy -> setYCoordinate(2 * gridY);
+
+
       vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 
       if(allTowers.size() != 0){
@@ -601,4 +616,11 @@ const unordered_map<int, shared_ptr<TowerInterface>>& GameLogic::getTowersPlaced
  */
 const unordered_map<long long,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemyUnits(){
   return waveManager -> getSpawnedEnemyUnits();
+}
+
+/*
+ * @return the vector with all the currently fired projectiles
+ */
+vector<shared_ptr<ActorInterface>>& GameLogic::getFiredProjectiles(){
+  return projectileManager -> getAllProjectiles();
 }
