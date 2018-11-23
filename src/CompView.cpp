@@ -27,13 +27,17 @@ void CompView::moveUnits(float deltaS){
 
   vector<vector<int>> dists=gameLogic->getDistances();
 
-  for(int z=0;z<waveManager->getSpawnedEnemyUnits().size();z++){
+  //the unordered_map with all the melee units
+  unordered_map<long long, shared_ptr<MeleeUnit>> spawnedUnits = waveManager -> getSpawnedEnemyUnits();
+
+  for(unordered_map<long long, shared_ptr<MeleeUnit>>::const_iterator curr = spawnedUnits.begin(); curr != spawnedUnits.end(); ++curr){
+    //the melee unit
+    shared_ptr<MeleeUnit> unitToUpdate = (*curr).second;
 
     //figure out which square to move towards
     //move there
     //update your row and col
-
-    waveManager->getSpawnedEnemyUnits()[z]->update(deltaS);
+    unitToUpdate -> update(deltaS);
   }
 
 }

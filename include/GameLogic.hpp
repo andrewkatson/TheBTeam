@@ -143,7 +143,7 @@ public:
   const shared_ptr<TowerInterface> getTowerPlaced(int row, int col);
   const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
   const unordered_map<long long,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
-
+  vector<shared_ptr<ActorInterface>>& getFiredProjectiles();
   shared_ptr<WaveManager> getWaveManager(){return waveManager;};
 
 };

@@ -23,7 +23,7 @@ using namespace std;
 
 class WaveManager{
 
-private:
+public:
   //int pair (used to assocaite a row and col)
   typedef pair<int,int> intPair;
 

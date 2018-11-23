@@ -33,6 +33,16 @@ void Projectile::setVector(float x, float y){
   this -> y = y;
 }
 
+void Projectile::setVectorScale(float xScale, float yScale){
+  this -> xVectorScale = xScale;
+  this -> yVectorScale = yScale;
+}
+
+void Projectile::setTargetPos(float xPos, float yPos){
+  this -> xTarget = xPos;
+  this -> yTarget = yPos;
+}
+
 void Projectile::setProjectileID(int ID){
   this -> projectileID = ID;
 }
