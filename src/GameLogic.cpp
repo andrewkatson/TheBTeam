@@ -91,6 +91,17 @@ void GameLogic::updateGameLogic(float deltaS){
     int row = 3;
     int col = 3;
     if(test == 2){
+      //creates a unit for testing as well
+      shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+
+      //add to the current wave of spawned
+      waveManager -> spawnedCurrentWave.insert({fryGuy -> getID(), fryGuy});
+
+      //set the x and y coordinates
+      fryGuy -> setXCoordinate(4 * gridX);
+      fryGuy -> setYCoordinate(3 * gridY);
+
+
       vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 
       if(allTowers.size() != 0){

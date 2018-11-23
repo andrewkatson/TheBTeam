@@ -84,7 +84,7 @@ public:
 
     @return an integer representing the actor's identity
    */
-  int getID(){return id;}
+  long long getID(){return id;}
 
   /*
     Returns the actor's sprite.
