@@ -133,7 +133,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  void move(float delta,int xmult, int ymult);
+  void move(float delta,float xmult, float ymult);
 
   /*
     Determine whether or not the object's collision box is colliding with the

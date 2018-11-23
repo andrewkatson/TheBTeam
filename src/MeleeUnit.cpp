@@ -70,9 +70,9 @@ HitpointBar MeleeUnit::getHpBar() {
   return this->hpBar;
 }
 
-void MeleeUnit::move(float deltaS, int xmult, int ymult){
-  this->x+=(speed*deltaS)*(double)xmult;
-  this->y+=(speed*deltaS)*(double)ymult;
+void MeleeUnit::move(float deltaS, float xmult, float ymult){
+  this->x+=speed*deltaS*xmult;
+  this->y+=speed*deltaS*ymult;
 
 }
 

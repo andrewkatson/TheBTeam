@@ -5,6 +5,7 @@
 ###Changed
 - playing screen draws enemies to the screen
 - all range towers now have the capacity to create projectiles of their type when asked to attack 
+- CompView controls enemy melee units and sets their direction to move toward the map exit [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 [0.4.0] 2018-11-15
 ###Added
