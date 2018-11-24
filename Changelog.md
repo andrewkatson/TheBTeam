@@ -9,6 +9,9 @@
 - projectiles have a vector of attack based on the coordinates of the unit they target 
 - clicking on a tower will show its attack/spawn radius in light blue 
 - CompView controls enemy melee units and sets their direction to move toward the map exit [@jeremyelkayam][https://github.com/jeremyelkayam]
+- When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.
+ - Event to decrease user's HP
+ - Event to remove actor from the spawned units map
 
 [0.4.0] 2018-11-15
 ###Added
