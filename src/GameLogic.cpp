@@ -84,6 +84,7 @@ void GameLogic::registerDelegates(){
   EventType stateChangeEventType = stateChangeEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
+
 }
 
 

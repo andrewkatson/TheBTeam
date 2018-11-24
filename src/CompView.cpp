@@ -45,43 +45,44 @@ void CompView::moveUnits(float deltaS){
 
       this -> eventManager -> queueEvent(actorDestroyed);
       this -> eventManager -> queueEvent(hitpointsLost);
+    }else { //these don't need to happen if the unit hit the exit
+
+      int r = currentUnit->getRow();
+      int c = currentUnit->getCol();
+
+      std::map<int, pair<int, int>> dists_coords;
+
+      pair<int, int> relative_position;
+
+      relative_position.first = -1;
+      relative_position.second = 0;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+      relative_position.first = 1;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+      relative_position.first = 0;
+      relative_position.second = 1;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+      relative_position.first = 0;
+      relative_position.second = -1;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+
+      pair<int, int> new_direction = dists_coords.begin()->second; //get the one with the shortest distance
+
+      float x_scale = 1 / (float) dists[0].size();
+      float y_scale = 1 / (float) dists.size();
+
+      currentUnit->move(currentUnit->getSpeed(), new_direction.first * x_scale, new_direction.second * y_scale);
+
+      currentUnit->update(deltaS);
     }
-
-    int r=currentUnit->getRow();
-    int c=currentUnit->getCol();
-
-    std::map<int,pair<int,int>>dists_coords;
-
-    pair<int,int> relative_position;
-
-    relative_position.first=-1;
-    relative_position.second=0;
-
-    dists_coords[dists[r+relative_position.first][c+relative_position.second]]=relative_position;
-
-    relative_position.first=1;
-
-    dists_coords[dists[r+relative_position.first][c+relative_position.second]]=relative_position;
-
-    relative_position.first=0;
-    relative_position.second=1;
-
-    dists_coords[dists[r+relative_position.first][c+relative_position.second]]=relative_position;
-
-    relative_position.first=0;
-    relative_position.second=-1;
-
-    dists_coords[dists[r+relative_position.first][c+relative_position.second]]=relative_position;
-
-
-    pair<int,int>new_direction=dists_coords.begin()->second; //get the one with the shortest distance
-
-    float x_scale=1/(float)dists[0].size();
-    float y_scale=1/(float)dists.size();
-
-    currentUnit->move(currentUnit->getSpeed(),new_direction.first*x_scale,new_direction.second*y_scale);
-
-    currentUnit->update(deltaS);
   }
 }
 

@@ -7,6 +7,8 @@
  */
 
 #include <deque>
+#include <functional>
+#include "Events/ActorDestroyedEvent.hpp"
 #include "WaveManager.hpp"
 
 
@@ -233,3 +235,23 @@ map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<
 queue<shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return currentWave;}
 
 unordered_map<long long,shared_ptr<MeleeUnit>>& WaveManager::getSpawnedEnemyUnits(){return spawnedCurrentWave;}
+
+void WaveManager::registerDelegates() {
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate actorDestroyedDelegate = std::bind(&WaveManager::handleActorDestroyed, this, _1);
+
+  //make an event and get its type
+  ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+  EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_WaveManager_ActorDestroyed")),actorDestroyedEventType);
+}
+
+void WaveManager::deregisterDelegates() {
+
+}
+
+
+void WaveManager::handleActorDestroyed(const EventInterface& event) {
+
+}
