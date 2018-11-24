@@ -165,6 +165,8 @@ public:
    * @return the enemies that have been spawned in the current wave
    */
   unordered_map<long long,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
+
+  void handleActorDestroyed(const EventInterface& event);
 };
 
 #endif

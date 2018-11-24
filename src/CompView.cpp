@@ -26,29 +26,73 @@ void CompView::moveUnits(float deltaS){
 
   vector<vector<int>> dists=gameLogic->getDistances();
 
-  //the unordered_map with all the melee units
-  unordered_map<long long, shared_ptr<MeleeUnit>> spawnedUnits = waveManager -> getSpawnedEnemyUnits();
+  for(int z=0;z<waveManager->getSpawnedEnemyUnits().size();z++){
 
-  for(unordered_map<long long, shared_ptr<MeleeUnit>>::const_iterator curr = spawnedUnits.begin(); curr != spawnedUnits.end(); ++curr){
-    //the melee unit
-    shared_ptr<MeleeUnit> unitToUpdate = (*curr).second;
+    shared_ptr<MeleeUnit> currentUnit=waveManager->getSpawnedEnemyUnits()[z];
 
-    //figure out which square to move towards
-    //move there
-    //update your row and col
-    unitToUpdate -> update(deltaS);
+    if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getXCoordinate())){
+      int newCol=currentUnit->getXCoordinate()/playingScreenHeader->getTrueXTileSize();
+      int newRow=currentUnit->getYCoordinate()/playingScreenHeader->getTrueYTileSize();
+      currentUnit->setRow(newRow);
+      currentUnit->setRow(newCol);
+    }//make sure the col is up to date
+
+
+    if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
+      shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),deltaS);
+      shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()/4,deltaS);
+
+      this -> eventManager -> queueEvent(actorDestroyed);
+      this -> eventManager -> queueEvent(hitpointsLost);
+    }else { //these don't need to happen if the unit hit the exit
+
+      int r = currentUnit->getRow();
+      int c = currentUnit->getCol();
+
+      std::map<int, pair<int, int>> dists_coords;
+
+      pair<int, int> relative_position;
+
+      relative_position.first = -1;
+      relative_position.second = 0;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+      relative_position.first = 1;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+      relative_position.first = 0;
+      relative_position.second = 1;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+      relative_position.first = 0;
+      relative_position.second = -1;
+
+      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+
+
+      pair<int, int> new_direction = dists_coords.begin()->second; //get the one with the shortest distance
+
+      float x_scale = 1 / (float) dists[0].size();
+      float y_scale = 1 / (float) dists.size();
+
+      currentUnit->move(currentUnit->getSpeed(), new_direction.first * x_scale, new_direction.second * y_scale);
+
+      currentUnit->update(deltaS);
+    }
   }
-
 }
 
 
 void CompView::delegateEvents(){}
 
 bool CompView::coordsInsideTile(int row, int col,double x, double y){
-  float min_x=playingScreenHeader->getTrueXTileSize()*row;
-  float max_x=playingScreenHeader->getTrueXTileSize()*(row+1);
-  float min_y=playingScreenHeader->getTrueYTileSize()*col;
-  float max_y=playingScreenHeader->getTrueYTileSize()*(col+1);
+  float min_x=playingScreenHeader->getTrueXTileSize()*col;
+  float max_x=playingScreenHeader->getTrueXTileSize()*(col+1);
+  float min_y=playingScreenHeader->getTrueYTileSize()*row;
+  float max_y=playingScreenHeader->getTrueYTileSize()*(row+1);
 
   return (min_x < x && x < max_x) && (min_y < y && y < max_y);
 };

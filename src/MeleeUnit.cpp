@@ -20,7 +20,7 @@ void MeleeUnit::update(float delta){
 
     current_sprite=2;
     this->sprite.setTexture(textures->at(current_sprite));
-    
+
   }else {
 
     s_elapsed += delta;
@@ -70,9 +70,9 @@ HitpointBar MeleeUnit::getHpBar() {
   return this->hpBar;
 }
 
-void MeleeUnit::move(float deltaS, int xmult, int ymult){
-  this->x+=(speed*deltaS)*(double)xmult;
-  this->y+=(speed*deltaS)*(double)ymult;
+void MeleeUnit::move(float deltaS, float xmult, float ymult){
+  this->x+=speed*deltaS*xmult;
+  this->y+=speed*deltaS*ymult;
 
 }
 
@@ -109,9 +109,9 @@ void MeleeUnit::setArmor(int armor) {
 }
 
 int MeleeUnit::getAttackRadius() const {
-  return attackRadius;
+  return radius;
 }
 
 void MeleeUnit::setAttackRadius(int attackRadius) {
-  MeleeUnit::attackRadius = attackRadius;
+  radius = attackRadius;
 }

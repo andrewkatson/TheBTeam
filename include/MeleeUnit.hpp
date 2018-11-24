@@ -30,9 +30,6 @@ protected:
   //The amount of armor the unit has.
   int armor;
 
-  //The radius of the unit's automatic attack.
-  int attackRadius;
-
   //A reference to the unit that this unit is fighting.
   shared_ptr<MeleeUnit> engagedUnit;
 
@@ -133,7 +130,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  void move(float delta,int xmult, int ymult);
+  void move(float delta,float xmult, float ymult);
 
   /*
     Determine whether or not the object's collision box is colliding with the

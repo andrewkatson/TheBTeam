@@ -6,7 +6,7 @@ SodaProjectile::SodaProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this -> armor = textLoader->getInteger(string("IDS_SO_AM"));;
   this -> speed =  textLoader->getInteger(string("IDS_SO_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_SO_AP"));;
-  this -> areaOfEffect = textLoader->getInteger(string("IDS_SO_AR"));;
+  this -> radius = textLoader->getInteger(string("IDS_SO_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_SOP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
   this -> initSprite();

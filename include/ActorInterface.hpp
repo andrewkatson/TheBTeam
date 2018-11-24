@@ -10,6 +10,7 @@
 #define ACTORINTERFACE_H
 
 #include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 #include <memory>
 #include <vector>
 #include "EventManager.hpp"
@@ -67,8 +68,17 @@ protected:
   //Row and column of the actor on the world grid.
   int row,col;
 
+  sf::Color color;
+
   //the degree of error
   const float e = 0.001;
+
+  //Box2d World and Body
+  shared_ptr<b2World> world;
+  shared_ptr<b2Body> body;
+
+  //the area of effect for a projectile and the area of attack for a unit
+  int radius;
 
 public:
 
@@ -76,6 +86,9 @@ public:
   /*
     TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
    */
+
+  void setWorld(shared_ptr<b2World> world);
+  void updatePosition();
 
   /*
    * Reset the hitpoints back to the max (for respawning allied units)
@@ -102,17 +115,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  virtual void move(float delta,int xmult=0,int ymult=0)=0;
-
-  /*
-    Determine whether or not the object's collision box is colliding with the
-    given collision box. By default, this is determined by whether or not the
-    wo collision boxes intersect.
-
-    @return true if the actor's collision box is colliding with colliding_with,
-            false otherwise.
-   */
-  bool isCollision(sf::FloatRect colliding_with);
+  virtual void move(float delta, float xmult = 0, float ymult = 0)=0;
 
   /*
    * Return actor type ID

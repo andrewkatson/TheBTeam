@@ -43,7 +43,7 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   //set the x and y coordinate of the projectile to the same as the firing tower's
   firedProjectile -> setXCoordinate(this -> xCoordinate);
   firedProjectile -> setYCoordinate(this -> yCoordinate);
-  
+
   //set up the vector that the projectile will be fired on
   calcAttackVector(firedProjectile, enemyInRange);
 
@@ -82,7 +82,7 @@ shared_ptr<vector<int>>  RangeTower::getStatistics(){
   //push back the projectile armor penetration
   stats->push_back(currentProjectile -> getArmorPenetration());
   //area of effect
-  stats->push_back(currentProjectile -> areaOfEffect);
+  stats->push_back(currentProjectile -> getAreaOfEffect());
   //rate of fire of tower
   stats->push_back(rateOfFire);
 

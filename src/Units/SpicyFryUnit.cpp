@@ -6,7 +6,7 @@ SpicyFryUnit::SpicyFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventMa
   this->armor=textLoader->getInteger(string("IDS_SF_AM"));;
   this->speed=textLoader->getInteger(string("IDS_SF_SP"));;
   this->armorPenetration=textLoader->getInteger(string("IDS_SF_AP"));;
-  this->attackRadius= textLoader->getInteger(string("IDS_SF_AR"));;
+  this->radius= textLoader->getInteger(string("IDS_SF_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_SF_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_SFU"));
   this -> textures = textureLoader -> getTexture(actorTypeID);

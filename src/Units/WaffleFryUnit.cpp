@@ -7,7 +7,7 @@ WaffleFryUnit::WaffleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->armor=textLoader->getInteger(string("IDS_WF_AM"));;
   this->speed=textLoader->getInteger(string("IDS_WF_SP"));;
   this->armorPenetration=textLoader->getInteger(string("IDS_WF_AP"));;
-  this->attackRadius=textLoader->getInteger(string("IDS_WF_AR"));;
+  this->radius=textLoader->getInteger(string("IDS_WF_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_WF_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_WFU"));
   this -> textures = textureLoader -> getTexture(actorTypeID);

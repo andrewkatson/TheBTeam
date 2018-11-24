@@ -5,7 +5,7 @@ GravyProjectile::GravyProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<E
   this -> armor = textLoader->getInteger(string("IDS_G_AM"));;
   this -> speed = textLoader->getInteger(string("IDS_G_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_G_AP"));;
-  this -> areaOfEffect = textLoader->getInteger(string("IDS_G_AR"));;
+  this -> radius = textLoader->getInteger(string("IDS_G_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_GP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
   this -> initSprite();

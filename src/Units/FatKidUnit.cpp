@@ -10,7 +10,7 @@ FatKidUnit::FatKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManage
   this->armor=textLoader->getInteger(string("IDS_FK_AM"));;
   this->speed=textLoader->getInteger(string("IDS_FK_SP"));;
   this->armorPenetration=textLoader->getInteger(string("IDS_FK_AP"));;
-  this->attackRadius=textLoader->getInteger(string("IDS_FK_AR"));;
+  this->radius=textLoader->getInteger(string("IDS_FK_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_FK_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_FKU"));
   this -> textures = textureLoader -> getTexture(actorTypeID);

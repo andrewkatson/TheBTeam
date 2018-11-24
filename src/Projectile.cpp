@@ -24,7 +24,7 @@ int Projectile::getDamage() const {
   return damage;
 }
 
-void Projectile::move(float delta,int xmult, int ymult){
+void Projectile::move(float delta, float xmult, float ymult){
 
 }
 

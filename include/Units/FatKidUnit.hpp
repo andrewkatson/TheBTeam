@@ -14,7 +14,7 @@ private:
 public:
 
   FatKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
-  void move(float delta,int xmult, int ymult){MeleeUnit::move(delta,xmult,ymult);}
+  void move(float delta, float xmult, float ymult){MeleeUnit::move(delta, xmult, ymult);}
   void update(float delta){MeleeUnit::update(delta);}
 };
 

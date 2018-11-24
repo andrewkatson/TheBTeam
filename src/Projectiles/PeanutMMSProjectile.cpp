@@ -6,7 +6,7 @@ PeanutMMSProjectile::PeanutMMSProjectile(shared_ptr<TextLoader> textLoader, shar
   this -> armor = textLoader->getInteger(string("IDS_PMM_AM"));;
   this -> speed = textLoader->getInteger(string("IDS_PMM_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_PMM_AP"));;
-  this -> areaOfEffect = textLoader->getInteger(string("IDS_PMM_AR"));;
+  this -> radius = textLoader->getInteger(string("IDS_PMM_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_PMMP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
   this -> initSprite();

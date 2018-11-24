@@ -32,8 +32,6 @@ protected:
   int projectileID;
 
 public:
-  //Area on the board that this projectile effects.
-  int areaOfEffect;
   Projectile(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
 
   void initSprite();
@@ -55,7 +53,7 @@ public:
   /*
    * Move the projectile based on its speed and direction.
    */
-  void move(float delta,int xmult=0, int ymult=0);
+  void move(float delta, float xmult = 0, float ymult = 0);
 
   /*
    * set the vector for movement (defined by an x and y)
@@ -83,6 +81,11 @@ public:
    * @param projectileID: the integer identifier (probably the address)
    */
   void setProjectileID(int ID);
+
+  /*
+   * @return the area of radius
+   */
+  int getAreaOfEffect(){return radius;}
 
   void update(float delta);
 

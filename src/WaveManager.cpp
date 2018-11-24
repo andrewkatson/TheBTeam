@@ -7,6 +7,8 @@
  */
 
 #include <deque>
+#include <functional>
+#include "Events/ActorDestroyedEvent.hpp"
 #include "WaveManager.hpp"
 
 
@@ -23,11 +25,19 @@ WaveManager::~WaveManager(){
   this -> deregisterDelegates();
 }
 
-void WaveManager::registerDelegates(){
 
+void WaveManager::registerDelegates() {
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate actorDestroyedDelegate = std::bind(&WaveManager::handleActorDestroyed, this, _1);
+
+  //make an event and get its type
+  ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+  EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_WaveManager_ActorDestroyed")),actorDestroyedEventType);
 }
 
-void WaveManager::deregisterDelegates(){
+void WaveManager::deregisterDelegates() {
 
 }
 
@@ -241,3 +251,20 @@ map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<
 queue<shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return currentWave;}
 
 unordered_map<long long,shared_ptr<MeleeUnit>>& WaveManager::getSpawnedEnemyUnits(){return spawnedCurrentWave;}
+
+
+/*
+ * Handle destruction of an actor by removing it from the map of actors
+ */
+void WaveManager::handleActorDestroyed(const EventInterface& event) {
+  /*
+   * cast it
+   */
+  const ActorDestroyedEvent* actorDestroyedEvent = static_cast<const ActorDestroyedEvent*>(&event);
+
+  ActorDestroyedEventData* actorDestroyedEventData = static_cast<ActorDestroyedEventData*>((actorDestroyedEvent -> data).get());
+
+  long long actorID = actorDestroyedEventData -> actorID;//get the dead actor's ID
+
+  spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
+}

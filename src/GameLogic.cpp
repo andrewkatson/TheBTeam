@@ -24,6 +24,10 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   test = 5;
   this -> windowX = windowX;
   this -> windowY = windowY;
+  //Intialize World
+  //have to take a parameter gravity because it is part of class paramters in Box2D library
+  b2Vec2 gravity(0.f, 1.0f);
+  this -> world = make_shared<b2World>(gravity);
 }
 
 /*
@@ -84,6 +88,7 @@ void GameLogic::registerDelegates(){
   EventType stateChangeEventType = stateChangeEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
+
 }
 
 /*

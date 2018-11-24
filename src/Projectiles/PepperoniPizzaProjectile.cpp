@@ -5,7 +5,7 @@ PepperoniPizzaProjectile::PepperoniPizzaProjectile(shared_ptr<TextLoader> textLo
   this -> armor = textLoader->getInteger(string("IDS_PP_AM"));;
   this -> speed = textLoader->getInteger(string("IDS_PP_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_PP_AP"));;
-  this -> areaOfEffect = textLoader->getInteger(string("IDS_PP_AR"));;
+  this -> radius = textLoader->getInteger(string("IDS_PP_AR"));;
   this -> actorTypeID = textLoader->getTypeID(string("IDS_PPP"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
   this -> initSprite();

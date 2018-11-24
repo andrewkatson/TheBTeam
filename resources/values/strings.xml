@@ -212,8 +212,11 @@
     <string value="TOWERMANAGERHANDLETOWERREMOVE" id="IDS_TMD_TR"> </string>
     <!--Projectile Manager Delegates-->
     <string value="Projectile_Manager_Actor_Created" id="IDS_ProjectileManager_ActorCreated"> </string>
+    <!--Wave Manager Delegates-->
+    <string value="Wave_Manager_Actor_Destroyed" id="IDS_WaveManager_ActorDestroyed"> </string>
 
-    <!--MainMenuScreen Delegates-->
+
+  <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->
     <string value="OPTIONSMENUSCREENHANDLEKEYPRESS" id="IDS_OMSD_KP"> </string>

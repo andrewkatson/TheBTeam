@@ -10,7 +10,7 @@ SkinnyKidUnit::SkinnyKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->armor=textLoader->getInteger(string("IDS_SK_AM"));;
   this->speed=textLoader->getInteger(string("IDS_SK_SP"));;
   this->armorPenetration=textLoader->getInteger(string("IDS_SK_AP"));;
-  this->attackRadius=textLoader->getInteger(string("IDS_SK_AR"));;
+  this->radius=textLoader->getInteger(string("IDS_SK_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_SK_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_SKU"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
