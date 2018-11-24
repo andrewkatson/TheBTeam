@@ -26,9 +26,9 @@ void CompView::moveUnits(float deltaS){
 
   vector<vector<int>> dists=gameLogic->getDistances();
 
-  for(int z=0;z<waveManager->getSpawnedEnemyUnits().size();z++){
+  for(auto iterator : waveManager->getSpawnedEnemyUnits()){
 
-    shared_ptr<MeleeUnit> currentUnit=waveManager->getSpawnedEnemyUnits()[z];
+    shared_ptr<MeleeUnit> currentUnit= iterator.second;
 
     if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getXCoordinate())){
       int newCol=currentUnit->getXCoordinate()/playingScreenHeader->getTrueXTileSize();

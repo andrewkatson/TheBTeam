@@ -43,6 +43,7 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   //set the x and y coordinate of the projectile to the same as the firing tower's
   firedProjectile -> setXCoordinate(this -> xCoordinate);
   firedProjectile -> setYCoordinate(this -> yCoordinate);
+  cout <<  "set x " << this -> xCoordinate << " set y " << this -> yCoordinate << endl;
 
   //set up the vector that the projectile will be fired on
   calcAttackVector(firedProjectile, enemyInRange);

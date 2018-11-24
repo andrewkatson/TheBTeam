@@ -913,6 +913,8 @@ void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
       Projectile* projectile = dynamic_cast<Projectile*>(current.get());
 
       projectile -> setVectorScale(xScale,yScale);
+
+      cout << "projectile x " << xPos << " and y " << yPos << endl;
     }
 
     //finally draw the sprite

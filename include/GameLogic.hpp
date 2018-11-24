@@ -73,8 +73,6 @@ private:
   shared_ptr<b2World> world;
   shared_ptr<b2Body> body;
 
-
-
   int test;
   long long fryID;
 
