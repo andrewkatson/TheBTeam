@@ -251,7 +251,18 @@ void WaveManager::deregisterDelegates() {
 
 }
 
-
+/*
+ * Handle destruction of an actor by removing it from the map of actors
+ */
 void WaveManager::handleActorDestroyed(const EventInterface& event) {
+  /*
+   * cast it
+   */
+  const ActorDestroyedEvent* actorDestroyedEvent = static_cast<const ActorDestroyedEvent*>(&event);
 
+  ActorDestroyedEventData* actorDestroyedEventData = static_cast<ActorDestroyedEventData*>((actorDestroyedEvent -> data).get());
+
+  long long actorID = actorDestroyedEventData -> actorID;//get the dead actor's ID
+
+  spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
 }
