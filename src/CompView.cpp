@@ -1,5 +1,4 @@
 #include "CompView.hpp"
-#include "GameState.hpp"
 
 CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,shared_ptr<PlayingScreenHeader> playingScreenHeader){
   this -> textLoader = textLoader;

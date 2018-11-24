@@ -13,6 +13,14 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   haveSetColorShift=false;
   this -> registerPersistentDelegates();
   this -> initDrawingMaterials();
+
+  rect.setFillColor(sf::Color::Red);
+  specialRectY = -1;
+  specialRectX = -1;
+}
+
+PlayingScreen::~PlayingScreen(){
+  this -> deregisterPersistentDelegates();
 }
 
 /*
@@ -89,6 +97,19 @@ void PlayingScreen::registerPersistentDelegates(){
   EventType stateChangeEventType = stateChangeEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_PS_SC")),stateChangeEventType);
+}
+
+/*
+ * Deregister all persistent delegates
+ */
+void PlayingScreen::deregisterPersistentDelegates(){
+
+  //make an event and get its type
+  StateChangeEvent stateChangeEvent = StateChangeEvent();
+  EventType stateChangeEventType = stateChangeEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PS_SC")),stateChangeEventType);
+
 }
 
 
@@ -425,6 +446,29 @@ void PlayingScreen::handleStateChange(const EventInterface& event){
 
 
 void PlayingScreen::draw(sf::RenderWindow &window){
+
+  //initlaize the color shift vectors
+  //if we have not or this is a new board
+  if(!haveSetColorShift){
+    initColorShifts();
+    haveSetColorShift=true;
+  }
+  drawFloorMap(window);
+  drawTowersAndObstacles(window);
+  //to avoid looping twice we draw all the units of the towers in the
+  //same method as drawing the towers
+  drawEnemyUnits(window);
+  drawProjectiles(window);
+
+  //draw the header
+  playingScreenHeader -> draw(window);
+
+  if(specialRectX != -1 && specialRectY != -1){
+    rect.setPosition(sf::Vector2f(specialRectX, specialRectY));
+    rect.setSize(sf::Vector2f(specialRectXDim, specialRectYDim));
+    window.draw(rect);
+  }
+
   //TODO change into real code for drawing the map!
   if(somethingChanged){
     cout << endl << "THE FLOOR " << endl;
@@ -442,21 +486,6 @@ void PlayingScreen::draw(sf::RenderWindow &window){
     somethingChanged = false;
   }
 
-  //initlaize the color shift vectors
-  //if we have not or this is a new board
-  if(!haveSetColorShift){
-    initColorShifts();
-    haveSetColorShift=true;
-  }
-  drawFloorMap(window);
-  drawTowersAndObstacles(window);
-  //to avoid looping twice we draw all the units of the towers in the
-  //same method as drawing the towers
-  drawEnemyUnits(window);
-  drawProjectiles(window);
-
-  //draw the header
-  playingScreenHeader -> draw(window);
 }
 
 /*
@@ -669,9 +698,6 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
   //the size of each tile in y direction
   const int yTileSize = playingScreenHeader -> getTrueYTileSize();
 
-  //circle used to draw a radius around the tower
-  sf::CircleShape radiusCircle;
-
   //the four components for a color
   int redComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Red"));
   int greenComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Green"));
@@ -680,7 +706,6 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
 
   //set the colors of the radius circle
   sf::Color color (redComponent, greenComponent, blueComponent, alphaComponent);
-  radiusCircle.setFillColor(color);
 
   //iterate through the towers/obstacles placed on the board
   for(auto iterator : towersPlaced){
@@ -708,9 +733,9 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //the bounding rectangle will give us the dimensions of the sprite
     sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
     //the x dimension of the box
-    int xDim = boundingBox.width;
+    float xDim = boundingBox.width;
     //the ydimension of the box
-    int yDim = boundingBox.height;
+    float yDim = boundingBox.height;
 
     //the scale in the x direction
     float xScale = (float) xTileSize / (float) xDim;
@@ -723,11 +748,17 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //set the position of the sprite to the top left of the rectangle
     currentSprite.setPosition(xPos, yPos);
 
-    //updates the coordinates of the tower in case it moved
-    //to always be the center of the tile it is placed at
-    current -> setXCoordinate((float)(xPos)+ (xDim)/2.0);
-    current -> setYCoordinate((float)(yPos) + (yDim)/2.0);
-
+    //updates the coordinates of the tower in case they have not been set to be
+    //the center of the tile it is placed on
+    if(!current->withinBounds(xPos, yPos, xDim*xScale, yDim*yScale)){
+      cout << "using scale " << xScale << " " << yScale << endl;
+      specialRectX = (float)(xPos)+ (xDim*xScale)/ 2.0;
+      specialRectY = (float)(yPos) + (yDim*yScale)/2.0;
+      specialRectXDim = 5;
+      specialRectYDim = 5;
+      current -> setXCoordinate((float)(xPos)+ (xDim*xScale)/ 2.0);
+      current -> setYCoordinate((float)(yPos) + (yDim*yScale)/2.0);
+    }
     //finally draw the sprite
     window.draw(currentSprite);
 
@@ -737,6 +768,9 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     }
     //if the radius of firing/spawning units is visible we draw it
     if(current -> isRadiusVisible()){
+      //circle used to draw a radius around the tower
+      sf::CircleShape radiusCircle = current -> getRadiusCircle();
+      radiusCircle.setFillColor(color);
       float radius = (float) current -> getRadius();
       radiusCircle.setRadius(radius);
       radiusCircle.setScale(xScale, yScale);
@@ -797,9 +831,9 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
     //the bounding rectangle will give us the dimensions of the sprite
     sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
     //the x dimension of the box
-    int xDim = boundingBox.width;
+    float xDim = boundingBox.width;
     //the ydimension of the box
-    int yDim = boundingBox.height;
+    float yDim = boundingBox.height;
 
     //the scaling used for the units so that they do not fill up an entire square
     float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
@@ -815,10 +849,6 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
 
     //set the position of the sprite to the top left of the rectangle
     currentSprite.setPosition(xPos, yPos);
-
-    //set the position of the actor to be the center of the bounding rectangle
-    current -> setXCoordinate((xPos+xDim)/2);
-    current -> setYCoordinate((yPos+yDim)/2);
 
     //finally draw the sprite
     window.draw(currentSprite);
@@ -844,7 +874,6 @@ void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
 
   //loop through all enemies on the board
   for(shared_ptr<ActorInterface> current : allProjectiles){
-
     //get the sprite to be drawn
     sf::Sprite currentSprite = current -> getSprite();
 
@@ -859,24 +888,24 @@ void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
     //the bounding rectangle will give us the dimensions of the sprite
     sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
     //the x dimension of the box
-    int xDim = boundingBox.width;
+    float xDim = boundingBox.width;
     //the ydimension of the box
-    int yDim = boundingBox.height;
+    float yDim = boundingBox.height;
+
+    //the scaling used for the projectiles so that they do not fill up an entire square
+    float projectileScaleX = textLoader -> getDouble(string("IDS_Projectile_Size_Scale_X"));
+    float projectileScaleY =  textLoader -> getDouble(string("IDS_Projectile_Size_Scale_Y"));
 
     //the scale in the x direction
-    float xScale = (float) xTileSize / (float) xDim;
+    float xScale = (float) xTileSize / ((float) xDim*projectileScaleX);
     //the scale in the y direction
-    float yScale = (float) yTileSize / (float) yDim;
+    float yScale = (float) yTileSize / ((float) yDim*projectileScaleY);
 
     //set the scale for the tower/obstalce to fill up the square
     currentSprite.setScale(xScale, yScale);
 
     //set the position of the sprite to the top left of the rectangle
     currentSprite.setPosition(xPos, yPos);
-
-    //set the position of the actor to be the center of the bounding rectangle
-    current -> setXCoordinate((xPos+xDim)/2);
-    current -> setYCoordinate((yPos+yDim)/2);
 
     //pass the scale of the screen to the header to modify its vector trajectory
     if(playingScreenHeader -> headerRecalculated()){

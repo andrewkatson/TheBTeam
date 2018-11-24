@@ -725,6 +725,10 @@
     <constant value = "4.0" id="IDS_Unit_Size_Scale_X"/>
     <constant value = "4.0" id="IDS_Unit_Size_Scale_Y"/>
 
+    <!--Projectile Scale-->
+    <constant value = "6.0" id="IDS_Projectile_Size_Scale_X"/>
+    <constant value = "6.0" id="IDS_Projectile_Size_Scale_Y"/>
+
     <!--Buy_Tower_Option Generation Constants-->
     <constant value=".2" id="IDS_STAT_MAX_SCALAR"/>
     <constant value="-.2" id="IDS_STAT_MIN_SCALAR"/>

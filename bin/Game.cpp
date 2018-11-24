@@ -62,6 +62,8 @@ void Game::initGame(sf::RenderWindow  &game){
   this -> userView = unique_ptr<UserView>(new UserView(eventManager, textLoader, gameLogic));
   //initialize the Computer View
   this -> compView = unique_ptr<CompView>(new CompView(eventManager, textLoader, gameLogic, userView->getHeader()));
+  //initalize the Computer View for the ai that is allied to the player
+  this -> allyCompView = unique_ptr<AllyCompView>(new AllyCompView(eventManager, textLoader, gameLogic, userView->getHeader()));
 }
 
 

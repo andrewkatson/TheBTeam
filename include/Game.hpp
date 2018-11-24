@@ -3,6 +3,7 @@
 #include "GameLogic.hpp"
 #include "UserView.hpp"
 #include "CompView.hpp"
+#include "AllyCompView.hpp"
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
 #include <SFML/Graphics.hpp>
@@ -21,6 +22,7 @@ shared_ptr<GameLogic> gameLogic;
 
 unique_ptr<UserView> userView;
 unique_ptr<CompView> compView;
+unique_ptr<AllyCompView> allyCompView;
 public:
   shared_ptr<TextLoader> textLoader;
   shared_ptr<TextureLoader> textureLoader;

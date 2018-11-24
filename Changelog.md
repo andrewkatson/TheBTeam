@@ -1,13 +1,15 @@
 [Unreleased]
 ###Added
 - ActorCreatedEvent,ActorCreatedEventData [@andrewkatson][https://github.com/andrewkatson]
+- AllyCompView to deal with tower attacking, allied unit attacking and projectile hits
 
 ###Changed
 - playing screen draws enemies to the screen [@andrewkatson][https://github.com/andrewkatson]
 - all range towers now have the capacity to create projectiles of their type when asked to attack
 - units scale properly so they do not appear as large as towers
 - projectiles have a vector of attack based on the coordinates of the unit they target \
-- clicking on a tower will show its attack/spawn radius in light blue 
+- clicking on a tower will show its attack/spawn radius in light blue
+- all projectiles face same way as eachother 
 
 
 [0.4.0] 2018-11-15

@@ -20,6 +20,10 @@ PlayingScreenHeader::PlayingScreenHeader(shared_ptr<EventManager> eventManager, 
   registerPersistentDelegates();
 }
 
+PlayingScreenHeader::~PlayingScreenHeader(){
+  this -> deregisterPersistentDelegates();
+}
+
 /*
  * Set up any objects that can be drawn
  */
@@ -691,6 +695,18 @@ void PlayingScreenHeader::registerPersistentDelegates(){
   EventType balanceChangeEventType = balanceChangeEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(balanceChangeDelegate, textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
+
+}
+
+/*
+ * Deregister the persistent event delegates
+ */
+void PlayingScreenHeader::deregisterPersistentDelegates(){
+  //make an event and get its type
+  BalanceChangeEvent balanceChangeEvent = BalanceChangeEvent();
+  EventType balanceChangeEventType = balanceChangeEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
 
 }
 

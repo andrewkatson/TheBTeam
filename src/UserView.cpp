@@ -15,7 +15,7 @@ UserView::UserView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
 }
 
 UserView::~UserView(){
-
+  this -> deregisterDelegates();
 }
 
 /*
@@ -51,6 +51,31 @@ void UserView::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_UVD_SC")),stateChangeEventType);
 }
+
+
+/*
+ * Deregister all event delegates for this class
+ */
+void UserView::deregisterDelegates(){
+  //make an event and get its type
+  KeyPressEvent keyPressEvent = KeyPressEvent();
+  EventType keyPressEventType = keyPressEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_UVD_KP")),keyPressEventType);
+
+  //make an event and get its type
+  MousePressEvent mousePressEvent = MousePressEvent();
+  EventType mousePressEventType = mousePressEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_UVD_MP")),mousePressEventType);
+
+  //make an event and get its type
+  StateChangeEvent stateChangeEvent = StateChangeEvent();
+  EventType stateChangeEventType = stateChangeEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_UVD_SC")),stateChangeEventType);
+}
+
 
 //TODO MOVE TO GAMESCREEN WHEN IT IS MADE
 /*

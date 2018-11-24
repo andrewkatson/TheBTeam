@@ -30,10 +30,21 @@ SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
    */
    this -> eventManager = eventManager;
    this -> textLoader = textLoader;
+   this -> registerDelegates();
 }
 
-//handle new event
-void SoundManager::delegateMethod(const EventInterface& event){}
+SoundManager::~SoundManager(){
+  this -> deregisterDelegates();
+}
+
+void SoundManager::registerDelegates(){
+
+}
+
+void SoundManager::deregisterDelegates(){
+
+}
+
 
 void SoundManager::playSound(int dex){
   sound_objs[dex].play();

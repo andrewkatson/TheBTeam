@@ -50,6 +50,7 @@ public:
   ~UserView();
 
   void registerDelegates();
+  void deregisterDelegates();
 
   void registerEvents();
 

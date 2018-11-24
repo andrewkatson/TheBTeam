@@ -5,9 +5,10 @@ BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
   this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(1,cafeteria::Elementary,5), textLoader));
   this -> eventManager = eventManager;
   this -> registerDelegates();
+}
 
-  //this->mapFactory -> generateMap();
-
+BoardManager::~BoardManager(){
+  this -> deregisterDelegates();
 }
 
 /*
@@ -33,6 +34,25 @@ void BoardManager::registerDelegates(){
   EventType towerRemoveEventType = towerRemoveEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(towerRemoveEventDelegate,
+  textLoader -> getString(string("IDS_BMD_TR")),towerRemoveEventType);
+}
+
+/*
+ * Deregister all the event delegates for the class
+ */
+void BoardManager::deregisterDelegates(){
+  //make an event and get its type
+  TowerCreationEvent towerCreationEvent = TowerCreationEvent();
+  EventType towerCreationEventType = towerCreationEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(
+  textLoader -> getString(string("IDS_BMD_TC")),towerCreationEventType);
+
+  //make an event and get its type
+  TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
+  EventType towerRemoveEventType = towerRemoveEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(
   textLoader -> getString(string("IDS_BMD_TR")),towerRemoveEventType);
 }
 

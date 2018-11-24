@@ -14,6 +14,10 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> registerDelegates();
 }
 
+MeleeTower::~MeleeTower(){
+  this -> deregisterDelegates();
+}
+
 /*
  * Register the delegate method for this class
  * with any events it needs to know about
@@ -27,6 +31,18 @@ void MeleeTower::registerDelegates(){
   EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_MT_AD")),actorDestroyedEventType);
+}
+
+/*
+ * Deregister the delegates methods for this class
+ */
+void MeleeTower::deregisterDelegates(){
+
+    //make an event and get its type
+    ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+    EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+    //deregister the delegate and its type
+    this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_MT_AD")),actorDestroyedEventType);
 }
 
 void MeleeTower::upgrade(){}

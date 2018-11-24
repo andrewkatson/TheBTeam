@@ -18,6 +18,10 @@ ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager, shar
   this -> registerDelegates();
 }
 
+ProjectileManager::~ProjectileManager(){
+  this -> deregisterDelegates();
+}
+
 /*
  * Register the delegate method for this class
  * with any events it needs to know about
@@ -31,6 +35,18 @@ void ProjectileManager::registerDelegates(){
   EventType actorCreatedEventType = actorCreatedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorCreatedDelegate, textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorCreatedEventType);
+}
+
+/*
+ * Deregister the delegate methods for this class
+ */
+void ProjectileManager::deregisterDelegates(){
+
+    //make an event and get its type
+    ActorCreatedEvent actorCreatedEvent = ActorCreatedEvent();
+    EventType actorCreatedEventType = actorCreatedEvent.getEventType();
+    //deregister the delegate and its type
+    this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorCreatedEventType);
 }
 
 /*

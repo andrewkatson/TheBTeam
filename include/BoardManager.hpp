@@ -63,8 +63,10 @@ public:
   void addUnit(shared_ptr<MeleeUnit> unit);
 
   BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+  ~BoardManager();
 
   void registerDelegates();
+  void deregisterDelegates();
 
   void newMap();
   void newMap(MapChoices * newCustomization);

@@ -62,10 +62,13 @@ protected:
   sf::FloatRect collisionBox;
 
   //The coordinates of the actor.
-  double x,y;
+  float x,y;
 
   //Row and column of the actor on the world grid.
   int row,col;
+
+  //the degree of error
+  const float e = 0.001;
 
 public:
 
@@ -123,11 +126,11 @@ public:
   /*
    * get the x coordinate of the actor
    */
-  double getXCoordinate(){return x;}
+  float getXCoordinate(){return x;}
   /*
    * get the y coordinate of the actor
    */
-  double getYCoordinate(){return y;}
+  float getYCoordinate(){return y;}
   /*
    * get the row of fthe actor
    */
@@ -139,11 +142,11 @@ public:
   /*
    * set the x coordinate of the actor
    */
-  void setXCoordinate(double x){this -> x = x;}
+  void setXCoordinate(float x){this -> x = x;}
   /*
    * set the y coordinate of the actor
    */
-  void setYCoordinate(double y){this -> y = y;}
+  void setYCoordinate(float y){this -> y = y;}
   /*
    * set the row of the actor
    */
@@ -163,6 +166,24 @@ public:
 
   int getArmorPenetration(){return this->armorPenetration;}
 
+  /*
+   * @param xPos: the x of the bounding box
+   * @param yPos: the y of the bounding box
+   * @param xDim: the x of the bounding box dimensions
+   * @param yDim: the y of the bounding box dimensions
+   * @return true if the passed dimensions are not signficantly far away from the current
+   * coordinates of the tower
+   */
+  bool withinBounds(float xPos, float yPos, float xDim, float yDim){
+    float desiredXCor = xPos + xDim/2.0;
+    float desiredYCor = yPos + yDim/2.0;
+    if (x <= desiredXCor + e && x >= desiredXCor - e){
+      if(y <= desiredYCor + e && y >= desiredYCor -e){
+        return true;
+      }
+    }
+    return false;
+  }
 };
 
 #endif

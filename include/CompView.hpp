@@ -3,6 +3,7 @@
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
 #include "GameLogic.hpp"
+#include "GameState.hpp"
 #include "PlayingScreenHeader.hpp"
 class CompView{
 private:

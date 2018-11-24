@@ -40,11 +40,13 @@ protected:
 
 public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+  ~MeleeTower();
   void update(float delta);
 
   void initSprite();
 
   void registerDelegates();
+  void deregisterDelegates();
 
   virtual void upgrade();
   virtual void setUpUnits();

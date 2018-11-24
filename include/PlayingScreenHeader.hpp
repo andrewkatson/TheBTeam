@@ -53,6 +53,8 @@ private:
 public:
 
   PlayingScreenHeader(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
+  ~PlayingScreenHeader();
+
 
   void initDrawingMaterials();
   void initBuyTowerButton();
@@ -72,6 +74,7 @@ public:
 
   void registerDelegates();
   void registerPersistentDelegates();
+  void deregisterPersistentDelegates();
   void deregisterDelegates();
 
   void handleKeyPress(const EventInterface& event);

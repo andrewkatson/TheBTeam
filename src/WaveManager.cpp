@@ -16,6 +16,19 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
   this -> textureLoader = textureLoader;
   this -> currentWaveNumber = 0;
   this -> setUpPossibleEnemies();
+  this -> registerDelegates();
+}
+
+WaveManager::~WaveManager(){
+  this -> deregisterDelegates();
+}
+
+void WaveManager::registerDelegates(){
+
+}
+
+void WaveManager::deregisterDelegates(){
+
 }
 
 
@@ -146,11 +159,6 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
   return result;
 }
 
-
-//handle events
-void WaveManager::delegateMethod(const EventInterface& event){
-
-}
 
 void WaveManager::startNextWave() {
   currentWaveNumber++;

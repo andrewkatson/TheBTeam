@@ -43,8 +43,9 @@ public:
     buffer.
    */
   SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
-
-  void delegateMethod(const EventInterface& event);
+  ~SoundManager();
+  void registerDelegates();
+  void deregisterDelegates();
 
   /*
     Play the sound stored at the given index in sound_objs.

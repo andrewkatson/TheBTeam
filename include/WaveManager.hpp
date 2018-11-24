@@ -94,6 +94,17 @@ public:
    * as well as waves to be spawned.
    */
   WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
+  ~WaveManager();
+
+  /*
+   * Register all event delegates for this class
+   */
+  void registerDelegates();
+
+  /*
+   * Deregister all event delegates for this class
+   */
+  void deregisterDelegates();
 
   /*
    * Setup the possible enemies that can spawn
@@ -133,8 +144,6 @@ public:
    * Populate the wave vector with a number of waves according to level.
    */
   void setupWaves(int difficulty);
-
-  void delegateMethod(const EventInterface& event);
 
   /*
    * Set the distance from exit for each path space on the current board. Should be set

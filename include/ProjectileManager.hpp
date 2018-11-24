@@ -32,11 +32,17 @@ public:
    * Constructor. Initialize the projectile vector
    */
   ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+  ~ProjectileManager();
 
   /*
    * Register delegate methods
    */
   void registerDelegates();
+
+  /*
+   * Deregister delegate methods
+   */
+  void deregisterDelegates();
 
   /*
    * Register events that the projectile manager needs to listen for

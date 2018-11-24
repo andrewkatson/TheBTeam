@@ -21,7 +21,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader));
   this -> registerEvents();
   this -> registerDelegates();
-  test = 2;
+  test = 5;
   this -> windowX = windowX;
   this -> windowY = windowY;
 }
@@ -48,6 +48,10 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
    EventType mapGeneratedEventType = mapGeneratedEvent.getEventType();
 
    this -> eventManager -> registerEvent(mapGeneratedEventType);
+ }
+
+ GameLogic::~GameLogic(){
+   this -> deregisterDelegates();
  }
 
 /*
@@ -82,25 +86,49 @@ void GameLogic::registerDelegates(){
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
 }
 
+/*
+ * Deregister all event delegates for this class
+ */
+void GameLogic::deregisterDelegates(){
+  //make an event and get its type
+  KeyPressEvent keyPressEvent = KeyPressEvent();
+  EventType keyPressEventType = keyPressEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GLD_KP")),keyPressEventType);
+
+  //make an event and get its type
+  MousePressEvent mousePressEvent = MousePressEvent();
+  EventType mousePressEventType = mousePressEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GLD_MP")),mousePressEventType);
+
+  //make an event and get its type
+  StateChangeEvent stateChangeEvent = StateChangeEvent();
+  EventType stateChangeEventType = stateChangeEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
+}
+
 
 //Called once every loop. Update according to elapsed time.
 void GameLogic::updateGameLogic(float deltaS){
   this -> eventManager -> processEvent();
-
+  //cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){
     int row = 3;
     int col = 3;
-    if(test == 2){
+    if(test == 5){
       //creates a unit for testing as well
       shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
 
-      //add to the current wave of spawned
-      waveManager -> spawnedCurrentWave.insert({fryGuy -> getID(), fryGuy});
+      fryID = fryGuy -> getID();
 
       //set the x and y coordinates
       fryGuy -> setXCoordinate(3 * gridX);
       fryGuy -> setYCoordinate(2 * gridY);
 
+      //add to the current wave of spawned
+      (waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
 
       vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 
@@ -109,6 +137,7 @@ void GameLogic::updateGameLogic(float deltaS){
         string towerType = tower -> getType();
         if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
           createATower(row,col,towerType);
+          test++;
         }
         else if(canBuy(towerType) && boardManager -> isObstacle(row,col)){
           removeATower(row,col);
@@ -116,15 +145,42 @@ void GameLogic::updateGameLogic(float deltaS){
           test -=2;
         }
       }
+
     }
-    if(test == 4){
+    if(test == 2){
+
+      //get all the spawned units
+      unordered_map<long long, shared_ptr<MeleeUnit>> spawnedWave = getSpawnedEnemyUnits();
+
+      cout << "size " << spawnedWave.size() << endl;
+      cout << "fry id now " << fryID << endl;
+
+      //get our fry guy
+      shared_ptr<MeleeUnit> fryGuy = spawnedWave.at(fryID);
+
+      //get the tower
+      unordered_map<int, shared_ptr<TowerInterface>> towers = towerManager -> getTowersPlaced();
+
+      cout << "tower num " << towers.size() << endl;
+      cout << "check placed " << row*getCols() + col << endl;
+
+      shared_ptr<TowerInterface> towerToFire = towers.at(row*getCols() + col);
+
+      towerToFire -> attack(fryGuy);
+
+      cout << "where is this tower " << endl;
+      cout << towerToFire -> getXCoordinate() << endl;
+      cout << towerToFire -> getYCoordinate() << endl;
+
+    }
+    if(test == 10){
       cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
       cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
       if(boardManager -> isTower(row, col)){
         removeATower(row,col);
       }
     }
-    test--;
+    test-=2;
   }
 
 }

@@ -42,16 +42,20 @@ private:
   int rowSelected;
   //the current col selected
   int colSelected;
-
-
+  sf::RectangleShape rect;
+  float specialRectX;
+  float specialRectY;
+  float specialRectXDim;
+  float specialRectYDim;
   //testing variable TODO remove when finished rendering
   bool somethingChanged;
 
 public:
   PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic, int windowX, int windowY);
-
+  ~PlayingScreen();
   void registerDelegates();
   void registerPersistentDelegates();
+  void deregisterPersistentDelegates();
   void deregisterDelegates();
   void initDrawingMaterials();
   void initBuyTowerButton();

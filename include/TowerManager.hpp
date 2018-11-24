@@ -80,6 +80,7 @@ typedef pair<int,int> intPair;
 
 public:
   TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
+  ~TowerManager();
 
   void setDimensions(int xDim, int yDim);
   void setGridDimensions(int xGrid, int yGrid);
@@ -106,6 +107,7 @@ public:
 
 private:
   void registerDelegates();
+  void deregisterDelegates();
 
   void populateTowersToChoose();
   void populateObstacles();

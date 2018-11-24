@@ -52,8 +52,12 @@ protected:
   int yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
+  //the circle shape object to draw the radius
+  sf::CircleShape radiusCircle;
   //whether the radius of shooting/spawning units is visible
   bool radiusVisible;
+  //the degree of error
+  const float e = 0.1;
 
 public:
   //boolean used to tell if this is a melee tower without casting
@@ -87,6 +91,26 @@ public:
   int getRadius(){return radius;}
   bool isRadiusVisible(){return radiusVisible;}
   void flipRadiusVisibility(){radiusVisible = radiusVisible==true ? false : true;}
+  sf::CircleShape& getRadiusCircle(){return radiusCircle;}
+
+  /*
+   * @param xPos: the x of the bounding box
+   * @param yPos: the y of the bounding box
+   * @param xDim: the x of the bounding box dimensions
+   * @param yDim: the y of the bounding box dimensions
+   * @return true if the passed dimensions are not signficantly far away from the current
+   * coordinates of the tower
+   */
+  bool withinBounds(float xPos, float yPos, float xDim, float yDim){
+    float desiredXCor = xPos + xDim/2.0;
+    float desiredYCor = yPos + yDim/2.0;
+    if (xCoordinate <= desiredXCor + e && xCoordinate >= desiredXCor - e){
+      if(yCoordinate <= desiredYCor + e && yCoordinate >= desiredYCor -e){
+        return true;
+      }
+    }
+    return false;
+  }
 
 };
 

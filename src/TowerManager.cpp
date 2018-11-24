@@ -13,6 +13,10 @@ TowerManager::TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
   this -> populateTowersToChoose();
 }
 
+TowerManager::~TowerManager(){
+  this -> deregisterDelegates();
+}
+
 /*
  * Set the x dimension (cols)
  * and the y dimension (rows)
@@ -52,8 +56,23 @@ void TowerManager::registerDelegates(){
   EventType towerRemoveEventType = towerRemoveEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(towerRemoveEventDelegate, textLoader -> getString(string("IDS_TMD_TR")),towerRemoveEventType);
+}
 
+/*
+ * Deregister all the event delegates for this class
+ */
+void TowerManager::deregisterDelegates(){
+  //make an event and get its type
+  TowerCreationEvent towerCreationEvent = TowerCreationEvent();
+  EventType towerCreationEventType = towerCreationEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_TMD_TC")),towerCreationEventType);
 
+  //make an event and get its type
+  TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
+  EventType towerRemoveEventType = towerRemoveEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_TMD_TR")),towerRemoveEventType);
 }
 
 /*
