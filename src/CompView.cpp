@@ -38,6 +38,15 @@ void CompView::moveUnits(float deltaS){
       currentUnit->setRow(newCol);
     }//make sure the col is up to date
 
+
+    if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
+      shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),deltaS);
+      shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()/4,deltaS);
+
+      this -> eventManager -> queueEvent(actorDestroyed);
+      this -> eventManager -> queueEvent(hitpointsLost);
+    }
+
     int r=currentUnit->getRow();
     int c=currentUnit->getCol();
 
