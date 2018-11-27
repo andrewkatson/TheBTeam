@@ -233,13 +233,10 @@ void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<
 map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions){
   map<int,vector<intPair>> result;
 
-  int min=distancesFromEntryPositions.begin()->first;
-
   int max=(--distancesFromEntryPositions.end())->first;
 
   for( auto it = distancesFromEntryPositions.begin(); it != distancesFromEntryPositions.end(); it++ )
   {
-    int oldkey=it->first;
     int newkey=max-(it->first);
 
     result[newkey]=it->second;
@@ -266,5 +263,7 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
 
   long long actorID = actorDestroyedEventData -> actorID;//get the dead actor's ID
 
-  spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
+  if(spawnedCurrentWave.count(actorID)) {
+    spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
+  }
 }
