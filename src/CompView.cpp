@@ -25,6 +25,7 @@ void CompView::moveUnits(float deltaS){
   //	and move that direction
   /*
   vector<vector<int>> dists=gameLogic->getDistances();
+  vector<vector<int>> aboveFloor=gameLogic->getAboveFloor();
 
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
     shared_ptr<MeleeUnit> currentUnit= iterator.second;
@@ -34,7 +35,7 @@ void CompView::moveUnits(float deltaS){
       int newRow=currentUnit->getYCoordinate()/playingScreenHeader->getTrueYTileSize();
       currentUnit->setRow(newRow);
       currentUnit->setRow(newCol);
-    }//make sure the col is up to date
+    }//make sure the tile is up to date
 
 
     if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
@@ -50,26 +51,13 @@ void CompView::moveUnits(float deltaS){
 
       std::map<int, pair<int, int>> dists_coords;
 
-      pair<int, int> relative_position;
+      vector<pair<int, int>> relative_positions={make_pair(0,1),make_pair(1,0),make_pair(0,-1),make_pair(-1,0)};
 
-      relative_position.first = -1;
-      relative_position.second = 0;
-
-      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
-
-      relative_position.first = 1;
-
-      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
-
-      relative_position.first = 0;
-      relative_position.second = 1;
-
-      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
-
-      relative_position.first = 0;
-      relative_position.second = -1;
-
-      dists_coords[dists[r + relative_position.first][c + relative_position.second]] = relative_position;
+      for(auto dir : relative_positions){
+        if(aboveFloor[r + dir.first][c + dir.second] > 0) {
+          dists_coords[dists[r + dir.first][c + dir.second]] = dir;
+        }
+      }
 
 
       pair<int, int> new_direction = dists_coords.begin()->second; //get the one with the shortest distance

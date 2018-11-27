@@ -14,9 +14,8 @@
   a projectile explosion (handled by gamelogic) and then a actor destroyed event is made
 - game has a proper delta function for speeds 
 - CompView controls enemy melee units and sets their direction to move toward the map exit [@jeremyelkayam][https://github.com/jeremyelkayam]
+ - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.
- - Event to decrease user's HP
- - Event to remove actor from the spawned units map
 
  ###Removed
  - all scaling from the header! [@andrewkatson][https://github.com/andrewkatson]
