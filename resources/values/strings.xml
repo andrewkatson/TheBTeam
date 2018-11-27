@@ -200,6 +200,7 @@
     <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD_KP"> </string>
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
     <string value="GAMELOGICHANDLESTATECHANGE" id="IDS_GLD_SC"> </string>
+    <string value="GameLogic_Projectile_Explosion" id="IDS_GameLogic_Delegate_Projectile_Explosion"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
     <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>

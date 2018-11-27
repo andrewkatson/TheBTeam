@@ -29,5 +29,9 @@
  public:
    AllyCompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,shared_ptr<PlayingScreenHeader> playingScreenHeader);
 
-   void updateCompView(float deltaS);
+   void updateAllyCompView(float deltaS);
+
+   void updateProjectiles(float deltaS);
+
+   void moveAllyUnits(float deltaS);
  };

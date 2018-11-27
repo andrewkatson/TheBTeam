@@ -11,7 +11,16 @@
 ActorInterface::ActorInterface(){
   //the id is the address of the current object
   id = (long long) this;
+
+  //set the sprite to face roughly in the direction the textures are drawn  in
+  //sprite.setRotation(135.0f + 90.f);
+  //rotate(225.0f);
 }
+
+void ActorInterface::rotate(float degrees){
+  sprite.rotate(degrees);
+}
+
 
 void ActorInterface::setWorld(shared_ptr<b2World> world){
   //Box2D Info

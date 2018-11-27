@@ -23,8 +23,7 @@ int main(){
   while(game.isOpen())
   {
     sf::Time timeDelta = gameClock.restart();
-    float deltaS = timeDelta.asSeconds() * 2000;
-
+    float deltaS = timeDelta.asSeconds();
     foodFight -> updateGame(deltaS, game);
 
   }
@@ -71,5 +70,6 @@ void Game::updateGame(float deltaS,sf::RenderWindow &game){
   this -> gameLogic -> updateGameLogic(deltaS);
   this -> userView -> updateUserView( deltaS, game);
   this -> compView -> updateCompView(deltaS);
+  this -> allyCompView -> updateAllyCompView(deltaS);
 
 }

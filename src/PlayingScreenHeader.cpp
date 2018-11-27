@@ -17,6 +17,7 @@ PlayingScreenHeader::PlayingScreenHeader(shared_ptr<EventManager> eventManager, 
   ySize = getMaximumY();
   rowSelected = 0;
   colSelected = 0;
+  timesHeaderRecalculated = 0;
   registerPersistentDelegates();
 }
 
@@ -1016,15 +1017,7 @@ float PlayingScreenHeader::getTrueXTileSize(){
  * not the header is visible
  */
 float PlayingScreenHeader::getTrueYTileSize(){
-  if(!visible){
-    return gameLogic -> getTileYSize();
-  }
-  else{
-    int windowY = gameLogic -> getWindowY();
-    int newWindowY = windowY - ySize;
-    float yTileSize = newWindowY / gameLogic->getRows();
-    return yTileSize;
-  }
+  return gameLogic -> getTileYSize();
 }
 
 /*
@@ -1057,6 +1050,7 @@ void PlayingScreenHeader::draw(sf::RenderWindow &window){
     ySize = getMaximumY();
     resetButtons();
     recaculateHeader = false;
+    timesHeaderRecalculated++;
   }
 
   //handle the buy tower and sell tower buttons separately

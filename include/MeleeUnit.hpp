@@ -47,6 +47,11 @@ public:
 
   void update(float delta);
 
+  /*
+   * Set the coordinates of the actor to refer to its center
+   */
+  void setToCenter();
+
   void initSprite();
 
   int getLunchMoney() const;

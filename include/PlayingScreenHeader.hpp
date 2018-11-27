@@ -50,6 +50,8 @@ private:
   int windowY;
   //true when a button is made visible or invisible (will cause an auto recalculation of the header size)
   bool recaculateHeader;
+  //a counter for the number of times the header has been recalculated (used to synch with screen)
+  int timesHeaderRecalculated;
 public:
 
   PlayingScreenHeader(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
@@ -92,6 +94,7 @@ public:
   float getXOffSet();
   float getYOffSet();
   bool headerRecalculated();
+  int getHeaderRecalculatedTimes(){return timesHeaderRecalculated;}
 
   void setSelectedTile(int row, int col);
 

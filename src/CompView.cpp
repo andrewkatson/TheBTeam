@@ -23,11 +23,10 @@ void CompView::moveUnits(float deltaS){
 
   // Poll the actor class for its speed and position on map, use the shortest distance >= 0
   //	and move that direction
-
+  /*
   vector<vector<int>> dists=gameLogic->getDistances();
 
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
-
     shared_ptr<MeleeUnit> currentUnit= iterator.second;
 
     if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getXCoordinate())){
@@ -83,6 +82,7 @@ void CompView::moveUnits(float deltaS){
       currentUnit->update(deltaS);
     }
   }
+  */
 }
 
 

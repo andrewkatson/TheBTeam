@@ -11,7 +11,6 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> s_elapsed = 0;
-  this ->current_sprite = 0;
 }
 
 void MeleeUnit::update(float delta){
@@ -45,6 +44,13 @@ void MeleeUnit::update(float delta){
  */
 void MeleeUnit::initSprite(){
   (this->sprite).setTexture(textures -> at(current_sprite));
+}
+
+
+void MeleeUnit::setToCenter(){
+  sf::FloatRect boundsOfSprite = sprite.getLocalBounds();
+  sprite.setOrigin(boundsOfSprite.left + (boundsOfSprite.width)/2.0,
+  boundsOfSprite.top + (boundsOfSprite.height)/2.0);
 }
 
 void MeleeUnit::updateHitpoints(int damage){

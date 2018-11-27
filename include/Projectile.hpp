@@ -10,6 +10,12 @@
 #define CSCI437_PROJECTILE_HPP
 
 #include "ActorInterface.hpp"
+#include "Events/ProjectileExplosionEvent.hpp"
+#include <chrono>
+
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::nanoseconds;
 
 class Projectile : public ActorInterface {
 
@@ -30,9 +36,16 @@ protected:
 
   //the unique identifier for the projectile when it is spawned
   int projectileID;
+  //The index of the sprite that the actor is currently using.
+  int current_sprite;
 
 public:
   Projectile(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
+
+  /*
+   * Set the coordinates of the actor to refer to its center
+   */
+  void setToCenter();
 
   void initSprite();
 
@@ -88,6 +101,17 @@ public:
   int getAreaOfEffect(){return radius;}
 
   void update(float delta);
+
+  /*
+   * @return true if the projectile has hit the target
+   */
+  bool hasHitTarget();
+
+  /*
+   * If the projectile has hit the target we make an event for the projectile's
+   * explosion that will be handeled by the gamelogic
+   */
+  void handleTargetHit();
 
 };
 

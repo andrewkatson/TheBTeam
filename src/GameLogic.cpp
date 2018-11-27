@@ -52,6 +52,18 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
    EventType mapGeneratedEventType = mapGeneratedEvent.getEventType();
 
    this -> eventManager -> registerEvent(mapGeneratedEventType);
+
+   //make a projectile explosion event, get its type, and register it
+   ProjectileExplosionEvent projectileExplosionEvent = ProjectileExplosionEvent();
+   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
+
+   this -> eventManager -> registerEvent(projectileExplosionEventType);
+
+   //make a actor destroyed event, get its type, and register it
+   ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+   EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+
+   this -> eventManager -> registerEvent(actorDestroyedEventType);
  }
 
  GameLogic::~GameLogic(){
@@ -89,6 +101,14 @@ void GameLogic::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
 
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate projectileExplosionEventDelegate = std::bind(&GameLogic::handleProjectileExplosion, this, _1);
+
+  //make an event and get its type
+  ProjectileExplosionEvent projectileExplosionEvent = ProjectileExplosionEvent();
+  EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(projectileExplosionEventDelegate, textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
 }
 
 /*
@@ -112,6 +132,12 @@ void GameLogic::deregisterDelegates(){
   EventType stateChangeEventType = stateChangeEvent.getEventType();
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
+
+  //make an event and get its type
+  ProjectileExplosionEvent projectileExplosionEvent = ProjectileExplosionEvent();
+  EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
 }
 
 
@@ -153,7 +179,7 @@ void GameLogic::updateGameLogic(float deltaS){
 
     }
     if(test == 2){
-
+      /*
       //get all the spawned units
       unordered_map<long long, shared_ptr<MeleeUnit>> spawnedWave = getSpawnedEnemyUnits();
 
@@ -162,6 +188,9 @@ void GameLogic::updateGameLogic(float deltaS){
 
       //get our fry guy
       shared_ptr<MeleeUnit> fryGuy = spawnedWave.at(fryID);
+
+      //rotate fry
+      sf::Sprite sp = fryGuy -> getSprite();
 
       //get the tower
       unordered_map<int, shared_ptr<TowerInterface>> towers = towerManager -> getTowersPlaced();
@@ -176,7 +205,7 @@ void GameLogic::updateGameLogic(float deltaS){
       cout << "where is this tower " << endl;
       cout << towerToFire -> getXCoordinate() << endl;
       cout << towerToFire -> getYCoordinate() << endl;
-
+      */
     }
     if(test == 10){
       cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
@@ -268,6 +297,40 @@ void GameLogic::handleStateChange(const EventInterface& event){
     makeNewMap();
   }
 }
+
+/*
+ * Handle a projectile explosion
+ * @param event: the event of the projectile explosion
+ */
+ void GameLogic::handleProjectileExplosion(const EventInterface& event){
+   /*
+    * cast the EventInterface reference to a CONST pointer to the
+    * ProjectileExplosionEvent type which allows us to access variables and methods
+    * specific to ProjectileExplosionEvent
+    */
+   const ProjectileExplosionEvent* peEvent = static_cast<const ProjectileExplosionEvent*>(&event);
+   /*
+    * cast the "data" (a EventDataInterface) to a ProjectileExplosionEventData type
+    * the .get() is because data is a unique_ptr and we need to grab the
+    * raw pointer inside of it for this
+    */
+   ProjectileExplosionEventData* peEventData = static_cast<ProjectileExplosionEventData*>((peEvent -> data).get());
+   //get id for the projectile that exploded
+   long long projectileExplodedID = peEventData -> projectileID;
+
+   //TODO check for collisions with this projectile
+
+   //now create an event to indicate the projectile was destroyed
+   //the time object of the class
+   auto now = high_resolution_clock::now();
+   //the actual count in nanoseconds for the time
+   auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+   //make event
+   shared_ptr<EventInterface> projectileDestroyed = make_shared<ActorDestroyedEvent>(projectileExplodedID, nowInNano);
+
+   this -> eventManager -> queueEvent(projectileDestroyed);
+ }
 
 /*
  * Have a new map generated (callable by the UserView)
@@ -678,6 +741,6 @@ const unordered_map<long long,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemy
 /*
  * @return the vector with all the currently fired projectiles
  */
-vector<shared_ptr<ActorInterface>>& GameLogic::getFiredProjectiles(){
+unordered_map<long long, shared_ptr<ActorInterface>>& GameLogic::getFiredProjectiles(){
   return projectileManager -> getAllProjectiles();
 }
