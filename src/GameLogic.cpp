@@ -109,6 +109,7 @@ void GameLogic::registerDelegates(){
   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(projectileExplosionEventDelegate, textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
+
 }
 
 /*
@@ -355,7 +356,7 @@ void GameLogic::handleStateChange(const EventInterface& event){
    //the actual count in nanoseconds for the time
    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
-   shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano);
+   shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano,boardManager->getDistances(),boardManager->getEntryPositions());
 
    this -> eventManager -> queueEvent(mapGenerated);
 
