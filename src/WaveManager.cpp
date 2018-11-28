@@ -70,7 +70,7 @@ void WaveManager::setUpPossibleEnemies(){
   enemies.push_back(fatKid);
 }
 
-void WaveManager::setupWaves(int difficulty){
+void WaveManager::setupWaves(){
 
   currentWaveNumber = 0;
 
@@ -91,13 +91,13 @@ void WaveManager::setupWaves(int difficulty){
 }
 
 
-queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumber) {
+queue<shared_ptr<MeleeUnit>> WaveManager::makeWave() {
   assert(!distances.empty() && "Distances must be initialized AND UPDATED EVERY TIME THE MAP CHANGES.");
   assert(!entryPositions.empty());
 
   queue<shared_ptr<MeleeUnit>>result;
 
-  double avg=difficulty*waveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
+  double avg=difficulty*currentWaveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
 
   std::normal_distribution<double> wave_weight_rng (avg,avg*.4);
 
@@ -218,6 +218,11 @@ void WaveManager::spawnNextUnit() {
 }
 
 void WaveManager::update(float deltaS) {
+  // if there are no waves left, make a LevelChangeEvent for a new level
+  // if there are waves left but no enemies left do nothing
+  //
+
+
   timeElapsed+=deltaS;
   if(timeElapsed > textLoader->getDouble("IDS_SECONDS_BETWEEN_ENEMY_SPAWNS") && !currentWave.empty())
   {
@@ -313,7 +318,8 @@ void WaveManager::handleLevelChanged(const EventInterface& event){
   auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
 
   level=levelChangedEventData->level;
-  //setupWaves();
+  setupWaves();
+  currentWaveNumber=0;
 }
 
 void WaveManager::handleDiffChanged(const EventInterface& event){

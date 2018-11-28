@@ -84,7 +84,7 @@ public:
   /*
    * @return a wave filled with enemies according to the specifications in the class (level, wave number)
    */
-  queue<shared_ptr<MeleeUnit>> makeWave(int difficulty, int waveNumber);
+  queue<shared_ptr<MeleeUnit>> makeWave();
 
   /*
    * Create and return a vector listing the distance from exit for every entry point in the entrypoints
@@ -156,7 +156,7 @@ public:
   /*
    * Populate the wave vector with a number of waves according to level.
    */
-  void setupWaves(int difficulty);
+  void setupWaves();
 
   /*
    * Set the distance from exit for each path space on the current board. Should be set
