@@ -14,6 +14,7 @@
   <!--General Button-->
   <constant value="10" id="IDS_Button_Position_Padding"> </constant>
   <constant value="15" id="IDS_Button_Size_Padding"> </constant>
+  <constant value="10" id="IDS_Button_Radius"> </constant>
 
   <!--Playing Screen Header-->
   <constant value="5" id="IDS_Playing_Screen_Header_Padding_Y"> </constant>
@@ -369,6 +370,13 @@
   <constant value="1" id="IDS_Buy_Tower_Text_Outline_Thickness"> </constant>
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
+
+  <!--Rally Flag Icon Circle Shape -->
+  <constant value="240" id="IDS_Rally_Flag_Outline_Color_Red"> </constant>
+  <constant value="240" id="IDS_Rally_Flag_Outline_Color_Green"> </constant>
+  <constant value="39" id="IDS_Rally_Flag_Outline_Color_Blue"> </constant>
+  <constant value="255" id="IDS_Rally_Flag_Outline_Color_Alpha"> </constant>
+  <constant value="2" id="IDS_Rally_Flag_Outline_Thickness"> </constant>
 
   <!--Sell Tower Button-->
   <!--Sell Tower Button Colors -->

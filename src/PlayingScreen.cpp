@@ -2,7 +2,9 @@
 
 
 
-PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,  int windowX, int windowY) : mt(std::random_device()()){
+PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,
+   shared_ptr<GameLogic> gameLogic,
+  int windowX, int windowY) : mt(std::random_device()()){
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> eventManager = eventManager;
@@ -157,7 +159,34 @@ void PlayingScreen::deregisterDelegates(){
  * Initialize all the things used for drawing (shapes, fonts)
  */
 void PlayingScreen::initDrawingMaterials(){
+  initRallyPointButton();
+}
 
+/*
+ * Initialize the rally point button
+ */
+void PlayingScreen::initRallyPointButton(){
+  bool makeItCircle = true;
+  //make a circular button for the rally point for any tower
+  this -> rallyPointChange = unique_ptr<Button>(new Button(windowX, windowY, 0.0, 0.0, textLoader,
+     textLoader->getString("IDS_Rally_Flag_Icon"), makeItCircle));
+  //set the radius of the circle to be its initial size
+  rallyPointChange -> setCircleRadius(textLoader->getInteger("IDS_Button_Radius"));
+  //set the origin of the circle shape to be its center
+  rallyPointChange -> setOrigin(textLoader->getInteger("IDS_Button_Radius"), textLoader->getInteger("IDS_Button_Radius"));
+
+  //load in the color components of the button's color
+  float redComponent = textLoader -> getInteger(string("IDS_Rally_Flag_Outline_Color_Red"));
+  float greenComponent = textLoader -> getInteger(string("IDS_Rally_Flag_Outline_Color_Green"));
+  float blueComponent = textLoader -> getInteger(string("IDS_Rally_Flag_Outline_Color_Blue"));
+  float alphaComponent = textLoader -> getInteger(string("IDS_Rally_Flag_Outline_Color_Alpha"));
+  //set the outline color for the rally point button
+  rallyPointChange -> setOutlineColor(redComponent, greenComponent, blueComponent, alphaComponent);
+
+  //set the outline color thickness
+  rallyPointChange -> setOutlineThickness(textLoader->getInteger(string("IDS_Rally_Flag_Outline_Thickness")));
+  //make it initially invisible
+  rallyPointChange -> flipVisibility();
 }
 
 /*
@@ -370,9 +399,9 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
 
   //get the xposition
-  float xPos = mpEventData -> x - playingScreenHeader -> getXOffSet();
+  float xPos = mpEventData -> x;
   //get the y position
-  float yPos = mpEventData -> y - playingScreenHeader -> getYOffSet();
+  float yPos = mpEventData -> y;
 
   //get the size of a tile in the x
   float xTileSize = playingScreenHeader -> getTrueXTileSize();
@@ -384,6 +413,47 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   //what col is being clicked
   int col = (int) xPos / xTileSize;
 
+  //if we have clicked the rally point flag icon
+  if(rallyPointChange -> isCurrentlyVisible()){
+    if(rallyPointChange -> isSelected(xPos, yPos)){
+      //get the currently selected tower (if the rally flag is visible a tower must be selected)
+      const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+      int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+      shared_ptr<TowerInterface> tower = towers.at(combinedRowCol);
+      //check that it is within the bounds of the radius circle of the tower
+      //if it is not then we cannot click the rally point flag
+      if(clickWithinRange(xPos, yPos,tower)){
+        rallyPointChange -> clickButton();
+      }
+      else{
+        return;
+      }
+
+      if(rallyPointChange -> isButtonClicked()){
+        //we want the header to ignore mouse presses when we have selected the flag icon
+        playingScreenHeader -> flipClickCheck();
+      }
+      else{
+        //if we have clicked it for a second time (thus unclick) and it was in bounds
+        //then we reset the rally point for the tower
+        MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+        meleeTower->resetRallyPoint(xPos,yPos);
+        //allow the header to check again
+        playingScreenHeader -> flipClickCheck();
+        //make sure that the flag is not visible
+        if(rallyPointChange -> isCurrentlyVisible()){
+          rallyPointChange -> flipVisibility();
+        }
+        //make sure it is unclicked
+        if(rallyPointChange -> isButtonClicked()){
+          rallyPointChange -> clickButton();
+        }
+      }
+      //if we click the rally point flag we do not continue as normal
+      return;
+    }
+  }
+
   //if the row and col are the same as the last click
   if(row == rowSelected && col == colSelected){
     if(gameLogic -> isTower (row,col)){
@@ -393,7 +463,6 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
       towerToSetVisibility -> flipRadiusVisibility();
     }
   }
-
   //otherwise reset the pair after we check if we were just clicking on a tower
   //if so flip its visible radius off
   else{
@@ -408,6 +477,45 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
     rowSelected = row;
     colSelected = col;
   }
+}
+
+/*
+ * @return whether the passed positions are within the towers radius
+ */
+bool PlayingScreen::clickWithinRange(float mouseX, float mouseY, shared_ptr<TowerInterface> tower){
+  //the size of each tile in x direction
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //the size of each tile in y direction
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //get the sprite to be drawn
+  sf::Sprite currentSprite = tower -> getSprite();
+
+  //the bounding rectangle will give us the dimensions of the sprite
+  sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+  //the x dimension of the box
+  float xDim = boundingBox.width;
+  //the ydimension of the box
+  float yDim = boundingBox.height;
+
+  //the x and y position of the tower
+  float towerX = tower -> getXCoordinate();
+  float towerY = tower -> getYCoordinate();
+
+  //the scale in the x direction
+  float xScale = (float) xTileSize / (float) xDim;
+  //the scale in the y direction
+  float yScale = (float) yTileSize / (float) yDim;
+
+  //the radius of the tower's effect area (either respawn or shooting range)
+  float radius = tower -> getRadius();
+
+  if(mouseX >= towerX - radius*xScale && mouseX <= towerX + radius*xScale){
+    if(mouseY >= towerY - radius*yScale && mouseY <= towerY + radius*yScale){
+      return true;
+    }
+  }
+  return false;
 }
 
 /*
@@ -443,6 +551,7 @@ void PlayingScreen::handleStateChange(const EventInterface& event){
 
 
 void PlayingScreen::draw(sf::RenderWindow &window){
+
 
   //initlaize the color shift vectors
   //if we have not or this is a new board
@@ -672,9 +781,9 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
   const int cols = gameLogic->getCols();
 
   //the size of each tile in x direction
-  const int xTileSize = playingScreenHeader -> getTrueXTileSize();
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
-  const int yTileSize = playingScreenHeader -> getTrueYTileSize();
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
 
   //the four components for a color
   int redComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Red"));
@@ -712,6 +821,10 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //the scale in the y direction
     float yScale = (float) yTileSize / (float) yDim;
 
+    //keep the tower's scale updated
+    current -> setXScale(xScale);
+    current -> setYScale(yScale);
+
     //the x and y position of this rectangle
     float xPos = col * xTileSize;
     float yPos = row * yTileSize;
@@ -730,16 +843,7 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     }
     //if the radius of firing/spawning units is visible we draw it
     if(current -> isRadiusVisible()){
-      //circle used to draw a radius around the tower
-      sf::CircleShape radiusCircle = current -> getRadiusCircle();
-      radiusCircle.setFillColor(color);
-      float radius = (float) current -> getRadius();
-      radiusCircle.setRadius(radius);
-      radiusCircle.setScale(xScale, yScale);
-      //reset the origin so any position set refers to the center of the circle
-      radiusCircle.setOrigin(radius, radius);
-      radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
-      window.draw(radiusCircle);
+      drawTowerRadius(current,window, xScale, yScale, color);
     }
   }
 }
@@ -755,6 +859,52 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::Re
 
 
 /*
+ * Draw the semi-transparent circle around the tower indicating its effect radius
+ * and if this is a melee tower it will draw a button that allows us to change the rally point
+ * @param tower: the tower with the radius
+ * @param window: the window being drawn on
+ * @param xScale: the scale in the x direction
+ * @param yScale: the scale in the y direciton
+ * @param color: the color used for all radius circles
+ */
+ void PlayingScreen::drawTowerRadius(shared_ptr<TowerInterface> tower, sf::RenderWindow& window, float xScale, float yScale, sf::Color color){
+   //circle used to draw a radius around the tower
+   sf::CircleShape radiusCircle = tower -> getRadiusCircle();
+   radiusCircle.setFillColor(color);
+   float radius = (float) tower -> getRadius();
+   radiusCircle.setRadius(radius);
+   radiusCircle.setScale(xScale, yScale);
+   //reset the origin so any position set refers to the center of the circle
+   radiusCircle.setOrigin(radius, radius);
+   radiusCircle.setPosition(tower -> getXCoordinate(), tower->getYCoordinate());
+   window.draw(radiusCircle);
+
+   //if the tower is a melee tower we will drawn a circle that lets us change its rally point
+   if(tower -> isMelee){
+     //set the button to visible if it is not
+     if(!(rallyPointChange -> isCurrentlyVisible())){
+       rallyPointChange -> flipVisibility();
+     }
+
+     MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+     if (rallyPointChange -> isButtonClicked()){
+       sf::Vector2i mousePos = mouse.getPosition(window);
+
+       rallyPointChange -> setButtonPosition(mousePos.x, mousePos.y);
+     }
+     else{
+       rallyPointChange -> setButtonPosition(meleeTower->getRallyX(), meleeTower->getRallyY());
+     }
+
+     //scale the button
+     rallyPointChange -> setButtonScale(xScale, yScale);
+
+     rallyPointChange -> draw(window);
+   }
+ }
+
+
+/*
  * Draw all the enemy units on the screen
  * @param window: the game window to draw on
  */
@@ -767,9 +917,9 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
   const int cols = gameLogic->getCols();
 
   //the size of each tile in x direction
-  const int xTileSize = playingScreenHeader -> getTrueXTileSize();
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
-  const int yTileSize = playingScreenHeader -> getTrueYTileSize();
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
 
   //loop through all enemies on the board
   for(auto iterator : allEnemyUnits){
@@ -826,9 +976,9 @@ void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
   const int cols = gameLogic->getCols();
 
   //the size of each tile in x direction
-  const int xTileSize = playingScreenHeader -> getTrueXTileSize();
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
-  const int yTileSize = playingScreenHeader -> getTrueYTileSize();
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
 
   //loop through all enemies on the board
   for(auto it : allProjectiles){

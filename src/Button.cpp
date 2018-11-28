@@ -4,7 +4,8 @@ Button::Button(){
 
 }
 
-Button::Button(int windowX, int windowY, int order, string message,shared_ptr<TextLoader> textLoader, string fontpath){
+Button::Button(int windowX, int windowY, int order, string message,
+  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle){
   this -> textLoader = textLoader;
   this -> fontPath = fontpath;
   (this -> text).setString(message);
@@ -14,12 +15,14 @@ Button::Button(int windowX, int windowY, int order, string message,shared_ptr<Te
   (this -> rect).setOutlineColor(sf::Color::Yellow);
   (this -> rect).setOutlineThickness(1);
   this -> isVisible= true;
-
+  this -> isClicked = false;
+  this -> isCircle = isCircle;
   (this -> text).setCharacterSize(this -> windowX / 40);
   this -> setWindowSize(windowX, windowY);
   this -> scaleButton();
 }
-Button::Button(int windowX, int windowY, Position position, string message,shared_ptr<TextLoader> textLoader, string fontpath){
+Button::Button(int windowX, int windowY, Position position, string message,
+  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle){
     this -> textLoader = textLoader;
     this -> fontPath = fontpath;
     this -> setWindowSize(windowX, windowY);
@@ -31,10 +34,13 @@ Button::Button(int windowX, int windowY, Position position, string message,share
     (this -> rect).setOutlineColor(sf::Color::Yellow);
     (this -> rect).setOutlineThickness(1);
     this -> isVisible= true;
+    this -> isClicked = false;
+    this -> isCircle = isCircle;
     this -> setButtonPosition(position);
 }
 
-Button::Button(int windowX, int windowY, float xPos, float yPos, string message,shared_ptr<TextLoader> textLoader, string fontpath){
+Button::Button(int windowX, int windowY, float xPos, float yPos, string message,
+  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle){
   this -> textLoader = textLoader;
   this -> fontPath = fontpath;
   this -> setWindowSize(windowX, windowY);
@@ -46,8 +52,23 @@ Button::Button(int windowX, int windowY, float xPos, float yPos, string message,
   (this -> rect).setOutlineColor(sf::Color::Yellow);
   (this -> rect).setOutlineThickness(1);
   this -> isVisible= true;
+  this -> isClicked = false;
   this -> order = 0;
+  this -> isCircle = isCircle;
   this -> scaleButton(xPos, yPos);
+}
+
+Button::Button(int windowX, int windowY, float xPos, float yPos, shared_ptr<TextLoader> textLoader,
+   string texturepath, bool isCircle){
+  this -> textLoader = textLoader;
+  this -> texturepath = texturepath;
+  this -> setWindowSize(windowX, windowY);
+  this -> isVisible= true;
+  this -> isClicked = false;
+  this -> order = 0;
+  this -> isCircle = isCircle;
+  this -> initTexture();
+  this -> numChars = 0;
 }
 
 void Button::setWindowSize(int windowX, int windowY){
@@ -107,6 +128,25 @@ void Button::setButtonPosition(Position position){
     yPos = (windowY - distanceFromXAxis)/2;
   }
   scaleButton(xPos, yPos);
+}
+
+/*
+ * Set the x and y coordinates of the position
+ * @param xPos: the new x coordinate
+ * @param yPos: the new y coordinate
+ */
+void Button::setButtonPosition(float xPos, float yPos){
+  if(isCircle){
+    circle.setPosition(sf::Vector2f(xPos, yPos));
+  }
+  else{
+    rect.setPosition(sf::Vector2f(xPos, yPos));
+  }
+  //if there is text then we need to scale the button
+  if(numChars){
+    text.setPosition(sf::Vector2f(xPos, yPos));
+    scaleButton(xPos, yPos);
+  }
 }
 
 void Button::scaleButton(){
@@ -175,25 +215,96 @@ void Button::scaleButton(float xPos, float yPos){
 
 }
 
+/*
+ * Set the scale of the button (different from scaleButton which assumes there is text to scale around)
+ */
+void Button::setButtonScale(float xScale, float yScale){
+  assert(!numChars);
+  this -> xScale = xScale;
+  this -> yScale = yScale;
+  //we do no check for text because this button assumes no text
+  if(isCircle){
+    circle.setScale(xScale, yScale);
+  }
+  else{
+    rect.setScale(xScale, yScale);
+  }
+}
+
+/*
+ * Loads in the texture if there is one
+ */
+void Button::initTexture(){
+  if(!texture.loadFromFile(texturepath)){
+    assert(true == false);
+  }
+  if(isCircle){
+    circle.setTexture(&texture);
+  }
+  else{
+    rect.setTexture(&texture);
+  }
+}
+
 bool Button::isSelected(int mousePressX, int mousePressY){
   //if the button is not visible always return false
   if(!isVisible){
     return false;
   }
-  sf::Vector2f rectPos = (this -> rect).getPosition();
-  sf::Vector2f rectDim = (this -> rect).getSize();
 
-  int xPos = rectPos.x;
-  int yPos = rectPos.y;
-  int xDim = rectDim.x;
-  int yDim = rectDim.y;
 
-  if(xPos <= mousePressX && mousePressX <= xPos + xDim){
-    if(yPos <= mousePressY && mousePressY <= yPos + yDim){
-      return true;
+  sf::Vector2f pos;
+  sf::Vector2f dim;
+  float xDim;
+  float yDim;
+
+  if(isCircle){
+    pos = (this -> circle).getPosition();
+    float radius = (this -> circle).getRadius();
+    xDim = radius *xScale;
+    yDim = radius *yScale;
+  }
+  else{
+    pos = (this -> rect).getPosition();
+    dim = (this -> rect).getSize();
+    xDim = dim.x *xScale;
+    yDim = dim.y *yScale;
+  }
+
+  float xPos = pos.x;
+  float yPos = pos.y;
+
+  //need to check differently if we are dealing with a circle (i.e. in all directions since the positon is a center not the top left corner)
+  if(isCircle){
+    if(xPos - xDim <= mousePressX && mousePressX <= xPos + xDim){
+      if(yPos - yDim <= mousePressY && mousePressY <= yPos + yDim){
+        return true;
+      }
     }
   }
+  else{
+    if(xPos <= mousePressX && mousePressX <= xPos + xDim){
+      if(yPos <= mousePressY && mousePressY <= yPos + yDim){
+        return true;
+      }
+    }
+  }
+
   return false;
+}
+
+/*
+ * Set the button's clicked status to the opposite of what it currently is
+ */
+void Button::clickButton(){
+  isClicked = isClicked == true ? false : true;
+}
+
+/*
+ * @return true if the button is clicked on (as in it was just clicked)
+ */
+bool Button::isButtonClicked(){
+  return isClicked;
 }
 
 sf::RectangleShape & Button::getButtonRect(){
@@ -201,6 +312,28 @@ sf::RectangleShape & Button::getButtonRect(){
 }
 sf::Text & Button::getButtonText(){
   return this -> text;
+}
+sf::CircleShape& Button::getButtonCircle(){
+  return this -> circle;
+}
+
+/*
+ * Set the radius of the circle
+ */
+void Button::setCircleRadius(float radius){
+  circle.setRadius(radius);
+}
+
+/*
+ * Set the shape
+ */
+void Button::setOrigin(float originX, float originY){
+  if(isCircle){
+    circle.setOrigin(originX, originY);
+  }
+  else{
+    rect.setOrigin(originX, originY);
+  }
 }
 
 /*
@@ -215,6 +348,9 @@ bool Button::isCurrentlyVisible(){
  */
 void Button::flipVisibility(){
   isVisible = isVisible == true ? false : true;
+  if(!isVisible){
+    isClicked = false;
+  }
 }
 
 /*
@@ -237,7 +373,13 @@ void Button::setFont(string fontPath){
  */
 void Button::setFillColor(int redComponent, int blueComponent, int greenComponent, int alpha){
   sf::Color color (redComponent, blueComponent, greenComponent, alpha);
-  (this -> rect).setFillColor(color);
+
+  if(isCircle){
+    (this->circle).setFillColor(color);
+  }
+  else{
+    (this -> rect).setFillColor(color);
+  }
 }
 
 /*
@@ -245,14 +387,24 @@ void Button::setFillColor(int redComponent, int blueComponent, int greenComponen
  */
 void Button::setOutlineColor(int redComponent, int blueComponent, int greenComponent, int alpha){
   sf::Color color (redComponent, blueComponent, greenComponent, alpha);
-  (this -> rect).setOutlineColor(color);
+  if(isCircle){
+    (this->circle).setOutlineColor(color);
+  }
+  else{
+    (this -> rect).setOutlineColor(color);
+  }
 }
 
 /*
  * Set the thickness for the outline
  */
 void Button::setOutlineThickness(float thickness){
-  (this->rect).setOutlineThickness(thickness);
+  if(isCircle){
+    (this->circle).setOutlineThickness(thickness);
+  }
+  else{
+    (this->rect).setOutlineThickness(thickness);
+  }
 }
 
 /*
@@ -283,4 +435,23 @@ void Button::setTextOutlineThickness(float thickness){
  */
 void Button::setTextSize(int textSize){
   (this->text).setCharacterSize(textSize);
+}
+
+/*
+ * draw the button onto the window
+ */
+void Button::draw(sf::RenderWindow& window){
+  string textString = text.getString();
+  //draw the text if it has a message
+  if(textString.length()){
+    window.draw(text);
+  }
+
+  //draw the circle shape if this is a circle
+  if(isCircle){
+    window.draw(circle);
+  }
+  else{
+    window.draw(rect);
+  }
 }

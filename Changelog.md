@@ -12,8 +12,11 @@
 - all projectiles face same way as eachother
 - projectiles will go towards the point they are fired at and then when they reach it they will trigger
   a projectile explosion (handled by gamelogic) and then a actor destroyed event is made
-- game has a proper delta function for speeds 
-- CompView controls enemy melee units and sets their direction to move toward the map exit [@jeremyelkayam][https://github.com/jeremyelkayam]
+- game has a proper delta function for speeds
+- CompView controls enemy melee units and sets their direction to move toward the map exit
+- all towers use floats for their coordinates
+- radius circles are now centered
+ [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.
 

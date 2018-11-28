@@ -66,9 +66,9 @@ void MeleeTower::initSprite(){
  * @param x: the x coordinate
  * @param y: the y coordinate
  */
-void MeleeTower::resetRallyPoint(int x, int y){
+void MeleeTower::resetRallyPoint(float x, float y){
   //if this rally point is not in the prescribed radius around the tower
-  if(x<xCoordinate-radius || x>xCoordinate+radius || y<yCoordinate-radius || y>yCoordinate+radius){
+  if(x<xCoordinate-radius*xScale || x>xCoordinate+radius*xScale || y<yCoordinate-radius*yScale || y>yCoordinate+radius*yScale){
     return;
   }
   this -> xRally = x;

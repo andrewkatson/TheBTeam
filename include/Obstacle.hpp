@@ -25,10 +25,10 @@ public:
   int getPrice(){return price;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
-  int getXCoordinate(){return xCoordinate;}
-  int getYCoordinate(){return yCoordinate;}
-  void setXCoordinate(int xCor){xCoordinate = xCor;}
-  void setYCoordinate(int yCor){yCoordinate = yCor;}
+  float getXCoordinate(){return xCoordinate;}
+  float getYCoordinate(){return yCoordinate;}
+  void setXCoordinate(float xCor){xCoordinate = xCor;}
+  void setYCoordinate(float yCor){yCoordinate = yCor;}
   bool canAttack(){return false;}
   void attack(shared_ptr<ActorInterface> enemyInRange){}
   void setProjectile(){}

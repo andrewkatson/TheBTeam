@@ -490,8 +490,6 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
       //grab the string identifier of this type of obstacle
       string obstacleType = textLoader -> getTypeID(std::to_string(typeNum));
 
-      cout << obstacleType << endl;
-
       //the obstacle we will place
       shared_ptr<TowerInterface> obstacle;
 
@@ -500,9 +498,6 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
       int col = ((*it).second).second;
 
       obstacle = copyOfTowerType(obstacleType, row, col);
-
-      cout << obstacle -> getType() << endl;
-
       towersPlaced.insert({row*xDim+col, obstacle});
   }
 }
@@ -622,6 +617,12 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
   retTower -> setPos(row,col);
   retTower -> setXCoordinate((float)col * xGrid + (xGrid/2.0));
   retTower -> setYCoordinate((float)row * yGrid + (yGrid/2.0));
+
+  //if the tower is a melee tower we set its rally point to be the center of the tower
+  if(retTower -> isMelee){
+    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(retTower.get());
+    meleeTower -> resetRallyPoint((float)col * xGrid + (xGrid/2.0), (float)row * yGrid + (yGrid/2.0));
+  }
   return retTower;
 }
 

@@ -52,6 +52,8 @@ private:
   bool recaculateHeader;
   //a counter for the number of times the header has been recalculated (used to synch with screen)
   int timesHeaderRecalculated;
+  //block clicks
+  bool blockClicks;
 public:
 
   PlayingScreenHeader(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic);
@@ -102,4 +104,13 @@ public:
   void drawBuyTowerButton(sf::RenderWindow& window);
   void drawSellTowerButton(sf::RenderWindow& window);
   void drawHeaderButtons(sf::RenderWindow& window);
+
+  /*
+   * flip whether clicks are going to be checked for
+   */
+  void flipClickCheck(){blockClicks = blockClicks==true ? false : true;}
+   /*
+    * whether clicks are being checked for
+    */
+  bool clicksCheckedFor(){return !blockClicks;}
 };
