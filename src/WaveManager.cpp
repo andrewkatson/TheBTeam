@@ -31,15 +31,20 @@ void WaveManager::registerDelegates() {
 
   //make an event and get its type
   ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
-  EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+  const EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_WaveManager_ActorDestroyed")),actorDestroyedEventType);
 
 
   EventManager::EventDelegate mapGenDelegate = std::bind(&WaveManager::handleMapGenerated, this, _1);
   MapGeneratedEvent mapGenEvent = MapGeneratedEvent();
-  EventType mapGenEventType = mapGenEvent.getEventType();
+  const EventType mapGenEventType = mapGenEvent.getEventType();
   this -> eventManager -> registerDelegate(mapGenDelegate, textLoader -> getString(string("IDS_WaveManager_MapGenerated")),mapGenEventType);
+
+  EventManager::EventDelegate levelChangeDelegate = std::bind(&WaveManager::handleLevelChanged, this, _1);
+  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
+  const EventType levelChangeEventType = levelChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_LevelChange")),levelChangeEventType);
 }
 
 void WaveManager::deregisterDelegates() {
@@ -295,5 +300,11 @@ void WaveManager::handleMapGenerated(const EventInterface& event){
 
   setDistances(mapGeneratedEventData->dists);
   setEntryPoints(mapGeneratedEventData->entrances);
+}
 
+void WaveManager::handleLevelChanged(const EventInterface& event){
+  auto levelChangedEvent = static_cast<const LevelChangeEvent*>(&event);
+  auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
+
+  level=levelChangedEventData->level;
 }

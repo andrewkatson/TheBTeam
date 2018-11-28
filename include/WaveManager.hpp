@@ -24,6 +24,7 @@ using namespace std;
 #include "Units/FatKidUnit.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
 #include "Events/MapGeneratedEvent.hpp"
+#include "Events/LevelChangeEvent.hpp"
 
 class WaveManager{
 
@@ -32,7 +33,7 @@ public:
   typedef pair<int,int> intPair;
 
   //Store the textLoader to make requests for strings and constants
-  shared_ptr<TextLoader> textLoader;
+  shared_ptr<TextLoader> textLoader-;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
   //Store the textureLoader to get the textures for this tower and pass to
@@ -177,6 +178,8 @@ public:
   void handleActorDestroyed(const EventInterface& event);
 
   void handleMapGenerated(const EventInterface& event);
+
+  void handleLevelChanged(const EventInterface& event);
 };
 
 #endif

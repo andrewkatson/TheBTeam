@@ -216,7 +216,7 @@
     <!--Wave Manager Delegates-->
     <string value="Wave_Manager_Actor_Destroyed" id="IDS_WaveManager_ActorDestroyed"> </string>
     <string value="Wave_Manager_Map_Generated" id="IDS_WaveManager_MapGenerated"> </string>
-
+    <string value="Wave_Manager_Level_Change" id="IDS_WaveManager_LevelChange"> </string>
 
   <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
