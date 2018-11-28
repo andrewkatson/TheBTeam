@@ -112,6 +112,18 @@ public:
     return false;
   }
 
+  /*
+   * Set the center coordinates to the be equal to the middle of the object
+   */
+  void setToCenter(){
+
+    sf::FloatRect boundsOfSprite = sprite.getGlobalBounds();
+    /*
+    sprite.setOrigin(boundsOfSprite.left + (boundsOfSprite.width)/2.0,
+    boundsOfSprite.top + (boundsOfSprite.height)/2.0);
+    */
+  }
+
 };
 
 #endif

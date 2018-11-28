@@ -13,10 +13,7 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   haveSetColorShift=false;
   this -> registerPersistentDelegates();
   this -> initDrawingMaterials();
-
-  rect.setFillColor(sf::Color::Red);
-  specialRectY = -1;
-  specialRectX = -1;
+  headerRecalculated=0;
 }
 
 PlayingScreen::~PlayingScreen(){
@@ -462,13 +459,6 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 
   //draw the header
   playingScreenHeader -> draw(window);
-
-  if(specialRectX != -1 && specialRectY != -1){
-    rect.setPosition(sf::Vector2f(specialRectX, specialRectY));
-    rect.setSize(sf::Vector2f(specialRectXDim, specialRectYDim));
-    window.draw(rect);
-  }
-
   //TODO change into real code for drawing the map!
   if(somethingChanged){
     cout << endl << "THE FLOOR " << endl;
@@ -485,7 +475,6 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 
     somethingChanged = false;
   }
-
 }
 
 /*
@@ -564,13 +553,10 @@ void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col,
       alphaComponent = textLoader -> getInteger(string("IDS_Path_Tile_1_Fill_Color_Alpha"));
     }
 
-    //the offset for the starting position if there is a header
-    float xOffSet = playingScreenHeader -> getXOffSet();
-    float yOffSet = playingScreenHeader -> getYOffSet();
 
     //the x and y position of this rectangle
-    float xPos = col * xTileSize + xOffSet;
-    float yPos = row * yTileSize + yOffSet;
+    float xPos = col * xTileSize;
+    float yPos = row * yTileSize;
 
     //set the position of the rectangle
     floorRect.setPosition(xPos, yPos);
@@ -635,13 +621,9 @@ void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
     alphaComponent = textLoader -> getInteger(string("IDS_1_Floor_Tile_0_Fill_Color_Alpha"));
   }
 
-  //the offset for the starting position if there is a header
-  float xOffSet = playingScreenHeader -> getXOffSet();
-  float yOffSet = playingScreenHeader -> getYOffSet();
-
   //the x and y position of this rectangle
-  float xPos = col * xTileSize + xOffSet;
-  float yPos = row * yTileSize + yOffSet;
+  float xPos = col * xTileSize;
+  float yPos = row * yTileSize;
 
   //set the position of the rectangle
   floorRect.setPosition(xPos, yPos);
@@ -661,13 +643,9 @@ void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
      int blueComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Blue"));
      int alphaComponent = textLoader -> getInteger(string("IDS_Exit_Fill_Color_Alpha"));
 
-     //the offset for the starting position if there is a header
-     float xOffSet = playingScreenHeader -> getXOffSet();
-     float yOffSet = playingScreenHeader -> getYOffSet();
-
      //the x and y position of this rectangle
-     float xPos = col * xTileSize + xOffSet;
-     float yPos = row * yTileSize + yOffSet;
+     float xPos = col * xTileSize;
+     float yPos = row * yTileSize;
 
      //set the position of the rectangle
      floorRect.setPosition(xPos, yPos);
@@ -722,14 +700,6 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //get the sprite to be drawn
     sf::Sprite currentSprite = current -> getSprite();
 
-    //the offset for the starting position if there is a header
-    float xOffSet = playingScreenHeader -> getXOffSet();
-    float yOffSet = playingScreenHeader -> getYOffSet();
-
-    //the x and y position of this rectangle
-    float xPos = col * xTileSize + xOffSet;
-    float yPos = row * yTileSize + yOffSet;
-
     //the bounding rectangle will give us the dimensions of the sprite
     sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
     //the x dimension of the box
@@ -742,23 +712,15 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //the scale in the y direction
     float yScale = (float) yTileSize / (float) yDim;
 
+    //the x and y position of this rectangle
+    float xPos = col * xTileSize;
+    float yPos = row * yTileSize;
+
     //set the scale for the tower/obstalce to fill up the square
     currentSprite.setScale(xScale, yScale);
 
     //set the position of the sprite to the top left of the rectangle
     currentSprite.setPosition(xPos, yPos);
-
-    //updates the coordinates of the tower in case they have not been set to be
-    //the center of the tile it is placed on
-    if(!current->withinBounds(xPos, yPos, xDim*xScale, yDim*yScale)){
-      cout << "using scale " << xScale << " " << yScale << endl;
-      specialRectX = (float)(xPos)+ (xDim*xScale)/ 2.0;
-      specialRectY = (float)(yPos) + (yDim*yScale)/2.0;
-      specialRectXDim = 5;
-      specialRectYDim = 5;
-      current -> setXCoordinate((float)(xPos)+ (xDim*xScale)/ 2.0);
-      current -> setYCoordinate((float)(yPos) + (yDim*yScale)/2.0);
-    }
     //finally draw the sprite
     window.draw(currentSprite);
 
@@ -820,13 +782,9 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
     //get the sprite to be drawn
     sf::Sprite currentSprite = current -> getSprite();
 
-    //the offset for the starting position if there is a header
-    float xOffSet = playingScreenHeader -> getXOffSet();
-    float yOffSet = playingScreenHeader -> getYOffSet();
-
     //the x and y position of this rectangle
-    float xPos = current -> getXCoordinate() + xOffSet;
-    float yPos = current -> getYCoordinate() + yOffSet;
+    float xPos = current -> getXCoordinate();
+    float yPos = current -> getYCoordinate();
 
     //the bounding rectangle will give us the dimensions of the sprite
     sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
@@ -860,7 +818,7 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
  * @param window: the game window to draw on
  */
 void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
-  vector<shared_ptr<ActorInterface>> allProjectiles = gameLogic -> getFiredProjectiles();
+  unordered_map<long long, shared_ptr<ActorInterface>> allProjectiles = gameLogic -> getFiredProjectiles();
 
   //the number of rows
   const int rows = gameLogic->getRows();
@@ -873,17 +831,11 @@ void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
   const int yTileSize = playingScreenHeader -> getTrueYTileSize();
 
   //loop through all enemies on the board
-  for(shared_ptr<ActorInterface> current : allProjectiles){
+  for(auto it : allProjectiles){
+    shared_ptr<ActorInterface> current = it.second;
+
     //get the sprite to be drawn
     sf::Sprite currentSprite = current -> getSprite();
-
-    //the offset for the starting position if there is a header
-    float xOffSet = playingScreenHeader -> getXOffSet();
-    float yOffSet = playingScreenHeader -> getYOffSet();
-
-    //the x and y position of this rectangle
-    float xPos = current -> getXCoordinate() + xOffSet;
-    float yPos = current -> getYCoordinate() + yOffSet;
 
     //the bounding rectangle will give us the dimensions of the sprite
     sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
@@ -901,6 +853,10 @@ void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
     //the scale in the y direction
     float yScale = (float) yTileSize / ((float) yDim*projectileScaleY);
 
+    //the x and y position of this rectangle
+    float xPos = current -> getXCoordinate();
+    float yPos = current -> getYCoordinate();
+
     //set the scale for the tower/obstalce to fill up the square
     currentSprite.setScale(xScale, yScale);
 
@@ -908,18 +864,27 @@ void PlayingScreen::drawProjectiles(sf::RenderWindow& window){
     currentSprite.setPosition(xPos, yPos);
 
     //pass the scale of the screen to the header to modify its vector trajectory
-    if(playingScreenHeader -> headerRecalculated()){
+    if(wasHeaderRecalculated()){
       //cast to projectile before calling set vector scale
       Projectile* projectile = dynamic_cast<Projectile*>(current.get());
 
       projectile -> setVectorScale(xScale,yScale);
-
-      cout << "projectile x " << xPos << " and y " << yPos << endl;
     }
 
     //finally draw the sprite
     window.draw(currentSprite);
   }
+}
+
+/*
+ * @return true if the header has been recaluclated
+ */
+bool PlayingScreen::wasHeaderRecalculated(){
+  if(headerRecalculated < playingScreenHeader -> getHeaderRecalculatedTimes()){
+    headerRecalculated = playingScreenHeader -> getHeaderRecalculatedTimes();
+    return true;
+  }
+  return false;
 }
 
 template <class T>

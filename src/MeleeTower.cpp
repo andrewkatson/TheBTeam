@@ -12,6 +12,7 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> isMelee = true;
   this -> radiusVisible = false;
   this -> registerDelegates();
+  this -> setToCenter();
 }
 
 MeleeTower::~MeleeTower(){

@@ -620,8 +620,8 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
 
   //set the dimensions and location of the tower
   retTower -> setPos(row,col);
-  retTower -> setXCoordinate(col * xGrid + (xGrid/2));
-  retTower -> setYCoordinate(row * yGrid + (yGrid/2));
+  retTower -> setXCoordinate((float)col * xGrid + (xGrid/2.0));
+  retTower -> setYCoordinate((float)row * yGrid + (yGrid/2.0));
   return retTower;
 }
 

@@ -42,13 +42,12 @@ private:
   int rowSelected;
   //the current col selected
   int colSelected;
-  sf::RectangleShape rect;
-  float specialRectX;
-  float specialRectY;
-  float specialRectXDim;
-  float specialRectYDim;
   //testing variable TODO remove when finished rendering
   bool somethingChanged;
+  //an integer to synch with the header recalculations
+  //if it is different than the value in playing screen header than we know
+  //the header has been changed recently
+  int headerRecalculated;
 
 public:
   PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic, int windowX, int windowY);
@@ -82,6 +81,8 @@ public:
   void drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window);
   void drawEnemyUnits(sf::RenderWindow& window);
   void drawProjectiles(sf::RenderWindow& window);
+
+  bool wasHeaderRecalculated();
 
   template <class T>
   void printVector(const vector<vector<T>> &v);

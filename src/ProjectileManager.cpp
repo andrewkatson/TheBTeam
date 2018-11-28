@@ -35,6 +35,15 @@ void ProjectileManager::registerDelegates(){
   EventType actorCreatedEventType = actorCreatedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorCreatedDelegate, textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorCreatedEventType);
+
+  //bind our delegate function for actor destructions (specifically projectiles)
+  EventManager::EventDelegate actorDestroyedDelegate = std::bind(&ProjectileManager::handleActorDestroyed, this, _1);
+
+  //make an event and get its type
+  ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+  EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorDestroyedEventType);
 }
 
 /*
@@ -47,6 +56,12 @@ void ProjectileManager::deregisterDelegates(){
     EventType actorCreatedEventType = actorCreatedEvent.getEventType();
     //deregister the delegate and its type
     this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorCreatedEventType);
+
+    //make an event and get its type
+    ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+    EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+    //deregister the delegate and its type
+    this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorDestroyedEventType);
 }
 
 /*
@@ -61,7 +76,7 @@ void ProjectileManager::registerEvents(){
   this -> eventManager -> registerEvent(actorCreatedEventType);
 }
 
-vector<shared_ptr<ActorInterface>>& ProjectileManager::getAllProjectiles(){
+unordered_map<long long, shared_ptr<ActorInterface>>& ProjectileManager::getAllProjectiles(){
   return projectiles;
 }
 
@@ -89,12 +104,33 @@ void ProjectileManager::handleActorCreated(const EventInterface& event){
   }
 }
 
-void ProjectileManager::addProjectile(shared_ptr<ActorInterface> projectile){
-  projectiles.push_back(projectile);
+void ProjectileManager::handleActorDestroyed(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * ActorDestroyedEvent type which allows us to access variables and methods
+   * specific to ActorDestroyedEvent
+   */
+  const ActorDestroyedEvent* adEvent = static_cast<const ActorDestroyedEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a ActorDestroyedEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  ActorDestroyedEventData* adEventData = static_cast<ActorDestroyedEventData*>((adEvent -> data).get());
+  //get the id of the actor to check if it was a projectile
+  long long actorDestroyedID = adEventData -> actorID;
+
+  if(projectiles.find(actorDestroyedID) != projectiles.end()){
+    removeProjectile(actorDestroyedID);
+  }
 }
 
-void ProjectileManager::removeProjectile(int projectile_index){
-  projectiles.erase(projectiles.erase(projectiles.begin() + 1));
+void ProjectileManager::addProjectile(shared_ptr<ActorInterface> projectile){
+  projectiles.insert({projectile->getID(), projectile});
+}
+
+void ProjectileManager::removeProjectile(long long ID){
+  projectiles.erase(ID);
 }
 
 void ProjectileManager::update(float deltaS){

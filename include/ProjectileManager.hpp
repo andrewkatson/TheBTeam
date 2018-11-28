@@ -13,9 +13,11 @@ using namespace std;
 
 #include <memory>
 #include <vector>
+#include <unordered_map>
 #include "ActorInterface.hpp"
 #include "EventManager.hpp"
 #include "Events/ActorCreatedEvent.hpp"
+#include "Events/ActorDestroyedEvent.hpp"
 #include "TextLoader.hpp"
 
 class ProjectileManager {
@@ -25,7 +27,7 @@ private:
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //Array storing the actors representing all projectiles.
-  vector<shared_ptr<ActorInterface>> projectiles;
+  unordered_map<long long, shared_ptr<ActorInterface>> projectiles;
 public:
 
   /*
@@ -54,12 +56,17 @@ public:
    *
    * @return a vector containing all of the manager's projectiles
    */
-  vector<shared_ptr<ActorInterface>>& getAllProjectiles();
+  unordered_map<long long, shared_ptr<ActorInterface>>& getAllProjectiles();
 
   /*
    * Handle an actor created event
    */
   void handleActorCreated(const EventInterface& event);
+
+  /*
+   * Checks if the actor destroyed is a projectile and then removes it from the map of fired projectiles
+   */
+  void handleActorDestroyed(const EventInterface& event);
 
   /*
    * Appends the given projectile to the manager's vector.
@@ -69,7 +76,7 @@ public:
   /*
    * Removes the projectile at the given index.
    */
-  void removeProjectile(int projectile_index);
+  void removeProjectile(long long ID);
 
   /*
    * Updates all projectiles under the manager.

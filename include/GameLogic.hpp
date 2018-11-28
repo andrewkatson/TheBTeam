@@ -21,6 +21,8 @@
 #include "Events/MousePressEvent.hpp"
 #include "Events/StateChangeEvent.hpp"
 #include "Events/MapGeneratedEvent.hpp"
+#include "Events/ProjectileExplosionEvent.hpp"
+#include "Events/ActorDestroyedEvent.hpp"
 #include "EventType.hpp"
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
@@ -91,6 +93,7 @@ public:
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
   void handleStateChange(const EventInterface& event);
+  void handleProjectileExplosion(const EventInterface& event);
   /*
     Called once every game loop. Updates the game's happenings according to the
     time since the last loop.
@@ -145,7 +148,7 @@ public:
   const shared_ptr<TowerInterface> getTowerPlaced(int row, int col);
   const unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
   const unordered_map<long long,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
-  vector<shared_ptr<ActorInterface>>& getFiredProjectiles();
+  unordered_map<long long, shared_ptr<ActorInterface>>& getFiredProjectiles();
   shared_ptr<WaveManager> getWaveManager(){return waveManager;};
 
 };

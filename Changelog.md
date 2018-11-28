@@ -10,9 +10,15 @@
 - projectiles have a vector of attack based on the coordinates of the unit they target
 - clicking on a tower will show its attack/spawn radius in light blue
 - all projectiles face same way as eachother
+- projectiles will go towards the point they are fired at and then when they reach it they will trigger
+  a projectile explosion (handled by gamelogic) and then a actor destroyed event is made
+- game has a proper delta function for speeds 
 - CompView controls enemy melee units and sets their direction to move toward the map exit [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.
+
+ ###Removed
+ - all scaling from the header! [@andrewkatson][https://github.com/andrewkatson]
 
 [0.4.0] 2018-11-15
 ###Added

@@ -83,6 +83,13 @@ protected:
 public:
 
   ActorInterface();
+
+  /*
+   * Rotate the texture by the number of degrees
+   * @param degrees:
+   */
+  void rotate(float degrees);
+
   /*
     TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
    */
