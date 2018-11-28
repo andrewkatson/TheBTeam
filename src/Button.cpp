@@ -120,8 +120,8 @@ void Button::setButtonPosition(Position position){
     yPos = 0 + distanceFromXAxis + padding/2;
   }
   else if(position == BOTTOMLEFT){
-    xPos = 0 + distanceFromYAxis;
-    yPos = windowY - distanceFromXAxis;
+    xPos = windowX - boundingBoxXDim - padding;
+    yPos = windowY - boundingBoxYDim - padding;
   }
   else if(position == CENTER){
     xPos = (windowX - distanceFromYAxis)/2;
@@ -441,11 +441,6 @@ void Button::setTextSize(int textSize){
  * draw the button onto the window
  */
 void Button::draw(sf::RenderWindow& window){
-  string textString = text.getString();
-  //draw the text if it has a message
-  if(textString.length()){
-    window.draw(text);
-  }
 
   //draw the circle shape if this is a circle
   if(isCircle){
@@ -453,5 +448,21 @@ void Button::draw(sf::RenderWindow& window){
   }
   else{
     window.draw(rect);
+  }
+  string textString = text.getString();
+
+  //draw the text if it has a message
+  //has issues and may not show the text sometimes
+  if(textString.length()){
+    sf::Font mainFont;
+    if(!mainFont.loadFromFile(fontPath)){
+      cout << "No font!" << endl;
+    }
+    else{
+    //  cout << "loaded font!" << endl;
+    }
+
+    (this->text).setFont(mainFont);
+    window.draw(this -> text);
   }
 }

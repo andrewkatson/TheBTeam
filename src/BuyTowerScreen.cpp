@@ -6,8 +6,16 @@ BuyTowerScreen::BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
-  this -> initText();
+  this -> initDrawingMaterials();
   this -> registerPersistentDelegates();
+}
+
+/*
+ * Initlaize anything required to be drawn on the screen
+ */
+void BuyTowerScreen::initDrawingMaterials(){
+  initText();
+  initBackButton();
 }
 
 /*
@@ -17,9 +25,76 @@ void BuyTowerScreen::initText(){
     this -> currentTitle = textLoader->getString(string("IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"));
 }
 
+/*
+ * Initalize the back button
+ */
+void BuyTowerScreen::initBackButton(){
+  string fontpath = textLoader -> getString(string("IDS_TFP"));
+
+  //set up the back button
+  backButton = unique_ptr<Button>(new Button(windowX, windowY, BOTTOMLEFT,
+    textLoader -> getString(string("IDS_Buy_Tower_Back_Button")), textLoader, fontpath));
+
+  // set the fill color for the button rectangle
+  this -> backButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  this -> backButton -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  //this->backButton -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Thickness")));
+
+  //set the fill color for the button text
+  this -> backButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
+  cout  << "red for text  " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")) << " and blue "<< this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")) << " and green " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")) << " and alpha " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")) << endl;
+
+  //set the outline color for the text
+  this -> backButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")),
+  this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
+
+  cout  << "red for text outline  " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")) << " and blue "<< this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")) << " and green " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")) << " and alpha " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")) << endl;
+
+  //set the button text outline thickness
+  this->backButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
+
+  //set the text character size
+  this->backButton -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Back_Button_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->backButton) -> setFont(fontpath);
+
+  //rescale the button and reset it
+  (this -> backButton) -> setButtonPosition( BOTTOMLEFT);
+}
+
 
 void BuyTowerScreen::draw(sf::RenderWindow &window){
   drawTitle(window);
+
+  backButton -> draw(window);
+
+  //below is a workaround because the draw was not showing the text because sfml is stupid
+  sf::Text text = backButton -> getButtonText();
+  sf::Font mainFont;
+  //used to make the font local
+  string mainFontPath = textLoader -> getString(string("IDS_TFP"));
+
+  if(!mainFont.loadFromFile(mainFontPath)){
+    cout << "No font!" << endl;
+  }
+  else{
+  //  cout << "loaded font!" << endl;
+  }
+
+  text.setFont(mainFont);
+  window.draw(text);
 
   //iterate through the options on the screen and draw them one by one
   for(shared_ptr<BuyTowerOption>  towerOption : options){
@@ -204,6 +279,16 @@ void BuyTowerScreen::handleMousePress(const EventInterface& event){
     this -> eventManager -> queueEvent(playGameState);
   }
 
+  if(backButton->isSelected(xPos,yPos)){
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    shared_ptr<EventInterface> playGameState = make_shared<StateChangeEvent>(State::Playing,nowInNano);
+
+    this -> eventManager -> queueEvent(playGameState);
+  }
 }
 
 /*
@@ -340,9 +425,6 @@ void BuyTowerScreen::populateOptionsVector(){
   float xPos = (indexTowerOption)*xSize + xPadding *(indexTowerOption+1);
   //the yPos of the last tower Option
   float yPos = (gameLogic->getWindowY())/3;
-
-
-
 
   //vector to hold the maximum value for every MeleeTower
   vector<int> meleeTowerMaxStats(6,0);

@@ -437,7 +437,8 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
       shared_ptr<TowerInterface> tower = towers.at(combinedRowCol);
       //check that it is within the bounds of the radius circle of the tower
       //if it is not then we cannot click the rally point flag
-      if(clickWithinRange(xPos, yPos,tower)){
+      //also check if this is a path tile or if this is the first click (i,e, the position is the center of the tower)
+      if(clickWithinRange(xPos, yPos,tower) && ((clickedOnAPath(xPos, yPos)) || (firstTimeClickOnRallyFlag(tower)) && !(rallyPointChange -> isButtonClicked()))){
         rallyPointChange -> clickButton();
       }
       else{
@@ -538,6 +539,32 @@ bool PlayingScreen::clickWithinRange(float mouseX, float mouseY, shared_ptr<Towe
     return true;
   }
   return false;
+}
+
+/*
+ * @return when the position passed refers to a path tile
+ */
+bool PlayingScreen::clickedOnAPath(float mouseX, float mouseY){
+  //get the size of a tile in the x
+  float xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //get the size of a tile in the y
+  float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //what row is being clicked
+  int row = (int) mouseY / yTileSize;
+  //what col is being clicked
+  int col = (int) mouseX / xTileSize;
+
+  return gameLogic->isPath(row,col);
+}
+
+/*
+ * @return whether this click is one where the tower is at its initial placement
+ */
+bool PlayingScreen::firstTimeClickOnRallyFlag(shared_ptr<TowerInterface> tower){
+  MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+
+  return meleeTower->getRallyX() == meleeTower -> getXCoordinate() && meleeTower -> getRallyY() == meleeTower->getYCoordinate();
 }
 
 /*

@@ -508,6 +508,32 @@
   <!--Wave Text Size -->
   <constant value="60" id="IDS_Wave_Text_Size"> </constant>
 
+  <!--Buy Tower Screen -->
+  <!--Back Button Colors -->
+  <constant value="178" id="IDS_Back_Button_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Back_Button_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Back_Button_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Back_Button_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Back_Button_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Back_Button_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Back_Button_Outline_Color_Green"> </constant>
+  <constant value="125" id="IDS_Back_Button_Outline_Color_Alpha"> </constant>
+  <!--Back Button Text Colors -->
+  <constant value="0" id="IDS_Back_Button_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Back_Button_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Back_Button_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Back_Button_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Back_Button_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Back_Button_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Back_Button_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Back_Button_Text_Outline_Color_Alpha"> </constant>
+  <!--Back Button Outline Thickness-->
+  <constant value="1" id="IDS_Back_Button_Outline_Thickness"> </constant>
+  <!--Back Button Outline Text Thickness-->
+  <constant value="1" id="IDS_Back_Button_Text_Outline_Thickness"> </constant>
+  <!--Back Button Text Size-->
+  <constant value="45" id="IDS_Back_Button_Text_Size"> </constant>
+
   <!--Buy_Tower_Option Button-->
   <!--Buy_Tower_Option Button Colors-->
   <constant value="178" id="IDS_Buy_Tower_Option_Fill_Color_Red"> </constant>

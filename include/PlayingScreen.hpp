@@ -73,6 +73,8 @@ public:
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
   bool clickWithinRange(float mouseX, float mouseY, shared_ptr<TowerInterface> tower);
+  bool clickedOnAPath(float mouseX, float mouseY);
+  bool firstTimeClickOnRallyFlag(shared_ptr<TowerInterface> tower);
   void handleStateChange(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
