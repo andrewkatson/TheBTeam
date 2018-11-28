@@ -23,6 +23,12 @@
  ###Removed
  - all scaling from the header! [@andrewkatson][https://github.com/andrewkatson]
 
+ ###Fixed
+ - sometimes objects were not being removed [@andrewkatson][https://github.com/andrewkatson]
+
+ ###Bug
+ - sometmes when towers and/or obstacles are removed the change is overwritten in the boardmanager [@andrewkatson][https://github.com/andrewkatson]
+
 [0.4.0] 2018-11-15
 ###Added
 - MapGeneratedEvent and MapGeneratedEventData [@andrewkatson][https://github.com/andrewkatson]
