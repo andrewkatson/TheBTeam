@@ -25,6 +25,7 @@ using namespace std;
 #include "Events/ActorDestroyedEvent.hpp"
 #include "Events/MapGeneratedEvent.hpp"
 #include "Events/LevelChangeEvent.hpp"
+#include "Events/DifficultyChangeEvent.hpp"
 
 class WaveManager{
 

@@ -46,6 +46,9 @@ void WaveManager::registerDelegates() {
   LevelChangeEvent levelChangeEvent = LevelChangeEvent();
   const EventType levelChangeEventType = levelChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_LevelChange")),levelChangeEventType);
+
+  DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
+  const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
 }
 
 void WaveManager::deregisterDelegates() {
@@ -308,4 +311,5 @@ void WaveManager::handleLevelChanged(const EventInterface& event){
   auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
 
   level=levelChangedEventData->level;
+  //setupWaves(1);
 }
