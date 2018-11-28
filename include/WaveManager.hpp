@@ -33,7 +33,7 @@ public:
   typedef pair<int,int> intPair;
 
   //Store the textLoader to make requests for strings and constants
-  shared_ptr<TextLoader> textLoader-;
+  shared_ptr<TextLoader> textLoader;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
   //Store the textureLoader to get the textures for this tower and pass to
@@ -55,7 +55,6 @@ public:
   unordered_map<long long,shared_ptr<MeleeUnit>> spawnedCurrentWave;
 
   //The current level the user is at in the game.
-  //TODO - pull this from gamelogic
   int level;
 
   //The number of waves in the current level.
@@ -102,7 +101,7 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level);
   ~WaveManager();
 
   /*

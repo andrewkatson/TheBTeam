@@ -9,12 +9,13 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> windowX = windowX;
   this -> windowY = windowY;
+  this -> level = level;
   this -> currentWaveNumber = 0;
   this -> timeElapsed = 0;
   this -> setUpPossibleEnemies();
