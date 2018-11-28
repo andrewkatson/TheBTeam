@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <assert.h>
+#include <cmath>
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
 
@@ -12,6 +13,9 @@ using std::cout;
 using std::string;
 using std::shared_ptr;
 using std::unique_ptr;
+using std::sqrt;
+using std::pow;
+using std::min;
 enum Position {TOPRIGHT, BOTTOMRIGHT, TOPLEFT, BOTTOMLEFT, CENTER};
 class Button{
 private:

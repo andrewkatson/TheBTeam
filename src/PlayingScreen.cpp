@@ -413,12 +413,27 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   //what col is being clicked
   int col = (int) xPos / xTileSize;
 
+  //get the currently selected tower (if the rally flag is visible a tower must be selected)
+  const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+
+  //if the current row and col does not have a tower on them
+  //ensure that the rally flag is both invisible and unchecked
+  int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+  if(towers.find(combinedRowCol) == towers.end()){
+    if(rallyPointChange -> isCurrentlyVisible()){
+      rallyPointChange->flipVisibility();
+    }
+    if(rallyPointChange->isButtonClicked()){
+      rallyPointChange->clickButton();
+    }
+  }
+
   //if we have clicked the rally point flag icon
   if(rallyPointChange -> isCurrentlyVisible()){
     if(rallyPointChange -> isSelected(xPos, yPos)){
-      //get the currently selected tower (if the rally flag is visible a tower must be selected)
-      const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+
       int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+
       shared_ptr<TowerInterface> tower = towers.at(combinedRowCol);
       //check that it is within the bounds of the radius circle of the tower
       //if it is not then we cannot click the rally point flag
@@ -437,7 +452,10 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
         //if we have clicked it for a second time (thus unclick) and it was in bounds
         //then we reset the rally point for the tower
         MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
-        meleeTower->resetRallyPoint(xPos,yPos);
+        //if the clcik was out of range the rally point is not reset
+        if(clickWithinRange(xPos, yPos, tower)){
+          meleeTower->resetRallyPoint(xPos,yPos);
+        }
         //allow the header to check again
         playingScreenHeader -> flipClickCheck();
         //make sure that the flag is not visible
@@ -510,10 +528,14 @@ bool PlayingScreen::clickWithinRange(float mouseX, float mouseY, shared_ptr<Towe
   //the radius of the tower's effect area (either respawn or shooting range)
   float radius = tower -> getRadius();
 
-  if(mouseX >= towerX - radius*xScale && mouseX <= towerX + radius*xScale){
-    if(mouseY >= towerY - radius*yScale && mouseY <= towerY + radius*yScale){
-      return true;
-    }
+  //get the distance from the center of the click
+  float distanceOfClick = sqrt(pow(mouseX - towerX, 2) + pow(mouseY - towerY, 2));
+
+  //we will use the minimum scale
+  float scale = min(xScale, yScale);
+
+  if(distanceOfClick <= radius*scale){
+    return true;
   }
   return false;
 }
