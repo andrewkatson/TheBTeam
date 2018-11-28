@@ -14,12 +14,15 @@ using namespace std;
 #include <queue>
 #include <random>
 #include <map>
+#include <deque>
+#include <functional>
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "TextLoader.hpp"
 #include "Units/AverageKidUnit.hpp"
 #include "Units/SkinnyKidUnit.hpp"
 #include "Units/FatKidUnit.hpp"
+#include "Events/ActorDestroyedEvent.hpp"
 
 class WaveManager{
 

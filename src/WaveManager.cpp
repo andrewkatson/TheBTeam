@@ -6,9 +6,6 @@
   @author Jeremy Elkayam
  */
 
-#include <deque>
-#include <functional>
-#include "Events/ActorDestroyedEvent.hpp"
 #include "WaveManager.hpp"
 
 
