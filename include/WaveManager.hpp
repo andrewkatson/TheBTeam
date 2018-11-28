@@ -58,6 +58,9 @@ public:
   //The current level the user is at in the game.
   int level;
 
+  //The game's difficulty. This can be 1,2,or 3 - 1 for elementary school, 2 for middle school, and 3 for high school.
+  int difficulty;
+
   //The number of waves in the current level.
   unsigned int numWaves;
 
@@ -95,6 +98,7 @@ public:
    * converted to { 3, 0, 4, 2, 5 }.
    */
   map<int,vector<intPair>> getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
+
 
 
 public:
@@ -180,6 +184,8 @@ public:
   void handleMapGenerated(const EventInterface& event);
 
   void handleLevelChanged(const EventInterface& event);
+
+  void handleDiffChanged(const EventInterface& event);
 };
 
 #endif

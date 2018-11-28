@@ -47,8 +47,10 @@ void WaveManager::registerDelegates() {
   const EventType levelChangeEventType = levelChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_LevelChange")),levelChangeEventType);
 
+  EventManager::EventDelegate difficultyChangeDelegate = std::bind(&WaveManager::handleDiffChanged, this, _1);
   DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
   const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_DifficultyChange")),difficultyChangeEventType);
 }
 
 void WaveManager::deregisterDelegates() {
@@ -311,5 +313,12 @@ void WaveManager::handleLevelChanged(const EventInterface& event){
   auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
 
   level=levelChangedEventData->level;
-  //setupWaves(1);
+  //setupWaves();
+}
+
+void WaveManager::handleDiffChanged(const EventInterface& event){
+  auto difficultyChangedEvent = static_cast<const DifficultyChangeEvent*>(&event);
+  auto difficultyChangedEventData = static_cast<DifficultyChangeEventData*>((difficultyChangedEvent->data).get());
+
+  difficulty=difficultyChangedEventData->difficulty;
 }
