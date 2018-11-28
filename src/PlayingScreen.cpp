@@ -529,13 +529,10 @@ bool PlayingScreen::clickWithinRange(float mouseX, float mouseY, shared_ptr<Towe
   //the radius of the tower's effect area (either respawn or shooting range)
   float radius = tower -> getRadius();
 
-  //get the distance from the center of the click
-  float distanceOfClick = sqrt(pow(mouseX - towerX, 2) + pow(mouseY - towerY, 2));
+  //find distance of point from region bounded by the ellipse radius
+  float distanceOfPoint = pow((mouseX - towerX),2)/pow((radius*xScale),2) +  pow((mouseY - towerY),2)/pow((radius*yScale),2);
 
-  //we will use the minimum scale
-  float scale = min(xScale, yScale);
-
-  if(distanceOfClick <= radius*scale){
+  if(distanceOfPoint <= 1.0){
     return true;
   }
   return false;
