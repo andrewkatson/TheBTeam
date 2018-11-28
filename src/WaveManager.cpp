@@ -17,6 +17,7 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> currentWaveNumber = 0;
+  this -> timeElapsed = 0;
   this -> setUpPossibleEnemies();
   this -> registerDelegates();
 }
@@ -172,27 +173,37 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
 void WaveManager::startNextWave() {
   currentWaveNumber++;
-  //TODO - body
+
+
 }
 
 
 void WaveManager::endCurrentWave() {
+  assert(spawnedCurrentWave.empty());
     //TODO - code to stop the wave
     numWaves--;
 }
 
 void WaveManager::spawnNextUnit() {
-    shared_ptr<MeleeUnit> next_unit = currentWave.front();
-    //TODO - spawn the unit
-    currentWave.pop();
+  //this should only ever be called if there are units to spawn
+  assert(!currentWave.empty());
 
-    //add the unit to the vector of currently spawned units
-    //use the ID
-    spawnedCurrentWave[next_unit->getID()]=next_unit;
+  shared_ptr<MeleeUnit> next_unit = currentWave.front();
+  //TODO - spawn the unit
+  currentWave.pop();
+
+  //add the unit to the vector of currently spawned units
+  //use the ID
+  spawnedCurrentWave[next_unit->getID()]=next_unit;
 }
 
 void WaveManager::update(float deltaS) {
-    //TODO - implement
+  timeElapsed+=deltaS;
+  if(timeElapsed > textLoader->getDouble("IDS_SECONDS_BETWEEN_ENEMY_SPAWNS") && !currentWave.empty())
+  {
+    timeElapsed=0;
+    spawnNextUnit();
+  }
 }
 
 void WaveManager::setDistances(vector<vector<int>>& dists) {

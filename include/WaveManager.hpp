@@ -69,6 +69,8 @@ public:
 
   map<int,vector<intPair>>distancesFromEntryPositions;
 
+  float timeElapsed;
+
   /*
    *
    * @return a wave filled with enemies according to the specifications in the class (level, wave number)
@@ -87,6 +89,7 @@ public:
    * converted to { 3, 0, 4, 2, 5 }.
    */
   map<int,vector<intPair>> getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
+
 
 public:
   /*
