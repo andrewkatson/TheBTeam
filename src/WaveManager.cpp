@@ -12,10 +12,12 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
+  this -> windowX = windowX;
+  this -> windowY = windowY;
   this -> currentWaveNumber = 0;
   this -> timeElapsed = 0;
   this -> setUpPossibleEnemies();
@@ -77,6 +79,8 @@ void WaveManager::setupWaves(int difficulty){
 
 
 queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumber) {
+  assert(!distances.empty() && "Distances must be initialized AND UPDATED EVERY TIME THE MAP CHANGES.");
+  assert(!entryPositions.empty());
 
   queue<shared_ptr<MeleeUnit>>result;
 
@@ -164,6 +168,9 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
     //set the intPair to the enemy's starting point on the board grid
     enemy->setRow(entryPoint.first);
     enemy->setCol(entryPoint.second);
+
+    enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + 0.5)); // multipy tile size by tiles
+    enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + 0.5)); //window size / board size = tile size
 
     result.push(enemy);
   }

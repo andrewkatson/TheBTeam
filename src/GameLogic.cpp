@@ -17,7 +17,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
-  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader);
+  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY);
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader));
   this -> registerEvents();
   this -> registerDelegates();

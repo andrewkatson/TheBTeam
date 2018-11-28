@@ -58,6 +58,8 @@ public:
 
   unsigned int currentWaveNumber;
 
+  unsigned int windowX,windowY;
+
   //A random device to pull from
   std::random_device rd;
 
@@ -96,7 +98,7 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY);
   ~WaveManager();
 
   /*
