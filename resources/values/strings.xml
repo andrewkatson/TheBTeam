@@ -215,6 +215,7 @@
     <string value="Projectile_Manager_Actor_Created" id="IDS_ProjectileManager_ActorCreated"> </string>
     <!--Wave Manager Delegates-->
     <string value="Wave_Manager_Actor_Destroyed" id="IDS_WaveManager_ActorDestroyed"> </string>
+    <string value="Wave_Manager_Map_Generated" id="IDS_WaveManager_MapGenerated"> </string>
 
 
   <!--MainMenuScreen Delegates-->

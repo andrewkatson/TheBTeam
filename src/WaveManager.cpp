@@ -27,7 +27,6 @@ WaveManager::~WaveManager(){
 
 
 void WaveManager::registerDelegates() {
-  //bind our delegate function for mouse presses
   EventManager::EventDelegate actorDestroyedDelegate = std::bind(&WaveManager::handleActorDestroyed, this, _1);
 
   //make an event and get its type
@@ -35,6 +34,12 @@ void WaveManager::registerDelegates() {
   EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_WaveManager_ActorDestroyed")),actorDestroyedEventType);
+
+
+  EventManager::EventDelegate mapGenDelegate = std::bind(&WaveManager::handleMapGenerated, this, _1);
+  MapGeneratedEvent mapGenEvent = MapGeneratedEvent();
+  EventType mapGenEventType = mapGenEvent.getEventType();
+  this -> eventManager -> registerDelegate(mapGenDelegate, textLoader -> getString(string("IDS_WaveManager_MapGenerated")),mapGenEventType);
 }
 
 void WaveManager::deregisterDelegates() {
@@ -281,4 +286,14 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
   if(spawnedCurrentWave.count(actorID)) {
     spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
   }
+}
+
+void WaveManager::handleMapGenerated(const EventInterface& event){
+  auto mapGeneratedEvent= static_cast<const MapGeneratedEvent*>(&event);
+
+  auto mapGeneratedEventData = static_cast<MapGeneratedEventData*>((mapGeneratedEvent->data).get());
+
+  setDistances(mapGeneratedEventData->dists);
+  setEntryPoints(mapGeneratedEventData->entrances);
+
 }

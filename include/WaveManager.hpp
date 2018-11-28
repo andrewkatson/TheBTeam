@@ -23,6 +23,7 @@ using namespace std;
 #include "Units/SkinnyKidUnit.hpp"
 #include "Units/FatKidUnit.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
+#include "Events/MapGeneratedEvent.hpp"
 
 class WaveManager{
 
@@ -61,7 +62,7 @@ public:
 
   unsigned int currentWaveNumber;
 
-  unsigned int windowX,windowY;
+  int windowX,windowY;
 
   //A random device to pull from
   std::random_device rd;
@@ -77,7 +78,6 @@ public:
   float timeElapsed;
 
   /*
-   *
    * @return a wave filled with enemies according to the specifications in the class (level, wave number)
    */
   queue<shared_ptr<MeleeUnit>> makeWave(int difficulty, int waveNumber);
@@ -175,6 +175,8 @@ public:
   unordered_map<long long,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 
   void handleActorDestroyed(const EventInterface& event);
+
+  void handleMapGenerated(const EventInterface& event);
 };
 
 #endif
