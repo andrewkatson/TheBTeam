@@ -26,6 +26,7 @@ using namespace std;
 #include "Events/MapGeneratedEvent.hpp"
 #include "Events/LevelChangeEvent.hpp"
 #include "Events/DifficultyChangeEvent.hpp"
+#include "Events/WaveChangeEvent.hpp"
 
 class WaveManager{
 
@@ -106,7 +107,7 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level,int startingDifficulty);
   ~WaveManager();
 
   /*
@@ -118,6 +119,8 @@ public:
    * Deregister all event delegates for this class
    */
   void deregisterDelegates();
+
+  void registerEvents();
 
   /*
    * Setup the possible enemies that can spawn

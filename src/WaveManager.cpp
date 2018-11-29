@@ -9,16 +9,18 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level,int startingDifficulty){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> level = level;
-  this -> currentWaveNumber = 0;
+  this -> difficulty = startingDifficulty;
+  this -> currentWaveNumber = 1;
   this -> timeElapsed = 0;
   this -> setUpPossibleEnemies();
+  this -> setupWaves();
   this -> registerDelegates();
 }
 
@@ -26,6 +28,12 @@ WaveManager::~WaveManager(){
   this -> deregisterDelegates();
 }
 
+void WaveManager::registerEvents(){
+  WaveChangeEvent wce = WaveChangeEvent();
+  EventType wceType = wce.getEventType();
+
+  this -> eventManager -> registerEvent(wceType);
+}
 
 void WaveManager::registerDelegates() {
   EventManager::EventDelegate actorDestroyedDelegate = std::bind(&WaveManager::handleActorDestroyed, this, _1);
@@ -72,7 +80,9 @@ void WaveManager::setUpPossibleEnemies(){
 
 void WaveManager::setupWaves(){
 
-  currentWaveNumber = 0;
+  printf("difficulty: %d\nlevel: %d\n",difficulty,level);
+
+  currentWaveNumber = 1;
 
   std::mt19937 rnd_gen (rd ());
 
@@ -84,10 +94,11 @@ void WaveManager::setupWaves(){
 
   unsigned int num_waves = round(num_waves_rng(rnd_gen));
 
-  if(num_waves<0) num_waves=1; //on the off-chance that we generated a negative or 0 value, round that shit
+  if(num_waves<=0) num_waves=1; //on the off-chance that we generated a negative or 0 value, round that shit
 
   numWaves=num_waves;
 
+  printf("picked our waves: %d waves\n",numWaves);
 }
 
 
@@ -187,12 +198,12 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave() {
 
     result.push(enemy);
   }
+  printf("created a wave\n");
   return result;
 }
 
 
 void WaveManager::startNextWave() {
-  currentWaveNumber++;
 
 
 }
@@ -209,12 +220,13 @@ void WaveManager::spawnNextUnit() {
   assert(!currentWave.empty());
 
   shared_ptr<MeleeUnit> next_unit = currentWave.front();
-  //TODO - spawn the unit
   currentWave.pop();
 
   //add the unit to the vector of currently spawned units
   //use the ID
   spawnedCurrentWave[next_unit->getID()]=next_unit;
+
+  printf("birthed a unit: %d \n",next_unit->getID());
 }
 
 void WaveManager::update(float deltaS) {
@@ -229,6 +241,8 @@ void WaveManager::update(float deltaS) {
     timeElapsed=0;
     spawnNextUnit();
   }
+
+
 }
 
 void WaveManager::setDistances(vector<vector<int>>& dists) {
@@ -298,9 +312,19 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
   ActorDestroyedEventData* actorDestroyedEventData = static_cast<ActorDestroyedEventData*>((actorDestroyedEvent -> data).get());
 
   long long actorID = actorDestroyedEventData -> actorID;//get the dead actor's ID
+  float time = actorDestroyedEventData -> timeStamp;
+
+
 
   if(spawnedCurrentWave.count(actorID)) {
     spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
+
+    if(spawnedCurrentWave.empty() && currentWave.empty()){
+      //if both of these are empty, that means the last guy in the wave just died
+      currentWaveNumber++;
+      shared_ptr<EventInterface> wcEvent = make_shared<WaveChangeEvent>(currentWaveNumber, time);
+
+    }
   }
 }
 
@@ -319,7 +343,6 @@ void WaveManager::handleLevelChanged(const EventInterface& event){
 
   level=levelChangedEventData->level;
   setupWaves();
-  currentWaveNumber=0;
 }
 
 void WaveManager::handleDiffChanged(const EventInterface& event){
@@ -327,4 +350,8 @@ void WaveManager::handleDiffChanged(const EventInterface& event){
   auto difficultyChangedEventData = static_cast<DifficultyChangeEventData*>((difficultyChangedEvent->data).get());
 
   difficulty=difficultyChangedEventData->difficulty;
+}
+
+void WaveManager::handleWaveChange(const EventInterface& event){
+
 }
