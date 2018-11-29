@@ -144,6 +144,10 @@ void GameLogic::deregisterDelegates(){
 
 //Called once every loop. Update according to elapsed time.
 void GameLogic::updateGameLogic(float deltaS){
+  if(getGameState()==State::Playing){
+    this -> waveManager -> update(deltaS);
+  }
+
   this -> eventManager -> processEvent();
   //cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){

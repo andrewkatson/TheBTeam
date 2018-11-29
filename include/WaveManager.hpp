@@ -48,7 +48,7 @@ public:
   shared_ptr<TextureLoader> textureLoader;
 
   //Vector storing every enemy type that can be spawned.
-  vector<shared_ptr<MeleeUnit>> enemies;
+  //vector<shared_ptr<MeleeUnit>> enemies;
 
   /*
    * A queue storing every enemy in the current wave.
@@ -130,7 +130,7 @@ public:
   /*
    * Setup the possible enemies that can spawn
    */
-  void setUpPossibleEnemies();
+  //void setUpPossibleEnemies();
 
   /*
    * Return the next wave in waves.

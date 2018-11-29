@@ -117,7 +117,10 @@ public:
 
     @return an integer representing the actor's identity
    */
-  int getID(){return id;}
+//  int getID(){return id;}
+// Redundant AND confusing because ActorInterface has this same thing
+// and it returns a long long (as it should). I think I did this some time ago
+// and it should not work for this
 
   /*
     Returns the actor's sprite.

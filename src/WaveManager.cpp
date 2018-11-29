@@ -19,7 +19,7 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
   this -> difficulty = startingDifficulty;
   this -> currentWaveNumber = 1;
   this -> timeElapsed = 0;
-  this -> setUpPossibleEnemies();
+  //this -> setUpPossibleEnemies();
   this -> setupWaves();
   this -> registerDelegates();
 }
@@ -43,7 +43,6 @@ void WaveManager::registerDelegates() {
   const EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_WaveManager_ActorDestroyed")),actorDestroyedEventType);
-
 
   EventManager::EventDelegate mapGenDelegate = std::bind(&WaveManager::handleMapGenerated, this, _1);
   MapGeneratedEvent mapGenEvent = MapGeneratedEvent();
@@ -70,7 +69,7 @@ void WaveManager::deregisterDelegates() {
 
 }
 
-
+/*
 void WaveManager::setUpPossibleEnemies(){
   shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(textLoader, eventManager, textureLoader);
 
@@ -82,6 +81,7 @@ void WaveManager::setUpPossibleEnemies(){
   enemies.push_back(averageKid);
   enemies.push_back(fatKid);
 }
+*/
 
 void WaveManager::setupWaves(){
 
@@ -112,27 +112,45 @@ void WaveManager::createNextWave() {
   assert(!entryPositions.empty());
   assert(currentWave.empty() && "don't create a new wave if there's still enemies left in the one you already have...");
 
-  double avg=difficulty*currentWaveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
+  double avg = difficulty * currentWaveNumber * level * textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
 
-  std::normal_distribution<double> wave_weight_rng (avg,avg*.4);
+  std::normal_distribution<double> wave_weight_rng(avg, avg * .4);
 
-  std::mt19937 rnd_gen (rd ());
+  std::mt19937 rnd_gen(rd());
 
   //average 15, standard deviation 5
-  std::normal_distribution<double> enemy_type_rng(15,5);
+  std::normal_distribution<double> enemy_type_rng(15, 5);
 
   //At minimum, stats will be scaled down by 20%
-  double min_scale=textLoader->getDouble("IDS_STAT_MIN_SCALAR");
+  double min_scale = textLoader->getDouble("IDS_STAT_MIN_SCALAR");
 
   //At maximum, stats will be scaled up by 20% for difficulty 1, 40% for 2, etc.
-  double max_scale=textLoader->getDouble("IDS_STAT_MAX_SCALAR")*difficulty;
+  double max_scale = textLoader->getDouble("IDS_STAT_MAX_SCALAR") * difficulty;
 
-  std::uniform_real_distribution<double> percent_perturbation_rng(min_scale,max_scale);
+  std::uniform_real_distribution<double> percent_perturbation_rng(min_scale, max_scale);
 
-  buildDistanceEntryMap(entryPositions,distances);
+  buildDistanceEntryMap(entryPositions, distances);
+/*
+  for (auto it = distancesFromEntryPositions.begin();it != distancesFromEntryPositions.end(); it++){
+    printf("distances. key = %d\nvalues: ",it->first);
+    for(int z=0;z<it->second.size();z++){
+      printf("{ %d , %d }",it->second[z].first,it->second[z].second);
+    }
+    printf("\n");
+  }
+*/
 
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
-
+  //printf("***** NORMALIZE ***** \n");
+/*
+  for (auto it = distancesFromEntryPositions.begin();it != distancesFromEntryPositions.end(); it++){
+    printf("distances. key = %d\nvalues: ",it->first);
+    for(int z=0;z<it->second.size();z++){
+      printf("{ %d , %d }",it->second[z].first,it->second[z].second);
+    }
+    printf("\n");
+  }
+  */
   double range=(--distancesFromEntryPositions.end())->first;
 
   std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
@@ -143,13 +161,15 @@ void WaveManager::createNextWave() {
     double randnum=enemy_type_rng(rnd_gen);
     shared_ptr<MeleeUnit> enemy;
     if(randnum<10){
-      enemy = std::static_pointer_cast<MeleeUnit>(enemies[0]);//add a skinny kid
+      enemy = make_shared<SkinnyKidUnit>(textLoader,eventManager,textureLoader);
       weight+=textLoader->getDouble("IDS_SKINNY_WEIGHT");
     }else if(randnum>=10 && randnum<20){
-      enemy = static_pointer_cast<MeleeUnit>(enemies[1]);//add a normal kid
+      enemy = make_shared<AverageKidUnit>(textLoader,eventManager,textureLoader);
+      //enemy = static_pointer_cast<MeleeUnit>(enemies[1]);//add a normal kid
       weight+=textLoader->getDouble("IDS_AVERAGE_WEIGHT");
     }else if(randnum>=20){
-      enemy = static_pointer_cast<MeleeUnit>(enemies[2]);//add a fat kid
+      enemy = make_shared<FatKidUnit>(textLoader,eventManager,textureLoader);
+      //enemy = static_pointer_cast<MeleeUnit>(enemies[2]);//add a fat kid
       weight+=textLoader->getDouble("IDS_FAT_WEIGHT");
     }
     //Randomize this stuff to be +/- 20% of the default
@@ -170,6 +190,11 @@ void WaveManager::createNextWave() {
 
     //iterate through every key in the map
     for(auto iterator=(distancesFromEntryPositions.begin());iterator!=distancesFromEntryPositions.end();iterator++){
+      //printf("picking entrance. key: %d,length of vector: %ld\n",iterator->first,iterator->second.size());
+      //for(int z=0;z<iterator->second.size();z++){
+      //  printf("{ %d , %d } ",iterator->second[z].first,iterator->second[z].second);
+      //}
+      //printf("\n");
       //current and next keys in the map
       double current=iterator->first;
       double next=(++iterator)->first;
@@ -186,23 +211,53 @@ void WaveManager::createNextWave() {
       roundedKey=iterator->first;
     }
 
+    //printf("rounded key: %d\n",roundedKey);
+
     //now that we have our distance key, we can get all of the entry positions with that distance
     vector<intPair> chosenEntrances=distancesFromEntryPositions[roundedKey];
 
+    /*
+    printf("chosen entrances size: %ld\n",chosenEntrances.size());
+    for(int z=0;z<chosenEntrances.size();z++){
+      printf("{ %d , %d } ",chosenEntrances[z].first,chosenEntrances[z].second);
+    }
+    printf("\n");
+*/
     //pick a random intPair from the vector
-    uniform_int_distribution<int> entrance_chooser_rng(0,chosenEntrances.size());
+    uniform_int_distribution<unsigned long> entrance_chooser_rng(0,chosenEntrances.size()-1);
     intPair entryPoint=chosenEntrances[entrance_chooser_rng(rnd_gen)];
+
+    printf("chosen entry point row: %d\ncol: %d\n",entryPoint.first,entryPoint.second);
 
     //set the intPair to the enemy's starting point on the board grid
     enemy->setRow(entryPoint.first);
     enemy->setCol(entryPoint.second);
 
-    enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + 0.5)); // multipy tile size by tiles
-    enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + 0.5)); //window size / board size = tile size
+    uniform_real_distribution<float>entry_offset_rng(0.0001,0.9999);
+
+    float offset=entry_offset_rng(rnd_gen);
+    float xOffset,yOffset;
+
+    if(entryPoint.first == 0){
+      yOffset =0.001;
+      xOffset=offset;
+    }else if(entryPoint.second==0){
+      yOffset =offset;
+      xOffset=0.001;
+    }else if(entryPoint.first==distances.size()-1){
+      yOffset =0.999;
+      xOffset=offset;
+    }else{
+      yOffset =offset;
+      xOffset=0.999;
+    }
+
+    enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + xOffset)); // multiply tile size by tiles
+    enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
 
     currentWave.push(enemy);
   }
-  printf("created a wave\n");
+  printf("created a wave with %ld units\n",currentWave.size());
 }
 
 
@@ -229,14 +284,16 @@ void WaveManager::spawnNextUnit() {
   //use the ID
   spawnedCurrentWave[next_unit->getID()]=next_unit;
 
-  printf("birthed a unit: %d \n",next_unit->getID());
+  printf("birthed a unit: %llx \nspawned:%ld\nleft:%ld\nxcor: %f\n ycor: %f\nrow: %d\ncol: %d\n*****\n",
+          next_unit->getID(),spawnedCurrentWave.size(),currentWave.size(),next_unit->getXCoordinate(),
+          next_unit->getYCoordinate(),next_unit->getRow(),next_unit->getCol());
+
 }
 
 void WaveManager::update(float deltaS) {
   // if there are no waves left, make a LevelChangeEvent for a new level
   // if there are waves left but no enemies left do nothing
-  //
-
+  //printf("updating wave manager...\n");
 
   timeElapsed+=deltaS;
   if(timeElapsed > textLoader->getDouble("IDS_SECONDS_BETWEEN_ENEMY_SPAWNS") && !currentWave.empty())
