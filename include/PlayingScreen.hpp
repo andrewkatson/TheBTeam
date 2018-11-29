@@ -86,7 +86,7 @@ public:
   void drawFloorExit(sf::RenderWindow& window, int row, int col, float yTileSize,
      float xTileSize, sf::RectangleShape& floorRect);
   void drawTowersAndObstacles(sf::RenderWindow& window);
-  void drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window);
+  void drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderWindow& window);
   void drawTowerRadius(shared_ptr<TowerInterface> tower, sf::RenderWindow& window, float xScale, float yScale, sf::Color color);
   void drawEnemyUnits(sf::RenderWindow& window);
   void drawProjectiles(sf::RenderWindow& window);

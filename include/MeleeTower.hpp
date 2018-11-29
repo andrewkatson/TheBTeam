@@ -42,6 +42,7 @@ public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~MeleeTower();
   void update(float delta);
+  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex);
 
   void initSprite();
 
@@ -53,6 +54,7 @@ public:
   void resetRallyPoint(float x, float y);
   float getRallyX(){return xRally;}
   float getRallyY(){return yRally;}
+  vector<shared_ptr<MeleeUnit>>& getUnits(){return currentUnits;}
 
   /*
    * @return the price of the tower

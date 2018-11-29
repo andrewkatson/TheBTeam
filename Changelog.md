@@ -16,6 +16,8 @@
 - CompView controls enemy melee units and sets their direction to move toward the map exit
 - all towers use floats for their coordinates
 - radius circles are now centered
+- all melee units will be initalized to the center of the tower that spawns them
+- all non dead allied melee units will be drawn 
  [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.

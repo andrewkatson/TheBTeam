@@ -32,6 +32,8 @@ shared_ptr<Projectile> currentProjectile;
 shared_ptr<TextLoader> textLoader;
 //the rate that this tower can fire projectiles at
 int rateOfFire;
+//the time that the last shot was fired
+float lastTimeFired;
 protected:
   virtual shared_ptr<ActorInterface> createProjectile();
 public:

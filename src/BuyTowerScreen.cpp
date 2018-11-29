@@ -52,15 +52,12 @@ void BuyTowerScreen::initBackButton(){
   this -> backButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
-  cout  << "red for text  " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")) << " and blue "<< this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")) << " and green " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")) << " and alpha " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")) << endl;
 
   //set the outline color for the text
   this -> backButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
-
-  cout  << "red for text outline  " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")) << " and blue "<< this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")) << " and green " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")) << " and alpha " << this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")) << endl;
-
+  
   //set the button text outline thickness
   this->backButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
 

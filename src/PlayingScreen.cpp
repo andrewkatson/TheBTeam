@@ -896,11 +896,65 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
 
 /*
  * Draw all the units for the melee tower to the screen
- * @param meleeTower: the current tower
+ * @param tower: the current tower
  * @param window: the game window to draw
  */
-void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window){
-  //TODO implementation
+void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderWindow& window){
+  MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+
+  //all the units spawned by this tower
+  vector<shared_ptr<MeleeUnit>> units = meleeTower -> getUnits();
+
+  //the size of each tile in x direction
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //the size of each tile in y direction
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //iterate through all the units
+  for(shared_ptr<MeleeUnit>& unit : units){
+    //only draw them if they have health
+    if(unit -> getHitpoints() != 0){
+      //get the sprite to be drawn
+      sf::Sprite currentSprite = unit -> getSprite();
+
+      //the x and y position of this rectangle
+      float xPos = unit -> getXCoordinate();
+      float yPos = unit -> getYCoordinate();
+
+
+      float towerX = meleeTower -> getXCoordinate();
+      float towerY = meleeTower -> getYCoordinate();
+
+      //only draw the units if they do not have the coordinates
+      //that are the same as the tower center (i.e. their initialization coordinates)
+      if(!(xPos == towerX && yPos == towerY)){
+        //the bounding rectangle will give us the dimensions of the sprite
+        sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+        //the x dimension of the box
+        float xDim = boundingBox.width;
+        //the ydimension of the box
+        float yDim = boundingBox.height;
+
+        //the scaling used for the units so that they do not fill up an entire square
+        float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
+        float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
+
+        //the scale in the x direction
+        float xScale = (float) xTileSize / ((float) xDim*unitScaleX);
+        //the scale in the y direction
+        float yScale = (float) yTileSize / ((float) yDim*unitScaleY);
+
+        //set the scale for the tower/obstalce to fill up the square
+        currentSprite.setScale(xScale, yScale);
+
+        //set the position of the sprite to the top left of the rectangle
+        currentSprite.setPosition(xPos, yPos);
+
+        //finally draw the sprite
+        window.draw(currentSprite);
+      }
+    }
+  }
 }
 
 

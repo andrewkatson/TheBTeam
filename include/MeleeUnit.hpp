@@ -42,7 +42,6 @@ protected:
   //The index of the sprite that the actor is currently using.
   int current_sprite;
 
-
 public:
 
   void update(float delta);
@@ -69,6 +68,8 @@ public:
   void setArmor(int armor);
 
   int getAttackRadius() const;
+
+  shared_ptr<MeleeUnit> getEngagedUnit(){return engagedUnit;}
 
   void setAttackRadius(int attackRadius);
 

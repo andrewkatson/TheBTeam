@@ -880,7 +880,6 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
       (this->buyTower) -> setButtonPosition(TOPRIGHT);
     }
     else if(gameLogic->isObstacle(rowSelected,colSelected)){
-      cout  << "there is an obstacle!" << endl;
       (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
       (this->buyTower) -> setButtonPosition(TOPRIGHT);
     }
