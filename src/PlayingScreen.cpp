@@ -11,6 +11,7 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
   this -> playingScreenHeader = make_shared<PlayingScreenHeader>(eventManager, textLoader, gameLogic);
+  this -> waveGoingOn = false;
   somethingChanged = true;
   haveSetColorShift=false;
   this -> registerPersistentDelegates();
@@ -76,6 +77,15 @@ void PlayingScreen::registerDelegates(){
   EventType mousePressEventType = mousePressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_PS_MP")),mousePressEventType);
+
+
+  EventManager::EventDelegate wcDelegate = std::bind(&PlayingScreen::handleWaveChange, this, _1);
+
+  WaveChangeEvent wcEvent = WaveChangeEvent();
+  EventType wceType = wcEvent.getEventType();
+  this -> eventManager -> registerDelegate(wcDelegate, textLoader -> getString(string("IDS_PlayingScreen_WaveChange")),wceType);
+
+
 
   //register delegates for the header
   playingScreenHeader -> registerDelegates();
@@ -373,7 +383,19 @@ void PlayingScreen::handleKeyPress(const EventInterface& event){
     shared_ptr<EventInterface> mainMenuState = make_shared<StateChangeEvent>(State::MainMenu, nowInNano);
 
     this -> eventManager -> queueEvent(mainMenuState);
+  }else if(key == "W" && !waveGoingOn){
+    printf("ok, starting a wave\n");
+    shared_ptr<EventInterface> waveChangeEvent = make_shared<WaveChangeEvent>(playingScreenHeader->getWaveNumber(),nowInNano,true);
+
+    eventManager -> queueEvent(waveChangeEvent);
   }
+}
+
+void PlayingScreen::handleWaveChange(const EventInterface& event){
+  auto wcEvent = static_cast<const WaveChangeEvent *>(&event);
+  auto wcEventData = static_cast<WaveChangeEventData *>((wcEvent->data).get());
+
+  waveGoingOn = wcEventData->waveStart;
 }
 
 /*

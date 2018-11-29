@@ -223,6 +223,8 @@
     <string value="Wave_Manager_Actor_Destroyed" id="IDS_WaveManager_ActorDestroyed"> </string>
     <string value="Wave_Manager_Map_Generated" id="IDS_WaveManager_MapGenerated"> </string>
     <string value="Wave_Manager_Level_Change" id="IDS_WaveManager_LevelChange"> </string>
+  <string value="Wave_Manager_Difficulty_Change" id="IDS_WaveManager_DifficultyChange"> </string>
+  <string value="Wave_Manager_Wave_Change" id="IDS_WaveManager_WaveChange"> </string>
 
   <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
@@ -234,6 +236,7 @@
     <string value="PLAYINGSCREENHANDLEMOUSEPRESS" id="IDS_PS_MP"> </string>
     <string value="PLAYINGSCREENHANDLEKEYPRESS" id="IDS_PS_KP"> </string>
     <string value="Playing_Screen_Handle_State_Change" id="IDS_PS_SC"> </string>
+  <string value="Playing_Screen_Handle_Wave_Change" id="IDS_PlayingScreen_WaveChange"> </string>
     <!--PlayingScreenHeader Delegates-->
     <string value="Playing_Screen_Header_Key_Press" id="IDS_PSH_KP"> </string>
     <string value="Playing_Screen_Header_Mouse_Press" id="IDS_PSH_MP"> </string>

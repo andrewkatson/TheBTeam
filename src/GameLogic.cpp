@@ -159,8 +159,8 @@ void GameLogic::updateGameLogic(float deltaS){
       fryGuy -> setXCoordinate(3 * gridX);
       fryGuy -> setYCoordinate(2 * gridY);
 
-      //add to the current wave of spawned
-      (waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
+      //DON'T add to the current wave of spawned because that breaks things, IDIOT!
+      //(waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
 
       vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 

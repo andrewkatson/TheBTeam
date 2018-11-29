@@ -59,6 +59,11 @@ void WaveManager::registerDelegates() {
   DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
   const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_DifficultyChange")),difficultyChangeEventType);
+
+  EventManager::EventDelegate waveChangeDelegate = std::bind(&WaveManager::handleWaveChange, this, _1);
+  WaveChangeEvent waveChangeEvent = WaveChangeEvent();
+  const EventType waveChangeEventType = waveChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(waveChangeDelegate, textLoader -> getString(string("IDS_WaveManager_WaveChange")),waveChangeEventType);
 }
 
 void WaveManager::deregisterDelegates() {
@@ -202,8 +207,8 @@ void WaveManager::createNextWave() {
 
 
 void WaveManager::startNextWave() {
-  assert(spawnedCurrentWave.empty());
-  assert(currentWave.empty());
+  assert(currentWave.empty() && "this will make a wave for you... so there shouldn't be a wave");
+  assert(spawnedCurrentWave.empty() && "A new wave should only begin if the last wave is completely eliminated.");
   createNextWave();
   numWaves--;
 }
@@ -310,8 +315,11 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
   ActorDestroyedEventData* actorDestroyedEventData = static_cast<ActorDestroyedEventData*>((actorDestroyedEvent -> data).get());
 
   long long actorID = actorDestroyedEventData -> actorID;//get the dead actor's ID
-  float time = actorDestroyedEventData -> timeStamp;
 
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
 
   if(spawnedCurrentWave.count(actorID)) {
@@ -320,8 +328,9 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
     if(spawnedCurrentWave.empty() && currentWave.empty()){
       //if both of these are empty, that means the last guy in the wave just died
       currentWaveNumber++;
-      shared_ptr<EventInterface> wcEvent = make_shared<WaveChangeEvent>(currentWaveNumber, time);
+      shared_ptr<EventInterface> wcEvent = make_shared<WaveChangeEvent>(currentWaveNumber, nowInNano);
 
+      eventManager->queueEvent(wcEvent);
     }
   }
 }

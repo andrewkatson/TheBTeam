@@ -52,6 +52,8 @@ private:
   int headerRecalculated;
   //a special circular button that is used by the melee towers to reset their rally points
   unique_ptr<Button> rallyPointChange;
+  //true if there's a wave happening. false otherwise
+  bool waveGoingOn;
 
 public:
   PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,
@@ -76,6 +78,7 @@ public:
   bool clickedOnAPath(float mouseX, float mouseY);
   bool firstTimeClickOnRallyFlag(shared_ptr<TowerInterface> tower);
   void handleStateChange(const EventInterface& event);
+  void handleWaveChange(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);

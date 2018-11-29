@@ -75,6 +75,8 @@ public:
   void resetWaveButton();
 
   float getMaximumY();
+  //return the wave number as stored in the header variable
+  int getWaveNumber(){return headerVariableValues.at(3);}
 
   void registerDelegates();
   void registerPersistentDelegates();

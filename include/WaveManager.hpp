@@ -16,6 +16,7 @@ using namespace std;
 #include <map>
 #include <deque>
 #include <functional>
+#include <chrono>
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "TextLoader.hpp"
@@ -27,6 +28,10 @@ using namespace std;
 #include "Events/LevelChangeEvent.hpp"
 #include "Events/DifficultyChangeEvent.hpp"
 #include "Events/WaveChangeEvent.hpp"
+
+using std::chrono::high_resolution_clock;
+using std::chrono::nanoseconds;
+using std::chrono::duration_cast;
 
 class WaveManager{
 
