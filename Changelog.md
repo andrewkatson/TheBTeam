@@ -1,5 +1,35 @@
 [Unreleased]
 ###Added
+- DifficultyChangeEvent,DifficultyChangeEventData [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Pressing w now creates a new wave and begins spawning its units if a wave is not in progress
+- Enemy units now spawn at a random position at the edge of their entrance square
+- Many assertions in WaveManager so that functions are activated from safe contexts
+
+###Changed
+- Many major changes to wave generation [@jeremyelkayam][https://github.com/jeremyelkayam]
+ - Wave generation tweaked for debugging and to accomodate better randomization
+ - Inclusion of difficulty as an instance variable
+  - updated when adjusted by the player
+ - More Events!
+  - Takes ActorDestroyedEvents and removes units accordingly
+  - Takes MapGeneratedEvents and updates map info accordingly
+  - Takes LevelChangeEvents and sets up a new wave set for each new level
+  - Takes DifficultyChangeEvents and updates difficulty setting accordingly
+  - Takes and raises WaveChangeEvents every time a wave is signaled to begin or end.
+ - WaveManager spawns units in its update function once every 10th of a second (adjustable)
+ - Disabled CompView movement for now in order to get spawning working properly
+
+###Fixed
+- Sometimes units were initialized with bogus coordinates [@jeremyelkayam][https://github.com/jeremyelkayam]
+- CompView will now only direct units to move to path tiles (previously they could move onto other tiles)
+
+###Removed
+- MeleeUnit::getID() (removed for being redundant and confusing) [@jeremyelkayam][https://github.com/jeremyelkayam]
+- WaveManager no longer selects its unit types from an array; it now allocates them in hardcoded fashion
+ - The instance variable `enemies` and function `setupPossibleEnemies` are no longer necessary, so they no longer exist.
+
+[0.5.0] 2018-11-29
+###Added
 - ActorCreatedEvent,ActorCreatedEventData [@andrewkatson][https://github.com/andrewkatson]
 - AllyCompView to deal with tower attacking, allied unit attacking and projectile hits
 
@@ -18,7 +48,7 @@
 - radius circles are now centered
 - all melee units will be initalized to the center of the tower that spawns them
 - all non dead allied melee units will be drawn 
- [@jeremyelkayam][https://github.com/jeremyelkayam]
+- AI for enemy units [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.
 - MapGeneratedEvent now includes information on the new map which is used by WaveManager
