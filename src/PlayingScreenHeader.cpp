@@ -18,6 +18,7 @@ PlayingScreenHeader::PlayingScreenHeader(shared_ptr<EventManager> eventManager, 
   rowSelected = 0;
   colSelected = 0;
   timesHeaderRecalculated = 0;
+  blockClicks = false;
   registerPersistentDelegates();
 }
 
@@ -799,9 +800,9 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
    */
   MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
   //get the xposition
-  float xPos = mpEventData -> x - getXOffSet();
+  float xPos = mpEventData -> x;
   //get the y position
-  float yPos = mpEventData -> y - getYOffSet();
+  float yPos = mpEventData -> y;
 
   //get the size of a tile in the x
   float xTileSize = getTrueXTileSize();
@@ -813,10 +814,15 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
   //what col is being clicked
   int col = (int) xPos / xTileSize;
 
+  //if the playing screen is blocking clicks for some reason
+  if(blockClicks){
+    return;
+  }
+
   //check if BuyTower button is being clicked
   //modify the xposition to reflect if there is an offset
   //otherwise it will not register the click
-  bool buyTowerClicked = (this->buyTower) -> isSelected(xPos + getXOffSet(),yPos + getYOffSet());
+  bool buyTowerClicked = (this->buyTower) -> isSelected(xPos,yPos);
   if(buyTowerClicked){
     shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, rowSelected, colSelected, true, nowInNano);
 
@@ -827,7 +833,7 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
   //check if SellTower button is being clicked
   //modify the xposition to reflect if there is an offset
   //otherwise it will not register the click
-  bool sellTowerClicked = (this->sellTower) -> isSelected(xPos + getXOffSet(),yPos + getYOffSet());
+  bool sellTowerClicked = (this->sellTower) -> isSelected(xPos,yPos);
   if(sellTowerClicked){
     shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, rowSelected, colSelected, false, nowInNano);
 
@@ -1031,10 +1037,7 @@ float PlayingScreenHeader::getXOffSet(){
  * @return the offset in the y direction for the header
  */
 float PlayingScreenHeader::getYOffSet(){
-  if(!visible){
-    return 0.0;
-  }
-  return ySize;
+  return 0.0;
 }
 
 /*

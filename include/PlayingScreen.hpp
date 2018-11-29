@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SFML/Window.hpp"
 #include "Screen.hpp"
 #include "GameLogic.hpp"
 #include "Button.hpp"
@@ -12,6 +13,7 @@ using std::make_tuple;
 using std::get;
 class PlayingScreen : public Screen {
 private:
+  sf::Mouse mouse;
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
   //Store the textLoader to make requests for strings and constants
@@ -48,16 +50,19 @@ private:
   //if it is different than the value in playing screen header than we know
   //the header has been changed recently
   int headerRecalculated;
+  //a special circular button that is used by the melee towers to reset their rally points
+  unique_ptr<Button> rallyPointChange;
 
 public:
-  PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,shared_ptr<GameLogic> gameLogic, int windowX, int windowY);
+  PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,
+    shared_ptr<GameLogic> gameLogic, int windowX, int windowY);
   ~PlayingScreen();
   void registerDelegates();
   void registerPersistentDelegates();
   void deregisterPersistentDelegates();
   void deregisterDelegates();
   void initDrawingMaterials();
-  void initBuyTowerButton();
+  void initRallyPointButton();
   void initColorShifts();
   void initColorShiftsForFloor();
   void initColorShiftsForPath();
@@ -67,6 +72,9 @@ public:
   void handleTowerRemove(const EventInterface& event);
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
+  bool clickWithinRange(float mouseX, float mouseY, shared_ptr<TowerInterface> tower);
+  bool clickedOnAPath(float mouseX, float mouseY);
+  bool firstTimeClickOnRallyFlag(shared_ptr<TowerInterface> tower);
   void handleStateChange(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
@@ -78,7 +86,8 @@ public:
   void drawFloorExit(sf::RenderWindow& window, int row, int col, float yTileSize,
      float xTileSize, sf::RectangleShape& floorRect);
   void drawTowersAndObstacles(sf::RenderWindow& window);
-  void drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::RenderWindow& window);
+  void drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderWindow& window);
+  void drawTowerRadius(shared_ptr<TowerInterface> tower, sf::RenderWindow& window, float xScale, float yScale, sf::Color color);
   void drawEnemyUnits(sf::RenderWindow& window);
   void drawProjectiles(sf::RenderWindow& window);
 
@@ -88,4 +97,6 @@ public:
   void printVector(const vector<vector<T>> &v);
 
   shared_ptr<PlayingScreenHeader> getHeader(){return playingScreenHeader;};
+
+  bool isFlagButtonClicked(){return rallyPointChange->isButtonClicked();}
 };

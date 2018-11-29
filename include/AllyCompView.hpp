@@ -33,5 +33,5 @@
 
    void updateProjectiles(float deltaS);
 
-   void moveAllyUnits(float deltaS);
+   void updateTowers(float deltaS);
  };

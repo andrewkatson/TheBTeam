@@ -194,6 +194,10 @@
     <!--TrashCanObstacle-->
     <string value="../resources/sprites/obstacle/trashcan/can.png" id="IDS_Trash_Can_Obstacle_0"> </string>
 
+    <!--Special Icons-->
+    <!--Rally Point Flag-->
+    <string value="../resources/sprites/icons/rallyflag.png" id="IDS_Rally_Flag_Icon"> </string>
+
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
     <!--GameLogic Delegates-->
@@ -307,6 +311,8 @@
     <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"> </string>
     <string value="Remove Obstacle?" id="IDS_Buy_Tower_Title_Text_Existig_Obstacle"> </string>
     <string value="Sell Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_To_Sell"> </string>
+    <!--Back Button -->
+    <string value ="Back" id="IDS_Buy_Tower_Back_Button"> </string>
     <!--Buy Tower Option Tile Buttons-->
     <string value="Purchase: " id="IDS_Buy_Tower_Option_Tile_Button_Buy"> </string>
     <string value="Sell For: " id="IDS_Buy_Tower_Option_Tile_Button_Sell"> </string>

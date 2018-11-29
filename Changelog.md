@@ -12,14 +12,25 @@
 - all projectiles face same way as eachother
 - projectiles will go towards the point they are fired at and then when they reach it they will trigger
   a projectile explosion (handled by gamelogic) and then a actor destroyed event is made
-- game has a proper delta function for speeds 
-- CompView controls enemy melee units and sets their direction to move toward the map exit [@jeremyelkayam][https://github.com/jeremyelkayam]
+- game has a proper delta function for speeds
+- CompView controls enemy melee units and sets their direction to move toward the map exit
+- all towers use floats for their coordinates
+- radius circles are now centered
+- all melee units will be initalized to the center of the tower that spawns them
+- all non dead allied melee units will be drawn 
+ [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.
 - MapGeneratedEvent now includes information on the new map which is used by WaveManager
 
  ###Removed
  - all scaling from the header! [@andrewkatson][https://github.com/andrewkatson]
+
+ ###Fixed
+ - sometimes objects were not being removed [@andrewkatson][https://github.com/andrewkatson]
+
+ ###Bug
+ - sometmes when towers and/or obstacles are removed the change is overwritten in the boardmanager [@andrewkatson][https://github.com/andrewkatson]
 
 [0.4.0] 2018-11-15
 ###Added

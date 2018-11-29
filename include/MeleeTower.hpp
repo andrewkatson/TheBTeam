@@ -32,9 +32,9 @@ protected:
   //the values used to determine if a float is equal
   float e;
   //the x coordinate of the rally point for this tower
-  int xRally;
+  float xRally;
   //the y coordinate of the rally point for this tower
-  int yRally;
+  float yRally;
   //the specific units that are fighitng for this tower
   vector<shared_ptr<MeleeUnit>> currentUnits;
 
@@ -42,6 +42,7 @@ public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~MeleeTower();
   void update(float delta);
+  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex);
 
   void initSprite();
 
@@ -50,7 +51,11 @@ public:
 
   virtual void upgrade();
   virtual void setUpUnits();
-  void resetRallyPoint(int x, int y);
+  void resetRallyPoint(float x, float y);
+  float getRallyX(){return xRally;}
+  float getRallyY(){return yRally;}
+  vector<shared_ptr<MeleeUnit>>& getUnits(){return currentUnits;}
+
   /*
    * @return the price of the tower
    */
@@ -60,10 +65,10 @@ public:
 
   void setPos(intPair pos);
   void setPos(int row, int col);
-  int getXCoordinate(){return xCoordinate;}
-  int getYCoordinate(){return yCoordinate;}
-  void setXCoordinate(int xCor){xCoordinate = xCor;}
-  void setYCoordinate(int yCor){yCoordinate = yCor;}
+  float getXCoordinate(){return xCoordinate;}
+  float getYCoordinate(){return yCoordinate;}
+  void setXCoordinate(float xCor){xCoordinate = xCor;}
+  void setYCoordinate(float yCor){yCoordinate = yCor;}
 
   void setProjectile(){}
 

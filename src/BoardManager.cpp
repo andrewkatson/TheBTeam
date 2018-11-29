@@ -200,7 +200,7 @@ void BoardManager::handleTowerRemove(const EventInterface& event){
   int towerPosID = trEventData -> towerPosID;
 
   //decode the ID so that it is a row and column
-  int row = towerPosID / getYDim();
+  int row = towerPosID / getXDim();
   int col = towerPosID % getXDim();
 
   //remove the tower value on the above floor grid
@@ -216,6 +216,9 @@ void BoardManager::handleTowerRemove(const EventInterface& event){
 void BoardManager::clearTowerOrObstacle(int row, int col){
   if(!isInMap(row,col)){
     return;
+  }
+  if(allObstacles.find(row*getXDim()+col) != allObstacles.end()){
+    allObstacles.erase(row*getXDim()+col);
   }
   aboveFloorGrid.at(row).at(col) = emptyTile;
 }
