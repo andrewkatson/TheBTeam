@@ -85,7 +85,7 @@ public:
   /*
    * @return a wave filled with enemies according to the specifications in the class (level, wave number)
    */
-  queue<shared_ptr<MeleeUnit>> makeWave();
+  void createNextWave();
 
   /*
    * Create and return a vector listing the distance from exit for every entry point in the entrypoints
@@ -189,6 +189,8 @@ public:
   void handleLevelChanged(const EventInterface& event);
 
   void handleDiffChanged(const EventInterface& event);
+
+  void handleWaveChange(const EventInterface& event);
 };
 
 #endif

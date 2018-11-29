@@ -102,11 +102,10 @@ void WaveManager::setupWaves(){
 }
 
 
-queue<shared_ptr<MeleeUnit>> WaveManager::makeWave() {
+void WaveManager::createNextWave() {
   assert(!distances.empty() && "Distances must be initialized AND UPDATED EVERY TIME THE MAP CHANGES.");
   assert(!entryPositions.empty());
-
-  queue<shared_ptr<MeleeUnit>>result;
+  assert(currentWave.empty() && "don't create a new wave if there's still enemies left in the one you already have...");
 
   double avg=difficulty*currentWaveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
 
@@ -196,23 +195,22 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave() {
     enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + 0.5)); // multipy tile size by tiles
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + 0.5)); //window size / board size = tile size
 
-    result.push(enemy);
+    currentWave.push(enemy);
   }
   printf("created a wave\n");
-  return result;
 }
 
 
 void WaveManager::startNextWave() {
-
-
+  assert(spawnedCurrentWave.empty());
+  assert(currentWave.empty());
+  createNextWave();
+  numWaves--;
 }
 
 
 void WaveManager::endCurrentWave() {
   assert(spawnedCurrentWave.empty());
-    //TODO - code to stop the wave
-    numWaves--;
 }
 
 void WaveManager::spawnNextUnit() {
@@ -353,5 +351,10 @@ void WaveManager::handleDiffChanged(const EventInterface& event){
 }
 
 void WaveManager::handleWaveChange(const EventInterface& event){
+  auto waveChangeEvent = static_cast<const WaveChangeEvent*>(&event);
+  auto waveChangeEventData = static_cast<const WaveChangeEventData*>((waveChangeEvent->data).get());
 
+  if(waveChangeEventData->waveStart){
+    startNextWave();
+  }
 }
