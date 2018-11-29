@@ -205,6 +205,8 @@
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
     <string value="GAMELOGICHANDLESTATECHANGE" id="IDS_GLD_SC"> </string>
     <string value="GameLogic_Projectile_Explosion" id="IDS_GameLogic_Delegate_Projectile_Explosion"> </string>
+  <!--Player Delegates-->
+  <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
     <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>
@@ -219,7 +221,8 @@
     <string value="Projectile_Manager_Actor_Created" id="IDS_ProjectileManager_ActorCreated"> </string>
     <!--Wave Manager Delegates-->
     <string value="Wave_Manager_Actor_Destroyed" id="IDS_WaveManager_ActorDestroyed"> </string>
-
+    <string value="Wave_Manager_Map_Generated" id="IDS_WaveManager_MapGenerated"> </string>
+    <string value="Wave_Manager_Level_Change" id="IDS_WaveManager_LevelChange"> </string>
 
   <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>

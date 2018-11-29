@@ -21,6 +21,7 @@
  [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.
+- MapGeneratedEvent now includes information on the new map which is used by WaveManager
 
  ###Removed
  - all scaling from the header! [@andrewkatson][https://github.com/andrewkatson]

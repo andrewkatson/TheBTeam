@@ -6,17 +6,18 @@
   @author Jeremy Elkayam
  */
 
-#include <deque>
-#include <functional>
-#include "Events/ActorDestroyedEvent.hpp"
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
+  this -> windowX = windowX;
+  this -> windowY = windowY;
+  this -> level = level;
   this -> currentWaveNumber = 0;
+  this -> timeElapsed = 0;
   this -> setUpPossibleEnemies();
   this -> registerDelegates();
 }
@@ -27,14 +28,29 @@ WaveManager::~WaveManager(){
 
 
 void WaveManager::registerDelegates() {
-  //bind our delegate function for mouse presses
   EventManager::EventDelegate actorDestroyedDelegate = std::bind(&WaveManager::handleActorDestroyed, this, _1);
 
   //make an event and get its type
   ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
-  EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+  const EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_WaveManager_ActorDestroyed")),actorDestroyedEventType);
+
+
+  EventManager::EventDelegate mapGenDelegate = std::bind(&WaveManager::handleMapGenerated, this, _1);
+  MapGeneratedEvent mapGenEvent = MapGeneratedEvent();
+  const EventType mapGenEventType = mapGenEvent.getEventType();
+  this -> eventManager -> registerDelegate(mapGenDelegate, textLoader -> getString(string("IDS_WaveManager_MapGenerated")),mapGenEventType);
+
+  EventManager::EventDelegate levelChangeDelegate = std::bind(&WaveManager::handleLevelChanged, this, _1);
+  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
+  const EventType levelChangeEventType = levelChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_LevelChange")),levelChangeEventType);
+
+  EventManager::EventDelegate difficultyChangeDelegate = std::bind(&WaveManager::handleDiffChanged, this, _1);
+  DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
+  const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_DifficultyChange")),difficultyChangeEventType);
 }
 
 void WaveManager::deregisterDelegates() {
@@ -54,7 +70,7 @@ void WaveManager::setUpPossibleEnemies(){
   enemies.push_back(fatKid);
 }
 
-void WaveManager::setupWaves(int difficulty){
+void WaveManager::setupWaves(){
 
   currentWaveNumber = 0;
 
@@ -75,11 +91,13 @@ void WaveManager::setupWaves(int difficulty){
 }
 
 
-queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumber) {
+queue<shared_ptr<MeleeUnit>> WaveManager::makeWave() {
+  assert(!distances.empty() && "Distances must be initialized AND UPDATED EVERY TIME THE MAP CHANGES.");
+  assert(!entryPositions.empty());
 
   queue<shared_ptr<MeleeUnit>>result;
 
-  double avg=difficulty*waveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
+  double avg=difficulty*currentWaveNumber*level*textLoader->getDouble("IDS_WAVE_WEIGHT_AVG_SCALAR");
 
   std::normal_distribution<double> wave_weight_rng (avg,avg*.4);
 
@@ -164,6 +182,9 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
     enemy->setRow(entryPoint.first);
     enemy->setCol(entryPoint.second);
 
+    enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + 0.5)); // multipy tile size by tiles
+    enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + 0.5)); //window size / board size = tile size
+
     result.push(enemy);
   }
   return result;
@@ -172,27 +193,42 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
 
 void WaveManager::startNextWave() {
   currentWaveNumber++;
-  //TODO - body
+
+
 }
 
 
 void WaveManager::endCurrentWave() {
+  assert(spawnedCurrentWave.empty());
     //TODO - code to stop the wave
     numWaves--;
 }
 
 void WaveManager::spawnNextUnit() {
-    shared_ptr<MeleeUnit> next_unit = currentWave.front();
-    //TODO - spawn the unit
-    currentWave.pop();
+  //this should only ever be called if there are units to spawn
+  assert(!currentWave.empty());
 
-    //add the unit to the vector of currently spawned units
-    //use the ID
-    spawnedCurrentWave[next_unit->getID()]=next_unit;
+  shared_ptr<MeleeUnit> next_unit = currentWave.front();
+  //TODO - spawn the unit
+  currentWave.pop();
+
+  //add the unit to the vector of currently spawned units
+  //use the ID
+  spawnedCurrentWave[next_unit->getID()]=next_unit;
 }
 
 void WaveManager::update(float deltaS) {
-    //TODO - implement
+  // if there are no waves left, make a LevelChangeEvent for a new level
+  // if there are waves left but no enemies left do nothing
+  //
+
+
+  timeElapsed+=deltaS;
+  if(timeElapsed > textLoader->getDouble("IDS_SECONDS_BETWEEN_ENEMY_SPAWNS") && !currentWave.empty())
+  {
+    timeElapsed=0;
+    spawnNextUnit();
+  }
 }
 
 void WaveManager::setDistances(vector<vector<int>>& dists) {
@@ -233,13 +269,10 @@ void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<
 map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions){
   map<int,vector<intPair>> result;
 
-  int min=distancesFromEntryPositions.begin()->first;
-
   int max=(--distancesFromEntryPositions.end())->first;
 
   for( auto it = distancesFromEntryPositions.begin(); it != distancesFromEntryPositions.end(); it++ )
   {
-    int oldkey=it->first;
     int newkey=max-(it->first);
 
     result[newkey]=it->second;
@@ -266,5 +299,32 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
 
   long long actorID = actorDestroyedEventData -> actorID;//get the dead actor's ID
 
-  spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
+  if(spawnedCurrentWave.count(actorID)) {
+    spawnedCurrentWave.erase(actorID);//take him off the map. he gone!
+  }
+}
+
+void WaveManager::handleMapGenerated(const EventInterface& event){
+  auto mapGeneratedEvent= static_cast<const MapGeneratedEvent*>(&event);
+
+  auto mapGeneratedEventData = static_cast<MapGeneratedEventData*>((mapGeneratedEvent->data).get());
+
+  setDistances(mapGeneratedEventData->dists);
+  setEntryPoints(mapGeneratedEventData->entrances);
+}
+
+void WaveManager::handleLevelChanged(const EventInterface& event){
+  auto levelChangedEvent = static_cast<const LevelChangeEvent*>(&event);
+  auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
+
+  level=levelChangedEventData->level;
+  setupWaves();
+  currentWaveNumber=0;
+}
+
+void WaveManager::handleDiffChanged(const EventInterface& event){
+  auto difficultyChangedEvent = static_cast<const DifficultyChangeEvent*>(&event);
+  auto difficultyChangedEventData = static_cast<DifficultyChangeEventData*>((difficultyChangedEvent->data).get());
+
+  difficulty=difficultyChangedEventData->difficulty;
 }
