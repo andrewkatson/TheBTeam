@@ -6,8 +6,8 @@
   @author Andrew Katson
  */
 
- #ifndef MELEETOWER_H
- #define MELEETOWER_H
+#pragma once
+
 #include "TowerInterface.hpp"
 #include "MeleeUnit.hpp"
 #include <memory>
@@ -82,5 +82,3 @@ public:
 
   shared_ptr<vector<int>>  getStatistics();
 };
-
- #endif

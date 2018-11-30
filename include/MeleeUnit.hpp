@@ -13,6 +13,7 @@ using namespace std;
 #include <memory>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
+//#include "GameLogic.hpp"
 
 class MeleeUnit : public ActorInterface {
 
@@ -139,7 +140,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  void move(float delta,float xmult, float ymult);
+  void move(float delta);
 
   /*
     Determine whether or not the object's collision box is colliding with the

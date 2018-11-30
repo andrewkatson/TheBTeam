@@ -365,6 +365,9 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> eventManager -> queueEvent(mapGenerated);
 
    placeObstacles();
+
+   ActorInterface::setXScale(windowX, boardManager -> getXDim());
+   ActorInterface::setYScale(windowY, boardManager -> getYDim());
  }
 
 /*
@@ -749,3 +752,4 @@ const unordered_map<long long,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemy
 unordered_map<long long, shared_ptr<ActorInterface>>& GameLogic::getFiredProjectiles(){
   return projectileManager -> getAllProjectiles();
 }
+
