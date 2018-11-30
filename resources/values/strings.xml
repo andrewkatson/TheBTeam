@@ -252,6 +252,12 @@
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
+
+
+
+    <!--RestartScreen-->
+    <string value="Congratualtions! You tried your best, but Big Pharma wins." id="IDS_RSM"></string>
+
     <!--OptionsMenuScreen-->
 
     <!--School Switcher-->

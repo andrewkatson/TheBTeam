@@ -44,10 +44,12 @@ void Switcher::initText(){
                 string option = textLoader -> getString(string(path + std::to_string(i)));
                 options.push_back(option);
     }
+
 }
 
 
 void Switcher::changeSelected(int direction){
+    //direction = 1, should be called as moveRight, and 0 should be called as moveLeft
     if(direction == 1){
         selected == (selected + 1) % len;
 
@@ -58,8 +60,8 @@ void Switcher::changeSelected(int direction){
         //OOB check
         selected = selected >= 0 ? selected: len + selected;
         selected = selected % len;
+        
     }
-    draw();
 }
 int Switcher::getSelected(){
     return selected;
@@ -67,10 +69,8 @@ int Switcher::getSelected(){
 int Switcher::getID(){
     return id;
 }
-void Switcher::draw(){
+void Switcher::draw(sf::RenderWindow &window){
     getSelected();
     text.setString(options.at(selected));
     text.setPosition(sf::Vector2f((windowX / 4) * 3, (windowY / 7) * (id + 1)));
-
-
 }

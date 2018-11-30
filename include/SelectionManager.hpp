@@ -11,13 +11,15 @@ using std::unique_ptr;
 
 class SelectionManager{
 private:
+    //index 0 = School, 1 = population, 2 = obstacles, 3 = waves, 4 = startMoney, 5 = cafeteriaSize
+    std::vector<int> selections;
   Switcher school;
   Switcher population;
   Switcher obstacles;
   Switcher waves;
   Switcher startMoney;
   Switcher cafetriaSize;
-  Switcher pathLength;
+
 public:
   void selectOtherSwitcher();
 
