@@ -17,7 +17,7 @@
   - Takes DifficultyChangeEvents and updates difficulty setting accordingly
   - Takes and raises WaveChangeEvents every time a wave is signaled to begin or end.
  - WaveManager spawns units in its update function once every 10th of a second (adjustable)
- - Disabled CompView movement for now in order to get spawning working properly
+ - CompView only moves enemy units if there are units to move
 
 ###Fixed
 - Sometimes units were initialized with bogus coordinates [@jeremyelkayam][https://github.com/jeremyelkayam]
