@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -g  -rdynamic CMakeFiles/Game.dir/bin/Game.cpp.o  -o Game Box2D/Box2D/libBox2D.a -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network libTheBTeam_core.a Box2D/Box2D/libBox2D.a -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network 
