@@ -9,6 +9,7 @@ class WaveChangeEventData : public EventDataInterface{
 public:
   int waveNum;
   float timeStamp;
+  bool waveStart;
 
-  WaveChangeEventData (int waveNum, float timeStamp);
+  WaveChangeEventData (int waveNum, float timeStamp,bool waveStart);
 };

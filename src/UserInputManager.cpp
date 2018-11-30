@@ -135,6 +135,11 @@ void UserInputManager::processUserInput(sf::RenderWindow &game){
 
      this -> eventManager -> queueEvent(enterKey);
    }
+   else if(event.key.code == sf::Keyboard::W){
+     shared_ptr<EventInterface> wKey = make_shared<KeyPressEvent>(string("W"), nowInNano);
+
+     this -> eventManager -> queueEvent(wKey);
+   }
  }
 
  /*

@@ -23,4 +23,6 @@ void SpicyFry::setUpUnits(){
     shared_ptr<MeleeUnit> unitToAdd = make_shared<SpicyFryUnit>(textLoader, eventManager, textureLoader);
     currentUnits.push_back(unitToAdd);
   }
+  //call the super version to set the position of the units
+  MeleeTower::setUpUnits();
 }

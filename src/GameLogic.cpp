@@ -17,7 +17,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
-  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader);
+  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool());
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader));
   this -> registerEvents();
   this -> registerDelegates();
@@ -109,6 +109,7 @@ void GameLogic::registerDelegates(){
   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(projectileExplosionEventDelegate, textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
+
 }
 
 /*
@@ -143,6 +144,10 @@ void GameLogic::deregisterDelegates(){
 
 //Called once every loop. Update according to elapsed time.
 void GameLogic::updateGameLogic(float deltaS){
+  if(getGameState()==State::Playing){
+    this -> waveManager -> update(deltaS);
+  }
+
   this -> eventManager -> processEvent();
   //cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){
@@ -158,8 +163,8 @@ void GameLogic::updateGameLogic(float deltaS){
       fryGuy -> setXCoordinate(3 * gridX);
       fryGuy -> setYCoordinate(2 * gridY);
 
-      //add to the current wave of spawned
-      (waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
+      //DON'T add to the current wave of spawned because that breaks things, IDIOT!
+      //(waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
 
       vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 
@@ -355,7 +360,7 @@ void GameLogic::handleStateChange(const EventInterface& event){
    //the actual count in nanoseconds for the time
    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
-   shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano);
+   shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano,boardManager->getDistances(),boardManager->getEntryPositions());
 
    this -> eventManager -> queueEvent(mapGenerated);
 

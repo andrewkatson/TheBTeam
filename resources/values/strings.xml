@@ -194,6 +194,10 @@
     <!--TrashCanObstacle-->
     <string value="../resources/sprites/obstacle/trashcan/can.png" id="IDS_Trash_Can_Obstacle_0"> </string>
 
+    <!--Special Icons-->
+    <!--Rally Point Flag-->
+    <string value="../resources/sprites/icons/rallyflag.png" id="IDS_Rally_Flag_Icon"> </string>
+
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
     <!--GameLogic Delegates-->
@@ -201,6 +205,8 @@
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
     <string value="GAMELOGICHANDLESTATECHANGE" id="IDS_GLD_SC"> </string>
     <string value="GameLogic_Projectile_Explosion" id="IDS_GameLogic_Delegate_Projectile_Explosion"> </string>
+  <!--Player Delegates-->
+  <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
     <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>
@@ -215,7 +221,10 @@
     <string value="Projectile_Manager_Actor_Created" id="IDS_ProjectileManager_ActorCreated"> </string>
     <!--Wave Manager Delegates-->
     <string value="Wave_Manager_Actor_Destroyed" id="IDS_WaveManager_ActorDestroyed"> </string>
-
+    <string value="Wave_Manager_Map_Generated" id="IDS_WaveManager_MapGenerated"> </string>
+    <string value="Wave_Manager_Level_Change" id="IDS_WaveManager_LevelChange"> </string>
+  <string value="Wave_Manager_Difficulty_Change" id="IDS_WaveManager_DifficultyChange"> </string>
+  <string value="Wave_Manager_Wave_Change" id="IDS_WaveManager_WaveChange"> </string>
 
   <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
@@ -227,6 +236,7 @@
     <string value="PLAYINGSCREENHANDLEMOUSEPRESS" id="IDS_PS_MP"> </string>
     <string value="PLAYINGSCREENHANDLEKEYPRESS" id="IDS_PS_KP"> </string>
     <string value="Playing_Screen_Handle_State_Change" id="IDS_PS_SC"> </string>
+  <string value="Playing_Screen_Handle_Wave_Change" id="IDS_PlayingScreen_WaveChange"> </string>
     <!--PlayingScreenHeader Delegates-->
     <string value="Playing_Screen_Header_Key_Press" id="IDS_PSH_KP"> </string>
     <string value="Playing_Screen_Header_Mouse_Press" id="IDS_PSH_MP"> </string>
@@ -310,6 +320,8 @@
     <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"> </string>
     <string value="Remove Obstacle?" id="IDS_Buy_Tower_Title_Text_Existig_Obstacle"> </string>
     <string value="Sell Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_To_Sell"> </string>
+    <!--Back Button -->
+    <string value ="Back" id="IDS_Buy_Tower_Back_Button"> </string>
     <!--Buy Tower Option Tile Buttons-->
     <string value="Purchase: " id="IDS_Buy_Tower_Option_Tile_Button_Buy"> </string>
     <string value="Sell For: " id="IDS_Buy_Tower_Option_Tile_Button_Sell"> </string>

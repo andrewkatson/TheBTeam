@@ -47,9 +47,9 @@ protected:
   //the col in the grid this tower is located at
   int col;
   //the x coordinate on the map that the tower is located at (center of the tile on the grid it is at)
-  int xCoordinate;
+  float xCoordinate;
   //the y coordinate on the map that the tower is located at (center of the tile on the grid it is at)
-  int yCoordinate;
+  float yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
   //the circle shape object to draw the radius
@@ -58,7 +58,10 @@ protected:
   bool radiusVisible;
   //the degree of error
   const float e = 0.1;
-
+  //scale in the x direction applied to tower when drawing
+  float xScale = 1.0;
+  //scale in the y direction applied to tower when drawing
+  float yScale = 1.0;
 public:
   //boolean used to tell if this is a melee tower without casting
   bool isMelee;
@@ -71,10 +74,10 @@ public:
   virtual void attack(shared_ptr<ActorInterface> enemyInRange)=0;
   virtual void setPos(int row, int col)=0;
   virtual void setPos(intPair pos)=0;
-  virtual int getXCoordinate()=0;
-  virtual int getYCoordinate()=0;
-  virtual void setXCoordinate(int xCor)=0;
-  virtual void setYCoordinate(int yCor)=0;
+  virtual float getXCoordinate()=0;
+  virtual float getYCoordinate()=0;
+  virtual void setXCoordinate(float xCor)=0;
+  virtual void setYCoordinate(float yCor)=0;
   virtual shared_ptr<vector<int>> getStatistics()=0;
   /*
    * update the position, check if it hit its target
@@ -123,6 +126,9 @@ public:
     boundsOfSprite.top + (boundsOfSprite.height)/2.0);
     */
   }
+
+  void setXScale(float xScale){this->xScale = xScale;}
+  void setYScale(float yScale){this->yScale = yScale;}
 
 };
 

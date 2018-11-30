@@ -10,10 +10,12 @@
   <constant value="1000" id ="IDS_P_B"> </constant>
   <constant value="1" id="IDS_Default_Wave"> </constant>
   <constant value="1" id="IDS_Default_Level"> </constant>
+    <constant value="1" id="IDS_Default_School"> </constant>
 
   <!--General Button-->
   <constant value="10" id="IDS_Button_Position_Padding"> </constant>
   <constant value="15" id="IDS_Button_Size_Padding"> </constant>
+  <constant value="10" id="IDS_Button_Radius"> </constant>
 
   <!--Playing Screen Header-->
   <constant value="5" id="IDS_Playing_Screen_Header_Padding_Y"> </constant>
@@ -370,6 +372,13 @@
   <!--Buy Tower Text Size-->
   <constant value="45" id="IDS_Buy_Tower_Text_Size"> </constant>
 
+  <!--Rally Flag Icon Circle Shape -->
+  <constant value="240" id="IDS_Rally_Flag_Outline_Color_Red"> </constant>
+  <constant value="240" id="IDS_Rally_Flag_Outline_Color_Green"> </constant>
+  <constant value="39" id="IDS_Rally_Flag_Outline_Color_Blue"> </constant>
+  <constant value="255" id="IDS_Rally_Flag_Outline_Color_Alpha"> </constant>
+  <constant value="2" id="IDS_Rally_Flag_Outline_Thickness"> </constant>
+
   <!--Sell Tower Button-->
   <!--Sell Tower Button Colors -->
   <constant value="178" id="IDS_Sell_Tower_Fill_Color_Red"> </constant>
@@ -499,6 +508,32 @@
   <constant value="1" id="IDS_Wave_Text_Outline_Thickness"> </constant>
   <!--Wave Text Size -->
   <constant value="60" id="IDS_Wave_Text_Size"> </constant>
+
+  <!--Buy Tower Screen -->
+  <!--Back Button Colors -->
+  <constant value="178" id="IDS_Back_Button_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Back_Button_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Back_Button_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Back_Button_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Back_Button_Outline_Color_Red"> </constant>
+  <constant value="255" id="IDS_Back_Button_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Back_Button_Outline_Color_Green"> </constant>
+  <constant value="125" id="IDS_Back_Button_Outline_Color_Alpha"> </constant>
+  <!--Back Button Text Colors -->
+  <constant value="0" id="IDS_Back_Button_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Back_Button_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Back_Button_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Back_Button_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Back_Button_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Back_Button_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Back_Button_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Back_Button_Text_Outline_Color_Alpha"> </constant>
+  <!--Back Button Outline Thickness-->
+  <constant value="1" id="IDS_Back_Button_Outline_Thickness"> </constant>
+  <!--Back Button Outline Text Thickness-->
+  <constant value="1" id="IDS_Back_Button_Text_Outline_Thickness"> </constant>
+  <!--Back Button Text Size-->
+  <constant value="45" id="IDS_Back_Button_Text_Size"> </constant>
 
   <!--Buy_Tower_Option Button-->
   <!--Buy_Tower_Option Button Colors-->
@@ -733,10 +768,12 @@
     <constant value=".2" id="IDS_STAT_MAX_SCALAR"/>
     <constant value="-.2" id="IDS_STAT_MIN_SCALAR"/>
 
+    <!--WaveManager Unit Generation Constants-->
     <constant value="2.0" id="IDS_WAVE_WEIGHT_AVG_SCALAR"/>
     <constant value="2.0" id="IDS_SKINNY_WEIGHT"/>
     <constant value="1.0" id="IDS_AVERAGE_WEIGHT"/>
     <constant value="2.0" id="IDS_FAT_WEIGHT"/>
+    <constant value=".1" id="IDS_SECONDS_BETWEEN_ENEMY_SPAWNS"/>
 
     <!--Player Constants-->
     <constant value="0.5" id="IDS_Percentage_Money_Returned_On_Sell_Tower"> </constant>

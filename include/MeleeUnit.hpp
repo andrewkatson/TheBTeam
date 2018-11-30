@@ -42,7 +42,6 @@ protected:
   //The index of the sprite that the actor is currently using.
   int current_sprite;
 
-
 public:
 
   void update(float delta);
@@ -69,6 +68,8 @@ public:
   void setArmor(int armor);
 
   int getAttackRadius() const;
+
+  shared_ptr<MeleeUnit> getEngagedUnit(){return engagedUnit;}
 
   void setAttackRadius(int attackRadius);
 
@@ -116,7 +117,10 @@ public:
 
     @return an integer representing the actor's identity
    */
-  int getID(){return id;}
+//  int getID(){return id;}
+// Redundant AND confusing because ActorInterface has this same thing
+// and it returns a long long (as it should). I think I did this some time ago
+// and it should not work for this
 
   /*
     Returns the actor's sprite.

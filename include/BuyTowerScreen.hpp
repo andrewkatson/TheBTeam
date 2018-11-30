@@ -13,6 +13,8 @@ private:
   //logic of the game. handles mechanics
   //use to access frequently required data (i.e. towers, obstacles, board, units)
   shared_ptr<GameLogic> gameLogic;
+  //back button
+  unique_ptr<Button> backButton;
   //used to load font
   sf::Font font;
   //first index is the title
@@ -30,7 +32,9 @@ private:
 
 public:
   BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
+  void initDrawingMaterials();
   void initText();
+  void initBackButton();
 
   void draw(sf::RenderWindow& window);
   void drawTitle(sf::RenderWindow& window);

@@ -14,9 +14,25 @@ Player::Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> tex
   hitpoints= textLoader->getInteger(string("IDS_P_HP"));
   wave=textLoader->getInteger(string("IDS_Default_Wave"));
   level=textLoader->getInteger(string("IDS_Default_Level"));
+  schoolLevel=textLoader->getInteger(string("IDS_Default_School"));
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this-> registerEvents();
+  this -> registerDelegates();
+}
+
+void Player::registerDelegates(){
+  EventManager::EventDelegate difficultyChangeDelegate = std::bind(&Player::handleDiffChanged, this, _1);
+  DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
+  const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(difficultyChangeDelegate, textLoader -> getString(string("IDS_Player_DifficultyChange")),difficultyChangeEventType);
+}
+
+void Player::handleDiffChanged(const EventInterface& event){
+  auto difficultyChangedEvent = static_cast<const DifficultyChangeEvent*>(&event);
+  auto difficultyChangedEventData = static_cast<DifficultyChangeEventData*>((difficultyChangedEvent->data).get());
+
+  schoolLevel=difficultyChangedEventData->difficulty;
 }
 
 void Player::registerEvents(){

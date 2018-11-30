@@ -14,12 +14,24 @@ using namespace std;
 #include <queue>
 #include <random>
 #include <map>
+#include <deque>
+#include <functional>
+#include <chrono>
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "TextLoader.hpp"
 #include "Units/AverageKidUnit.hpp"
 #include "Units/SkinnyKidUnit.hpp"
 #include "Units/FatKidUnit.hpp"
+#include "Events/ActorDestroyedEvent.hpp"
+#include "Events/MapGeneratedEvent.hpp"
+#include "Events/LevelChangeEvent.hpp"
+#include "Events/DifficultyChangeEvent.hpp"
+#include "Events/WaveChangeEvent.hpp"
+
+using std::chrono::high_resolution_clock;
+using std::chrono::nanoseconds;
+using std::chrono::duration_cast;
 
 class WaveManager{
 
@@ -36,7 +48,7 @@ public:
   shared_ptr<TextureLoader> textureLoader;
 
   //Vector storing every enemy type that can be spawned.
-  vector<shared_ptr<MeleeUnit>> enemies;
+  //vector<shared_ptr<MeleeUnit>> enemies;
 
   /*
    * A queue storing every enemy in the current wave.
@@ -50,13 +62,17 @@ public:
   unordered_map<long long,shared_ptr<MeleeUnit>> spawnedCurrentWave;
 
   //The current level the user is at in the game.
-  //TODO - pull this from gamelogic
   int level;
+
+  //The game's difficulty. This can be 1,2,or 3 - 1 for elementary school, 2 for middle school, and 3 for high school.
+  int difficulty;
 
   //The number of waves in the current level.
   unsigned int numWaves;
 
   unsigned int currentWaveNumber;
+
+  int windowX,windowY;
 
   //A random device to pull from
   std::random_device rd;
@@ -69,11 +85,12 @@ public:
 
   map<int,vector<intPair>>distancesFromEntryPositions;
 
+  float timeElapsed;
+
   /*
-   *
    * @return a wave filled with enemies according to the specifications in the class (level, wave number)
    */
-  queue<shared_ptr<MeleeUnit>> makeWave(int difficulty, int waveNumber);
+  void createNextWave();
 
   /*
    * Create and return a vector listing the distance from exit for every entry point in the entrypoints
@@ -88,12 +105,14 @@ public:
    */
   map<int,vector<intPair>> getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
 
+
+
 public:
   /*
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level,int startingDifficulty);
   ~WaveManager();
 
   /*
@@ -106,10 +125,12 @@ public:
    */
   void deregisterDelegates();
 
+  void registerEvents();
+
   /*
    * Setup the possible enemies that can spawn
    */
-  void setUpPossibleEnemies();
+  //void setUpPossibleEnemies();
 
   /*
    * Return the next wave in waves.
@@ -143,7 +164,7 @@ public:
   /*
    * Populate the wave vector with a number of waves according to level.
    */
-  void setupWaves(int difficulty);
+  void setupWaves();
 
   /*
    * Set the distance from exit for each path space on the current board. Should be set
@@ -167,6 +188,14 @@ public:
   unordered_map<long long,shared_ptr<MeleeUnit>>& getSpawnedEnemyUnits();
 
   void handleActorDestroyed(const EventInterface& event);
+
+  void handleMapGenerated(const EventInterface& event);
+
+  void handleLevelChanged(const EventInterface& event);
+
+  void handleDiffChanged(const EventInterface& event);
+
+  void handleWaveChange(const EventInterface& event);
 };
 
 #endif
