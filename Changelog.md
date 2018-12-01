@@ -11,6 +11,7 @@
 - Units no longer travel at the edges of a path; they travel roughly toward the center (perturbed randomly) of each path.
 - Multiplier on unit health for decreasing of player health moved to constants.xml
  - Greatly decreased this multiplier
+- Animation speed is now dependent on unit movement speed
 
 ###Fixed
 - seg faults from trying to destroy unitialized box2d bodies [@andrewkatson][https://github.com/andrewkatson]

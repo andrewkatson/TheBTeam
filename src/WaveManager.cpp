@@ -222,13 +222,6 @@ void WaveManager::createNextWave() {
     //now that we have our distance key, we can get all of the entry positions with that distance
     vector<intPair> chosenEntrances=distancesFromEntryPositions[roundedKey];
 
-    /*
-    printf("chosen entrances size: %ld\n",chosenEntrances.size());
-    for(int z=0;z<chosenEntrances.size();z++){
-      printf("{ %d , %d } ",chosenEntrances[z].first,chosenEntrances[z].second);
-    }
-    printf("\n");
-*/
     //pick a random intPair from the vector
     uniform_int_distribution<unsigned long> entrance_chooser_rng(0,chosenEntrances.size()-1);
     intPair entryPoint=chosenEntrances[entrance_chooser_rng(rnd_gen)];
@@ -269,7 +262,7 @@ void WaveManager::createNextWave() {
 
     currentWave.push(enemy);
   }
-  printf("created a wave with %ld units\n",currentWave.size());
+  //printf("created a wave with %ld units\n",currentWave.size());
 }
 
 

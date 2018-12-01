@@ -26,7 +26,7 @@ void MeleeUnit::update(float delta){
 
     s_elapsed += delta;
 
-    if (s_elapsed > .5) {
+    if (s_elapsed > 1/speed) {
       s_elapsed = 0;
 
       if (current_sprite == 0) {
