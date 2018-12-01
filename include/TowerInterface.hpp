@@ -69,6 +69,12 @@ protected:
   //scale in the y direction applied to tower when drawing
   float yScale = 1.0;
 
+  //the number of upgrades purchased by this tower (so when a tower is changed it will reset to 0)
+  int totalUpgradesPurchased;
+
+  //the level of the tower
+  int level;
+
 public:
   TowerInterface();
   ~TowerInterface();
@@ -162,6 +168,10 @@ public:
   float getXScale(){return xScale;}
   float getYScale(){return yScale;}
 
+  int getNumUpgrades(){return totalUpgradesPurchased;}
+  void incrementNewUpgrade(){totalUpgradesPurchased++;}
+
+  int getLevel(){return level;}
 };
 
 #endif

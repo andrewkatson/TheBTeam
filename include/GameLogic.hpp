@@ -111,9 +111,11 @@ public:
 
   shared_ptr<EventManager> getEventManager();
 
+  vector<shared_ptr<TowerInterface>>& allUpgradesForTower(int row, int col);
+  void modifyToIncludeUpgrades(vector<shared_ptr<TowerInterface>>& towerUpgrades, shared_ptr<TowerInterface> tower);
+
   bool attemptPurchaseTower(int row, int col, string towerTypeID);
   bool attemptSellTower(int row, int col);
-  vector<shared_ptr<TowerInterface>>& allUpgradesForTower(int row, int col);
 
   bool canBuy(int row, int col);
   bool canBuy(string towerType);
@@ -122,6 +124,8 @@ public:
   void removeATower(int row, int col);
   void removeATowerMoney(int row, int col);
   void removeAObstacleMoney(int row, int col);
+
+  int getUpgradePrice(int row, int col);
 
   State getGameState();
 

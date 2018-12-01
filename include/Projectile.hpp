@@ -112,7 +112,7 @@ public:
    * explosion that will be handeled by the gamelogic
    */
   void handleTargetHit();
-
+  
 
 };
 

@@ -8,6 +8,7 @@ CheesePizza::CheesePizza(shared_ptr<TextLoader> textLoader, shared_ptr<EventMana
   this -> price = textLoader->getInteger(string("IDS_CPT_PR"));
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> level = 1;
   this -> setProjectile();
   this -> initSprite();
 }

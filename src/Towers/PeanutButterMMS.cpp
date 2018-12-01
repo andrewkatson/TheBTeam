@@ -7,6 +7,7 @@ PeanutButterMMS::PeanutButterMMS(shared_ptr<TextLoader> textLoader, shared_ptr<E
   this -> price = textLoader->getInteger(string("IDS_PBMMT_PR"));
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> level = 3;
   this -> setProjectile();
   this -> initSprite();
 }

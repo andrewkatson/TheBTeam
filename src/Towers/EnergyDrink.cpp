@@ -8,6 +8,7 @@ EnergyDrink::EnergyDrink(shared_ptr<TextLoader> textLoader,  shared_ptr<EventMan
   this -> price = textLoader->getInteger(string("IDS_EDT_PR"));
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> level = 2;
   this -> setProjectile();
   this -> initSprite();
 }

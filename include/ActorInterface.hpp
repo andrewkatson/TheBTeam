@@ -189,14 +189,18 @@ public:
   float getSpeed(){return this->speed;}
 
   int getHitpoints(){return this->hitpoints;}
-
+  int getMaxHitpoints(){return this->maxHitpoints;}
   int getDamage(){return this->damage;}
-
   int getArmor(){return this->armor;}
-
   int getArmorPenetration(){return this->armorPenetration;}
-
   int getRadius(){return radius;}
+
+  void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
+  void updateDamage(int newDamage){damage = newDamage;}
+  void updateArmor(int newArmor){armor = newArmor;}
+  void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
+  void updateRadius(int newRadius){radius = newRadius;}
+
   sf::CircleShape& getRadiusCircle(){return radiusCircle;}
 
   double getDirection() const;

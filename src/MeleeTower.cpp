@@ -312,3 +312,32 @@ shared_ptr<vector<int>>  MeleeTower::getStatistics(){
 
   return stats;
 }
+
+/*
+ * Setters below used to update the statistics of the units of this tower when
+ * upgrading through the upgrade system
+ */
+
+ void MeleeTower::updateUnitHitpoints(int newMaxHitpoints){
+   for(shared_ptr<MeleeUnit> unit : currentUnits){
+     unit -> updateMaxHitpoints(newMaxHitpoints);
+   }
+ }
+
+ void MeleeTower::updateUnitDamage(int newDamage){
+   for(shared_ptr<MeleeUnit> unit : currentUnits){
+     unit -> updateDamage(newDamage);
+   }
+ }
+
+ void MeleeTower::updateUnitArmorPenetration(int newArmorPenetration){
+   for(shared_ptr<MeleeUnit> unit : currentUnits){
+     unit -> updateArmorPenetration(newArmorPenetration);
+   }
+ }
+
+ void MeleeTower::updateUnitArmor(int newArmor){
+   for(shared_ptr<MeleeUnit> unit : currentUnits){
+     unit -> updateArmor(newArmor);
+   }
+ }

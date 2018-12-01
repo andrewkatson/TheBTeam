@@ -49,6 +49,10 @@ bool RangeTower::canAttack(){
 
 void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   shared_ptr<ActorInterface> firedProjectile = createProjectile();
+
+  //modify the statistics of the firedProjectile so they match any upgrades in the stored projectile
+  modifyToIncludeUpgrades(firedProjectile);
+
   assert(firedProjectile != NULL);
   assert(firedProjectile -> getType() == currentProjectile -> getType());
   firedProjectile -> setWorld(world);
@@ -76,6 +80,16 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   bool isProjectile = true;
   shared_ptr<EventInterface> projectileFiredEvent = make_shared<ActorCreatedEvent>(firedProjectile, isProjectile, nowInNano);
   this -> eventManager -> queueEvent(projectileFiredEvent);
+}
+
+/*
+ * Update all statistics for the fired projectile to reflect the upgrades bought
+ * for the stored projectile
+ */
+void RangeTower::modifyToIncludeUpgrades(shared_ptr<ActorInterface> firedProjectile){
+  firedProjectile->updateDamage(currentProjectile->getDamage());
+  firedProjectile->updateArmorPenetration(currentProjectile->getArmorPenetration());
+  firedProjectile->updateRadius(currentProjectile->getRadius());
 }
 
 /*

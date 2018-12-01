@@ -8,6 +8,7 @@ NormalMMS::NormalMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager>
   this -> price = textLoader->getInteger(string("IDS_NMMT_PR"));
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> level = 2;
   this -> setProjectile();
   this -> initSprite();
 }
