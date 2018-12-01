@@ -781,6 +781,7 @@
 
     <!--Player Constants-->
     <constant value="0.5" id="IDS_Percentage_Money_Returned_On_Sell_Tower"> </constant>
+    <constant value="0.05" id="IDS_Percentage_Unit_Hitpoint_Player_Damage"> </constant>
 
 
   </floats>
