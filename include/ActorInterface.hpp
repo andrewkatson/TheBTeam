@@ -98,8 +98,8 @@ public:
   static double getXScale();
   static double getYScale();
 
-  static void setXScale(int windowX, int num_cols);
-  static void setYScale(int windowY, int num_rows);
+  static void setXScale(int num_cols);
+  static void setYScale(int num_rows);
 
   ActorInterface();
   ~ActorInterface();
@@ -190,6 +190,8 @@ public:
   void setCol(int col){this -> col = col;}
 
   float getSpeed(){return this->speed;}
+
+  void setSpeed(float speed){this->speed=speed;}
 
   int getHitpoints(){return this->hitpoints;}
   int getMaxHitpoints(){return this->maxHitpoints;}

@@ -372,8 +372,8 @@ void GameLogic::handleStateChange(const EventInterface& event){
 
    placeObstacles();
 
-   ActorInterface::setXScale(windowX, boardManager -> getXDim());
-   ActorInterface::setYScale(windowY, boardManager -> getYDim());
+   ActorInterface::setXScale(boardManager -> getXDim());
+   ActorInterface::setYScale(boardManager -> getYDim());
  }
 
 /*

@@ -86,17 +86,14 @@ void ActorInterface::setDirection(double direction) {
   this ->direction = direction;
 }
 
-void ActorInterface::setXScale(int windowX, int num_cols){
-  double dx=windowX;
+void ActorInterface::setXScale(int num_cols){
   double dc=num_cols;
-  ActorInterface::xScale=dx/dc;
+  ActorInterface::xScale=1.0/dc;
 }
 
-void ActorInterface::setYScale(int windowY, int num_rows){
-  double dy=windowY;
+void ActorInterface::setYScale(int num_rows){
   double dr=num_rows;
-
-  ActorInterface::yScale=dy/dr;
+  ActorInterface::yScale=1.0/dr;
 }
 
 double ActorInterface::getYScale(){
