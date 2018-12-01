@@ -453,6 +453,7 @@ void GameLogic::modifyToIncludeUpgrades(vector<shared_ptr<TowerInterface>>& towe
     int unitDamageUpgrades = meleeTower->getUnitDamage()-genericMelee->getUnitDamage();
     int unitArmorPenetrationUpgrades = meleeTower->getUnitArmorPenetration()-genericMelee->getUnitArmorPenetration();
     int unitArmorUpgrades = meleeTower->getUnitArmor()-genericMelee->getUnitArmor();
+    int unitAttackRateUpgrades = meleeTower->getUnitAttackRate()-genericMelee->getUnitAttackRate();
 
     //modify each tower upgrades statisitcs to reflect the purchased upgrades
     for(shared_ptr<TowerInterface> towerUpgrade : towerUpgrades){
@@ -466,6 +467,7 @@ void GameLogic::modifyToIncludeUpgrades(vector<shared_ptr<TowerInterface>>& towe
       towerToUpgrade->updateUnitDamage(towerToUpgrade->getUnitDamage()+unitDamageUpgrades);
       towerToUpgrade->updateUnitArmorPenetration(towerToUpgrade->getUnitArmorPenetration()+unitArmorPenetrationUpgrades);
       towerToUpgrade->updateUnitArmor(towerToUpgrade->getUnitArmor()+unitArmorUpgrades);
+      towerToUpgrade->updateUnitAttackRate(towerToUpgrade->getUnitAttackRate()+unitAttackRateUpgrades);
     }
 
   }

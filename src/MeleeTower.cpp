@@ -341,3 +341,9 @@ shared_ptr<vector<int>>  MeleeTower::getStatistics(){
      unit -> updateArmor(newArmor);
    }
  }
+
+ void MeleeTower::updateUnitAttackRate(int newAttackRate){
+   for(shared_ptr<MeleeUnit> unit : currentUnits){
+     unit -> updateAttackRate(newAttackRate);
+   }
+ }

@@ -91,6 +91,7 @@ public:
   int getUnitDamage(){return currentUnits.at(0)->getDamage();}
   int getUnitArmorPenetration(){currentUnits.at(0)->getArmorPenetration();}
   int getUnitArmor(){currentUnits.at(0)->getArmor();}
+  int getUnitAttackRate(){currentUnits.at(0)->getAttackRate();}
 
 
   //setters used by the upgrading system
@@ -100,4 +101,5 @@ public:
   void updateUnitDamage(int newDamage);
   void updateUnitArmorPenetration(int newArmorPenetration);
   void updateUnitArmor(int newArmor);
+  void updateUnitAttackRate(int newAttackRate);
 };

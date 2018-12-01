@@ -1,7 +1,11 @@
 [Unreleased]
 
+###Added
+- attack rate for all units [@andrewkatson][https://github.com/andrewkatson]
+- upgrade system for aspects of the melee and range towers for more customizaton
+
 ###Changed  
-- melee towers spawn units surrounding their flag in the right spaces 
+- melee towers spawn units surrounding their flag in the right spaces [@andrewkatson][https://github.com/andrewkatson]
 
 
 ###Fixed

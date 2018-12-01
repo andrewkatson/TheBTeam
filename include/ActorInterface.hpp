@@ -63,6 +63,9 @@ protected:
   //The actor's armor penetration
   int armorPenetration;
 
+  //The actor's attack rate (not applicable to projectiles)
+  int attackRate;
+
   //The rectangle corresponding to the object's dimensions.
   sf::FloatRect collisionBox;
 
@@ -194,12 +197,14 @@ public:
   int getArmor(){return this->armor;}
   int getArmorPenetration(){return this->armorPenetration;}
   int getRadius(){return radius;}
+  int getAttackRate(){return attackRate;}
 
   void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
   void updateDamage(int newDamage){damage = newDamage;}
   void updateArmor(int newArmor){armor = newArmor;}
   void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
   void updateRadius(int newRadius){radius = newRadius;}
+  void updateAttackRate(int newAttackRate){attackRate = newAttackRate;}
 
   sf::CircleShape& getRadiusCircle(){return radiusCircle;}
 

@@ -349,6 +349,7 @@
     <string value="Actor_Damage" id="IDS_Actor_Max_Damage_Upgrade"> </string>
     <string value="Actor_Armor_Penetration" id="IDS_Actor_Armor_Penetration_Upgrade"> </string>
     <string value="Actor_Armor" id="IDS_Actor_Armor_Upgrade"> </string>
+    <string value="ACtor_Attack_Rate" id="IDS_Actor_Attack_Rate"> </string>
     <string value="Actor_Area_Of_Effect" id="IDS_Actor_Area_Of_Effect_Upgrade"> </string>
 
 </strings>

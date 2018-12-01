@@ -17,6 +17,9 @@ ActorInterface::ActorInterface(){
   //set the body to NULL in case we never set the world so the destructor does not try to destroy an unitialized body
   body = NULL;
 
+  //set the attack rate to 0 in case this is a projectile
+  attackRate = 0;
+
   //set the sprite to face roughly in the direction the textures are drawn  in
   //sprite.setRotation(135.0f + 90.f);
   //rotate(225.0f);
