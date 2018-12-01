@@ -13,6 +13,7 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> playingScreenHeader = make_shared<PlayingScreenHeader>(eventManager, textLoader, gameLogic);
   rowSelected = 0;
   colSelected = 0;
+  this -> waveGoingOn = false;
   somethingChanged = true;
   haveSetColorShift=false;
   this -> registerPersistentDelegates();
@@ -78,6 +79,15 @@ void PlayingScreen::registerDelegates(){
   EventType mousePressEventType = mousePressEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_PS_MP")),mousePressEventType);
+
+
+  EventManager::EventDelegate wcDelegate = std::bind(&PlayingScreen::handleWaveChange, this, _1);
+
+  WaveChangeEvent wcEvent = WaveChangeEvent();
+  EventType wceType = wcEvent.getEventType();
+  this -> eventManager -> registerDelegate(wcDelegate, textLoader -> getString(string("IDS_PlayingScreen_WaveChange")),wceType);
+
+
 
   //register delegates for the header
   playingScreenHeader -> registerDelegates();
@@ -375,7 +385,19 @@ void PlayingScreen::handleKeyPress(const EventInterface& event){
     shared_ptr<EventInterface> mainMenuState = make_shared<StateChangeEvent>(State::MainMenu, nowInNano);
 
     this -> eventManager -> queueEvent(mainMenuState);
+  }else if(key == "W" && !waveGoingOn){
+    printf("ok, starting a wave\n");
+    shared_ptr<EventInterface> waveChangeEvent = make_shared<WaveChangeEvent>(playingScreenHeader->getWaveNumber(),nowInNano,true);
+
+    eventManager -> queueEvent(waveChangeEvent);
   }
+}
+
+void PlayingScreen::handleWaveChange(const EventInterface& event){
+  auto wcEvent = static_cast<const WaveChangeEvent *>(&event);
+  auto wcEventData = static_cast<WaveChangeEventData *>((wcEvent->data).get());
+
+  waveGoingOn = wcEventData->waveStart;
 }
 
 /*
@@ -908,7 +930,7 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
 
   //all the units spawned by this tower
   vector<shared_ptr<MeleeUnit>> units = meleeTower -> getUnits();
-  
+
   assert(units.size() != 0);
 
   //the size of each tile in x direction
@@ -1016,7 +1038,6 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
  */
 void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
   unordered_map<long long,shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
-
   //the number of rows
   const int rows = gameLogic->getRows();
   //the number of cols
@@ -1026,6 +1047,15 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
   const float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
   const float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //the four components for a color
+  int redComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Red"));
+  int greenComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Green"));
+  int blueComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Blue"));
+  int alphaComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Alpha"));
+
+  //set the colors of the radius circle
+  sf::Color color (redComponent, greenComponent, blueComponent, alphaComponent);
 
   //loop through all enemies on the board
   for(auto iterator : allEnemyUnits){
@@ -1066,6 +1096,18 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
 
     //finally draw the sprite
     window.draw(currentSprite);
+    sf::CircleShape radiusCircle = current -> getRadiusCircle();
+    radiusCircle.setFillColor(sf::Color(150, 50, 250));
+    float radius = (float) current -> getRadius();
+    cout << radius << endl;
+    radiusCircle.setRadius(radius);
+    radiusCircle.setScale(xScale, yScale);
+    //reset the origin so any position set refers to the center of the circle
+    radiusCircle.setOrigin(radius, radius);
+    radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+    window.draw(radiusCircle);
+    cout << "drew radius" << endl;
+
   }
 }
 

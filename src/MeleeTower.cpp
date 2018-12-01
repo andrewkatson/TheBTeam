@@ -1,6 +1,6 @@
 #include "MeleeTower.hpp"
 //empty constructor used for derived classes to call
-MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) : TowerInterface(){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   //all rally points initilaized to this number so that if we try to spawn them without
@@ -82,11 +82,14 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
       float xVector = newX - unit -> getXCoordinate();
       float yVector = newY - unit -> getYCoordinate();
 
-      //the multipliers cooresponding to the movement of the unit in the direction of the desired position
-      float xmult = cos(xVector);
-      float ymult = sin(yVector);
+      //convert the vector into radians for the direction
+      double direction = atan2(yVector, xVector);
 
-      unit -> move(delta, xmult, ymult);
+      //set the direction for the unit (value on the unit circle)
+      unit -> setDirection(direction);
+
+      //then move it
+      unit -> move(delta);
 
       //we check to see if the projectile has overshot the target
       if(xVector > 0 ){

@@ -1,7 +1,7 @@
 #include "RangeTower.hpp"
 
 //empty constructor used for derived classes to call
-RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) : TowerInterface(){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> isMelee = false;
@@ -51,6 +51,7 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   shared_ptr<ActorInterface> firedProjectile = createProjectile();
   assert(firedProjectile != NULL);
   assert(firedProjectile -> getType() == currentProjectile -> getType());
+  firedProjectile -> setWorld(world);
 
   //set the row and col of the projetile created to be the same as the tower's
   firedProjectile -> setRow(row);

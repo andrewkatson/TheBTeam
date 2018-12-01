@@ -33,6 +33,7 @@
 #include "EventManager.hpp"
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
+#include <Box2D/Box2D.h>
 #include <vector>
 #include <unordered_map>
 #include <functional>
@@ -73,13 +74,15 @@ int yDim;
 int xGrid;
 //y dimension in pixels of a grid space
 int yGrid;
+//handles all collisions
+shared_ptr<b2World> world;
 
 
 //int pair (used to assocaite a row and col)
 typedef pair<int,int> intPair;
 
 public:
-  TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
+  TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, shared_ptr<b2World> world);
   ~TowerManager();
 
   void setDimensions(int xDim, int yDim);
@@ -103,6 +106,8 @@ public:
   void handleTowerRemove(const EventInterface& event);
 
   void addObstacles(unordered_map<int, intPair>& allObstaclesToPlace);
+
+
 
 
 private:

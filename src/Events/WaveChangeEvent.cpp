@@ -6,8 +6,8 @@ const EventType WaveChangeEvent::eventType = EventType(&WaveChangeEvent::eventTy
 WaveChangeEvent::WaveChangeEvent(){
 
 }
-WaveChangeEvent::WaveChangeEvent(int waveNum, float timeStamp){
-  this -> data = unique_ptr<WaveChangeEventData>(new WaveChangeEventData(waveNum, timeStamp));
+WaveChangeEvent::WaveChangeEvent(int waveNum, float timeStamp,bool waveStart){
+  this -> data = unique_ptr<WaveChangeEventData>(new WaveChangeEventData(waveNum, timeStamp,waveStart));
 }
 
 const EventType& WaveChangeEvent::getEventType() const{

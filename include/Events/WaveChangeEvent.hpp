@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   WaveChangeEvent();
-  WaveChangeEvent(int waveNum, float timeStamp);
+  WaveChangeEvent(int waveNum, float timeStamp,bool waveStart=false);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;

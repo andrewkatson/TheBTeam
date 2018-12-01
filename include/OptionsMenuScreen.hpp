@@ -19,7 +19,7 @@ private:
   int check;
 
 public:
-  OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems, sf::Font font);
+  OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems);
   void initText();
   void moveUp();
   void moveDown();

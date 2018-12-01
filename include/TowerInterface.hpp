@@ -1,3 +1,4 @@
+
 /*
   TowerInterface.hpp
 
@@ -18,6 +19,7 @@
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
+#include "Box2D/Box2D.h"
 
 using std::string;
 using std::make_shared;
@@ -52,17 +54,24 @@ protected:
   float yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
-  //the circle shape object to draw the radius
+  //the circle shape object to draw the radius, where collision detection happens
   sf::CircleShape radiusCircle;
   //whether the radius of shooting/spawning units is visible
   bool radiusVisible;
   //the degree of error
   const float e = 0.1;
+  //Box2d World and Body
+  shared_ptr<b2World> world;
+  b2Body* body;
+
   //scale in the x direction applied to tower when drawing
   float xScale = 1.0;
   //scale in the y direction applied to tower when drawing
   float yScale = 1.0;
+
 public:
+  TowerInterface();
+  ~TowerInterface();
   //boolean used to tell if this is a melee tower without casting
   bool isMelee;
   virtual void upgrade()=0;
@@ -125,6 +134,27 @@ public:
     sprite.setOrigin(boundsOfSprite.left + (boundsOfSprite.width)/2.0,
     boundsOfSprite.top + (boundsOfSprite.height)/2.0);
     */
+  }
+
+  void startContact(void* collidingWith){
+    //collidingWith should be cast to a clas you can collide with ie Actors and Towers
+  }
+
+  void endContact(void* collidingWith){
+    //look above
+  }
+
+  //gives actor access to the world to set physics body
+  void setWorld(shared_ptr<b2World> world){
+    this -> world = world;
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    bodyDef.position.Set(xCoordinate,yCoordinate);
+    bodyDef.angle = 0;
+    body = world -> CreateBody(&bodyDef);
+
+    //FIXTURES
+
   }
 
   void setXScale(float xScale){this->xScale = xScale;}

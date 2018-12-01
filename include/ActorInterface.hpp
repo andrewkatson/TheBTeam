@@ -23,6 +23,10 @@ using std::vector;
 class ActorInterface{
 
 protected:
+
+  //The actor's direction in RADIANS.
+  double direction;
+
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
 
@@ -44,7 +48,7 @@ protected:
   //The actor's movement speed in [units]. [pixels per millisecond? microsecond?]
   float speed;
 
-  //The actor's hispoints
+  //The actor's hitpoints
   int hitpoints;
 
   //Used to reset the actor's hit points
@@ -70,20 +74,36 @@ protected:
 
   sf::Color color;
 
+  sf::CircleShape radiusCircle;
+
   //the degree of error
   const float e = 0.001;
 
   //Box2d World and Body
   shared_ptr<b2World> world;
-  shared_ptr<b2Body> body;
+  b2Body* body;
 
   //the area of effect for a projectile and the area of attack for a unit
   int radius;
 
+
+  static double xScale;
+  static double yScale;
+
 public:
 
-  ActorInterface();
+  static double getXScale();
+  static double getYScale();
 
+  static void setXScale(int windowX, int num_cols);
+  static void setYScale(int windowY, int num_rows);
+
+  ActorInterface();
+  ~ActorInterface();
+
+  void startContact(void* collidingWith);
+
+  void endContact(void* collidingWith);
   /*
    * Rotate the texture by the number of degrees
    * @param degrees:
@@ -93,9 +113,9 @@ public:
   /*
     TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
    */
-
+  //gives actor access to the world to set physics body
   void setWorld(shared_ptr<b2World> world);
-  void updatePosition();
+
 
   /*
    * Reset the hitpoints back to the max (for respawning allied units)
@@ -122,7 +142,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  virtual void move(float delta, float xmult = 0, float ymult = 0)=0;
+  virtual void move(float delta)=0;
 
   /*
    * Return actor type ID
@@ -175,6 +195,15 @@ public:
   int getArmor(){return this->armor;}
 
   int getArmorPenetration(){return this->armorPenetration;}
+
+  int getRadius(){return radius;}
+  sf::CircleShape& getRadiusCircle(){return radiusCircle;}
+
+  double getDirection() const;
+
+  void setDirection(double direction);
+
+
 
   /*
    * @param xPos: the x of the bounding box

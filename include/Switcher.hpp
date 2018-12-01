@@ -34,5 +34,5 @@ public:
     void changeSelected(int direction);
     int getSelected();
     int getID();
-    void draw();
+    void draw(sf::RenderWindow &window);
 };

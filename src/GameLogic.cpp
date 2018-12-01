@@ -8,26 +8,23 @@
 #include "GameLogic.hpp"
 
 //Constructor.
-GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader){
+GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world){
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager, textLoader));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
+  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader, world));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
-  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel());
-  this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader));
+  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool(),world);
+  this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader, world));
   this -> registerEvents();
   this -> registerDelegates();
   test = 5;
   this -> windowX = windowX;
   this -> windowY = windowY;
-  //Intialize World
-  //have to take a parameter gravity because it is part of class paramters in Box2D library
-  b2Vec2 gravity(0.f, 1.0f);
-  this -> world = make_shared<b2World>(gravity);
+  this -> world = world;
 }
 
 /*
@@ -144,6 +141,10 @@ void GameLogic::deregisterDelegates(){
 
 //Called once every loop. Update according to elapsed time.
 void GameLogic::updateGameLogic(float deltaS){
+  if(getGameState()==State::Playing){
+    this -> waveManager -> update(deltaS);
+  }
+
   this -> eventManager -> processEvent();
   //cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){
@@ -152,20 +153,29 @@ void GameLogic::updateGameLogic(float deltaS){
     if(test == 5){
       //creates a unit for testing as well
       shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+      shared_ptr<MeleeUnit> fryGuy1 = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+      //fryGuy -> setWorld(world);
+      //fryGuy1 -> setWorld(world);
 
       fryID = fryGuy -> getID();
+      fryID1 = fryGuy1 -> getID();
 
       //set the x and y coordinates
       fryGuy -> setXCoordinate(3 * gridX);
       fryGuy -> setYCoordinate(2 * gridY);
+      fryGuy1 -> setXCoordinate(3 * gridX);
+      fryGuy1 -> setYCoordinate(2 * gridY);
 
       //add to the current wave of spawned
-      (waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
+      //something something idiot
+      // (waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
+      // (waveManager -> spawnedCurrentWave).insert({fryGuy1 -> getID(), fryGuy1});
 
       vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 
       if(allTowers.size() != 0){
         shared_ptr<TowerInterface> tower = allTowers.at(0);
+        //tower -> setWorld(world);
         string towerType = tower -> getType();
         if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
           createATower(row,col,towerType);
@@ -361,6 +371,9 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> eventManager -> queueEvent(mapGenerated);
 
    placeObstacles();
+
+   ActorInterface::setXScale(windowX, boardManager -> getXDim());
+   ActorInterface::setYScale(windowY, boardManager -> getYDim());
  }
 
 /*

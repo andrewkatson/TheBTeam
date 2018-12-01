@@ -4,13 +4,14 @@
  * Constructor for a tower manager
  * @param eventManager: the event manager class that directs events
  */
-TowerManager::TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader){
+TowerManager::TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> registerDelegates();
   this -> populateObstacles();
   this -> populateTowersToChoose();
+  this -> world = world;
 }
 
 TowerManager::~TowerManager(){
@@ -602,11 +603,17 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
   retTower -> setPos(row,col);
   retTower -> setXCoordinate((float)col * xGrid + (xGrid/2.0));
   retTower -> setYCoordinate((float)row * yGrid + (yGrid/2.0));
+  retTower -> setWorld(world);
 
   //if the tower is a melee tower we set its rally point to be the center of the tower
   if(retTower -> isMelee){
     MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(retTower.get());
     meleeTower -> resetRallyPoint((float)col * xGrid + (xGrid/2.0), (float)row * yGrid + (yGrid/2.0));
+    //loop through all the meleeUnits and set their world
+    vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();
+    for (shared_ptr<MeleeUnit> meleeUnit : meleeUnits){
+      meleeUnit -> setWorld(world);
+    }
   }
   return retTower;
 }
