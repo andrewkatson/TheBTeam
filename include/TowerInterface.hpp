@@ -129,6 +129,8 @@ public:
 
   void setXScale(float xScale){this->xScale = xScale;}
   void setYScale(float yScale){this->yScale = yScale;}
+  float getXScale(){return xScale;}
+  float getYScale(){return yScale;}
 
 };
 

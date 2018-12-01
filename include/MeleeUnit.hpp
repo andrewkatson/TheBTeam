@@ -148,6 +148,11 @@ public:
    */
   bool isCollision(sf::FloatRect colliding_with);
 
+  /*
+   * Set the engaged unit
+   */
+  void setEngagedUnit(shared_ptr<MeleeUnit> unitToEngage){engagedUnit = unitToEngage;}
+
 };
 
 

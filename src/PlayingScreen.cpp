@@ -11,6 +11,8 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
   this -> playingScreenHeader = make_shared<PlayingScreenHeader>(eventManager, textLoader, gameLogic);
+  rowSelected = 0;
+  colSelected = 0;
   somethingChanged = true;
   haveSetColorShift=false;
   this -> registerPersistentDelegates();
@@ -902,8 +904,12 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
 void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderWindow& window){
   MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
 
+  assert(meleeTower != NULL);
+
   //all the units spawned by this tower
   vector<shared_ptr<MeleeUnit>> units = meleeTower -> getUnits();
+  
+  assert(units.size() != 0);
 
   //the size of each tile in x direction
   const float xTileSize = playingScreenHeader -> getTrueXTileSize();

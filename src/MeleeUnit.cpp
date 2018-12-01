@@ -76,6 +76,10 @@ HitpointBar MeleeUnit::getHpBar() {
   return this->hpBar;
 }
 
+/*
+ * @param xmult: the cos of angle
+ * @param ymult: the sin of angle 
+ */
 void MeleeUnit::move(float deltaS, float xmult, float ymult){
   this->x+=speed*deltaS*xmult;
   this->y+=speed*deltaS*ymult;
