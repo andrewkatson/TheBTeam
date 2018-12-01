@@ -188,6 +188,8 @@ public:
 
   float getSpeed(){return this->speed;}
 
+  void setSpeed(float speed){this->speed=speed;}
+
   int getHitpoints(){return this->hitpoints;}
 
   int getDamage(){return this->damage;}

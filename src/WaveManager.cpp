@@ -134,27 +134,13 @@ void WaveManager::createNextWave() {
   std::uniform_real_distribution<double> percent_perturbation_rng(min_scale, max_scale);
 
   buildDistanceEntryMap(entryPositions, distances);
-/*
-  for (auto it = distancesFromEntryPositions.begin();it != distancesFromEntryPositions.end(); it++){
-    printf("distances. key = %d\nvalues: ",it->first);
-    for(int z=0;z<it->second.size();z++){
-      printf("{ %d , %d }",it->second[z].first,it->second[z].second);
-    }
-    printf("\n");
-  }
-*/
 
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
-  //printf("***** NORMALIZE ***** \n");
-/*
-  for (auto it = distancesFromEntryPositions.begin();it != distancesFromEntryPositions.end(); it++){
-    printf("distances. key = %d\nvalues: ",it->first);
-    for(int z=0;z<it->second.size();z++){
-      printf("{ %d , %d }",it->second[z].first,it->second[z].second);
-    }
-    printf("\n");
+
+  for(auto it=distancesFromEntryPositions.begin();it!=distancesFromEntryPositions.end();it++){
+    cout << "map dist normalized " << it->first << endl;
   }
-  */
+
   double range=(--distancesFromEntryPositions.end())->first;
 
   std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
@@ -184,13 +170,21 @@ void WaveManager::createNextWave() {
 
     enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
 
+    enemy->setSpeed(enemy->getSpeed()+enemy->getSpeed()*percent_perturbation_rng(rnd_gen));
+
     enemy -> setWorld(world);
 
     double spawn_distance;
-    do{
+    //do{
       spawn_distance=spawn_location_rng(rnd_gen);
-    }while(0<spawn_distance && spawn_distance<range);
-    //a shitty solution... let's try and figure out something else
+    //  cout << "spawn distance pick" << spawn_distance << endl;
+    //w}while(0>spawn_distance || spawn_distance>range);
+    if(spawn_distance<0){
+      spawn_distance=0.1;
+    }else if(spawn_distance>range){
+      spawn_distance=range-.1;
+    }
+    cout << "spawn dist: " << spawn_distance << endl;
 
     int roundedKey;
 
@@ -217,7 +211,7 @@ void WaveManager::createNextWave() {
       roundedKey=iterator->first;
     }
 
-    //printf("rounded key: %d\n",roundedKey);
+    printf("rounded key: %d\n",roundedKey);
 
     //now that we have our distance key, we can get all of the entry positions with that distance
     vector<intPair> chosenEntrances=distancesFromEntryPositions[roundedKey];
