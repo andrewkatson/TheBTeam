@@ -78,7 +78,8 @@ HitpointBar MeleeUnit::getHpBar() {
 
 void MeleeUnit::move(float deltaS){
   this->x+=(speed*cos(direction))*ActorInterface::getXScale();
-  this->y+=(speed*sin(direction))*ActorInterface::getYScale();
+  this->y+=(speed*sin(direction)*-1)*ActorInterface::getYScale();
+  printf("new coords: %f %f",x,y);
 }
 
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){
@@ -119,4 +120,20 @@ int MeleeUnit::getAttackRadius() const {
 
 void MeleeUnit::setAttackRadius(int attackRadius) {
   radius = attackRadius;
+}
+
+double MeleeUnit::getOvershoot() const {
+  return overshoot;
+}
+
+void MeleeUnit::setOvershoot(double overshoot) {
+  MeleeUnit::overshoot = overshoot;
+}
+
+bool MeleeUnit::isOvershooting() const {
+  return overshooting;
+}
+
+void MeleeUnit::setOvershooting(bool overshooting) {
+  MeleeUnit::overshooting = overshooting;
 }

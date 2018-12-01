@@ -43,7 +43,21 @@ protected:
   //The index of the sprite that the actor is currently using.
   int current_sprite;
 
+  //Stores the amount of pixels that this unit overshoots its target when turning.
+  double overshoot;
+
+  bool overshooting;
 public:
+
+  bool isOvershooting() const;
+
+  void setOvershooting(bool overshooting);
+
+  //Return the overshoot
+  double getOvershoot() const;
+
+  //Set the overshoot to the desired value
+  void setOvershoot(double overshoot);
 
   void update(float delta);
 

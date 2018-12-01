@@ -95,8 +95,8 @@ public:
   static double getXScale();
   static double getYScale();
 
-  static void setXScale(int windowX, int num_cols);
-  static void setYScale(int windowY, int num_rows);
+  static void setXScale(int num_cols);
+  static void setYScale(int num_rows);
 
   ActorInterface();
   ~ActorInterface();

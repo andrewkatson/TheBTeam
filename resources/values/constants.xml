@@ -2,8 +2,8 @@
 <constants>
   <ints>
   <!--Window-->
-  <constant value="800" id="IDS_W_X"></constant>
-  <constant value="600" id="IDS_W_Y"></constant>
+  <constant value="800" id="IDS_W_X"> </constant>
+  <constant value="600" id="IDS_W_Y"> </constant>
 
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
