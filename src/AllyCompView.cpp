@@ -11,6 +11,7 @@ AllyCompView::AllyCompView(shared_ptr<EventManager> eventManager, shared_ptr<Tex
 void AllyCompView::updateAllyCompView(float deltaS){
   if(gameLogic->getGameState()==State::Playing){
     updateProjectiles(deltaS);
+    updateTowers(deltaS);
   }
 }
 /*
@@ -30,6 +31,13 @@ void AllyCompView::updateProjectiles(float deltaS){
   }
 }
 
-void AllyCompView::moveAllyUnits(float deltaS){
+void AllyCompView::updateTowers(float deltaS){
+  //UPDATE ALL TOWERS
+  unordered_map<int, shared_ptr<TowerInterface>> allTowers = gameLogic -> getTowersPlaced();
 
+  for(auto it : allTowers){
+    shared_ptr<TowerInterface> tower = it.second;
+
+    tower -> update(deltaS);
+  }
 }

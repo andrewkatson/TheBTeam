@@ -1,10 +1,9 @@
 #include "OptionsMenuScreen.hpp"
 
-OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems, sf::Font font) {
+OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,int windowX, int windowY, int numItems) {
   this -> windowX = windowX;
   this -> windowY = windowY;
   this -> numItems = numItems;
-  this -> font = font;
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> selectedItem = 0;
@@ -85,15 +84,17 @@ void OptionsMenuScreen::moveDown()
 
 void OptionsMenuScreen::moveRight()
 {
+    cout << std::to_string(selectedItem) + " was incremented one to the right" << endl;
   /* psuedocode:
-  switcher[selectedItem].increment
+  switcher.changeSelected(1)
   */
 }
 
 void OptionsMenuScreen::moveLeft()
 {
+    cout << std::to_string(selectedItem) + " was incremented one to the left" << endl;
     /* psuedocode:
-    switcher[selectedItem].increment
+    switcher.changeSelected(0)
     */
 }
 
@@ -105,7 +106,9 @@ void OptionsMenuScreen::draw(sf::RenderWindow &window){
     screen.at(i).setFont(font);
     window.draw(screen.at(i));
   }
+  //window.draw(switcher)
 
+  window.display();
 }
 
 
@@ -129,14 +132,21 @@ void OptionsMenuScreen::registerDelegates(){
  * so they are not called when we switch off this screen
  */
 void OptionsMenuScreen::deregisterDelegates(){
-
+    //make an event and get its type
+    KeyPressEvent keyPressEvent = KeyPressEvent();
+    EventType keyPressEventType = keyPressEvent.getEventType();
+    //deregister the delegate and its type
+    this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_OMSD_KP")),keyPressEventType);
 }
-
 /*
  * Handle any key press from the user
  * @param event: event of the key press
  */
 void OptionsMenuScreen::handleKeyPress(const EventInterface& event){
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * KeyPressEvent type which allows us to access variables and methods
@@ -159,15 +169,18 @@ void OptionsMenuScreen::handleKeyPress(const EventInterface& event){
       moveDown();
   }
   else if(key == "Left"){
-
+      moveLeft();
   }
   else if(key == "Right"){
-
+      moveRight();
   }
   else if(key == "Enter"){
-
+      cout << selectedItem << endl;
   }
   else if(key == "B"){
+    //back/return to main menu can be implemented into a future restart screen
+    shared_ptr<EventInterface> mainMenu = make_shared<StateChangeEvent>(State::MainMenu, nowInNano);
 
+    this -> eventManager -> queueEvent(mainMenu);
   }
 }

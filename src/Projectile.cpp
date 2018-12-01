@@ -31,7 +31,7 @@ int Projectile::getDamage() const {
   return damage;
 }
 
-void Projectile::move(float delta, float xmult, float ymult){
+void Projectile::move(float delta){
   float newX = xVector /(1/speed) *delta + x;
   float newY = yVector / (1/speed) *delta + y;
 

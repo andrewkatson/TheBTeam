@@ -23,6 +23,10 @@ using std::vector;
 class ActorInterface{
 
 protected:
+
+  //The actor's direction in RADIANS.
+  double direction;
+
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
 
@@ -44,7 +48,7 @@ protected:
   //The actor's movement speed in [units]. [pixels per millisecond? microsecond?]
   float speed;
 
-  //The actor's hispoints
+  //The actor's hitpoints
   int hitpoints;
 
   //Used to reset the actor's hit points
@@ -82,7 +86,17 @@ protected:
   //the area of effect for a projectile and the area of attack for a unit
   int radius;
 
+
+  static double xScale;
+  static double yScale;
+
 public:
+
+  static double getXScale();
+  static double getYScale();
+
+  static void setXScale(int windowX, int num_cols);
+  static void setYScale(int windowY, int num_rows);
 
   ActorInterface();
 
@@ -127,7 +141,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  virtual void move(float delta, float xmult = 0, float ymult = 0)=0;
+  virtual void move(float delta)=0;
 
   /*
    * Return actor type ID
@@ -183,6 +197,12 @@ public:
 
   int getRadius(){return radius;}
   sf::CircleShape& getRadiusCircle(){return radiusCircle;}
+
+  double getDirection() const;
+
+  void setDirection(double direction);
+
+
 
   /*
    * @param xPos: the x of the bounding box

@@ -7,6 +7,8 @@
  */
 
 #include "ActorInterface.hpp"
+double ActorInterface::xScale;
+double ActorInterface::yScale;
 
 ActorInterface::ActorInterface(){
   //the id is the address of the current object
@@ -59,4 +61,33 @@ void ActorInterface::startContact(void* collidingWith){
 
 void ActorInterface::endContact(void* collidingWith){
   //look above
+}
+
+double ActorInterface::getDirection() const {
+  return direction;
+}
+
+void ActorInterface::setDirection(double direction) {
+  this ->direction = direction;
+}
+
+void ActorInterface::setXScale(int windowX, int num_cols){
+  double dx=windowX;
+  double dc=num_cols;
+  ActorInterface::xScale=dx/dc;
+}
+
+void ActorInterface::setYScale(int windowY, int num_rows){
+  double dy=windowY;
+  double dr=num_rows;
+
+  ActorInterface::yScale=dy/dr;
+}
+
+double ActorInterface::getYScale(){
+  return ActorInterface::yScale;
+}
+
+double ActorInterface::getXScale() {
+  return ActorInterface::xScale;
 }

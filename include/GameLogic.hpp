@@ -78,12 +78,15 @@ private:
   long long fryID;
   long long fryID1;
 
+
+
 public:
   /*
     Constructor. Initialize game, setting up instance variables.
    */
   GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world);
   ~GameLogic();
+
 
 
   void registerEvents();

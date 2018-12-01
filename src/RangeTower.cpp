@@ -6,11 +6,14 @@ RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> textLoader = textLoader;
   this -> isMelee = false;
   this -> radiusVisible = false;
+  lastTimeFired = 0.0;
   this -> setToCenter();
 }
 
 void RangeTower::update(float delta){
-
+  if(canAttack()){
+    //TODO find some way to get a specific enemy to be attacked
+  }
 }
 
 /*
@@ -29,6 +32,18 @@ int RangeTower::getPrice(){
 }
 
 bool RangeTower::canAttack(){
+  //can only attack when the difference between the last shot and now is greater than the 1/rate of fire
+  float minTimeBetweenShots = 1/rateOfFire;
+
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  float timeBetweenShots = nowInNano - lastTimeFired;
+
+  if(timeBetweenShots > minTimeBetweenShots){
+    //TODO check if there are enemies in range
+  }
   return false;
 }
 
@@ -53,6 +68,10 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
   auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  //update the time of the last fired shot
+  lastTimeFired = nowInNano;
+
   bool isProjectile = true;
   shared_ptr<EventInterface> projectileFiredEvent = make_shared<ActorCreatedEvent>(firedProjectile, isProjectile, nowInNano);
   this -> eventManager -> queueEvent(projectileFiredEvent);

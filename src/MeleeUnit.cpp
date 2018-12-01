@@ -76,10 +76,9 @@ HitpointBar MeleeUnit::getHpBar() {
   return this->hpBar;
 }
 
-void MeleeUnit::move(float deltaS, float xmult, float ymult){
-  this->x+=speed*deltaS*xmult;
-  this->y+=speed*deltaS*ymult;
-
+void MeleeUnit::move(float deltaS){
+  this->x+=(speed*cos(direction))*ActorInterface::getXScale();
+  this->y+=(speed*sin(direction))*ActorInterface::getYScale();
 }
 
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){

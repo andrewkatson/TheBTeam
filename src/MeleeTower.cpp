@@ -19,6 +19,48 @@ MeleeTower::~MeleeTower(){
   this -> deregisterDelegates();
 }
 
+void MeleeTower::update(float delta){
+  int unitIndex = 0;
+  //if a unit does not have an engaged enemy unit then send it back towards
+  //a point situated around the rally point
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+    if(unit -> getHitpoints() != 0){
+      if((unit -> getEngagedUnit()).get() == NULL){
+        resetUnitPosition(unit, unitIndex);
+      }
+
+      //update the unit (i.e. it will move if it is not at its target or will fight if it is
+      unit -> update(delta);
+    }
+    unitIndex++;
+  }
+}
+
+/*
+ * Initialize all the units that will spawn for this tower with a position
+ */
+void MeleeTower::setUpUnits(){
+  for(int unitIndex = 0; unitIndex < currentUnits.size(); unitIndex++){
+    resetUnitPosition(currentUnits.at(unitIndex), unitIndex);
+  }
+}
+
+/*
+ * Set all the unit positions to a point on the circle surrounding the rally point corresponding
+ * to their index (unless the rally point is the tower's center in which case we set all positions to tower pos)
+ * @param unit: the unit to reset
+ * @param unitIndex: the index in the vector of units of this unit
+ */
+void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex){
+  if(xRally == xCoordinate && yRally == yCoordinate){
+    unit->setXCoordinate(xRally);
+    unit->setYCoordinate(yRally);
+  }
+  else{
+    //TODO set the target to be staggered around the rally point
+  }
+}
+
 /*
  * Register the delegate method for this class
  * with any events it needs to know about
@@ -48,10 +90,6 @@ void MeleeTower::deregisterDelegates(){
 
 void MeleeTower::upgrade(){}
 
-/*
- * Initialize all the units that will spawn for this tower
- */
-void MeleeTower::setUpUnits(){}
 
 /*
  * Initliaze the texture for the sprite to be the first texture of the textures vector
@@ -66,9 +104,9 @@ void MeleeTower::initSprite(){
  * @param x: the x coordinate
  * @param y: the y coordinate
  */
-void MeleeTower::resetRallyPoint(int x, int y){
+void MeleeTower::resetRallyPoint(float x, float y){
   //if this rally point is not in the prescribed radius around the tower
-  if(x<xCoordinate-radius || x>xCoordinate+radius || y<yCoordinate-radius || y>yCoordinate+radius){
+  if(x<xCoordinate-radius*xScale || x>xCoordinate+radius*xScale || y<yCoordinate-radius*yScale || y>yCoordinate+radius*yScale){
     return;
   }
   this -> xRally = x;
@@ -196,9 +234,4 @@ shared_ptr<vector<int>>  MeleeTower::getStatistics(){
   stats->push_back(respawnSpeed);
 
   return stats;
-}
-
-
-void MeleeTower::update(float delta){
-
 }

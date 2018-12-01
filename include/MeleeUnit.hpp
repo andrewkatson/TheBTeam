@@ -13,6 +13,7 @@ using namespace std;
 #include <memory>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
+//#include "GameLogic.hpp"
 
 class MeleeUnit : public ActorInterface {
 
@@ -42,7 +43,6 @@ protected:
   //The index of the sprite that the actor is currently using.
   int current_sprite;
 
-
 public:
 
   void update(float delta);
@@ -69,6 +69,8 @@ public:
   void setArmor(int armor);
 
   int getAttackRadius() const;
+
+  shared_ptr<MeleeUnit> getEngagedUnit(){return engagedUnit;}
 
   void setAttackRadius(int attackRadius);
 
@@ -116,7 +118,10 @@ public:
 
     @return an integer representing the actor's identity
    */
-  int getID(){return id;}
+//  int getID(){return id;}
+// Redundant AND confusing because ActorInterface has this same thing
+// and it returns a long long (as it should). I think I did this some time ago
+// and it should not work for this
 
   /*
     Returns the actor's sprite.
@@ -135,7 +140,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  void move(float delta,float xmult, float ymult);
+  void move(float delta);
 
   /*
     Determine whether or not the object's collision box is colliding with the

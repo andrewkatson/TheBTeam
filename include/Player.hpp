@@ -14,6 +14,7 @@
 #include "Events/WaveChangeEvent.hpp"
 #include "Events/LevelChangeEvent.hpp"
 #include "Events/BalanceChangeEvent.hpp"
+#include "Events/DifficultyChangeEvent.hpp"
 #include <memory>
 #include <chrono>
 
@@ -34,13 +35,15 @@ private:
 
     level: the current level number
    */
-  int balance,hitpoints, wave, level;
+  int balance,hitpoints, wave, level,schoolLevel;
 
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
 
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
+
+  void registerDelegates();
 
 public:
 
@@ -79,6 +82,11 @@ public:
   int getLevel(){return level;}
 
   /*
+   * return the school level
+   */
+  int getSchool(){return schoolLevel;}
+
+  /*
     Set the balance to the given value.
 
     @param balance The new balance value for the player.
@@ -113,7 +121,7 @@ public:
    */
   void updateLevel(int level);
 
-
+  void handleDiffChanged(const EventInterface& event);
 };
 
 #endif

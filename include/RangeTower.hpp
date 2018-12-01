@@ -32,6 +32,8 @@ shared_ptr<Projectile> currentProjectile;
 shared_ptr<TextLoader> textLoader;
 //the rate that this tower can fire projectiles at
 int rateOfFire;
+//the time that the last shot was fired
+float lastTimeFired;
 protected:
   virtual shared_ptr<ActorInterface> createProjectile();
 public:
@@ -55,10 +57,10 @@ public:
   string getType(){return towerTypeID;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
-  int getXCoordinate(){return xCoordinate;}
-  int getYCoordinate(){return yCoordinate;}
-  void setXCoordinate(int xCor){xCoordinate = xCor;}
-  void setYCoordinate(int yCor){yCoordinate = yCor;}
+  float getXCoordinate(){return xCoordinate;}
+  float getYCoordinate(){return yCoordinate;}
+  void setXCoordinate(float xCor){xCoordinate = xCor;}
+  void setYCoordinate(float yCor){yCoordinate = yCor;}
 
   void setUpUnits(){}
 
