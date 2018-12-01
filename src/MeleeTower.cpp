@@ -70,17 +70,19 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
                     + textLoader -> getInteger(string("IDS_Rally_Flag_Unit_Offset")));
 
     //the x and y for the unit that is its resting position around the rally point flag
-    float newX = (radiusOfUnitCircle) * xScale * cos(angle*unitIndex) + xRally;
-    float newY = (radiusOfUnitCircle) * yScale * sin(angle*unitIndex) + yRally;
-
-    cout << "for unit " << unitIndex << endl;
-    cout << "go to x " << newX << " y " << newY << endl;
+    float newX = (radiusOfUnitCircle) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + xRally;
+    float newY = (radiusOfUnitCircle) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + yRally;
 
     //if the unit is already at its correct resting poisiton nothing needs to be done
     if(!(withinRange(newX, newY, unit->getXCoordinate(), unit->getYCoordinate()))){
       //the vector components of the movement this unit needs to make
       float xVector = newX - unit -> getXCoordinate();
       float yVector = newY - unit -> getYCoordinate();
+
+      //get the max so we can normalize the vectors so they do not move too fast
+      float normalize = max(xVector, yVector);
+      xVector /= normalize;
+      yVector /= normalize;
 
       //convert the vector into radians for the direction
       double direction = atan2(yVector, xVector);

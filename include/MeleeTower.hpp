@@ -13,6 +13,7 @@
 #include <memory>
 #include <vector>
 #include <chrono>
+#include <math.h>
 
 using std::vector;
 using std::shared_ptr;

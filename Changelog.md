@@ -1,6 +1,8 @@
 [Unreleased]
 
 ###Changed  
+- melee towers spawn units surrounding their flag in the right spaces 
+
 
 ###Fixed
 - seg faults from trying to destroy unitialized box2d bodies [@andrewkatson][https://github.com/andrewkatson]
