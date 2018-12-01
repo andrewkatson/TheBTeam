@@ -1,6 +1,6 @@
 #include "MeleeTower.hpp"
 //empty constructor used for derived classes to call
-MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) : TowerInterface(){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   //all rally points initilaized to this number so that if we try to spawn them without

@@ -81,7 +81,7 @@ protected:
 
   //Box2d World and Body
   shared_ptr<b2World> world;
-  shared_ptr<b2Body> body;
+  b2Body* body;
 
   //the area of effect for a projectile and the area of attack for a unit
   int radius;
@@ -99,6 +99,7 @@ public:
   static void setYScale(int windowY, int num_rows);
 
   ActorInterface();
+  ~ActorInterface();
 
   void startContact(void* collidingWith);
 

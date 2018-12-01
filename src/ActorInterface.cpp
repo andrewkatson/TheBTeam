@@ -29,10 +29,12 @@ void ActorInterface::setWorld(shared_ptr<b2World> world){
   this -> world = world;
 
   b2BodyDef bodyDef;
-  bodyDef.position = b2Vec2(this -> x/30.f, this -> y/30.f);
   bodyDef.type = b2_dynamicBody;
-  b2Body* body = this -> world -> CreateBody(&bodyDef);
+  bodyDef.position.Set(x,y);
+  bodyDef.angle = 0;
+  body = world -> CreateBody(&bodyDef);
 
+  //FIXTURES OVER HERE START HERE TOMORROW
   b2CircleShape circle;
   circle.m_p.Set(0,0);
   circle.m_radius = (float) this -> radius/30.f;
@@ -90,4 +92,8 @@ double ActorInterface::getYScale(){
 
 double ActorInterface::getXScale() {
   return ActorInterface::xScale;
+}
+
+ActorInterface::~ActorInterface(){
+world -> DestroyBody(body);
 }

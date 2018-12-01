@@ -60,8 +60,9 @@ protected:
   bool radiusVisible;
   //the degree of error
   const float e = 0.1;
-  //Box2d world
+  //Box2d World and Body
   shared_ptr<b2World> world;
+  b2Body* body;
 
   //scale in the x direction applied to tower when drawing
   float xScale = 1.0;
@@ -69,6 +70,8 @@ protected:
   float yScale = 1.0;
 
 public:
+  TowerInterface();
+  ~TowerInterface();
   //boolean used to tell if this is a melee tower without casting
   bool isMelee;
   virtual void upgrade()=0;
@@ -144,6 +147,14 @@ public:
   //gives actor access to the world to set physics body
   void setWorld(shared_ptr<b2World> world){
     this -> world = world;
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    bodyDef.position.Set(xCoordinate,yCoordinate);
+    bodyDef.angle = 0;
+    body = world -> CreateBody(&bodyDef);
+
+    //FIXTURES 
+
   }
 
   void setXScale(float xScale){this->xScale = xScale;}
