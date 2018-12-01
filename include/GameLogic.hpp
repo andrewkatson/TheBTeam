@@ -71,18 +71,18 @@ private:
   //Store the textureLoader to get the textures for this tower and pass to
   //any dependent units or projectiles
   shared_ptr<TextureLoader> textureLoader;
-  //Box2d World and Body
+
   shared_ptr<b2World> world;
-  shared_ptr<b2Body> body;
 
   int test;
   long long fryID;
+  long long fryID1;
 
 public:
   /*
     Constructor. Initialize game, setting up instance variables.
    */
-  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader);
+  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world);
   ~GameLogic();
 
 

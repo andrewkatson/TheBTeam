@@ -4,13 +4,14 @@
  * Constructor for a tower manager
  * @param eventManager: the event manager class that directs events
  */
-TowerManager::TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader){
+TowerManager::TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> registerDelegates();
   this -> populateObstacles();
   this -> populateTowersToChoose();
+  this -> world = world;
 }
 
 TowerManager::~TowerManager(){

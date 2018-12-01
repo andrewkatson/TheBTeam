@@ -20,6 +20,7 @@ using namespace std;
 #include "Units/AverageKidUnit.hpp"
 #include "Units/SkinnyKidUnit.hpp"
 #include "Units/FatKidUnit.hpp"
+#include <Box2D/Box2D.h>
 
 class WaveManager{
 
@@ -87,13 +88,15 @@ public:
    * converted to { 3, 0, 4, 2, 5 }.
    */
   map<int,vector<intPair>> getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
+  //handles all collisions
+  shared_ptr<b2World> world;
 
 public:
   /*
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, shared_ptr<b2World> world);
   ~WaveManager();
 
   /*

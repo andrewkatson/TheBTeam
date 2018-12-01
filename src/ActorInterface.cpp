@@ -43,21 +43,20 @@ void ActorInterface::setWorld(shared_ptr<b2World> world){
 	this -> body -> SetAwake(1);
 }
 
-void ActorInterface::updatePosition(){
-	//Set body to awake in case of it being 0 velocity in both x and y direction to prevent
-	//Freezing
-	this -> body -> SetAwake(1);
+// void ActorInterface::updatePosition(){
+// 	//Set body to awake in case of it being 0 velocity in both x and y direction to prevent
+// 	//Freezing
+// 	this -> body -> SetAwake(1);
+//
+// 	this -> x = this -> body -> GetPosition().x * 30.f;
+// 	this -> y = this -> body -> GetPosition().y * 30.f;
+//
+// }
 
-	this -> x = this -> body -> GetPosition().x * 30.f;
-	this -> y = this -> body -> GetPosition().y * 30.f;
+void ActorInterface::startContact(void* collidingWith){
+  //collidingWith should be cast to a clas you can collide with ie Actors and Towers
+}
 
-	/*Keeping this Debug information for now to keep track of b2World Objects
-	for (b2Body* BodyIterator = this -> World -> GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
-        {
-		printf("Obj %i is at x:%f y:%f ", BodyIterator, BodyIterator -> GetPosition().x * SCALE, BodyIterator -> GetPosition().y * SCALE);
-		printf(" is active %i\n", this -> Body -> IsActive());
-	}
-	printf("\n");
-	*/
-
+void ActorInterface::endContact(void* collidingWith){
+  //look above
 }

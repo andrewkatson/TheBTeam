@@ -70,6 +70,8 @@ protected:
 
   sf::Color color;
 
+  sf::CircleShape radiusCircle;
+
   //the degree of error
   const float e = 0.001;
 
@@ -84,6 +86,9 @@ public:
 
   ActorInterface();
 
+  void startContact(void* collidingWith);
+
+  void endContact(void* collidingWith);
   /*
    * Rotate the texture by the number of degrees
    * @param degrees:
@@ -93,9 +98,9 @@ public:
   /*
     TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
    */
-
+  //gives actor access to the world to set physics body
   void setWorld(shared_ptr<b2World> world);
-  void updatePosition();
+
 
   /*
    * Reset the hitpoints back to the max (for respawning allied units)
@@ -175,6 +180,9 @@ public:
   int getArmor(){return this->armor;}
 
   int getArmorPenetration(){return this->armorPenetration;}
+
+  int getRadius(){return radius;}
+  sf::CircleShape& getRadiusCircle(){return radiusCircle;}
 
   /*
    * @param xPos: the x of the bounding box

@@ -760,7 +760,6 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> meleeTower, sf::Re
  */
 void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
   unordered_map<long long,shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
-
   //the number of rows
   const int rows = gameLogic->getRows();
   //the number of cols
@@ -770,6 +769,15 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
   const int xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
   const int yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //the four components for a color
+  int redComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Red"));
+  int greenComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Green"));
+  int blueComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Blue"));
+  int alphaComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Alpha"));
+
+  //set the colors of the radius circle
+  sf::Color color (redComponent, greenComponent, blueComponent, alphaComponent);
 
   //loop through all enemies on the board
   for(auto iterator : allEnemyUnits){
@@ -810,6 +818,18 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
 
     //finally draw the sprite
     window.draw(currentSprite);
+    sf::CircleShape radiusCircle = current -> getRadiusCircle();
+    radiusCircle.setFillColor(sf::Color(150, 50, 250));
+    float radius = (float) current -> getRadius();
+    cout << radius << endl;
+    radiusCircle.setRadius(radius);
+    radiusCircle.setScale(xScale, yScale);
+    //reset the origin so any position set refers to the center of the circle
+    radiusCircle.setOrigin(radius, radius);
+    radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+    window.draw(radiusCircle);
+    cout << "drew radius" << endl;
+
   }
 }
 

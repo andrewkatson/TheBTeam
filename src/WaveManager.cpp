@@ -12,13 +12,14 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, shared_ptr<b2World> world){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> currentWaveNumber = 0;
   this -> setUpPossibleEnemies();
   this -> registerDelegates();
+  this -> world = world;
 }
 
 WaveManager::~WaveManager(){
@@ -44,10 +45,13 @@ void WaveManager::deregisterDelegates() {
 
 void WaveManager::setUpPossibleEnemies(){
   shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(textLoader, eventManager, textureLoader);
+  skinnyKid -> setWorld(world);
 
   shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(textLoader, eventManager, textureLoader);
+  averageKid -> setWorld(world);
 
   shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(textLoader, eventManager, textureLoader);
+  fatkid -> setWorld(world);
 
   enemies.push_back(skinnyKid);
   enemies.push_back(averageKid);
@@ -126,6 +130,8 @@ queue<shared_ptr<MeleeUnit>> WaveManager::makeWave(int difficulty, int waveNumbe
     enemy->setLunchMoney(enemy->getLunchMoney()+enemy->getLunchMoney()*percent_perturbation_rng(rnd_gen));
 
     enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
+
+    enemy -> setWorld(world);
 
     double spawn_distance;
     do{
