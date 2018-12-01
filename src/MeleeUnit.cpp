@@ -11,6 +11,8 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> s_elapsed = 0;
+  this -> overshooting = false;
+  this -> overshoot = 0;
 }
 
 void MeleeUnit::update(float delta){

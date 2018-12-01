@@ -243,23 +243,29 @@ void WaveManager::createNextWave() {
 
     float offset=entry_offset_rng(rnd_gen);
     float xOffset,yOffset;
+    double dir;
 
     if(entryPoint.first == 0){
       yOffset =0.001;
       xOffset=offset;
+      dir=3*M_PI/2;
     }else if(entryPoint.second==0){
       yOffset =offset;
       xOffset=0.001;
+      dir=0;
     }else if(entryPoint.first==distances.size()-1){
       yOffset =0.999;
       xOffset=offset;
+      dir=M_PI/2;
     }else{
       yOffset =offset;
       xOffset=0.999;
+      dir=M_PI;
     }
 
     enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + xOffset)); // multiply tile size by tiles
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
+    enemy->setDirection(dir);
 
     currentWave.push(enemy);
   }

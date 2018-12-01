@@ -28,6 +28,8 @@ void CompView::moveUnits(float deltaS){
   vector<vector<int>> dists=gameLogic->getDistances();
   vector<vector<int>> floor=gameLogic->getFloor();
 
+  std::mt19937 rnd_gen (rd ());
+
   uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()-.5);
   uniform_real_distribution<double>y_overshoot(0,playingScreenHeader->getTrueYTileSize()-.5);
 
@@ -78,7 +80,7 @@ void CompView::moveUnits(float deltaS){
         //      (0 <= adjusted_r), (adjusted_r < floor.size()), (0 <= adjusted_c), (adjusted_c < floor[0].size()));
         if((0 <= adjusted_r) && (adjusted_r < floor.size()) && (0 <= adjusted_c) && (adjusted_c < floor[0].size())) {
           //printf("above floor grid: %d\n",floor[r + dir.first][c + dir.second]);
-          if (floor[r + dir_r][c + dir_c] > 0) {
+          if (floor[r + dir_r][c + dir_c] >= 0) {
             //printf("huge succeeded\n");
             dists_coords[dists[adjusted_r][adjusted_c]] = dir;
           }
@@ -91,17 +93,43 @@ void CompView::moveUnits(float deltaS){
 
       //printf("going to next: %lf\n",new_direction);
 
-      /*
-      if(new_direction==currentUnit->getDirection()){
+
+      double curdir=currentUnit->getDirection();
+
+      if(new_direction==curdir){
         currentUnit->setOvershooting(false);
       }else{
         if(currentUnit->isOvershooting()){
           //if it didn't hit its target yet, keep overshooting, otherwise stop
-        }else{
+          bool passedTarget=((curdir==0 && currentUnit->getXCoordinate()>currentUnit->getOvershoot()) //going right, so the cor should be greater than the overshoot
+                  || (curdir==M_PI/2 && currentUnit->getYCoordinate()<currentUnit->getOvershoot()) // going up, so the cor should be less
+                  || (curdir==M_PI && currentUnit->getXCoordinate()<currentUnit->getOvershoot())
+                  || (curdir==3*M_PI/2 && currentUnit->getYCoordinate()>currentUnit->getOvershoot()));
 
+          if(!passedTarget){
+            new_direction=currentUnit->getDirection();
+          }
+
+        }else {
+          double overshoot;
+          if(curdir==0){
+            overshoot=currentUnit->getXCoordinate()+x_overshoot(rnd_gen);
+          }else if(curdir==M_PI/2){
+            overshoot=currentUnit->getYCoordinate()-y_overshoot(rnd_gen);
+          }else if(curdir==M_PI){
+            overshoot=currentUnit->getXCoordinate()-x_overshoot(rnd_gen);
+          }else{
+            overshoot=currentUnit->getYCoordinate()+y_overshoot(rnd_gen);
+          }
+          currentUnit->setOvershoot(overshoot);
+
+          currentUnit->setOvershooting(true);
+
+          new_direction=currentUnit->getDirection();
         }
+        //new_direction=currentUnit->getDirection();
       }
-       */
+
 
       currentUnit->setDirection(new_direction);
 
