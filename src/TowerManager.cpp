@@ -546,66 +546,51 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
 
   if(type == textLoader->getTypeID(string("IDS_CPT"))){
     retTower = make_shared<CheesePizza>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_PPT"))){
     retTower = make_shared<PepperoniPizza>(textLoader,eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_DDT"))){
     retTower = make_shared<DeepDish>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_MLT"))){
     retTower = make_shared<MeatLovers>(textLoader, eventManager, textureLoader);
   }
   else if(type == textLoader->getTypeID(string("IDS_MMMT"))){
     retTower = make_shared<MiniMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_NMMT"))){
     retTower = make_shared<NormalMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_PBMMT"))){
     retTower = make_shared<PeanutButterMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_PMMT"))){
     retTower = make_shared<PeanutMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_SOT"))){
     retTower = make_shared<Soda>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_EDT"))){
     retTower = make_shared<EnergyDrink>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_GT"))){
     retTower = make_shared<Gravy>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_SLT"))){
     retTower = make_shared<Slushie>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_NFT"))){
     retTower = make_shared<NormalFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_CFT"))){
     retTower = make_shared<CrinkleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_SFT"))){
     retTower = make_shared<SpicyFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_WFT"))){
     retTower = make_shared<WaffleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_CTO"))){
     retTower = make_shared<CafeteriaTable>(textLoader, eventManager, textureLoader);

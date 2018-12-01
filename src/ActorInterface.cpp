@@ -14,9 +14,19 @@ ActorInterface::ActorInterface(){
   //the id is the address of the current object
   id = (long long) this;
 
+  //set the body to NULL in case we never set the world so the destructor does not try to destroy an unitialized body
+  body = NULL;
+
   //set the sprite to face roughly in the direction the textures are drawn  in
   //sprite.setRotation(135.0f + 90.f);
   //rotate(225.0f);
+}
+
+ActorInterface::~ActorInterface(){
+
+  if(body){
+    world -> DestroyBody(body);
+  }
 }
 
 void ActorInterface::rotate(float degrees){
@@ -89,8 +99,4 @@ double ActorInterface::getYScale(){
 
 double ActorInterface::getXScale() {
   return ActorInterface::xScale;
-}
-
-ActorInterface::~ActorInterface(){
-world -> DestroyBody(body);
 }

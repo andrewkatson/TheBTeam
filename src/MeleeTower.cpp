@@ -26,11 +26,14 @@ void MeleeTower::update(float delta){
   for(shared_ptr<MeleeUnit> unit : currentUnits){
     if(unit -> getHitpoints() != 0){
       if((unit -> getEngagedUnit()).get() == NULL){
+        //sets the unit position to the center of the tower if there is no set rally point
+        //or moves it closer to the rally point position
         resetUnitPosition(unit, unitIndex);
       }
+      else{
+        //TODO move the unit towards the enemy unit (or attack if in contact)
+      }
 
-      //update the unit (i.e. it will move if it is not at its target or will fight if it is
-      unit -> update(delta);
     }
     unitIndex++;
   }
@@ -41,7 +44,8 @@ void MeleeTower::update(float delta){
  */
 void MeleeTower::setUpUnits(){
   for(int unitIndex = 0; unitIndex < currentUnits.size(); unitIndex++){
-    resetUnitPosition(currentUnits.at(unitIndex), unitIndex);
+    currentUnits.at(unitIndex) -> setXCoordinate(xCoordinate);
+    currentUnits.at(unitIndex) -> setYCoordinate(yCoordinate);
   }
 }
 
@@ -50,15 +54,81 @@ void MeleeTower::setUpUnits(){
  * to their index (unless the rally point is the tower's center in which case we set all positions to tower pos)
  * @param unit: the unit to reset
  * @param unitIndex: the index in the vector of units of this unit
+ * @param delta: the time used to keep the adaptive frame rate (default is 1.0)
  */
-void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex){
+void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, float delta){
   if(xRally == xCoordinate && yRally == yCoordinate){
     unit->setXCoordinate(xRally);
     unit->setYCoordinate(yRally);
   }
   else{
-    //TODO set the target to be staggered around the rally point
+    //the angle to use to stagger each unit around the rally point flag
+    float angle = 360.0 / totalUnits;
+
+    //the radius without scaling of the circle to place the units on
+    float radiusOfUnitCircle = (textLoader -> getInteger(string("IDS_Button_Radius"))
+                    + textLoader -> getInteger(string("IDS_Rally_Flag_Unit_Offset")));
+
+    //the x and y for the unit that is its resting position around the rally point flag
+    float newX = (radiusOfUnitCircle) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + xRally;
+    float newY = (radiusOfUnitCircle) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + yRally;
+
+    //if the unit is already at its correct resting poisiton nothing needs to be done
+    if(!(withinRange(newX, newY, unit->getXCoordinate(), unit->getYCoordinate()))){
+      //the vector components of the movement this unit needs to make
+      float xVector = newX - unit -> getXCoordinate();
+      float yVector = newY - unit -> getYCoordinate();
+
+      //get the max so we can normalize the vectors so they do not move too fast
+      float normalize = max(xVector, yVector);
+      xVector /= normalize;
+      yVector /= normalize;
+
+      //convert the vector into radians for the direction
+      double direction = atan2(yVector, xVector);
+
+      //set the direction for the unit (value on the unit circle)
+      unit -> setDirection(direction);
+
+      //then move it
+      unit -> move(delta);
+
+      //we check to see if the projectile has overshot the target
+      if(xVector > 0 ){
+        if(unit->getXCoordinate() > newX - e){
+          unit->setXCoordinate(newX);
+        }
+      }
+      else{
+        if(unit->getXCoordinate() < newX + e){
+          unit->setXCoordinate(newX);
+        }
+      }
+
+      if(yVector > 0){
+        if(unit->getYCoordinate() > newY - e){
+          unit->setYCoordinate(newY);
+        }
+      }
+      else{
+        if(unit->getYCoordinate() < newY + e){
+          unit->setYCoordinate(newY);
+        }
+      }
+    }
   }
+}
+
+/*
+ * @return if x2,y2 are near enough to x1,y1
+ */
+bool MeleeTower::withinRange(float x1, float y1, float x2, float y2){
+  if(x1-e <= x2 && x1+e>=x2){
+    if(y1-e <= y2 && y1+e>=y2){
+      return true;
+    }
+  }
+  return false;
 }
 
 /*
@@ -195,6 +265,13 @@ void MeleeTower::respawnUnits(){
       timeOfDeath.at(index) = -1.0;
       //set the health back to max
       currentUnits.at(index) -> resetHealth();
+
+      //set the engaged unit to null
+      currentUnits.at(index) -> setEngagedUnit(NULL);
+
+      //set the position to be the center of the tower (so it will not draw and then start moving towards some other point)
+      currentUnits.at(index) -> setXCoordinate(xCoordinate);
+      currentUnits.at(index) -> setYCoordinate(yCoordinate);
     }
   }
 }

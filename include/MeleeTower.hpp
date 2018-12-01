@@ -13,6 +13,7 @@
 #include <memory>
 #include <vector>
 #include <chrono>
+#include <math.h>
 
 using std::vector;
 using std::shared_ptr;
@@ -42,7 +43,8 @@ public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~MeleeTower();
   void update(float delta);
-  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex);
+  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, float delta = 1.0);
+  bool withinRange(float x1, float y1, float x2, float y2);
 
   void initSprite();
 

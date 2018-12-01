@@ -154,8 +154,8 @@ void GameLogic::updateGameLogic(float deltaS){
       //creates a unit for testing as well
       shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
       shared_ptr<MeleeUnit> fryGuy1 = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
-      fryGuy -> setWorld(world);
-      fryGuy1 -> setWorld(world);
+      //fryGuy -> setWorld(world);
+      //fryGuy1 -> setWorld(world);
 
       fryID = fryGuy -> getID();
       fryID1 = fryGuy1 -> getID();
@@ -175,7 +175,7 @@ void GameLogic::updateGameLogic(float deltaS){
 
       if(allTowers.size() != 0){
         shared_ptr<TowerInterface> tower = allTowers.at(0);
-        tower -> setWorld(world);
+        //tower -> setWorld(world);
         string towerType = tower -> getType();
         if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
           createATower(row,col,towerType);
@@ -190,7 +190,7 @@ void GameLogic::updateGameLogic(float deltaS){
 
     }
     if(test == 2){
-
+      /*
       //get all the spawned units
       unordered_map<long long, shared_ptr<MeleeUnit>> spawnedWave = getSpawnedEnemyUnits();
 
@@ -216,7 +216,7 @@ void GameLogic::updateGameLogic(float deltaS){
       cout << "where is this tower " << endl;
       cout << towerToFire -> getXCoordinate() << endl;
       cout << towerToFire -> getYCoordinate() << endl;
-
+      */
     }
     if(test == 10){
       cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
