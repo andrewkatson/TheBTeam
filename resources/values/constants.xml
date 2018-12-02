@@ -422,7 +422,7 @@
   <!--Upgrade Price Button Outline Text Thickness-->
   <constant value="1" id="IDS_Upgrade_Price_Button_Text_Outline_Thickness"> </constant>
   <!--Upgrade Price Button Text Size-->
-  <constant value="120" id="IDS_Upgrade_Price_Button_Text_Size"> </constant>
+  <constant value="100" id="IDS_Upgrade_Price_Button_Text_Size"> </constant>
 
   <!--Buy Tower Button-->
   <!--Buy Tower Button Colors -->

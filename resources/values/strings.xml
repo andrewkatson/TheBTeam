@@ -339,7 +339,7 @@
     <string value="Wave:   " id="IDS_Wave_Button_Text"> </string>
 
     <!--Upgrade Circle-->
-    <string value="Upgrade Stat: " id="IDS_Upgrade_Circle_Price_Button"> </string>
+    <string value="Upgrade " id="IDS_Upgrade_Circle_Price_Button"> </string>
 
     <!--BuyTower Screen-->
     <!--Buy Tower Title-->
@@ -389,6 +389,22 @@
     <string value="IDS_Actor_Attack_Rate_Upgrade" id="IDS_Actor_Attack_Rate_Upgrade_ID"> </string>
     <string value="IDS_Actor_Area_Of_Effect_Upgrade" id="IDS_Actor_Area_Of_Effect_Upgrade_ID"> </string>
 
+    <!--Upgrade Button Strings used for Upgrade Price -->
+    <!--For Melee Tower Upgrades-->
+    <string value="Rally Range " id="IDS_Melee_Tower_Radius"> </string>
+    <string value="Respawn Rate " id="IDS_Melee_Tower_Respawn_Rate"> </string>
+    <string value="Hitpoints " id="IDS_Melee_Actor_Max_Hitpoints"> </string>
+    <string value="Damage " id="IDS_Melee_Actor_Damage"> </string>
+    <string value="Armor Penetration " id="IDS_Melee_Actor_Armor_Penetration"> </string>
+    <string value="Armor " id="IDS_Melee_Actor_Armor"> </string>
+    <string value="Attack Rate " id="IDS_Melee_Actor_Attack_Rate"> </string>
+
+    <!--For Range Tower Upgrades-->
+    <string value="Attack Range " id="IDS_Range_Tower_Radius"> </string>
+    <string value="Rate of Fire " id="IDS_Range_Tower_Rate_Of_Fire"> </string>
+    <string value="Damage " id="IDS_Range_Actor_Damage"> </string>
+    <string value="Armor Penetration " id="IDS_Range_Actor_Armor_Penetration"> </string>
+    <string value="Area of Effect " id="IDS_Range_Actor_Area_Of_Effect"> </string>
 </strings>
 
 <typeids>
