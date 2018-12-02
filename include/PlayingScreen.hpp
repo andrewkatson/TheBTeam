@@ -5,6 +5,7 @@
 #include "GameLogic.hpp"
 #include "Button.hpp"
 #include "PlayingScreenHeader.hpp"
+#include "UpgradeCircle.hpp"
 #include <random>
 #include <tuple>
 
@@ -55,6 +56,10 @@ private:
   //true if there's a wave happening. false otherwise
   bool waveGoingOn;
 
+  //the upgrade system visuals
+  unique_ptr<UpgradeCircle> upgradeCircle;
+
+
 public:
   PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,
     shared_ptr<GameLogic> gameLogic, int windowX, int windowY);
@@ -65,6 +70,7 @@ public:
   void deregisterDelegates();
   void initDrawingMaterials();
   void initRallyPointButton();
+  void initUpgradeCircle();
   void initColorShifts();
   void initColorShiftsForFloor();
   void initColorShiftsForPath();

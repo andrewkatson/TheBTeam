@@ -7,27 +7,31 @@ void CollisionCallback::BeginContact(b2Contact* contact){
   if (bodyUserDataA){
     //check if Fixture A is a tower or an actor, if true for one of them you startContact with the B fixture
     TowerInterface* towerTestA = static_cast<TowerInterface*>( bodyUserDataA );
-    cout << "IS tower A? " <<  towerTestA -> isTower << endl;
-    cout << "AND ITS ID A! " << towerTestA -> typeID << endl;
+    cout << "Is it a tower? " <<  towerTestA -> isTower << endl;
     if (towerTestA -> isTower == true){
+      cout << "IT IS -> ID A = " << towerTestA -> typeID << endl;
       static_cast<TowerInterface*>( bodyUserDataA ) -> startContact(bodyUserDataB);
-      cout << "In Begin Contact TOWER Interface bodyUserDataA START Contact with bodyUserDataB"<<'\n'<<endl;
+      cout << "In Begin Contact TOWER Interface "<< towerTestA -> typeID << " START Contact with bodyUserDataB"<<'\n'<<endl;
     }
     else if (towerTestA -> isActor == true){
+      ActorInterface* towerTestA = static_cast<ActorInterface*>( bodyUserDataA );
       static_cast<ActorInterface*>( bodyUserDataA ) -> startContact(bodyUserDataB);
+      cout << "IT IS NOT -> ID A = " << towerTestA -> typeID << endl;
       cout << "In Begin Contact ACTOR Interface bodyUserDataA START Contact with bodyUserDataB"<<'\n'<<endl;
     }
   }
   //check if Fixture B is a tower or an actor, if true for one of them you startContact with the A fixture
   if (bodyUserDataB ){
     TowerInterface*  towerTestB = static_cast<TowerInterface*>( bodyUserDataB );
-    cout << "IS tower B? " <<  towerTestB -> isTower << endl;
-    cout << "AND ITS ID B! " << towerTestB -> typeID << endl;
+    cout << "Is it a tower? " <<  towerTestB -> isTower << endl;
     if (towerTestB -> isTower == true){
+      cout << "IT IS -> ID B = " << towerTestB -> typeID << endl;
       static_cast<TowerInterface*>( bodyUserDataB ) -> startContact(bodyUserDataA);
       cout << "In Begin Contact TOWER Interface bodyUserDataB START Contact with bodyUserDataA"<<'\n'<<endl;
     }
     else if (towerTestB -> isActor == true){
+      ActorInterface* towerTestB = static_cast<ActorInterface*>( bodyUserDataB );
+      cout << "IT IS NOT-> ID B = " << towerTestB -> typeID << endl;
       static_cast<ActorInterface*>( bodyUserDataB ) -> startContact(bodyUserDataA);
       cout << "In Begin Contact ACTOR Interface bodyUserDataB START Contact with bodyUserDataA"<<'\n'<<endl;
     }

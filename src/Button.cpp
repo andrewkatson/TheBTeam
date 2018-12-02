@@ -5,7 +5,7 @@ Button::Button(){
 }
 
 Button::Button(int windowX, int windowY, int order, string message,
-  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle){
+  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle, string buttonID){
   this -> textLoader = textLoader;
   this -> fontPath = fontpath;
   (this -> text).setString(message);
@@ -17,12 +17,13 @@ Button::Button(int windowX, int windowY, int order, string message,
   this -> isVisible= true;
   this -> isClicked = false;
   this -> isCircle = isCircle;
+  this -> buttonID = buttonID;
   (this -> text).setCharacterSize(this -> windowX / 40);
   this -> setWindowSize(windowX, windowY);
   this -> scaleButton();
 }
 Button::Button(int windowX, int windowY, Position position, string message,
-  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle){
+  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle, string buttonID){
     this -> textLoader = textLoader;
     this -> fontPath = fontpath;
     this -> setWindowSize(windowX, windowY);
@@ -36,11 +37,12 @@ Button::Button(int windowX, int windowY, Position position, string message,
     this -> isVisible= true;
     this -> isClicked = false;
     this -> isCircle = isCircle;
+    this -> buttonID = buttonID;
     this -> setButtonPosition(position);
 }
 
 Button::Button(int windowX, int windowY, float xPos, float yPos, string message,
-  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle){
+  shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle, string buttonID){
   this -> textLoader = textLoader;
   this -> fontPath = fontpath;
   this -> setWindowSize(windowX, windowY);
@@ -55,11 +57,12 @@ Button::Button(int windowX, int windowY, float xPos, float yPos, string message,
   this -> isClicked = false;
   this -> order = 0;
   this -> isCircle = isCircle;
+  this -> buttonID = buttonID;
   this -> scaleButton(xPos, yPos);
 }
 
 Button::Button(int windowX, int windowY, float xPos, float yPos, shared_ptr<TextLoader> textLoader,
-   string texturepath, bool isCircle){
+   string texturepath, bool isCircle, string buttonID){
   this -> textLoader = textLoader;
   this -> texturepath = texturepath;
   this -> setWindowSize(windowX, windowY);
@@ -69,6 +72,7 @@ Button::Button(int windowX, int windowY, float xPos, float yPos, shared_ptr<Text
   this -> isCircle = isCircle;
   this -> initTexture();
   this -> numChars = 0;
+  this -> buttonID = buttonID;
 }
 
 void Button::setWindowSize(int windowX, int windowY){

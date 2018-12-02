@@ -9,6 +9,7 @@
 
 ###Changed  
 - melee towers spawn units surrounding their flag in the right spaces [@andrewkatson][https://github.com/andrewkatson]
+- mouseover to see what each upgrade button is
 - MeleeUnit::move() now takes an angle in radians to move. [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Units no longer travel at the edges of a path; they travel roughly toward the center (perturbed randomly) of each path.
 - Multiplier on unit health for decreasing of player health moved to constants.xml
@@ -19,6 +20,7 @@
 
 ###Fixed
 - seg faults from trying to destroy unitialized box2d bodies [@andrewkatson][https://github.com/andrewkatson]
+- allied units now move to the rally point correctly
 - Enemies no longer stop right before moving to the exit[@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnit::move() behaves like it's supposed to instead of doing weird and erratic garbage
 - A bug where enemy units would only spawn from one entrance in the board
