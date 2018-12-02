@@ -1,12 +1,12 @@
 #include "Towers/PeanutButterMMS.hpp"
 PeanutButterMMS::PeanutButterMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
-  this -> towerTypeID = textLoader->getTypeID(string("IDS_PBMMT"));
+  this -> typeID = textLoader->getTypeID(string("IDS_PBMMT"));
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_PBMMT_ROF"));
   this -> radius = textLoader->getInteger(string("IDS_PBMMT_RA"));
   this -> price = textLoader->getInteger(string("IDS_PBMMT_PR"));
   this -> textureLoader = textureLoader;
-  this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> textures = textureLoader -> getTexture(typeID);
   this -> level = 3;
   this -> setProjectile();
   this -> initSprite();

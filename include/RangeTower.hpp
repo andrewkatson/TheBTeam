@@ -54,7 +54,7 @@ public:
    */
   int getPrice();
 
-  string getType(){return towerTypeID;}
+  string getType(){return typeID;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
   float getXCoordinate(){return xCoordinate;}

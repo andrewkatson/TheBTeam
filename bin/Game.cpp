@@ -79,10 +79,10 @@ void Game::updateGame(float deltaS,sf::RenderWindow &game){
   this -> userView -> updateUserView( deltaS, game);
   this -> compView -> updateCompView(deltaS);
   this -> allyCompView -> updateAllyCompView(deltaS);
-  float32 timeStep = 1/deltaS;      //the length of time passed to simulate (seconds)
+  float32 timeStep = 1/1000;      //the length of time passed to simulate (seconds)
   int32 velocityIterations = 1;   //how strongly to correct velocity
   int32 positionIterations = 3;   //how strongly to correct position
 
-  world->Step( timeStep, velocityIterations, positionIterations);
+  world->Step(timeStep, velocityIterations, positionIterations);
 
 }

@@ -46,18 +46,19 @@ void ActorInterface::setWorld(shared_ptr<b2World> world){
   bodyDef.position.Set(x,y);
   bodyDef.angle = 0;
   body = world -> CreateBody(&bodyDef);
+  body ->SetUserData( this );
 
-  //FIXTURES OVER HERE START HERE TOMORROW
-  b2CircleShape circle;
-  circle.m_p.Set(0,0);
-  circle.m_radius = (float) this -> radius/30.f;
-  b2FixtureDef fixtureDef;
-	fixtureDef.density = 1.f;
-	fixtureDef.friction = 0.7f;
-	fixtureDef.shape = &circle;
-	fixtureDef.restitution = .5f;
-	this -> body -> CreateFixture(&fixtureDef);
-	this -> body -> SetAwake(1);
+  //FIXTURES (moved to Projectile and MeleeUnit)
+  // b2CircleShape circle;
+  // circle.m_p.Set(0,0);
+  // circle.m_radius = (float) this -> radius/30.f;
+  // b2FixtureDef fixtureDef;
+	// fixtureDef.density = 1.f;
+	// fixtureDef.friction = 0.7f;
+	// fixtureDef.shape = &circle;
+	// fixtureDef.restitution = .5f;
+	// this -> body -> CreateFixture(&fixtureDef);
+	// this -> body -> SetAwake(1);
 }
 
 // void ActorInterface::updatePosition(){
@@ -72,10 +73,12 @@ void ActorInterface::setWorld(shared_ptr<b2World> world){
 
 void ActorInterface::startContact(void* collidingWith){
   //collidingWith should be cast to a clas you can collide with ie Actors and Towers
+  cout << "start Contact Actor Interface" << '\n'<<endl;
 }
 
 void ActorInterface::endContact(void* collidingWith){
   //look above
+  cout << "end Contact Actor Interface" << '\n'<<endl;
 }
 
 double ActorInterface::getDirection() const {
