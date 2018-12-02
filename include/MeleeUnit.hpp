@@ -41,7 +41,7 @@ protected:
   float s_elapsed;
 
   //The index of the sprite that the actor is currently using.
-  int current_sprite;
+  int current_sprite,walk_cycle_position;
 
   //Stores the amount of pixels that this unit overshoots its target when turning.
   double overshoot;
