@@ -44,8 +44,7 @@ protected:
   shared_ptr<TextureLoader> textureLoader;
   //The sprite corresponding to the tower.
   sf::Sprite sprite;
-  //the tower type identifier that allows for its next upgrade to be pulled
-  string towerTypeID;
+
   //the price of the tower (cost to remove in the case of an obstacle)
   int price;
   //the row in the grid this tower is located at
@@ -81,9 +80,14 @@ protected:
   int level;
 
 public:
+
+  //the tower type identifier that allows for its next upgrade to be pulled
+  string typeID;
   TowerInterface();
   ~TowerInterface();
   //boolean used to tell if this is a melee tower without casting
+  bool isTower = true;
+  bool isActor = false;
   bool isMelee;
   virtual void upgrade()=0;
   virtual int getPrice()=0;
@@ -149,11 +153,11 @@ public:
 
   void startContact(void* collidingWith){
     //collidingWith should be cast to a clas you can collide with ie Actors and Towers
-    cout << "start colliding in Tower Interface" << '\n';
+    cout << "start colliding in Tower Interface" << '\n'<<endl;
   }
 
   void endContact(void* collidingWith){
-    cout << "end colliding Tower Interface" << '\n';
+    cout << "end colliding in Tower Interface" << '\n'<<endl;
   }
 
   //gives actor access to the world to set physics body

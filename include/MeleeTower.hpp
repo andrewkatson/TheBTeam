@@ -63,7 +63,7 @@ public:
    */
   int getPrice();
 
-  string getType(){return towerTypeID;}
+  string getType(){return typeID;}
 
   void setPos(intPair pos);
   void setPos(int row, int col);

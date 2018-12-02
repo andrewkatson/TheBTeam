@@ -84,6 +84,5 @@ void Game::updateGame(float deltaS,sf::RenderWindow &game){
   int32 positionIterations = 3;   //how strongly to correct position
 
   world->Step(timeStep, velocityIterations, positionIterations);
-  cout << "step" << endl;
 
 }

@@ -7,8 +7,8 @@ PeanutButterMMSProjectile::PeanutButterMMSProjectile(shared_ptr<TextLoader> text
   this -> speed = textLoader->getInteger(string("IDS_PBMM_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_PBMM_AP"));;
   this -> radius = textLoader->getInteger(string("IDS_PBMM_AR"));;
-  this -> actorTypeID = textLoader->getTypeID(string("IDS_PBMMP"));
-  this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> typeID = textLoader->getTypeID(string("IDS_PBMMP"));
+  this -> textures = textureLoader -> getTexture(typeID);
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

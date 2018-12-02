@@ -6,9 +6,9 @@ WaffleFry::WaffleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, share
   this -> respawnSpeed = textLoader->getInteger(string("IDS_WFT_RS"));
   this -> radius = textLoader->getInteger(string("IDS_WFT_RA"));
   this -> price = textLoader->getInteger(string("IDS_WFT_PR"));
-  this -> towerTypeID = textLoader->getTypeID(string("IDS_WFT"));
+  this -> typeID = textLoader->getTypeID(string("IDS_WFT"));
   this -> textureLoader = textureLoader;
-  this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> textures = textureLoader -> getTexture(typeID);
   this -> level = 3;
   this -> initSprite();
   this -> setUpUnits();

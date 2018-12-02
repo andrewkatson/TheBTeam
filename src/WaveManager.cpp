@@ -172,10 +172,6 @@ void WaveManager::createNextWave() {
 
     enemy->setSpeed(enemy->getSpeed()+enemy->getSpeed()*percent_perturbation_rng(rnd_gen));
 
-    enemy -> setWorld(world);
-
-    enemy -> setFixtures();
-
     double spawn_distance;
     //do{
       spawn_distance=spawn_location_rng(rnd_gen);
@@ -255,6 +251,10 @@ void WaveManager::createNextWave() {
     enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + xOffset)); // multiply tile size by tiles
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
     enemy->setDirection(dir);
+    //setWorld and fixture
+    enemy -> setWorld(world);
+
+    enemy -> setFixtures();
 
     currentWave.push(enemy);
   }
