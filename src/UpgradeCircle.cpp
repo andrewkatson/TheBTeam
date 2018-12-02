@@ -10,6 +10,7 @@ UpgradeCircle::UpgradeCircle(shared_ptr<EventManager> eventManager,shared_ptr<Te
     this -> colSelected = 0;
     this -> windowX = windowX;
     this -> windowY = windowY;
+    this -> upgradePriceAdditionString = "";
     this -> initButtonIDs();
     this -> initButtonIcons();
     this -> initDrawingMaterials();
@@ -374,8 +375,14 @@ void UpgradeCircle::initCircleToDraw(){
 }
 
 void UpgradeCircle::draw(sf::RenderWindow& window){
+
   if(isDisplayed){
     shared_ptr<TowerInterface> tower = gameLogic->getTowerPlaced(rowSelected, colSelected);
+
+    //check the mouse position every second in case it is hovering over one of
+    //the buttons so that the price button reflects what it upgrades
+    checkMousePosAndDisplayUpgrade(tower, window);
+
     //if this is a melee tower selected
     if(tower -> isMelee){
       drawMeleeTowerButtons(tower, window);
@@ -388,6 +395,64 @@ void UpgradeCircle::draw(sf::RenderWindow& window){
     drawUpgradePriceButton(window);
   }
 }
+
+/*
+ * Checks the mouse position and displays the corresponding string inside of the
+ * upgrade price button
+ */
+void UpgradeCircle::checkMousePosAndDisplayUpgrade(shared_ptr<TowerInterface> tower,sf::RenderWindow& window){
+  if(tower->isMelee){
+    checkMousePosAndDisplayMeleeUpgrade(tower, window);
+  }
+  else{
+    checkMousePosAndDisplayRangeUpgrade(tower, window);
+  }
+}
+
+/*
+ * Check the mouse position considering a melee tower has been clicked on
+ * and display the appropriate screen in the upgrade price button
+ */
+void UpgradeCircle::checkMousePosAndDisplayMeleeUpgrade(shared_ptr<TowerInterface> tower,sf::RenderWindow& window){
+  float mouseX = mouse.getPosition(window).x;
+  float mouseY = mouse.getPosition(window).y;
+
+  for(shared_ptr<Button> meleeTowerUpgradeButton : meleeTowerUpgradeButtons){
+    //if the current mouse coordinates are over the button then we set the addtion string
+    //for the upgrade price button to reflect that
+    if(meleeTowerUpgradeButton->isSelected(mouseX, mouseY)){
+      upgradePriceAdditionString = textLoader->getString(string("IDS_Melee_")+meleeTowerUpgradeButton->getButtonID());
+      return;
+    }
+  }
+
+  //if no tower was being hovered over then we set it to nothing
+  upgradePriceAdditionString = " ";
+
+}
+
+/*
+ * Check the mouse position considering a range tower has been clicked on
+ * and display the appropriate screen in the upgrade price button
+ */
+void UpgradeCircle::checkMousePosAndDisplayRangeUpgrade(shared_ptr<TowerInterface> tower,sf::RenderWindow& window){
+  float mouseX = mouse.getPosition(window).x;
+  float mouseY = mouse.getPosition(window).y;
+
+
+  for(shared_ptr<Button> rangeTowerUpgradeButton : rangeTowerUpgradeButtons){
+    //if the current mouse coordinates are over the button then we set the addtion string
+    //for the upgrade price button to reflect that
+    if(rangeTowerUpgradeButton->isSelected(mouseX, mouseY)){
+      upgradePriceAdditionString = textLoader->getString(string("IDS_Range_")+rangeTowerUpgradeButton->getButtonID());
+      return;
+    }
+  }
+
+  //if no tower was being hovered over then we set it to nothing
+  upgradePriceAdditionString = " ";
+}
+
 
 /*
  * Draw the upgrade buttons for a melee tower
@@ -508,7 +573,7 @@ void UpgradeCircle::drawUpgradePriceButton(sf::RenderWindow& window){
 
   //have to modify the text to reflect the current price of an upgrade
   int priceOfUpgrade = gameLogic -> getUpgradePrice(rowSelected, colSelected);
-  upgradePriceButton -> setString(upgradePriceBaseString + to_string(priceOfUpgrade));
+  upgradePriceButton -> setString(upgradePriceBaseString + upgradePriceAdditionString + to_string(priceOfUpgrade));
 
   for(int i = 0; i < 2; i++){
     //get the x dimension of the tower
@@ -537,7 +602,7 @@ void UpgradeCircle::drawUpgradePriceButton(sf::RenderWindow& window){
     float newxPos = ownRectPos.x + difference;
 
     //the yPosition is the same as the tower's
-    float newyPos = gameLogic->getTileYSize() * rowSelected - ownRecDimensions.y;
+    float newyPos = gameLogic->getTileYSize() * rowSelected - ownRecDimensions.y*1.5;
 
     //rescale the button and reset it
     upgradePriceButton -> scaleButton(newxPos, newyPos);

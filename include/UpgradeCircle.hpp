@@ -32,6 +32,9 @@ private:
   //use to access frequently required data (i.e. towers, obstacles, board, units)
   shared_ptr<GameLogic> gameLogic;
 
+
+  //the mouse object
+  sf::Mouse mouse;
   //circle shape used to draw all buttons on
   sf::CircleShape circleToDraw;
 
@@ -65,6 +68,8 @@ private:
 
   //string that serves as the base for upgrade price button
   string upgradePriceBaseString;
+  //the string for the addition to the base before the price is added (i.e. "Armor Penetration" when we say "Upgrade Armor Penetration 6")
+  string upgradePriceAdditionString;
 public:
 
   UpgradeCircle(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader,
@@ -98,6 +103,9 @@ public:
   void initCircleToDraw();
 
   void draw(sf::RenderWindow& window);
+  void checkMousePosAndDisplayUpgrade(shared_ptr<TowerInterface> tower,sf::RenderWindow& window);
+  void checkMousePosAndDisplayMeleeUpgrade(shared_ptr<TowerInterface> tower,sf::RenderWindow& window);
+  void checkMousePosAndDisplayRangeUpgrade(shared_ptr<TowerInterface> tower,sf::RenderWindow& window);
   void drawMeleeTowerButtons(shared_ptr<TowerInterface> tower, sf::RenderWindow& window);
   void drawRangeTowerButtons(shared_ptr<TowerInterface> tower, sf::RenderWindow& window);
   void drawUpgradePriceButton(sf::RenderWindow& window);
