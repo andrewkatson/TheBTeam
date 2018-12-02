@@ -694,8 +694,8 @@ void PlayingScreen::draw(sf::RenderWindow &window){
   drawEnemyUnits(window);
   drawProjectiles(window);
 
-  //draw the header
   playingScreenHeader -> draw(window);
+
   //draw the upgrade circle
   upgradeCircle -> draw(window);
 

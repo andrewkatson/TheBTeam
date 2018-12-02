@@ -226,6 +226,7 @@ void UpgradeCircle::initButtonIconPathsRangeTower(){
 void UpgradeCircle::initDrawingMaterials(){
   initTowerUpgradeButtons();
   initUpgradePriceButton();
+  initCircleToDraw();
 }
 
 /*

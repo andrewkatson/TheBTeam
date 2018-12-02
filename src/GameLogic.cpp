@@ -426,7 +426,7 @@ vector<shared_ptr<TowerInterface>>& GameLogic::allUpgradesForTower(int row, int 
   //otherwise we need to modify the statistics of these towers to reflect the player purchased upgrades
   else{
     modifyToIncludeUpgrades(towerManager->getUpgradesForTower(towerID), tower);
-    return towerManager->getUpgradesForTower(towerID);
+    return towerManager->getModifiedUpgrades();
   }
 }
 

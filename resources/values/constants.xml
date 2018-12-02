@@ -390,7 +390,7 @@
   <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Fill_Color_Red"> </constant>
   <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Fill_Color_Blue"> </constant>
   <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Fill_Color_Alpha"> </constant>
+  <constant value="150" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Fill_Color_Alpha"> </constant>
   <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Outline_Color_Red"> </constant>
   <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Outline_Color_Blue"> </constant>
   <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Background_Circle_Outline_Color_Green"> </constant>
@@ -400,29 +400,29 @@
 
 
   <!--Upgrade Price Button Colors -->
-  <constant value="178" id="IDS_Upgrade_Price_Button_Background_Circle_Fill_Color_Red"> </constant>
-  <constant value="34" id="IDS_Upgrade_Price_Button_Background_Circle_Fill_Color_Blue"> </constant>
-  <constant value="34" id="IDS_Upgrade_Price_Button_Background_Circle_Fill_Color_Green"> </constant>
-  <constant value="100" id="IDS_Upgrade_Price_Button_Background_Circle_Fill_Color_Alpha"> </constant>
-  <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Outline_Color_Red"> </constant>
-  <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Outline_Color_Blue"> </constant>
-  <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Outline_Color_Green"> </constant>
-  <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Outline_Color_Alpha"> </constant>
+  <constant value="178" id="IDS_Upgrade_Price_Button_Fill_Color_Red"> </constant>
+  <constant value="34" id="IDS_Upgrade_Price_Button_Fill_Color_Blue"> </constant>
+  <constant value="34" id="IDS_Upgrade_Price_Button_Fill_Color_Green"> </constant>
+  <constant value="100" id="IDS_Upgrade_Price_Button_Fill_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Upgrade_Price_Button_Outline_Color_Red"> </constant>
+  <constant value="0" id="IDS_Upgrade_Price_Button_Outline_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Upgrade_Price_Button_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Upgrade_Price_Button_Outline_Color_Alpha"> </constant>
   <!--Upgrade Price Button Text Colors -->
-  <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Fill_Color_Red"> </constant>
-  <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Fill_Color_Blue"> </constant>
-  <constant value="0" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Fill_Color_Green"> </constant>
-  <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Fill_Color_Alpha"> </constant>
-  <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Outline_Color_Red"> </constant>
-  <constant value="250" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Outline_Color_Blue"> </constant>
-  <constant value="250" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Outline_Color_Green"> </constant>
-  <constant value="255" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Outline_Color_Alpha"> </constant>
+  <constant value="0" id="IDS_Upgrade_Price_Button_Text_Fill_Color_Red"> </constant>
+  <constant value="0" id="IDS_Upgrade_Price_Button_Text_Fill_Color_Blue"> </constant>
+  <constant value="0" id="IDS_Upgrade_Price_Button_Text_Fill_Color_Green"> </constant>
+  <constant value="255" id="IDS_Upgrade_Price_Button_Text_Fill_Color_Alpha"> </constant>
+  <constant value="255" id="IDS_Upgrade_Price_Button_Text_Outline_Color_Red"> </constant>
+  <constant value="250" id="IDS_Upgrade_Price_Button_Text_Outline_Color_Blue"> </constant>
+  <constant value="250" id="IDS_Upgrade_Price_Button_Text_Outline_Color_Green"> </constant>
+  <constant value="255" id="IDS_Upgrade_Price_Button_Text_Outline_Color_Alpha"> </constant>
   <!--Upgrade Price Button Outline Thickness-->
-  <constant value="1" id="IDS_Upgrade_Price_Button_Background_Circle_Outline_Thickness"> </constant>
+  <constant value="1" id="IDS_Upgrade_Price_Button_Outline_Thickness"> </constant>
   <!--Upgrade Price Button Outline Text Thickness-->
-  <constant value="1" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Outline_Thickness"> </constant>
+  <constant value="1" id="IDS_Upgrade_Price_Button_Text_Outline_Thickness"> </constant>
   <!--Upgrade Price Button Text Size-->
-  <constant value="120" id="IDS_Upgrade_Price_Button_Background_Circle_Text_Size"> </constant>
+  <constant value="120" id="IDS_Upgrade_Price_Button_Text_Size"> </constant>
 
   <!--Buy Tower Button-->
   <!--Buy Tower Button Colors -->

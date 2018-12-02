@@ -7,6 +7,7 @@ Obstacle::Obstacle(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> 
   this -> isMelee = false;
   this -> radiusVisible = false;
   this -> radius = 0;
+  this -> level = -1;
 }
 
 /*

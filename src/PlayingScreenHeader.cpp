@@ -1061,8 +1061,10 @@ void PlayingScreenHeader::draw(sf::RenderWindow &window){
   }
 
   //handle the buy tower and sell tower buttons separately
-  drawBuyTowerButton(window);
-  drawSellTowerButton(window);
+  if(clicksCheckedFor()){
+    drawBuyTowerButton(window);
+    drawSellTowerButton(window);
+  }
   //draw the rest of the header if it is visible
   if(visible){
     drawHeaderButtons(window);
