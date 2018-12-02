@@ -12,10 +12,12 @@
 #include "ActorInterface.hpp"
 #include "Events/ProjectileExplosionEvent.hpp"
 #include <chrono>
+#include <algorithm>
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
+using std::max;
 
 class Projectile : public ActorInterface {
 
@@ -112,7 +114,16 @@ public:
    * explosion that will be handeled by the gamelogic
    */
   void handleTargetHit();
+<<<<<<< HEAD
+
+  /*
+   * Setting the fixtures for Box2D
+   */
+  void setFixtures();
+
+=======
   
+>>>>>>> 473e04c6569408107c873c4227e81727331b4064
 
 };
 

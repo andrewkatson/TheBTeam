@@ -12,6 +12,7 @@ TowerInterface::TowerInterface(){
 //Destructor
 TowerInterface::~TowerInterface(){
   if(body){
+    body -> DestroyFixture(fixture);
     world -> DestroyBody(body);
   }
 }

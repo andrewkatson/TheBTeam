@@ -174,6 +174,8 @@ void WaveManager::createNextWave() {
 
     enemy -> setWorld(world);
 
+    enemy -> setFixtures();
+
     double spawn_distance;
     //do{
       spawn_distance=spawn_location_rng(rnd_gen);

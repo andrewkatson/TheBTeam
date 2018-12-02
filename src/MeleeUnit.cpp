@@ -123,6 +123,18 @@ void MeleeUnit::setAttackRadius(int attackRadius) {
   radius = attackRadius;
 }
 
+<<<<<<< HEAD
+void MeleeUnit::setFixtures(){
+  sf::FloatRect boundingBox = sprite.getGlobalBounds();
+  b2PolygonShape boxShape;
+  boxShape.SetAsBox(boundingBox.width, boundingBox.height);
+
+  b2FixtureDef boxFixtureDef;
+  boxFixtureDef.shape = &boxShape;
+  boxFixtureDef.density = 0;
+  body->CreateFixture(&boxFixtureDef);
+
+=======
 double MeleeUnit::getOvershoot() const {
   return overshoot;
 }
@@ -137,4 +149,5 @@ bool MeleeUnit::isOvershooting() const {
 
 void MeleeUnit::setOvershooting(bool overshooting) {
   MeleeUnit::overshooting = overshooting;
+>>>>>>> 473e04c6569408107c873c4227e81727331b4064
 }
