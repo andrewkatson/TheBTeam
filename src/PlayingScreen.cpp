@@ -1096,17 +1096,17 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
 
     //finally draw the sprite
     window.draw(currentSprite);
-    sf::CircleShape radiusCircle = current -> getRadiusCircle();
-    radiusCircle.setFillColor(sf::Color(150, 50, 250));
-    float radius = (float) current -> getRadius();
-    cout << radius << endl;
-    radiusCircle.setRadius(radius);
-    radiusCircle.setScale(xScale, yScale);
-    //reset the origin so any position set refers to the center of the circle
-    radiusCircle.setOrigin(radius, radius);
-    radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
-    window.draw(radiusCircle);
-    cout << "drew radius" << endl;
+    // sf::CircleShape radiusCircle = current -> getRadiusCircle();
+    // radiusCircle.setFillColor(sf::Color(150, 50, 250));
+    // float radius = (float) current -> getRadius();
+    // //cout << radius << endl;
+    // radiusCircle.setRadius(radius);
+    // radiusCircle.setScale(xScale, yScale);
+    // //reset the origin so any position set refers to the center of the circle
+    // radiusCircle.setOrigin(radius, radius);
+    // radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+    // window.draw(radiusCircle);
+    //cout << "drew radius" << endl;
 
   }
 }

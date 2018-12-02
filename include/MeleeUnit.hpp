@@ -157,6 +157,11 @@ public:
    */
   void setEngagedUnit(shared_ptr<MeleeUnit> unitToEngage){engagedUnit = unitToEngage;}
 
+  /*
+   * Setting the fixtures for Box2D
+   */
+  void setFixtures();
+
 };
 
 

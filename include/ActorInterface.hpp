@@ -16,7 +16,9 @@
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
+#include<iostream>
 
+using namespace std;
 using std::shared_ptr;
 using std::addressof;
 using std::vector;

@@ -20,11 +20,15 @@
 #include "ActorInterface.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
 #include "Box2D/Box2D.h"
+#include <algorithm>
+#include <iostream>
 
+using namespace std;
 using std::string;
 using std::make_shared;
 using std::shared_ptr;
 using std::pair;
+using std::max;
 class TowerInterface{
 protected:
   //int pair (used to assocaite a row and col)
@@ -63,6 +67,7 @@ protected:
   //Box2d World and Body
   shared_ptr<b2World> world;
   b2Body* body;
+  b2Fixture* fixture;
 
   //scale in the x direction applied to tower when drawing
   float xScale = 1.0;
@@ -138,10 +143,11 @@ public:
 
   void startContact(void* collidingWith){
     //collidingWith should be cast to a clas you can collide with ie Actors and Towers
+    cout << "start colliding in Tower Interface" << '\n';
   }
 
   void endContact(void* collidingWith){
-    //look above
+    cout << "end colliding Tower Interface" << '\n';
   }
 
   //gives actor access to the world to set physics body
@@ -152,8 +158,16 @@ public:
     bodyDef.position.Set(xCoordinate,yCoordinate);
     bodyDef.angle = 0;
     body = world -> CreateBody(&bodyDef);
+    body ->SetUserData(this);
 
-    //FIXTURES
+    b2CircleShape circleShape;
+    circleShape.m_p.Set(0,0);
+    float scale = max(xScale, yScale);
+    circleShape.m_radius = radius * scale;
+
+    b2FixtureDef towerFixtureDef;
+    towerFixtureDef.shape = &circleShape;
+    fixture = body -> CreateFixture(&towerFixtureDef);
 
   }
 

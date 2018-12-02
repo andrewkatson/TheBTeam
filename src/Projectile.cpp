@@ -113,3 +113,15 @@ void Projectile::handleTargetHit(){
 
   this -> eventManager -> queueEvent(projectileHit);
 }
+
+void Projectile::setFixtures(){
+  b2CircleShape circleShape;
+  circleShape.m_p.Set(0,0);
+  float scale = max(xScale, yScale);
+  circleShape.m_radius = radius * scale;
+
+  b2FixtureDef circleFixtureDef;
+  circleFixtureDef.shape = &circleShape; //this is a pointer to the shape above
+  body->CreateFixture(&circleFixtureDef); //add a fixture to the body
+
+}

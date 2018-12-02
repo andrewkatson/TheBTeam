@@ -24,6 +24,7 @@
 #include "Events/ProjectileExplosionEvent.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
 #include "EventType.hpp"
+#include "Projectile.hpp"
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 #include <chrono>

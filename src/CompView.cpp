@@ -9,9 +9,9 @@ CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
 }
 
 void CompView::updateCompView(float deltaS){
-  if(gameLogic->getGameState()==State::Playing && !waveManager->getSpawnedEnemyUnits().empty()){
-    moveUnits(deltaS);
-  }
+  // if(gameLogic->getGameState()==State::Playing && !waveManager->getSpawnedEnemyUnits().empty()){
+  //   moveUnits(deltaS);
+  // }
 }
 
 void CompView::attackEnemies(){}

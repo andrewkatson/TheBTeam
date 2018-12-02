@@ -20,6 +20,9 @@ using namespace std;
 #include "Events/ActorDestroyedEvent.hpp"
 #include "TextLoader.hpp"
 #include <Box2D/Box2D.h>
+#include <algorithm>
+
+using std::max;
 
 class ProjectileManager {
 private:
@@ -85,6 +88,8 @@ public:
    * Updates all projectiles under the manager.
    */
   void update(float deltaS);
+
+  shared_ptr<ActorInterface> getProjectile(long long ID);
 };
 
 

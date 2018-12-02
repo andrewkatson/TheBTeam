@@ -137,3 +137,11 @@ void ProjectileManager::removeProjectile(long long ID){
 void ProjectileManager::update(float deltaS){
 
 }
+
+//Used ID to grab projectile
+shared_ptr<ActorInterface> ProjectileManager::getProjectile(long long ID){
+  if(projectiles.find(ID) == projectiles.end()){
+    assert(true==false);
+  }
+  return projectiles.at(ID);
+}
