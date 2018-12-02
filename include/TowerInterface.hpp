@@ -174,6 +174,7 @@ public:
     circleShape.m_p.Set(0,0);
     float scale = max(xScale, yScale);
     circleShape.m_radius = radius * scale;
+    cout << "Tower Radius " << circleShape.m_radius<<endl;
 
     b2FixtureDef towerFixtureDef;
     towerFixtureDef.shape = &circleShape;
