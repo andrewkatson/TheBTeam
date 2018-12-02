@@ -378,8 +378,8 @@ void GameLogic::handleStateChange(const EventInterface& event){
 
    placeObstacles();
 
-   ActorInterface::setXScale(windowX, boardManager -> getXDim());
-   ActorInterface::setYScale(windowY, boardManager -> getYDim());
+   ActorInterface::setXScale(boardManager -> getXDim());
+   ActorInterface::setYScale(boardManager -> getYDim());
  }
 
 /*
@@ -425,7 +425,82 @@ vector<shared_ptr<TowerInterface>>& GameLogic::allUpgradesForTower(int row, int 
 
   string towerID = tower -> getType();
 
-  return towerManager -> getUpgradesForTower(towerID);
+  //if the current tower is no tower than we do not need to modify the statistics at all
+  if(tower -> getType() == textLoader->getTypeID(string("IDS_NT"))){
+    return towerManager->getUpgradesForTower(towerID);
+  }
+  //otherwise we need to modify the statistics of these towers to reflect the player purchased upgrades
+  else{
+    modifyToIncludeUpgrades(towerManager->getUpgradesForTower(towerID), tower);
+    return towerManager->getUpgradesForTower(towerID);
+  }
+}
+
+/*
+ * @param towerUpgrades: all the possible upgrades for the tower at the position to consider
+ * @param tower: the tower we will be upgrading
+ */
+void GameLogic::modifyToIncludeUpgrades(vector<shared_ptr<TowerInterface>>& towerUpgrades, shared_ptr<TowerInterface> tower){
+
+  //get a generic copy of this tower to measure the amount its variables have been changed
+  shared_ptr<TowerInterface> genericTowerOfType = towerManager -> getGenericTower(tower->getType());
+
+
+  //first we need to determine if this is a melee tower or a range tower we are upgrading
+  if(tower -> isMelee){
+    //cast the towers to their correct type
+    MeleeTower* genericMelee = dynamic_cast<MeleeTower*>(genericTowerOfType.get());
+    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+
+    //get the difference between the generic type and the current tower (i.e. the amount the tower was upgraded)
+    int respawnSpeedUpgrades = meleeTower->getRespawnSpeed()-genericMelee->getRespawnSpeed();
+    int respawnRangeUpgrades = meleeTower->getRadius()-genericMelee->getRadius();
+    int unitMaxHitpointsUpgrades = meleeTower->getUnitHitpoints()-genericMelee->getUnitHitpoints();
+    int unitDamageUpgrades = meleeTower->getUnitDamage()-genericMelee->getUnitDamage();
+    int unitArmorPenetrationUpgrades = meleeTower->getUnitArmorPenetration()-genericMelee->getUnitArmorPenetration();
+    int unitArmorUpgrades = meleeTower->getUnitArmor()-genericMelee->getUnitArmor();
+    int unitAttackRateUpgrades = meleeTower->getUnitAttackRate()-genericMelee->getUnitAttackRate();
+
+    //modify each tower upgrades statisitcs to reflect the purchased upgrades
+    for(shared_ptr<TowerInterface> towerUpgrade : towerUpgrades){
+      //cast the tower
+      MeleeTower* towerToUpgrade = dynamic_cast<MeleeTower*>(towerUpgrade.get());
+
+      //set all statistics to be the old statistic plus the upgrades
+      towerToUpgrade->updateRespawnSpeed(towerToUpgrade->getRespawnSpeed()+respawnSpeedUpgrades);
+      towerToUpgrade->updateRadius(towerToUpgrade->getRadius()+respawnRangeUpgrades);
+      towerToUpgrade->updateUnitHitpoints(towerToUpgrade->getUnitHitpoints()+unitMaxHitpointsUpgrades);
+      towerToUpgrade->updateUnitDamage(towerToUpgrade->getUnitDamage()+unitDamageUpgrades);
+      towerToUpgrade->updateUnitArmorPenetration(towerToUpgrade->getUnitArmorPenetration()+unitArmorPenetrationUpgrades);
+      towerToUpgrade->updateUnitArmor(towerToUpgrade->getUnitArmor()+unitArmorUpgrades);
+      towerToUpgrade->updateUnitAttackRate(towerToUpgrade->getUnitAttackRate()+unitAttackRateUpgrades);
+    }
+
+  }
+  else{
+    RangeTower* genericRanged = dynamic_cast<RangeTower*>(genericTowerOfType.get());
+    RangeTower* rangeTower = dynamic_cast<RangeTower*>(tower.get());
+
+    //get the difference between the generic type and the current tower (i.e. the amount the tower was upgraded)
+    int rateOfFireUpgrades = rangeTower -> getRateOfFire()-genericRanged->getRateOfFire();
+    int rangeOfFireUpgrades = rangeTower->getRadius()-genericRanged->getRadius();
+    int projectileDamageUpgrades = rangeTower->getProjectileDamage()-genericRanged->getProjectileDamage();
+    int projectileArmorPenetrationUpgrades = rangeTower->getProjectileArmorPenetration()-genericRanged->getProjectileArmorPenetration();
+    int projectileAreaOfEffectUpgrades = rangeTower->getProjectileAreaOfEffect()-genericRanged->getProjectileAreaOfEffect();
+
+    //modify each tower upgrades statisitcs to reflect the purchased upgrades
+    for(shared_ptr<TowerInterface> towerUpgrade : towerUpgrades){
+      //cast the tower
+      RangeTower* towerToUpgrade = dynamic_cast<RangeTower*>(towerUpgrade.get());
+
+      //set all statitics to be theold statistic plus the upgrades
+      towerToUpgrade->updateRateOfFire(towerToUpgrade->getRateOfFire()+rateOfFireUpgrades);
+      towerToUpgrade->updateRadius(towerToUpgrade->getRadius()+rangeOfFireUpgrades);
+      towerToUpgrade->updateProjectileDamage(towerToUpgrade->getProjectileDamage()+projectileDamageUpgrades);
+      towerToUpgrade->updateProjectileArmorPenetration(towerToUpgrade->getProjectileArmorPenetration()+projectileArmorPenetrationUpgrades);
+      towerToUpgrade->updateProjectileAreaOfEffect(towerToUpgrade->getProjectileAreaOfEffect()+projectileAreaOfEffectUpgrades);
+    }
+  }
 }
 
 /*
@@ -608,6 +683,13 @@ void GameLogic::removeAObstacleMoney(int row, int col){
 
   //add a percentage of this money back to the player's account
   player -> modifyBalance(price*-1);
+}
+
+/*
+ * @return the price of an upgrade for the tower at the passed position
+ */
+int GameLogic::getUpgradePrice(int row, int col){
+  return towerManager->getUpgradePrice(row,col);
 }
 
 /*```

@@ -83,4 +83,23 @@ public:
   void attack(shared_ptr<ActorInterface> enemyInRange);
 
   shared_ptr<vector<int>>  getStatistics();
+
+  //getters used by the upgrading system
+  int getRespawnSpeed(){return respawnSpeed;}
+  int getRadius(){return radius;}
+  int getUnitHitpoints(){return currentUnits.at(0)->getMaxHitpoints();}
+  int getUnitDamage(){return currentUnits.at(0)->getDamage();}
+  int getUnitArmorPenetration(){currentUnits.at(0)->getArmorPenetration();}
+  int getUnitArmor(){currentUnits.at(0)->getArmor();}
+  int getUnitAttackRate(){currentUnits.at(0)->getAttackRate();}
+
+
+  //setters used by the upgrading system
+  void updateRespawnSpeed(int newRespawnSpeed){respawnSpeed = newRespawnSpeed;}
+  void updateRadius(int newRadius){radius = newRadius;}
+  void updateUnitHitpoints(int newMaxHitpoints);
+  void updateUnitDamage(int newDamage);
+  void updateUnitArmorPenetration(int newArmorPenetration);
+  void updateUnitArmor(int newArmor);
+  void updateUnitAttackRate(int newAttackRate);
 };

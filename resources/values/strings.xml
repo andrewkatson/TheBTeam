@@ -341,6 +341,17 @@
     <string value="Respawn Speed: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_5"> </string>
 
 
+    <!--Upgrade Button IDs-->
+    <string value="Tower_Radius" id="IDS_Tower_Radius_Upgrade"> </string>
+    <string value="Tower_Rate_Of_Fire" id="IDS_Tower_Rate_Of_Fire_Upgrade"> </string>
+    <string value="Tower_Respawn_Rate" id="IDS_Tower_Respawn_Rate_Upgrade"> </string>
+    <string value="Actor_Max_Hitpoints" id="IDS_Actor_Max_Hitpoints_Upgrade"> </string>
+    <string value="Actor_Damage" id="IDS_Actor_Max_Damage_Upgrade"> </string>
+    <string value="Actor_Armor_Penetration" id="IDS_Actor_Armor_Penetration_Upgrade"> </string>
+    <string value="Actor_Armor" id="IDS_Actor_Armor_Upgrade"> </string>
+    <string value="ACtor_Attack_Rate" id="IDS_Actor_Attack_Rate"> </string>
+    <string value="Actor_Area_Of_Effect" id="IDS_Actor_Area_Of_Effect_Upgrade"> </string>
+
 </strings>
 
 <typeids>
@@ -449,4 +460,5 @@
   <typeid value="Average_Kid_Unit" id="IDS_AKU"> </typeid>
   <!--FatKid Unit-->
   <typeid value="Fat_Kid_Unit" id="IDS_FKU"> </typeid>
+
 </typeids>

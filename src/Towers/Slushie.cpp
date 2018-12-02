@@ -8,6 +8,7 @@ Slushie::Slushie(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> even
   this -> price = textLoader->getInteger(string("IDS_SLT_PR"));
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> level = 3;
   this-> setProjectile();
   this -> initSprite();
 }

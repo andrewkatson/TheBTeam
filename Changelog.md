@@ -1,11 +1,27 @@
 [Unreleased]
 
+###Added
+- attack rate for all units [@andrewkatson][https://github.com/andrewkatson]
+- upgrade system for aspects of the melee and range towers for more customizaton
+- ENEMY UNIT MOVEMENT. [@jeremyelkayam][https://github.com/jeremyelkayam]
+- __WORKING__ ENEMY UNIT MOVEMENT.
+- Units despawn and knock off player health when they reach the exit tile
+
 ###Changed  
-- melee towers spawn units surrounding their flag in the right spaces 
+- melee towers spawn units surrounding their flag in the right spaces [@andrewkatson][https://github.com/andrewkatson]
+- MeleeUnit::move() now takes an angle in radians to move. [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Units no longer travel at the edges of a path; they travel roughly toward the center (perturbed randomly) of each path.
+- Multiplier on unit health for decreasing of player health moved to constants.xml
+ - Greatly decreased this multiplier
+- Animation speed is now dependent on unit movement speed
+
 
 
 ###Fixed
 - seg faults from trying to destroy unitialized box2d bodies [@andrewkatson][https://github.com/andrewkatson]
+- Enemies no longer stop right before moving to the exit[@jeremyelkayam][https://github.com/jeremyelkayam]
+- MeleeUnit::move() behaves like it's supposed to instead of doing weird and erratic garbage
+- A bug where enemy units would only spawn from one entrance in the board
 
 
 [0.6.0] 2018-12-01

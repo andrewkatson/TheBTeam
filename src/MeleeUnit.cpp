@@ -11,6 +11,8 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> s_elapsed = 0;
+  this -> overshooting = false;
+  this -> overshoot = 0;
 }
 
 void MeleeUnit::update(float delta){
@@ -24,7 +26,7 @@ void MeleeUnit::update(float delta){
 
     s_elapsed += delta;
 
-    if (s_elapsed > .5) {
+    if (s_elapsed > 1/speed) {
       s_elapsed = 0;
 
       if (current_sprite == 0) {
@@ -78,7 +80,7 @@ HitpointBar MeleeUnit::getHpBar() {
 
 void MeleeUnit::move(float deltaS){
   this->x+=(speed*cos(direction))*ActorInterface::getXScale();
-  this->y+=(speed*sin(direction))*ActorInterface::getYScale();
+  this->y+=(speed*sin(direction)*-1)*ActorInterface::getYScale();
 }
 
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){
@@ -121,6 +123,7 @@ void MeleeUnit::setAttackRadius(int attackRadius) {
   radius = attackRadius;
 }
 
+<<<<<<< HEAD
 void MeleeUnit::setFixtures(){
   sf::FloatRect boundingBox = sprite.getGlobalBounds();
   b2PolygonShape boxShape;
@@ -131,4 +134,20 @@ void MeleeUnit::setFixtures(){
   boxFixtureDef.density = 0;
   body->CreateFixture(&boxFixtureDef);
 
+=======
+double MeleeUnit::getOvershoot() const {
+  return overshoot;
+}
+
+void MeleeUnit::setOvershoot(double overshoot) {
+  MeleeUnit::overshoot = overshoot;
+}
+
+bool MeleeUnit::isOvershooting() const {
+  return overshooting;
+}
+
+void MeleeUnit::setOvershooting(bool overshooting) {
+  MeleeUnit::overshooting = overshooting;
+>>>>>>> 473e04c6569408107c873c4227e81727331b4064
 }

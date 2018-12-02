@@ -28,6 +28,11 @@ void CompView::moveUnits(float deltaS){
   vector<vector<int>> dists=gameLogic->getDistances();
   vector<vector<int>> floor=gameLogic->getFloor();
 
+  std::mt19937 rnd_gen (rd ());
+
+  uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()-.5);
+  uniform_real_distribution<double>y_overshoot(0,playingScreenHeader->getTrueYTileSize()-.5);
+
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
     shared_ptr<MeleeUnit> currentUnit= iterator.second;
 
@@ -46,7 +51,7 @@ void CompView::moveUnits(float deltaS){
 
     if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
       shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),deltaS);
-      shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()/4,deltaS);
+      shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
 
       this -> eventManager -> queueEvent(actorDestroyed);
       this -> eventManager -> queueEvent(hitpointsLost);
@@ -56,38 +61,79 @@ void CompView::moveUnits(float deltaS){
       int c = currentUnit->getCol();
       //printf("row=%d col=%d x=%f y=%f\n",r,c,currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
 
-      std::map<int, pair<int, int>> dists_coords;
+      std::map<int, double> dists_coords;
 
-      vector<pair<int, int>> relative_positions={make_pair(0,1),make_pair(1,0),make_pair(0,-1),make_pair(-1,0)};
+      vector<double> angles={0,M_PI/2,M_PI,3*M_PI/2};
 
-      int adjusted_r,adjusted_c;
+      int adjusted_r,adjusted_c,dir_r,dir_c;
 
-      for(auto dir : relative_positions){
+      for(auto dir : angles){
         //printf("row + %d col %d \nfloor:%ldx%ld\n",dir.first,dir.second,floor.size(),floor[0].size());
-        adjusted_r = r + dir.first;
-        adjusted_c = c + dir.second;
+
+        dir_r=-sin(dir);
+        dir_c=cos(dir);
+        //printf("checking %d %d\n",dir_r,dir_c);
+        adjusted_r = r + dir_r;
+        adjusted_c = c + dir_c;
         //printf("adjusted: %d, %d\n",adjusted_r,adjusted_c);
         //printf("0<= adjusted_r? %d\nadjusted_r < floor.size()? %d\n0 <= adjusted_c? %d\nadjusted_c < floor[0].size()? %d\n",
         //      (0 <= adjusted_r), (adjusted_r < floor.size()), (0 <= adjusted_c), (adjusted_c < floor[0].size()));
         if((0 <= adjusted_r) && (adjusted_r < floor.size()) && (0 <= adjusted_c) && (adjusted_c < floor[0].size())) {
           //printf("above floor grid: %d\n",floor[r + dir.first][c + dir.second]);
-          if (floor[r + dir.first][c + dir.second] > 0) {
+          if (floor[r + dir_r][c + dir_c] >= 0) {
             //printf("huge succeeded\n");
-            dists_coords[dists[r + dir.first][c + dir.second]] = dir;
+            dists_coords[dists[adjusted_r][adjusted_c]] = dir;
           }
         }
       }
       assert(!dists_coords.empty());
       //printf("map size: %ld\n",dists_coords.size());
 
-      pair<int, int> new_direction = dists_coords.begin()->second; //get the one with the shortest distance
+      double new_direction = dists_coords.begin()->second; //get the one with the shortest distance
 
-      printf("going to next: %d %d\n",new_direction.first,new_direction.second);
+      //printf("going to next: %lf\n",new_direction);
 
-      float x_scale = 1 / (float) dists[0].size();
-      float y_scale = 1 / (float) dists.size();
 
-      //currentUnit->move(currentUnit->getSpeed(), new_direction.first * x_scale, new_direction.second * y_scale);
+      double curdir=currentUnit->getDirection();
+
+      if(new_direction==curdir){
+        currentUnit->setOvershooting(false);
+      }else{
+        if(currentUnit->isOvershooting()){
+          //if it didn't hit its target yet, keep overshooting, otherwise stop
+          bool passedTarget=((curdir==0 && currentUnit->getXCoordinate()>currentUnit->getOvershoot()) //going right, so the cor should be greater than the overshoot
+                  || (curdir==M_PI/2 && currentUnit->getYCoordinate()<currentUnit->getOvershoot()) // going up, so the cor should be less
+                  || (curdir==M_PI && currentUnit->getXCoordinate()<currentUnit->getOvershoot())
+                  || (curdir==3*M_PI/2 && currentUnit->getYCoordinate()>currentUnit->getOvershoot()));
+
+          if(!passedTarget){
+            new_direction=currentUnit->getDirection();
+          }
+
+        }else {
+          double overshoot;
+          if(curdir==0){
+            overshoot=currentUnit->getXCoordinate()+x_overshoot(rnd_gen);
+          }else if(curdir==M_PI/2){
+            overshoot=currentUnit->getYCoordinate()-y_overshoot(rnd_gen);
+          }else if(curdir==M_PI){
+            overshoot=currentUnit->getXCoordinate()-x_overshoot(rnd_gen);
+          }else{
+            overshoot=currentUnit->getYCoordinate()+y_overshoot(rnd_gen);
+          }
+          currentUnit->setOvershoot(overshoot);
+
+          currentUnit->setOvershooting(true);
+
+          new_direction=currentUnit->getDirection();
+        }
+        //new_direction=currentUnit->getDirection();
+      }
+
+
+      currentUnit->setDirection(new_direction);
+
+      currentUnit->move(deltaS);
 
       currentUnit->update(deltaS);
     }

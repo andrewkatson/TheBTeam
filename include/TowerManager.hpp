@@ -38,12 +38,14 @@
 #include <unordered_map>
 #include <functional>
 #include <assert.h>
+#include <random>
 
 using namespace std::placeholders;
 
 using std::vector;
 using std::unordered_map;
 using std::dynamic_pointer_cast;
+using std::cerr;
 class TowerManager{
 //Store the textLoader to make requests for strings and constants
 shared_ptr<TextLoader> textLoader;
@@ -77,6 +79,8 @@ int yGrid;
 //handles all collisions
 shared_ptr<b2World> world;
 
+//random number generator (seeded in the constructor)
+std::mt19937 mt;
 
 //int pair (used to assocaite a row and col)
 typedef pair<int,int> intPair;
@@ -90,8 +94,11 @@ public:
 
   int getTowerPrice(int row, int col);
   int getTowerPrice(string towerTypeID);
+  int getUpgradePrice(int row, int col);
 
   unordered_map<string, vector<shared_ptr<TowerInterface>>>& getAllTowersToChoose();
+  shared_ptr<TowerInterface> getGenericTower(string towerTypeID);
+
   vector<shared_ptr<TowerInterface>>& getUpgradesForTower(string towerTypeID);
 
   unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
@@ -107,9 +114,6 @@ public:
 
   void addObstacles(unordered_map<int, intPair>& allObstaclesToPlace);
 
-
-
-
 private:
   void registerDelegates();
   void deregisterDelegates();
@@ -124,10 +128,15 @@ private:
   void addTower(string type, int combinedRowCol);
   void addTower(string type, int row, int col);
 
+  void modifyToIncludeUpgrades(shared_ptr<TowerInterface> towerToUpgrade, shared_ptr<TowerInterface> tower);
+
   shared_ptr<TowerInterface> copyOfTowerType(string type, int row, int col);
 
   void removeTower(int combinedRowCol);
   void removeTower(int row, int col);
 
+  void upgradeTower(string upgradeButtonID, int row, int col);
+  void upgradeMeleeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
+  void upgradeRangeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
 };
 #endif

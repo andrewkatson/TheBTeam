@@ -9,6 +9,7 @@ CrinkleFryUnit::CrinkleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this->radius=textLoader->getInteger(string("IDS_CF_AR"));;;
   this->lunchMoney= textLoader->getInteger(string("IDS_CF_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_CFU"));
+  this->attackRate=textLoader->getInteger(string("IDS_CF_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
   //set the initial sprite texture
   this ->current_sprite = 0;

@@ -8,6 +8,7 @@ SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_
   this -> towerTypeID = textLoader->getTypeID(string("IDS_SFT"));
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> level = 3;
   this -> initSprite();
   this -> setUpUnits();
 }

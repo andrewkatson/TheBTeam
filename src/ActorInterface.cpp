@@ -17,6 +17,9 @@ ActorInterface::ActorInterface(){
   //set the body to NULL in case we never set the world so the destructor does not try to destroy an unitialized body
   body = NULL;
 
+  //set the attack rate to 0 in case this is a projectile
+  attackRate = 0;
+
   //set the sprite to face roughly in the direction the textures are drawn  in
   //sprite.setRotation(135.0f + 90.f);
   //rotate(225.0f);
@@ -86,17 +89,14 @@ void ActorInterface::setDirection(double direction) {
   this ->direction = direction;
 }
 
-void ActorInterface::setXScale(int windowX, int num_cols){
-  double dx=windowX;
+void ActorInterface::setXScale(int num_cols){
   double dc=num_cols;
-  ActorInterface::xScale=dx/dc;
+  ActorInterface::xScale=1.0/dc;
 }
 
-void ActorInterface::setYScale(int windowY, int num_rows){
-  double dy=windowY;
+void ActorInterface::setYScale(int num_rows){
   double dr=num_rows;
-
-  ActorInterface::yScale=dy/dr;
+  ActorInterface::yScale=1.0/dr;
 }
 
 double ActorInterface::getYScale(){

@@ -13,6 +13,7 @@ SkinnyKidUnit::SkinnyKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->radius=textLoader->getInteger(string("IDS_SK_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_SK_LM"));;
   this->actorTypeID=textLoader->getTypeID(string("IDS_SKU"));
+  this->attackRate=textLoader->getInteger(string("IDS_SK_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(actorTypeID);
   //set the initial sprite texture
   this ->current_sprite = 0;

@@ -65,6 +65,9 @@ protected:
   //The actor's armor penetration
   int armorPenetration;
 
+  //The actor's attack rate (not applicable to projectiles)
+  int attackRate;
+
   //The rectangle corresponding to the object's dimensions.
   sf::FloatRect collisionBox;
 
@@ -97,8 +100,8 @@ public:
   static double getXScale();
   static double getYScale();
 
-  static void setXScale(int windowX, int num_cols);
-  static void setYScale(int windowY, int num_rows);
+  static void setXScale(int num_cols);
+  static void setYScale(int num_rows);
 
   ActorInterface();
   ~ActorInterface();
@@ -190,15 +193,23 @@ public:
 
   float getSpeed(){return this->speed;}
 
+  void setSpeed(float speed){this->speed=speed;}
+
   int getHitpoints(){return this->hitpoints;}
-
+  int getMaxHitpoints(){return this->maxHitpoints;}
   int getDamage(){return this->damage;}
-
   int getArmor(){return this->armor;}
-
   int getArmorPenetration(){return this->armorPenetration;}
-
   int getRadius(){return radius;}
+  int getAttackRate(){return attackRate;}
+
+  void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
+  void updateDamage(int newDamage){damage = newDamage;}
+  void updateArmor(int newArmor){armor = newArmor;}
+  void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
+  void updateRadius(int newRadius){radius = newRadius;}
+  void updateAttackRate(int newAttackRate){attackRate = newAttackRate;}
+
   sf::CircleShape& getRadiusCircle(){return radiusCircle;}
 
   double getDirection() const;
