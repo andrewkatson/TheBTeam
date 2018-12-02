@@ -16,4 +16,6 @@ class CollisionCallback : public b2ContactListener
 
     void EndContact(b2Contact* contact);
 
+
+
 };

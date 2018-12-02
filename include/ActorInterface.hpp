@@ -38,9 +38,6 @@ protected:
   //The unique identifier for the actor.
   long long  id;
 
-  //the string identifier for the type of actor (specific to each type of actor)
-  string actorTypeID;
-
   //The sprite corresponding to the actor.
   sf::Sprite sprite;
 
@@ -96,13 +93,15 @@ protected:
   static double yScale;
 
 public:
-
+  bool isActor = true;
+  bool isTower = false;
   static double getXScale();
   static double getYScale();
 
   static void setXScale(int num_cols);
   static void setYScale(int num_rows);
-
+  //the string identifier for the type of actor (specific to each type of actor)
+  string typeID;
   ActorInterface();
   ~ActorInterface();
 
@@ -132,7 +131,9 @@ public:
 
     @return an integer representing the actor's identity
    */
-  long long getID(){return id;}
+  long long getID(){
+    //cout << "id = "<< id << endl;
+    return id;}
 
   /*
     Returns the actor's sprite.
@@ -152,7 +153,7 @@ public:
   /*
    * Return actor type ID
    */
-  string getType(){return actorTypeID;}
+  string getType(){return typeID;}
 
   /*
    * update the position, check if it hit its target
@@ -236,6 +237,8 @@ public:
     }
     return false;
   }
+
+
 };
 
 #endif

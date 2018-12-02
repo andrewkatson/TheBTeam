@@ -152,25 +152,25 @@ void GameLogic::updateGameLogic(float deltaS){
     int col = 3;
     if(test == 5){
       //creates a unit for testing as well
-      shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
-      shared_ptr<MeleeUnit> fryGuy1 = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
-      fryGuy -> setWorld(world);
-      fryGuy1 -> setWorld(world);
-      fryGuy -> setFixtures();
-      fryGuy1 -> setFixtures();
-
-      fryID = fryGuy -> getID();
-      fryID1 = fryGuy1 -> getID();
+      // shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+      // shared_ptr<MeleeUnit> fryGuy1 = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+      // fryGuy -> setWorld(world);
+      // fryGuy1 -> setWorld(world);
+      // fryGuy -> setFixtures();
+      // fryGuy1 -> setFixtures();
+      //
+      // fryID = fryGuy -> getID();
+      // fryID1 = fryGuy1 -> getID();
 
       //set the x and y coordinates
-      fryGuy -> setXCoordinate(3 * gridX);
-      fryGuy -> setYCoordinate(2 * gridY);
-      fryGuy1 -> setXCoordinate(3 * gridX);
-      fryGuy1 -> setYCoordinate(2 * gridY);
+      // fryGuy -> setXCoordinate(3 * gridX);
+      // fryGuy -> setYCoordinate(2 * gridY);
+      // fryGuy1 -> setXCoordinate(3 * gridX);
+      // fryGuy1 -> setYCoordinate(2 * gridY);
 
       //add to the current wave of spawned
       //something something idiot
-      (waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
+      //(waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
       //(waveManager -> spawnedCurrentWave).insert({fryGuy1 -> getID(), fryGuy1});
 
       //vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);

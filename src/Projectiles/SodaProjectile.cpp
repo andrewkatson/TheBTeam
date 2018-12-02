@@ -7,8 +7,8 @@ SodaProjectile::SodaProjectile(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this -> speed =  textLoader->getInteger(string("IDS_SO_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_SO_AP"));;
   this -> radius = textLoader->getInteger(string("IDS_SO_AR"));;
-  this -> actorTypeID = textLoader->getTypeID(string("IDS_SOP"));
-  this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> typeID = textLoader->getTypeID(string("IDS_SOP"));
+  this -> textures = textureLoader -> getTexture(typeID);
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

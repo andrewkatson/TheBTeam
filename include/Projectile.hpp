@@ -114,16 +114,13 @@ public:
    * explosion that will be handeled by the gamelogic
    */
   void handleTargetHit();
-<<<<<<< HEAD
+
 
   /*
    * Setting the fixtures for Box2D
    */
   void setFixtures();
 
-=======
-  
->>>>>>> 473e04c6569408107c873c4227e81727331b4064
 
 };
 

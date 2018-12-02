@@ -73,12 +73,12 @@ void ActorInterface::setWorld(shared_ptr<b2World> world){
 
 void ActorInterface::startContact(void* collidingWith){
   //collidingWith should be cast to a clas you can collide with ie Actors and Towers
-  cout << "start Contact Actor Interface" << endl;
+  cout << "start Contact Actor Interface" << '\n'<<endl;
 }
 
 void ActorInterface::endContact(void* collidingWith){
   //look above
-  cout << "end Contact Actor Interface" << endl;
+  cout << "end Contact Actor Interface" << '\n'<<endl;
 }
 
 double ActorInterface::getDirection() const {

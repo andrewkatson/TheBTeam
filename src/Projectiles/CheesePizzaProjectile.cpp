@@ -8,8 +8,8 @@ CheesePizzaProjectile::CheesePizzaProjectile(shared_ptr<TextLoader> textLoader, 
   this -> speed = textLoader->getInteger(string("IDS_CP_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_CP_AP"));;
   this -> radius = textLoader->getInteger(string("IDS_CP_AR"));;
-  this -> actorTypeID = textLoader->getTypeID(string("IDS_CPP"));
-  this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> typeID = textLoader->getTypeID(string("IDS_CPP"));
+  this -> textures = textureLoader -> getTexture(typeID);
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing
