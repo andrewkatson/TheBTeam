@@ -85,7 +85,7 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
       yVector /= normalize;
 
       //convert the vector into radians for the direction
-      double direction = atan2(yVector, xVector);
+      double direction = atan2((-1)*yVector, xVector);
 
       //set the direction for the unit (value on the unit circle)
       unit -> setDirection(direction);
