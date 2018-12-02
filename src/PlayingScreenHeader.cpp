@@ -799,6 +799,10 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
    * raw pointer inside of it for this
    */
   MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
+
+  //get whether this is a left or right click
+  string mouseButtonPressed = mpEventData -> partOfMouse;
+
   //get the xposition
   float xPos = mpEventData -> x;
   //get the y position

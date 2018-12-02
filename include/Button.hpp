@@ -47,12 +47,15 @@ private:
   float xScale = 1.0;
   float yScale = 1.0;
 
+  //the id of the button (may not always have one)
+  string buttonID;
+
 public:
   Button();
-  Button(int windowX, int windowY, int order, string message,shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle=false);
-  Button(int windowX, int windowY, Position position, string message,shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle=false);
-  Button(int windowX, int windowY, float xPos, float yPos, string message,shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle=false);
-  Button(int windowX, int windowY, float xPos, float yPos, shared_ptr<TextLoader> textLoader, string texturepath, bool isCircle=false);
+  Button(int windowX, int windowY, int order, string message,shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle=false, string buttonID="");
+  Button(int windowX, int windowY, Position position, string message,shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle=false, string buttonID="");
+  Button(int windowX, int windowY, float xPos, float yPos, string message,shared_ptr<TextLoader> textLoader, string fontpath, bool isCircle=false, string buttonID="");
+  Button(int windowX, int windowY, float xPos, float yPos, shared_ptr<TextLoader> textLoader, string texturepath, bool isCircle=false, string buttonID="");
 
   void setWindowSize(int windowX, int windowY);
 
@@ -97,6 +100,8 @@ public:
   void setOrigin(float originX, float originY);
 
   void draw(sf::RenderWindow& window);
+  
+  string getButtonID(){return buttonID;}
 
 };
 

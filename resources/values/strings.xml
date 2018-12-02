@@ -198,6 +198,28 @@
     <!--Rally Point Flag-->
     <string value="../resources/sprites/icons/rallyflag.png" id="IDS_Rally_Flag_Icon"> </string>
 
+    <!--Upgrade Icons-->
+    <string value="../resources/sprites/icons/areaofeffect.png" id="IDS_Area_Of_Effect_Upgrade"> </string>
+    <string value="../resources/sprites/icons/armor.png" id="IDS_Armor_Upgrade"> </string>
+    <string value="../resources/sprites/icons/armorpenetration.png" id="IDS_Armor_Penetration_Upgrade"> </string>
+    <string value="../resources/sprites/icons/attackrate.png" id="IDS_Attack_Rate_Upgrade"> </string>
+    <string value="../resources/sprites/icons/damage.png" id="IDS_Damage_Upgrade"> </string>
+    <string value="../resources/sprites/icons/hitpoints.png" id="IDS_Hitpoints_Upgrade"> </string>
+    <string value="../resources/sprites/icons/radius.png" id="IDS_Radius_Upgrade"> </string>
+    <string value="../resources/sprites/icons/rateoffire.png" id="IDS_Rate_Of_Fire_Upgrade"> </string>
+    <string value="../resources/sprites/icons/respawnspeed.png" id="IDS_Respawn_Speed_Upgrade"> </string>
+
+    <!--Upgrade Icons IDs, VALUES MUST MATCH THE IDS ABOVE-->
+    <string value="IDS_Area_Of_Effect_Upgrade" id="IDS_Area_Of_Effect_Upgrade_ID"> </string>
+    <string value="IDS_Armor_Upgrade" id="IDS_Armor_Upgrade_ID"> </string>
+    <string value="IDS_Armor_Penetration_Upgrade" id="IDS_Armor_Penetration_Upgrade_ID"> </string>
+    <string value="IDS_Attack_Rate_Upgrade" id="IDS_Attack_Rate_Upgrade_ID"> </string>
+    <string value="IDS_Damage_Upgrade" id="IDS_Damage_Upgrade_ID"> </string>
+    <string value="IDS_Hitpoints_Upgrade" id="IDS_Hitpoints_Upgrade_ID"> </string>
+    <string value="IDS_Radius_Upgrade" id="IDS_Radius_Upgrade_ID"> </string>
+    <string value="IDS_Rate_Of_Fire_Upgrade" id="IDS_Rate_Of_Fire_Upgrade_ID"> </string>
+    <string value="IDS_Respawn_Speed_Upgrade" id="IDS_Respawn_Speed_Upgrade_ID"> </string>
+
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
     <!--GameLogic Delegates-->
@@ -245,14 +267,15 @@
     <string value="Playing_Screen_Header_Level_Change" id="IDS_PSH_LC"> </string>
     <string value="Playing_Screen_Header_Wave_Change" id="IDS_PSH_WC"> </string>
 
+    <!--Upgrade Circle Delegates-->
+    <string value="Upgrade_Circle_Mouse_Press_Delegate" id="IDS_Upgrade_Circle_Mouse_Press"> </string>
+
     <!--BuyTowerScreen Delegates-->
     <string value="BUYTOWERSCREENMOUSEPRESS" id="IDS_BTS_MP"> </string>
     <string value="BUYTOWERSCREENHANDLEKEYPRESS" id="IDS_BTS_KP"> </string>
     <string value="Buy_Tower_Screen_Handle_State_Change" id="IDS_BTS_SC"> </string>
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
-
-
 
 
     <!--RestartScreen-->
@@ -315,6 +338,9 @@
     <!--Wave Button-->
     <string value="Wave:   " id="IDS_Wave_Button_Text"> </string>
 
+    <!--Upgrade Circle-->
+    <string value="Upgrade Stat: " id="IDS_Upgrade_Circle_Price_Button"> </string>
+
     <!--BuyTower Screen-->
     <!--Buy Tower Title-->
     <string value="Choose A Tower" id="IDS_Buy_Tower_Title_Text_Existing_Tower_Or_Empty_Space"> </string>
@@ -349,8 +375,19 @@
     <string value="Actor_Damage" id="IDS_Actor_Max_Damage_Upgrade"> </string>
     <string value="Actor_Armor_Penetration" id="IDS_Actor_Armor_Penetration_Upgrade"> </string>
     <string value="Actor_Armor" id="IDS_Actor_Armor_Upgrade"> </string>
-    <string value="ACtor_Attack_Rate" id="IDS_Actor_Attack_Rate"> </string>
+    <string value="Actor_Attack_Rate" id="IDS_Actor_Attack_Rate_Upgrade"> </string>
     <string value="Actor_Area_Of_Effect" id="IDS_Actor_Area_Of_Effect_Upgrade"> </string>
+
+    <!--Upgrade Button IDS for the IDS VALUE MUST MATCH ID ABOVE-->
+    <string value="IDS_Tower_Radius_Upgrade" id="IDS_Tower_Radius_Upgrade_ID"> </string>
+    <string value="IDS_Tower_Rate_Of_Fire_Upgrade" id="IDS_Tower_Rate_Of_Fire_Upgrade_ID"> </string>
+    <string value="IDS_Tower_Respawn_Rate_Upgrade" id="IDS_Tower_Respawn_Rate_Upgrade_ID"> </string>
+    <string value="IDS_Actor_Max_Hitpoints_Upgrade" id="IDS_Actor_Max_Hitpoints_Upgrade_ID"> </string>
+    <string value="IDS_Actor_Max_Damage_Upgrade" id="IDS_Actor_Max_Damage_Upgrade_ID"> </string>
+    <string value="IDS_Actor_Armor_Penetration_Upgrade" id="IDS_Actor_Armor_Penetration_Upgrade_ID"> </string>
+    <string value="IDS_Actor_Armor_Upgrade" id="IDS_Actor_Armor_Upgrade_ID"> </string>
+    <string value="IDS_Actor_Attack_Rate_Upgrade" id="IDS_Actor_Attack_Rate_Upgrade_ID"> </string>
+    <string value="IDS_Actor_Area_Of_Effect_Upgrade" id="IDS_Actor_Area_Of_Effect_Upgrade_ID"> </string>
 
 </strings>
 

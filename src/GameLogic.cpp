@@ -543,6 +543,26 @@ bool GameLogic::attemptSellTower(int row, int col){
   }
 }
 
+/*
+ * Try to see if the tower at this position can have a statistic upgraded
+ * @param row: the row of the tower
+ * @param col: the col of the tower
+ * @return bool: whether we can upgrade a statistic
+ */
+ bool GameLogic::canUpgradeTowerStats(int row, int col){
+   assert(isTower(row,col));
+
+   //the price for an upgrade
+   int upgradeCost = getUpgradePrice(row, col);
+
+   int playerBalance = player -> getBalance();
+
+   if(playerBalance >= upgradeCost){
+     return true;
+   }
+   return false;
+ }
+
 
 /*
  * @param row: the row of the target
@@ -685,6 +705,22 @@ void GameLogic::removeAObstacleMoney(int row, int col){
 int GameLogic::getUpgradePrice(int row, int col){
   return towerManager->getUpgradePrice(row,col);
 }
+
+
+/*
+ * Upgrade the tower at this row and col
+ * @param upgradeButtonID: the id of the upgrade button that was selected
+ */
+void GameLogic::upgradeTower(string upgradeButtonID, int row, int col){
+  //get the upgrade price
+  int priceOfUpgrade = getUpgradePrice(row,col);
+
+  //update the balance to reflect the purchase
+  player -> modifyBalance(priceOfUpgrade * -1);
+
+  towerManager -> upgradeTower(upgradeButtonID, row, col);
+}
+
 
 /*```
  * Return the current GameState

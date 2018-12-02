@@ -116,6 +116,7 @@ public:
 
   bool attemptPurchaseTower(int row, int col, string towerTypeID);
   bool attemptSellTower(int row, int col);
+  bool canUpgradeTowerStats(int row, int col);
 
   bool canBuy(int row, int col);
   bool canBuy(string towerType);
@@ -126,6 +127,7 @@ public:
   void removeAObstacleMoney(int row, int col);
 
   int getUpgradePrice(int row, int col);
+  void upgradeTower(string upgradeButtonID, int row, int col);
 
   State getGameState();
 

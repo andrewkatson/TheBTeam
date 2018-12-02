@@ -91,6 +91,9 @@ void PlayingScreen::registerDelegates(){
 
   //register delegates for the header
   playingScreenHeader -> registerDelegates();
+  //register delegates for the upgrade circle
+  upgradeCircle -> registerDelegates();
+
 }
 
 /*
@@ -164,6 +167,8 @@ void PlayingScreen::deregisterDelegates(){
 
   //deregister the delegates for the header
   playingScreenHeader -> deregisterDelegates();
+  //deregister the deleagtes for the upgrade circle
+  upgradeCircle -> deregisterDelegates();
 }
 
 
@@ -172,6 +177,7 @@ void PlayingScreen::deregisterDelegates(){
  */
 void PlayingScreen::initDrawingMaterials(){
   initRallyPointButton();
+  initUpgradeCircle();
 }
 
 /*
@@ -199,6 +205,13 @@ void PlayingScreen::initRallyPointButton(){
   rallyPointChange -> setOutlineThickness(textLoader->getInteger(string("IDS_Rally_Flag_Outline_Thickness")));
   //make it initially invisible
   rallyPointChange -> flipVisibility();
+}
+
+/*
+ * Initialize the upgrade circle that is drawn above a tower when it is clicked with right click
+ */
+void PlayingScreen::initUpgradeCircle(){
+  upgradeCircle = unique_ptr<UpgradeCircle>(new UpgradeCircle(eventManager, textLoader, gameLogic, windowX, windowY));
 }
 
 /*
@@ -422,6 +435,9 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
    */
   MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
 
+  //get whether this is a left or right click
+  string mouseButtonPressed = mpEventData -> partOfMouse;
+
   //get the xposition
   float xPos = mpEventData -> x;
   //get the y position
@@ -452,63 +468,105 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
     }
   }
 
-  //if we have clicked the rally point flag icon
-  if(rallyPointChange -> isCurrentlyVisible()){
-    if(rallyPointChange -> isSelected(xPos, yPos)){
+  //if the upgrade circle is displayed we ignore the click
+  if(!(upgradeCircle -> isCurrentlyVisible())){
+    //if this is a right click we still ignore the click
+    if(mouseButtonPressed == "Left"){
+      //if we have clicked the rally point flag icon
+      if(rallyPointChange -> isCurrentlyVisible()){
+        if(rallyPointChange -> isSelected(xPos, yPos)){
 
-      int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+          int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
 
-      shared_ptr<TowerInterface> tower = towers.at(combinedRowCol);
-      //check that it is within the bounds of the radius circle of the tower
-      //if it is not then we cannot click the rally point flag
-      //also check if this is a path tile or if this is the first click (i,e, the position is the center of the tower)
-      if(clickWithinRange(xPos, yPos,tower) && ((clickedOnAPath(xPos, yPos)) || (firstTimeClickOnRallyFlag(tower)) && !(rallyPointChange -> isButtonClicked()))){
-        rallyPointChange -> clickButton();
+          shared_ptr<TowerInterface> tower = towers.at(combinedRowCol);
+          //check that it is within the bounds of the radius circle of the tower
+          //if it is not then we cannot click the rally point flag
+          //also check if this is a path tile or if this is the first click (i,e, the position is the center of the tower)
+          if(clickWithinRange(xPos, yPos,tower) && ((clickedOnAPath(xPos, yPos)) || (firstTimeClickOnRallyFlag(tower)) && !(rallyPointChange -> isButtonClicked()))){
+            rallyPointChange -> clickButton();
+          }
+          else{
+            return;
+          }
+          if(rallyPointChange -> isButtonClicked()){
+            //we want the header to ignore mouse presses when we have selected the flag icon
+            playingScreenHeader -> flipClickCheck();
+          }
+          else{
+            //if we have clicked it for a second time (thus unclick) and it was in bounds
+            //then we reset the rally point for the tower
+            MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+            //if the clcik was out of range the rally point is not reset
+            if(clickWithinRange(xPos, yPos, tower)){
+              meleeTower->resetRallyPoint(xPos,yPos);
+            }
+            //allow the header to check again
+            if(!(playingScreenHeader->clicksCheckedFor())){
+              playingScreenHeader -> flipClickCheck();
+            }
+            //make sure that the flag is not visible
+            if(rallyPointChange -> isCurrentlyVisible()){
+              rallyPointChange -> flipVisibility();
+            }
+            //make sure it is unclicked
+            if(rallyPointChange -> isButtonClicked()){
+              rallyPointChange -> clickButton();
+            }
+          }
+          //if we click the rally point flag we do not continue as normal
+          return;
+        }
       }
+      //if the rally point is not visible AND we know the upgrade circle is not visible
+      //then always unlock the header
       else{
-        return;
+        if(!(playingScreenHeader->clicksCheckedFor())){
+          playingScreenHeader->flipClickCheck();
+        }
       }
 
-      if(rallyPointChange -> isButtonClicked()){
-        //we want the header to ignore mouse presses when we have selected the flag icon
-        playingScreenHeader -> flipClickCheck();
+      //if the row and col are the same as the last click
+      if(row == rowSelected && col == colSelected){
+        if(gameLogic -> isTower (row,col)){
+          const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+          int combinedRowCol = row*gameLogic->getCols() + col;
+          shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+          towerToSetVisibility -> flipRadiusVisibility();
+        }
       }
+      //otherwise reset the pair after we check if we were just clicking on a tower
+      //if so flip its visible radius off
       else{
-        //if we have clicked it for a second time (thus unclick) and it was in bounds
-        //then we reset the rally point for the tower
-        MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
-        //if the clcik was out of range the rally point is not reset
-        if(clickWithinRange(xPos, yPos, tower)){
-          meleeTower->resetRallyPoint(xPos,yPos);
+        if(gameLogic -> isTower(rowSelected,colSelected)){
+          const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+          int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+          shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+          if(towerToSetVisibility->isRadiusVisible()){
+            towerToSetVisibility -> flipRadiusVisibility();
+          }
         }
-        //allow the header to check again
-        playingScreenHeader -> flipClickCheck();
-        //make sure that the flag is not visible
-        if(rallyPointChange -> isCurrentlyVisible()){
-          rallyPointChange -> flipVisibility();
-        }
-        //make sure it is unclicked
-        if(rallyPointChange -> isButtonClicked()){
-          rallyPointChange -> clickButton();
+        rowSelected = row;
+        colSelected = col;
+      }
+    }
+    else{
+      if(gameLogic -> isTower(rowSelected,colSelected)){
+        const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+        int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+        shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+        if(towerToSetVisibility->isRadiusVisible()){
+          towerToSetVisibility -> flipRadiusVisibility();
         }
       }
-      //if we click the rally point flag we do not continue as normal
-      return;
+      rowSelected = row;
+      colSelected = col;
     }
   }
-
-  //if the row and col are the same as the last click
-  if(row == rowSelected && col == colSelected){
-    if(gameLogic -> isTower (row,col)){
-      const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
-      int combinedRowCol = row*gameLogic->getCols() + col;
-      shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
-      towerToSetVisibility -> flipRadiusVisibility();
-    }
-  }
-  //otherwise reset the pair after we check if we were just clicking on a tower
-  //if so flip its visible radius off
   else{
+    //we want to block clicks on the header if the upgrade circle is open
+    if(playingScreenHeader->clicksCheckedFor()){
+      playingScreenHeader->flipClickCheck();
+    }
     if(gameLogic -> isTower(rowSelected,colSelected)){
       const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
       int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
@@ -638,6 +696,9 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 
   //draw the header
   playingScreenHeader -> draw(window);
+  //draw the upgrade circle
+  upgradeCircle -> draw(window);
+
   //TODO change into real code for drawing the map!
   if(somethingChanged){
     cout << endl << "THE FLOOR " << endl;

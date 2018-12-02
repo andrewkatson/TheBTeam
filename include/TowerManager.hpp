@@ -114,6 +114,8 @@ public:
 
   void addObstacles(unordered_map<int, intPair>& allObstaclesToPlace);
 
+  void upgradeTower(string upgradeButtonID, int row, int col);
+
 private:
   void registerDelegates();
   void deregisterDelegates();
@@ -135,7 +137,6 @@ private:
   void removeTower(int combinedRowCol);
   void removeTower(int row, int col);
 
-  void upgradeTower(string upgradeButtonID, int row, int col);
   void upgradeMeleeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
   void upgradeRangeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
 };
