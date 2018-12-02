@@ -19,6 +19,7 @@
 
 ###Fixed
 - seg faults from trying to destroy unitialized box2d bodies [@andrewkatson][https://github.com/andrewkatson]
+- allied units now move to the rally point correctly 
 - Enemies no longer stop right before moving to the exit[@jeremyelkayam][https://github.com/jeremyelkayam]
 - MeleeUnit::move() behaves like it's supposed to instead of doing weird and erratic garbage
 - A bug where enemy units would only spawn from one entrance in the board

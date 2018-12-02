@@ -67,6 +67,9 @@ unordered_map<string, vector<shared_ptr<TowerInterface>>> allTowerUpgrades;
 //the integer key is the row*collength + colindex of the tower on the map
 unordered_map<int, shared_ptr<TowerInterface>> towersPlaced;
 
+//vector used to return upgardes that can be modified to reflect upgrades to a tower
+vector<shared_ptr<TowerInterface>> towerUpgrades;
+
 //xdim of map (cols)
 int xDim;
 //ydim of map(rows)
@@ -100,6 +103,7 @@ public:
   shared_ptr<TowerInterface> getGenericTower(string towerTypeID);
 
   vector<shared_ptr<TowerInterface>>& getUpgradesForTower(string towerTypeID);
+  vector<shared_ptr<TowerInterface>>& getModifiedUpgrades();
 
   unordered_map<int, shared_ptr<TowerInterface>>& getTowersPlaced();
 
@@ -113,6 +117,8 @@ public:
   void handleTowerRemove(const EventInterface& event);
 
   void addObstacles(unordered_map<int, intPair>& allObstaclesToPlace);
+
+  void upgradeTower(string upgradeButtonID, int row, int col);
 
 private:
   void registerDelegates();
@@ -130,12 +136,11 @@ private:
 
   void modifyToIncludeUpgrades(shared_ptr<TowerInterface> towerToUpgrade, shared_ptr<TowerInterface> tower);
 
-  shared_ptr<TowerInterface> copyOfTowerType(string type, int row, int col);
+  shared_ptr<TowerInterface> copyOfTowerType(string type, int row, int col, bool inWorld=true);
 
   void removeTower(int combinedRowCol);
   void removeTower(int row, int col);
 
-  void upgradeTower(string upgradeButtonID, int row, int col);
   void upgradeMeleeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
   void upgradeRangeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
 };
