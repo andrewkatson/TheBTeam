@@ -7,6 +7,7 @@
 Projectile::Projectile(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) : ActorInterface(){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> isProjectile = true;
 }
 
 /*

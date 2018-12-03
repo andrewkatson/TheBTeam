@@ -56,7 +56,7 @@ private:
   unique_ptr<GameState> gameState;
   //Store the instance of the TowerManager class that the logic needs to
   //interact with the defensive towers
-  unique_ptr<TowerManager> towerManager;
+  shared_ptr<TowerManager> towerManager;
   //Store the human player's statistics
   unique_ptr<Player> player;
   //Store any sounds/music used by the game and play/stop when necessary
@@ -65,13 +65,15 @@ private:
   shared_ptr<WaveManager> waveManager;
   //Store the projectiles that can be fired by the defensive towers and handle their
   //creation, path, and destruction
-  unique_ptr<ProjectileManager> projectileManager;
+  shared_ptr<ProjectileManager> projectileManager;
   //Store the Event Manger for the game that receives and distributes irregular
   //game events
   shared_ptr<EventManager> eventManager;
   //Store the textureLoader to get the textures for this tower and pass to
   //any dependent units or projectiles
   shared_ptr<TextureLoader> textureLoader;
+  //stored the manager for all collions
+  shared_ptr<CollisionManager> collisionManager;
 
   shared_ptr<b2World> world;
 

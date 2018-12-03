@@ -11,6 +11,7 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> s_elapsed = 0;
+  this -> isProjectile = false;
   this -> overshooting = false;
   this -> overshoot = 0;
   this -> current_sprite = 0 ;
@@ -91,10 +92,6 @@ HitpointBar MeleeUnit::getHpBar() {
 void MeleeUnit::move(float deltaS){
   this->x+=(speed*cos(direction))*ActorInterface::getXScale();
   this->y+=(speed*sin(direction)*-1)*ActorInterface::getYScale();
-
-  //keep the box2d body updated
-  body -> SetTransform(b2Vec2(x,y), body->GetAngle());
-  b2Vec2 pos = body -> GetPosition();
 }
 
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){
@@ -138,8 +135,6 @@ void MeleeUnit::setAttackRadius(int attackRadius) {
 }
 
 void MeleeUnit::setFixtures(){
-  cout << " pos " << x << " " << y << endl;
-  cout << "is this " << isActor << " " << isTower << endl;
   sf::FloatRect boundingBox = sprite.getGlobalBounds();
   b2PolygonShape boxShape;
   boxShape.SetAsBox(boundingBox.width*xScale, boundingBox.height*yScale);

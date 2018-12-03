@@ -23,6 +23,7 @@ using namespace std;
 #include "Units/AverageKidUnit.hpp"
 #include "Units/SkinnyKidUnit.hpp"
 #include "Units/FatKidUnit.hpp"
+#include "Events/ActorCreatedEvent.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
 #include "Events/MapGeneratedEvent.hpp"
 #include "Events/LevelChangeEvent.hpp"
@@ -61,6 +62,14 @@ public:
    * key: the unique id of the unit [its memory address]
    */
   unordered_map<long long,shared_ptr<MeleeUnit>> spawnedCurrentWave;
+
+  //size of a tile in pixels
+  float xTileSize;
+  float yTileSize;
+
+  //rows and cols
+  int rows;
+  int cols;
 
   //The current level the user is at in the game.
   int level;
@@ -199,6 +208,10 @@ public:
   void handleDiffChanged(const EventInterface& event);
 
   void handleWaveChange(const EventInterface& event);
+
+
+  void setGridDimensions(float x, float y);
+  void setDimensions(int rows, int cols);
 };
 
 #endif

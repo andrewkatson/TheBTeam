@@ -6,10 +6,11 @@
  */
 TowerManager::TowerManager(shared_ptr<EventManager> eventManager,
   shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,
-  shared_ptr<b2World> world) : mt(std::random_device()()) {
+  shared_ptr<b2World> world,shared_ptr<CollisionManager> collisionManager) : mt(std::random_device()()) {
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
+  this -> collisionManager = collisionManager;
   this -> world = world;
   this -> registerDelegates();
   this -> populateObstacles();
@@ -32,7 +33,7 @@ void TowerManager::setDimensions(int xDim, int yDim){
  * Set the x size in pixels of a grid space
  * Set they size in pixels of a grid space
  */
-void TowerManager::setGridDimensions(int xGrid, int yGrid){
+void TowerManager::setGridDimensions(float xGrid, float yGrid){
   this -> xGrid = xGrid;
   this -> yGrid = yGrid;
 }
@@ -552,6 +553,9 @@ void TowerManager::addTower(string type, int combinedRowCol){
 
   //insert the new tower
   towersPlaced.insert({combinedRowCol, aTower});
+
+  //make sure we signal to collision manager this tower exists
+  collisionManager -> addNewTower(aTower);
 }
 /*
  * @param type: the index in the vector of tower types that
@@ -574,6 +578,9 @@ void TowerManager::addTower(string type, int row, int col){
 
   //insert the new tower
   towersPlaced.insert({row*xDim+col, aTower});
+
+  //signal to collison manager this tower exists
+  collisionManager -> addNewTower(aTower);
 }
 
 /*
@@ -730,6 +737,7 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
 
   retTower->setXScale(xScale);
   retTower->setYScale(yScale);
+  retTower->setTileSize(xGrid, yGrid);
   if(inWorld){
     //retTower -> setWorld(world);
 
@@ -740,6 +748,7 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
       meleeTower -> resetRallyPoint((float)col * xGrid + (xGrid/2.0), (float)row * yGrid + (yGrid/2.0));
       //set the positions of the units to be the center of the tower
       meleeTower -> setUpUnitCoordinates(meleeTower->getXCoordinate(), meleeTower->getYCoordinate());
+      meleeTower -> setUpUnitTileSize(xGrid, yGrid);
       /*
       //loop through all the meleeUnits and set their world
       vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();
@@ -759,6 +768,8 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
  */
 void TowerManager::removeTower(int combinedRowCol){
   if(towersPlaced.find(combinedRowCol) != towersPlaced.end()){
+    shared_ptr<TowerInterface> towerToRemove = towersPlaced.at(combinedRowCol);
+    collisionManager -> removeOldTower(towerToRemove);
     towersPlaced.erase(combinedRowCol);
   }
 }
@@ -770,6 +781,8 @@ void TowerManager::removeTower(int combinedRowCol){
 void TowerManager::removeTower(int row, int col){
   int combinedRowCol = row * xDim + col;
   if(towersPlaced.find(combinedRowCol) != towersPlaced.end()){
+    shared_ptr<TowerInterface> towerToRemove = towersPlaced.at(combinedRowCol);
+    collisionManager -> removeOldTower(towerToRemove);
     towersPlaced.erase(combinedRowCol);
   }
 }

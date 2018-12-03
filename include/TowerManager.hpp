@@ -11,6 +11,7 @@
 #include "TowerInterface.hpp"
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
+#include "CollisionManager.hpp"
 #include "Towers/CheesePizza.hpp"
 #include "Towers/CrinkleFry.hpp"
 #include "Towers/DeepDish.hpp"
@@ -54,6 +55,8 @@ shared_ptr<EventManager> eventManager;
 //Store the textureLoader to get the textures for this tower and pass to
 //any dependent units or projectiles
 shared_ptr<TextureLoader> textureLoader;
+//store the collision manager so we can signal that a tower has been created
+shared_ptr<CollisionManager> collisionManager;
 
 //map of every tower that can be used to copy a tower type once
 //it is created
@@ -76,9 +79,9 @@ int xDim;
 int yDim;
 
 //x dimension in pixels of a grid space
-int xGrid;
+float xGrid;
 //y dimension in pixels of a grid space
-int yGrid;
+float yGrid;
 //handles all collisions
 shared_ptr<b2World> world;
 
@@ -89,11 +92,12 @@ std::mt19937 mt;
 typedef pair<int,int> intPair;
 
 public:
-  TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, shared_ptr<b2World> world);
+  TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,
+     shared_ptr<TextureLoader> textureLoader, shared_ptr<b2World> world,shared_ptr<CollisionManager> collisionManager);
   ~TowerManager();
 
   void setDimensions(int xDim, int yDim);
-  void setGridDimensions(int xGrid, int yGrid);
+  void setGridDimensions(float xGrid, float yGrid);
 
   int getTowerPrice(int row, int col);
   int getTowerPrice(string towerTypeID);
@@ -119,6 +123,9 @@ public:
   void addObstacles(unordered_map<int, intPair>& allObstaclesToPlace);
 
   void upgradeTower(string upgradeButtonID, int row, int col);
+
+  float getXTileSize(){return xGrid;}
+  float getYTileSize(){return yGrid;}
 
 private:
   void registerDelegates();

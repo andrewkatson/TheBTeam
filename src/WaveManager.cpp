@@ -251,6 +251,7 @@ void WaveManager::createNextWave() {
     enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + xOffset)); // multiply tile size by tiles
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
     enemy->setDirection(dir);
+    enemy->setTileSize(xTileSize, yTileSize);
     //setWorld and fixture
     //enemy -> setWorld(world);
 
@@ -278,7 +279,19 @@ void WaveManager::spawnNextUnit() {
   //this should only ever be called if there are units to spawn
   assert(!currentWave.empty());
 
+  //make an event to signal the new unit being made
+  //Create ActorCreatedEvent and attach the created unit
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
   shared_ptr<MeleeUnit> next_unit = currentWave.front();
+
+  bool isProjectile = false;
+  shared_ptr<EventInterface> enemyUnitSpawned = make_shared<ActorCreatedEvent>(next_unit, isProjectile, nowInNano);
+  this -> eventManager -> queueEvent(enemyUnitSpawned);
+
   currentWave.pop();
 
   //add the unit to the vector of currently spawned units
@@ -424,4 +437,20 @@ void WaveManager::handleWaveChange(const EventInterface& event){
   if(waveChangeEventData->waveStart){
     startNextWave();
   }
+}
+
+/*
+ * Set the size of a row and col in pixels
+ */
+void WaveManager::setGridDimensions(float x, float y){
+  xTileSize = x;
+  yTileSize = y;
+}
+
+/*
+ * Set the dimensions of the grid
+ */
+void WaveManager::setDimensions(int rows, int cols){
+  this -> rows = rows;
+  this -> cols = cols;
 }

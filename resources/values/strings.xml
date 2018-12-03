@@ -227,8 +227,8 @@
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
     <string value="GAMELOGICHANDLESTATECHANGE" id="IDS_GLD_SC"> </string>
     <string value="GameLogic_Projectile_Explosion" id="IDS_GameLogic_Delegate_Projectile_Explosion"> </string>
-  <!--Player Delegates-->
-  <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
+    <!--Player Delegates-->
+    <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
     <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>
@@ -241,14 +241,15 @@
     <string value="TOWERMANAGERHANDLETOWERREMOVE" id="IDS_TMD_TR"> </string>
     <!--Projectile Manager Delegates-->
     <string value="Projectile_Manager_Actor_Created" id="IDS_ProjectileManager_ActorCreated"> </string>
+    <string value="Projectile_Manager_Actor_Destroyed" id="IDS_Projectile_Manager_Actor_Destroyed"> </string>
     <!--Wave Manager Delegates-->
     <string value="Wave_Manager_Actor_Destroyed" id="IDS_WaveManager_ActorDestroyed"> </string>
     <string value="Wave_Manager_Map_Generated" id="IDS_WaveManager_MapGenerated"> </string>
     <string value="Wave_Manager_Level_Change" id="IDS_WaveManager_LevelChange"> </string>
-  <string value="Wave_Manager_Difficulty_Change" id="IDS_WaveManager_DifficultyChange"> </string>
-  <string value="Wave_Manager_Wave_Change" id="IDS_WaveManager_WaveChange"> </string>
+    <string value="Wave_Manager_Difficulty_Change" id="IDS_WaveManager_DifficultyChange"> </string>
+    <string value="Wave_Manager_Wave_Change" id="IDS_WaveManager_WaveChange"> </string>
 
-  <!--MainMenuScreen Delegates-->
+    <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->
     <string value="OPTIONSMENUSCREENHANDLEKEYPRESS" id="IDS_OMSD_KP"> </string>
@@ -258,7 +259,7 @@
     <string value="PLAYINGSCREENHANDLEMOUSEPRESS" id="IDS_PS_MP"> </string>
     <string value="PLAYINGSCREENHANDLEKEYPRESS" id="IDS_PS_KP"> </string>
     <string value="Playing_Screen_Handle_State_Change" id="IDS_PS_SC"> </string>
-  <string value="Playing_Screen_Handle_Wave_Change" id="IDS_PlayingScreen_WaveChange"> </string>
+    <string value="Playing_Screen_Handle_Wave_Change" id="IDS_PlayingScreen_WaveChange"> </string>
     <!--PlayingScreenHeader Delegates-->
     <string value="Playing_Screen_Header_Key_Press" id="IDS_PSH_KP"> </string>
     <string value="Playing_Screen_Header_Mouse_Press" id="IDS_PSH_MP"> </string>
@@ -266,6 +267,12 @@
     <string value="Playing_Screen_Header_Balance_Changed" id="IDS_PSH_BC"> </string>
     <string value="Playing_Screen_Header_Level_Change" id="IDS_PSH_LC"> </string>
     <string value="Playing_Screen_Header_Wave_Change" id="IDS_PSH_WC"> </string>
+
+    <!--Collison Manager Delegates-->
+    <string value="Collision_Manager_Tower_Creation" id="IDS_Collision_Manager_Tower_Creation"> </string>
+    <string value="Collision_Manager_Tower_Remove" id="IDS_Collision_Manager_Tower_Remove"> </string>
+    <string value="Collision_Manager_Actor_Creation" id="IDS_Collision_Manager_Actor_Creation"> </string>
+    <string value="Collision_Manager_Actor_Destroy" id="IDS_Collision_Manager_Actor_Destroy"> </string>
 
     <!--Upgrade Circle Delegates-->
     <string value="Upgrade_Circle_Mouse_Press_Delegate" id="IDS_Upgrade_Circle_Mouse_Press"> </string>

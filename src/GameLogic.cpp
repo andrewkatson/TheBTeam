@@ -8,18 +8,20 @@
 #include "GameLogic.hpp"
 
 //Constructor.
-GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world){
+GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY,
+  shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world){
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> world = world;
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager, textLoader));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader, world));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
   this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool(),world);
-  this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader, world));
+  this -> projectileManager = make_shared<ProjectileManager>(eventManager, textLoader, world);
+  this -> collisionManager = make_shared<CollisionManager>(textLoader, eventManager, waveManager, projectileManager);
+  this -> towerManager = make_shared<TowerManager>(eventManager, textLoader, textureLoader, world, collisionManager);
   this -> registerEvents();
   this -> registerDelegates();
   test = 5;
@@ -360,11 +362,15 @@ void GameLogic::handleStateChange(const EventInterface& event){
    int xDim = boardManager -> getXDim();
    int yDim = boardManager -> getYDim();
    this -> towerManager -> setDimensions(xDim, yDim);
+   this -> collisionManager -> setDimensions(xDim, yDim);
+   this -> waveManager -> setDimensions(xDim, yDim);
 
    //set the x and y in pixel length
    this -> gridX = (float) windowX / boardManager -> getXDim();
    this -> gridY = (float) windowY / boardManager -> getYDim();
    this-> towerManager -> setGridDimensions(gridX, gridY);
+   this -> collisionManager -> setGridDimensions(gridX, gridY);
+   this -> waveManager -> setGridDimensions(gridX, gridY);
 
    //make a map generated event
    //the time object of the class
