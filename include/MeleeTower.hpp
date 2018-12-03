@@ -6,13 +6,14 @@
   @author Andrew Katson
  */
 
- #ifndef MELEETOWER_H
- #define MELEETOWER_H
+#pragma once
+
 #include "TowerInterface.hpp"
 #include "MeleeUnit.hpp"
 #include <memory>
 #include <vector>
 #include <chrono>
+#include <math.h>
 
 using std::vector;
 using std::shared_ptr;
@@ -42,7 +43,8 @@ public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~MeleeTower();
   void update(float delta);
-  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex);
+  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, float delta = 1.0);
+  bool withinRange(float x1, float y1, float x2, float y2);
 
   void initSprite();
 
@@ -51,6 +53,7 @@ public:
 
   virtual void upgrade();
   virtual void setUpUnits();
+  void setUpUnitCoordinates(float x, float y);
   void resetRallyPoint(float x, float y);
   float getRallyX(){return xRally;}
   float getRallyY(){return yRally;}
@@ -61,7 +64,7 @@ public:
    */
   int getPrice();
 
-  string getType(){return towerTypeID;}
+  string getType(){return typeID;}
 
   void setPos(intPair pos);
   void setPos(int row, int col);
@@ -81,6 +84,23 @@ public:
   void attack(shared_ptr<ActorInterface> enemyInRange);
 
   shared_ptr<vector<int>>  getStatistics();
-};
 
- #endif
+  //getters used by the upgrading system
+  int getRespawnSpeed(){return respawnSpeed;}
+  int getRadius(){return radius;}
+  int getUnitHitpoints(){return currentUnits.at(0)->getMaxHitpoints();}
+  int getUnitDamage(){return currentUnits.at(0)->getDamage();}
+  int getUnitArmorPenetration(){currentUnits.at(0)->getArmorPenetration();}
+  int getUnitArmor(){currentUnits.at(0)->getArmor();}
+  int getUnitAttackRate(){currentUnits.at(0)->getAttackRate();}
+
+
+  //setters used by the upgrading system
+  void updateRespawnSpeed(int newRespawnSpeed){respawnSpeed = newRespawnSpeed;}
+  void updateRadius(int newRadius){radius = newRadius;}
+  void updateUnitHitpoints(int newMaxHitpoints);
+  void updateUnitDamage(int newDamage);
+  void updateUnitArmorPenetration(int newArmorPenetration);
+  void updateUnitArmor(int newArmor);
+  void updateUnitAttackRate(int newAttackRate);
+};

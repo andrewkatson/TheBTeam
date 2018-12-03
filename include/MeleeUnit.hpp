@@ -13,6 +13,7 @@ using namespace std;
 #include <memory>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
+//#include "GameLogic.hpp"
 
 class MeleeUnit : public ActorInterface {
 
@@ -40,9 +41,23 @@ protected:
   float s_elapsed;
 
   //The index of the sprite that the actor is currently using.
-  int current_sprite;
+  int current_sprite,walk_cycle_position;
 
+  //Stores the amount of pixels that this unit overshoots its target when turning.
+  double overshoot;
+
+  bool overshooting;
 public:
+
+  bool isOvershooting() const;
+
+  void setOvershooting(bool overshooting);
+
+  //Return the overshoot
+  double getOvershoot() const;
+
+  //Set the overshoot to the desired value
+  void setOvershoot(double overshoot);
 
   void update(float delta);
 
@@ -139,7 +154,7 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  void move(float delta,float xmult, float ymult);
+  void move(float delta);
 
   /*
     Determine whether or not the object's collision box is colliding with the
@@ -150,6 +165,16 @@ public:
             false otherwise.
    */
   bool isCollision(sf::FloatRect colliding_with);
+
+  /*
+   * Set the engaged unit
+   */
+  void setEngagedUnit(shared_ptr<MeleeUnit> unitToEngage){engagedUnit = unitToEngage;}
+
+  /*
+   * Setting the fixtures for Box2D
+   */
+  void setFixtures();
 
 };
 

@@ -1,4 +1,65 @@
 [Unreleased]
+
+###Added
+- Textures added for other units as well as all tower upgrades, as follows: [@jeremyelkayam][https://github.com/jeremyelkayam]
+ - Kids
+  - Fat Kid
+  - Skinny Kid
+ - Pizza Towers
+  - Pepperoni
+  - Deep Dish
+  - Meat Lovers'
+ - Drink Towers
+  - Energy Drink
+  - Slushie
+  - Gravy Boat
+ - Candy Towers
+  - Regular M&M
+  - Peanut M&M
+  - Peanut Butter M&M
+ - Fry Towers & Units
+  - Waffle Fry
+  - Crinkle Cut Fry
+  - Spicy Fry
+- yes, I did all this... it took many hours
+
+###Changed
+- Improved unit animations [@jeremyelkayam][https://github.com/jeremyelkayam]
+
+
+###Fixed
+- Units now face the direction in which they're moving (when set using setDirection) [@jeremyelkayam][https://github.com/jeremyelkayam]
+
+
+[0.7.0] 2018-12-02
+
+###Added
+- attack rate for all units [@andrewkatson][https://github.com/andrewkatson]
+- upgrade system for aspects of the melee and range towers for more customizaton
+- ENEMY UNIT MOVEMENT. [@jeremyelkayam][https://github.com/jeremyelkayam]
+- __WORKING__ ENEMY UNIT MOVEMENT.
+- Units despawn and knock off player health when they reach the exit tile
+
+###Changed  
+- melee towers spawn units surrounding their flag in the right spaces [@andrewkatson][https://github.com/andrewkatson]
+- mouseover to see what each upgrade button is
+- MeleeUnit::move() now takes an angle in radians to move. [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Units no longer travel at the edges of a path; they travel roughly toward the center (perturbed randomly) of each path.
+- Multiplier on unit health for decreasing of player health moved to constants.xml
+ - Greatly decreased this multiplier
+- Animation speed is now dependent on unit movement speed
+
+###Fixed
+- seg faults from trying to destroy unitialized box2d bodies [@andrewkatson][https://github.com/andrewkatson]
+- allied units now move to the rally point correctly
+- Enemies no longer stop right before moving to the exit[@jeremyelkayam][https://github.com/jeremyelkayam]
+- MeleeUnit::move() behaves like it's supposed to instead of doing weird and erratic garbage
+- A bug where enemy units would only spawn from one entrance in the board
+
+###Bugs
+- Sometimes enemies stray off the path
+
+[0.6.0] 2018-12-01
 ###Added
 - DifficultyChangeEvent,DifficultyChangeEventData [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Pressing w now creates a new wave and begins spawning its units if a wave is not in progress
@@ -22,6 +83,9 @@
 ###Fixed
 - Sometimes units were initialized with bogus coordinates [@jeremyelkayam][https://github.com/jeremyelkayam]
 - CompView will now only direct units to move to path tiles (previously they could move onto other tiles)
+
+###Bug
+- seg faults every time the game creates an actor or tower
 
 ###Removed
 - MeleeUnit::getID() (removed for being redundant and confusing) [@jeremyelkayam][https://github.com/jeremyelkayam]
@@ -47,7 +111,7 @@
 - all towers use floats for their coordinates
 - radius circles are now centered
 - all melee units will be initalized to the center of the tower that spawns them
-- all non dead allied melee units will be drawn 
+- all non dead allied melee units will be drawn
 - AI for enemy units [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Check for whether the space is actually a path tile
 - When a unit leaves the map (by reaching the exit) appropriate events are triggered and delegated.

@@ -9,7 +9,7 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level,int startingDifficulty){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level,int startingDifficulty, shared_ptr<b2World> world){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
@@ -22,6 +22,7 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
   //this -> setUpPossibleEnemies();
   this -> setupWaves();
   this -> registerDelegates();
+  this -> world = world;
 }
 
 WaveManager::~WaveManager(){
@@ -82,10 +83,13 @@ void WaveManager::deregisterDelegates() {
 /*
 void WaveManager::setUpPossibleEnemies(){
   shared_ptr<MeleeUnit> skinnyKid = make_shared<SkinnyKidUnit>(textLoader, eventManager, textureLoader);
+  skinnyKid -> setWorld(world);
 
   shared_ptr<MeleeUnit> averageKid = make_shared<AverageKidUnit>(textLoader, eventManager, textureLoader);
+  averageKid -> setWorld(world);
 
   shared_ptr<MeleeUnit> fatKid = make_shared<FatKidUnit>(textLoader, eventManager, textureLoader);
+  fatkid -> setWorld(world);
 
   enemies.push_back(skinnyKid);
   enemies.push_back(averageKid);
@@ -140,27 +144,13 @@ void WaveManager::createNextWave() {
   std::uniform_real_distribution<double> percent_perturbation_rng(min_scale, max_scale);
 
   buildDistanceEntryMap(entryPositions, distances);
-/*
-  for (auto it = distancesFromEntryPositions.begin();it != distancesFromEntryPositions.end(); it++){
-    printf("distances. key = %d\nvalues: ",it->first);
-    for(int z=0;z<it->second.size();z++){
-      printf("{ %d , %d }",it->second[z].first,it->second[z].second);
-    }
-    printf("\n");
-  }
-*/
 
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
-  //printf("***** NORMALIZE ***** \n");
-/*
-  for (auto it = distancesFromEntryPositions.begin();it != distancesFromEntryPositions.end(); it++){
-    printf("distances. key = %d\nvalues: ",it->first);
-    for(int z=0;z<it->second.size();z++){
-      printf("{ %d , %d }",it->second[z].first,it->second[z].second);
-    }
-    printf("\n");
+
+  for(auto it=distancesFromEntryPositions.begin();it!=distancesFromEntryPositions.end();it++){
+    cout << "map dist normalized " << it->first << endl;
   }
-  */
+
   double range=(--distancesFromEntryPositions.end())->first;
 
   std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
@@ -190,11 +180,19 @@ void WaveManager::createNextWave() {
 
     enemy->setDamage(enemy->getDamage()+enemy->getDamage()*percent_perturbation_rng(rnd_gen));
 
+    enemy->setSpeed(enemy->getSpeed()+enemy->getSpeed()*percent_perturbation_rng(rnd_gen));
+
     double spawn_distance;
-    do{
+    //do{
       spawn_distance=spawn_location_rng(rnd_gen);
-    }while(0<spawn_distance && spawn_distance<range);
-    //a shitty solution... let's try and figure out something else
+    //  cout << "spawn distance pick" << spawn_distance << endl;
+    //w}while(0>spawn_distance || spawn_distance>range);
+    if(spawn_distance<0){
+      spawn_distance=0.1;
+    }else if(spawn_distance>range){
+      spawn_distance=range-.1;
+    }
+    cout << "spawn dist: " << spawn_distance << endl;
 
     int roundedKey;
 
@@ -221,18 +219,11 @@ void WaveManager::createNextWave() {
       roundedKey=iterator->first;
     }
 
-    //printf("rounded key: %d\n",roundedKey);
+    printf("rounded key: %d\n",roundedKey);
 
     //now that we have our distance key, we can get all of the entry positions with that distance
     vector<intPair> chosenEntrances=distancesFromEntryPositions[roundedKey];
 
-    /*
-    printf("chosen entrances size: %ld\n",chosenEntrances.size());
-    for(int z=0;z<chosenEntrances.size();z++){
-      printf("{ %d , %d } ",chosenEntrances[z].first,chosenEntrances[z].second);
-    }
-    printf("\n");
-*/
     //pick a random intPair from the vector
     uniform_int_distribution<unsigned long> entrance_chooser_rng(0,chosenEntrances.size()-1);
     intPair entryPoint=chosenEntrances[entrance_chooser_rng(rnd_gen)];
@@ -247,27 +238,37 @@ void WaveManager::createNextWave() {
 
     float offset=entry_offset_rng(rnd_gen);
     float xOffset,yOffset;
+    double dir;
 
     if(entryPoint.first == 0){
       yOffset =0.001;
       xOffset=offset;
+      dir=3*M_PI/2;
     }else if(entryPoint.second==0){
       yOffset =offset;
       xOffset=0.001;
+      dir=0;
     }else if(entryPoint.first==distances.size()-1){
       yOffset =0.999;
       xOffset=offset;
+      dir=M_PI/2;
     }else{
       yOffset =offset;
       xOffset=0.999;
+      dir=M_PI;
     }
 
     enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + xOffset)); // multiply tile size by tiles
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
+    enemy->setDirection(dir);
+    //setWorld and fixture
+    //enemy -> setWorld(world);
+
+    //enemy -> setFixtures();
 
     currentWave.push(enemy);
   }
-  printf("created a wave with %ld units\n",currentWave.size());
+  //printf("created a wave with %ld units\n",currentWave.size());
 }
 
 

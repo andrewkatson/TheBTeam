@@ -8,26 +8,23 @@
 #include "GameLogic.hpp"
 
 //Constructor.
-GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader){
+GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world){
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
+  this -> world = world;
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager, textLoader));
-  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader));
+  this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader, world));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
-  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool());
-  this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader));
+  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool(),world);
+  this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader, world));
   this -> registerEvents();
   this -> registerDelegates();
   test = 5;
   this -> windowX = windowX;
   this -> windowY = windowY;
-  //Intialize World
-  //have to take a parameter gravity because it is part of class paramters in Box2D library
-  b2Vec2 gravity(0.f, 1.0f);
-  this -> world = make_shared<b2World>(gravity);
 }
 
 /*
@@ -155,32 +152,43 @@ void GameLogic::updateGameLogic(float deltaS){
     int col = 3;
     if(test == 5){
       //creates a unit for testing as well
-      shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
-
-      fryID = fryGuy -> getID();
+      // shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+      // shared_ptr<MeleeUnit> fryGuy1 = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
+      // fryGuy -> setWorld(world);
+      // fryGuy1 -> setWorld(world);
+      // fryGuy -> setFixtures();
+      // fryGuy1 -> setFixtures();
+      //
+      // fryID = fryGuy -> getID();
+      // fryID1 = fryGuy1 -> getID();
 
       //set the x and y coordinates
-      fryGuy -> setXCoordinate(3 * gridX);
-      fryGuy -> setYCoordinate(2 * gridY);
+      // fryGuy -> setXCoordinate(3 * gridX);
+      // fryGuy -> setYCoordinate(2 * gridY);
+      // fryGuy1 -> setXCoordinate(3 * gridX);
+      // fryGuy1 -> setYCoordinate(2 * gridY);
 
-      //DON'T add to the current wave of spawned because that breaks things, IDIOT!
+      //add to the current wave of spawned
+      //something something idiot
       //(waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
+      //(waveManager -> spawnedCurrentWave).insert({fryGuy1 -> getID(), fryGuy1});
 
-      vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
+      //vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
 
-      if(allTowers.size() != 0){
-        shared_ptr<TowerInterface> tower = allTowers.at(0);
-        string towerType = tower -> getType();
-        if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
-          createATower(row,col,towerType);
-          test++;
-        }
-        else if(canBuy(towerType) && boardManager -> isObstacle(row,col)){
-          removeATower(row,col);
-          cout << "removed an obstacle" << endl;
-          test -=2;
-        }
-      }
+      // if(allTowers.size() != 0){
+      //   shared_ptr<TowerInterface> tower = allTowers.at(0);
+      //   tower -> setWorld(world);
+      //   string towerType = tower -> getType();
+      //   if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
+      //     createATower(row,col,towerType);
+      //     test++;
+      //   }
+      //   else if(canBuy(towerType) && boardManager -> isObstacle(row,col)){
+      //     removeATower(row,col);
+      //     cout << "removed an obstacle" << endl;
+      //     test -=2;
+      //   }
+      // }
 
     }
     if(test == 2){
@@ -323,7 +331,11 @@ void GameLogic::handleStateChange(const EventInterface& event){
    //get id for the projectile that exploded
    long long projectileExplodedID = peEventData -> projectileID;
 
-   //TODO check for collisions with this projectile
+   //setting fixtures for projectiles
+   shared_ptr<ActorInterface> projectile = projectileManager -> getProjectile(projectileExplodedID);
+   Projectile* newProjectile = dynamic_cast<Projectile*>(projectile.get());
+   //newProjectile -> setFixtures();
+
 
    //now create an event to indicate the projectile was destroyed
    //the time object of the class
@@ -365,6 +377,9 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> eventManager -> queueEvent(mapGenerated);
 
    placeObstacles();
+
+   ActorInterface::setXScale(boardManager -> getXDim());
+   ActorInterface::setYScale(boardManager -> getYDim());
  }
 
 /*
@@ -410,7 +425,82 @@ vector<shared_ptr<TowerInterface>>& GameLogic::allUpgradesForTower(int row, int 
 
   string towerID = tower -> getType();
 
-  return towerManager -> getUpgradesForTower(towerID);
+  //if the current tower is no tower than we do not need to modify the statistics at all
+  if(tower -> getType() == textLoader->getTypeID(string("IDS_NT"))){
+    return towerManager->getUpgradesForTower(towerID);
+  }
+  //otherwise we need to modify the statistics of these towers to reflect the player purchased upgrades
+  else{
+    modifyToIncludeUpgrades(towerManager->getUpgradesForTower(towerID), tower);
+    return towerManager->getModifiedUpgrades();
+  }
+}
+
+/*
+ * @param towerUpgrades: all the possible upgrades for the tower at the position to consider
+ * @param tower: the tower we will be upgrading
+ */
+void GameLogic::modifyToIncludeUpgrades(vector<shared_ptr<TowerInterface>>& towerUpgrades, shared_ptr<TowerInterface> tower){
+
+  //get a generic copy of this tower to measure the amount its variables have been changed
+  shared_ptr<TowerInterface> genericTowerOfType = towerManager -> getGenericTower(tower->getType());
+
+
+  //first we need to determine if this is a melee tower or a range tower we are upgrading
+  if(tower -> isMelee){
+    //cast the towers to their correct type
+    MeleeTower* genericMelee = dynamic_cast<MeleeTower*>(genericTowerOfType.get());
+    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+
+    //get the difference between the generic type and the current tower (i.e. the amount the tower was upgraded)
+    int respawnSpeedUpgrades = meleeTower->getRespawnSpeed()-genericMelee->getRespawnSpeed();
+    int respawnRangeUpgrades = meleeTower->getRadius()-genericMelee->getRadius();
+    int unitMaxHitpointsUpgrades = meleeTower->getUnitHitpoints()-genericMelee->getUnitHitpoints();
+    int unitDamageUpgrades = meleeTower->getUnitDamage()-genericMelee->getUnitDamage();
+    int unitArmorPenetrationUpgrades = meleeTower->getUnitArmorPenetration()-genericMelee->getUnitArmorPenetration();
+    int unitArmorUpgrades = meleeTower->getUnitArmor()-genericMelee->getUnitArmor();
+    int unitAttackRateUpgrades = meleeTower->getUnitAttackRate()-genericMelee->getUnitAttackRate();
+
+    //modify each tower upgrades statisitcs to reflect the purchased upgrades
+    for(shared_ptr<TowerInterface> towerUpgrade : towerUpgrades){
+      //cast the tower
+      MeleeTower* towerToUpgrade = dynamic_cast<MeleeTower*>(towerUpgrade.get());
+
+      //set all statistics to be the old statistic plus the upgrades
+      towerToUpgrade->updateRespawnSpeed(towerToUpgrade->getRespawnSpeed()+respawnSpeedUpgrades);
+      towerToUpgrade->updateRadius(towerToUpgrade->getRadius()+respawnRangeUpgrades);
+      towerToUpgrade->updateUnitHitpoints(towerToUpgrade->getUnitHitpoints()+unitMaxHitpointsUpgrades);
+      towerToUpgrade->updateUnitDamage(towerToUpgrade->getUnitDamage()+unitDamageUpgrades);
+      towerToUpgrade->updateUnitArmorPenetration(towerToUpgrade->getUnitArmorPenetration()+unitArmorPenetrationUpgrades);
+      towerToUpgrade->updateUnitArmor(towerToUpgrade->getUnitArmor()+unitArmorUpgrades);
+      towerToUpgrade->updateUnitAttackRate(towerToUpgrade->getUnitAttackRate()+unitAttackRateUpgrades);
+    }
+
+  }
+  else{
+    RangeTower* genericRanged = dynamic_cast<RangeTower*>(genericTowerOfType.get());
+    RangeTower* rangeTower = dynamic_cast<RangeTower*>(tower.get());
+
+    //get the difference between the generic type and the current tower (i.e. the amount the tower was upgraded)
+    int rateOfFireUpgrades = rangeTower -> getRateOfFire()-genericRanged->getRateOfFire();
+    int rangeOfFireUpgrades = rangeTower->getRadius()-genericRanged->getRadius();
+    int projectileDamageUpgrades = rangeTower->getProjectileDamage()-genericRanged->getProjectileDamage();
+    int projectileArmorPenetrationUpgrades = rangeTower->getProjectileArmorPenetration()-genericRanged->getProjectileArmorPenetration();
+    int projectileAreaOfEffectUpgrades = rangeTower->getProjectileAreaOfEffect()-genericRanged->getProjectileAreaOfEffect();
+
+    //modify each tower upgrades statisitcs to reflect the purchased upgrades
+    for(shared_ptr<TowerInterface> towerUpgrade : towerUpgrades){
+      //cast the tower
+      RangeTower* towerToUpgrade = dynamic_cast<RangeTower*>(towerUpgrade.get());
+
+      //set all statitics to be theold statistic plus the upgrades
+      towerToUpgrade->updateRateOfFire(towerToUpgrade->getRateOfFire()+rateOfFireUpgrades);
+      towerToUpgrade->updateRadius(towerToUpgrade->getRadius()+rangeOfFireUpgrades);
+      towerToUpgrade->updateProjectileDamage(towerToUpgrade->getProjectileDamage()+projectileDamageUpgrades);
+      towerToUpgrade->updateProjectileArmorPenetration(towerToUpgrade->getProjectileArmorPenetration()+projectileArmorPenetrationUpgrades);
+      towerToUpgrade->updateProjectileAreaOfEffect(towerToUpgrade->getProjectileAreaOfEffect()+projectileAreaOfEffectUpgrades);
+    }
+  }
 }
 
 /*
@@ -458,6 +548,26 @@ bool GameLogic::attemptSellTower(int row, int col){
     return false;
   }
 }
+
+/*
+ * Try to see if the tower at this position can have a statistic upgraded
+ * @param row: the row of the tower
+ * @param col: the col of the tower
+ * @return bool: whether we can upgrade a statistic
+ */
+ bool GameLogic::canUpgradeTowerStats(int row, int col){
+   assert(isTower(row,col));
+
+   //the price for an upgrade
+   int upgradeCost = getUpgradePrice(row, col);
+
+   int playerBalance = player -> getBalance();
+
+   if(playerBalance >= upgradeCost){
+     return true;
+   }
+   return false;
+ }
 
 
 /*
@@ -594,6 +704,29 @@ void GameLogic::removeAObstacleMoney(int row, int col){
   //add a percentage of this money back to the player's account
   player -> modifyBalance(price*-1);
 }
+
+/*
+ * @return the price of an upgrade for the tower at the passed position
+ */
+int GameLogic::getUpgradePrice(int row, int col){
+  return towerManager->getUpgradePrice(row,col);
+}
+
+
+/*
+ * Upgrade the tower at this row and col
+ * @param upgradeButtonID: the id of the upgrade button that was selected
+ */
+void GameLogic::upgradeTower(string upgradeButtonID, int row, int col){
+  //get the upgrade price
+  int priceOfUpgrade = getUpgradePrice(row,col);
+
+  //update the balance to reflect the purchase
+  player -> modifyBalance(priceOfUpgrade * -1);
+
+  towerManager -> upgradeTower(upgradeButtonID, row, col);
+}
+
 
 /*```
  * Return the current GameState

@@ -16,13 +16,19 @@
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
+#include<iostream>
 
+using namespace std;
 using std::shared_ptr;
 using std::addressof;
 using std::vector;
 class ActorInterface{
 
 protected:
+
+  //The actor's direction in RADIANS.
+  double direction;
+
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
 
@@ -31,9 +37,6 @@ protected:
 
   //The unique identifier for the actor.
   long long  id;
-
-  //the string identifier for the type of actor (specific to each type of actor)
-  string actorTypeID;
 
   //The sprite corresponding to the actor.
   sf::Sprite sprite;
@@ -44,7 +47,7 @@ protected:
   //The actor's movement speed in [units]. [pixels per millisecond? microsecond?]
   float speed;
 
-  //The actor's hispoints
+  //The actor's hitpoints
   int hitpoints;
 
   //Used to reset the actor's hit points
@@ -59,6 +62,9 @@ protected:
   //The actor's armor penetration
   int armorPenetration;
 
+  //The actor's attack rate (not applicable to projectiles)
+  int attackRate;
+
   //The rectangle corresponding to the object's dimensions.
   sf::FloatRect collisionBox;
 
@@ -70,20 +76,39 @@ protected:
 
   sf::Color color;
 
+  sf::CircleShape radiusCircle;
+
   //the degree of error
   const float e = 0.001;
 
   //Box2d World and Body
   shared_ptr<b2World> world;
-  shared_ptr<b2Body> body;
+  b2Body* body;
+  b2Fixture* fixture;
 
   //the area of effect for a projectile and the area of attack for a unit
   int radius;
 
+
+  static double xScale;
+  static double yScale;
+
 public:
+  bool isActor = true;
+  bool isTower = false;
+  static double getXScale();
+  static double getYScale();
 
+  static void setXScale(int num_cols);
+  static void setYScale(int num_rows);
+  //the string identifier for the type of actor (specific to each type of actor)
+  string typeID;
   ActorInterface();
+  ~ActorInterface();
 
+  void startContact(void* collidingWith);
+
+  void endContact(void* collidingWith);
   /*
    * Rotate the texture by the number of degrees
    * @param degrees:
@@ -93,9 +118,9 @@ public:
   /*
     TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
    */
-
+  //gives actor access to the world to set physics body
   void setWorld(shared_ptr<b2World> world);
-  void updatePosition();
+
 
   /*
    * Reset the hitpoints back to the max (for respawning allied units)
@@ -107,7 +132,9 @@ public:
 
     @return an integer representing the actor's identity
    */
-  long long getID(){return id;}
+  long long getID(){
+    //cout << "id = "<< id << endl;
+    return id;}
 
   /*
     Returns the actor's sprite.
@@ -122,12 +149,12 @@ public:
     This must be implemented by extending classes, since different types of
     actors obviously have different movement patterns.
   */
-  virtual void move(float delta, float xmult = 0, float ymult = 0)=0;
+  virtual void move(float delta)=0;
 
   /*
    * Return actor type ID
    */
-  string getType(){return actorTypeID;}
+  string getType(){return typeID;}
 
   /*
    * update the position, check if it hit its target
@@ -168,13 +195,30 @@ public:
 
   float getSpeed(){return this->speed;}
 
+  void setSpeed(float speed){this->speed=speed;}
+
   int getHitpoints(){return this->hitpoints;}
-
+  int getMaxHitpoints(){return this->maxHitpoints;}
   int getDamage(){return this->damage;}
-
   int getArmor(){return this->armor;}
-
   int getArmorPenetration(){return this->armorPenetration;}
+  int getRadius(){return radius;}
+  int getAttackRate(){return attackRate;}
+
+  void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
+  void updateDamage(int newDamage){damage = newDamage;}
+  void updateArmor(int newArmor){armor = newArmor;}
+  void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
+  void updateRadius(int newRadius){radius = newRadius;}
+  void updateAttackRate(int newAttackRate){attackRate = newAttackRate;}
+
+  sf::CircleShape& getRadiusCircle(){return radiusCircle;}
+
+  double getDirection() const;
+
+  void setDirection(double direction);
+
+
 
   /*
    * @param xPos: the x of the bounding box
@@ -194,6 +238,8 @@ public:
     }
     return false;
   }
+
+
 };
 
 #endif

@@ -6,6 +6,7 @@
 #include "AllyCompView.hpp"
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
+#include "CollisionCallback.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -26,6 +27,10 @@ unique_ptr<AllyCompView> allyCompView;
 public:
   shared_ptr<TextLoader> textLoader;
   shared_ptr<TextureLoader> textureLoader;
+  //Box2d World and Body
+  shared_ptr<b2World> world;
+  shared_ptr<b2Body> body;
+  CollisionCallback collisionCallbackInstance;
   Game();
 
   void setUpTextLoader();

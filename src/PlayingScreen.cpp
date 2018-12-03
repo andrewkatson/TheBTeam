@@ -11,6 +11,8 @@ PlayingScreen::PlayingScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
   this -> textLoader = textLoader;
   this -> gameLogic = gameLogic;
   this -> playingScreenHeader = make_shared<PlayingScreenHeader>(eventManager, textLoader, gameLogic);
+  rowSelected = 0;
+  colSelected = 0;
   this -> waveGoingOn = false;
   somethingChanged = true;
   haveSetColorShift=false;
@@ -89,6 +91,9 @@ void PlayingScreen::registerDelegates(){
 
   //register delegates for the header
   playingScreenHeader -> registerDelegates();
+  //register delegates for the upgrade circle
+  upgradeCircle -> registerDelegates();
+
 }
 
 /*
@@ -162,6 +167,8 @@ void PlayingScreen::deregisterDelegates(){
 
   //deregister the delegates for the header
   playingScreenHeader -> deregisterDelegates();
+  //deregister the deleagtes for the upgrade circle
+  upgradeCircle -> deregisterDelegates();
 }
 
 
@@ -170,6 +177,7 @@ void PlayingScreen::deregisterDelegates(){
  */
 void PlayingScreen::initDrawingMaterials(){
   initRallyPointButton();
+  initUpgradeCircle();
 }
 
 /*
@@ -197,6 +205,13 @@ void PlayingScreen::initRallyPointButton(){
   rallyPointChange -> setOutlineThickness(textLoader->getInteger(string("IDS_Rally_Flag_Outline_Thickness")));
   //make it initially invisible
   rallyPointChange -> flipVisibility();
+}
+
+/*
+ * Initialize the upgrade circle that is drawn above a tower when it is clicked with right click
+ */
+void PlayingScreen::initUpgradeCircle(){
+  upgradeCircle = unique_ptr<UpgradeCircle>(new UpgradeCircle(eventManager, textLoader, gameLogic, windowX, windowY));
 }
 
 /*
@@ -420,6 +435,9 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
    */
   MousePressEventData* mpEventData = static_cast<MousePressEventData*>((mpEvent -> data).get());
 
+  //get whether this is a left or right click
+  string mouseButtonPressed = mpEventData -> partOfMouse;
+
   //get the xposition
   float xPos = mpEventData -> x;
   //get the y position
@@ -450,63 +468,105 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
     }
   }
 
-  //if we have clicked the rally point flag icon
-  if(rallyPointChange -> isCurrentlyVisible()){
-    if(rallyPointChange -> isSelected(xPos, yPos)){
+  //if the upgrade circle is displayed we ignore the click
+  if(!(upgradeCircle -> isCurrentlyVisible())){
+    //if this is a right click we still ignore the click
+    if(mouseButtonPressed == "Left"){
+      //if we have clicked the rally point flag icon
+      if(rallyPointChange -> isCurrentlyVisible()){
+        if(rallyPointChange -> isSelected(xPos, yPos)){
 
-      int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+          int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
 
-      shared_ptr<TowerInterface> tower = towers.at(combinedRowCol);
-      //check that it is within the bounds of the radius circle of the tower
-      //if it is not then we cannot click the rally point flag
-      //also check if this is a path tile or if this is the first click (i,e, the position is the center of the tower)
-      if(clickWithinRange(xPos, yPos,tower) && ((clickedOnAPath(xPos, yPos)) || (firstTimeClickOnRallyFlag(tower)) && !(rallyPointChange -> isButtonClicked()))){
-        rallyPointChange -> clickButton();
+          shared_ptr<TowerInterface> tower = towers.at(combinedRowCol);
+          //check that it is within the bounds of the radius circle of the tower
+          //if it is not then we cannot click the rally point flag
+          //also check if this is a path tile or if this is the first click (i,e, the position is the center of the tower)
+          if(clickWithinRange(xPos, yPos,tower) && ((clickedOnAPath(xPos, yPos)) || (firstTimeClickOnRallyFlag(tower)) && !(rallyPointChange -> isButtonClicked()))){
+            rallyPointChange -> clickButton();
+          }
+          else{
+            return;
+          }
+          if(rallyPointChange -> isButtonClicked()){
+            //we want the header to ignore mouse presses when we have selected the flag icon
+            playingScreenHeader -> flipClickCheck();
+          }
+          else{
+            //if we have clicked it for a second time (thus unclick) and it was in bounds
+            //then we reset the rally point for the tower
+            MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+            //if the clcik was out of range the rally point is not reset
+            if(clickWithinRange(xPos, yPos, tower)){
+              meleeTower->resetRallyPoint(xPos,yPos);
+            }
+            //allow the header to check again
+            if(!(playingScreenHeader->clicksCheckedFor())){
+              playingScreenHeader -> flipClickCheck();
+            }
+            //make sure that the flag is not visible
+            if(rallyPointChange -> isCurrentlyVisible()){
+              rallyPointChange -> flipVisibility();
+            }
+            //make sure it is unclicked
+            if(rallyPointChange -> isButtonClicked()){
+              rallyPointChange -> clickButton();
+            }
+          }
+          //if we click the rally point flag we do not continue as normal
+          return;
+        }
       }
+      //if the rally point is not visible AND we know the upgrade circle is not visible
+      //then always unlock the header
       else{
-        return;
+        if(!(playingScreenHeader->clicksCheckedFor())){
+          playingScreenHeader->flipClickCheck();
+        }
       }
 
-      if(rallyPointChange -> isButtonClicked()){
-        //we want the header to ignore mouse presses when we have selected the flag icon
-        playingScreenHeader -> flipClickCheck();
+      //if the row and col are the same as the last click
+      if(row == rowSelected && col == colSelected){
+        if(gameLogic -> isTower (row,col)){
+          const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+          int combinedRowCol = row*gameLogic->getCols() + col;
+          shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+          towerToSetVisibility -> flipRadiusVisibility();
+        }
       }
+      //otherwise reset the pair after we check if we were just clicking on a tower
+      //if so flip its visible radius off
       else{
-        //if we have clicked it for a second time (thus unclick) and it was in bounds
-        //then we reset the rally point for the tower
-        MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
-        //if the clcik was out of range the rally point is not reset
-        if(clickWithinRange(xPos, yPos, tower)){
-          meleeTower->resetRallyPoint(xPos,yPos);
+        if(gameLogic -> isTower(rowSelected,colSelected)){
+          const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+          int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+          shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+          if(towerToSetVisibility->isRadiusVisible()){
+            towerToSetVisibility -> flipRadiusVisibility();
+          }
         }
-        //allow the header to check again
-        playingScreenHeader -> flipClickCheck();
-        //make sure that the flag is not visible
-        if(rallyPointChange -> isCurrentlyVisible()){
-          rallyPointChange -> flipVisibility();
-        }
-        //make sure it is unclicked
-        if(rallyPointChange -> isButtonClicked()){
-          rallyPointChange -> clickButton();
+        rowSelected = row;
+        colSelected = col;
+      }
+    }
+    else{
+      if(gameLogic -> isTower(rowSelected,colSelected)){
+        const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
+        int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
+        shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
+        if(towerToSetVisibility->isRadiusVisible()){
+          towerToSetVisibility -> flipRadiusVisibility();
         }
       }
-      //if we click the rally point flag we do not continue as normal
-      return;
+      rowSelected = row;
+      colSelected = col;
     }
   }
-
-  //if the row and col are the same as the last click
-  if(row == rowSelected && col == colSelected){
-    if(gameLogic -> isTower (row,col)){
-      const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
-      int combinedRowCol = row*gameLogic->getCols() + col;
-      shared_ptr<TowerInterface> towerToSetVisibility = towers.at(combinedRowCol);
-      towerToSetVisibility -> flipRadiusVisibility();
-    }
-  }
-  //otherwise reset the pair after we check if we were just clicking on a tower
-  //if so flip its visible radius off
   else{
+    //we want to block clicks on the header if the upgrade circle is open
+    if(playingScreenHeader->clicksCheckedFor()){
+      playingScreenHeader->flipClickCheck();
+    }
     if(gameLogic -> isTower(rowSelected,colSelected)){
       const unordered_map<int, shared_ptr<TowerInterface>> towers = gameLogic -> getTowersPlaced();
       int combinedRowCol = rowSelected*gameLogic->getCols() + colSelected;
@@ -634,8 +694,11 @@ void PlayingScreen::draw(sf::RenderWindow &window){
   drawEnemyUnits(window);
   drawProjectiles(window);
 
-  //draw the header
   playingScreenHeader -> draw(window);
+
+  //draw the upgrade circle
+  upgradeCircle -> draw(window);
+
   //TODO change into real code for drawing the map!
   if(somethingChanged){
     cout << endl << "THE FLOOR " << endl;
@@ -884,14 +947,11 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //the ydimension of the box
     float yDim = boundingBox.height;
 
-    //the scale in the x direction
-    float xScale = (float) xTileSize / (float) xDim;
-    //the scale in the y direction
-    float yScale = (float) yTileSize / (float) yDim;
+    float xScale = current -> getXScale();
+    float yScale = current -> getYScale();
 
-    //keep the tower's scale updated
-    current -> setXScale(xScale);
-    current -> setYScale(yScale);
+    float x = xTileSize / xDim;
+    float y = yTileSize / yDim;
 
     //the x and y position of this rectangle
     float xPos = col * xTileSize;
@@ -924,8 +984,13 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
 void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderWindow& window){
   MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
 
+  assert(meleeTower != NULL);
+
   //all the units spawned by this tower
   vector<shared_ptr<MeleeUnit>> units = meleeTower -> getUnits();
+
+  assert(units.size() != 0);
+
 
   //the size of each tile in x direction
   const float xTileSize = playingScreenHeader -> getTrueXTileSize();
@@ -934,6 +999,7 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
 
   //iterate through all the units
   for(shared_ptr<MeleeUnit>& unit : units){
+
     //only draw them if they have health
     if(unit -> getHitpoints() != 0){
       //get the sprite to be drawn
@@ -1032,7 +1098,6 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
  */
 void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
   unordered_map<long long,shared_ptr<MeleeUnit>> allEnemyUnits = gameLogic -> getSpawnedEnemyUnits();
-
   //the number of rows
   const int rows = gameLogic->getRows();
   //the number of cols
@@ -1042,6 +1107,15 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
   const float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
   const float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //the four components for a color
+  int redComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Red"));
+  int greenComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Green"));
+  int blueComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Blue"));
+  int alphaComponent = textLoader -> getInteger(string("IDS_Radius_Circle_Fill_Color_Alpha"));
+
+  //set the colors of the radius circle
+  sf::Color color (redComponent, greenComponent, blueComponent, alphaComponent);
 
   //loop through all enemies on the board
   for(auto iterator : allEnemyUnits){
@@ -1082,6 +1156,36 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
 
     //finally draw the sprite
     window.draw(currentSprite);
+
+    // sf::CircleShape radiusCircle = current -> getRadiusCircle();
+    // radiusCircle.setFillColor(sf::Color(150, 50, 250));
+    // float radius = (float) current -> getRadius();
+    // //cout << radius << endl;
+    // radiusCircle.setRadius(radius);
+    // radiusCircle.setScale(xScale, yScale);
+    // //reset the origin so any position set refers to the center of the circle
+    // radiusCircle.setOrigin(radius, radius);
+    // radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+    // window.draw(radiusCircle);
+    //cout << "drew radius" << endl;
+
+
+    /*
+    sf::CircleShape radiusCircle = current -> getRadiusCircle();
+    radiusCircle.setFillColor(sf::Color(150, 50, 250));
+    float radius = (float) current -> getRadius();
+    //cout << radius << endl;
+    radiusCircle.setRadius(radius);
+    radiusCircle.setScale(xScale, yScale);
+    //reset the origin so any position set refers to the center of the circle
+    radiusCircle.setOrigin(radius, radius);
+    radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+    window.draw(radiusCircle);
+    //cout << "drew radius" << endl;
+
+     */
+
+
   }
 }
 

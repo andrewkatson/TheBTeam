@@ -1,7 +1,7 @@
 #include "RangeTower.hpp"
 
 //empty constructor used for derived classes to call
-RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
+RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) : TowerInterface(){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> isMelee = false;
@@ -49,8 +49,13 @@ bool RangeTower::canAttack(){
 
 void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   shared_ptr<ActorInterface> firedProjectile = createProjectile();
+
+  //modify the statistics of the firedProjectile so they match any upgrades in the stored projectile
+  modifyToIncludeUpgrades(firedProjectile);
+
   assert(firedProjectile != NULL);
   assert(firedProjectile -> getType() == currentProjectile -> getType());
+  //firedProjectile -> setWorld(world);
 
   //set the row and col of the projetile created to be the same as the tower's
   firedProjectile -> setRow(row);
@@ -75,6 +80,16 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   bool isProjectile = true;
   shared_ptr<EventInterface> projectileFiredEvent = make_shared<ActorCreatedEvent>(firedProjectile, isProjectile, nowInNano);
   this -> eventManager -> queueEvent(projectileFiredEvent);
+}
+
+/*
+ * Update all statistics for the fired projectile to reflect the upgrades bought
+ * for the stored projectile
+ */
+void RangeTower::modifyToIncludeUpgrades(shared_ptr<ActorInterface> firedProjectile){
+  firedProjectile->updateDamage(currentProjectile->getDamage());
+  firedProjectile->updateArmorPenetration(currentProjectile->getArmorPenetration());
+  firedProjectile->updateRadius(currentProjectile->getRadius());
 }
 
 /*

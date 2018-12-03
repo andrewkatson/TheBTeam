@@ -8,8 +8,9 @@ SpicyFryUnit::SpicyFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventMa
   this->armorPenetration=textLoader->getInteger(string("IDS_SF_AP"));;
   this->radius= textLoader->getInteger(string("IDS_SF_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_SF_LM"));;
-  this->actorTypeID=textLoader->getTypeID(string("IDS_SFU"));
-  this -> textures = textureLoader -> getTexture(actorTypeID);
+  this->typeID=textLoader->getTypeID(string("IDS_SFU"));
+  this->attackRate=textLoader->getInteger(string("IDS_SF_Attack_Rate"));
+  this -> textures = textureLoader -> getTexture(typeID);
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

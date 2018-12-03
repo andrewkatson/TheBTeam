@@ -1,12 +1,13 @@
 #include "Towers/MiniMMS.hpp"
 MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader) {
-  this -> towerTypeID = textLoader->getTypeID(string("IDS_MMMT"));
+  this -> typeID = textLoader->getTypeID(string("IDS_MMMT"));
   this -> textLoader = textLoader;
   this -> rateOfFire = textLoader->getInteger(string("IDS_MMMT_ROF"));
   this -> radius = textLoader->getInteger(string("IDS_MMMT_RA"));
   this -> price = textLoader->getInteger(string("IDS_MMMT_PR"));
   this -> textureLoader = textureLoader;
-  this -> textures = textureLoader -> getTexture(towerTypeID);
+  this -> textures = textureLoader -> getTexture(typeID);
+  this -> level = 1;
   this -> setProjectile();
   this -> initSprite();
 }

@@ -24,6 +24,7 @@
 #include "Events/ProjectileExplosionEvent.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
 #include "EventType.hpp"
+#include "Projectile.hpp"
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 #include <chrono>
@@ -71,19 +72,22 @@ private:
   //Store the textureLoader to get the textures for this tower and pass to
   //any dependent units or projectiles
   shared_ptr<TextureLoader> textureLoader;
-  //Box2d World and Body
+
   shared_ptr<b2World> world;
-  shared_ptr<b2Body> body;
 
   int test;
   long long fryID;
+  long long fryID1;
+
+
 
 public:
   /*
     Constructor. Initialize game, setting up instance variables.
    */
-  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader);
+  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world);
   ~GameLogic();
+
 
 
   void registerEvents();
@@ -108,9 +112,12 @@ public:
 
   shared_ptr<EventManager> getEventManager();
 
+  vector<shared_ptr<TowerInterface>>& allUpgradesForTower(int row, int col);
+  void modifyToIncludeUpgrades(vector<shared_ptr<TowerInterface>>& towerUpgrades, shared_ptr<TowerInterface> tower);
+
   bool attemptPurchaseTower(int row, int col, string towerTypeID);
   bool attemptSellTower(int row, int col);
-  vector<shared_ptr<TowerInterface>>& allUpgradesForTower(int row, int col);
+  bool canUpgradeTowerStats(int row, int col);
 
   bool canBuy(int row, int col);
   bool canBuy(string towerType);
@@ -119,6 +126,9 @@ public:
   void removeATower(int row, int col);
   void removeATowerMoney(int row, int col);
   void removeAObstacleMoney(int row, int col);
+
+  int getUpgradePrice(int row, int col);
+  void upgradeTower(string upgradeButtonID, int row, int col);
 
   State getGameState();
 

@@ -4,10 +4,13 @@
  * Constructor for a tower manager
  * @param eventManager: the event manager class that directs events
  */
-TowerManager::TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader){
+TowerManager::TowerManager(shared_ptr<EventManager> eventManager,
+  shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,
+  shared_ptr<b2World> world) : mt(std::random_device()()) {
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
+  this -> world = world;
   this -> registerDelegates();
   this -> populateObstacles();
   this -> populateTowersToChoose();
@@ -352,10 +355,38 @@ unordered_map<string, vector<shared_ptr<TowerInterface>>>& TowerManager::getAllT
 }
 
 /*
+ * @return a tower with the type id passed
+ */
+shared_ptr<TowerInterface> TowerManager::getGenericTower(string towerTypeID){
+  if(allTowerTypes.find(towerTypeID) != allTowerTypes.end()){
+    return allTowerTypes.at(towerTypeID);
+  }
+  assert(true == false);
+  return NULL;
+}
+
+/*
  * @return vector<TowerInterface>: all the upgrades for a partiuclar tower type
  */
 vector<shared_ptr<TowerInterface>>& TowerManager::getUpgradesForTower(string towerTypeID){
-  return allTowerUpgrades.at(towerTypeID);
+  //clear any tower upgrades in the queue
+  towerUpgrades.clear();
+  //set to false because this should not have a physics body
+  bool inWorld = false;
+  //make a copy of each type of tower
+  for(shared_ptr<TowerInterface> towerToCopy : allTowerUpgrades.at(towerTypeID)){
+    shared_ptr<TowerInterface> copy = copyOfTowerType(towerToCopy->getType(), 0, 0, inWorld);
+    towerUpgrades.push_back(copy);
+  }
+  return towerUpgrades;
+}
+
+/*
+ * @return vector<TowerInterface>: the vector of tower upgrades that has been copied from the full map
+ *                                 of possible upgrades
+ */
+vector<shared_ptr<TowerInterface>>& TowerManager::getModifiedUpgrades(){
+  return towerUpgrades;
 }
 
 /*
@@ -511,8 +542,14 @@ void TowerManager::addTower(string type, int combinedRowCol){
   //an tower of the desired type
   shared_ptr<TowerInterface> aTower = copyOfTowerType(type, combinedRowCol / xDim, combinedRowCol % xDim);
 
+  //check if there is a tower at the position that we must remove
+  if(towersPlaced.find(combinedRowCol) != towersPlaced.end()){
+    modifyToIncludeUpgrades(aTower, towersPlaced.at(combinedRowCol));
+  }
+
   //remove the current tower position if there is one
   removeTower(combinedRowCol);
+
   //insert the new tower
   towersPlaced.insert({combinedRowCol, aTower});
 }
@@ -526,18 +563,91 @@ void TowerManager::addTower(string type, int row, int col){
   //an tower of the desired type
   shared_ptr<TowerInterface> aTower = copyOfTowerType(type, row, col);
 
+  int combinedRowCol = row * xDim + col;
+  //check if there is a tower at the position that we must remove
+  if(towersPlaced.find(combinedRowCol) != towersPlaced.end()){
+    modifyToIncludeUpgrades(aTower, towersPlaced.at(combinedRowCol));
+  }
+
   //remove the current tower position if there is one
   removeTower(row, col);
+
   //insert the new tower
   towersPlaced.insert({row*xDim+col, aTower});
 }
 
 /*
+ * calculate how much the stats of the previous tower were improved and apply that
+ * to the new tower it is being upgraded to
+ * @param towerUpgrade: the tower we will be upgrading to
+ * @param tower: the tower we will be upgrading
+ */
+void TowerManager::modifyToIncludeUpgrades(shared_ptr<TowerInterface> towerUpgrade, shared_ptr<TowerInterface> tower){
+
+  //get a generic copy of this tower to measure the amount its variables have been changed
+  shared_ptr<TowerInterface> genericTowerOfType = getGenericTower(tower->getType());
+
+
+  //first we need to determine if this is a melee tower or a range tower we are upgrading
+  if(tower -> isMelee){
+    //cast the towers to their correct type
+    MeleeTower* genericMelee = dynamic_cast<MeleeTower*>(genericTowerOfType.get());
+    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+
+    //get the difference between the generic type and the current tower (i.e. the amount the tower was upgraded)
+    int respawnSpeedUpgrades = meleeTower->getRespawnSpeed()-genericMelee->getRespawnSpeed();
+    int respawnRangeUpgrades = meleeTower->getRadius()-genericMelee->getRadius();
+    int unitMaxHitpointsUpgrades = meleeTower->getUnitHitpoints()-genericMelee->getUnitHitpoints();
+    int unitDamageUpgrades = meleeTower->getUnitDamage()-genericMelee->getUnitDamage();
+    int unitArmorPenetrationUpgrades = meleeTower->getUnitArmorPenetration()-genericMelee->getUnitArmorPenetration();
+    int unitArmorUpgrades = meleeTower->getUnitArmor()-genericMelee->getUnitArmor();
+    int unitAttackRateUpgrades = meleeTower->getUnitAttackRate()-genericMelee->getUnitAttackRate();
+
+    //modify each tower upgrades statisitcs to reflect the purchased upgrades
+    //cast the tower
+    MeleeTower* towerToUpgrade = dynamic_cast<MeleeTower*>(towerUpgrade.get());
+
+    //set all statistics to be the old statistic plus the upgrades
+    towerToUpgrade->updateRespawnSpeed(towerToUpgrade->getRespawnSpeed()+respawnSpeedUpgrades);
+    towerToUpgrade->updateRadius(towerToUpgrade->getRadius()+respawnRangeUpgrades);
+    towerToUpgrade->updateUnitHitpoints(towerToUpgrade->getUnitHitpoints()+unitMaxHitpointsUpgrades);
+    towerToUpgrade->updateUnitDamage(towerToUpgrade->getUnitDamage()+unitDamageUpgrades);
+    towerToUpgrade->updateUnitArmorPenetration(towerToUpgrade->getUnitArmorPenetration()+unitArmorPenetrationUpgrades);
+    towerToUpgrade->updateUnitArmor(towerToUpgrade->getUnitArmor()+unitArmorUpgrades);
+    towerToUpgrade->updateUnitAttackRate(towerToUpgrade->getUnitAttackRate()+unitAttackRateUpgrades);
+
+  }
+  else{
+    RangeTower* genericRanged = dynamic_cast<RangeTower*>(genericTowerOfType.get());
+    RangeTower* rangeTower = dynamic_cast<RangeTower*>(tower.get());
+
+    //get the difference between the generic type and the current tower (i.e. the amount the tower was upgraded)
+    int rateOfFireUpgrades = rangeTower -> getRateOfFire()-genericRanged->getRateOfFire();
+    int rangeOfFireUpgrades = rangeTower->getRadius()-genericRanged->getRadius();
+    int projectileDamageUpgrades = rangeTower->getProjectileDamage()-genericRanged->getProjectileDamage();
+    int projectileArmorPenetrationUpgrades = rangeTower->getProjectileArmorPenetration()-genericRanged->getProjectileArmorPenetration();
+    int projectileAreaOfEffectUpgrades = rangeTower->getProjectileAreaOfEffect()-genericRanged->getProjectileAreaOfEffect();
+
+    //modify each tower upgrades statisitcs to reflect the purchased upgrades
+    //cast the tower
+    RangeTower* towerToUpgrade = dynamic_cast<RangeTower*>(towerUpgrade.get());
+
+    //set all statitics to be theold statistic plus the upgrades
+    towerToUpgrade->updateRateOfFire(towerToUpgrade->getRateOfFire()+rateOfFireUpgrades);
+    towerToUpgrade->updateRadius(towerToUpgrade->getRadius()+rangeOfFireUpgrades);
+    towerToUpgrade->updateProjectileDamage(towerToUpgrade->getProjectileDamage()+projectileDamageUpgrades);
+    towerToUpgrade->updateProjectileArmorPenetration(towerToUpgrade->getProjectileArmorPenetration()+projectileArmorPenetrationUpgrades);
+    towerToUpgrade->updateProjectileAreaOfEffect(towerToUpgrade->getProjectileAreaOfEffect()+projectileAreaOfEffectUpgrades);
+  }
+}
+
+/*
  * Make a copy of one of the tower types and
  * initialize them with their units/projectiles
+ * @param inWorld: whether this should be placed in the physics and collision world
  * @return a shared pointer to a copy of the tower type specified
  */
-shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, int col){
+shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, int col, bool inWorld){
   shared_ptr<TowerInterface> retTower;
 
   //get the maximum number of melee units allowed per melee tower
@@ -545,66 +655,51 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
 
   if(type == textLoader->getTypeID(string("IDS_CPT"))){
     retTower = make_shared<CheesePizza>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_PPT"))){
     retTower = make_shared<PepperoniPizza>(textLoader,eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_DDT"))){
     retTower = make_shared<DeepDish>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_MLT"))){
     retTower = make_shared<MeatLovers>(textLoader, eventManager, textureLoader);
   }
   else if(type == textLoader->getTypeID(string("IDS_MMMT"))){
     retTower = make_shared<MiniMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_NMMT"))){
     retTower = make_shared<NormalMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_PBMMT"))){
     retTower = make_shared<PeanutButterMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_PMMT"))){
     retTower = make_shared<PeanutMMS>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_SOT"))){
     retTower = make_shared<Soda>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_EDT"))){
     retTower = make_shared<EnergyDrink>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_GT"))){
     retTower = make_shared<Gravy>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_SLT"))){
     retTower = make_shared<Slushie>(textLoader, eventManager, textureLoader);
-    retTower -> setProjectile();
   }
   else if(type == textLoader->getTypeID(string("IDS_NFT"))){
     retTower = make_shared<NormalFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_CFT"))){
     retTower = make_shared<CrinkleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_SFT"))){
     retTower = make_shared<SpicyFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_WFT"))){
     retTower = make_shared<WaffleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
-    retTower -> setUpUnits();
   }
   else if(type == textLoader->getTypeID(string("IDS_CTO"))){
     retTower = make_shared<CafeteriaTable>(textLoader, eventManager, textureLoader);
@@ -618,10 +713,42 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
   retTower -> setXCoordinate((float)col * xGrid + (xGrid/2.0));
   retTower -> setYCoordinate((float)row * yGrid + (yGrid/2.0));
 
-  //if the tower is a melee tower we set its rally point to be the center of the tower
-  if(retTower -> isMelee){
-    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(retTower.get());
-    meleeTower -> resetRallyPoint((float)col * xGrid + (xGrid/2.0), (float)row * yGrid + (yGrid/2.0));
+  //get the sprite to be drawn
+  sf::Sprite currentSprite = retTower -> getSprite();
+
+  //the bounding rectangle will give us the dimensions of the sprite
+  sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+  //the x dimension of the box
+  float xDimension = boundingBox.width;
+  //the ydimension of the box
+  float yDimimenson = boundingBox.height;
+
+  //the scale in the x direction
+  float xScale = (float) xGrid / (float) xDimension;
+  //the scale in the y direction
+  float yScale = (float) yGrid / (float) yDimimenson;
+
+  retTower->setXScale(xScale);
+  retTower->setYScale(yScale);
+  if(inWorld){
+    //retTower -> setWorld(world);
+
+    //if the tower is a melee tower we set its rally point to be the center of the tower
+    if(retTower -> isMelee){
+      MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(retTower.get());
+      //set the rally point of the tower to be the center of the tower
+      meleeTower -> resetRallyPoint((float)col * xGrid + (xGrid/2.0), (float)row * yGrid + (yGrid/2.0));
+      //set the positions of the units to be the center of the tower
+      meleeTower -> setUpUnitCoordinates(meleeTower->getXCoordinate(), meleeTower->getYCoordinate());
+      /*
+      //loop through all the meleeUnits and set their world
+      vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();
+      for (shared_ptr<MeleeUnit> meleeUnit : meleeUnits){
+        meleeUnit -> setWorld(world);
+        meleeUnit -> setFixtures();
+      }
+      */
+    }
   }
   return retTower;
 }
@@ -646,3 +773,134 @@ void TowerManager::removeTower(int row, int col){
     towersPlaced.erase(combinedRowCol);
   }
 }
+
+/*
+ * @return the price of an upgrade for the tower at the passed position
+ */
+int TowerManager::getUpgradePrice(int row, int col){
+  int combinedRowCol = row * xDim + col;
+  if(towersPlaced.find(combinedRowCol) == towersPlaced.end()){
+    cerr << "Could Not Get Upgrade Price: TowerManager" << endl;
+    assert(true == false);
+  }
+
+  //get the tower we are looking for upgrade prices for
+  shared_ptr<TowerInterface> towerToUpgrade = towersPlaced.at(combinedRowCol);
+
+  //calculate the next upgrade price
+  int nextUpgradePrice = pow(1.5,towerToUpgrade->getNumUpgrades());
+
+  return nextUpgradePrice;
+}
+
+/*
+ * Upgrades the tower at the passed row and column for the type of upgrade requested
+ * @param upgradeButtonID: the id of the button pressed to upgrade
+ * @param row: row of the tower
+ * @param col: col of the tower
+ */
+ void TowerManager::upgradeTower(string upgradeButtonID, int row, int col){
+   int combinedRowCol = row * xDim + col;
+   if(towersPlaced.find(combinedRowCol) == towersPlaced.end()){
+     cerr << "Upgrade Tower Failed: TowerManager" << endl;
+     assert(true == false);
+   }
+
+   //get the tower we want to upgrade the stat of
+   shared_ptr<TowerInterface> towerToUpgrade = towersPlaced.at(combinedRowCol);
+
+   //if this is a melee tower we handle its upgrades differently
+   if(towerToUpgrade -> isMelee){
+     upgradeMeleeTower(upgradeButtonID, towerToUpgrade);
+   }
+  else{
+     upgradeRangeTower(upgradeButtonID, towerToUpgrade);
+   }
+ }
+
+/*
+ * Upgrades the melee tower in the statistic corresponding to the button id
+ * @param upgradeButtonID: the upgrade button that has been chosen
+ * @param towerToUpgrade: the  tower we are upgrading
+ */
+ void TowerManager::upgradeMeleeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade){
+   //calculate the price for this upgrade
+   int upgradePrice = pow(1.5, towerToUpgrade -> getNumUpgrades());
+
+   //generate an amount to upgrade
+   //the distribution we generate numbers for
+   std::uniform_int_distribution<int> dist(textLoader->getInteger(string("IDS_Minimum_Tower_Upgrade")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+
+   int upgradeAmount = dist(mt);
+
+   //cast as a melee tower
+   MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(towerToUpgrade.get());
+
+   //check which upgrade has been trigged and apply the upgrading amount
+   if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
+     meleeTower->updateRadius(meleeTower->getRadius()+upgradeAmount);
+   }
+   else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Respawn_Rate_Upgrade"))){
+     meleeTower->updateRespawnSpeed(meleeTower->getRespawnSpeed()+upgradeAmount);
+   }
+   else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Hitpoints_Upgrade"))){
+     meleeTower->updateUnitHitpoints(meleeTower->getUnitHitpoints()+upgradeAmount);
+   }
+   else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Damage_Upgrade"))){
+     meleeTower->updateUnitDamage(meleeTower->getUnitDamage()+upgradeAmount);
+   }
+   else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Penetration_Upgrade"))){
+     meleeTower->updateUnitArmorPenetration(meleeTower->getUnitArmorPenetration()+upgradeAmount);
+   }
+   else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Upgrade"))){
+     meleeTower->updateUnitArmor(meleeTower->getUnitArmor()+upgradeAmount);
+   }
+   else{
+     cerr << "upgrade Melee Tower unknown upgrade button id : TowerManager" << endl;
+     assert(true == false);
+   }
+
+   meleeTower->incrementNewUpgrade();
+ }
+
+ /*
+  * Upgrades the range tower in the statistic corresponding to the button id
+  * @param upgradeButtonID: the upgrade button that has been chosen
+  * @param towerToUpgrade: the tower we are upgrading
+  */
+  void TowerManager::upgradeRangeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade){
+    //calculate the price for this upgrade
+    int upgradePrice = pow(1.5, towerToUpgrade -> getNumUpgrades());
+
+    //generate an amount to upgrade
+    //the distribution we generate numbers for
+    std::uniform_int_distribution<int> dist(textLoader->getInteger(string("IDS_Minimum_Tower_Upgrade")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+
+    int upgradeAmount = dist(mt);
+
+    //cast as a range tower
+    RangeTower* rangeTower = dynamic_cast<RangeTower*>(towerToUpgrade.get());
+
+    //check which upgrade has been trigged and apply the upgrading amount
+    if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
+      rangeTower->updateRadius(rangeTower->getRadius()+upgradeAmount);
+    }
+    else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Rate_Of_Fire_Upgrade"))){
+      rangeTower->updateRateOfFire(rangeTower->getRateOfFire()+upgradeAmount);
+    }
+    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Damage_Upgrade"))){
+      rangeTower->updateProjectileDamage(rangeTower->getProjectileDamage()+upgradeAmount);
+    }
+    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Penetration_Upgrade"))){
+      rangeTower->updateProjectileArmorPenetration(rangeTower->getProjectileArmorPenetration()+upgradeAmount);
+    }
+    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Area_Of_Effect_Upgrade"))){
+      rangeTower->updateProjectileAreaOfEffect(rangeTower->getProjectileAreaOfEffect()+upgradeAmount);
+    }
+    else{
+      cerr << "upgrade Range Tower unknown upgrade button id : Tower Manager" << endl;
+      assert(true == false);
+    }
+
+    rangeTower->incrementNewUpgrade();
+  }

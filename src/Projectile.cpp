@@ -31,7 +31,7 @@ int Projectile::getDamage() const {
   return damage;
 }
 
-void Projectile::move(float delta, float xmult, float ymult){
+void Projectile::move(float delta){
   float newX = xVector /(1/speed) *delta + x;
   float newY = yVector / (1/speed) *delta + y;
 
@@ -60,6 +60,9 @@ void Projectile::move(float delta, float xmult, float ymult){
 
   x = newX;
   y = newY;
+
+  //update the body
+  body -> SetTransform(b2Vec2(x,y), body->GetAngle());
 }
 
 void Projectile::setVector(float x, float y){
@@ -112,4 +115,16 @@ void Projectile::handleTargetHit(){
   shared_ptr<EventInterface> projectileHit = make_shared<ProjectileExplosionEvent>(this -> getID(), nowInNano);
 
   this -> eventManager -> queueEvent(projectileHit);
+}
+
+void Projectile::setFixtures(){
+  b2CircleShape circleShape;
+  circleShape.m_p.Set(0,0);
+  float scale = max(xScale, yScale);
+  circleShape.m_radius = radius * scale;
+
+  b2FixtureDef circleFixtureDef;
+  circleFixtureDef.shape = &circleShape; //this is a pointer to the shape above
+  fixture = body->CreateFixture(&circleFixtureDef); //add a fixture to the body
+
 }

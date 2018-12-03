@@ -8,8 +8,9 @@ CrinkleFryUnit::CrinkleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this->armorPenetration=textLoader->getInteger(string("IDS_CF_AP"));;
   this->radius=textLoader->getInteger(string("IDS_CF_AR"));;;
   this->lunchMoney= textLoader->getInteger(string("IDS_CF_LM"));;
-  this->actorTypeID=textLoader->getTypeID(string("IDS_CFU"));
-  this -> textures = textureLoader -> getTexture(actorTypeID);
+  this->typeID=textLoader->getTypeID(string("IDS_CFU"));
+  this->attackRate=textLoader->getInteger(string("IDS_CF_Attack_Rate"));
+  this -> textures = textureLoader -> getTexture(typeID);
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

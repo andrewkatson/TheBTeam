@@ -8,11 +8,12 @@ NormalFry::NormalFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, share
   this -> respawnSpeed = textLoader->getInteger(string("IDS_NFT_RS"));
   this -> radius = textLoader->getInteger(string("IDS_NFT_RA"));
   this -> price = textLoader->getInteger(string("IDS_NFT_PR"));
-  this -> towerTypeID = textLoader->getTypeID(string("IDS_NFT"));
+  this -> typeID = textLoader->getTypeID(string("IDS_NFT"));
   this -> textureLoader = textureLoader;
-  this -> textures = textureLoader -> getTexture(towerTypeID);
-  this -> setUpUnits();
+  this -> textures = textureLoader -> getTexture(typeID);
+  this -> level = 1;
   this -> initSprite();
+  this -> setUpUnits();
 }
 
 void NormalFry::upgrade(){

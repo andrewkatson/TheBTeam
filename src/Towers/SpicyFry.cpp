@@ -5,11 +5,12 @@ SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_
   this -> respawnSpeed = textLoader->getInteger(string("IDS_SFT_RS"));
   this -> radius = textLoader->getInteger(string("IDS_SFT_RA"));
   this -> price = textLoader->getInteger(string("IDS_SFT_PR"));
-  this -> towerTypeID = textLoader->getTypeID(string("IDS_SFT"));
+  this -> typeID = textLoader->getTypeID(string("IDS_SFT"));
   this -> textureLoader = textureLoader;
-  this -> textures = textureLoader -> getTexture(towerTypeID);
-  this -> setUpUnits();
+  this -> textures = textureLoader -> getTexture(typeID);
+  this -> level = 3;
   this -> initSprite();
+  this -> setUpUnits();
 }
 
 void SpicyFry::upgrade(){}

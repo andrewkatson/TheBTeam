@@ -21,7 +21,7 @@ public:
 
   void initSprite();
 
-  string getType(){return towerTypeID;}
+  string getType(){return typeID;}
   int getPrice(){return price;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
@@ -33,6 +33,7 @@ public:
   void attack(shared_ptr<ActorInterface> enemyInRange){}
   void setProjectile(){}
   void setUpUnits(){}
+
 
   void update(float delta);
   shared_ptr<vector<int>>  getStatistics(){shared_ptr<vector<int>> emptyVec = make_shared<vector<int>>(); return emptyVec;}

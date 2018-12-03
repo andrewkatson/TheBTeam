@@ -7,11 +7,12 @@ CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, sha
   this -> respawnSpeed = textLoader->getInteger(string("IDS_CFT_RS"));
   this -> radius = textLoader->getInteger(string("IDS_CFT_RA"));
   this -> price = textLoader->getInteger(string("IDS_CFT_PR"));
-  this -> towerTypeID = textLoader->getTypeID(string("IDS_CFT"));
+  this -> typeID = textLoader->getTypeID(string("IDS_CFT"));
   this -> textureLoader = textureLoader;
-  this -> textures = textureLoader -> getTexture(towerTypeID);
-  this -> setUpUnits();
+  this -> textures = textureLoader -> getTexture(typeID);
+  this -> level = 2;
   this -> initSprite();
+  this -> setUpUnits();
 }
 
 void CrinkleFry::upgrade(){}

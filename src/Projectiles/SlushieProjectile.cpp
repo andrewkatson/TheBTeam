@@ -7,8 +7,8 @@ SlushieProjectile::SlushieProjectile(shared_ptr<TextLoader> textLoader,  shared_
   this -> speed = textLoader->getInteger(string("IDS_SL_SP"));;
   this -> armorPenetration = textLoader->getInteger(string("IDS_SL_AP"));;
   this -> radius = textLoader->getInteger(string("IDS_SL_AR"));;
-  this -> actorTypeID = textLoader->getTypeID(string("IDS_SLP"));
-  this -> textures = textureLoader -> getTexture(actorTypeID);
+  this -> typeID = textLoader->getTypeID(string("IDS_SLP"));
+  this -> textures = textureLoader -> getTexture(typeID);
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

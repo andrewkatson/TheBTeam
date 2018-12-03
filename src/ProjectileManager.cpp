@@ -10,12 +10,13 @@
 #include "ProjectileManager.hpp"
 
 
-ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) {
+ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,shared_ptr<b2World> world) {
   //initialize the projectile vector
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> registerEvents();
   this -> registerDelegates();
+  this -> world = world;
 }
 
 ProjectileManager::~ProjectileManager(){
@@ -135,4 +136,12 @@ void ProjectileManager::removeProjectile(long long ID){
 
 void ProjectileManager::update(float deltaS){
 
+}
+
+//Used ID to grab projectile
+shared_ptr<ActorInterface> ProjectileManager::getProjectile(long long ID){
+  if(projectiles.find(ID) == projectiles.end()){
+    assert(true==false);
+  }
+  return projectiles.at(ID);
 }

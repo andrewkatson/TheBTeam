@@ -20,6 +20,7 @@ private:
 
   bool coordsInsideTile(int row, int col,double x, double y);
 
+  std::random_device rd;
 
 public:
   CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,shared_ptr<PlayingScreenHeader> playingScreenHeader);

@@ -1,3 +1,4 @@
+
 /*
   TowerInterface.hpp
 
@@ -18,11 +19,16 @@
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
+#include "Box2D/Box2D.h"
+#include <algorithm>
+#include <iostream>
 
+using namespace std;
 using std::string;
 using std::make_shared;
 using std::shared_ptr;
 using std::pair;
+using std::max;
 class TowerInterface{
 protected:
   //int pair (used to assocaite a row and col)
@@ -38,8 +44,7 @@ protected:
   shared_ptr<TextureLoader> textureLoader;
   //The sprite corresponding to the tower.
   sf::Sprite sprite;
-  //the tower type identifier that allows for its next upgrade to be pulled
-  string towerTypeID;
+
   //the price of the tower (cost to remove in the case of an obstacle)
   int price;
   //the row in the grid this tower is located at
@@ -52,18 +57,37 @@ protected:
   float yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
-  //the circle shape object to draw the radius
+  //the circle shape object to draw the radius, where collision detection happens
   sf::CircleShape radiusCircle;
   //whether the radius of shooting/spawning units is visible
   bool radiusVisible;
   //the degree of error
   const float e = 0.1;
+  //Box2d World and Body
+  shared_ptr<b2World> world;
+  b2Body* body;
+  b2Fixture* fixture;
+
   //scale in the x direction applied to tower when drawing
   float xScale = 1.0;
   //scale in the y direction applied to tower when drawing
   float yScale = 1.0;
+
+  //the number of upgrades purchased by this tower (so when a tower is changed it will reset to 0)
+  int totalUpgradesPurchased;
+
+  //the level of the tower
+  int level;
+
 public:
+
+  //the tower type identifier that allows for its next upgrade to be pulled
+  string typeID;
+  TowerInterface();
+  ~TowerInterface();
   //boolean used to tell if this is a melee tower without casting
+  bool isTower = true;
+  bool isActor = false;
   bool isMelee;
   virtual void upgrade()=0;
   virtual int getPrice()=0;
@@ -127,9 +151,51 @@ public:
     */
   }
 
+  void startContact(void* collidingWith){
+    //collidingWith should be cast to a clas you can collide with ie Actors and Towers
+    cout << "start colliding in Tower Interface" << '\n'<<endl;
+  }
+
+  void endContact(void* collidingWith){
+    cout << "end colliding in Tower Interface" << '\n'<<endl;
+  }
+
+  //gives actor access to the world to set physics body
+  void setWorld(shared_ptr<b2World> world){
+    this -> world = world;
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    bodyDef.position.Set(xCoordinate,yCoordinate);
+    bodyDef.angle = 0;
+    body = world -> CreateBody(&bodyDef);
+    body ->SetUserData(this);
+
+    b2CircleShape circleShape;
+    circleShape.m_p.Set(0,0);
+    float scale = max(xScale, yScale);
+    circleShape.m_radius = radius * scale;
+    cout << "Tower Radius " << circleShape.m_radius<<endl;
+    b2Vec2 pos = body -> GetPosition();
+    cout << "tower shape at " << pos.x << " " << pos.y << endl;
+
+    b2FixtureDef towerFixtureDef;
+    towerFixtureDef.shape = &circleShape;
+    fixture = body -> CreateFixture(&towerFixtureDef);
+
+    cout << "tower radius is really " << radius << endl;
+    cout << "tower at " << xCoordinate << " " << yCoordinate<< endl;
+
+  }
+
   void setXScale(float xScale){this->xScale = xScale;}
   void setYScale(float yScale){this->yScale = yScale;}
+  float getXScale(){return xScale;}
+  float getYScale(){return yScale;}
 
+  int getNumUpgrades(){return totalUpgradesPurchased;}
+  void incrementNewUpgrade(){totalUpgradesPurchased++;}
+
+  int getLevel(){return level;}
 };
 
 #endif

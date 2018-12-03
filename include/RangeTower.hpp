@@ -54,7 +54,7 @@ public:
    */
   int getPrice();
 
-  string getType(){return towerTypeID;}
+  string getType(){return typeID;}
   void setPos(intPair pos){row = pos.first; col=pos.second;}
   void setPos(int row, int col) {this->row=row; this->col=col;}
   float getXCoordinate(){return xCoordinate;}
@@ -66,9 +66,26 @@ public:
 
   bool canAttack();
   void attack(shared_ptr<ActorInterface> enemyInRange);
+  void modifyToIncludeUpgrades(shared_ptr<ActorInterface> firedProjectile);
   void calcAttackVector(shared_ptr<ActorInterface> projectileToFire, shared_ptr<ActorInterface> enemyInRange);
 
   shared_ptr<vector<int>>  getStatistics();
+
+  //gettters used for the upgrading system
+  int getRadius(){return radius;}
+  int getRateOfFire(){return rateOfFire;}
+  int getProjectileDamage(){return currentProjectile->getDamage();}
+  int getProjectileArmorPenetration(){return currentProjectile->getArmorPenetration();}
+  int getProjectileAreaOfEffect(){return currentProjectile->getRadius();}
+
+  //setters for the upgrade system
+  void updateRadius(int newRadius){radius = newRadius;}
+  void updateRateOfFire(int newRateOfFire){rateOfFire = newRateOfFire;}
+  void updateProjectileDamage(int newProjectileDamage){currentProjectile->updateDamage(newProjectileDamage);}
+  void updateProjectileArmorPenetration(int newProjectileArmorPenetration){currentProjectile->updateArmorPenetration(newProjectileArmorPenetration);}
+  void updateProjectileAreaOfEffect(int newProjectileAreaOfEffect){currentProjectile->updateRadius(newProjectileAreaOfEffect);}
+
+
 };
 
  #endif
