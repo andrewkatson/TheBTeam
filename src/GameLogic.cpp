@@ -18,6 +18,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> towerManager = unique_ptr<TowerManager>(new TowerManager(eventManager, textLoader, textureLoader, world));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
+  this -> soundManager->loadSounds();
   this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool(),world);
   this -> projectileManager = unique_ptr<ProjectileManager>(new ProjectileManager(eventManager, textLoader, world));
   this -> registerEvents();
@@ -371,7 +372,6 @@ void GameLogic::handleStateChange(const EventInterface& event){
    auto now = high_resolution_clock::now();
    //the actual count in nanoseconds for the time
    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
-
    shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano,boardManager->getDistances(),boardManager->getEntryPositions());
 
    this -> eventManager -> queueEvent(mapGenerated);

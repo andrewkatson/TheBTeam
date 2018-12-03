@@ -12,18 +12,20 @@
 #include <SFML/Audio.hpp>
 #include "Player.hpp"
 #include "TextLoader.hpp"
+#include "Events/PlaySoundEvent.hpp"
+
 #include <memory>
 
-using namespace std;
+using std::string;
 
 class SoundManager{
 private:
 
   //Stores game objects referencing streaming music.
-  vector<sf::Music>music_objs;
+  std::unordered_map<std::string,sf::Music>music_objs;
 
   //Stores game objects referencing pre-loaded sounds.
-  vector<sf::Sound>sound_objs;
+  std::unordered_map<std::string,sf::Sound>sound_objs;
 
   //event manager (used to register, deregister from events, and create them)
   shared_ptr<EventManager> eventManager;
@@ -47,12 +49,15 @@ public:
   void registerDelegates();
   void deregisterDelegates();
 
+  void loadSounds();
+
+
   /*
     Play the sound stored at the given index in sound_objs.
 
     @param dex the index in sound_objs where the sound is stored.
    */
-  void playSound(int dex);
+  void playSound(string soundID);
 
   /*
     Pause the music from music_objs at the given index if it is currently
@@ -61,7 +66,7 @@ public:
 
     @param dex the index in sound_objs where the sound is stored.
    */
-  void pauseSound(int dex);
+  void pauseSound(string soundID);
 
   /*
     Stop the music from music_objs at the given index if it is currently
@@ -70,14 +75,14 @@ public:
 
     @param dex the index in sound_objs where the sound is stored.
    */
-  void stopSound(int dex);
+  void stopSound(string soundID);
 
   /*
     Play the music stored at the given index in music_objs.
 
     @param dex the index in music_objs where the music is stored.
    */
-  void playMusic(int dex);
+  void playMusic(string musicID);
 
   /*
     Pause the music from music_objs at the given index if it is currently
@@ -86,7 +91,7 @@ public:
 
     @param dex the index in music_objs where the music is stored.
    */
-  void pauseMusic(int dex);
+  void pauseMusic(string musicID);
 
   /*
     Stop the music from music_objs at the given index if it is currently
@@ -95,7 +100,10 @@ public:
 
     @param dex the index in music_objs where the music is stored.
    */
-  void stopMusic(int dex);
+  void stopMusic(string musicID);
+
+  void handleSoundPlay(const EventInterface& event);
+
 };
 
 #endif

@@ -220,6 +220,12 @@
     <string value="IDS_Rate_Of_Fire_Upgrade" id="IDS_Rate_Of_Fire_Upgrade_ID"> </string>
     <string value="IDS_Respawn_Speed_Upgrade" id="IDS_Respawn_Speed_Upgrade_ID"> </string>
 
+  <!--Sound Paths-->
+  <string value="../resources/sounds/unit/escape.ogg" id="IDS_Unit_Escape_Sound_Path"> </string>
+
+  <!--Sound IDs-->
+  <string value="Unit_Escape" id="IDS_Unit_Escape_Noise"> </string>
+
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
     <!--GameLogic Delegates-->
