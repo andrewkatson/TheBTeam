@@ -14,7 +14,6 @@ NormalFry::NormalFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, share
   this -> level = 1;
   this -> initSprite();
   this -> setUpUnits();
-
 }
 
 void NormalFry::upgrade(){

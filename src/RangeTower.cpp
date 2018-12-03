@@ -55,7 +55,7 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
 
   assert(firedProjectile != NULL);
   assert(firedProjectile -> getType() == currentProjectile -> getType());
-  firedProjectile -> setWorld(world);
+  //firedProjectile -> setWorld(world);
 
   //set the row and col of the projetile created to be the same as the tower's
   firedProjectile -> setRow(row);

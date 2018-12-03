@@ -10,10 +10,10 @@ TowerManager::TowerManager(shared_ptr<EventManager> eventManager,
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
+  this -> world = world;
   this -> registerDelegates();
   this -> populateObstacles();
   this -> populateTowersToChoose();
-  this -> world = world;
 }
 
 TowerManager::~TowerManager(){
@@ -712,18 +712,42 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
   retTower -> setPos(row,col);
   retTower -> setXCoordinate((float)col * xGrid + (xGrid/2.0));
   retTower -> setYCoordinate((float)row * yGrid + (yGrid/2.0));
-  if(inWorld){
-    retTower -> setWorld(world);
-  }
 
-  //if the tower is a melee tower we set its rally point to be the center of the tower
-  if(retTower -> isMelee){
-    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(retTower.get());
-    meleeTower -> resetRallyPoint((float)col * xGrid + (xGrid/2.0), (float)row * yGrid + (yGrid/2.0));
-    //loop through all the meleeUnits and set their world
-    vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();
-    for (shared_ptr<MeleeUnit> meleeUnit : meleeUnits){
-      meleeUnit -> setWorld(world);
+  //get the sprite to be drawn
+  sf::Sprite currentSprite = retTower -> getSprite();
+
+  //the bounding rectangle will give us the dimensions of the sprite
+  sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+  //the x dimension of the box
+  float xDimension = boundingBox.width;
+  //the ydimension of the box
+  float yDimimenson = boundingBox.height;
+
+  //the scale in the x direction
+  float xScale = (float) xGrid / (float) xDimension;
+  //the scale in the y direction
+  float yScale = (float) yGrid / (float) yDimimenson;
+
+  retTower->setXScale(xScale);
+  retTower->setYScale(yScale);
+  if(inWorld){
+    //retTower -> setWorld(world);
+
+    //if the tower is a melee tower we set its rally point to be the center of the tower
+    if(retTower -> isMelee){
+      MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(retTower.get());
+      //set the rally point of the tower to be the center of the tower
+      meleeTower -> resetRallyPoint((float)col * xGrid + (xGrid/2.0), (float)row * yGrid + (yGrid/2.0));
+      //set the positions of the units to be the center of the tower
+      meleeTower -> setUpUnitCoordinates(meleeTower->getXCoordinate(), meleeTower->getYCoordinate());
+      /*
+      //loop through all the meleeUnits and set their world
+      vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();
+      for (shared_ptr<MeleeUnit> meleeUnit : meleeUnits){
+        meleeUnit -> setWorld(world);
+        meleeUnit -> setFixtures();
+      }
+      */
     }
   }
   return retTower;

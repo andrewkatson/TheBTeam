@@ -175,10 +175,15 @@ public:
     float scale = max(xScale, yScale);
     circleShape.m_radius = radius * scale;
     cout << "Tower Radius " << circleShape.m_radius<<endl;
+    b2Vec2 pos = body -> GetPosition();
+    cout << "tower shape at " << pos.x << " " << pos.y << endl;
 
     b2FixtureDef towerFixtureDef;
     towerFixtureDef.shape = &circleShape;
     fixture = body -> CreateFixture(&towerFixtureDef);
+
+    cout << "tower radius is really " << radius << endl;
+    cout << "tower at " << xCoordinate << " " << yCoordinate<< endl;
 
   }
 

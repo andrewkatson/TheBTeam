@@ -53,6 +53,7 @@ public:
 
   virtual void upgrade();
   virtual void setUpUnits();
+  void setUpUnitCoordinates(float x, float y);
   void resetRallyPoint(float x, float y);
   float getRallyX(){return xRally;}
   float getRallyY(){return yRally;}

@@ -11,6 +11,7 @@
 GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world){
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
+  this -> world = world;
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager, textLoader));
@@ -24,7 +25,6 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   test = 5;
   this -> windowX = windowX;
   this -> windowY = windowY;
-  this -> world = world;
 }
 
 /*
@@ -334,7 +334,7 @@ void GameLogic::handleStateChange(const EventInterface& event){
    //setting fixtures for projectiles
    shared_ptr<ActorInterface> projectile = projectileManager -> getProjectile(projectileExplodedID);
    Projectile* newProjectile = dynamic_cast<Projectile*>(projectile.get());
-   newProjectile -> setFixtures();
+   //newProjectile -> setFixtures();
 
 
    //now create an event to indicate the projectile was destroyed
