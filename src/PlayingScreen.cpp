@@ -947,14 +947,11 @@ void PlayingScreen::drawTowersAndObstacles(sf::RenderWindow& window){
     //the ydimension of the box
     float yDim = boundingBox.height;
 
-    //the scale in the x direction
-    float xScale = (float) xTileSize / (float) xDim;
-    //the scale in the y direction
-    float yScale = (float) yTileSize / (float) yDim;
+    float xScale = current -> getXScale();
+    float yScale = current -> getYScale();
 
-    //keep the tower's scale updated
-    current -> setXScale(xScale);
-    current -> setYScale(yScale);
+    float x = xTileSize / xDim;
+    float y = yTileSize / yDim;
 
     //the x and y position of this rectangle
     float xPos = col * xTileSize;
@@ -994,6 +991,7 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
 
   assert(units.size() != 0);
 
+
   //the size of each tile in x direction
   const float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //the size of each tile in y direction
@@ -1001,6 +999,7 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
 
   //iterate through all the units
   for(shared_ptr<MeleeUnit>& unit : units){
+
     //only draw them if they have health
     if(unit -> getHitpoints() != 0){
       //get the sprite to be drawn

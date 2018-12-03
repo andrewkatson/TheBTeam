@@ -28,6 +28,8 @@ ActorInterface::ActorInterface(){
 ActorInterface::~ActorInterface(){
 
   if(body){
+    cout << "destoryed " << endl;
+    body -> DestroyFixture(fixture);
     world -> DestroyBody(body);
   }
 }

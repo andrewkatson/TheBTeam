@@ -2,12 +2,13 @@
 
 
 void CollisionCallback::BeginContact(b2Contact* contact){
+  cout << "hey collision!" << endl;
   void* bodyUserDataA = contact -> GetFixtureA()-> GetBody() -> GetUserData();
   void* bodyUserDataB = contact -> GetFixtureB() -> GetBody() -> GetUserData();
   if (bodyUserDataA){
     //check if Fixture A is a tower or an actor, if true for one of them you startContact with the B fixture
     TowerInterface* towerTestA = static_cast<TowerInterface*>( bodyUserDataA );
-    cout << "Is it a tower? " <<  towerTestA -> isTower << endl;
+    cout << "Is it a tower A? " <<  towerTestA -> isTower << endl;
     if (towerTestA -> isTower == true){
       cout << "IT IS -> ID A = " << towerTestA -> typeID << endl;
       static_cast<TowerInterface*>( bodyUserDataA ) -> startContact(bodyUserDataB);
@@ -23,15 +24,15 @@ void CollisionCallback::BeginContact(b2Contact* contact){
   //check if Fixture B is a tower or an actor, if true for one of them you startContact with the A fixture
   if (bodyUserDataB ){
     TowerInterface*  towerTestB = static_cast<TowerInterface*>( bodyUserDataB );
-    cout << "Is it a tower? " <<  towerTestB -> isTower << endl;
+    cout << "Is it a tower B ? " <<  towerTestB -> isTower << endl;
     if (towerTestB -> isTower == true){
       cout << "IT IS -> ID B = " << towerTestB -> typeID << endl;
       static_cast<TowerInterface*>( bodyUserDataB ) -> startContact(bodyUserDataA);
       cout << "In Begin Contact TOWER Interface bodyUserDataB START Contact with bodyUserDataA"<<'\n'<<endl;
     }
     else if (towerTestB -> isActor == true){
-      ActorInterface* towerTestB = static_cast<ActorInterface*>( bodyUserDataB );
-      cout << "IT IS NOT-> ID B = " << towerTestB -> typeID << endl;
+      ActorInterface* actorTestB = static_cast<ActorInterface*>( bodyUserDataB );
+      cout << "IT IS NOT-> ID B = " << actorTestB -> typeID << endl;
       static_cast<ActorInterface*>( bodyUserDataB ) -> startContact(bodyUserDataA);
       cout << "In Begin Contact ACTOR Interface bodyUserDataB START Contact with bodyUserDataA"<<'\n'<<endl;
     }
@@ -39,6 +40,7 @@ void CollisionCallback::BeginContact(b2Contact* contact){
 }
 
 void CollisionCallback::EndContact(b2Contact* contact){
+  cout << "yay we done!" << endl;
   void* bodyUserDataA = contact -> GetFixtureA()-> GetBody() -> GetUserData();
   void* bodyUserDataB = contact -> GetFixtureB() -> GetBody() -> GetUserData();
   if (bodyUserDataA){

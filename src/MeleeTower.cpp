@@ -50,6 +50,18 @@ void MeleeTower::setUpUnits(){
 }
 
 /*
+ * Set all units to the positions passed
+ * @param x: the x position to set the units to
+ * @param y: the y position to set the units to
+ */
+void MeleeTower::setUpUnitCoordinates(float x, float y){
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+    unit->setXCoordinate(x);
+    unit->setYCoordinate(y);
+  }
+}
+
+/*
  * Set all the unit positions to a point on the circle surrounding the rally point corresponding
  * to their index (unless the rally point is the tower's center in which case we set all positions to tower pos)
  * @param unit: the unit to reset

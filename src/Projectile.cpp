@@ -60,6 +60,9 @@ void Projectile::move(float delta){
 
   x = newX;
   y = newY;
+
+  //update the body
+  body -> SetTransform(b2Vec2(x,y), body->GetAngle());
 }
 
 void Projectile::setVector(float x, float y){
@@ -122,6 +125,6 @@ void Projectile::setFixtures(){
 
   b2FixtureDef circleFixtureDef;
   circleFixtureDef.shape = &circleShape; //this is a pointer to the shape above
-  body->CreateFixture(&circleFixtureDef); //add a fixture to the body
+  fixture = body->CreateFixture(&circleFixtureDef); //add a fixture to the body
 
 }

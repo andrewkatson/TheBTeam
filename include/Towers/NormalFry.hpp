@@ -15,8 +15,8 @@ public:
   void setPos(int row, int col){this->row=row; this->col=col;}
   float getXCoordinate(){return xCoordinate;}
   float getYCoordinate(){return yCoordinate;}
-  void setXCoordinate(float xCor){xCoordinate = xCor;}
-  void setYCoordinate(float yCor){yCoordinate = yCor;}
+  void setXCoordinate(float xCor){xCoordinate = xCor; cout << "set to " << xCor << endl;}
+  void setYCoordinate(float yCor){yCoordinate = yCor; cout << "set it " << yCor << endl;}
   bool canAttack(){return MeleeTower::canAttack();}
   void attack(shared_ptr<ActorInterface> enemyInRange){MeleeTower::attack(enemyInRange);}
   void update(float delta){MeleeTower::update(delta);}

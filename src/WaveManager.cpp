@@ -252,9 +252,9 @@ void WaveManager::createNextWave() {
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
     enemy->setDirection(dir);
     //setWorld and fixture
-    enemy -> setWorld(world);
+    //enemy -> setWorld(world);
 
-    enemy -> setFixtures();
+    //enemy -> setFixtures();
 
     currentWave.push(enemy);
   }

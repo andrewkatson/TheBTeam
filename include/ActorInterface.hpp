@@ -84,6 +84,7 @@ protected:
   //Box2d World and Body
   shared_ptr<b2World> world;
   b2Body* body;
+  b2Fixture* fixture;
 
   //the area of effect for a projectile and the area of attack for a unit
   int radius;
