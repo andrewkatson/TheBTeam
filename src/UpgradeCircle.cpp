@@ -604,6 +604,24 @@ void UpgradeCircle::drawUpgradePriceButton(sf::RenderWindow& window){
     //the yPosition is the same as the tower's
     float newyPos = gameLogic->getTileYSize() * rowSelected - ownRecDimensions.y*1.5;
 
+    //if the x position on the left is past the start of the map then we shift it
+    if(newxPos <= 0){
+      while(newxPos <= 0){
+        newxPos += ownRecDimensions.x/10.0;
+      }
+    }
+
+    else{
+      //if the x position on the right side is part the end of the map then we shift it
+      while(newxPos + ownRecDimensions.x > windowX){
+        newxPos -= ownRecDimensions.x/10.0;
+      }
+    }
+    //if the yPosition is offscreen we flip it to the other side of the tower
+    if(newyPos < 0){
+      newyPos = gameLogic->getTileYSize()*(rowSelected+1) + ownRecDimensions.y*1.5;
+    }
+
     //rescale the button and reset it
     upgradePriceButton -> scaleButton(newxPos, newyPos);
 

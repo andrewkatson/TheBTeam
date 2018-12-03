@@ -785,10 +785,12 @@ void MapFactory::makeFloor(){
     for(int col = 0; col < xDim; col++){
       if(floorGrid.at(row).at(col) != 0){
         if(col % 2 == 0){
-          floorGrid.at(row).at(col) = 2 * ((int)(mapCustomizationChoices -> cafeteriaChoice) - 1) - 1;
+          floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1);
+          cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1)<<endl;
         }
         else{
-          floorGrid.at(row).at(col) = 2 * ((int)(mapCustomizationChoices -> cafeteriaChoice) - 1) - 2;
+          floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1);
+          cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1)<<endl;
         }
       }
     }

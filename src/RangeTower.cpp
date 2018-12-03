@@ -50,6 +50,9 @@ bool RangeTower::canAttack(){
 void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   shared_ptr<ActorInterface> firedProjectile = createProjectile();
 
+  //send the size of a tile in the x and y to the projectile
+  firedProjectile -> setTileSize(xTileSize, yTileSize);
+
   //modify the statistics of the firedProjectile so they match any upgrades in the stored projectile
   modifyToIncludeUpgrades(firedProjectile);
 

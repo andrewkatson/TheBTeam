@@ -19,9 +19,8 @@ using std::vector;
 class Switcher{
 private:
     sf::Font font;
-    sf::Text text;
     int id;
-    std::vector<string> options;
+    std::vector<std::string> options;
     int len;
     int selected;
     shared_ptr<TextLoader> textLoader;
@@ -29,7 +28,8 @@ protected:
     int windowX;
     int windowY;
 public:
-    Switcher(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,int windowX, int windowY, sf::Font font, int id, int len);
+    sf::Text text;
+    Switcher(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,int windowX, int windowY, int id, int len);
     void initText();
     void changeSelected(int direction);
     int getSelected();

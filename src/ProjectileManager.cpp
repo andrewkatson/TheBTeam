@@ -44,7 +44,7 @@ void ProjectileManager::registerDelegates(){
   ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
   EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorDestroyedEventType);
+  this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_Projectile_Manager_Actor_Destroyed")),actorDestroyedEventType);
 }
 
 /*
@@ -62,7 +62,7 @@ void ProjectileManager::deregisterDelegates(){
     ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
     EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
     //deregister the delegate and its type
-    this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_ProjectileManager_ActorCreated")),actorDestroyedEventType);
+    this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_Projectile_Manager_Actor_Destroyed")),actorDestroyedEventType);
 }
 
 /*

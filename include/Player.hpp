@@ -15,6 +15,7 @@
 #include "Events/LevelChangeEvent.hpp"
 #include "Events/BalanceChangeEvent.hpp"
 #include "Events/DifficultyChangeEvent.hpp"
+#include "Events/OptionSelectedEvent.hpp"
 #include <memory>
 #include <chrono>
 
@@ -35,7 +36,7 @@ private:
 
     level: the current level number
    */
-  int balance,hitpoints, wave, level,schoolLevel;
+  int balance,hitpoints, wave, level,schoolLevel, population;
 
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
@@ -122,6 +123,9 @@ public:
   void updateLevel(int level);
 
   void handleDiffChanged(const EventInterface& event);
+
+  void handleOptionSelectedEvent(const EventInterface& event);
+
 };
 
 #endif

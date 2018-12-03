@@ -78,6 +78,10 @@ protected:
 
   sf::CircleShape radiusCircle;
 
+  //the size of a tile in the x and the y
+  float xTileSize;
+  float yTileSize;
+
   //the degree of error
   const float e = 0.001;
 
@@ -92,6 +96,9 @@ protected:
 
   static double xScale;
   static double yScale;
+
+  //whether this is a projectile or not
+  bool isProjectile;
 
 public:
   bool isActor = true;
@@ -239,7 +246,9 @@ public:
     return false;
   }
 
+  void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
 
+  bool isAProjectile(){return isProjectile;}
 };
 
 #endif

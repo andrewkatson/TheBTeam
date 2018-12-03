@@ -57,6 +57,10 @@ protected:
   float yCoordinate;
   //the radius for the tower (if range then it is where it can fire, if melee it is where it can place a rally point)
   int radius;
+  //size of a tile in the x and the y
+  float xTileSize;
+  float yTileSize;
+
   //the circle shape object to draw the radius, where collision detection happens
   sf::CircleShape radiusCircle;
   //whether the radius of shooting/spawning units is visible
@@ -196,6 +200,8 @@ public:
   void incrementNewUpgrade(){totalUpgradesPurchased++;}
 
   int getLevel(){return level;}
+
+  void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
 };
 
 #endif

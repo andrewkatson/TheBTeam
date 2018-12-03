@@ -61,6 +61,12 @@ void MeleeTower::setUpUnitCoordinates(float x, float y){
   }
 }
 
+void MeleeTower::setUpUnitTileSize(float x, float y){
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+    unit->setTileSize(x,y);
+  }
+}
+
 /*
  * Set all the unit positions to a point on the circle surrounding the rally point corresponding
  * to their index (unless the rally point is the tower's center in which case we set all positions to tower pos)

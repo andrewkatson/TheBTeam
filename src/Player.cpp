@@ -22,6 +22,10 @@ Player::Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> tex
 }
 
 void Player::registerDelegates(){
+  EventManager::EventDelegate optionSelectedDelegate = std::bind(&Player::handleOptionSelectedEvent, this, _1);
+  OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
+  const EventType optionSelectedEventType = optionSelectedEvent.getEventType();
+  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_P")), optionSelectedEventType);
   EventManager::EventDelegate difficultyChangeDelegate = std::bind(&Player::handleDiffChanged, this, _1);
   DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
   const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
@@ -55,6 +59,11 @@ void Player::registerEvents(){
   LevelChangeEvent levelChangeEvent = LevelChangeEvent();
   EventType levelChangeEventType = levelChangeEvent.getEventType();
   this -> eventManager -> registerEvent(levelChangeEventType);
+
+  //make a generic option selected events event, get its type, and register it
+  OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
+  EventType optionSelectedEventType = optionSelectedEvent.getEventType();
+  this -> eventManager -> registerEvent(optionSelectedEventType);
 }
 
 void Player::updateBalance(int balance){
@@ -141,4 +150,36 @@ void Player::updateLevel(int level){
   this -> eventManager -> queueEvent(lcEvent);
 
   this->level=level;
+}
+
+void Player::handleOptionSelectedEvent(const EventInterface& event){
+    // different ID's need to be checked 0 = school, 1 = population, 4 = start money
+    // Get the optionselectedevent and get the data from it
+    auto optionSelectedEvent = static_cast<const OptionSelectedEvent*>(&event);
+    auto optionSelectedEventData = static_cast<OptionSelectedEventData*>((optionSelectedEvent->data).get());
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    if(optionSelectedEventData -> optionID == 0){
+        shared_ptr<EventInterface> newDiff = make_shared<DifficultyChangeEvent>(optionSelectedEventData -> newValue + 1, nowInNano);
+
+        this -> eventManager -> queueEvent(newDiff);
+    }
+    else if(optionSelectedEventData -> optionID == 1){
+        this -> population = optionSelectedEventData -> newValue + 1;
+    }
+    else if(optionSelectedEventData -> optionID == 4){
+        if(optionSelectedEventData -> newValue == 0){
+            updateBalance(20);
+        }
+        else if(optionSelectedEventData -> newValue == 1){
+            updateBalance(100);
+        }
+        else if(optionSelectedEventData -> newValue == 2){
+            updateBalance(1000);
+        }
+    }
+
 }
