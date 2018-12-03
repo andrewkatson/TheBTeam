@@ -84,7 +84,7 @@ void BuyTowerOption::initChooseButton(){
 
   //if we are buying than the number is negative
   if(areBuying){
-    fullPurchaseString += string(" -") + to_string(towerToShow->getPrice());
+    fullPurchaseString += string(" -") + to_string(towerToShow->getPrice()*textLoader->getDouble(string("IDS_Percentage_Money_Returned_On_Sell_Tower")));
   }
   //if we are selling then the number is positive
   else{

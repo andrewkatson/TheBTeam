@@ -50,7 +50,7 @@ void CompView::moveUnits(float deltaS){
 
 
     if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
-      shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),deltaS);
+      shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
       shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
 
       this -> eventManager -> queueEvent(actorDestroyed);

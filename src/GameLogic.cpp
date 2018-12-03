@@ -346,7 +346,7 @@ void GameLogic::handleStateChange(const EventInterface& event){
    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
    //make event
-   shared_ptr<EventInterface> projectileDestroyed = make_shared<ActorDestroyedEvent>(projectileExplodedID, nowInNano);
+   shared_ptr<EventInterface> projectileDestroyed = make_shared<ActorDestroyedEvent>(projectileExplodedID, projectile, nowInNano);
 
    this -> eventManager -> queueEvent(projectileDestroyed);
  }

@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   ActorDestroyedEvent();
-  ActorDestroyedEvent(long long actorID, float timeStamp);
+  ActorDestroyedEvent(long long actorID, shared_ptr<ActorInterface> actorDestroyed, float timeStamp);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;
