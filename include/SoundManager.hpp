@@ -38,7 +38,7 @@ private:
     A SoundBuffer to keep all of the game's sounds loaded into memory before
     they're played.
   */
-  sf::SoundBuffer buffer;
+  std::unordered_map<string,sf::SoundBuffer>buffers;
 
   void loadSound(string path, string soundID);
 
@@ -108,6 +108,8 @@ public:
   void stopMusic(string musicID);
 
   void handleSoundPlay(const EventInterface& event);
+
+  void handleLevelChanged(const EventInterface& event);
 
 };
 

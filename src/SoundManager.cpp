@@ -24,6 +24,11 @@ void SoundManager::registerDelegates(){
   PlaySoundEvent playSoundEvent= PlaySoundEvent();
   const EventType playSoundEventType = playSoundEvent.getEventType();
   this -> eventManager -> registerDelegate(playSoundDelegate, textLoader -> getString(string("IDS_SoundManager_PlaySound")),playSoundEventType);
+
+  EventManager::EventDelegate levelChangeDelegate = std::bind(&SoundManager::handleLevelChanged, this, _1);
+  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
+  const EventType levelChangeEventType = levelChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_SoundManager_LevelChange")),levelChangeEventType);
 }
 
 void SoundManager::deregisterDelegates(){
@@ -49,8 +54,8 @@ void SoundManager::loadSounds(){
      else
         stop the game and pull up a box saying you 'screwed' up (family friendly)
  */
-  vector<string>paths={"IDS_Unit_Escape_Sound_Path","IDS_Level_Start_Sound_Path"};
-  vector<string>ids={"IDS_Unit_Escape_Noise","IDS_Level_Start_Noise"};
+  vector<string>paths={"IDS_Unit_Escape_Sound_Path","IDS_Level_Start_Sound_Path","IDS_Jazzy_Sound_Path"};
+  vector<string>ids={"IDS_Unit_Escape_Noise","IDS_Level_Start_Noise","IDS_Jazzy_Noise"};
 
   assert(paths.size()==ids.size());
 
@@ -62,14 +67,20 @@ void SoundManager::loadSounds(){
 }
 
 void SoundManager::loadSound(string path, string soundID){
-  if(!buffer.loadFromFile(textLoader->getString("IDS_Unit_Escape_Sound_Path"))) {
-    //you fucked up
-  }
-  sound_objs[textLoader->getString("IDS_Unit_Escape_Noise")].setBuffer(buffer);
+  string true_path=textLoader->getString(path);
+  string id=textLoader->getString(soundID);
+  //cout << "path" << textLoader->getString(path) << endl;
+  assert(buffers[id].loadFromFile(true_path));
+
+  //cout << "adding sound " << textLoader->getString(soundID) << endl;
+  sound_objs[id].setBuffer(buffers[id]);
+  //cout << sound_objs.count(textLoader->getString(soundID)) << endl;
 }
 
 
 void SoundManager::playSound(string soundID){
+  //cout << "playing sound " << soundID << endl;
+  assert(sound_objs.count(soundID));
   sound_objs[soundID].play();
 }
 
@@ -104,4 +115,8 @@ void SoundManager::handleSoundPlay(const EventInterface& event){
   string soundID=playSoundEventData->soundID;
 
   playSound(typeID+soundID);
+}
+
+void SoundManager::handleLevelChanged(const EventInterface& event){
+  playSound(textLoader->getString("IDS_Level_Start_Noise"));
 }
