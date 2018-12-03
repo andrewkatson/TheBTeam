@@ -1,6 +1,39 @@
 [Unreleased]
 
 ###Added
+- Textures added for other units as well as all tower upgrades, as follows: [@jeremyelkayam][https://github.com/jeremyelkayam]
+ - Kids
+  - Fat Kid
+  - Skinny Kid
+ - Pizza Towers
+  - Pepperoni
+  - Deep Dish
+  - Meat Lovers'
+ - Drink Towers
+  - Energy Drink
+  - Slushie
+  - Gravy Boat
+ - Candy Towers
+  - Regular M&M
+  - Peanut M&M
+  - Peanut Butter M&M
+ - Fry Towers & Units
+  - Waffle Fry
+  - Crinkle Cut Fry
+  - Spicy Fry
+- yes, I did all this... it took many hours
+
+###Changed
+- Improved unit animations [@jeremyelkayam][https://github.com/jeremyelkayam]
+
+
+###Fixed
+- Units now face the direction in which they're moving (when set using setDirection) [@jeremyelkayam][https://github.com/jeremyelkayam]
+
+
+[0.7.0] 2018-12-02
+
+###Added
 - attack rate for all units [@andrewkatson][https://github.com/andrewkatson]
 - upgrade system for aspects of the melee and range towers for more customizaton
 - ENEMY UNIT MOVEMENT. [@jeremyelkayam][https://github.com/jeremyelkayam]
@@ -16,8 +49,6 @@
  - Greatly decreased this multiplier
 - Animation speed is now dependent on unit movement speed
 
-
-
 ###Fixed
 - seg faults from trying to destroy unitialized box2d bodies [@andrewkatson][https://github.com/andrewkatson]
 - allied units now move to the rally point correctly
@@ -25,6 +56,8 @@
 - MeleeUnit::move() behaves like it's supposed to instead of doing weird and erratic garbage
 - A bug where enemy units would only spawn from one entrance in the board
 
+###Bugs
+- Sometimes enemies stray off the path
 
 [0.6.0] 2018-12-01
 ###Added
