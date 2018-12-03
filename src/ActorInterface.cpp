@@ -77,6 +77,7 @@ double ActorInterface::getDirection() const {
 }
 
 void ActorInterface::setDirection(double direction) {
+  sprite.setRotation(-180*direction/M_PI);
   this ->direction = direction;
 }
 
