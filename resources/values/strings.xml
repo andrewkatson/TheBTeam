@@ -18,6 +18,8 @@
     <string value="../resources/fonts/amoremio.ttf" id="IDS_Fifth_Font_Path"> </string>
     <!--Textures Path-->
     <string value="../resources/textures/foodfightmainpic.png" id="IDS_Main_Title_Pic"> </string>
+    <!--Restart Menu-->
+    <string value="../resources/textures/restart_pic.png" id="IDS_Restart_Pic"></string>
 
     <!--Sprites Paths-->
 
@@ -230,6 +232,13 @@
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->
     <string value="OPTIONSMENUSCREENHANDLEKEYPRESS" id="IDS_OMSD_KP"> </string>
+    <string value="OPTIONSMENUSCREENHANDLEMOUSEPRESS" id="IDS_OMSD_MP"> </string>
+    <string value="OPTIONSMENUSCREENOPTIONSELECTEDPLAYER" id="IDS_OMSD_P"> </string>
+    <string value="OPTIONSMENUSCREENOPTIONSELECTEDBOARDMANAGER" id="IDS_OMSD_BM"> </string>
+    <string value="OPTIONSMENUSCREENOPTIONSELECTEDWAVEMANAGER" id="IDS_OMSD_WM"> </string>
+
+    <!--RestartMenuScreen Delegates-->
+    <string value="RESTARTSCREENHANDLEKEYPRESS" id="IDS_RSD_KP"> </string>
     <!--PlayingScreen Delegates-->
     <string value="PLAYINGSCREENHANDLETOWERCREATION" id="IDS_PS_TC"> </string>
     <string value="PLAYINGSCREENHANDLETOWERREMOVE" id="IDS_PS_TR"> </string>
@@ -256,9 +265,11 @@
 
 
     <!--RestartScreen-->
-    <string value="Congratualtions! You tried your best, but Big Pharma wins." id="IDS_RSM"></string>
+    <string value="Congratualtions! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
 
     <!--OptionsMenuScreen-->
+    <string value ="Confirm" id="IDS_Options_Menu_Confirm_Button"> </string>
+
 
     <!--School Switcher-->
     <!--Increment by 1 for gl-->
@@ -280,9 +291,9 @@
     <string value="A lot" id="IDS_Switcher_Obstacles_2"> </string>
     <!--Waves-->
     <!--Like population, modifier for gl-->
-    <string value="Snack Time" id="IDS_Switcher_Waves_0"> </string>
-    <string value="Breakfast" id="IDS_Switcher_Waves_1"> </string>
-    <string value="Lunch Rush" id="IDS_Switcher_Waves_2"> </string>
+    <string value="Snack Time" id="IDS_Switcher_Meal_0"> </string>
+    <string value="Breakfast" id="IDS_Switcher_Meal_1"> </string>
+    <string value="Lunch Rush" id="IDS_Switcher_Meal_2"> </string>
     <!--Start Money-->
     <!--5,10,25-->
     <string value="Allowance" id="IDS_Switcher_Start_Money_0"> </string>

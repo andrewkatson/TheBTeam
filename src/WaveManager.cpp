@@ -33,6 +33,11 @@ void WaveManager::registerEvents(){
   EventType wceType = wce.getEventType();
 
   this -> eventManager -> registerEvent(wceType);
+
+  //make a generic option selected events event, get its type, and register it
+  OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
+  EventType optionSelectedEventType = optionSelectedEvent.getEventType();
+  this -> eventManager -> registerEvent(optionSelectedEventType);
 }
 
 void WaveManager::registerDelegates() {
@@ -63,6 +68,11 @@ void WaveManager::registerDelegates() {
   WaveChangeEvent waveChangeEvent = WaveChangeEvent();
   const EventType waveChangeEventType = waveChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(waveChangeDelegate, textLoader -> getString(string("IDS_WaveManager_WaveChange")),waveChangeEventType);
+
+  EventManager::EventDelegate optionSelectedDelegate = std::bind(&WaveManager::handleOptionSelectedEvent, this, _1);
+  OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
+  const EventType optionSelectedEventType = optionSelectedEvent.getEventType();
+  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_WM")), optionSelectedEventType);
 }
 
 void WaveManager::deregisterDelegates() {
@@ -423,4 +433,17 @@ void WaveManager::handleWaveChange(const EventInterface& event){
   if(waveChangeEventData->waveStart){
     startNextWave();
   }
+}
+
+void WaveManager::handleOptionSelectedEvent(const EventInterface &event) {
+    auto optionSelectedEvent = static_cast<const OptionSelectedEvent*>(&event);
+    auto optionSelectedEventData = static_cast<OptionSelectedEventData*>((optionSelectedEvent->data).get());
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    if(optionSelectedEventData -> optionID == 3){
+        //do something to the wave manager with the meal option
+    }
 }

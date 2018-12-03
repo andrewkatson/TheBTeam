@@ -5,11 +5,17 @@
 #include "TextLoader.hpp"
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
+#include "Events/OptionSelectedEvent.hpp"
 #include "MeleeUnit.hpp"
 #include <functional>
 #include <assert.h>
+#include <chrono>
+#include <random>
 
 using namespace std::placeholders;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::nanoseconds;
 class BoardManager{
 
 private:
@@ -77,6 +83,7 @@ public:
 
   void handleTowerCreation(const EventInterface& event);
   void handleTowerRemove(const EventInterface& event);
+  void handleOptionSelectedEvent(const EventInterface& event);
 
   bool hasMap();
   bool isInMap(int row, int col);

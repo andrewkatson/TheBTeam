@@ -28,6 +28,7 @@ using namespace std;
 #include "Events/LevelChangeEvent.hpp"
 #include "Events/DifficultyChangeEvent.hpp"
 #include "Events/WaveChangeEvent.hpp"
+#include "Events/OptionSelectedEvent.hpp"
 
 using std::chrono::high_resolution_clock;
 using std::chrono::nanoseconds;
@@ -196,6 +197,8 @@ public:
   void handleDiffChanged(const EventInterface& event);
 
   void handleWaveChange(const EventInterface& event);
+
+  void handleOptionSelectedEvent(const EventInterface& event);
 };
 
 #endif
