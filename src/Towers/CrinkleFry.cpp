@@ -1,7 +1,7 @@
 #include "Towers/CrinkleFry.hpp"
 
 
-CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : MeleeTower(eventManager, textLoader){
+CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;
   this -> respawnSpeed = textLoader->getInteger(string("IDS_CFT_RS"));
@@ -11,6 +11,7 @@ CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, sha
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(typeID);
   this -> level = 2;
+  this -> logUnitsForCollisions = setUpUnits;
   this -> initSprite();
   this -> setUpUnits();
 }

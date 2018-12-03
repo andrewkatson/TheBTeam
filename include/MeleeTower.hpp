@@ -10,6 +10,7 @@
 
 #include "TowerInterface.hpp"
 #include "MeleeUnit.hpp"
+#include "Events/ActorCreatedEvent.hpp"
 #include <memory>
 #include <vector>
 #include <chrono>
@@ -39,6 +40,9 @@ protected:
   //the specific units that are fighitng for this tower
   vector<shared_ptr<MeleeUnit>> currentUnits;
 
+  //whether we want to log the units made for this tower in the collision system
+  bool logUnitsForCollisions;
+
 public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~MeleeTower();
@@ -55,6 +59,7 @@ public:
   virtual void setUpUnits();
   void setUpUnitCoordinates(float x, float y);
   void setUpUnitTileSize(float x, float y);
+  void setUpUnitPositions(int row, int col);
   void resetRallyPoint(float x, float y);
   float getRallyX(){return xRally;}
   float getRallyY(){return yRally;}
@@ -85,6 +90,8 @@ public:
   void attack(shared_ptr<ActorInterface> enemyInRange);
 
   shared_ptr<vector<int>>  getStatistics();
+
+  void logUnitsForCollisionManager();
 
   //getters used by the upgrading system
   int getRespawnSpeed(){return respawnSpeed;}

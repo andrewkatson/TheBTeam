@@ -12,6 +12,7 @@ WaffleFryUnit::WaffleFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->typeID=textLoader->getTypeID(string("IDS_WFU"));
   this->attackRate=textLoader->getInteger(string("IDS_WF_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(typeID);
+  this -> isAlly = true;
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

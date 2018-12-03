@@ -8,6 +8,7 @@ Projectile::Projectile(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> isProjectile = true;
+  this -> isAlly = true;
 }
 
 /*

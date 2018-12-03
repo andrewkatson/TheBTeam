@@ -11,6 +11,7 @@ NormalFryUnit::NormalFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->typeID=textLoader->getTypeID(string("IDS_NFU"));
   this->attackRate=textLoader->getInteger(string("IDS_NF_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(typeID);
+  this -> isAlly = true;
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

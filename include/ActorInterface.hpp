@@ -99,6 +99,8 @@ protected:
 
   //whether this is a projectile or not
   bool isProjectile;
+  //whether this is an allied unit or not
+  bool isAlly;
 
 public:
   bool isActor = true;
@@ -249,6 +251,7 @@ public:
   void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
 
   bool isAProjectile(){return isProjectile;}
+  bool isAnAlly(){return isAlly;}
 };
 
 #endif

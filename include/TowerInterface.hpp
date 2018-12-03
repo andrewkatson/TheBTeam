@@ -83,6 +83,9 @@ protected:
   //the level of the tower
   int level;
 
+  //the unique id of the tower
+  long long towerID;
+
 public:
 
   //the tower type identifier that allows for its next upgrade to be pulled
@@ -202,6 +205,8 @@ public:
   int getLevel(){return level;}
 
   void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
+
+  long long getID(){return towerID;}
 };
 
 #endif

@@ -147,6 +147,9 @@ void GameLogic::updateGameLogic(float deltaS){
     this -> waveManager -> update(deltaS);
   }
 
+  //check for collisions before processing events so any unit that has been
+  //destroyed but moved can be placed in the right map
+  this -> collisionManager -> checkForCollisions();
   this -> eventManager -> processEvent();
   //cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){

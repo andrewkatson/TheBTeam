@@ -29,13 +29,13 @@ private:
   shared_ptr<ProjectileManager> projectileManager;
 
   //all towers keyed by a row, col pair they belong in (uses their radius to determine where)
-  unordered_map<int, vector<shared_ptr<TowerInterface>>> towersPlaced;
+  unordered_map<int, unordered_map<long long, shared_ptr<TowerInterface>>> towersPlaced;
   //all projectiles keyed by their id (so they can be grabbed when they explode quickly
   unordered_map<long long, shared_ptr<ActorInterface>> projectilesFired;
   //all allied units keyed by a row, col they belong in
-  unordered_map<int, vector<shared_ptr<ActorInterface>>> alliedUnits;
+  unordered_map<int, unordered_map<long long, shared_ptr<ActorInterface>>> alliedUnits;
   //all enemy units keyed by a row, col they belong in
-  unordered_map<int, vector<shared_ptr<ActorInterface>>> enemyUnits;
+  unordered_map<int, unordered_map<long long, shared_ptr<ActorInterface>>> enemyUnits;
 
   //the size of tiles in x dimension
   float xTileSize;
@@ -70,5 +70,11 @@ public:
   void removeOldTower(shared_ptr<TowerInterface> tower);
 
   void checkForCollisions();
+  void updateAllUnitPositions();
+  void updateAllAllyUnitPositions();
+  void updateAllEnemyUnitPositions();
+
+  bool inMap(int row, int col);
+  bool inMap(float x, float y);
 
 };

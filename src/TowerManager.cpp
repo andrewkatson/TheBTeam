@@ -127,10 +127,13 @@ void TowerManager::populateTowersToChoose(){
   string normalFryID = textLoader -> getTypeID(string("IDS_NFT"));
   string miniMMSID = textLoader -> getTypeID(string("IDS_MMMT"));
 
+  //we do not want to log the units made by these towers for collisions (only use their stats)
+  bool logUnitsForCollisions = false;
+
   //first make a pointer to the first of the tower types for each tower tree
   shared_ptr<RangeTower> cheesePizza = make_shared<CheesePizza>(textLoader, eventManager, textureLoader);
   shared_ptr<RangeTower> soda = make_shared<Soda>(textLoader, eventManager, textureLoader);
-  shared_ptr<MeleeTower> normalFry = make_shared<NormalFry>(textLoader,maxMeleeUnits, eventManager, textureLoader);
+  shared_ptr<MeleeTower> normalFry = make_shared<NormalFry>(textLoader,maxMeleeUnits, eventManager, textureLoader,logUnitsForCollisions);
   shared_ptr<RangeTower> miniMMS = make_shared<MiniMMS>(textLoader, eventManager, textureLoader);
 
 
@@ -184,10 +187,13 @@ void TowerManager::populateTowerUpgradesLvl1(int maxMeleeUnits){
   string crinkleFryID = textLoader -> getTypeID(string("IDS_CFT"));
   string normalMMSID = textLoader -> getTypeID(string("IDS_NMMT"));
 
+  //we do not want to log the units made by these towers for collisions (only use their stats)
+  bool logUnitsForCollisions = false;
+
   //make a pointer to each type of object that the basic types can be upgraded to
   shared_ptr<RangeTower> pepperoniPizza = make_shared<PepperoniPizza>(textLoader,  eventManager, textureLoader);
   shared_ptr<RangeTower> energyDrink = make_shared<EnergyDrink>(textLoader,  eventManager, textureLoader);
-  shared_ptr<MeleeTower> crinkleFry = make_shared<CrinkleFry>(textLoader,maxMeleeUnits, eventManager, textureLoader);
+  shared_ptr<MeleeTower> crinkleFry = make_shared<CrinkleFry>(textLoader,maxMeleeUnits, eventManager, textureLoader,logUnitsForCollisions);
   shared_ptr<RangeTower> normalMMS = make_shared<NormalMMS>(textLoader, eventManager, textureLoader);
 
   //push each tower into a vector of possible upgrades
@@ -234,11 +240,14 @@ void TowerManager::populateTowerUpgradesLvl2(int maxMeleeUnits){
   string peanutButterMMSID = textLoader -> getTypeID(string("IDS_PBMMT"));
   string peanutMMSID = textLoader -> getTypeID(string("IDS_PMMT"));
 
+  //we do not want to log the units made by these towers for collisions (only use their stats)
+  bool logUnitsForCollisions = false;
+
   //make a pointer to each type of object that the type 2 towers can be upgraded to
   shared_ptr<RangeTower> deepDish = make_shared<DeepDish>(textLoader, eventManager, textureLoader);
   shared_ptr<RangeTower> meatLovers = make_shared<MeatLovers>(textLoader, eventManager, textureLoader);
-  shared_ptr<MeleeTower> spicyFry = make_shared<SpicyFry>(textLoader,maxMeleeUnits, eventManager, textureLoader);
-  shared_ptr<MeleeTower> waffleFry = make_shared<WaffleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader);
+  shared_ptr<MeleeTower> spicyFry = make_shared<SpicyFry>(textLoader,maxMeleeUnits, eventManager, textureLoader,logUnitsForCollisions);
+  shared_ptr<MeleeTower> waffleFry = make_shared<WaffleFry>(textLoader, maxMeleeUnits, eventManager, textureLoader,logUnitsForCollisions);
   shared_ptr<RangeTower> slushie = make_shared<Slushie>(textLoader, eventManager, textureLoader);
   shared_ptr<RangeTower> gravy = make_shared<Gravy>(textLoader, eventManager, textureLoader);
   shared_ptr<RangeTower> peanutButterMMS = make_shared<PeanutButterMMS>(textLoader, eventManager, textureLoader);
@@ -749,6 +758,9 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
       //set the positions of the units to be the center of the tower
       meleeTower -> setUpUnitCoordinates(meleeTower->getXCoordinate(), meleeTower->getYCoordinate());
       meleeTower -> setUpUnitTileSize(xGrid, yGrid);
+      meleeTower -> setUpUnitPositions(row, col);
+      //ensure that the collision manager knows about the existence of our units
+      meleeTower -> logUnitsForCollisionManager();
       /*
       //loop through all the meleeUnits and set their world
       vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();

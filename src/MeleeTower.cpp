@@ -43,6 +43,8 @@ void MeleeTower::update(float delta){
  * Initialize all the units that will spawn for this tower with a position
  */
 void MeleeTower::setUpUnits(){
+
+
   for(int unitIndex = 0; unitIndex < currentUnits.size(); unitIndex++){
     currentUnits.at(unitIndex) -> setXCoordinate(xCoordinate);
     currentUnits.at(unitIndex) -> setYCoordinate(yCoordinate);
@@ -61,9 +63,39 @@ void MeleeTower::setUpUnitCoordinates(float x, float y){
   }
 }
 
+/*
+ * Set the unit's position in the grid
+ */
+void MeleeTower::setUpUnitPositions(int row, int col){
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+    unit -> setRow(row);
+    unit -> setCol(col);
+  }
+}
+
 void MeleeTower::setUpUnitTileSize(float x, float y){
   for(shared_ptr<MeleeUnit> unit : currentUnits){
     unit->setTileSize(x,y);
+  }
+}
+
+/*
+ * Make events to signal that all the units were created
+ */
+void MeleeTower::logUnitsForCollisionManager(){
+  //Create ActorCreatedEvent and attach the created projectile
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+
+    //make an event to mark the unit's creation
+    //Create ActorCreatedEvent and attach the created actor
+    bool isProjectile = false;
+    shared_ptr<EventInterface> alliedUnitCreatedEvent = make_shared<ActorCreatedEvent>(unit, isProjectile, nowInNano);
+    this -> eventManager -> queueEvent(alliedUnitCreatedEvent);
   }
 }
 

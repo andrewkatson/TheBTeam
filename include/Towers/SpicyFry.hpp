@@ -5,7 +5,7 @@
 class SpicyFry : public MeleeTower{
 private:
 public:
-  SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
+  SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits=true);
 
   virtual void upgrade();
   virtual void setUpUnits();

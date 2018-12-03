@@ -15,6 +15,7 @@ FatKidUnit::FatKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManage
   this->typeID=textLoader->getTypeID(string("IDS_FKU"));
   this->attackRate=textLoader->getInteger(string("IDS_FK_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(typeID);
+  this -> isAlly = false;
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing
