@@ -6,6 +6,8 @@
   @author Jeremy Elkayam
 */
 
+#include <Events/TowerRemoveEvent.hpp>
+#include <Events/TowerCreationEvent.hpp>
 #include "SoundManager.hpp"
 
 SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
@@ -29,6 +31,16 @@ void SoundManager::registerDelegates(){
   LevelChangeEvent levelChangeEvent = LevelChangeEvent();
   const EventType levelChangeEventType = levelChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_SoundManager_LevelChange")),levelChangeEventType);
+
+  EventManager::EventDelegate towerCreationDelegate = std::bind(&SoundManager::handleTowerCreation, this, _1);
+  TowerCreationEvent towerCreationEvent = TowerCreationEvent();
+  const EventType towerCreationEventType = towerCreationEvent.getEventType();
+  this -> eventManager -> registerDelegate(towerCreationDelegate, textLoader -> getString(string("IDS_SoundManager_TowerCreation")),towerCreationEventType);
+
+  EventManager::EventDelegate towerRemoveDelegate = std::bind(&SoundManager::handleTowerRemove, this, _1);
+  TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
+  const EventType towerRemoveEventType = towerRemoveEvent.getEventType();
+  this -> eventManager -> registerDelegate(towerRemoveDelegate, textLoader -> getString(string("IDS_SoundManager_TowerRemove")),towerRemoveEventType);
 }
 
 void SoundManager::deregisterDelegates(){
@@ -54,8 +66,18 @@ void SoundManager::loadSounds(){
      else
         stop the game and pull up a box saying you 'screwed' up (family friendly)
  */
-  vector<string>paths={"IDS_Unit_Escape_Sound_Path","IDS_Level_Start_Sound_Path","IDS_Jazzy_Sound_Path"};
-  vector<string>ids={"IDS_Unit_Escape_Noise","IDS_Level_Start_Noise","IDS_Jazzy_Noise"};
+  vector<string>paths={"IDS_Unit_Escape_Sound_Path",
+                       "IDS_Level_Start_Sound_Path",
+                       "IDS_Jazzy_Sound_Path",
+                       "IDS_Tower_Creation_Sound_Path",
+                       "IDS_Tower_Remove_Sound_Path",
+                       "IDS_Failure_Sound_Path"};
+  vector<string>ids={"IDS_Unit_Escape_Noise",
+                     "IDS_Level_Start_Noise",
+                     "IDS_Jazzy_Noise",
+                     "IDS_Tower_Creation_Noise",
+                     "IDS_Tower_Remove_Noise",
+                     "IDS_Failure_Noise"};
 
   assert(paths.size()==ids.size());
 
@@ -119,4 +141,12 @@ void SoundManager::handleSoundPlay(const EventInterface& event){
 
 void SoundManager::handleLevelChanged(const EventInterface& event){
   playSound(textLoader->getString("IDS_Level_Start_Noise"));
+}
+
+void SoundManager::handleTowerCreation(const EventInterface &event) {
+  playSound(textLoader->getString("IDS_Tower_Creation_Noise"));
+}
+
+void SoundManager::handleTowerRemove(const EventInterface &event) {
+  playSound(textLoader->getString("IDS_Tower_Remove_Noise"));
 }

@@ -111,6 +111,10 @@ public:
 
   void handleLevelChanged(const EventInterface& event);
 
+  void handleTowerRemove(const EventInterface& event);
+
+  void handleTowerCreation(const EventInterface& event);
+
 };
 
 #endif
