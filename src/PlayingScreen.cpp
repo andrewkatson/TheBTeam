@@ -1148,8 +1148,12 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
     //the scale in the y direction
     float yScale = (float) yTileSize / ((float) yDim*unitScaleY);
 
-    //set the scale for the tower/obstalce to fill up the square
-    currentSprite.setScale(xScale, yScale);
+    if(current->getDirection()==M_PI || current->getDirection()==0){
+      //set the scale for the tower/obstalce to fill up the square
+      currentSprite.setScale(xScale, yScale);
+    }else{
+      currentSprite.setScale(yScale, xScale);
+    }
 
     //set the position of the sprite to the top left of the rectangle
     currentSprite.setPosition(xPos, yPos);
