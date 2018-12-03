@@ -273,7 +273,7 @@
   <string value="Sound_Manager_Level_Change" id="IDS_SoundManager_LevelChange"> </string>
   <string value="Sound_Manager_Tower_Creation" id="IDS_SoundManager_TowerCreation"> </string>
   <string value="Sound_Manager_Tower_Remove" id="IDS_SoundManager_TowerRemove"> </string>
-
+  <string value="Sound_Manager_Wave_Change" id="IDS_SoundManager_WaveChange"> </string>
     <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->

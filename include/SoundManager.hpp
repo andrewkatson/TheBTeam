@@ -115,6 +115,8 @@ public:
 
   void handleTowerCreation(const EventInterface& event);
 
+  void handleWaveChange(const EventInterface & event);
+
 };
 
 #endif

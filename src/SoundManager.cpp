@@ -41,6 +41,11 @@ void SoundManager::registerDelegates(){
   TowerRemoveEvent towerRemoveEvent = TowerRemoveEvent();
   const EventType towerRemoveEventType = towerRemoveEvent.getEventType();
   this -> eventManager -> registerDelegate(towerRemoveDelegate, textLoader -> getString(string("IDS_SoundManager_TowerRemove")),towerRemoveEventType);
+
+  EventManager::EventDelegate waveChangeDelegate = std::bind(&SoundManager::handleWaveChange, this, _1);
+  WaveChangeEvent waveChangeEvent= WaveChangeEvent();
+  const EventType waveChangeEventType = waveChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(waveChangeDelegate, textLoader -> getString(string("IDS_SoundManager_WaveChange")),waveChangeEventType);
 }
 
 void SoundManager::deregisterDelegates(){
@@ -151,4 +156,14 @@ void SoundManager::handleTowerCreation(const EventInterface &event) {
 
 void SoundManager::handleTowerRemove(const EventInterface &event) {
   playSound(textLoader->getString("IDS_Tower_Remove_Noise"));
+}
+
+void SoundManager::handleWaveChange(const EventInterface & event){
+  const WaveChangeEvent* waveChangeEvent= static_cast<const WaveChangeEvent*>(&event);
+
+  WaveChangeEventData* waveChangeEventData= static_cast<WaveChangeEventData*>((waveChangeEvent-> data).get());
+
+  if(!waveChangeEventData->waveStart){
+    playSound(textLoader->getString("IDS_Jazzy_Noise"));
+  }
 }
