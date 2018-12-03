@@ -13,11 +13,13 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> s_elapsed = 0;
   this -> overshooting = false;
   this -> overshoot = 0;
+  this -> current_sprite = 0 ;
+  this -> walk_cycle_position = 0;
 }
 
 void MeleeUnit::update(float delta){
 
-  if(speed==0 && current_sprite!=2){
+  if(speed==0){
 
     current_sprite=2;
     this->sprite.setTexture(textures->at(current_sprite));
@@ -29,10 +31,18 @@ void MeleeUnit::update(float delta){
     if (s_elapsed > 1/speed) {
       s_elapsed = 0;
 
-      if (current_sprite == 0) {
+      if (walk_cycle_position == 0) { //first walking frame
+	walk_cycle_position = 1;
+        current_sprite = 2; //standing
+      }else if(walk_cycle_position == 1){ // second walking frame
+	walk_cycle_position = 2;
         current_sprite = 1;
-      } else {
-        current_sprite = 0;
+      } else if(walk_cycle_position == 2) {
+	walk_cycle_position = 3;
+        current_sprite = 2;
+      }else{
+	walk_cycle_position = 0;
+	current_sprite = 0;
       }
 
       this->sprite.setTexture(textures->at(current_sprite));
