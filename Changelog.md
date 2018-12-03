@@ -25,6 +25,10 @@
 
 ###Changed
 - Improved unit animations [@jeremyelkayam][https://github.com/jeremyelkayam]
+- OptionsMenuScreen now sends events to player, boardmanager, and wavemanager [kp-hb][https://github.com/kp-hb]
+- Player has a handleoptionselectedevent method
+- boardmanager has a handleoptionselectedevent method
+- wavemanager has a handleoptionselectedevent method
 
 
 ###Fixed
