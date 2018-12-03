@@ -33,17 +33,17 @@ void MeleeUnit::update(float delta){
       s_elapsed = 0;
 
       if (walk_cycle_position == 0) { //first walking frame
-	walk_cycle_position = 1;
+        walk_cycle_position = 1;
         current_sprite = 2; //standing
       }else if(walk_cycle_position == 1){ // second walking frame
-	walk_cycle_position = 2;
+        walk_cycle_position = 2;
         current_sprite = 1;
       } else if(walk_cycle_position == 2) {
-	walk_cycle_position = 3;
+        walk_cycle_position = 3;
         current_sprite = 2;
       }else{
-	walk_cycle_position = 0;
-	current_sprite = 0;
+        walk_cycle_position = 0;
+        current_sprite = 0;
       }
 
       this->sprite.setTexture(textures->at(current_sprite));

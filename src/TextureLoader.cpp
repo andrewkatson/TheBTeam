@@ -49,6 +49,7 @@ void TextureLoader::initTextures(){
       sf::Texture textureToAdd;
       //load the texture specified by the current path string
       textureToAdd.loadFromFile(texturePathString);
+      textureToAdd.setSmooth(true);
       //add it to the vector of textures for the current type
       allTextures.at(currentTypeID) -> push_back(textureToAdd);
       //increment to the next texture path

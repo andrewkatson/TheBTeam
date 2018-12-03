@@ -16,6 +16,7 @@
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
 #include "Events/MapGeneratedEvent.hpp"
+#include "Events/OptionSelectedEvent.hpp"
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;

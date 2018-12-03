@@ -56,7 +56,7 @@ void Game::initGame(sf::RenderWindow  &game){
   //bool doSleep = true;
   this -> world = make_shared<b2World>(gravity);
 
-  world -> SetContactListener(&collisionCallbackInstance);
+  //world -> SetContactListener(&collisionCallbackInstance);
 
   //initlaize the texture loader
   this -> textureLoader = make_shared<TextureLoader>(textLoader);
