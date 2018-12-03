@@ -460,9 +460,10 @@ void WaveManager::setGridDimensions(float x, float y){
 /*
  * Set the dimensions of the grid
  */
-void WaveManager::setDimensions(int rows, int cols){
-  this -> rows = rows;
-  this -> cols = cols;
+void WaveManager::setDimensions(int rows, int cols) {
+  this->rows = rows;
+  this->cols = cols;
+}
 
 void WaveManager::handleOptionSelectedEvent(const EventInterface &event) {
     auto optionSelectedEvent = static_cast<const OptionSelectedEvent*>(&event);
