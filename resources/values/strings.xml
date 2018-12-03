@@ -224,9 +224,11 @@
 
   <!--Sound Paths-->
   <string value="../resources/sounds/unit/escape.ogg" id="IDS_Unit_Escape_Sound_Path"> </string>
+  <string value="../resources/sounds/game_stuff/newlevel.ogg" id="IDS_Level_Start_Sound_Path"> </string>
 
   <!--Sound IDs-->
   <string value="Unit_Escape" id="IDS_Unit_Escape_Noise"> </string>
+  <string value="New_Level" id="IDS_Level_Start_Noise"> </string>
 
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
@@ -256,6 +258,9 @@
     <string value="Wave_Manager_Level_Change" id="IDS_WaveManager_LevelChange"> </string>
     <string value="Wave_Manager_Difficulty_Change" id="IDS_WaveManager_DifficultyChange"> </string>
     <string value="Wave_Manager_Wave_Change" id="IDS_WaveManager_WaveChange"> </string>
+
+  <!--Sound Manager Delegates-->
+  <string value="Sound_Manager_Play_Sound" id="IDS_SoundManager_PlaySound"> </string>
 
     <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>

@@ -49,13 +49,23 @@ void SoundManager::loadSounds(){
      else
         stop the game and pull up a box saying you 'screwed' up (family friendly)
  */
+  vector<string>paths={"IDS_Unit_Escape_Sound_Path","IDS_Level_Start_Sound_Path"};
+  vector<string>ids={"IDS_Unit_Escape_Noise","IDS_Level_Start_Noise"};
 
-  if(!buffer.loadFromFile(textLoader->getString("IDS_Unit_Escape_Sound_Path"))){
-    //you fucked up
+  assert(paths.size()==ids.size());
+
+  for(int z=0;z<paths.size();z++){
+    loadSound(paths[z],ids[z]);
   }
 
-  sound_objs[textLoader->getString("IDS_Unit_Escape_Noise")].setBuffer(buffer);
 
+}
+
+void SoundManager::loadSound(string path, string soundID){
+  if(!buffer.loadFromFile(textLoader->getString("IDS_Unit_Escape_Sound_Path"))) {
+    //you fucked up
+  }
+  sound_objs[textLoader->getString("IDS_Unit_Escape_Noise")].setBuffer(buffer);
 }
 
 

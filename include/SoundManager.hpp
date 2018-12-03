@@ -15,8 +15,11 @@
 #include "Events/PlaySoundEvent.hpp"
 
 #include <memory>
+#include <vector>
+#include <cassert>
 
 using std::string;
+using std::vector;
 
 class SoundManager{
 private:
@@ -36,6 +39,8 @@ private:
     they're played.
   */
   sf::SoundBuffer buffer;
+
+  void loadSound(string path, string soundID);
 
 public:
 

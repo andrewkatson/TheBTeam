@@ -22,6 +22,9 @@
   - Crinkle Cut Fry
   - Spicy Fry
 - yes, I did all this... it took many hours
+- PlaySoundEvent
+- PlaySoundEventData
+- A "peeeow" sound now plays when units leave the map
 
 ###Changed
 - Improved unit animations [@jeremyelkayam][https://github.com/jeremyelkayam]
@@ -29,6 +32,7 @@
 - Player has a handleoptionselectedevent method
 - boardmanager has a handleoptionselectedevent method
 - wavemanager has a handleoptionselectedevent method
+- SoundManager does things now
 
 
 ###Fixed
