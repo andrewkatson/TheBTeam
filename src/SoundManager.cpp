@@ -71,13 +71,15 @@ void SoundManager::loadSounds(){
                        "IDS_Jazzy_Sound_Path",
                        "IDS_Tower_Creation_Sound_Path",
                        "IDS_Tower_Remove_Sound_Path",
-                       "IDS_Failure_Sound_Path"};
+                       "IDS_Failure_Sound_Path",
+                       "IDS_Ding_Sound_Path"};
   vector<string>ids={"IDS_Unit_Escape_Noise",
                      "IDS_Level_Start_Noise",
                      "IDS_Jazzy_Noise",
                      "IDS_Tower_Creation_Noise",
                      "IDS_Tower_Remove_Noise",
-                     "IDS_Failure_Noise"};
+                     "IDS_Failure_Noise",
+                     "IDS_Ding_Noise"};
 
   assert(paths.size()==ids.size());
 

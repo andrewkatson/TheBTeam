@@ -229,6 +229,7 @@
   <string value="../resources/sounds/tower/harp.ogg" id="IDS_Tower_Creation_Sound_Path"> </string>
   <string value="../resources/sounds/tower/chaching.ogg" id="IDS_Tower_Remove_Sound_Path"> </string>
   <string value="../resources/sounds/game_stuff/failure.ogg" id="IDS_Failure_Sound_Path"> </string>
+  <string value="../resources/sounds/tower/ding.ogg" id="IDS_Ding_Sound_Path"> </string>
   <!--Sound IDs-->
   <string value="Unit_Escape" id="IDS_Unit_Escape_Noise"> </string>
   <string value="New_Level" id="IDS_Level_Start_Noise"> </string>
@@ -236,6 +237,7 @@
   <string value="Tower_Creation" id="IDS_Tower_Creation_Noise"> </string>
   <string value="Tower_Remove" id="IDS_Tower_Remove_Noise"> </string>
   <string value="Failure" id="IDS_Failure_Noise"> </string>
+  <string value="Ding" id="IDS_Ding_Noise"> </string>
 
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
