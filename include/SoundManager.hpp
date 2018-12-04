@@ -27,7 +27,7 @@ class SoundManager{
 private:
 
   //Stores game objects referencing streaming music.
-  std::unordered_map<int,vector<shared_ptr<sf::Music>>>music_objs;
+  std::unordered_map<int,vector<sf::Music*>>music_objs;
 
   //Stores game objects referencing pre-loaded sounds.
   std::unordered_map<std::string,sf::Sound>sound_objs;

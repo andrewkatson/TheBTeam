@@ -15,10 +15,18 @@ SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
    this -> eventManager = eventManager;
    this -> textLoader = textLoader;
    this -> registerDelegates();
+   playingIndex=-1;
 }
 
 SoundManager::~SoundManager(){
   this -> deregisterDelegates();
+
+  for(auto iterator : music_objs){
+    for(auto music : iterator.second){
+      delete(music);
+    }
+  }
+
 }
 
 void SoundManager::registerDelegates(){
@@ -97,22 +105,17 @@ void SoundManager::loadSounds(){
 
 
   for(int z=0;z<=5;z++){
-    std::shared_ptr<sf::Music>music=make_shared<sf::Music>();
+    sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
-    if(z==3){
-
-    }
     music_objs[COMBAT].push_back(music);
   }
   for(int z=0;z<=1;z++){
-    std::shared_ptr<sf::Music>music=make_shared<sf::Music>();
+    sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Prep_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
     music_objs[PREP].push_back(music);
   }
-
-
 
 }
 
@@ -164,6 +167,8 @@ void SoundManager::startSongOfType(int type){
 
   playingIndex=musicPicker(rnd_gen);
 
+  cout << "starting song of type" << playingIndex;
+
   playMusic();
 }
 
@@ -192,6 +197,7 @@ void SoundManager::handleTowerRemove(const EventInterface &event) {
 }
 
 void SoundManager::handleWaveChange(const EventInterface & event){
+//  cout << "starting song of type" << playingIndex;
   stopSound(textLoader->getString("IDS_Jazzy_Noise"));
   stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
 
@@ -201,7 +207,7 @@ void SoundManager::handleWaveChange(const EventInterface & event){
   WaveChangeEventData* waveChangeEventData= static_cast<WaveChangeEventData*>((waveChangeEvent-> data).get());
 
   if(waveChangeEventData->waveStart){
-    stopMusic();
+    if(playingIndex!=-1) stopMusic();
     startSongOfType(COMBAT);
   }else{
     stopMusic();
