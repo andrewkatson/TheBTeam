@@ -16,6 +16,7 @@ SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
    this -> textLoader = textLoader;
    this -> registerDelegates();
    playingIndex=-1;
+   newLevel=false;
 }
 
 SoundManager::~SoundManager(){
@@ -201,7 +202,13 @@ void SoundManager::handleSoundPlay(const EventInterface& event){
 }
 
 void SoundManager::handleLevelChanged(const EventInterface& event){
+  stopSound(textLoader->getString("IDS_Jazzy_Noise"));
+  stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
+  stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));
+
   playSound(textLoader->getString("IDS_Level_Start_Noise"));
+
+  newLevel=true;
 }
 
 void SoundManager::handleTowerCreation(const EventInterface &event) {
@@ -228,13 +235,17 @@ void SoundManager::handleWaveChange(const EventInterface & event){
     startSongOfType(COMBAT);
   }else{
     stopMusic();
-    if(playingIndex==3) {
-      playSound(textLoader->getString("IDS_QFG_Win_Noise"));
-    }else if(playingIndex==4 || playingIndex==5){
+    if (newLevel){
+      newLevel=false;
+    }else {
+      if (playingIndex == 3) {
+        playSound(textLoader->getString("IDS_QFG_Win_Noise"));
+      } else if (playingIndex == 4 || playingIndex == 5) {
         playSound(textLoader->getString("IDS_QFG4_Win_Noise"));
-    }else{
-      playSound(textLoader->getString("IDS_Jazzy_Noise"));
+      } else {
+        playSound(textLoader->getString("IDS_Jazzy_Noise"));
+      }
+      startSongOfType(PREP);
     }
-    startSongOfType(PREP);
   }
 }

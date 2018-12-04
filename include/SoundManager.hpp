@@ -53,6 +53,8 @@ private:
 
   std::random_device rd;
 
+  bool newLevel;
+
 public:
 
   /*
