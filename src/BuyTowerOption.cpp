@@ -3,7 +3,7 @@
 
 BuyTowerOption::BuyTowerOption(shared_ptr<TextLoader> textLoader, float xPos, float yPos,
   float xSize, float ySize, string fontPath, shared_ptr<TowerInterface> towerToShow,
-  bool showStats, int windowX, int windowY, bool areBuying, bool isClickable){
+  bool showStats, int windowX, int windowY, bool areBuying, bool isClickable,shared_ptr<EventManager> eventManager){
   this -> textLoader = textLoader;
   this -> xPos = xPos;
   this -> yPos = yPos;
@@ -16,6 +16,7 @@ BuyTowerOption::BuyTowerOption(shared_ptr<TextLoader> textLoader, float xPos, fl
   this -> windowY = windowY;
   this -> areBuying = areBuying;
   this -> isClickable = isClickable;
+  this -> eventManager = eventManager;
   initDrawingMaterials();
 }
 
@@ -434,11 +435,24 @@ void BuyTowerOption::drawStatisticsButtons(sf::RenderWindow& window){
  * Whether the button to buy/sell has been clicked
  */
 bool BuyTowerOption::isClicked(float xPos, float yPos){
-  if(!isClickable){
+
+  if(buyOrSell -> isSelected(xPos, yPos)){
+
+    if(!isClickable) {
+      auto now = std::chrono::high_resolution_clock::now();
+      //the actual count in nanoseconds for the time
+      auto nowInNano = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+
+      shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("", textLoader->getString("IDS_Failure_Noise"),
+                                                                         nowInNano);
+
+      this->eventManager->queueEvent(playSound);
+      return false;
+    }
+    return true;
+  }else{
     return false;
   }
-
-  return buyOrSell -> isSelected(xPos, yPos);
 }
 
 

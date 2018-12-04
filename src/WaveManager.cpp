@@ -397,8 +397,6 @@ map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<
 }
 
 
-queue<shared_ptr<MeleeUnit>> WaveManager::getNextWave() {return currentWave;}
-
 unordered_map<long long,shared_ptr<MeleeUnit>>& WaveManager::getSpawnedEnemyUnits(){return spawnedCurrentWave;}
 
 

@@ -18,6 +18,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager, textLoader));
   this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
+  this -> soundManager->loadSounds();
   this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool(),world);
   this -> projectileManager = make_shared<ProjectileManager>(eventManager, textLoader, world);
   this -> collisionManager = make_shared<CollisionManager>(textLoader, eventManager, waveManager, projectileManager);
@@ -423,7 +424,6 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
    auto now = high_resolution_clock::now();
    //the actual count in nanoseconds for the time
    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
-
    shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano,boardManager->getDistances(),boardManager->getEntryPositions());
 
    this -> eventManager -> queueEvent(mapGenerated);
@@ -616,14 +616,29 @@ bool GameLogic::attemptSellTower(int row, int col){
  bool GameLogic::canUpgradeTowerStats(int row, int col){
    assert(isTower(row,col));
 
-   //the price for an upgrade
+  auto now = std::chrono::high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+
+       //the price for an upgrade
    int upgradeCost = getUpgradePrice(row, col);
 
    int playerBalance = player -> getBalance();
 
    if(playerBalance >= upgradeCost){
+
+     shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",
+             textLoader->getString("IDS_Ding_Noise"),nowInNano);
+     this->eventManager->queueEvent(playSound);
+     //play ding sound
      return true;
    }
+
+  shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("", textLoader->getString("IDS_Failure_Noise"),
+                                                                     nowInNano);
+
+  this->eventManager->queueEvent(playSound);
+
    return false;
  }
 
@@ -634,6 +649,7 @@ bool GameLogic::attemptSellTower(int row, int col){
  * @return whether the user can buy the obstacle/tower at the space selected
  */
 bool GameLogic::canBuy(int row, int col){
+
   bool isExit = (boardManager -> isExit(row,col));
   //check if this is not the exit
   if(isExit){

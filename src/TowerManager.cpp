@@ -870,6 +870,9 @@ int TowerManager::getUpgradePrice(int row, int col){
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Upgrade"))){
      meleeTower->updateUnitArmor(meleeTower->getUnitArmor()+upgradeAmount);
    }
+   else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Attack_Rate_Upgrade"))){
+     meleeTower->updateUnitAttackRate(meleeTower->getUnitAttackRate()+upgradeAmount);
+   }
    else{
      cerr << "upgrade Melee Tower unknown upgrade button id : TowerManager" << endl;
      assert(true == false);

@@ -1,5 +1,7 @@
 #pragma once
 #include <memory>
+#include <chrono>
+#include "Events/PlaySoundEvent.hpp"
 #include "Button.hpp"
 #include "TowerInterface.hpp"
 #include <assert.h>
@@ -25,6 +27,8 @@ private:
   vector<shared_ptr<Button>> statisticsButtons;
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
+
+  shared_ptr<EventManager> eventManager;
   //used to load in fonts
   sf::Font mainFont;
   //used to draw text
@@ -56,7 +60,7 @@ public:
 
   BuyTowerOption(shared_ptr<TextLoader> textLoader, float xPos, float yPos,
     float xSize, float ySize, string fontPath, shared_ptr<TowerInterface> towerToShow,
-    bool showStats, int windowX, int windowY, bool areBuying, bool isClickable);
+    bool showStats, int windowX, int windowY, bool areBuying, bool isClickable,shared_ptr<EventManager>eventManager);
 
   void initDrawingMaterials();
   void initPictureRectangle();

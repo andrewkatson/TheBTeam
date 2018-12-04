@@ -146,12 +146,6 @@ public:
    */
   //void setUpPossibleEnemies();
 
-  /*
-   * Return the next wave in waves.
-   *
-   * @return the wave at the front of the wave queue.
-   */
-  queue<shared_ptr<MeleeUnit>> getNextWave();
 
 
   /*
