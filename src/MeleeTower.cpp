@@ -8,7 +8,7 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> xRally = 0xFFFFFFFF;
   this -> yRally = 0xFFFFFFFF;
   this -> e = 0.00001;
-  this -> timeOfDeath = {-1.0, -1.0, -1.0};
+  this -> timeOfDeath = {-1, -1, -1};
   this -> isMelee = true;
   this -> radiusVisible = false;
   this -> registerDelegates();
@@ -21,6 +21,10 @@ MeleeTower::~MeleeTower(){
 
 void MeleeTower::update(float delta){
   int unitIndex = 0;
+
+  //if we can respawn units then respawn them
+  respawnUnits(delta);
+
   //if a unit does not have an engaged enemy unit then send it back towards
   //a point situated around the rally point
   for(shared_ptr<MeleeUnit> unit : currentUnits){
@@ -279,6 +283,7 @@ void MeleeTower::upgrade(){}
  */
 void MeleeTower::initSprite(){
   (this->sprite).setTexture(textures -> at(0));
+  currentTexture = 0;
 }
 
 /*
@@ -351,7 +356,7 @@ void MeleeTower::handleDeadUnit(int indexOfUnit){
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
-  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+  auto nowInNano = duration_cast<seconds>(now.time_since_epoch()).count();
 
   //set whatever time is in this space to the current time
   timeOfDeath.at(indexOfUnit) = nowInNano;
@@ -361,21 +366,21 @@ void MeleeTower::handleDeadUnit(int indexOfUnit){
  * Respawn any unit that is below 0 health that has a larger elapsed time
  * since it last died than the respawn Speed
  */
-void MeleeTower::respawnUnits(){
+void MeleeTower::respawnUnits(float delta){
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
-  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+  auto nowInNano = duration_cast<seconds>(now.time_since_epoch()).count();
 
   for(int index = 0; index < timeOfDeath.size(); index++){
-    float deathTime = timeOfDeath.at(index);
+    long long deathTime = timeOfDeath.at(index);
 
     //if this is not a dead unit
-    if(deathTime == -1.0){
+    if(deathTime == -1){
       continue;
     }
-    if(deathTime - e <= nowInNano && deathTime + e >= nowInNano){
-      timeOfDeath.at(index) = -1.0;
+    if(nowInNano - deathTime < (delta/respawnSpeed)){
+      timeOfDeath.at(index) = -1;
       //set the health back to max
       currentUnits.at(index) -> resetHealth();
 
@@ -400,7 +405,7 @@ bool MeleeTower::canAttack(){
  * If we can attack then we check to see if a unit is not engaged or
  * is engaged with an enemy unit that is not also engaged with it
  */
-void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange){
+void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
 
 }
 

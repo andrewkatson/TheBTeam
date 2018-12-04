@@ -44,6 +44,9 @@
   <constant value="1" id="IDS_Minimum_Tower_Upgrade"> </constant>
   <constant value="2" id="IDS_Maximum_Tower_Upgrade"> </constant>
 
+  <!--Range Tower Time Between Flip Textures -->
+  <constant value = "1" id = "IDS_Range_Tower_Flip_Face"> </constant>
+
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
   <!--No Tower Tile-->
@@ -271,84 +274,84 @@
   <constant value="0" id="IDS_CP_HP"> </constant>
   <constant value="10" id="IDS_CP_DM"> </constant>
   <constant value="0" id="IDS_CP_AM"> </constant>
-  <constant value="4" id="IDS_CP_SP"> </constant>
+  <constant value="40" id="IDS_CP_SP"> </constant>
   <constant value="10" id="IDS_CP_AP"> </constant>
   <constant value="2" id="IDS_CP_AR"> </constant>
   <!--PepperoniPizza Projectile-->
   <constant value="0" id="IDS_PP_HP"> </constant>
   <constant value="15" id="IDS_PP_DM"> </constant>
   <constant value="0" id="IDS_PP_AM"> </constant>
-  <constant value="6" id="IDS_PP_SP"> </constant>
+  <constant value="60" id="IDS_PP_SP"> </constant>
   <constant value="14" id="IDS_PP_AP"> </constant>
   <constant value="4" id="IDS_PP_AR"> </constant>
   <!--MeatLovers Projectile-->
   <constant value="0" id="IDS_ML_HP"> </constant>
   <constant value="25" id="IDS_ML_DM"> </constant>
   <constant value="50" id="IDS_ML_AM"> </constant>
-  <constant value="8" id="IDS_ML_SP"> </constant>
+  <constant value="80" id="IDS_ML_SP"> </constant>
   <constant value="14" id="IDS_ML_AP"> </constant>
   <constant value="4" id="IDS_ML_AR"> </constant>
   <!--DeepDish Projectile-->
   <constant value="0" id="IDS_DD_HP"> </constant>
   <constant value="15" id="IDS_DD_DM"> </constant>
   <constant value="0" id="IDS_DD_AM"> </constant>
-  <constant value="3" id="IDS_DD_SP"> </constant>
+  <constant value="30" id="IDS_DD_SP"> </constant>
   <constant value="20" id="IDS_DD_AP"> </constant>
   <constant value="8" id="IDS_DD_AR"> </constant>
   <!--MiniM&Ms Projectile-->
   <constant value="0" id="IDS_MMM_HP"> </constant>
   <constant value="1" id="IDS_MMM_DM"> </constant>
   <constant value="0" id="IDS_MMM_AM"> </constant>
-  <constant value="40" id="IDS_MMM_SP"> </constant>
+  <constant value="400" id="IDS_MMM_SP"> </constant>
   <constant value="0" id="IDS_MMM_AP"> </constant>
   <constant value="0" id="IDS_MMM_AR"> </constant>
   <!--NormalM&Ms Projectile-->
   <constant value="0" id="IDS_NMM_HP"> </constant>
   <constant value="3" id="IDS_NMM_DM"> </constant>
   <constant value="0" id="IDS_NMM_AM"> </constant>
-  <constant value="45" id="IDS_NMM_SP"> </constant>
+  <constant value="450" id="IDS_NMM_SP"> </constant>
   <constant value="0" id="IDS_NMM_AP"> </constant>
   <constant value="0" id="IDS_NMM_AR"> </constant>
   <!--PeanutButterM&Ms Projectile-->
   <constant value="0" id="IDS_PBMM_HP"> </constant>
   <constant value="2" id="IDS_PBMM_DM"> </constant>
   <constant value="0" id="IDS_PBMM_AM"> </constant>
-  <constant value="60" id="IDS_PBMM_SP"> </constant>
+  <constant value="600" id="IDS_PBMM_SP"> </constant>
   <constant value="0" id="IDS_PBMM_AP"> </constant>
   <constant value="2" id="IDS_PBMM_AR"> </constant>
   <!--PeanutM&Ms Projectile-->
   <constant value="0" id="IDS_PMM_HP"> </constant>
   <constant value="3" id="IDS_PMM_DM"> </constant>
   <constant value="0" id="IDS_PMM_AM"> </constant>
-  <constant value="30" id="IDS_PMM_SP"> </constant>
+  <constant value="300" id="IDS_PMM_SP"> </constant>
   <constant value="6" id="IDS_PMM_AP"> </constant>
   <constant value="0" id="IDS_PMM_AR"> </constant>
   <!--Soda Projectile-->
   <constant value="0" id="IDS_SO_HP"> </constant>
   <constant value="4" id="IDS_SO_DM"> </constant>
   <constant value="0" id="IDS_SO_AM"> </constant>
-  <constant value="10" id="IDS_SO_SP"> </constant>
+  <constant value="100" id="IDS_SO_SP"> </constant>
   <constant value="4" id="IDS_SO_AP"> </constant>
   <constant value="30" id="IDS_SO_AR"> </constant>
   <!--EnergyDrink Projectile-->
   <constant value="0" id="IDS_ED_HP"> </constant>
   <constant value="6" id="IDS_ED_DM"> </constant>
   <constant value="0" id="IDS_ED_AM"> </constant>
-  <constant value="12" id="IDS_ED_SP"> </constant>
+  <constant value="120" id="IDS_ED_SP"> </constant>
   <constant value="6" id="IDS_ED_AP"> </constant>
   <constant value="40" id="IDS_ED_AR"> </constant>
   <!--Gravy Projectile-->
   <constant value="0" id="IDS_G_HP"> </constant>
   <constant value="10" id="IDS_G_DM"> </constant>
   <constant value="0" id="IDS_G_AM"> </constant>
-  <constant value="6" id="IDS_G_SP"> </constant>
+  <constant value="60" id="IDS_G_SP"> </constant>
   <constant value="10" id="IDS_G_AP"> </constant>
   <constant value="20" id="IDS_G_AR"> </constant>
   <!--Slushie Projectile-->
   <constant value="0" id="IDS_SL_HP"> </constant>
   <constant value="7" id="IDS_SL_DM"> </constant>
   <constant value="0" id="IDS_SL_AM"> </constant>
-  <constant value="14" id="IDS_SL_SP"> </constant>
+  <constant value="140" id="IDS_SL_SP"> </constant>
   <constant value="4" id="IDS_SL_AP"> </constant>
   <constant value="60" id="IDS_SL_AR"> </constant>
 
@@ -834,6 +837,9 @@
 
   </ints>
   <floats>
+    <!--Tower Rate of Fire Scale" -->
+    <constant value = "0.0000001" id="IDS_Rate_Of_Fire_Scaler"/>
+
     <!--Unit Scale -->
     <constant value = "4.0" id="IDS_Unit_Size_Scale_X"/>
     <constant value = "4.0" id="IDS_Unit_Size_Scale_Y"/>

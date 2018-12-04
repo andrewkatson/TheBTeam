@@ -33,6 +33,9 @@ protected:
   //The index of the sprite that the actor is currently using.
   int current_sprite;
 
+  //whether this projectile has already hit its target
+  bool alreadyHit;
+
 public:
   Projectile(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader);
 
@@ -100,6 +103,11 @@ public:
    * Setting the fixtures for Box2D
    */
   void setFixtures();
+
+  /*
+   * does damage to the passed unit
+   */
+  void damageUnit(shared_ptr<ActorInterface> enemy);
 
 
 };

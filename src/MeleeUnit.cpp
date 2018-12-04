@@ -99,8 +99,8 @@ void MeleeUnit::move(float deltaS){
 }
 
 void MeleeUnit::vectorMove(float delta){
-  float newX = xVector /(2000/speed) *delta + x;
-  float newY = yVector / (2000/speed) *delta + y;
+  float newX = xVector /(500/speed) *delta * xScale + x;
+  float newY = yVector / (500/speed) *delta * yScale + y;
 
   //we check to see if the projectile has overshot the target
   if(xVector > 0 ){

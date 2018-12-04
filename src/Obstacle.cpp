@@ -16,6 +16,7 @@ Obstacle::Obstacle(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> 
  */
 void Obstacle::initSprite(){
   (this->sprite).setTexture(textures -> at(0));
+  currentTexture =0;
 }
 
 void Obstacle::upgrade(){

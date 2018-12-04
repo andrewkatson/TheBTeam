@@ -26,6 +26,9 @@ class ActorInterface{
 
 protected:
 
+  //whether the unit should be drawn or not (1=true, 0=false)
+  float drawUnit=1;
+
   //the x of the vector of movement
   float xVector;
   //the y of the vector of movement
@@ -227,6 +230,7 @@ public:
   int getRadius(){return radius;}
   int getAttackRate(){return attackRate;}
 
+  void updateHitpoints(int newHitpoints){this->hitpoints = newHitpoints;}
   void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
   void updateDamage(int newDamage){damage = newDamage;}
   void updateArmor(int newArmor){armor = newArmor;}
@@ -284,6 +288,19 @@ public:
    * @param ypos: the y coordinate of the target of the projectile
    */
   void setTargetPos(float x, float y);
+
+  /*
+   * flicker the unit by setting its draw unit variable to 0
+   */
+  void flickerUnit(){drawUnit = 0.0;}
+  /*
+   * @return float: the value of draw unit
+   */
+  float canDraw(){return drawUnit;}
+  /*
+   * increment draw unit (acts as a timer while the unit flickers)
+   */
+  void incrementDrawUnit(){drawUnit+=0.1;if(drawUnit>1.0){drawUnit=1.0;}}
 };
 
 #endif

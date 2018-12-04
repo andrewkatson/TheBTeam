@@ -10,6 +10,7 @@
 #include "WaveManager.hpp"
 #include "ProjectileManager.hpp"
 #include "TowerInterface.hpp"
+#include "Projectile.hpp"
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
 #include "Events/ActorCreatedEvent.hpp"
@@ -52,6 +53,8 @@ private:
   //the number of cols
   int cols;
 
+  //circle shape to take the place of any tower radius
+  sf::CircleShape radius;
   //rectangle shape to act in place of the tiles to check if a circle intersects
   sf::RectangleShape tile;
 
@@ -85,10 +88,12 @@ public:
   bool tileInRadius(shared_ptr<TowerInterface> tower);
   vector<floatPair> getFourCornersOfTileAndMidpoints();
 
-  void checkForCollisions();
+  void checkForCollisions(float delta);
   void updateAllUnitPositions();
   void updateAllAllyUnitPositions();
   void updateAllEnemyUnitPositions();
+
+  void projectileExplosionCollisionCheck(shared_ptr<ActorInterface> projectile);
 
   bool inMap(int row, int col);
   bool inMap(float x, float y);

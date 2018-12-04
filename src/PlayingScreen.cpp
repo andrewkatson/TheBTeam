@@ -1127,67 +1127,73 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
     //the current actor
     shared_ptr<ActorInterface> current = (iterator).second;
 
-    //get the sprite to be drawn
-    sf::Sprite currentSprite = current -> getSprite();
+    //if the unit is not to be drawn (i.e. flicker)
+    if(current -> canDraw() >= 1){
 
-    //the x and y position of this rectangle
-    float xPos = current -> getXCoordinate();
-    float yPos = current -> getYCoordinate();
+          //get the sprite to be drawn
+          sf::Sprite currentSprite = current -> getSprite();
 
-    //the bounding rectangle will give us the dimensions of the sprite
-    sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
-    //the x dimension of the box
-    float xDim = boundingBox.width;
-    //the ydimension of the box
-    float yDim = boundingBox.height;
+          //the x and y position of this rectangle
+          float xPos = current -> getXCoordinate();
+          float yPos = current -> getYCoordinate();
 
-    //the scaling used for the units so that they do not fill up an entire square
-    float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
-    float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
+          //the bounding rectangle will give us the dimensions of the sprite
+          sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+          //the x dimension of the box
+          float xDim = boundingBox.width;
+          //the ydimension of the box
+          float yDim = boundingBox.height;
 
-    //the scale in the x direction
-    float xScale = (float) xTileSize / ((float) xDim*unitScaleX);
-    //the scale in the y direction
-    float yScale = (float) yTileSize / ((float) yDim*unitScaleY);
+          //the scaling used for the units so that they do not fill up an entire square
+          float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
+          float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
 
-    //set the scale for the tower/obstalce to fill up the square
-    currentSprite.setScale(xScale, yScale);
+          //the scale in the x direction
+          float xScale = (float) xTileSize / ((float) xDim*unitScaleX);
+          //the scale in the y direction
+          float yScale = (float) yTileSize / ((float) yDim*unitScaleY);
 
-    //set the position of the sprite to the top left of the rectangle
-    currentSprite.setPosition(xPos, yPos);
+          //set the scale for the tower/obstalce to fill up the square
+          currentSprite.setScale(xScale, yScale);
 
-    //finally draw the sprite
-    window.draw(currentSprite);
+          //set the position of the sprite to the top left of the rectangle
+          currentSprite.setPosition(xPos, yPos);
 
-    // sf::CircleShape radiusCircle = current -> getRadiusCircle();
-    // radiusCircle.setFillColor(sf::Color(150, 50, 250));
-    // float radius = (float) current -> getRadius();
-    // //cout << radius << endl;
-    // radiusCircle.setRadius(radius);
-    // radiusCircle.setScale(xScale, yScale);
-    // //reset the origin so any position set refers to the center of the circle
-    // radiusCircle.setOrigin(radius, radius);
-    // radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
-    // window.draw(radiusCircle);
-    //cout << "drew radius" << endl;
+          //finally draw the sprite
+          window.draw(currentSprite);
 
-
-    /*
-    sf::CircleShape radiusCircle = current -> getRadiusCircle();
-    radiusCircle.setFillColor(sf::Color(150, 50, 250));
-    float radius = (float) current -> getRadius();
-    //cout << radius << endl;
-    radiusCircle.setRadius(radius);
-    radiusCircle.setScale(xScale, yScale);
-    //reset the origin so any position set refers to the center of the circle
-    radiusCircle.setOrigin(radius, radius);
-    radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
-    window.draw(radiusCircle);
-    //cout << "drew radius" << endl;
-
-     */
+          // sf::CircleShape radiusCircle = current -> getRadiusCircle();
+          // radiusCircle.setFillColor(sf::Color(150, 50, 250));
+          // float radius = (float) current -> getRadius();
+          // //cout << radius << endl;
+          // radiusCircle.setRadius(radius);
+          // radiusCircle.setScale(xScale, yScale);
+          // //reset the origin so any position set refers to the center of the circle
+          // radiusCircle.setOrigin(radius, radius);
+          // radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+          // window.draw(radiusCircle);
+          //cout << "drew radius" << endl;
 
 
+          /*
+          sf::CircleShape radiusCircle = current -> getRadiusCircle();
+          radiusCircle.setFillColor(sf::Color(150, 50, 250));
+          float radius = (float) current -> getRadius();
+          //cout << radius << endl;
+          radiusCircle.setRadius(radius);
+          radiusCircle.setScale(xScale, yScale);
+          //reset the origin so any position set refers to the center of the circle
+          radiusCircle.setOrigin(radius, radius);
+          radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
+          window.draw(radiusCircle);
+          //cout << "drew radius" << endl;
+
+           */
+    }
+    else{
+      //if we did not draw it (i.e. it if flickering) then increment the draw unit variable
+      current->incrementDrawUnit();
+    }
   }
 }
 

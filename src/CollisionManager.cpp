@@ -512,9 +512,228 @@ vector<floatPair> CollisionManager::getFourCornersOfTileAndMidpoints(){
 /*
  * Check for collisions between all objects within the same row, col
  */
-void CollisionManager::checkForCollisions(){
+void CollisionManager::checkForCollisions(float delta){
   //update the position of everything that can be moving
   updateAllUnitPositions();
+
+  //run through all the populated rows and col (i.e. the ones touched by towers)
+  //and check if they are impacting any units
+  for(auto gridWithTowerRadius : towersPlaced){
+
+    //if there are any towers here we check for collisions
+    if(gridWithTowerRadius.second.size() != 0){
+
+      //find the corresponding row,col pair in the map of enemy units
+      int combinedRowCol = gridWithTowerRadius.first;
+
+      //if there are none in this row, col we do not need to check
+      if(enemyUnits.find(combinedRowCol) != enemyUnits.end()){
+
+        //iterate through each tower that overlaps at this grid
+        for(auto towerAndKeyAtGrid : gridWithTowerRadius.second){
+
+          //iterate through the enemy units at this position
+          for(auto gridWithEnemyUnits : enemyUnits.at(combinedRowCol)){
+
+            //if there is a collision we only tell the tower since
+            //only that will be taking any action
+            auto isCollision = [] (shared_ptr<ActorInterface> enemyUnit, shared_ptr<TowerInterface> tower)
+            {
+
+              //get the eight points that are on the bounding box of the rectangle relevant to this calculation
+              auto eightPoints = [](sf::FloatRect rect){
+                vector<floatPair> eightPoints;
+
+                //the eight corners
+                eightPoints.push_back(make_pair(rect.left, rect.top));
+                eightPoints.push_back(make_pair(rect.left+rect.width, rect.top));
+                eightPoints.push_back(make_pair(rect.left, rect.top+rect.height));
+                eightPoints.push_back(make_pair(rect.left+rect.width, rect.top+rect.height));
+
+                //the midpoints of each side
+                eightPoints.push_back(make_pair(rect.left+(rect.width)/2.0, rect.top));
+                eightPoints.push_back(make_pair(rect.left, rect.top+(rect.height)/2.0));
+                eightPoints.push_back(make_pair(rect.left+rect.width, rect.top + (rect.height)/2.0));
+                eightPoints.push_back(make_pair(rect.left+(rect.width)/2.0, rect.top + rect.height));
+                return eightPoints;
+              }((enemyUnit->getSprite()).getGlobalBounds());
+
+              float towerX = tower -> getXCoordinate();
+              float towerY = tower -> getYCoordinate();
+              float towerRadius = tower->getRadius();
+              float xScale = tower->getXScale();
+              float yScale = tower->getYScale();
+
+              //iterate through all four corners and if one lies within the bounds (And midpoints)
+              //of the radius (which should be an ellipse) return true
+              for(floatPair corner : eightPoints){
+                //find distance of point from region bounded by the ellipse radius
+                float distanceOfPoint = pow((corner.first - towerX),2)/pow((towerRadius*xScale),2) +  pow((corner.second - towerY),2)/pow((towerRadius*yScale),2);
+
+                if(distanceOfPoint <= 1.0){
+                  return true;
+                }
+              }
+
+            }(gridWithEnemyUnits.second, towerAndKeyAtGrid.second);
+
+            if(isCollision){
+              //if there is a collision the tower should attack the unit
+              towerAndKeyAtGrid.second -> attack(gridWithEnemyUnits.second, delta);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*
+ * Special Function to calculate all collisions when a projectile explodes
+ * called by GameLogic
+ */
+void CollisionManager::projectileExplosionCollisionCheck(shared_ptr<ActorInterface> projectile){
+  //get the current row and col position of the projectile
+  int currRow = projectile -> getYCoordinate() / yTileSize;
+  int currCol = projectile -> getXCoordinate() / xTileSize;
+
+  //get the minimum and maximum row,col pairs for the projectile
+  vector<intPair> minAndMax = [this] (shared_ptr<ActorInterface> projectile){
+    vector<intPair> minAndMaxPositions;
+
+    //calculate the left position
+    float leftX = projectile->getXCoordinate()-projectile->getXTowerScale()*projectile->getRadius();
+    float leftY = projectile->getYCoordinate();
+
+    //if the left positions are anywhere over the edge
+    if(leftX < 0.0){
+      leftX = 0.0;
+    }
+
+    //the row and col pair on the left side
+    int leftRow = leftY / yTileSize;
+    int leftCol = leftX / xTileSize;
+
+    //calculate the right position
+    float rightX = projectile->getXCoordinate()+projectile->getXTowerScale()*projectile->getRadius();
+    float rightY = projectile->getYCoordinate();
+
+    //if the right position is anywhere over the edge
+    if(rightX > xTileSize*cols){
+      rightX = xTileSize*cols - 1.0;
+    }
+
+    //the row and col pair on the right side
+    int rightRow = rightY / yTileSize;
+    int rightCol = rightX / xTileSize;
+
+    //calculate the top position
+    float topX = projectile->getXCoordinate();
+    float topY = projectile->getYCoordinate()-projectile->getYTowerScale()*projectile->getRadius();
+
+    //if the top position is anywhere over the edge
+    if(topY < 0){
+      topY = 0.0;
+    }
+
+    //the row and col pair on the top side
+    int topRow = topY / yTileSize;
+    int topCol = topX / xTileSize;
+
+    //calculate the bottom position
+    float bottomX = projectile->getXCoordinate();
+    float bottomY = projectile->getYCoordinate()+projectile->getYTowerScale()*projectile->getRadius();
+
+    //if the bottom position is anywhere over the edge
+    if(bottomY > yTileSize*rows){
+      bottomY = yTileSize*rows - 1.0;
+    }
+
+    //the row and col pair on the bottom side
+    int bottomRow = bottomY / yTileSize;
+    int bottomCol = bottomX / xTileSize;
+
+    //push in pairs representing the min row,min col and the max row and max col
+    int minRow = (leftRow< rightRow) ? (leftRow < topRow ? (leftRow < bottomRow ? leftRow : bottomRow) : (topRow < bottomRow ? topRow : bottomRow)) : (rightRow <  topRow ? (rightRow < bottomRow ? rightRow : bottomRow) : (topRow < bottomRow ? topRow : bottomRow));
+    int minCol = (leftCol< rightCol) ? (leftCol < topCol ? (leftCol < bottomCol ? leftCol : bottomCol) : (topCol < bottomCol ? topCol : bottomCol)) : (rightCol <  topCol ? (rightCol < bottomCol ? rightCol : bottomCol) : (topCol < bottomCol ? topCol : bottomCol));
+    int maxRow = (leftRow> rightRow) ? (leftRow > topRow ? (leftRow > bottomRow ? leftRow : bottomRow) : (topRow > bottomRow ? topRow : bottomRow)) : (rightRow >  topRow ? (rightRow > bottomRow ? rightRow : bottomRow) : (topRow > bottomRow ? topRow : bottomRow));
+    int maxCol =  (leftCol> rightCol) ? (leftCol > topCol ? (leftCol > bottomCol ? leftCol : bottomCol) : (topCol > bottomCol ? topCol : bottomCol)) : (rightCol >  topCol ? (rightCol > bottomCol ? rightCol : bottomCol) : (topCol > bottomCol ? topCol : bottomCol));
+
+    minAndMaxPositions.push_back(make_pair(minRow, minCol));
+    minAndMaxPositions.push_back(make_pair(maxRow, maxCol));
+
+    return minAndMaxPositions;
+  }(projectile);
+
+
+  //now we have to iterate through the row, col square described by the min, max pairs
+  //and check for collisions withitn our radius
+  assert(minAndMax.size()==2);
+
+
+  //loop from minRow to maxRow
+  for(int row = minAndMax.at(0).first; row <= minAndMax.at(1).first; row++){
+    //loop from minCol to maxCol
+    for(int col = minAndMax.at(0).second; col <= minAndMax.at(1).second; col++){
+      //the combination of row and col
+      int combinedRowCol = row * cols + col;
+
+      //if there are none in this row, col we do not need to check
+      if(enemyUnits.find(combinedRowCol) != enemyUnits.end()){
+        //iterate through the enemy units at this position
+        for(auto gridWithEnemyUnits : enemyUnits.at(combinedRowCol)){
+
+          //if there is a collision we only tell the tower since
+          //only that will be taking any action
+          auto isCollision = [] (shared_ptr<ActorInterface> enemyUnit, shared_ptr<ActorInterface> projectile)
+          {
+
+            //get the eight points that are on the bounding box of the rectangle relevant to this calculation
+            auto eightPoints = [](sf::FloatRect rect){
+              vector<floatPair> eightPoints;
+
+              //the eight corners
+              eightPoints.push_back(make_pair(rect.left, rect.top));
+              eightPoints.push_back(make_pair(rect.left+rect.width, rect.top));
+              eightPoints.push_back(make_pair(rect.left, rect.top+rect.height));
+              eightPoints.push_back(make_pair(rect.left+rect.width, rect.top+rect.height));
+
+              //the midpoints of each side
+              eightPoints.push_back(make_pair(rect.left+(rect.width)/2.0, rect.top));
+              eightPoints.push_back(make_pair(rect.left, rect.top+(rect.height)/2.0));
+              eightPoints.push_back(make_pair(rect.left+rect.width, rect.top + (rect.height)/2.0));
+              eightPoints.push_back(make_pair(rect.left+(rect.width)/2.0, rect.top + rect.height));
+              return eightPoints;
+            }((enemyUnit->getSprite()).getGlobalBounds());
+
+            float projectileX = projectile -> getXCoordinate();
+            float projectileY = projectile -> getYCoordinate();
+            float projectileRadius = projectile->getRadius();
+            float xScale = projectile->getXTowerScale();
+            float yScale = projectile->getYTowerScale();
+
+            //iterate through all four corners and if one lies within the bounds (And midpoints)
+            //of the radius (which should be an ellipse) return true
+            for(floatPair corner : eightPoints){
+              //find distance of point from region bounded by the ellipse radius
+              float distanceOfPoint = pow((corner.first - projectileX),2)/pow((projectileRadius*xScale),2) +  pow((corner.second - projectileY),2)/pow((projectileRadius*yScale),2);
+
+              if(distanceOfPoint <= 1.0){
+                return true;
+              }
+            }
+
+          }(gridWithEnemyUnits.second, projectile);
+
+          if(isCollision){
+            Projectile* attackWithProjectile = dynamic_cast<Projectile*>(projectile.get());
+            //if there is a collision the tower should attack the unit
+            attackWithProjectile -> damageUnit(gridWithEnemyUnits.second);
+          }
+        }
+      }
+    }
+  }
 }
 
 /*

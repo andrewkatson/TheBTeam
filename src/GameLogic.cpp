@@ -149,7 +149,7 @@ void GameLogic::updateGameLogic(float deltaS){
 
   //check for collisions before processing events so any unit that has been
   //destroyed but moved can be placed in the right map
-  this -> collisionManager -> checkForCollisions();
+  this -> collisionManager -> checkForCollisions(deltaS);
   this -> eventManager -> processEvent();
   //cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){
@@ -339,8 +339,9 @@ void GameLogic::handleStateChange(const EventInterface& event){
    //setting fixtures for projectiles
    shared_ptr<ActorInterface> projectile = projectileManager -> getProjectile(projectileExplodedID);
    Projectile* newProjectile = dynamic_cast<Projectile*>(projectile.get());
-   //newProjectile -> setFixtures();
 
+   //check the projectile explosion for collisons with any enemies
+   collisionManager -> projectileExplosionCollisionCheck(projectile);
 
    //now create an event to indicate the projectile was destroyed
    //the time object of the class

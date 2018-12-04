@@ -20,7 +20,9 @@ using std::shared_ptr;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
-
+using std::chrono::milliseconds;
+using std::chrono::seconds;
+using std::chrono::microseconds;
 class RangeTower : public TowerInterface{
 protected:
 
@@ -31,9 +33,9 @@ shared_ptr<Projectile> currentProjectile;
 //Store the textLoader to make requests for strings and constants
 shared_ptr<TextLoader> textLoader;
 //the rate that this tower can fire projectiles at
-int rateOfFire;
+long long rateOfFire;
 //the time that the last shot was fired
-float lastTimeFired;
+long long lastTimeFired;
 protected:
   virtual shared_ptr<ActorInterface> createProjectile();
 public:
@@ -65,7 +67,7 @@ public:
   void setUpUnits(){}
 
   bool canAttack();
-  void attack(shared_ptr<ActorInterface> enemyInRange);
+  void attack(shared_ptr<ActorInterface> enemyInRange, float delta);
   void modifyToIncludeUpgrades(shared_ptr<ActorInterface> firedProjectile);
   void calcAttackVector(shared_ptr<ActorInterface> projectileToFire, shared_ptr<ActorInterface> enemyInRange);
 

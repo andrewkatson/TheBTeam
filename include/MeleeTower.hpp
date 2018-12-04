@@ -23,6 +23,7 @@ using std::make_shared;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
+using std::chrono::seconds;
 class MeleeTower : public TowerInterface{
 protected:
   //the total number of units that a melee tower can have
@@ -31,7 +32,7 @@ protected:
   int respawnSpeed;
   //vecotr that holds the measured time since the death of each of the units
   //at the corresponding index in currentUnits (set to 0 when they are alive);
-  vector<float> timeOfDeath;
+  vector<long long> timeOfDeath;
   //the values used to determine if a float is equal
   float e;
   //the x coordinate of the rally point for this tower
@@ -51,7 +52,7 @@ public:
   void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, float delta = 1.0);
   bool withinRange(float x1, float y1, float x2, float y2);
   void calcAttackVector(shared_ptr<ActorInterface> meleeUnit, shared_ptr<ActorInterface> enemyInRange);
-  
+
   void initSprite();
 
   void registerDelegates();
@@ -87,9 +88,9 @@ public:
 
   void handleDeadUnit(int indexOfUnit);
 
-  void respawnUnits();
+  void respawnUnits(float delta);
   bool canAttack();
-  void attack(shared_ptr<ActorInterface> enemyInRange);
+  void attack(shared_ptr<ActorInterface> enemyInRange, float delta);
 
   shared_ptr<vector<int>>  getStatistics();
 

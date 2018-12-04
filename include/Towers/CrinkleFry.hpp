@@ -18,7 +18,7 @@ public:
   void setXCoordinate(float xCor){xCoordinate = xCor;}
   void setYCoordinate(float yCor){yCoordinate = yCor;}
   bool canAttack(){return MeleeTower::canAttack();}
-  void attack(shared_ptr<ActorInterface> enemyInRange){MeleeTower::attack(enemyInRange);}
+  void attack(shared_ptr<ActorInterface> enemyInRange, float delta){MeleeTower::attack(enemyInRange, delta);}
   void update(float delta){MeleeTower::update(delta);}
   shared_ptr<vector<int>>  getStatistics(){return MeleeTower::getStatistics();}
 };

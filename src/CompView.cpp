@@ -36,6 +36,18 @@ void CompView::moveUnits(float deltaS){
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
     shared_ptr<MeleeUnit> currentUnit= iterator.second;
 
+    //if the unit is dead create an actor destroyed event and do nothing
+    if(currentUnit->getHitpoints() <= 0){
+      //the time object of the class
+      auto now = high_resolution_clock::now();
+      //the actual count in nanoseconds for the time
+      auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+      shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
+      this -> eventManager -> queueEvent(actorDestroyed);
+      continue;
+    }
+
     //printf("loop thru a unit\n");
 
     if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getYCoordinate())){

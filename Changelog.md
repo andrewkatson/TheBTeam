@@ -26,6 +26,9 @@
 ###Changed
 - going below 0 hitpoints ends the game [@andrewkatson][https://github.com/andrewkatson]
 - towers go into the right row, col in the collision manager
+- units with 0 hitpoints in comp view will create an actor destoryed event and do nothing
+- melee units from towers now move on a vector
+- collision between enemy units and towers is detected
 - Improved unit animations [@jeremyelkayam][https://github.com/jeremyelkayam]
 - OptionsMenuScreen now sends events to player, boardmanager, and wavemanager [kp-hb][https://github.com/kp-hb]
 - Player has a handleoptionselectedevent method
