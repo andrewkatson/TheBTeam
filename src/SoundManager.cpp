@@ -132,7 +132,7 @@ void SoundManager::loadSounds(){
     music->setVolume(80);
     music_objs[COMBAT].push_back(music);
   }
-  for(int z=0;z<=2;z++){
+  for(int z=0;z<=3;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Prep_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
