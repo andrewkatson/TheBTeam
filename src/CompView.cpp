@@ -58,7 +58,8 @@ void CompView::updateUnits(float deltaS){
           currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
           currentUnit->setEngagedUnit(NULL);
         }
-        shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
+        shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, nowInNano);
+        shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Death_Noise"), nowInNano);
         this -> eventManager -> queueEvent(actorDestroyed);
         continue;
       }
