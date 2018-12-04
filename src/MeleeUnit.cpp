@@ -160,3 +160,31 @@ bool MeleeUnit::isOvershooting() const {
 void MeleeUnit::setOvershooting(bool overshooting) {
   MeleeUnit::overshooting = overshooting;
 }
+
+void MeleeUnit::attackEngagedUnit(){
+  int hp = engagedUnit->getHitpoints();
+  int armor = engagedUnit->getArmor();
+  hp -= damage *(armorPenetration/armor);
+  engagedUnit->updateHitpoints(hp);
+  //hitpoints-=damage*(armorPenetration/armor);
+  cout << "I AM ATTACKING YOU" << endl;
+}
+
+void MeleeUnit::updateAttack(float delta){
+  if(this->sprite.getGlobalBounds().intersects(engagedUnit->getSprite().getGlobalBounds()) && attackPossible(delta) == true){
+    attackEngagedUnit();
+  }
+}
+
+bool MeleeUnit::attackPossible(float delta){
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in seconds for the time
+  auto nowInSec = duration_cast<seconds>(now.time_since_epoch()).count();
+  //time -last attack < (delta/attackrate)
+  if((nowInSec-lastAttack)<(delta/attackrate)){
+    return false;
+  }
+  lastAttack = nowInSec;
+  return true;
+}

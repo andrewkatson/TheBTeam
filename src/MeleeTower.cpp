@@ -31,7 +31,12 @@ void MeleeTower::update(float delta){
         resetUnitPosition(unit, unitIndex);
       }
       else{
+        //int xtarget = unit->get
+
         //TODO move the unit towards the enemy unit (or attack if in contact)
+        //check if my unit is at destination, if so move towards xtarget and ytarget
+        //else move to the enemy BUT before set the xvec and yVect
+        if ()
       }
 
     }
@@ -298,7 +303,7 @@ void MeleeTower::respawnUnits(){
  * @return if there is any enemy unit within the radius ofthe tower
  */
 bool MeleeTower::canAttack(){
-  //TODO implement using box2D collision
+
 }
 
 /*
@@ -306,7 +311,38 @@ bool MeleeTower::canAttack(){
  * is engaged with an enemy unit that is not also engaged with it
  */
 void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange){
-
+  for (shared_ptr<ActorInterface> unit : currentUnits){
+    isEnemyPointingAtUnit = true;
+    if (unit->getEngagedUnit() == NULL){
+      unit -> setEngagedUnit(enemyInRange);// x targ and y tart
+      unit -> setXCoordinate(enemyInRange->getXCoordinate());
+      unit -> setYCoordinate(enemyInRange->getYCoordinate());
+    }
+    // check is there a unit that is engaged with an enemy unit that the enemy unit isn't engaged with
+    if (unit->getEngagedUnit()->getEngagedUnit() != unit){
+      isEnemyPointingAtUnit = false;
+    }
+    if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() == enemyInRange){
+      if (enemyInRange->getEngagedUnit() == NULL){
+        enemyInRange -> setEngagedUnit(unit);
+      }
+    }
+    if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() != enemyInRange){
+      if (enemyInRange->getEngagedUnit() == NULL){
+        enemyInRange -> setEngagedUnit(unit);
+        unit -> setEngagedUnit(enemyInRange); //x targ and y tart
+        unit -> setXCoordinate(enemyInRange->getXCoordinate());
+        unit -> setYCoordinate(enemyInRange->getYCoordinate());
+      }
+      else {
+        if (enemyInRange->getHitpoints() < unit->getEngagedUnit()->getHitpoints()){
+          unit->setEngagedUnit(enemyInRange); // x targ and y tart
+          unit -> setXCoordinate(enemyInRange->getXCoordinate());
+          unit -> setYCoordinate(enemyInRange->getYCoordinate());
+        }
+      }
+    }
+  }
 }
 
 /*

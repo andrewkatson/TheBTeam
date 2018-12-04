@@ -10,7 +10,7 @@ CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
 
 void CompView::updateCompView(float deltaS){
   if(gameLogic->getGameState()==State::Playing && !waveManager->getSpawnedEnemyUnits().empty()){
-    moveUnits(deltaS);
+    updateUnits(deltaS);
   }
 }
 
@@ -19,7 +19,7 @@ void CompView::attackEnemies(){}
 // if there is a collsion subtracting health vs damage
 // if unit makes it to exit (grid space 0) subtract remain health from player health and then set player health.
 
-void CompView::moveUnits(float deltaS){
+void CompView::updateUnits(float deltaS){
   assert(!gameLogic->getSpawnedEnemyUnits().empty());
 
   // Poll the actor class for its speed and position on map, use the shortest distance >= 0
@@ -35,113 +35,121 @@ void CompView::moveUnits(float deltaS){
 
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
     shared_ptr<MeleeUnit> currentUnit= iterator.second;
+    //if you're not engaged with a unit do all the movement collide
+    if (currentUnit->getEngagedUnit() == NULL ){
+      //printf("loop thru a unit\n");
 
-    //printf("loop thru a unit\n");
+      if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getYCoordinate())){
+        //printf("updating tile...\nx: %f\ny: %f\n",currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
+        int newCol=currentUnit->getXCoordinate()/playingScreenHeader->getTrueXTileSize();
+        int newRow=currentUnit->getYCoordinate()/playingScreenHeader->getTrueYTileSize();
+        currentUnit->setRow(newRow);
+        currentUnit->setCol(newCol);
+      }//make sure the tile is up to date
 
-    if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getYCoordinate())){
-      //printf("updating tile...\nx: %f\ny: %f\n",currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
-      int newCol=currentUnit->getXCoordinate()/playingScreenHeader->getTrueXTileSize();
-      int newRow=currentUnit->getYCoordinate()/playingScreenHeader->getTrueYTileSize();
-      currentUnit->setRow(newRow);
-      currentUnit->setCol(newCol);
-    }//make sure the tile is up to date
-
-    //printf("checked the tile\nrow: %d\ncol: %d\n",currentUnit->getRow(),currentUnit->getCol());
-
-
-    if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
-      shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),deltaS);
-      shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
-      shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Escape_Noise"),deltaS);
+      //printf("checked the tile\nrow: %d\ncol: %d\n",currentUnit->getRow(),currentUnit->getCol());
 
 
-      this -> eventManager -> queueEvent(actorDestroyed);
-      this -> eventManager -> queueEvent(hitpointsLost);
-      this -> eventManager -> queueEvent(playSound);
-    }else { //these don't need to happen if the unit hit the exit
+      if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
+        shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),deltaS);
+        shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
+        shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Escape_Noise"),deltaS);
 
-      int r = currentUnit->getRow();
-      int c = currentUnit->getCol();
-      //printf("row=%d col=%d x=%f y=%f\n",r,c,currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
 
-      std::map<int, double> dists_coords;
+        this -> eventManager -> queueEvent(actorDestroyed);
+        this -> eventManager -> queueEvent(hitpointsLost);
+        this -> eventManager -> queueEvent(playSound);
+      }
+      else { //these don't need to happen if the unit hit the exit
 
-      vector<double> angles={0,M_PI/2,M_PI,3*M_PI/2};
+        int r = currentUnit->getRow();
+        int c = currentUnit->getCol();
+        //printf("row=%d col=%d x=%f y=%f\n",r,c,currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
 
-      int adjusted_r,adjusted_c,dir_r,dir_c;
+        std::map<int, double> dists_coords;
 
-      for(auto dir : angles){
-        //printf("row + %d col %d \nfloor:%ldx%ld\n",dir.first,dir.second,floor.size(),floor[0].size());
+        vector<double> angles={0,M_PI/2,M_PI,3*M_PI/2};
 
-        dir_r=-sin(dir);
-        dir_c=cos(dir);
-        //printf("checking %d %d\n",dir_r,dir_c);
-        adjusted_r = r + dir_r;
-        adjusted_c = c + dir_c;
-        //printf("adjusted: %d, %d\n",adjusted_r,adjusted_c);
-        //printf("0<= adjusted_r? %d\nadjusted_r < floor.size()? %d\n0 <= adjusted_c? %d\nadjusted_c < floor[0].size()? %d\n",
-        //      (0 <= adjusted_r), (adjusted_r < floor.size()), (0 <= adjusted_c), (adjusted_c < floor[0].size()));
-        if((0 <= adjusted_r) && (adjusted_r < floor.size()) && (0 <= adjusted_c) && (adjusted_c < floor[0].size())) {
-          //printf("above floor grid: %d\n",floor[r + dir.first][c + dir.second]);
-          if (floor[r + dir_r][c + dir_c] >= 0) {
-            //printf("huge succeeded\n");
-            dists_coords[dists[adjusted_r][adjusted_c]] = dir;
+        int adjusted_r,adjusted_c,dir_r,dir_c;
+
+        for(auto dir : angles){
+          //printf("row + %d col %d \nfloor:%ldx%ld\n",dir.first,dir.second,floor.size(),floor[0].size());
+
+          dir_r=-sin(dir);
+          dir_c=cos(dir);
+          //printf("checking %d %d\n",dir_r,dir_c);
+          adjusted_r = r + dir_r;
+          adjusted_c = c + dir_c;
+          //printf("adjusted: %d, %d\n",adjusted_r,adjusted_c);
+          //printf("0<= adjusted_r? %d\nadjusted_r < floor.size()? %d\n0 <= adjusted_c? %d\nadjusted_c < floor[0].size()? %d\n",
+          //      (0 <= adjusted_r), (adjusted_r < floor.size()), (0 <= adjusted_c), (adjusted_c < floor[0].size()));
+          if((0 <= adjusted_r) && (adjusted_r < floor.size()) && (0 <= adjusted_c) && (adjusted_c < floor[0].size())) {
+            //printf("above floor grid: %d\n",floor[r + dir.first][c + dir.second]);
+            if (floor[r + dir_r][c + dir_c] >= 0) {
+              //printf("huge succeeded\n");
+              dists_coords[dists[adjusted_r][adjusted_c]] = dir;
+            }
           }
         }
-      }
-      assert(!dists_coords.empty());
-      //printf("map size: %ld\n",dists_coords.size());
+        assert(!dists_coords.empty());
+        //printf("map size: %ld\n",dists_coords.size());
 
-      double new_direction = dists_coords.begin()->second; //get the one with the shortest distance
+        double new_direction = dists_coords.begin()->second; //get the one with the shortest distance
 
-      //printf("going to next: %lf\n",new_direction);
+        //printf("going to next: %lf\n",new_direction);
 
 
-      double curdir=currentUnit->getDirection();
+        double curdir=currentUnit->getDirection();
 
-      if(new_direction==curdir){
-        currentUnit->setOvershooting(false);
-      }else{
-        if(currentUnit->isOvershooting()){
-          //if it didn't hit its target yet, keep overshooting, otherwise stop
-          bool passedTarget=((curdir==0 && currentUnit->getXCoordinate()>currentUnit->getOvershoot()) //going right, so the cor should be greater than the overshoot
-                  || (curdir==M_PI/2 && currentUnit->getYCoordinate()<currentUnit->getOvershoot()) // going up, so the cor should be less
-                  || (curdir==M_PI && currentUnit->getXCoordinate()<currentUnit->getOvershoot())
-                  || (curdir==3*M_PI/2 && currentUnit->getYCoordinate()>currentUnit->getOvershoot()));
+        if(new_direction==curdir){
+          currentUnit->setOvershooting(false);
+        }
+        else{
+          if(currentUnit->isOvershooting()){
+            //if it didn't hit its target yet, keep overshooting, otherwise stop
+            bool passedTarget=((curdir==0 && currentUnit->getXCoordinate()>currentUnit->getOvershoot()) //going right, so the cor should be greater than the overshoot
+                    || (curdir==M_PI/2 && currentUnit->getYCoordinate()<currentUnit->getOvershoot()) // going up, so the cor should be less
+                    || (curdir==M_PI && currentUnit->getXCoordinate()<currentUnit->getOvershoot())
+                    || (curdir==3*M_PI/2 && currentUnit->getYCoordinate()>currentUnit->getOvershoot()));
 
-          if(!passedTarget){
+            if(!passedTarget){
+              new_direction=currentUnit->getDirection();
+            }
+
+          }
+          else {
+            double overshoot;
+            if(curdir==0){
+              overshoot=currentUnit->getXCoordinate()+x_overshoot(rnd_gen);
+            }else if(curdir==M_PI/2){
+              overshoot=currentUnit->getYCoordinate()-y_overshoot(rnd_gen);
+            }else if(curdir==M_PI){
+              overshoot=currentUnit->getXCoordinate()-x_overshoot(rnd_gen);
+            }else{
+              overshoot=currentUnit->getYCoordinate()+y_overshoot(rnd_gen);
+            }
+            currentUnit->setOvershoot(overshoot);
+
+            currentUnit->setOvershooting(true);
+
             new_direction=currentUnit->getDirection();
           }
-
-        }else {
-          double overshoot;
-          if(curdir==0){
-            overshoot=currentUnit->getXCoordinate()+x_overshoot(rnd_gen);
-          }else if(curdir==M_PI/2){
-            overshoot=currentUnit->getYCoordinate()-y_overshoot(rnd_gen);
-          }else if(curdir==M_PI){
-            overshoot=currentUnit->getXCoordinate()-x_overshoot(rnd_gen);
-          }else{
-            overshoot=currentUnit->getYCoordinate()+y_overshoot(rnd_gen);
-          }
-          currentUnit->setOvershoot(overshoot);
-
-          currentUnit->setOvershooting(true);
-
-          new_direction=currentUnit->getDirection();
+          //new_direction=currentUnit->getDirection();
         }
-        //new_direction=currentUnit->getDirection();
+
+
+        currentUnit->setDirection(new_direction);
+
+        currentUnit->move(deltaS);
+
+        currentUnit->update(deltaS);
       }
-
-
-      currentUnit->setDirection(new_direction);
-
-      currentUnit->move(deltaS);
-
-      currentUnit->update(deltaS);
+    }
+    //else we'll call another function to attack the enemy (attackengagedunit)
+    else {
+      currentUnit->updateAttack(deltaS);
     }
   }
-
 }
 
 

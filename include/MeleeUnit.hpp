@@ -13,7 +13,11 @@ using namespace std;
 #include <memory>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
+#include <time.h>
 //#include "GameLogic.hpp"
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::seconds;
 
 class MeleeUnit : public ActorInterface {
 
@@ -47,6 +51,9 @@ protected:
   double overshoot;
 
   bool overshooting;
+
+  long long lastAttack =0;
+
 public:
 
   bool isOvershooting() const;
@@ -175,6 +182,12 @@ public:
    * Setting the fixtures for Box2D
    */
   void setFixtures();
+
+  void updateAttack(float delta);
+
+  void attackEngagedUnit();
+
+  bool attackPossible(float delta);
 
 };
 

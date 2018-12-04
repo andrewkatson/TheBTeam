@@ -14,12 +14,17 @@
 #include <vector>
 #include <chrono>
 #include <math.h>
+#include <memory>
+#include <iostream>
+#include <time.h>
+
 
 using std::vector;
 using std::shared_ptr;
 using std::make_shared;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
+using std::chrono::seconds;
 using std::chrono::nanoseconds;
 class MeleeTower : public TowerInterface{
 protected:
@@ -39,6 +44,8 @@ protected:
   //the specific units that are fighitng for this tower
   vector<shared_ptr<MeleeUnit>> currentUnits;
 
+  bool isEnemyPointingAtUnit = true;
+
 public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~MeleeTower();
@@ -48,6 +55,8 @@ public:
 
   void initSprite();
 
+  //start game clock
+  sf::Clock gameClock;
   void registerDelegates();
   void deregisterDelegates();
 
@@ -104,4 +113,5 @@ public:
   void updateUnitArmorPenetration(int newArmorPenetration);
   void updateUnitArmor(int newArmor);
   void updateUnitAttackRate(int newAttackRate);
+
 };

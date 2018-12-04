@@ -29,7 +29,7 @@ public:
 
   void attackEnemies();
 
-  void moveUnits(float deltaS);
+  void updateUnits(float deltaS);
   void delegateEvents();
 
 };
