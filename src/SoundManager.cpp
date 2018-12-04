@@ -108,12 +108,14 @@ void SoundManager::loadSounds(){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
+    music->setVolume(80);
     music_objs[COMBAT].push_back(music);
   }
   for(int z=0;z<=1;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Prep_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
+    music->setVolume(80);
     music_objs[PREP].push_back(music);
   }
 
