@@ -47,6 +47,22 @@ void CompView::updateUnits(float deltaS){
         currentUnit->setCol(newCol);
       }//make sure the tile is up to date
 
+      //if the unit is dead create an actor destroyed event and do nothing
+      if(currentUnit->getHitpoints() <= 0){
+        //the time object of the class
+        auto now = high_resolution_clock::now();
+        //the actual count in nanoseconds for the time
+        auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+        //if the enemy was engaged with a unit we need to denengage them both
+        if(currentUnit->getEngagedUnit() != NULL){
+          currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
+          currentUnit->setEngagedUnit(NULL);
+        }
+        shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
+        this -> eventManager -> queueEvent(actorDestroyed);
+        continue;
+      }
+
       //printf("checked the tile\nrow: %d\ncol: %d\n",currentUnit->getRow(),currentUnit->getCol());
 
 
@@ -55,6 +71,10 @@ void CompView::updateUnits(float deltaS){
         shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
         shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Escape_Noise"),deltaS);
 
+        if(currentUnit->getEngagedUnit() != NULL){
+          currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
+          currentUnit->setEngagedUnit(NULL);
+        }
 
         this -> eventManager -> queueEvent(actorDestroyed);
         this -> eventManager -> queueEvent(hitpointsLost);
@@ -71,6 +91,7 @@ void CompView::updateUnits(float deltaS){
         vector<double> angles={0,M_PI/2,M_PI,3*M_PI/2};
 
         int adjusted_r,adjusted_c,dir_r,dir_c;
+
 
         for(auto dir : angles){
           //printf("row + %d col %d \nfloor:%ldx%ld\n",dir.first,dir.second,floor.size(),floor[0].size());

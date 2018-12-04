@@ -89,6 +89,7 @@ public:
   void handleBalanceChange(const EventInterface& event);
   void handleLevelChange(const EventInterface& event);
   void handleWaveChange(const EventInterface& event);
+  void handleRestartGame(const EventInterface& event);
 
   void softReset();
 

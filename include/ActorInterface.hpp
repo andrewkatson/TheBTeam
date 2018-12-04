@@ -25,6 +25,20 @@ using std::vector;
 class ActorInterface{
 
 protected:
+  //A reference to the unit that this unit is fighting.
+  shared_ptr<ActorInterface> engagedUnit;
+
+  //whether the unit should be drawn or not (1=true, 0=false)
+  float drawUnit=1;
+
+  //the x of the vector of movement
+  float xVector;
+  //the y of the vector of movement
+  float yVector;
+  //the x coordinate of the taget
+  float xTarget;
+  //the y coordinate of the target
+  float yTarget;
 
   //The actor's direction in RADIANS.
   double direction;
@@ -82,6 +96,10 @@ protected:
   float xTileSize;
   float yTileSize;
 
+  //the scale from the tower associated with this (ONLY APPLICABLE IF PROJECITLE)
+  float xTowerScale;
+  float yTowerScale;
+
   //the degree of error
   const float e = 0.001;
 
@@ -99,6 +117,8 @@ protected:
 
   //whether this is a projectile or not
   bool isProjectile;
+  //whether this is an allied unit or not
+  bool isAlly;
 
 public:
   bool isActor = true;
@@ -216,6 +236,7 @@ public:
   int getRadius(){return radius;}
   int getAttackRate(){return attackRate;}
 
+  void updateHitpoints(int newHitpoints){this->hitpoints = newHitpoints;}
   void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
   void updateDamage(int newDamage){damage = newDamage;}
   void updateArmor(int newArmor){armor = newArmor;}
@@ -266,8 +287,50 @@ public:
   void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
 
   bool isAProjectile(){return isProjectile;}
+<<<<<<< HEAD
 
 
+=======
+  bool isAnAlly(){return isAlly;}
+
+
+  void setTowerScale(float x, float y){xTowerScale = x; yTowerScale = y;}
+  float getXTowerScale(){return xTowerScale;}
+  float getYTowerScale(){return yTowerScale;}
+
+  /*
+   * set the vector for movement (defined by an x and y)
+   * @param x: the x component of the vector
+   * @param y: the y component of the vectors
+   */
+  void setVector(float x, float y);
+
+  /*
+   * set the positions for the target of the projectile
+   * @param xpos: the x coordiante of the target of the projectile
+   * @param ypos: the y coordinate of the target of the projectile
+   */
+  void setTargetPos(float x, float y);
+
+  /*
+   * flicker the unit by setting its draw unit variable to 0
+   */
+  void flickerUnit(){drawUnit = 0.0;}
+  /*
+   * @return float: the value of draw unit
+   */
+  float canDraw(){return drawUnit;}
+  /*
+   * increment draw unit (acts as a timer while the unit flickers)
+   */
+  void incrementDrawUnit(){drawUnit+=0.1;if(drawUnit>1.0){drawUnit=1.0;}}
+
+  shared_ptr<ActorInterface> getEngagedUnit(){return engagedUnit;}
+  /*
+   * Set the engaged unit
+   */
+  void setEngagedUnit(shared_ptr<ActorInterface> unitToEngage){engagedUnit = unitToEngage;}
+>>>>>>> 8d524c3e5071273cdb3158d47a6c8a02e2de8b40
 };
 
 #endif

@@ -39,5 +39,11 @@ void AllyCompView::updateTowers(float deltaS){
     shared_ptr<TowerInterface> tower = it.second;
 
     tower -> update(deltaS);
+
+    //if this is a melee tower we need to verify the unit still holds the correct row, col pair
+    if(tower->isMelee){
+      MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+      meleeTower->verifyUnitPositions(gameLogic->getTileXSize(), gameLogic->getTileYSize());
+    }
   }
 }

@@ -149,7 +149,7 @@ void WaveManager::createNextWave() {
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
 
   for(auto it=distancesFromEntryPositions.begin();it!=distancesFromEntryPositions.end();it++){
-    cout << "map dist normalized " << it->first << endl;
+    //cout << "map dist normalized " << it->first << endl;
   }
 
   double range=(--distancesFromEntryPositions.end())->first;
@@ -193,7 +193,7 @@ void WaveManager::createNextWave() {
     }else if(spawn_distance>range){
       spawn_distance=range-.1;
     }
-    cout << "spawn dist: " << spawn_distance << endl;
+    //cout << "spawn dist: " << spawn_distance << endl;
 
     int roundedKey;
 
@@ -480,9 +480,9 @@ void WaveManager::setGridDimensions(float x, float y){
 /*
  * Set the dimensions of the grid
  */
-void WaveManager::setDimensions(int rows, int cols) {
-  this->rows = rows;
-  this->cols = cols;
+void WaveManager::setDimensions(int rows, int cols){
+  this -> rows = rows;
+  this -> cols = cols;
 }
 
 void WaveManager::handleOptionSelectedEvent(const EventInterface &event){

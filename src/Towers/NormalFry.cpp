@@ -2,7 +2,7 @@
 
 
 
-NormalFry::NormalFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : MeleeTower(eventManager, textLoader){
+NormalFry::NormalFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;
   this -> respawnSpeed = textLoader->getInteger(string("IDS_NFT_RS"));
@@ -12,6 +12,7 @@ NormalFry::NormalFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, share
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(typeID);
   this -> level = 1;
+  this -> logUnitsForCollisions = setUpUnits;
   this -> initSprite();
   this -> setUpUnits();
 }

@@ -32,6 +32,7 @@ private:
 
 public:
   BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,int windowX, int windowY);
+  ~BuyTowerScreen();
   void initDrawingMaterials();
   void initText();
   void initBackButton();
@@ -40,6 +41,7 @@ public:
   void drawTitle(sf::RenderWindow& window);
   void registerDelegates();
   void registerPersistentDelegates();
+  void deregisterPersistentDelegates();
   void deregisterDelegates();
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);

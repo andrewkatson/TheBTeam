@@ -10,26 +10,59 @@
 
 Player::Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader)
 {
+
+  this -> textLoader = textLoader;
+  this -> eventManager = eventManager;
+  this-> registerEvents();
+  this -> registerDelegates();
   balance= textLoader->getInteger(string("IDS_P_B"));
   hitpoints= textLoader->getInteger(string("IDS_P_HP"));
   wave=textLoader->getInteger(string("IDS_Default_Wave"));
   level=textLoader->getInteger(string("IDS_Default_Level"));
-  schoolLevel=textLoader->getInteger(string("IDS_Default_School"));
-  this -> eventManager = eventManager;
-  this -> textLoader = textLoader;
-  this-> registerEvents();
-  this -> registerDelegates();
+  schoolLevel = textLoader->getInteger(string("IDS_Default_School"));
 }
 
+Player::~Player(){
+  deregisterDelegates();
+}
+
+void Player::setToDefaults(){
+  balance= textLoader->getInteger(string("IDS_P_B"));
+  hitpoints= textLoader->getInteger(string("IDS_P_HP"));
+  wave=textLoader->getInteger(string("IDS_Default_Wave"));
+  level=textLoader->getInteger(string("IDS_Default_Level"));
+}
+
+
 void Player::registerDelegates(){
+  EventManager::EventDelegate lostHitpointsDelegate = std::bind(&Player::handleLoseHitpoints, this, _1);
+  LoseHitpointsEvent loseHitpointsEvent = LoseHitpointsEvent();
+  EventType loseHitpointsEventType = loseHitpointsEvent.getEventType();
+  this -> eventManager -> registerDelegate(lostHitpointsDelegate, textLoader -> getString(string("IDS_Player_Lose_Hitpoints")), loseHitpointsEventType);
+
+
   EventManager::EventDelegate optionSelectedDelegate = std::bind(&Player::handleOptionSelectedEvent, this, _1);
   OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
-  const EventType optionSelectedEventType = optionSelectedEvent.getEventType();
-  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_P")), optionSelectedEventType);
+  EventType optionSelectedEventType = optionSelectedEvent.getEventType();
+  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_Player_Option_Selected")), optionSelectedEventType);
   EventManager::EventDelegate difficultyChangeDelegate = std::bind(&Player::handleDiffChanged, this, _1);
   DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
-  const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
+  EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(difficultyChangeDelegate, textLoader -> getString(string("IDS_Player_DifficultyChange")),difficultyChangeEventType);
+}
+
+void Player::deregisterDelegates(){
+  LoseHitpointsEvent loseHitpointsEvent = LoseHitpointsEvent();
+  const EventType loseHitpointsEventType = loseHitpointsEvent.getEventType();
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_Player_Lose_Hitpoints")), loseHitpointsEventType);
+
+  OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
+  const EventType optionSelectedEventType = optionSelectedEvent.getEventType();
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_Player_Option_Selected")), optionSelectedEventType);
+
+  DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
+  const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_Player_DifficultyChange")),difficultyChangeEventType);
 }
 
 void Player::handleDiffChanged(const EventInterface& event){
@@ -126,6 +159,13 @@ void Player::updateHitpoints(int points){
   this -> eventManager -> queueEvent(lhpEvent);
 
   this->hitpoints=points;
+
+  //if we have no hitpoints reset the game
+  if(hitpoints <= 0){
+    shared_ptr<EventInterface> restartScreen = make_shared<StateChangeEvent>(State::Restart, nowInNano);
+
+    this -> eventManager -> queueEvent(restartScreen);
+  }
 }
 
 void Player::modifyHitpoints(int pointsToDeduct){
@@ -139,6 +179,11 @@ void Player::modifyHitpoints(int pointsToDeduct){
   this -> eventManager -> queueEvent(lhpEvent);
 
   this->hitpoints-=pointsToDeduct;
+  if(hitpoints <= 0){
+    shared_ptr<EventInterface> restartScreen = make_shared<StateChangeEvent>(State::Restart, nowInNano);
+
+    this -> eventManager -> queueEvent(restartScreen);
+  }
 }
 
 void Player::resetHitpoints() {
@@ -212,5 +257,37 @@ void Player::handleOptionSelectedEvent(const EventInterface& event){
             updateBalance(1000);
         }
     }
+}
 
+/*
+ * Handle any lost hitpoints from enemy units reaching exit
+ * @param event: event of the hitpoint loss
+ */
+void Player::handleLoseHitpoints(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * LoseHitpointsEvent type which allows us to access variables and methods
+   * specific to LoseHitpointsEvent
+   */
+  const LoseHitpointsEvent* lhpEvent = static_cast<const LoseHitpointsEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a LoseHitpointsEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  LoseHitpointsEventData* lhpEventData = static_cast<LoseHitpointsEventData*>((lhpEvent -> data).get());
+  //get the hitpoints lost from the data
+  int lostHitpoints = lhpEventData -> lostHitpoints;
+
+  this->hitpoints -= lostHitpoints;
+
+  if(hitpoints <= 0){
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+    shared_ptr<EventInterface> restartScreen = make_shared<StateChangeEvent>(State::Restart, nowInNano);
+
+    this -> eventManager -> queueEvent(restartScreen);
+  }
 }

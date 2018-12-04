@@ -16,6 +16,7 @@
 #include "Events/BalanceChangeEvent.hpp"
 #include "Events/DifficultyChangeEvent.hpp"
 #include "Events/OptionSelectedEvent.hpp"
+#include "Events/StateChangeEvent.hpp"
 #include <memory>
 #include <chrono>
 
@@ -46,6 +47,8 @@ private:
 
   void registerDelegates();
 
+  void deregisterDelegates();
+
 public:
 
   /*
@@ -53,6 +56,8 @@ public:
     values.
    */
   Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
+
+  ~Player();
 
   void registerEvents();
 
@@ -134,6 +139,9 @@ public:
 
   void handleOptionSelectedEvent(const EventInterface& event);
 
+  void handleLoseHitpoints(const EventInterface& event);
+
+  void setToDefaults();
 };
 
 #endif

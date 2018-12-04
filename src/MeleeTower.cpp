@@ -8,7 +8,7 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> xRally = 0xFFFFFFFF;
   this -> yRally = 0xFFFFFFFF;
   this -> e = 0.00001;
-  this -> timeOfDeath = {-1.0, -1.0, -1.0};
+  this -> timeOfDeath = {-1, -1, -1};
   this -> isMelee = true;
   this -> radiusVisible = false;
   this -> registerDelegates();
@@ -21,9 +21,18 @@ MeleeTower::~MeleeTower(){
 
 void MeleeTower::update(float delta){
   int unitIndex = 0;
+
+  //if we can respawn units then respawn them
+  respawnUnits(delta);
+
   //if a unit does not have an engaged enemy unit then send it back towards
   //a point situated around the rally point
   for(shared_ptr<MeleeUnit> unit : currentUnits){
+    if(isnan(unit->getXCoordinate()) || isnan(unit->getYCoordinate())){
+      cerr << "is nan here " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
+      assert(false);
+    }
+
     if(unit -> getHitpoints() != 0){
       if((unit -> getEngagedUnit()).get() == NULL){
         //sets the unit position to the center of the tower if there is no set rally point
@@ -48,6 +57,8 @@ void MeleeTower::update(float delta){
  * Initialize all the units that will spawn for this tower with a position
  */
 void MeleeTower::setUpUnits(){
+
+
   for(int unitIndex = 0; unitIndex < currentUnits.size(); unitIndex++){
     currentUnits.at(unitIndex) -> setXCoordinate(xCoordinate);
     currentUnits.at(unitIndex) -> setYCoordinate(yCoordinate);
@@ -66,9 +77,53 @@ void MeleeTower::setUpUnitCoordinates(float x, float y){
   }
 }
 
+/*
+ * Set the unit's position in the grid
+ */
+void MeleeTower::setUpUnitPositions(int row, int col){
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+    unit -> setRow(row);
+    unit -> setCol(col);
+  }
+}
+
 void MeleeTower::setUpUnitTileSize(float x, float y){
   for(shared_ptr<MeleeUnit> unit : currentUnits){
     unit->setTileSize(x,y);
+  }
+}
+
+/*
+ * Make events to signal that all the units were created
+ */
+void MeleeTower::logUnitsForCollisionManager(){
+  //Create ActorCreatedEvent and attach the created projectile
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+
+    //make an event to mark the unit's creation
+    //Create ActorCreatedEvent and attach the created actor
+    bool isProjectile = false;
+    shared_ptr<EventInterface> alliedUnitCreatedEvent = make_shared<ActorCreatedEvent>(unit, isProjectile, nowInNano);
+    this -> eventManager -> queueEvent(alliedUnitCreatedEvent);
+  }
+}
+
+/*
+ * Check that all unit row, col reflect their current position in x,y
+ */
+void MeleeTower::verifyUnitPositions(float tileXSize, float tileYSize){
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+    if(unit->getRow() != unit->getYCoordinate()/tileYSize){
+      unit->setRow(unit->getYCoordinate()/tileYSize);
+    }
+    if(unit->getCol() != unit->getXCoordinate()/tileXSize){
+      unit->setCol(unit->getXCoordinate()/tileXSize);
+    }
   }
 }
 
@@ -96,8 +151,31 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
     float newX = (radiusOfUnitCircle) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + xRally;
     float newY = (radiusOfUnitCircle) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + yRally;
 
+    //set the target for the unit to be the rally point
+    unit -> setTargetPos(newX, newY);
+
+    float xvec = newX -  unit->getXCoordinate();
+    float yvec = newY -  unit->getYCoordinate();
+
+    //set the vector the unit will move along
+    unit -> setVector(xvec,yvec);
+
+    cout << "unit " << unitIndex << endl;
+    cout << "go to " << newX << " " << newY << endl;
+    cout << "along " << xvec << " " << yvec << endl;
+
+    //move the unit
+    unit -> vectorMove(delta);
+    /*
+    if(isnan(newX) || isnan(newY)){
+      cout << "oh my naaan " << newX << " " << newY << endl;
+    }
+
+
+    /*
     //if the unit is already at its correct resting poisiton nothing needs to be done
     if(!(withinRange(newX, newY, unit->getXCoordinate(), unit->getYCoordinate()))){
+
       //the vector components of the movement this unit needs to make
       float xVector = newX - unit -> getXCoordinate();
       float yVector = newY - unit -> getYCoordinate();
@@ -108,10 +186,12 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
       cout<< "unit hp"<< endl;
       cout<< unit -> getHitpoints()<<endl;
 
-      //get the max so we can normalize the vectors so they do not move too fast
-      float normalize = max(xVector, yVector);
-      xVector /= normalize;
-      yVector /= normalize;
+      //if the x vector of the y vector of the unit are nan set the units position to be its reset position
+      if(isnan(xVector) || isnan(yVector)){
+        unit->setXCoordinate(newX);
+        unit->setYCoordinate(newY);
+        return;
+      }
 
       //convert the vector into radians for the direction
       double direction = atan2((-1)*yVector, xVector);
@@ -121,6 +201,10 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
 
       //then move it
       unit -> move(delta);
+
+      if(isnan(unit->getXCoordinate()) || isnan(unit->getYCoordinate())){
+        cout << "what the helll " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
+      }
 
       //we check to see if the projectile has overshot the target
       if(xVector > 0 ){
@@ -145,6 +229,7 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
         }
       }
     }
+    */
   }
 }
 
@@ -158,6 +243,20 @@ bool MeleeTower::withinRange(float x1, float y1, float x2, float y2){
     }
   }
   return false;
+}
+
+/*
+ * Caclulates the x and y of the vector that the projectile will travel on.
+ * Uses the speed, direction and distance to the enemy unit as a guide
+ */
+void MeleeTower::calcAttackVector(shared_ptr<ActorInterface> meleeUnit, shared_ptr<ActorInterface> enemyInRange){
+  float xvec = enemyInRange -> getXCoordinate() - this -> xCoordinate;
+  float yvec = enemyInRange -> getYCoordinate() - this -> yCoordinate;
+
+  //set the target of the projectile to the be x,y of the enemy being fired at
+  meleeUnit -> setTargetPos(enemyInRange -> getXCoordinate(), enemyInRange -> getYCoordinate());
+
+  meleeUnit -> setVector(xvec,yvec);
 }
 
 /*
@@ -195,6 +294,7 @@ void MeleeTower::upgrade(){}
  */
 void MeleeTower::initSprite(){
   (this->sprite).setTexture(textures -> at(0));
+  currentTexture = 0;
 }
 
 /*
@@ -267,7 +367,7 @@ void MeleeTower::handleDeadUnit(int indexOfUnit){
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
-  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+  auto nowInNano = duration_cast<seconds>(now.time_since_epoch()).count();
 
   //set whatever time is in this space to the current time
   timeOfDeath.at(indexOfUnit) = nowInNano;
@@ -277,21 +377,21 @@ void MeleeTower::handleDeadUnit(int indexOfUnit){
  * Respawn any unit that is below 0 health that has a larger elapsed time
  * since it last died than the respawn Speed
  */
-void MeleeTower::respawnUnits(){
+void MeleeTower::respawnUnits(float delta){
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
-  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+  auto nowInNano = duration_cast<seconds>(now.time_since_epoch()).count();
 
   for(int index = 0; index < timeOfDeath.size(); index++){
-    float deathTime = timeOfDeath.at(index);
+    long long deathTime = timeOfDeath.at(index);
 
     //if this is not a dead unit
-    if(deathTime == -1.0){
+    if(deathTime == -1){
       continue;
     }
-    if(deathTime - e <= nowInNano && deathTime + e >= nowInNano){
-      timeOfDeath.at(index) = -1.0;
+    if(nowInNano - deathTime < (delta/respawnSpeed)){
+      timeOfDeath.at(index) = -1;
       //set the health back to max
       currentUnits.at(index) -> resetHealth();
 

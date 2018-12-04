@@ -18,7 +18,7 @@ public:
   void setXCoordinate(float xCor){xCoordinate = xCor;}
   void setYCoordinate(float yCor){yCoordinate = yCor;}
   bool canAttack(){return false;}
-  void attack(shared_ptr<ActorInterface> enemyInRange){}
+  void attack(shared_ptr<ActorInterface> enemyInRange, float delta){}
   void update(float delta){Obstacle::update(delta);}
   shared_ptr<vector<int>>  getStatistics(){return Obstacle::getStatistics();}
 };

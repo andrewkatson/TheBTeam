@@ -31,6 +31,9 @@ using std::pair;
 using std::max;
 class TowerInterface{
 protected:
+
+  //the scaling factor used for the shooting
+  float rateOfFireScale;
   //int pair (used to assocaite a row and col)
   typedef pair<int,int> intPair;
   //all the textures for this actor
@@ -44,6 +47,9 @@ protected:
   shared_ptr<TextureLoader> textureLoader;
   //The sprite corresponding to the tower.
   sf::Sprite sprite;
+
+  //the integer corresponding to the index of the current texture set to the sprite from the texture vector
+  int currentTexture;
 
   //the price of the tower (cost to remove in the case of an obstacle)
   int price;
@@ -83,6 +89,9 @@ protected:
   //the level of the tower
   int level;
 
+  //the unique id of the tower
+  long long towerID;
+
 public:
 
   //the tower type identifier that allows for its next upgrade to be pulled
@@ -99,7 +108,7 @@ public:
   virtual void setProjectile()=0;
   virtual void setUpUnits()=0;
   virtual bool canAttack()=0;
-  virtual void attack(shared_ptr<ActorInterface> enemyInRange)=0;
+  virtual void attack(shared_ptr<ActorInterface> enemyInRange, float delta)=0;
   virtual void setPos(int row, int col)=0;
   virtual void setPos(intPair pos)=0;
   virtual float getXCoordinate()=0;
@@ -202,6 +211,8 @@ public:
   int getLevel(){return level;}
 
   void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
+
+  long long getID(){return towerID;}
 };
 
 #endif

@@ -12,6 +12,8 @@
 using std::tuple;
 using std::make_tuple;
 using std::get;
+
+typedef pair<int,int> intPair;
 class PlayingScreen : public Screen {
 private:
   sf::Mouse mouse;
@@ -58,6 +60,9 @@ private:
 
   //the upgrade system visuals
   unique_ptr<UpgradeCircle> upgradeCircle;
+
+  sf::CircleShape radius;
+  sf::RectangleShape tile;
 
 
 public:

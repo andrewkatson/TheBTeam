@@ -15,6 +15,7 @@ AverageKidUnit::AverageKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this->typeID=textLoader->getTypeID(string("IDS_AKU"));
   this->attackRate=textLoader->getInteger(string("IDS_AK_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(typeID);
+  this -> isAlly = false;
   //set the initial sprite texture
   this ->current_sprite = 0;
   //load in the initial texture for sizing

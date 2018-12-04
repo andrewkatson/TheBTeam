@@ -11,6 +11,7 @@
 using namespace std;
 
 #include <memory>
+#include <cmath>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
 #include <time.h>
@@ -35,8 +36,6 @@ protected:
   //The amount of armor the unit has.
   int armor;
 
-  //A reference to the unit that this unit is fighting.
-  shared_ptr<MeleeUnit> engagedUnit;
 
   //The bar for rendering the unit's HP
   HitpointBar hpBar;
@@ -91,7 +90,7 @@ public:
 
   int getAttackRadius() const;
 
-  shared_ptr<MeleeUnit> getEngagedUnit(){return engagedUnit;}
+  shared_ptr<ActorInterface> getEngagedUnit(){return engagedUnit;}
 
   void setAttackRadius(int attackRadius);
 
@@ -163,6 +162,12 @@ public:
   */
   void move(float delta);
 
+
+  /*
+   * A vector based move specifically for the melee units that go with towers
+   */
+  void vectorMove(float delta);
+
   /*
     Determine whether or not the object's collision box is colliding with the
     given collision box. By default, this is determined by whether or not the
@@ -176,7 +181,7 @@ public:
   /*
    * Set the engaged unit
    */
-  void setEngagedUnit(shared_ptr<MeleeUnit> unitToEngage){engagedUnit = unitToEngage;}
+  void setEngagedUnit(shared_ptr<ActorInterface> unitToEngage){engagedUnit = unitToEngage;}
 
   /*
    * Setting the fixtures for Box2D

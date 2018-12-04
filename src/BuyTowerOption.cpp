@@ -89,7 +89,7 @@ void BuyTowerOption::initChooseButton(){
   }
   //if we are selling then the number is positive
   else{
-    fullPurchaseString += string(" ") + to_string(towerToShow->getPrice());
+    fullPurchaseString += string(" ") + to_string((int)(towerToShow->getPrice()*textLoader->getDouble(string("IDS_Percentage_Money_Returned_On_Sell_Tower"))));
   }
 
   string fontpath = textLoader -> getString(string("IDS_SFP"));

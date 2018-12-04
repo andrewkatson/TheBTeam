@@ -69,7 +69,7 @@ void BoardManager::deregisterDelegates(){
   OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
   EventType optionSelectedEventType = optionSelectedEvent.getEventType();
   //deregister the delegate and its type
-  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_OMSD_BM")),optionSelectedEventType);
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_OMSD_OS")),optionSelectedEventType);
 
   //make an event and get its type
   LevelChangeEvent levelChangeEvent = LevelChangeEvent();

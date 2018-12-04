@@ -1,5 +1,5 @@
 #include "Towers/SpicyFry.hpp"
-SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : MeleeTower(eventManager, textLoader){
+SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;
   this -> respawnSpeed = textLoader->getInteger(string("IDS_SFT_RS"));
@@ -9,6 +9,7 @@ SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_
   this -> textureLoader = textureLoader;
   this -> textures = textureLoader -> getTexture(typeID);
   this -> level = 3;
+  this -> logUnitsForCollisions = setUpUnits;
   this -> initSprite();
   this -> setUpUnits();
 }

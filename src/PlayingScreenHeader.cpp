@@ -30,6 +30,8 @@ PlayingScreenHeader::~PlayingScreenHeader(){
  * Set up any objects that can be drawn
  */
 void PlayingScreenHeader::initDrawingMaterials(){
+  headerVariables.clear();
+  headerVariableValues.clear();
   initBuyTowerButton();
   initSellTowerButton();
   initHitpointsButton();
@@ -170,8 +172,8 @@ void PlayingScreenHeader::initSellTowerButton(){
 void PlayingScreenHeader::initHitpointsButton(){
 
   //get the starting hitpoints
-  Player player = gameLogic -> getPlayer();
-  int startingHitpoints = player.getHitpoints();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingHitpoints = player -> getHitpoints();
 
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
@@ -236,8 +238,8 @@ void PlayingScreenHeader::initHitpointsButton(){
 void PlayingScreenHeader::initBalanceButton(){
 
   //get the starting balance
-  Player player = gameLogic -> getPlayer();
-  int startingBalance = player.getBalance();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingBalance = player -> getBalance();
 
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
@@ -309,8 +311,8 @@ void PlayingScreenHeader::initBalanceButton(){
  */
 void PlayingScreenHeader::initLevelButton(){
   //get the starting level
-  Player player = gameLogic -> getPlayer();
-  int startingLevel = player.getLevel();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingLevel = player -> getLevel();
 
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
@@ -382,8 +384,8 @@ void PlayingScreenHeader::initLevelButton(){
  */
 void PlayingScreenHeader::initWaveButton(){
   //get the starting wave
-  Player player = gameLogic -> getPlayer();
-  int startingWave = player.getWave();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingWave = player -> getWave();
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));
@@ -698,6 +700,15 @@ void PlayingScreenHeader::registerPersistentDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(balanceChangeDelegate, textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
 
+  //bind our delegate function for balance change
+  EventManager::EventDelegate restartGameEventDelegate = std::bind(&PlayingScreenHeader::handleRestartGame, this, _1);
+
+  //make an event and get its type
+  RestartGameEvent restartGameEvent = RestartGameEvent();
+  EventType restartGameEventType = restartGameEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(restartGameEventDelegate, textLoader -> getString(string("IDS_PSH_RG")),restartGameEventType);
+
 }
 
 /*
@@ -710,6 +721,11 @@ void PlayingScreenHeader::deregisterPersistentDelegates(){
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
 
+  //make an event and get its type
+  RestartGameEvent restartGameEvent = RestartGameEvent();
+  EventType restartGameEventType = restartGameEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PSH_RG")),restartGameEventType);
 }
 
 /*
@@ -1005,6 +1021,29 @@ void PlayingScreenHeader::handleWaveChange(const EventInterface& event){
   headerVariableValues.at(3) = newWave;
 
   recaculateHeader=true;
+}
+
+/*
+ * Handle restart game
+ * @param event:
+ */
+void PlayingScreenHeader::handleRestartGame(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * RestartGameEvent type which allows us to access variables and methods
+   * specific to RestartGameEvent
+   */
+  const RestartGameEvent* rgEvent = static_cast<const RestartGameEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a RestartGameEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  RestartGameEventData* rgEventData = static_cast<RestartGameEventData*>((rgEvent -> data).get());
+
+  //reinitlaize all the header buttons so that they use the new values for the
+  //player
+  initDrawingMaterials();
 }
 
 /*

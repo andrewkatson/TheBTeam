@@ -8,6 +8,8 @@ Projectile::Projectile(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> isProjectile = true;
+  this -> isAlly = true;
+  this -> alreadyHit = false;
 }
 
 /*
@@ -33,8 +35,8 @@ int Projectile::getDamage() const {
 }
 
 void Projectile::move(float delta){
-  float newX = xVector /(1/speed) *delta + x;
-  float newY = yVector / (1/speed) *delta + y;
+  float newX = xVector *(speed) *delta * xScale + x;
+  float newY = yVector *(speed) *delta * yScale + y;
 
   //we check to see if the projectile has overshot the target
   if(xVector > 0 ){
@@ -61,24 +63,11 @@ void Projectile::move(float delta){
 
   x = newX;
   y = newY;
-
-  //update the body
-  body -> SetTransform(b2Vec2(x,y), body->GetAngle());
-}
-
-void Projectile::setVector(float x, float y){
-  this -> xVector = x;
-  this -> yVector = y;
 }
 
 void Projectile::setVectorScale(float xScale, float yScale){
   this -> xVectorScale = xScale;
   this -> yVectorScale = yScale;
-}
-
-void Projectile::setTargetPos(float xPos, float yPos){
-  this -> xTarget = xPos;
-  this -> yTarget = yPos;
 }
 
 void Projectile::setProjectileID(int ID){
@@ -107,6 +96,11 @@ bool Projectile::hasHitTarget(){
 }
 
 void Projectile::handleTargetHit(){
+  //if we have already hit the target then we do not need to create more events
+  if(alreadyHit){
+    return;
+  }
+
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
@@ -116,6 +110,8 @@ void Projectile::handleTargetHit(){
   shared_ptr<EventInterface> projectileHit = make_shared<ProjectileExplosionEvent>(this -> getID(), nowInNano);
 
   this -> eventManager -> queueEvent(projectileHit);
+
+  alreadyHit = true;
 }
 
 void Projectile::setFixtures(){
@@ -128,4 +124,9 @@ void Projectile::setFixtures(){
   circleFixtureDef.shape = &circleShape; //this is a pointer to the shape above
   fixture = body->CreateFixture(&circleFixtureDef); //add a fixture to the body
 
+}
+
+void Projectile::damageUnit(shared_ptr<ActorInterface> enemy){
+  enemy ->updateHitpoints(enemy->getHitpoints()-damage*(armorPenetration/(enemy->getArmor()>0?enemy->getArmor() : 1)));
+  enemy ->flickerUnit();
 }

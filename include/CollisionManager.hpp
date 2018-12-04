@@ -10,13 +10,20 @@
 #include "WaveManager.hpp"
 #include "ProjectileManager.hpp"
 #include "TowerInterface.hpp"
+#include "Projectile.hpp"
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
 #include "Events/ActorCreatedEvent.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
 
+using std::cerr;
+//int pair (used to assocaite a row and col)
+typedef pair<int,int> intPair;
+//int pair (used to assocaite a x and y)
+typedef pair<float,float> floatPair;
 class CollisionManager{
 private:
+
   //Store the textLoader to make requests for strings and constants
   shared_ptr<TextLoader> textLoader;
   //Store the Event Manger for the game that receives and distributes irregular
@@ -29,13 +36,13 @@ private:
   shared_ptr<ProjectileManager> projectileManager;
 
   //all towers keyed by a row, col pair they belong in (uses their radius to determine where)
-  unordered_map<int, vector<shared_ptr<TowerInterface>>> towersPlaced;
+  unordered_map<int, unordered_map<long long, shared_ptr<TowerInterface>>> towersPlaced;
   //all projectiles keyed by their id (so they can be grabbed when they explode quickly
   unordered_map<long long, shared_ptr<ActorInterface>> projectilesFired;
   //all allied units keyed by a row, col they belong in
-  unordered_map<int, vector<shared_ptr<ActorInterface>>> alliedUnits;
+  unordered_map<int, unordered_map<long long, shared_ptr<ActorInterface>>> alliedUnits;
   //all enemy units keyed by a row, col they belong in
-  unordered_map<int, vector<shared_ptr<ActorInterface>>> enemyUnits;
+  unordered_map<int, unordered_map<long long, shared_ptr<ActorInterface>>> enemyUnits;
 
   //the size of tiles in x dimension
   float xTileSize;
@@ -46,6 +53,13 @@ private:
   //the number of cols
   int cols;
 
+  //circle shape to take the place of any tower radius
+  sf::CircleShape radius;
+  //rectangle shape to act in place of the tiles to check if a circle intersects
+  sf::RectangleShape tile;
+
+  int nummade = 0;
+  int numdestroyed = 0;
 public:
 
   CollisionManager(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager,
@@ -68,7 +82,20 @@ public:
 
   void addNewTower(shared_ptr<TowerInterface> tower);
   void removeOldTower(shared_ptr<TowerInterface> tower);
+  void handleTowerRadiusUpgrade(shared_ptr<TowerInterface> towerUpgraded);
+  void addTowerByRadius(shared_ptr<TowerInterface> tower);
+  vector<intPair> minAndMaxRowCol(shared_ptr<TowerInterface> tower);
+  bool tileInRadius(shared_ptr<TowerInterface> tower);
+  vector<floatPair> getFourCornersOfTileAndMidpoints();
 
-  void checkForCollisions();
+  void checkForCollisions(float delta);
+  void updateAllUnitPositions();
+  void updateAllAllyUnitPositions();
+  void updateAllEnemyUnitPositions();
+
+  void projectileExplosionCollisionCheck(shared_ptr<ActorInterface> projectile);
+
+  bool inMap(int row, int col);
+  bool inMap(float x, float y);
 
 };

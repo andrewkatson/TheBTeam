@@ -22,7 +22,7 @@ public:
   void setXCoordinate(float xCor){xCoordinate = xCor;}
   void setYCoordinate(float yCor){yCoordinate = yCor;}
   bool canAttack(){return RangeTower::canAttack();}
-  void attack(shared_ptr<ActorInterface> enemyInRange){RangeTower::attack(enemyInRange);}
+  void attack(shared_ptr<ActorInterface> enemyInRange, float delta){RangeTower::attack(enemyInRange, delta);}
   void update(float delta){RangeTower::update(delta);}
   shared_ptr<vector<int>>  getStatistics(){return RangeTower::getStatistics();}
 };

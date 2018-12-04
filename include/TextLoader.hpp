@@ -10,6 +10,7 @@
 #include <sstream>
 #include <memory>
 #include <iostream>
+#include <assert.h>
 #include "tinyxml2.h"
 
 using std::string;
@@ -17,6 +18,7 @@ using std::unordered_map;
 using std::stringstream;
 using std::cout;
 using std::endl;
+
 
 class TextLoader {
 

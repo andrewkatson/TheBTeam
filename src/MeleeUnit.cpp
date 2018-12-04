@@ -92,6 +92,41 @@ HitpointBar MeleeUnit::getHpBar() {
 void MeleeUnit::move(float deltaS){
   this->x+=(speed*cos(direction))*ActorInterface::getXScale();
   this->y+=(speed*sin(direction)*-1)*ActorInterface::getYScale();
+  if(isnan(x) || isnan(y)){
+    cout << "position after " << x << " " << y << endl;
+    cout << "direction was " << direction << endl;
+  }
+}
+
+void MeleeUnit::vectorMove(float delta){
+  float newX = xVector /(500/speed) *delta * xScale + x;
+  float newY = yVector / (500/speed) *delta * yScale + y;
+
+  //we check to see if the projectile has overshot the target
+  if(xVector > 0 ){
+    if(newX > xTarget - e){
+      newX = xTarget;
+    }
+  }
+  else{
+    if(newX < xTarget + e){
+      newX = xTarget;
+    }
+  }
+
+  if(yVector > 0){
+    if(newY > yTarget - e){
+      newY = yTarget;
+    }
+  }
+  else{
+    if(newY < yTarget + e){
+      newY = yTarget;
+    }
+  }
+
+  x = newX;
+  y = newY;
 }
 
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){

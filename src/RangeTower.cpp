@@ -6,13 +6,24 @@ RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> textLoader = textLoader;
   this -> isMelee = false;
   this -> radiusVisible = false;
+  //set the tower interface scaling factor for the rate of fire
+  rateOfFireScale = textLoader -> getDouble(string("IDS_Rate_Of_Fire_Scaler"));
   lastTimeFired = 0.0;
   this -> setToCenter();
 }
 
 void RangeTower::update(float delta){
-  if(canAttack()){
-    //TODO find some way to get a specific enemy to be attacked
+
+  //the time object of the class
+  auto time = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto currTime = duration_cast<seconds>(time.time_since_epoch()).count();
+
+  //if time has passed between the last shot and the current shot
+  //and the sprite is set to open then we reset it
+  if(currentTexture != 0 && currTime - lastTimeFired > (delta/(rateOfFire))){
+    (this->sprite).setTexture(textures -> at(0));
+    currentTexture = 0;
   }
 }
 
@@ -21,6 +32,7 @@ void RangeTower::update(float delta){
  */
 void RangeTower::initSprite(){
   (this->sprite).setTexture(textures -> at(0));
+  currentTexture = 0;
 }
 
 void RangeTower::upgrade(){}
@@ -31,27 +43,38 @@ int RangeTower::getPrice(){
   return this -> price;
 }
 
-bool RangeTower::canAttack(){
-  //can only attack when the difference between the last shot and now is greater than the 1/rate of fire
-  float minTimeBetweenShots = 1/rateOfFire;
+bool RangeTower::canAttack(){}
 
-  auto now = high_resolution_clock::now();
+void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
+
+  //the time object of the class
+  auto time = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
-  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
-
-  float timeBetweenShots = nowInNano - lastTimeFired;
-
-  if(timeBetweenShots > minTimeBetweenShots){
-    //TODO check if there are enemies in range
+  auto timeToShoot = duration_cast<seconds>(time.time_since_epoch()).count();
+  //if we are firing too quickly we ignore this enemy
+  if(timeToShoot - lastTimeFired < (delta/rateOfFire)){
+    //cout << "time " << timeToShoot << endl;
+    //cout << "last time " << lastTimeFired << endl;
+    //cout << "diff " << timeToShoot - lastTimeFired << endl;
+    //cout << "rate of fire " << rateOfFire << endl;
+    return;
   }
-  return false;
-}
 
-void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
+  //cout << "fire " << endl;
+
+  if(textures -> size() > 1){
+    //switch to the open texture if there is one
+    (this->sprite).setTexture(textures -> at(1));
+    currentTexture = 1;
+  }
+
+
   shared_ptr<ActorInterface> firedProjectile = createProjectile();
 
   //send the size of a tile in the x and y to the projectile
   firedProjectile -> setTileSize(xTileSize, yTileSize);
+  //send the scaling to the projectile for use when it explodes
+  firedProjectile -> setTowerScale(xScale, yScale);
 
   //modify the statistics of the firedProjectile so they match any upgrades in the stored projectile
   modifyToIncludeUpgrades(firedProjectile);
@@ -78,7 +101,8 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
   auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
   //update the time of the last fired shot
-  lastTimeFired = nowInNano;
+  lastTimeFired = duration_cast<seconds>(now.time_since_epoch()).count();
+
 
   bool isProjectile = true;
   shared_ptr<EventInterface> projectileFiredEvent = make_shared<ActorCreatedEvent>(firedProjectile, isProjectile, nowInNano);
