@@ -580,6 +580,7 @@ void CollisionManager::checkForCollisions(float delta){
             if(isCollision){
               //if there is a collision the tower should attack the unit
               towerAndKeyAtGrid.second -> attack(gridWithEnemyUnits.second, delta);
+              cout << "attack !" << endl;
             }
           }
         }

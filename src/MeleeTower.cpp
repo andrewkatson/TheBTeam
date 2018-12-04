@@ -412,7 +412,7 @@ bool MeleeTower::canAttack(){
  * is engaged with an enemy unit that is not also engaged with it
  */
 void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
-
+  cout << "Attack " << endl;
 }
 
 /*
