@@ -58,7 +58,7 @@ private:
   //interact with the defensive towers
   shared_ptr<TowerManager> towerManager;
   //Store the human player's statistics
-  unique_ptr<Player> player;
+  shared_ptr<Player> player;
   //Store any sounds/music used by the game and play/stop when necessary
   unique_ptr<SoundManager> soundManager;
   //Store the waves of ai enemies to be spawned and handle where/when each wave starts
@@ -153,7 +153,7 @@ public:
   const int getWindowY();
   const int getWindowX();
 
-  Player& getPlayer();
+  shared_ptr<Player> getPlayer();
 
   const MapChoices& getMapCustomizationChoices();
 

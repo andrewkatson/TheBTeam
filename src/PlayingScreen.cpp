@@ -443,6 +443,8 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   //get the y position
   float yPos = mpEventData -> y;
 
+  cout << "x " << xPos << " y " << yPos << endl;
+
   //get the size of a tile in the x
   float xTileSize = playingScreenHeader -> getTrueXTileSize();
   //get the size of a tile in the y

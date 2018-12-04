@@ -231,6 +231,8 @@
     <string value="GameLogic_Projectile_Explosion" id="IDS_GameLogic_Delegate_Projectile_Explosion"> </string>
     <!--Player Delegates-->
     <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
+    <string value="Player_Handle_Lost_Hitpoints" id="IDS_Player_Lose_Hitpoints"> </string>
+    <string value="Player_Option_Selected_Event" id="IDS_Player_Option_Selected"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
     <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>
@@ -238,6 +240,7 @@
     <!--Board Manager Delegates-->
     <string value="BOARDMANAGERHANDLETOWERCREATION" id="IDS_BMD_TC"> </string>
     <string value="BOARDMANAGERHANDLETOWERREMOVE" id="IDS_BMD_TR"> </string>
+    <string value="BoardManager_Handle_Option_Selected" id="IDS_BMD_OS"> </string>
     <!--Tower Manager Delegates-->
     <string value="TOWERMANAGERHANDLETOWERCREATION" id="IDS_TMD_TC"> </string>
     <string value="TOWERMANAGERHANDLETOWERREMOVE" id="IDS_TMD_TR"> </string>
@@ -263,6 +266,7 @@
     <!--RestartMenuScreen Delegates-->
     <string value="RESTARTSCREENHANDLEKEYPRESS" id="IDS_RSD_KP"> </string>
     <!--PlayingScreen Delegates-->
+    <string value="Playing_Screen_Map_Generated" id="IDS_PS_MG"> </string>
     <string value="PLAYINGSCREENHANDLETOWERCREATION" id="IDS_PS_TC"> </string>
     <string value="PLAYINGSCREENHANDLETOWERREMOVE" id="IDS_PS_TR"> </string>
     <string value="PLAYINGSCREENHANDLEMOUSEPRESS" id="IDS_PS_MP"> </string>

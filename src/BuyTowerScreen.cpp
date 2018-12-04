@@ -10,6 +10,10 @@ BuyTowerScreen::BuyTowerScreen(shared_ptr<EventManager> eventManager,shared_ptr<
   this -> registerPersistentDelegates();
 }
 
+BuyTowerScreen::~BuyTowerScreen(){
+  deregisterPersistentDelegates();
+}
+
 /*
  * Initlaize anything required to be drawn on the screen
  */
@@ -57,7 +61,7 @@ void BuyTowerScreen::initBackButton(){
   this -> backButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")),
   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")),
   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
-  
+
   //set the button text outline thickness
   this->backButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
 
@@ -169,7 +173,22 @@ void BuyTowerScreen::registerPersistentDelegates(){
   StateChangeEvent stateChangeEvent = StateChangeEvent();
   EventType stateChangeEventType = stateChangeEvent.getEventType();
   //register the delegate and its type
-  this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_BTD_SC")),stateChangeEventType);
+  this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_BTS_SC")),stateChangeEventType);
+}
+
+
+/*
+ * deregister the delegate methods for this class
+ * with any events it needs to know about
+ * used for any delegate methods that should never be deregistered
+ */
+void BuyTowerScreen::deregisterPersistentDelegates(){
+
+  //make an event and get its type
+  StateChangeEvent stateChangeEvent = StateChangeEvent();
+  EventType stateChangeEventType = stateChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_BTS_SC")),stateChangeEventType);
 }
 
 /*
@@ -369,7 +388,7 @@ void BuyTowerScreen::handleStateChange(const EventInterface& event){
 void BuyTowerScreen::populateOptionsVector(){
 
   //the amount of money the player has
-  int balance = (gameLogic -> getPlayer()).getBalance();
+  int balance = (gameLogic -> getPlayer()) -> getBalance();
 
   //whether we show the statistics of the option or not
   //set to false for obstacle

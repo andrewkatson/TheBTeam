@@ -52,6 +52,8 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange){
 
   //send the size of a tile in the x and y to the projectile
   firedProjectile -> setTileSize(xTileSize, yTileSize);
+  //send the scaling to the projectile for use when it explodes
+  firedProjectile -> setTowerScale(xScale, yScale);
 
   //modify the statistics of the firedProjectile so they match any upgrades in the stored projectile
   modifyToIncludeUpgrades(firedProjectile);

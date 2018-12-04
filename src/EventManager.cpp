@@ -75,8 +75,6 @@ void EventManager::deregisterDelegate(const string &eventDelegateIdentifier, con
   if(!(eventDelegatesEventMap.find(eventDelegateIdentifier) == eventDelegatesEventMap.end())){
     EventDelegateMap.at(type).erase(eventDelegateIdentifier);
   }
-
-
 }
 
 void EventManager::triggerEvent(const EventInterface& event)

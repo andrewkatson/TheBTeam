@@ -170,8 +170,8 @@ void PlayingScreenHeader::initSellTowerButton(){
 void PlayingScreenHeader::initHitpointsButton(){
 
   //get the starting hitpoints
-  Player player = gameLogic -> getPlayer();
-  int startingHitpoints = player.getHitpoints();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingHitpoints = player -> getHitpoints();
 
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
@@ -236,8 +236,8 @@ void PlayingScreenHeader::initHitpointsButton(){
 void PlayingScreenHeader::initBalanceButton(){
 
   //get the starting balance
-  Player player = gameLogic -> getPlayer();
-  int startingBalance = player.getBalance();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingBalance = player -> getBalance();
 
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
@@ -309,8 +309,8 @@ void PlayingScreenHeader::initBalanceButton(){
  */
 void PlayingScreenHeader::initLevelButton(){
   //get the starting level
-  Player player = gameLogic -> getPlayer();
-  int startingLevel = player.getLevel();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingLevel = player -> getLevel();
 
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
@@ -382,8 +382,8 @@ void PlayingScreenHeader::initLevelButton(){
  */
 void PlayingScreenHeader::initWaveButton(){
   //get the starting wave
-  Player player = gameLogic -> getPlayer();
-  int startingWave = player.getWave();
+  shared_ptr<Player> player = gameLogic -> getPlayer();
+  int startingWave = player -> getWave();
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));

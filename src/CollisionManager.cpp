@@ -13,6 +13,22 @@ CollisionManager::CollisionManager(shared_ptr<TextLoader> textLoader, shared_ptr
 
 CollisionManager::~CollisionManager(){
   deregisterDelegates();
+  cout << "num made " << nummade << " num destroyed " << numdestroyed << endl;
+
+  for(auto it : towersPlaced){
+    cout << "towers "<< it.second.size() << endl;
+  }
+
+  for(auto it : alliedUnits){
+    cout << "allied units " << it.second.size() << endl;
+  }
+
+  for(auto it : enemyUnits){
+    cout << "Enemy units " << it.second.size() << endl;
+    if(it.second.size() != 0){
+      cout << "position is " << it.first / cols << " " << it.first % cols << endl;
+    }
+  }
 }
 
 /*
@@ -190,9 +206,10 @@ void CollisionManager::handleActorCreated(const EventInterface& event){
       cout << "row en " << actorCreated -> getRow() << " col " << actorCreated -> getCol() << endl;
       cout << "x pos en " << actorCreated -> getXCoordinate() << " y " << actorCreated -> getYCoordinate() << endl;
       if(inMap(row,col)){
+        nummade++;
         int combinedRowCol = actorCreated -> getRow() * cols + actorCreated -> getCol();
         //if there is not a row, col stored then we need to set one up
-        if(alliedUnits.find(combinedRowCol) == alliedUnits.end()){
+        if(enemyUnits.find(combinedRowCol) == enemyUnits.end()){
           unordered_map<long long, shared_ptr<ActorInterface>> emptyMap;
           enemyUnits.insert({combinedRowCol, emptyMap});
         }
@@ -229,25 +246,28 @@ void CollisionManager::handleActorDestroyed(const EventInterface& event){
     //if this is an allied unit we place it in a map only for the allied units
     if(actorDestroyed->isAnAlly()){
       //the row and col the ally is currently at
-      cout << "row d" << actorDestroyed -> getRow() << " col " << actorDestroyed -> getCol() << endl;
-      cout << "x pos d" << actorDestroyed -> getXCoordinate() << " y " << actorDestroyed -> getYCoordinate() << endl;
       if(inMap(row,col)){
         int combinedRowCol = actorDestroyed -> getRow() * cols + actorDestroyed -> getCol();
-
+        if(alliedUnits.find(combinedRowCol) == alliedUnits.end()){
+          cerr << "allied unit not found in map on destruction " << endl;
+          assert(true == false);
+        }
         alliedUnits.at(combinedRowCol).erase(actorDestroyed->getID());
       }
     }
     else{
       //the row and col the enemy is currently at
-      cout << "row en d" << actorDestroyed -> getRow() << " col " << actorDestroyed -> getCol() << endl;
-      cout << "x pos en d" << actorDestroyed -> getXCoordinate() << " y " << actorDestroyed -> getYCoordinate() << endl;
       if(inMap(row,col)){
+        numdestroyed++;
         int combinedRowCol = actorDestroyed -> getRow() * cols + actorDestroyed -> getCol();
-        alliedUnits.at(combinedRowCol).erase(actorDestroyed->getID());
+        if(enemyUnits.find(combinedRowCol) == enemyUnits.end()){
+          cerr << "enemy unit not found in map on destruction " << endl;
+          assert(true == false);
+        }
+        enemyUnits.at(combinedRowCol).erase(actorDestroyed->getID());
       }
     }
   }
-
 }
 
 /*
@@ -256,6 +276,9 @@ void CollisionManager::handleActorDestroyed(const EventInterface& event){
 void CollisionManager::setGridDimensions(float x, float y){
   xTileSize = x;
   yTileSize = y;
+
+  //update the tile stand in to reflect the size
+  tile.setSize(sf::Vector2f(xTileSize, yTileSize));
 }
 
 /*
@@ -270,7 +293,8 @@ void CollisionManager::setDimensions(int rows, int cols){
  * Store a new tower created and store it after determining its location
  */
 void CollisionManager::addNewTower(shared_ptr<TowerInterface> tower){
-
+  //add the tower into any row and col that its radius touches
+  addTowerByRadius(tower);
 }
 
 /*
@@ -278,7 +302,211 @@ void CollisionManager::addNewTower(shared_ptr<TowerInterface> tower){
  * cells in the unordered map it is part of
  */
 void CollisionManager::removeOldTower(shared_ptr<TowerInterface> tower){
+  //calculate the four corners of the ellipse that surrounds the tower (its range of rally or shooting)
+  //and get pairs that represent the minimum row and the minimum col as well as the maximum row and the maximum col
+  vector<intPair> minAndMax = minAndMaxRowCol(tower);
 
+  assert(minAndMax.size()==2);
+
+    //loop from minRow to maxRow
+    for(int row = minAndMax.at(0).first; row <= minAndMax.at(1).first; row++){
+      //loop from minCol to maxCol
+      for(int col = minAndMax.at(0).second; col <= minAndMax.at(1).second; col++){
+        //set the position this tile would be in
+        tile.setPosition(sf::Vector2f(col*xTileSize, row*yTileSize));
+
+        //if the tile we have set is within the circle
+        if(tileInRadius(tower)){
+          cout << "intersecting! " << endl;
+          cout << "row " << row << " and col " << col << endl;
+
+          int combinedRowCol = row*cols + col;
+          //if the row,col pair does not have any towers in it we have to make one
+          if(towersPlaced.find(combinedRowCol) == towersPlaced.end()){
+            //should never go here
+            cerr << "Collision Manager trying to remove a tower in a space it does not exist" << endl;
+            assert(false);
+          }
+
+          //then place the tower to be at that combined row col
+          towersPlaced.at(combinedRowCol).erase({tower->getID()});
+      }
+    }
+  }
+}
+
+/*
+ * Handle when a tower is upgraded in its radius to recalculate the row and cols it belongs to
+ */
+void CollisionManager::handleTowerRadiusUpgrade(shared_ptr<TowerInterface> towerUpgraded){
+  addTowerByRadius(towerUpgraded);
+
+}
+
+/*
+ * Calculate all the rows and columns a tower is "in" by using its radius
+ * @param tower: the tower that is having its position on the board calculated
+ */
+void CollisionManager::addTowerByRadius(shared_ptr<TowerInterface> tower){
+  //calculate the four corners of the ellipse that surrounds the tower (its range of rally or shooting)
+  //and get pairs that represent the minimum row and the minimum col as well as the maximum row and the maximum col
+  vector<intPair> minAndMax = minAndMaxRowCol(tower);
+
+  assert(minAndMax.size()==2);
+
+  //loop from minRow to maxRow
+  for(int row = minAndMax.at(0).first; row <= minAndMax.at(1).first; row++){
+    //loop from minCol to maxCol
+    for(int col = minAndMax.at(0).second; col <= minAndMax.at(1).second; col++){
+      //set the position this tile would be in
+      tile.setPosition(sf::Vector2f(col*xTileSize, row*yTileSize));
+
+      //if the tile we have set is within the circle
+      if(tileInRadius(tower)){
+        cout << "intersecting! " << endl;
+        cout << "row " << row << " and col " << col << endl;
+
+        int combinedRowCol = row*cols + col;
+        //if the row,col pair does not have any towers in it we have to make one
+        if(towersPlaced.find(combinedRowCol) == towersPlaced.end()){
+          unordered_map<long long, shared_ptr<TowerInterface>> emptyMap;
+          towersPlaced.insert({combinedRowCol, emptyMap});
+        }
+
+        //then place the tower to be at that combined row col
+        towersPlaced.at(combinedRowCol).insert({tower->getID(), tower});
+      }
+    }
+  }
+}
+
+/*
+ * Calculate the four corners of the tower's radius. Checks whether a point lies
+ * outside the map and corrects for it.
+ * @return vector<intPair>: the two positions that represent the minimum row,col and the max row,col
+ */
+vector<intPair> CollisionManager::minAndMaxRowCol(shared_ptr<TowerInterface> tower){
+  vector<intPair> minAndMaxPositions;
+
+  //calculate the left position
+  float leftX = tower->getXCoordinate()-tower->getXScale()*tower->getRadius();
+  float leftY = tower->getYCoordinate();
+
+  //if the left positions are anywhere over the edge
+  if(leftX < 0.0){
+    leftX = 0.0;
+  }
+
+  //the row and col pair on the left side
+  int leftRow = leftY / yTileSize;
+  int leftCol = leftX / xTileSize;
+
+  //calculate the right position
+  float rightX = tower->getXCoordinate()+tower->getXScale()*tower->getRadius();
+  float rightY = tower->getYCoordinate();
+
+  //if the right position is anywhere over the edge
+  if(rightX > xTileSize*cols){
+    rightX = xTileSize*cols - 1.0;
+  }
+
+  //the row and col pair on the right side
+  int rightRow = rightY / yTileSize;
+  int rightCol = rightX / xTileSize;
+
+  //calculate the top position
+  float topX = tower->getXCoordinate();
+  float topY = tower->getYCoordinate()-tower->getYScale()*tower->getRadius();
+
+  //if the top position is anywhere over the edge
+  if(topY < 0){
+    topY = 0.0;
+  }
+
+  //the row and col pair on the top side
+  int topRow = topY / yTileSize;
+  int topCol = topX / xTileSize;
+
+  //calculate the bottom position
+  float bottomX = tower->getXCoordinate();
+  float bottomY = tower->getYCoordinate()+tower->getYScale()*tower->getRadius();
+
+  //if the bottom position is anywhere over the edge
+  if(bottomY > yTileSize*rows){
+    bottomY = yTileSize*rows - 1.0;
+  }
+
+  //the row and col pair on the bottom side
+  int bottomRow = bottomY / yTileSize;
+  int bottomCol = bottomX / xTileSize;
+
+  cout << "left " << leftRow << " " << leftCol << endl;
+  cout << "right "  << rightRow << " " << rightCol << endl;
+  cout << "top " << topRow << " " << topCol << endl;
+  cout << "bottom " << bottomRow << " " << bottomCol << endl;
+
+  //push in pairs representing the min row,min col and the max row and max col
+  int minRow = (leftRow< rightRow) ? (leftRow < topRow ? (leftRow < bottomRow ? leftRow : bottomRow) : (topRow < bottomRow ? topRow : bottomRow)) : (rightRow <  topRow ? (rightRow < bottomRow ? rightRow : bottomRow) : (topRow < bottomRow ? topRow : bottomRow));
+  int minCol = (leftCol< rightCol) ? (leftCol < topCol ? (leftCol < bottomCol ? leftCol : bottomCol) : (topCol < bottomCol ? topCol : bottomCol)) : (rightCol <  topCol ? (rightCol < bottomCol ? rightCol : bottomCol) : (topCol < bottomCol ? topCol : bottomCol));
+  int maxRow = (leftRow> rightRow) ? (leftRow > topRow ? (leftRow > bottomRow ? leftRow : bottomRow) : (topRow > bottomRow ? topRow : bottomRow)) : (rightRow >  topRow ? (rightRow > bottomRow ? rightRow : bottomRow) : (topRow > bottomRow ? topRow : bottomRow));
+  int maxCol =  (leftCol> rightCol) ? (leftCol > topCol ? (leftCol > bottomCol ? leftCol : bottomCol) : (topCol > bottomCol ? topCol : bottomCol)) : (rightCol >  topCol ? (rightCol > bottomCol ? rightCol : bottomCol) : (topCol > bottomCol ? topCol : bottomCol));
+
+  cout << "mins " << minRow << " " << minCol << endl;
+  cout << "maxs " << maxRow << " " << maxCol << endl;
+
+  minAndMaxPositions.push_back(make_pair(minRow, minCol));
+  minAndMaxPositions.push_back(make_pair(maxRow, maxCol));
+
+  return minAndMaxPositions;
+}
+
+/*
+ * @return bool: whether the tile is in the circle radius
+ */
+ bool CollisionManager::tileInRadius(shared_ptr<TowerInterface> tower){
+   vector<floatPair> eightPoints = getFourCornersOfTileAndMidpoints();
+
+   float towerX = tower -> getXCoordinate();
+   float towerY = tower -> getYCoordinate();
+   float towerRadius = tower->getRadius();
+   float xScale = tower->getXScale();
+   float yScale = tower->getYScale();
+
+   //iterate through all four corners and if one lies within the bounds (And midpoints)
+   //of the radius (which should be an ellipse) return true
+   for(floatPair corner : eightPoints){
+     //find distance of point from region bounded by the ellipse radius
+     float distanceOfPoint = pow((corner.first - towerX),2)/pow((towerRadius*xScale),2) +  pow((corner.second - towerY),2)/pow((towerRadius*yScale),2);
+
+     if(distanceOfPoint <= 1.0){
+       return true;
+     }
+   }
+
+   return false;
+ }
+
+/*
+ * @return vector<floatPair>: all the four corners of the tile object and the midpoints
+ */
+vector<floatPair> CollisionManager::getFourCornersOfTileAndMidpoints(){
+  vector<floatPair> eightPoints;
+
+  sf::Vector2f dimensions = tile.getSize();
+  sf::Vector2f position = tile.getPosition();
+
+  //the eight corners
+  eightPoints.push_back(make_pair(position.x, position.y));
+  eightPoints.push_back(make_pair(position.x+dimensions.x, position.y));
+  eightPoints.push_back(make_pair(position.x, position.y+dimensions.y));
+  eightPoints.push_back(make_pair(position.x+dimensions.x, position.y+dimensions.y));
+
+  //the midpoints of each side
+  eightPoints.push_back(make_pair(position.x+(dimensions.x)/2.0, position.y));
+  eightPoints.push_back(make_pair(position.x, position.y+(dimensions.y)/2.0));
+  eightPoints.push_back(make_pair(position.x+dimensions.x, position.y + (dimensions.y)/2.0));
+  eightPoints.push_back(make_pair(position.x+(dimensions.x)/2.0, position.y + dimensions.y));
+  return eightPoints;
 }
 
 /*
@@ -333,7 +561,7 @@ void CollisionManager::updateAllAllyUnitPositions(){
  */
 void CollisionManager::updateAllEnemyUnitPositions(){
   //iterate through every row,col keyed map of units
-  for(auto it : alliedUnits){
+  for(auto it : enemyUnits){
     int combinedRowCol = it.first;
 
     //iterate through each unit at the current row, col
@@ -344,6 +572,7 @@ void CollisionManager::updateAllEnemyUnitPositions(){
 
       //if the unit is no longer in the row, col pair then change its position in the map
       if(currentCombinedRowCol != combinedRowCol){
+        numdestroyed++;
         enemyUnits.at(combinedRowCol).erase(enemyUnit->getID());
 
         //ensure that there is a new row,col pair map to place in
@@ -351,7 +580,6 @@ void CollisionManager::updateAllEnemyUnitPositions(){
           unordered_map<long long, shared_ptr<ActorInterface>> emptyMap;
           enemyUnits.insert({currentCombinedRowCol,emptyMap});
         }
-
         enemyUnits.at(currentCombinedRowCol).insert({enemyUnit->getID(), enemyUnit});
       }
     }

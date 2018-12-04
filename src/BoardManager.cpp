@@ -39,7 +39,7 @@ void BoardManager::registerDelegates(){
   EventManager::EventDelegate optionSelectedDelegate = std::bind(&BoardManager::handleOptionSelectedEvent, this, _1);
   OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
   const EventType optionSelectedEventType = optionSelectedEvent.getEventType();
-  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_OS")), optionSelectedEventType);
+  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_BM")), optionSelectedEventType);
 }
 
 /*

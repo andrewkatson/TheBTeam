@@ -82,6 +82,10 @@ protected:
   float xTileSize;
   float yTileSize;
 
+  //the scale from the tower associated with this (ONLY APPLICABLE IF PROJECITLE)
+  float xTowerScale;
+  float yTowerScale;
+
   //the degree of error
   const float e = 0.001;
 
@@ -252,6 +256,11 @@ public:
 
   bool isAProjectile(){return isProjectile;}
   bool isAnAlly(){return isAlly;}
+
+
+  void setTowerScale(float x, float y){xTowerScale = x; yTowerScale = y;}
+  float getXTowerScale(){return xTowerScale;}
+  float getYTowerScale(){return yTowerScale;}
 };
 
 #endif

@@ -96,7 +96,7 @@ public:
      shared_ptr<TextureLoader> textureLoader, shared_ptr<b2World> world,shared_ptr<CollisionManager> collisionManager);
   ~TowerManager();
 
-  void setDimensions(int xDim, int yDim);
+  void setDimensions(int yDim, int xDim);
   void setGridDimensions(float xGrid, float yGrid);
 
   int getTowerPrice(int row, int col);

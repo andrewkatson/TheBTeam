@@ -24,6 +24,10 @@ void MeleeTower::update(float delta){
   //if a unit does not have an engaged enemy unit then send it back towards
   //a point situated around the rally point
   for(shared_ptr<MeleeUnit> unit : currentUnits){
+    if(isnan(unit->getXCoordinate()) || isnan(unit->getYCoordinate())){
+      cout << "is nan here " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
+    }
+
     if(unit -> getHitpoints() != 0){
       if((unit -> getEngagedUnit()).get() == NULL){
         //sets the unit position to the center of the tower if there is no set rally point
@@ -100,6 +104,20 @@ void MeleeTower::logUnitsForCollisionManager(){
 }
 
 /*
+ * Check that all unit row, col reflect their current position in x,y
+ */
+void MeleeTower::verifyUnitPositions(float tileXSize, float tileYSize){
+  for(shared_ptr<MeleeUnit> unit : currentUnits){
+    if(unit->getRow() != unit->getYCoordinate()/tileYSize){
+      unit->setRow(unit->getYCoordinate()/tileYSize);
+    }
+    if(unit->getCol() != unit->getXCoordinate()/tileXSize){
+      unit->setCol(unit->getXCoordinate()/tileXSize);
+    }
+  }
+}
+
+/*
  * Set all the unit positions to a point on the circle surrounding the rally point corresponding
  * to their index (unless the rally point is the tower's center in which case we set all positions to tower pos)
  * @param unit: the unit to reset
@@ -123,16 +141,23 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
     float newX = (radiusOfUnitCircle) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + xRally;
     float newY = (radiusOfUnitCircle) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + yRally;
 
+    if(isnan(newX) || isnan(newY)){
+      cout << "oh my naaan " << newX << " " << newY << endl;
+    }
+
     //if the unit is already at its correct resting poisiton nothing needs to be done
     if(!(withinRange(newX, newY, unit->getXCoordinate(), unit->getYCoordinate()))){
+
       //the vector components of the movement this unit needs to make
       float xVector = newX - unit -> getXCoordinate();
       float yVector = newY - unit -> getYCoordinate();
 
-      //get the max so we can normalize the vectors so they do not move too fast
-      float normalize = max(xVector, yVector);
-      xVector /= normalize;
-      yVector /= normalize;
+      //if the x vector of the y vector of the unit are nan set the units position to be its reset position
+      if(isnan(xVector) || isnan(yVector)){
+        unit->setXCoordinate(newX);
+        unit->setYCoordinate(newY);
+        return;
+      }
 
       //convert the vector into radians for the direction
       double direction = atan2((-1)*yVector, xVector);
@@ -142,6 +167,10 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
 
       //then move it
       unit -> move(delta);
+
+      if(isnan(unit->getXCoordinate()) || isnan(unit->getYCoordinate())){
+        cout << "what the helll " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
+      }
 
       //we check to see if the projectile has overshot the target
       if(xVector > 0 ){

@@ -92,6 +92,7 @@ public:
   shared_ptr<vector<int>>  getStatistics();
 
   void logUnitsForCollisionManager();
+  void verifyUnitPositions(float tileXSize, float tileYSize);
 
   //getters used by the upgrading system
   int getRespawnSpeed(){return respawnSpeed;}

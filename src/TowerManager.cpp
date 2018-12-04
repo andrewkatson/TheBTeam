@@ -25,7 +25,7 @@ TowerManager::~TowerManager(){
  * Set the x dimension (cols)
  * and the y dimension (rows)
  */
-void TowerManager::setDimensions(int xDim, int yDim){
+void TowerManager::setDimensions(int yDim, int xDim){
   this -> xDim = xDim;
   this -> yDim = yDim;
 }
@@ -864,6 +864,7 @@ int TowerManager::getUpgradePrice(int row, int col){
    //check which upgrade has been trigged and apply the upgrading amount
    if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
      meleeTower->updateRadius(meleeTower->getRadius()+upgradeAmount);
+     collisionManager -> handleTowerRadiusUpgrade(towerToUpgrade);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Respawn_Rate_Upgrade"))){
      meleeTower->updateRespawnSpeed(meleeTower->getRespawnSpeed()+upgradeAmount);
@@ -909,6 +910,7 @@ int TowerManager::getUpgradePrice(int row, int col){
     //check which upgrade has been trigged and apply the upgrading amount
     if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
       rangeTower->updateRadius(rangeTower->getRadius()+upgradeAmount);
+      collisionManager -> handleTowerRadiusUpgrade(towerToUpgrade);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Rate_Of_Fire_Upgrade"))){
       rangeTower->updateRateOfFire(rangeTower->getRateOfFire()+upgradeAmount);

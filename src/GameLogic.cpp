@@ -16,7 +16,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> eventManager = make_shared<EventManager>();
   this -> boardManager = unique_ptr<BoardManager>(new BoardManager(eventManager, textLoader));
   this -> gameState = unique_ptr<GameState>(new GameState(eventManager, textLoader));
-  this -> player = unique_ptr<Player>(new Player(eventManager, textLoader));
+  this -> player = make_shared<Player>(eventManager, textLoader);
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
   this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool(),world);
   this -> projectileManager = make_shared<ProjectileManager>(eventManager, textLoader, world);
@@ -362,11 +362,12 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> boardManager -> newMap();
 
    //set the dimensions (x are cols, y are rows of the map)
-   int xDim = boardManager -> getXDim();
-   int yDim = boardManager -> getYDim();
-   this -> towerManager -> setDimensions(xDim, yDim);
-   this -> collisionManager -> setDimensions(xDim, yDim);
-   this -> waveManager -> setDimensions(xDim, yDim);
+   int cols = boardManager -> getXDim();
+   int rows = boardManager -> getYDim();
+
+   this -> towerManager -> setDimensions(rows, cols);
+   this -> collisionManager -> setDimensions(rows, cols);
+   this -> waveManager -> setDimensions(rows, cols);
 
    //set the x and y in pixel length
    this -> gridX = (float) windowX / boardManager -> getXDim();
@@ -852,8 +853,8 @@ const int GameLogic::getWindowY(){
 /*
  * @return Player: the current statistics of the player
  */
-Player& GameLogic::getPlayer(){
-  return *(player.get());
+shared_ptr<Player> GameLogic::getPlayer(){
+  return player;
 }
 
 

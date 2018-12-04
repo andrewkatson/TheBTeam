@@ -11,6 +11,7 @@
 using namespace std;
 
 #include <memory>
+#include <cmath>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
 //#include "GameLogic.hpp"

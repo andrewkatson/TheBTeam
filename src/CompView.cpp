@@ -52,13 +52,13 @@ void CompView::moveUnits(float deltaS){
     if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
       shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
       shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
-
       this -> eventManager -> queueEvent(actorDestroyed);
       this -> eventManager -> queueEvent(hitpointsLost);
     }else { //these don't need to happen if the unit hit the exit
 
       int r = currentUnit->getRow();
       int c = currentUnit->getCol();
+      //cout << "before move " << r  << " "<< c << " " << currentUnit -> getXCoordinate() << " " << currentUnit->getYCoordinate() << endl;
       //printf("row=%d col=%d x=%f y=%f\n",r,c,currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
 
       std::map<int, double> dists_coords;
