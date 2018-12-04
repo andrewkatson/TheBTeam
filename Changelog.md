@@ -1,5 +1,7 @@
 [Unreleased]
 
+
+[0.8.0] 2018 - 12 -4
 ###Added
 - Textures added for other units as well as all tower upgrades, as follows: [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Kids
@@ -22,6 +24,9 @@
   - Crinkle Cut Fry
   - Spicy Fry
 - yes, I did all this... it took many hours
+- PlaySoundEvent
+- PlaySoundEventData
+- A "peeeow" sound now plays when units leave the map
 
 ###Changed
 - going below 0 hitpoints ends the game [@andrewkatson][https://github.com/andrewkatson]
@@ -34,6 +39,7 @@
 - Player has a handleoptionselectedevent method
 - boardmanager has a handleoptionselectedevent method
 - wavemanager has a handleoptionselectedevent method
+- SoundManager does things now
 
 
 ###Fixed

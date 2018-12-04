@@ -203,7 +203,7 @@
   <constant value="200" id="IDS_AK_HP"> </constant>
   <constant value="60" id="IDS_AK_DM"> </constant>
   <constant value="50" id="IDS_AK_AM"> </constant>
-  <constant value="7" id="IDS_AK_SP"> </constant>
+  <constant value="5" id="IDS_AK_SP"> </constant>
   <constant value="2" id="IDS_AK_AP"> </constant>
   <constant value="5" id="IDS_AK_AR"> </constant>
   <constant value="5" id ="IDS_AK_LM"> </constant>
@@ -212,7 +212,7 @@
   <constant value="300" id="IDS_FK_HP"> </constant>
   <constant value="100" id="IDS_FK_DM"> </constant>
   <constant value="100" id="IDS_FK_AM"> </constant>
-  <constant value="2" id="IDS_FK_SP"> </constant>
+  <constant value="3" id="IDS_FK_SP"> </constant>
   <constant value="10" id="IDS_FK_AP"> </constant>
   <constant value="10" id="IDS_FK_AR"> </constant>
   <constant value="20" id ="IDS_FK_LM"> </constant>
@@ -221,7 +221,7 @@
   <constant value="100" id="IDS_SK_HP"> </constant>
   <constant value="20" id="IDS_SK_DM"> </constant>
   <constant value="10" id="IDS_SK_AM"> </constant>
-  <constant value="20" id="IDS_SK_SP"> </constant>
+  <constant value="7" id="IDS_SK_SP"> </constant>
   <constant value="0" id="IDS_SK_AP"> </constant>
   <constant value="1" id="IDS_SK_AR"> </constant>
   <constant value="1" id ="IDS_SK_LM"> </constant>
@@ -841,8 +841,8 @@
     <constant value = "0.0000001" id="IDS_Rate_Of_Fire_Scaler"/>
 
     <!--Unit Scale -->
-    <constant value = "4.0" id="IDS_Unit_Size_Scale_X"/>
-    <constant value = "4.0" id="IDS_Unit_Size_Scale_Y"/>
+    <constant value = "2.0" id="IDS_Unit_Size_Scale_X"/>
+    <constant value = "2.0" id="IDS_Unit_Size_Scale_Y"/>
 
     <!--Projectile Scale-->
     <constant value = "6.0" id="IDS_Projectile_Size_Scale_X"/>

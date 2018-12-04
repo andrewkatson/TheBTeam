@@ -458,7 +458,7 @@ void BuyTowerScreen::populateOptionsVector(){
     bool isClickable = !(areBuying) ?  !(areBuying) :  balance >= tower -> getPrice() ? true : false;
 
     shared_ptr<BuyTowerOption> newOption = make_shared<BuyTowerOption>(textLoader, xPos, yPos, xSize, ySize,
-    fontPath, tower, showStats,  windowX, windowY, areBuying, isClickable);
+    fontPath, tower, showStats,  windowX, windowY, areBuying, isClickable,eventManager);
 
     if(showStats){
       //get the statistics for the tower being drawn as an option
