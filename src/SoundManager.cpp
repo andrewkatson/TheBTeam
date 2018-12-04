@@ -88,12 +88,12 @@ void SoundManager::loadSounds(){
                        "IDS_Ding_Sound_Path",
                        "IDS_QFG_Win_Sound_Path",
                        "IDS_QFG4_Win_Sound_Path",
-                       "IDS_Fire_Drink_Sound_Path",
-                       "IDS_Fire_MnM_Sound_Path",
-                       "IDS_Fire_Pizza_Sound_Path",
                        "IDS_Unit_Death_Sound_Path",
                        "IDS_Unit_Hit_By_Projectile_Sound_Path",
-                       "IDS_Unit_Punch_Sound_Path"};
+                       "IDS_Unit_Punch_Sound_Path",
+                       "IDS_Fire_Drink_Sound_Path",
+                       "IDS_Fire_MnM_Sound_Path",
+                       "IDS_Fire_Pizza_Sound_Path"};
   vector<string>ids={"IDS_Unit_Escape_Noise",
                      "IDS_Level_Start_Noise",
                      "IDS_Jazzy_Noise",
@@ -103,12 +103,12 @@ void SoundManager::loadSounds(){
                      "IDS_Ding_Noise",
                      "IDS_QFG_Win_Noise",
                      "IDS_QFG4_Win_Noise",
-                     "IDS_Fire_Drink_Noise",
-                     "IDS_Fire_MnM_Noise",
-                     "IDS_Fire_Pizza_Noise",
                      "IDS_Unit_Death_Noise",
                      "IDS_Unit_Hit_By_Projectile_Noise",
-                     "IDS_Unit_Punch_Noise"};
+                     "IDS_Unit_Punch_Noise",
+                     "IDS_Fire_Drink_Noise",
+                     "IDS_Fire_MnM_Noise",
+                     "IDS_Fire_Pizza_Noise",};
 
   assert(sound_paths.size()==ids.size());
 
