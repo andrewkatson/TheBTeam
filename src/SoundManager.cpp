@@ -100,7 +100,16 @@ void SoundManager::loadSounds(){
     std::shared_ptr<sf::Music>music=make_shared<sf::Music>();
     assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
+    if(z==3){
+
+    }
     music_objs[MusicType::Combat].push_back(music);
+  }
+  for(int z=0;z<=1;z++){
+    std::shared_ptr<sf::Music>music=make_shared<sf::Music>();
+    assert(music->openFromFile(textLoader->getString(string("IDS_Prep_")+std::to_string(z)+string("_Music_Path"))));
+    music->setLoop(true);
+    music_objs[MusicType::Prep].push_back(music);
   }
 
 
