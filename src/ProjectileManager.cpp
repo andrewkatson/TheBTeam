@@ -134,6 +134,15 @@ void ProjectileManager::addProjectile(shared_ptr<ActorInterface> projectile){
 }
 
 void ProjectileManager::removeProjectile(long long ID){
+  cout << "get hit" << endl;
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Hit_By_Projectile_Noise"),nowInNano);
+
+  eventManager->queueEvent(playSound);
+
   projectiles.erase(ID);
 }
 

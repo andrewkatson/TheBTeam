@@ -18,11 +18,16 @@ using namespace std;
 #include "EventManager.hpp"
 #include "Events/ActorCreatedEvent.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
+#include "Events/PlaySoundEvent.hpp"
 #include "TextLoader.hpp"
 #include <Box2D/Box2D.h>
 #include <algorithm>
+#include <chrono>
 
 using std::max;
+using std::chrono::high_resolution_clock ;
+using std::chrono::nanoseconds;
+using std::chrono::duration_cast;
 
 class ProjectileManager {
 private:

@@ -15,6 +15,7 @@ using namespace std;
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
 #include <time.h>
+#include <chrono>
 //#include "GameLogic.hpp"
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
