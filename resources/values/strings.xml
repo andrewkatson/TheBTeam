@@ -233,7 +233,7 @@
   <string value="../resources/sounds/game_stuff/qfgwin.ogg" id="IDS_QFG_Win_Sound_Path"> </string>
   <string value="../resources/sounds/game_stuff/qfg4win.ogg" id="IDS_QFG4_Win_Sound_Path"> </string>
   <string value="../resources/sounds/tower/firedrink.ogg" id="IDS_Fire_Drink_Sound_Path"> </string>
-  <string value="../resources/sounds/tower/firemnm.ogg" id="IDS_Fire_M&M_Sound_Path"> </string>
+  <string value="../resources/sounds/tower/firemnm.ogg" id="IDS_Fire_MnM_Sound_Path"> </string>
   <string value="../resources/sounds/tower/firepizza.ogg" id="IDS_Fire_Pizza_Sound_Path"> </string>
   <string value="../resources/sounds/unit/death.ogg" id="IDS_Unit_Death_Sound_Path"> </string>
   <string value="../resources/sounds/unit/hitbyprojectile.ogg" id="IDS_Unit_Hit_By_Projectile_Sound_Path"> </string>
@@ -262,7 +262,7 @@
   <string value="QFGWin" id="IDS_QFG_Win_Noise"> </string>
   <string value="QFG4Win" id="IDS_QFG4_Win_Noise"> </string>
   <string value="Fire_Drink" id="IDS_Fire_Drink_Noise"> </string>
-  <string value="Fire_M&M" id="IDS_Fire_M&M_Noise"> </string>
+  <string value="Fire_MnM" id="IDS_Fire_MnM_Noise"> </string>
   <string value="Fire_Pizza" id="IDS_Fire_Pizza_Noise"> </string>
   <string value="Death" id="IDS_Unit_Death_Noise"> </string>
   <string value="Hit_By_Projectile" id="IDS_Unit_Hit_By_Projectile_Noise"> </string>
