@@ -7,7 +7,7 @@
 
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
-  <constant value="1000" id ="IDS_P_B"> </constant>
+  <constant value="20" id ="IDS_P_B"> </constant>
   <constant value="1" id="IDS_Default_Wave"> </constant>
   <constant value="1" id="IDS_Default_Level"> </constant>
   <constant value="1" id="IDS_Default_School"> </constant>

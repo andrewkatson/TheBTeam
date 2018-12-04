@@ -10,19 +10,27 @@
 
 Player::Player(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader)
 {
+
+  this -> textLoader = textLoader;
+  this -> eventManager = eventManager;
+  this-> registerEvents();
+  this -> registerDelegates();
   balance= textLoader->getInteger(string("IDS_P_B"));
   hitpoints= textLoader->getInteger(string("IDS_P_HP"));
   wave=textLoader->getInteger(string("IDS_Default_Wave"));
   level=textLoader->getInteger(string("IDS_Default_Level"));
-  schoolLevel=textLoader->getInteger(string("IDS_Default_School"));
-  this -> eventManager = eventManager;
-  this -> textLoader = textLoader;
-  this-> registerEvents();
-  this -> registerDelegates();
+  schoolLevel = textLoader->getInteger(string("IDS_Default_School"));
 }
 
 Player::~Player(){
   deregisterDelegates();
+}
+
+void Player::setToDefaults(){
+  balance= textLoader->getInteger(string("IDS_P_B"));
+  hitpoints= textLoader->getInteger(string("IDS_P_HP"));
+  wave=textLoader->getInteger(string("IDS_Default_Wave"));
+  level=textLoader->getInteger(string("IDS_Default_Level"));
 }
 
 
@@ -121,6 +129,22 @@ void Player::modifyBalance(int modifyBy){
   this->balance+=modifyBy;
 }
 
+void Player::newLevelBalance(){
+    int newBalance = textLoader->getInteger(string("IDS_P_B")) * 2 - this->balance;
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    cout<<newBalance<<endl;
+
+    shared_ptr<EventInterface> bcEvent = make_shared<BalanceChangeEvent>(newBalance, nowInNano);
+
+    this -> eventManager -> queueEvent(bcEvent);
+
+    this->balance=newBalance;
+}
+
 void Player::updateHitpoints(int points){
   //the difference between the old hitpoints and the new ones
   int difference = points - this->hitpoints;
@@ -155,12 +179,26 @@ void Player::modifyHitpoints(int pointsToDeduct){
   this -> eventManager -> queueEvent(lhpEvent);
 
   this->hitpoints-=pointsToDeduct;
-
   if(hitpoints <= 0){
     shared_ptr<EventInterface> restartScreen = make_shared<StateChangeEvent>(State::Restart, nowInNano);
 
     this -> eventManager -> queueEvent(restartScreen);
   }
+}
+
+void Player::resetHitpoints() {
+    int reset = (this -> hitpoints - 100);
+    cout<<reset<<endl;
+    //the time object of the class
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    shared_ptr<EventInterface> lhpEvent = make_shared<LoseHitpointsEvent>(reset, nowInNano);
+
+    this -> eventManager -> queueEvent(lhpEvent);
+
+    this->hitpoints=reset;
 }
 
 void Player::updateWave(int wave){
@@ -242,8 +280,6 @@ void Player::handleLoseHitpoints(const EventInterface& event){
   int lostHitpoints = lhpEventData -> lostHitpoints;
 
   this->hitpoints -= lostHitpoints;
-
-  cout << "here! " << endl;
 
   if(hitpoints <= 0){
     //the time object of the class

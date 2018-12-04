@@ -39,7 +39,12 @@ void BoardManager::registerDelegates(){
   EventManager::EventDelegate optionSelectedDelegate = std::bind(&BoardManager::handleOptionSelectedEvent, this, _1);
   OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
   const EventType optionSelectedEventType = optionSelectedEvent.getEventType();
-  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_BM")), optionSelectedEventType);
+  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_OS")), optionSelectedEventType);
+
+  EventManager::EventDelegate levelChangeDelegate = std::bind(&BoardManager::handleLevelChangeEvent, this, _1);
+  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
+  const EventType levelChangeEventType = levelChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_BMD_LC")), levelChangeEventType);
 }
 
 /*
@@ -62,9 +67,15 @@ void BoardManager::deregisterDelegates(){
 
   //make an event and get its type
   OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
-  EventType optionSelectedType = optionSelectedEvent.getEventType();
+  EventType optionSelectedEventType = optionSelectedEvent.getEventType();
   //deregister the delegate and its type
-  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_OMSD_BM")),towerRemoveEventType);
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_OMSD_OS")),optionSelectedEventType);
+
+  //make an event and get its type
+  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
+  EventType levelChangeEventType = levelChangeEvent.getEventType();
+  //deregister the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_BMD_LC")),levelChangeEventType);
 }
 
 //genearte a new random map
@@ -91,6 +102,7 @@ void BoardManager::setMapBoards(){
   floorGrid = mapFactory -> getFloor();
   aboveFloorGrid = mapFactory -> getAboveFloor();
   distances = mapFactory -> getDistances();
+
 
   //correct the distances for each path to reflect the distance to the exit
   //accounting only for the length of the path from the path tile to the exit
@@ -262,6 +274,13 @@ void BoardManager::handleOptionSelectedEvent(const EventInterface &event) {
 
 }
 
+void BoardManager::handleLevelChangeEvent(const EventInterface &event){
+    //this -> distances.clear();
+    //this -> aboveFloorGrid.clear();
+    //this -> floorGrid.clear();
+    //this -> allObstacles.clear();
+}
+
 /*
  * Clear the tile of the obstacle or tower currently there
  * @param row: the row index for the obstacle/tower
@@ -405,15 +424,15 @@ void BoardManager::setMapEntryChoice(int pathEntryChoice){
   mapFactory -> setMapEntryChoice(pathEntryChoice);
 }
 
-vector<vector<int>>const & BoardManager::getDistances(){
+vector<vector<int>> & BoardManager::getDistances(){
   assert(hasMap()== true);
   return distances;
 }
-vector<int>const & BoardManager::getDistancesRow(int row){
+vector<int> & BoardManager::getDistancesRow(int row){
   assert(hasMap()== true);
   return distances.at(row);
 }
-vector<int>const & BoardManager::getDistanceCol(int col){
+vector<int> & BoardManager::getDistanceCol(int col){
   assert(hasMap()== true);
   static vector<int> distanceCol;
   distanceCol.clear();
@@ -429,7 +448,7 @@ int BoardManager::getDistanceRowCol(int row, int col){
   return distances.at(row).at(col);
 }
 
-vector<vector<int>>const & BoardManager::getAboveFloor(){
+vector<vector<int>> & BoardManager::getAboveFloor(){
   assert(hasMap()== true);
   return aboveFloorGrid;
 }
@@ -452,7 +471,7 @@ int BoardManager::getAboveFloorRowCol(int row, int col){
   return aboveFloorGrid.at(row).at(col);
 }
 
-vector<vector<int>>const & BoardManager::getFloor(){
+vector<vector<int>> & BoardManager::getFloor(){
   assert(hasMap()== true);
   return floorGrid;
 }

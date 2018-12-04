@@ -23,6 +23,7 @@
 #include "Events/MapGeneratedEvent.hpp"
 #include "Events/ProjectileExplosionEvent.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
+#include "Events/RestartGameEvent.hpp"
 #include "EventType.hpp"
 #include "Projectile.hpp"
 #include <Box2D/Box2D.h>
@@ -81,8 +82,6 @@ private:
   long long fryID;
   long long fryID1;
 
-
-
 public:
   /*
     Constructor. Initialize game, setting up instance variables.
@@ -100,6 +99,8 @@ public:
   void handleMousePress(const EventInterface& event);
   void handleStateChange(const EventInterface& event);
   void handleProjectileExplosion(const EventInterface& event);
+  void handleLevelChangeEvent(const EventInterface& event);
+  void handleRestartGameEvent(const EventInterface& event);
   /*
     Called once every game loop. Updates the game's happenings according to the
     time since the last loop.

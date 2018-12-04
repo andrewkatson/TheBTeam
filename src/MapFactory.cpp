@@ -52,6 +52,7 @@ void MapFactory::generateDimensions(){
   int minimumDimensions = textLoader->getInteger(string("IDS_Minimum_Board_Dimensions"));
 
   int xDim = (int) (abs(dist(mt))) + minimumDimensions;
+
   int yDim = (int) (abs(dist(mt)))  + minimumDimensions;
 
   //the maximum allowed difference between an x and a y dimension
@@ -82,6 +83,9 @@ void MapFactory::generateDimensions(){
 
   this -> xDim = xDim;
   this -> yDim = yDim;
+  cout<<xDim<<endl;
+  cout<<yDim<<endl;
+
 }
 
 /*
@@ -89,6 +93,8 @@ void MapFactory::generateDimensions(){
  * with the appropriate values
  */
 void MapFactory::generateMap(){
+  //generate the dimensions of the board using the cafeteria size choice
+  generateDimensions();
   cout << "here " << endl;
   int fails = 0;
   int notAnExit = 0;
@@ -137,6 +143,8 @@ void MapFactory::generateMap(){
  */
 bool MapFactory::tryAMap(){
   //initializes all vector indicies to -1
+  this ->  resetEverything();
+  cout << "entry is size " << entryPos.size() << endl;
   this -> initGridArrays();
 
   //initialize the floor pattern
@@ -181,6 +189,7 @@ bool MapFactory::tryAMap(){
     }
   }
 
+  cout << "our num entries " << entryPos.size() << endl;
   return true;
 }
 
@@ -786,9 +795,11 @@ void MapFactory::makeFloor(){
       if(floorGrid.at(row).at(col) != 0){
         if(col % 2 == 0){
           floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1);
+          //cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1)<<endl;
         }
         else{
           floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1);
+          //cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1)<<endl;
         }
       }
     }

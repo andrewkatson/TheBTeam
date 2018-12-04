@@ -90,6 +90,7 @@ std::string TextLoader::getString(const std::string id){
   if(strings.find(id) != strings.end()){
     return strings.at(id);
   }
+
   return "String not found";
 }
 

@@ -174,6 +174,12 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
       //the vector components of the movement this unit needs to make
       float xVector = newX - unit -> getXCoordinate();
       float yVector = newY - unit -> getYCoordinate();
+      cout << "unit x position"<<endl;
+      cout<< unit -> getXCoordinate()<<endl;
+      cout<<"unit y position"<< endl;
+      cout<< unit -> getYCoordinate()<<endl;
+      cout<< "unit hp"<< endl;
+      cout<< unit -> getHitpoints()<<endl;
 
       //if the x vector of the y vector of the unit are nan set the units position to be its reset position
       if(isnan(xVector) || isnan(yVector)){

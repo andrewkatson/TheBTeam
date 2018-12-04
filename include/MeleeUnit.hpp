@@ -32,8 +32,6 @@ protected:
   //The amount of armor the unit has.
   int armor;
 
-  //A reference to the unit that this unit is fighting.
-  shared_ptr<MeleeUnit> engagedUnit;
 
   //The bar for rendering the unit's HP
   HitpointBar hpBar;
@@ -85,7 +83,7 @@ public:
 
   int getAttackRadius() const;
 
-  shared_ptr<MeleeUnit> getEngagedUnit(){return engagedUnit;}
+  shared_ptr<ActorInterface> getEngagedUnit(){return engagedUnit;}
 
   void setAttackRadius(int attackRadius);
 
@@ -176,7 +174,7 @@ public:
   /*
    * Set the engaged unit
    */
-  void setEngagedUnit(shared_ptr<MeleeUnit> unitToEngage){engagedUnit = unitToEngage;}
+  void setEngagedUnit(shared_ptr<ActorInterface> unitToEngage){engagedUnit = unitToEngage;}
 
   /*
    * Setting the fixtures for Box2D

@@ -25,6 +25,8 @@ using std::vector;
 class ActorInterface{
 
 protected:
+  //A reference to the unit that this unit is fighting.
+  shared_ptr<ActorInterface> engagedUnit;
 
   //whether the unit should be drawn or not (1=true, 0=false)
   float drawUnit=1;
@@ -301,6 +303,12 @@ public:
    * increment draw unit (acts as a timer while the unit flickers)
    */
   void incrementDrawUnit(){drawUnit+=0.1;if(drawUnit>1.0){drawUnit=1.0;}}
+
+  shared_ptr<ActorInterface> getEngagedUnit(){return engagedUnit;}
+  /*
+   * Set the engaged unit
+   */
+  void setEngagedUnit(shared_ptr<ActorInterface> unitToEngage){engagedUnit = unitToEngage;}
 };
 
 #endif

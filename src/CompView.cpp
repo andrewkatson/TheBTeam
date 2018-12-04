@@ -43,9 +43,10 @@ void CompView::moveUnits(float deltaS){
       //the actual count in nanoseconds for the time
       auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
       //if the enemy was engaged with a unit we need to denengage them both
-      currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
-      currentUnit->setEngagedUnit(NULL);
-
+      if(currentUnit->getEngagedUnit() != NULL){
+        currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
+        currentUnit->setEngagedUnit(NULL);
+      }
       shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
       this -> eventManager -> queueEvent(actorDestroyed);
       continue;
@@ -55,20 +56,38 @@ void CompView::moveUnits(float deltaS){
 
     if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getYCoordinate())){
       //printf("updating tile...\nx: %f\ny: %f\n",currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
+      cout<<"somebody is outside the map"<<endl;
       int newCol=currentUnit->getXCoordinate()/playingScreenHeader->getTrueXTileSize();
       int newRow=currentUnit->getYCoordinate()/playingScreenHeader->getTrueYTileSize();
+      /*if(currentUnit -> getXCoordinate() < 0){
+        currentUnit ->setCol(0);
+      }
+      else if(currentUnit -> getYCoordinate() < 0){
+        currentUnit -> setRow(0);
+      }
+      else if(currentUnit -> getXCoordinate() > gameLogic -> getWindowX()){
+        currentUnit -> setCol(gameLogic -> getCols());
+      }
+      else if(currentUnit -> getYCoordinate() > gameLogic -> getWindowY()){
+        currentUnit -> setRow(gameLogic -> getRows());
+      }
+*/
       currentUnit->setRow(newRow);
+      cout<<newRow<<endl;
       currentUnit->setCol(newCol);
+      cout<<newCol<<endl;
     }//make sure the tile is up to date
-
+    cout<<"we are outside the loop"<<endl;
     //printf("checked the tile\nrow: %d\ncol: %d\n",currentUnit->getRow(),currentUnit->getCol());
 
 
     if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
       shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
       //if the enemy was engaged with a unit we need to denengage them both
-      currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
-      currentUnit->setEngagedUnit(NULL);
+      if(currentUnit->getEngagedUnit() != NULL){
+        currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
+        currentUnit->setEngagedUnit(NULL);
+      }
 
       shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
 
@@ -109,7 +128,7 @@ void CompView::moveUnits(float deltaS){
           }
         }
       }
-      assert(!dists_coords.empty());
+      //assert(!dists_coords.empty());
       //printf("map size: %ld\n",dists_coords.size());
 
       double new_direction = dists_coords.begin()->second; //get the one with the shortest distance

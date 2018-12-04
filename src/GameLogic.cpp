@@ -110,6 +110,25 @@ void GameLogic::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(projectileExplosionEventDelegate, textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
 
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate levelChangeEventDelegate = std::bind(&GameLogic::handleLevelChangeEvent, this, _1);
+
+  //make an event and get its type
+  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
+  EventType levelChangeEventType = levelChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(levelChangeEventDelegate, textLoader -> getString(string("IDS_GLD_LC")),levelChangeEventType);
+
+
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate restartGameEventDelegate = std::bind(&GameLogic::handleRestartGameEvent, this, _1);
+
+  //make an event and get its type
+  RestartGameEvent restartGameEvent = RestartGameEvent();
+  EventType restartGameEventType = restartGameEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(restartGameEventDelegate, textLoader -> getString(string("IDS_GameLogic_Handle_Restart")),restartGameEventType);
+
 }
 
 /*
@@ -139,6 +158,13 @@ void GameLogic::deregisterDelegates(){
   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
+
+  //make an event and get its type
+  RestartGameEvent restartGameEvent = RestartGameEvent();
+  EventType restartGameEventType = restartGameEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GameLogic_Handle_Restart")),restartGameEventType);
+
 }
 
 
@@ -356,12 +382,55 @@ void GameLogic::handleStateChange(const EventInterface& event){
    this -> eventManager -> queueEvent(projectileDestroyed);
  }
 
+void GameLogic::handleLevelChangeEvent(const EventInterface& event){
+  cout << "we changed level " << endl;
+  auto levelChangeEvent = static_cast<const LevelChangeEvent*>(&event);
+  auto levelChangeEventData = static_cast<LevelChangeEventData*>((levelChangeEvent->data).get());
+
+  //now create an event to indicate the level needs to change
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  //make a new map after checking for no towers, no enemies, resetting the player health and setting balance to be base * level
+  boardManager -> getAllObstacles().clear();
+  boardManager -> getAboveFloor().clear();
+  boardManager -> getDistances().clear();
+  boardManager -> getFloor().clear();
+  //makeNewMap();
+  //this -> waveManager -> entryPositions;
+  player -> resetHitpoints();
+
+  //playerbalance=(20 * 2);
+  player -> newLevelBalance();
+  //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
+  makeNewMap();
+  //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
+
+
+  //make an event and queue it
+  //shared_ptr<EventInterface>
+  //this -> eventManager -> queueEvent
+ }
+
+ /*
+  * Handle a game restart by resetting everything
+  */
+void GameLogic::handleRestartGameEvent(const EventInterface& event){
+  //reset all defaults in the player
+  player -> setToDefaults();
+
+  cout << "we restarted game " << endl;
+}
+
 /*
  * Have a new map generated (callable by the UserView)
  */
  void GameLogic::makeNewMap(){
    //make the new map
    this -> boardManager -> newMap();
+   cout<<"make a new map"<<endl;
 
    //set the dimensions (x are cols, y are rows of the map)
    int cols = boardManager -> getXDim();
@@ -391,6 +460,12 @@ void GameLogic::handleStateChange(const EventInterface& event){
 
    ActorInterface::setXScale(boardManager -> getXDim());
    ActorInterface::setYScale(boardManager -> getYDim());
+
+
+   cout << "entries are now " << endl;
+   for(int i = 0; i < boardManager->getEntryPositions().size(); i+=2){
+     cout << "entry is " << boardManager->getEntryPositions().at(i+1) << " " << boardManager->getEntryPositions().at(i) << endl;
+   }
  }
 
 /*

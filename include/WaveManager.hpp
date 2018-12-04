@@ -167,6 +167,11 @@ public:
    * Called once every game loop.  Update all aspects of the manager
    * [does WaveManager need to update its actors or does something else do that?]
    */
+  void getWavesLeft();
+
+  /*
+   * return the answer from numWaves - currentWave
+   */
   void update(float deltaS);
 
   /*

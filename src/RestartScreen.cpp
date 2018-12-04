@@ -162,6 +162,10 @@ void RestartScreen::handleKeyPress(const EventInterface& event){
   else if(key == "Enter"){
 
     if(selectedItem == (int) Choices::Restart){
+      shared_ptr<EventInterface> restartGame = make_shared<RestartGameEvent>(nowInNano);
+
+      this -> eventManager -> queueEvent(restartGame);
+
       shared_ptr<EventInterface> mainMenu = make_shared<StateChangeEvent>(State::MainMenu, nowInNano);
 
       this -> eventManager -> queueEvent(mainMenu);
