@@ -53,7 +53,7 @@ private:
 
   std::random_device rd;
 
-  bool newLevel;
+  bool newLevel,musicPlaying;
 
 public:
 

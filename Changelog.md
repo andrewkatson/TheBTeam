@@ -33,7 +33,7 @@
  - Sounds for unit getting too full to keep moving (death)
  - Sounds for unit eating food (hit by projectile)
 - Music
- - Different music sets that play during a wave and while prepping for a wave
+ - Different music sets that play during a wave, while prepping for a wave, and when the game ends
  - SoundManager randomly picks a song to play from the different music sets
 
 ###Changed

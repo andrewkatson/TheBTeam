@@ -17,6 +17,7 @@ SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
    this -> registerDelegates();
    playingIndex=-1;
    newLevel=false;
+   musicPlaying=false;
 }
 
 SoundManager::~SoundManager(){
@@ -175,6 +176,7 @@ void SoundManager::stopSound(string soundID){
 }
 
 void SoundManager::playMusic(){
+  musicPlaying=true;
   music_objs[playingType][playingIndex]->play();
 }
 
@@ -183,6 +185,7 @@ void SoundManager::pauseMusic(){
 }
 
 void SoundManager::stopMusic(){
+  musicPlaying=false;
   music_objs[playingType][playingIndex]->stop();
 
 }
@@ -196,7 +199,7 @@ void SoundManager::startSongOfType(int type){
 
   playingIndex=musicPicker(rnd_gen);
 
-  cout << "starting song of type" << playingIndex;
+  cout << "starting song of type" << playingIndex << endl;
 
   playMusic();
 }
@@ -268,7 +271,7 @@ void SoundManager::handleStateChange(const EventInterface & event){
 
   StateChangeEventData* stateChangeEventData=static_cast<StateChangeEventData*>((stateChangeEvent->data).get());
 
-  if(stateChangeEventData->state==State::Restart){
+  if(stateChangeEventData->state==State::Restart) {
     stopSound(textLoader->getString("IDS_Level_Start_Noise"));
     stopSound(textLoader->getString("IDS_Jazzy_Noise"));
     stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
@@ -276,5 +279,15 @@ void SoundManager::handleStateChange(const EventInterface & event){
     stopMusic();
     //play the evangelion ending
     startSongOfType(LOSE);
+  }else if(stateChangeEventData->state==State::Playing){
+    if(!musicPlaying){
+      cout << "lol" << endl;
+      startSongOfType(PREP);
+    }else if(playingType==LOSE){
+      cout << "lol" << endl;
+      stopMusic();
+    }
+  }else if(stateChangeEventData->state==State::MainMenu || stateChangeEventData->state==State::OptionsMenu){
+    if(playingIndex!=-1) stopMusic();
   }
 }

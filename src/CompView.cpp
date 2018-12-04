@@ -30,8 +30,8 @@ void CompView::updateUnits(float deltaS){
 
   std::mt19937 rnd_gen (rd ());
 
-  uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()-.5);
-  uniform_real_distribution<double>y_overshoot(0,playingScreenHeader->getTrueYTileSize()-.5);
+  uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()*.95);
+  uniform_real_distribution<double>y_overshoot(0,playingScreenHeader->getTrueYTileSize()*.95);
 
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
     shared_ptr<MeleeUnit> currentUnit= iterator.second;
