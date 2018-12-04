@@ -71,26 +71,38 @@ void SoundManager::loadSounds(){
      else
         stop the game and pull up a box saying you 'screwed' up (family friendly)
  */
-  vector<string>paths={"IDS_Unit_Escape_Sound_Path",
+  vector<string>sound_paths={"IDS_Unit_Escape_Sound_Path",
                        "IDS_Level_Start_Sound_Path",
                        "IDS_Jazzy_Sound_Path",
                        "IDS_Tower_Creation_Sound_Path",
                        "IDS_Tower_Remove_Sound_Path",
                        "IDS_Failure_Sound_Path",
-                       "IDS_Ding_Sound_Path"};
+                       "IDS_Ding_Sound_Path",
+                       "IDS_QFG_Win_Sound_Path"};
   vector<string>ids={"IDS_Unit_Escape_Noise",
                      "IDS_Level_Start_Noise",
                      "IDS_Jazzy_Noise",
                      "IDS_Tower_Creation_Noise",
                      "IDS_Tower_Remove_Noise",
                      "IDS_Failure_Noise",
-                     "IDS_Ding_Noise"};
+                     "IDS_Ding_Noise",
+                     "IDS_QFG_Win_Noise"};
 
-  assert(paths.size()==ids.size());
+  assert(sound_paths.size()==ids.size());
 
-  for(int z=0;z<paths.size();z++){
-    loadSound(paths[z],ids[z]);
+  for(int z=0;z<sound_paths.size();z++){
+    loadSound(sound_paths[z],ids[z]);
   }
+  //cout << textLoader->getString(("IDS_Combat_")+std::to_string(0)+string("_Music_Path")) << endl;
+
+
+  for(int z=0;z<=5;z++){
+    std::shared_ptr<sf::Music>music=make_shared<sf::Music>();
+    assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
+    music->setLoop(true);
+    music_objs[MusicType::Combat].push_back(music);
+  }
+
 
 
 }
@@ -121,21 +133,33 @@ void SoundManager::stopSound(string soundID){
   sound_objs[soundID].stop();
 }
 
-void SoundManager::playMusic(string musicID){
-  music_objs[musicID].play();
+void SoundManager::playMusic(){
+  music_objs[playingType][playingIndex]->play();
 }
 
-void SoundManager::pauseMusic(string musicID){
-  music_objs[musicID].pause();
+void SoundManager::pauseMusic(){
+  music_objs[playingType][playingIndex]->pause();
+}
+
+void SoundManager::stopMusic(){
+  music_objs[playingType][playingIndex]->stop();
 
 }
 
-void SoundManager::stopMusic(string musicID){
-  music_objs[musicID].stop();
+void SoundManager::startSongOfType(MusicType type){
+  playingType=type;
+  auto musics=music_objs[type];
+  std::uniform_int_distribution<unsigned int> musicPicker(0,musics.size()-1);
 
+  std::mt19937 rnd_gen(rd());
+
+  playingIndex=musicPicker(rnd_gen);
+
+  playMusic();
 }
 
 void SoundManager::handleSoundPlay(const EventInterface& event){
+
   const PlaySoundEvent* playSoundEvent = static_cast<const PlaySoundEvent*>(&event);
 
   PlaySoundEventData* playSoundEventData= static_cast<PlaySoundEventData*>((playSoundEvent-> data).get());
@@ -159,11 +183,22 @@ void SoundManager::handleTowerRemove(const EventInterface &event) {
 }
 
 void SoundManager::handleWaveChange(const EventInterface & event){
+  stopSound(textLoader->getString("IDS_Jazzy_Noise"));
+  stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
+
+
   const WaveChangeEvent* waveChangeEvent= static_cast<const WaveChangeEvent*>(&event);
 
   WaveChangeEventData* waveChangeEventData= static_cast<WaveChangeEventData*>((waveChangeEvent-> data).get());
 
-  if(!waveChangeEventData->waveStart){
-    playSound(textLoader->getString("IDS_Jazzy_Noise"));
+  if(waveChangeEventData->waveStart){
+    startSongOfType(MusicType::Combat);
+  }else{
+    stopMusic();
+    if(playingIndex==3){
+      playSound(textLoader->getString("IDS_QFG_Win_Noise"));
+    }else{
+      playSound(textLoader->getString("IDS_Jazzy_Noise"));
+    }
   }
 }

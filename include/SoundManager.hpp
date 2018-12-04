@@ -17,6 +17,8 @@
 #include <memory>
 #include <vector>
 #include <cassert>
+#include <random>
+#include <map>
 
 using std::string;
 using std::vector;
@@ -24,8 +26,10 @@ using std::vector;
 class SoundManager{
 private:
 
+  enum class MusicType {Combat, Prep, Finish};
+
   //Stores game objects referencing streaming music.
-  std::unordered_map<std::string,sf::Music>music_objs;
+  std::unordered_map<MusicType,vector<shared_ptr<sf::Music>>>music_objs;
 
   //Stores game objects referencing pre-loaded sounds.
   std::unordered_map<std::string,sf::Sound>sound_objs;
@@ -41,6 +45,11 @@ private:
   std::unordered_map<string,sf::SoundBuffer>buffers;
 
   void loadSound(string path, string soundID);
+
+  MusicType playingType;
+  unsigned int playingIndex;
+
+  std::random_device rd;
 
 public:
 
@@ -87,7 +96,7 @@ public:
 
     @param dex the index in music_objs where the music is stored.
    */
-  void playMusic(string musicID);
+  void playMusic();
 
   /*
     Pause the music from music_objs at the given index if it is currently
@@ -96,7 +105,7 @@ public:
 
     @param dex the index in music_objs where the music is stored.
    */
-  void pauseMusic(string musicID);
+  void pauseMusic();
 
   /*
     Stop the music from music_objs at the given index if it is currently
@@ -105,7 +114,9 @@ public:
 
     @param dex the index in music_objs where the music is stored.
    */
-  void stopMusic(string musicID);
+  void stopMusic();
+
+  void startSongOfType(MusicType type);
 
   void handleSoundPlay(const EventInterface& event);
 
