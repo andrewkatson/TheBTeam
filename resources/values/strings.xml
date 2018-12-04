@@ -250,6 +250,8 @@
   <string value="../resources/sounds/music/prep/HQTrack12.ogg" id="IDS_Prep_0_Music_Path"> </string>
   <string value="../resources/sounds/music/prep/qfg3calm.ogg" id="IDS_Prep_1_Music_Path"> </string>
   <string value="../resources/sounds/music/prep/086-Before-Battle.ogg" id="IDS_Prep_2_Music_Path"> </string>
+  <string value="../resources/sounds/music/end/evangelion-congrats.ogg" id="IDS_End_0_Music_Path"> </string>
+
 
   <!--Sound IDs-->
   <string value="Unit_Escape" id="IDS_Unit_Escape_Noise"> </string>
@@ -309,6 +311,7 @@
   <string value="Sound_Manager_Tower_Creation" id="IDS_SoundManager_TowerCreation"> </string>
   <string value="Sound_Manager_Tower_Remove" id="IDS_SoundManager_TowerRemove"> </string>
   <string value="Sound_Manager_Wave_Change" id="IDS_SoundManager_WaveChange"> </string>
+  <string value="Sound_Manager_State_Change" id="IDS_SoundManager_StateeChange"> </string>
     <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->

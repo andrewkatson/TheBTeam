@@ -55,6 +55,11 @@ void SoundManager::registerDelegates(){
   WaveChangeEvent waveChangeEvent= WaveChangeEvent();
   const EventType waveChangeEventType = waveChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(waveChangeDelegate, textLoader -> getString(string("IDS_SoundManager_WaveChange")),waveChangeEventType);
+
+  EventManager::EventDelegate stateChangeDelegate = std::bind(&SoundManager::handleStateChange, this, _1);
+  StateChangeEvent stateChangeEvent= StateChangeEvent();
+  const EventType stateChangeEventType = stateChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_SoundManager_StateChange")),stateChangeEventType);
 }
 
 void SoundManager::deregisterDelegates(){
@@ -132,6 +137,13 @@ void SoundManager::loadSounds(){
     music->setLoop(true);
     music->setVolume(80);
     music_objs[PREP].push_back(music);
+  }
+  for(int z=0;z<=0;z++){
+    sf::Music *music=new sf::Music();
+    assert(music->openFromFile(textLoader->getString(string("IDS_End_")+std::to_string(z)+string("_Music_Path"))));
+    music->setLoop(true);
+    music->setVolume(80);
+    music_objs[LOSE].push_back(music);
   }
 
 }
@@ -257,11 +269,12 @@ void SoundManager::handleStateChange(const EventInterface & event){
   StateChangeEventData* stateChangeEventData=static_cast<StateChangeEventData*>((stateChangeEvent->data).get());
 
   if(stateChangeEventData->state==State::Restart){
-    playSound(textLoader->getString("IDS_Level_Start_Noise"));
+    stopSound(textLoader->getString("IDS_Level_Start_Noise"));
     stopSound(textLoader->getString("IDS_Jazzy_Noise"));
     stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
     stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));
     stopMusic();
     //play the evangelion ending
+    startSongOfType(LOSE);
   }
 }
