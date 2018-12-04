@@ -26,10 +26,8 @@ using std::vector;
 class SoundManager{
 private:
 
-  enum class MusicType {Combat, Prep, Finish};
-
   //Stores game objects referencing streaming music.
-  std::unordered_map<MusicType,vector<shared_ptr<sf::Music>>>music_objs;
+  std::unordered_map<int,vector<shared_ptr<sf::Music>>>music_objs;
 
   //Stores game objects referencing pre-loaded sounds.
   std::unordered_map<std::string,sf::Sound>sound_objs;
@@ -46,8 +44,12 @@ private:
 
   void loadSound(string path, string soundID);
 
-  MusicType playingType;
+  int playingType;
   unsigned int playingIndex;
+
+  const int COMBAT=0;
+  const int PREP=1;
+  const int WIN=2;
 
   std::random_device rd;
 
@@ -116,7 +118,7 @@ public:
    */
   void stopMusic();
 
-  void startSongOfType(MusicType type);
+  void startSongOfType(int type);
 
   void handleSoundPlay(const EventInterface& event);
 

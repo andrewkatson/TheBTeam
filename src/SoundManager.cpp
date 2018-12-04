@@ -103,13 +103,13 @@ void SoundManager::loadSounds(){
     if(z==3){
 
     }
-    music_objs[MusicType::Combat].push_back(music);
+    music_objs[COMBAT].push_back(music);
   }
   for(int z=0;z<=1;z++){
     std::shared_ptr<sf::Music>music=make_shared<sf::Music>();
     assert(music->openFromFile(textLoader->getString(string("IDS_Prep_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
-    music_objs[MusicType::Prep].push_back(music);
+    music_objs[PREP].push_back(music);
   }
 
 
@@ -155,7 +155,7 @@ void SoundManager::stopMusic(){
 
 }
 
-void SoundManager::startSongOfType(MusicType type){
+void SoundManager::startSongOfType(int type){
   playingType=type;
   auto musics=music_objs[type];
   std::uniform_int_distribution<unsigned int> musicPicker(0,musics.size()-1);
@@ -201,7 +201,8 @@ void SoundManager::handleWaveChange(const EventInterface & event){
   WaveChangeEventData* waveChangeEventData= static_cast<WaveChangeEventData*>((waveChangeEvent-> data).get());
 
   if(waveChangeEventData->waveStart){
-    startSongOfType(MusicType::Combat);
+    stopMusic();
+    startSongOfType(COMBAT);
   }else{
     stopMusic();
     if(playingIndex==3){
@@ -209,5 +210,6 @@ void SoundManager::handleWaveChange(const EventInterface & event){
     }else{
       playSound(textLoader->getString("IDS_Jazzy_Noise"));
     }
+    startSongOfType(PREP);
   }
 }
