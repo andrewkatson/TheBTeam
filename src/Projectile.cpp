@@ -62,24 +62,11 @@ void Projectile::move(float delta){
 
   x = newX;
   y = newY;
-
-  //update the body
-  body -> SetTransform(b2Vec2(x,y), body->GetAngle());
-}
-
-void Projectile::setVector(float x, float y){
-  this -> xVector = x;
-  this -> yVector = y;
 }
 
 void Projectile::setVectorScale(float xScale, float yScale){
   this -> xVectorScale = xScale;
   this -> yVectorScale = yScale;
-}
-
-void Projectile::setTargetPos(float xPos, float yPos){
-  this -> xTarget = xPos;
-  this -> yTarget = yPos;
 }
 
 void Projectile::setProjectileID(int ID){

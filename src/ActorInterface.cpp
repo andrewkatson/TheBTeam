@@ -100,3 +100,14 @@ double ActorInterface::getYScale(){
 double ActorInterface::getXScale() {
   return ActorInterface::xScale;
 }
+
+
+void ActorInterface::setVector(float x, float y){
+  this -> xVector = x;
+  this -> yVector = y;
+}
+
+void ActorInterface::setTargetPos(float xPos, float yPos){
+  this -> xTarget = xPos;
+  this -> yTarget = yPos;
+}

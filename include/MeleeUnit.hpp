@@ -157,6 +157,12 @@ public:
   */
   void move(float delta);
 
+
+  /*
+   * A vector based move specifically for the melee units that go with towers
+   */
+  void vectorMove(float delta);
+
   /*
     Determine whether or not the object's collision box is colliding with the
     given collision box. By default, this is determined by whether or not the

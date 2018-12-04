@@ -26,6 +26,15 @@ class ActorInterface{
 
 protected:
 
+  //the x of the vector of movement
+  float xVector;
+  //the y of the vector of movement
+  float yVector;
+  //the x coordinate of the taget
+  float xTarget;
+  //the y coordinate of the target
+  float yTarget;
+
   //The actor's direction in RADIANS.
   double direction;
 
@@ -261,6 +270,20 @@ public:
   void setTowerScale(float x, float y){xTowerScale = x; yTowerScale = y;}
   float getXTowerScale(){return xTowerScale;}
   float getYTowerScale(){return yTowerScale;}
+
+  /*
+   * set the vector for movement (defined by an x and y)
+   * @param x: the x component of the vector
+   * @param y: the y component of the vectors
+   */
+  void setVector(float x, float y);
+
+  /*
+   * set the positions for the target of the projectile
+   * @param xpos: the x coordiante of the target of the projectile
+   * @param ypos: the y coordinate of the target of the projectile
+   */
+  void setTargetPos(float x, float y);
 };
 
 #endif

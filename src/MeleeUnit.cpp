@@ -98,6 +98,37 @@ void MeleeUnit::move(float deltaS){
   }
 }
 
+void MeleeUnit::vectorMove(float delta){
+  float newX = xVector /(2000/speed) *delta + x;
+  float newY = yVector / (2000/speed) *delta + y;
+
+  //we check to see if the projectile has overshot the target
+  if(xVector > 0 ){
+    if(newX > xTarget - e){
+      newX = xTarget;
+    }
+  }
+  else{
+    if(newX < xTarget + e){
+      newX = xTarget;
+    }
+  }
+
+  if(yVector > 0){
+    if(newY > yTarget - e){
+      newY = yTarget;
+    }
+  }
+  else{
+    if(newY < yTarget + e){
+      newY = yTarget;
+    }
+  }
+
+  x = newX;
+  y = newY;
+}
+
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){
 
 }

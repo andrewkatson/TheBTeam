@@ -16,6 +16,7 @@
 #include <chrono>
 #include <math.h>
 
+using std::cerr;
 using std::vector;
 using std::shared_ptr;
 using std::make_shared;
@@ -49,7 +50,8 @@ public:
   void update(float delta);
   void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, float delta = 1.0);
   bool withinRange(float x1, float y1, float x2, float y2);
-
+  void calcAttackVector(shared_ptr<ActorInterface> meleeUnit, shared_ptr<ActorInterface> enemyInRange);
+  
   void initSprite();
 
   void registerDelegates();

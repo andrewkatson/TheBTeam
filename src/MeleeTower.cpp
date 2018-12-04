@@ -25,7 +25,8 @@ void MeleeTower::update(float delta){
   //a point situated around the rally point
   for(shared_ptr<MeleeUnit> unit : currentUnits){
     if(isnan(unit->getXCoordinate()) || isnan(unit->getYCoordinate())){
-      cout << "is nan here " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
+      cerr << "is nan here " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
+      assert(false);
     }
 
     if(unit -> getHitpoints() != 0){
@@ -141,10 +142,28 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
     float newX = (radiusOfUnitCircle) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + xRally;
     float newY = (radiusOfUnitCircle) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + yRally;
 
+    //set the target for the unit to be the rally point
+    unit -> setTargetPos(newX, newY);
+
+    float xvec = newX -  unit->getXCoordinate();
+    float yvec = newY -  unit->getYCoordinate();
+
+    //set the vector the unit will move along
+    unit -> setVector(xvec,yvec);
+
+    cout << "unit " << unitIndex << endl;
+    cout << "go to " << newX << " " << newY << endl;
+    cout << "along " << xvec << " " << yvec << endl;
+
+    //move the unit
+    unit -> vectorMove(delta);
+    /*
     if(isnan(newX) || isnan(newY)){
       cout << "oh my naaan " << newX << " " << newY << endl;
     }
 
+
+    /*
     //if the unit is already at its correct resting poisiton nothing needs to be done
     if(!(withinRange(newX, newY, unit->getXCoordinate(), unit->getYCoordinate()))){
 
@@ -195,6 +214,7 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
         }
       }
     }
+    */
   }
 }
 
@@ -208,6 +228,20 @@ bool MeleeTower::withinRange(float x1, float y1, float x2, float y2){
     }
   }
   return false;
+}
+
+/*
+ * Caclulates the x and y of the vector that the projectile will travel on.
+ * Uses the speed, direction and distance to the enemy unit as a guide
+ */
+void MeleeTower::calcAttackVector(shared_ptr<ActorInterface> meleeUnit, shared_ptr<ActorInterface> enemyInRange){
+  float xvec = enemyInRange -> getXCoordinate() - this -> xCoordinate;
+  float yvec = enemyInRange -> getYCoordinate() - this -> yCoordinate;
+
+  //set the target of the projectile to the be x,y of the enemy being fired at
+  meleeUnit -> setTargetPos(enemyInRange -> getXCoordinate(), enemyInRange -> getYCoordinate());
+
+  meleeUnit -> setVector(xvec,yvec);
 }
 
 /*
