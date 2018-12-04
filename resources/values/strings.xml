@@ -231,6 +231,8 @@
   <string value="../resources/sounds/game_stuff/failure.ogg" id="IDS_Failure_Sound_Path"> </string>
   <string value="../resources/sounds/tower/ding.ogg" id="IDS_Ding_Sound_Path"> </string>
   <string value="../resources/sounds/game_stuff/qfgwin.ogg" id="IDS_QFG_Win_Sound_Path"> </string>
+  <string value="../resources/sounds/game_stuff/qfg4win.ogg" id="IDS_QFG4_Win_Sound_Path"> </string>
+
 
   <!--Music Paths-->
   <string value="../resources/sounds/music/wave/evangelion.ogg" id="IDS_Combat_0_Music_Path"> </string>
@@ -251,6 +253,7 @@
   <string value="Failure" id="IDS_Failure_Noise"> </string>
   <string value="Ding" id="IDS_Ding_Noise"> </string>
   <string value="QFGWin" id="IDS_QFG_Win_Noise"> </string>
+  <string value="QFGWin" id="IDS_QFG4_Win_Noise"> </string>
 
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>

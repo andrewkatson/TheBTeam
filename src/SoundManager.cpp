@@ -86,7 +86,8 @@ void SoundManager::loadSounds(){
                        "IDS_Tower_Remove_Sound_Path",
                        "IDS_Failure_Sound_Path",
                        "IDS_Ding_Sound_Path",
-                       "IDS_QFG_Win_Sound_Path"};
+                       "IDS_QFG_Win_Sound_Path",
+                       "IDS_QFG4_Win_Sound_Path"};
   vector<string>ids={"IDS_Unit_Escape_Noise",
                      "IDS_Level_Start_Noise",
                      "IDS_Jazzy_Noise",
@@ -94,7 +95,8 @@ void SoundManager::loadSounds(){
                      "IDS_Tower_Remove_Noise",
                      "IDS_Failure_Noise",
                      "IDS_Ding_Noise",
-                     "IDS_QFG_Win_Noise"};
+                     "IDS_QFG_Win_Noise",
+                     "IDS_QFG4_Win_Noise"};
 
   assert(sound_paths.size()==ids.size());
 
@@ -202,6 +204,7 @@ void SoundManager::handleWaveChange(const EventInterface & event){
 //  cout << "starting song of type" << playingIndex;
   stopSound(textLoader->getString("IDS_Jazzy_Noise"));
   stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
+  stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));
 
 
   const WaveChangeEvent* waveChangeEvent= static_cast<const WaveChangeEvent*>(&event);
@@ -213,8 +216,10 @@ void SoundManager::handleWaveChange(const EventInterface & event){
     startSongOfType(COMBAT);
   }else{
     stopMusic();
-    if(playingIndex==3){
+    if(playingIndex==3) {
       playSound(textLoader->getString("IDS_QFG_Win_Noise"));
+    }else if(playingIndex==4 || playingIndex==5){
+        playSound(textLoader->getString("IDS_QFG_Win_Noise"));
     }else{
       playSound(textLoader->getString("IDS_Jazzy_Noise"));
     }
