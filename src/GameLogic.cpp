@@ -438,14 +438,14 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
 
    this -> towerManager -> setDimensions(rows, cols);
    this -> collisionManager -> setDimensions(rows, cols);
-   this -> waveManager -> setDimensions(rows, cols);
+//   this -> waveManager -> setDimensions(rows, cols);
 
    //set the x and y in pixel length
    this -> gridX = (float) windowX / boardManager -> getXDim();
    this -> gridY = (float) windowY / boardManager -> getYDim();
    this-> towerManager -> setGridDimensions(gridX, gridY);
    this -> collisionManager -> setGridDimensions(gridX, gridY);
-   this -> waveManager -> setGridDimensions(gridX, gridY);
+//   this -> waveManager -> setGridDimensions(gridX, gridY);
 
    //make a map generated event
    //the time object of the class

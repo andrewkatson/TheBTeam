@@ -54,6 +54,7 @@
 - Units now face the direction in which they're moving (when set using setDirection) [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Units alter scale properly when angled
 - Fixed a typo in the endgame screen
+- Fixed a major bug where units would often spawn at bogus locations after generating maps beyond the initial one
 
 
 [0.7.0] 2018-12-02

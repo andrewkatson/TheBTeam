@@ -156,6 +156,20 @@ void WaveManager::createNextWave() {
 
   std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
 
+  printf("my distances: \n");
+  for(auto z : distances){
+    for(auto g : z){
+      printf("%3d",g);
+    }
+    printf("\n");
+  }
+  printf("my entries: \n");
+  for(int z = 0; z < entryPositions.size(); z+=2){
+    printf("%3d,%3d\n",entryPositions[z+1],entryPositions[z]);
+
+  }
+
+
   double total_wave_weight=wave_weight_rng(rnd_gen);
 
   for(double weight=0;weight<total_wave_weight;){
@@ -247,10 +261,10 @@ void WaveManager::createNextWave() {
       dir=3*M_PI/2;
     }else if(entryPoint.second==0){
       yOffset =offset;
-      xOffset=0.001;
+      xOffset= .001;
       dir=0;
     }else if(entryPoint.first==distances.size()-1){
-      yOffset =0.999;
+      yOffset = .999;
       xOffset=offset;
       dir=M_PI/2;
     }else{
@@ -258,6 +272,9 @@ void WaveManager::createNextWave() {
       xOffset=0.999;
       dir=M_PI;
     }
+    printf("instance tile size %f,%f\n",xTileSize,yTileSize);
+    printf("calculated tile size %f,%f\n",(float)windowX / (float)distances[0].size(),(float)windowY/ (float)distances.size());
+
 
     enemy->setXCoordinate((float)windowX / (float)distances[0].size() * ((float)entryPoint.second + xOffset)); // multiply tile size by tiles
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
@@ -353,6 +370,8 @@ void WaveManager::setEntryPoints(vector<int>& entries) {
 
 void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<int>>& distances) {
 
+  distancesFromEntryPositions.clear();
+
   /*
    * for every entrance point in the map
    * get its distance
@@ -434,6 +453,8 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
 }
 
 void WaveManager::handleMapGenerated(const EventInterface& event){
+
+  cout << "new map bruh" << endl;
   auto mapGeneratedEvent= static_cast<const MapGeneratedEvent*>(&event);
 
   auto mapGeneratedEventData = static_cast<MapGeneratedEventData*>((mapGeneratedEvent->data).get());
@@ -441,6 +462,13 @@ void WaveManager::handleMapGenerated(const EventInterface& event){
   setDistances(mapGeneratedEventData->dists);
   entryPositions.clear();
   setEntryPoints(mapGeneratedEventData->entrances);
+
+  int numRows=mapGeneratedEventData->dists.size();
+  int numCols=mapGeneratedEventData->dists[0].size();
+
+  setDimensions(numRows,numCols);
+
+  setGridDimensions(windowX/(float)numCols,windowY/(float)numRows);
 
 }
 

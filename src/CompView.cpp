@@ -27,6 +27,23 @@ void CompView::updateUnits(float deltaS){
 
   vector<vector<int>> dists=gameLogic->getDistances();
   vector<vector<int>> floor=gameLogic->getFloor();
+  /*
+  printf("my distances: \n");
+  for(auto z : dists){
+    for(auto g : z){
+      printf("%3d",g);
+    }
+    printf("\n");
+  }
+
+  printf("my floor: \n");
+  for(auto z : floor){
+    for(auto g : z){
+      printf("%3d",g);
+    }
+    printf("\n");
+  }
+   */
 
   std::mt19937 rnd_gen (rd ());
 
@@ -106,7 +123,7 @@ void CompView::updateUnits(float deltaS){
           //printf("0<= adjusted_r? %d\nadjusted_r < floor.size()? %d\n0 <= adjusted_c? %d\nadjusted_c < floor[0].size()? %d\n",
           //      (0 <= adjusted_r), (adjusted_r < floor.size()), (0 <= adjusted_c), (adjusted_c < floor[0].size()));
           if((0 <= adjusted_r) && (adjusted_r < floor.size()) && (0 <= adjusted_c) && (adjusted_c < floor[0].size())) {
-            //printf("above floor grid: %d\n",floor[r + dir.first][c + dir.second]);
+            //wprintf("floor grid: %d\n",floor[adjusted_r][adjusted_c]);
             if (floor[r + dir_r][c + dir_c] >= 0) {
               //printf("huge succeeded\n");
               dists_coords[dists[adjusted_r][adjusted_c]] = dir;
