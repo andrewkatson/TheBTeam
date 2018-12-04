@@ -24,9 +24,17 @@
   - Crinkle Cut Fry
   - Spicy Fry
 - yes, I did all this... it took many hours
+- SoundManager
 - PlaySoundEvent
 - PlaySoundEventData
-- A "peeeow" sound now plays when units leave the map
+- Sounds
+ - A "peeeow" sound now plays when units leave the map
+ - Separate sounds for firing of projectiles from the 3 classes of towers (Drink, Pizza, Candy)
+ - Sounds for unit getting too full to keep moving (death)
+ - Sounds for unit eating food (hit by projectile)
+- Music
+ - Different music sets that play during a wave and while prepping for a wave
+ - SoundManager randomly picks a song to play from the different music sets
 
 ###Changed
 - going below 0 hitpoints ends the game [@andrewkatson][https://github.com/andrewkatson]
@@ -44,6 +52,8 @@
 
 ###Fixed
 - Units now face the direction in which they're moving (when set using setDirection) [@jeremyelkayam][https://github.com/jeremyelkayam]
+- Units alter scale properly when angled
+- Fixed a typo in the endgame screen
 
 
 [0.7.0] 2018-12-02

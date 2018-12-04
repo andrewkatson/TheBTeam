@@ -132,6 +132,8 @@ public:
 
   void handleWaveChange(const EventInterface & event);
 
+  void handleStateChange(const EventInterface & event);
+
 };
 
 #endif

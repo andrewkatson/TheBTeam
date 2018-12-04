@@ -249,3 +249,14 @@ void SoundManager::handleWaveChange(const EventInterface & event){
     }
   }
 }
+
+void SoundManager::handleStateChange(const EventInterface & event){
+
+  const StateChangeEvent* stateChangeEvent=static_cast<const StateChangeEvent*>(&event);
+
+  StateChangeEventData* stateChangeEventData=static_cast<StateChangeEventData*>((stateChangeEvent->data).get());
+
+  if(stateChangeEventData->state==State::Restart){
+    //play the evangelion ending
+  }
+}
