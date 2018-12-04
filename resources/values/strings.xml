@@ -354,7 +354,7 @@
 
 
     <!--RestartScreen-->
-    <string value="Congratualtions! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
+    <string value="Congratulations! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
 
     <!--OptionsMenuScreen-->
     <string value ="Confirm" id="IDS_Options_Menu_Confirm_Button"> </string>
