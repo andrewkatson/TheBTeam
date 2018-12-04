@@ -125,7 +125,7 @@ void SoundManager::loadSounds(){
   //cout << textLoader->getString(("IDS_Combat_")+std::to_string(0)+string("_Music_Path")) << endl;
 
 
-  for(int z=0;z<=5;z++){
+  for(int z=0;z<=6;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
