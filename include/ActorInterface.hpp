@@ -133,9 +133,6 @@ public:
   ActorInterface();
   ~ActorInterface();
 
-  shared_ptr<ActorInterface> getEngagedUnit(){return engagedUnit;}
-
-  shared_ptr<ActorInterface> engagedUnit;
 
   void startContact(void* collidingWith);
 
@@ -271,26 +268,17 @@ public:
     return false;
   }
 
-  void setEngagedUnit(shared_ptr<ActorInterface> unitToEngage){
-  engagedUnit = unitToEngage;
-  }
 
   void attack() {
     engagedUnit->updateHitpoints(damage);
     //TODO - handle attacking animation with userview, initiate attack.
   }
 
-  void updateHitpoints(int damage){
-    hitpoints-=damage;
-  }
 
   void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
 
   bool isAProjectile(){return isProjectile;}
-<<<<<<< HEAD
 
-
-=======
   bool isAnAlly(){return isAlly;}
 
 
@@ -330,7 +318,10 @@ public:
    * Set the engaged unit
    */
   void setEngagedUnit(shared_ptr<ActorInterface> unitToEngage){engagedUnit = unitToEngage;}
->>>>>>> 8d524c3e5071273cdb3158d47a6c8a02e2de8b40
+
+  float getXTarget(){return xTarget;}
+
+  float getYTarget(){return yTarget;}
 };
 
 #endif

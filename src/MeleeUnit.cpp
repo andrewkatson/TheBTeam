@@ -217,7 +217,7 @@ bool MeleeUnit::attackPossible(float delta){
   //the actual count in seconds for the time
   auto nowInSec = duration_cast<seconds>(now.time_since_epoch()).count();
   //time -last attack < (delta/attackrate)
-  if((nowInSec-lastAttack)<(delta/attackrate)){
+  if((nowInSec-lastAttack)<(delta/attackRate)){
     return false;
   }
   lastAttack = nowInSec;
