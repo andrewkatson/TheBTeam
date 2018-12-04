@@ -229,6 +229,7 @@
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
     <string value="GAMELOGICHANDLESTATECHANGE" id="IDS_GLD_SC"> </string>
     <string value="GameLogic_Projectile_Explosion" id="IDS_GameLogic_Delegate_Projectile_Explosion"> </string>
+    <string value="GAMELOGICLEVELCHANGEDELEGATE" id="IDS_GLD_LC"></string>
     <!--Player Delegates-->
     <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
     <!--UserView Delegates-->
@@ -238,6 +239,7 @@
     <!--Board Manager Delegates-->
     <string value="BOARDMANAGERHANDLETOWERCREATION" id="IDS_BMD_TC"> </string>
     <string value="BOARDMANAGERHANDLETOWERREMOVE" id="IDS_BMD_TR"> </string>
+    <string value="BOARDMANAGERLEVELCHANGE" id="IDS_BMD_LC"></string>
     <!--Tower Manager Delegates-->
     <string value="TOWERMANAGERHANDLETOWERCREATION" id="IDS_TMD_TC"> </string>
     <string value="TOWERMANAGERHANDLETOWERREMOVE" id="IDS_TMD_TR"> </string>

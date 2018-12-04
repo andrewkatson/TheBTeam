@@ -516,11 +516,13 @@ void TowerManager::handleTowerRemove(const EventInterface& event){
  * sent from GameLogic and BoardManager
  */
 void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace){
+  towersPlaced.clear();
   for(auto it = allObstaclesToPlace.begin(); it != allObstaclesToPlace.end(); ++it){
       //grab the number stored at the position to indicate the type of obstacle
       int typeNum = (*it).first;
       //grab the string identifier of this type of obstacle
       string obstacleType = textLoader -> getTypeID(std::to_string(typeNum));
+      cout<<textLoader -> getTypeID(std::to_string(typeNum))<<endl;
 
       //the obstacle we will place
       shared_ptr<TowerInterface> obstacle;
