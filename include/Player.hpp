@@ -101,6 +101,10 @@ public:
   void modifyBalance(int modifyBy);
 
   /*
+   * reset balance to be the original balance * level unless the player is restarting so check
+   */
+  void newLevelBalance();
+  /*
     Set the player's current hit-points to the given value.
 
     @param points The new hit-point value for the player.
@@ -112,6 +116,10 @@ public:
    */
   void modifyHitpoints(int pointsToDeduct);
 
+  /*
+   * reset hitpoints to be 100, used during restart and level changed
+   */
+  void resetHitpoints();
   /*
    * Set the wave to be the passed wave number
    */

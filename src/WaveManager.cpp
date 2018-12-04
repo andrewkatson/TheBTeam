@@ -143,6 +143,7 @@ void WaveManager::createNextWave() {
 
   std::uniform_real_distribution<double> percent_perturbation_rng(min_scale, max_scale);
 
+  cout << "entry pos size " << entryPositions.size() << endl;
   buildDistanceEntryMap(entryPositions, distances);
 
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
@@ -314,6 +315,19 @@ void WaveManager::spawnNextUnit() {
 
 }
 
+void WaveManager::getWavesLeft() {
+    //cout<<"waves left = " << numWaves <<endl;
+    if(this -> numWaves == 0){
+      auto now = high_resolution_clock::now();
+      //the actual count in nanoseconds for the time
+      auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+      shared_ptr<EventInterface> levelChange = make_shared<LevelChangeEvent>(level + 1, nowInNano);
+
+      this -> eventManager -> queueEvent(levelChange);
+      //make a new map after checking for no towers, no enemies, resetting the player health and setting balance to be base * level --handled by gamelogic
+    }
+}
+
 void WaveManager::update(float deltaS) {
   // if there are no waves left, make a LevelChangeEvent for a new level
   // if there are waves left but no enemies left do nothing
@@ -347,6 +361,8 @@ void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<
    * push_back the intpair to the end of the vector that the distance points to
    */
 
+  cout  << "entry points size " << distancesFromEntryPositions.size() << endl;
+
   for(int z=0;z<entrypoints.size();z+=2){
 
 
@@ -362,6 +378,8 @@ void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<
     //and the vector
     distancesFromEntryPositions[distance].push_back(rowcol);
   }
+
+  cout  << "after entry points size " << distancesFromEntryPositions.size() << endl;
 }
 
 map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions){
@@ -406,6 +424,7 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
 
     if(spawnedCurrentWave.empty() && currentWave.empty()){
       //if both of these are empty, that means the last guy in the wave just died
+      getWavesLeft();
       currentWaveNumber++;
       shared_ptr<EventInterface> wcEvent = make_shared<WaveChangeEvent>(currentWaveNumber, nowInNano);
 
@@ -418,9 +437,11 @@ void WaveManager::handleMapGenerated(const EventInterface& event){
   auto mapGeneratedEvent= static_cast<const MapGeneratedEvent*>(&event);
 
   auto mapGeneratedEventData = static_cast<MapGeneratedEventData*>((mapGeneratedEvent->data).get());
-
+  distances.clear();
   setDistances(mapGeneratedEventData->dists);
+  entryPositions.clear();
   setEntryPoints(mapGeneratedEventData->entrances);
+
 }
 
 void WaveManager::handleLevelChanged(const EventInterface& event){
@@ -428,6 +449,7 @@ void WaveManager::handleLevelChanged(const EventInterface& event){
   auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
 
   level=levelChangedEventData->level;
+  cout<<"eat my ass"<<endl;
   setupWaves();
 }
 
@@ -463,7 +485,7 @@ void WaveManager::setDimensions(int rows, int cols) {
   this->cols = cols;
 }
 
-void WaveManager::handleOptionSelectedEvent(const EventInterface &event) {
+void WaveManager::handleOptionSelectedEvent(const EventInterface &event){
     auto optionSelectedEvent = static_cast<const OptionSelectedEvent*>(&event);
     auto optionSelectedEventData = static_cast<OptionSelectedEventData*>((optionSelectedEvent->data).get());
     //the time object of the class

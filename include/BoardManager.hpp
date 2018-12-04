@@ -6,6 +6,7 @@
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
 #include "Events/OptionSelectedEvent.hpp"
+#include "Events/LevelChangeEvent.hpp"
 #include "MeleeUnit.hpp"
 #include <functional>
 #include <assert.h>
@@ -84,6 +85,7 @@ public:
   void handleTowerCreation(const EventInterface& event);
   void handleTowerRemove(const EventInterface& event);
   void handleOptionSelectedEvent(const EventInterface& event);
+  void handleLevelChangeEvent(const EventInterface& event);
 
   bool hasMap();
   bool isInMap(int row, int col);
@@ -105,17 +107,17 @@ public:
   void setMapCafeteriaChoice(cafeteria cafeteriaChoice);
   void setMapEntryChoice(int pathEntryChoice);
 
-  vector<vector<int>>const & getDistances();
-  vector<int>const & getDistancesRow(int row);
-  vector<int>const & getDistanceCol(int col);
+  vector<vector<int>> & getDistances();
+  vector<int> & getDistancesRow(int row);
+  vector<int> & getDistanceCol(int col);
   int getDistanceRowCol(int row, int col);
 
-  vector<vector<int>>const & getAboveFloor();
+  vector<vector<int>> & getAboveFloor();
   vector<int>const & getAboveFloorRow(int row);
   vector<int>const & getAboveFloorCol(int col);
   int getAboveFloorRowCol(int row, int col);
 
-  vector<vector<int>>const & getFloor();
+  vector<vector<int>> & getFloor();
   vector<int>const & getFloorRow(int row);
   vector<int>const & getFloorCol(int col);
   int getFloorRowCol(int row, int col);

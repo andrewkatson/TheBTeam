@@ -232,6 +232,8 @@ void PlayingScreen::initColorShiftsForFloor(){
   //cols
   int cols = gameLogic -> getCols();
 
+  cout << "how< many rows " << rows << " "<< cols << endl;
+
   //set the number of rows
   floorColorShifts.resize(rows);
 
@@ -274,6 +276,8 @@ void PlayingScreen::initColorShiftsForPath(){
   //cols
   int cols = gameLogic -> getCols();
 
+  cout << "how we feeling " << rows << " " << cols << endl;
+
   //set the number of rows
   pathColorShifts.resize(rows);
 
@@ -303,6 +307,8 @@ void PlayingScreen::initColorShiftsForPath(){
       pathColorShifts.at(row).at(col) = colors;
     }
   }
+
+  cout << "row size of colors " << pathColorShifts.size() << " " <<pathColorShifts.at(0).size() << endl;
 }
 
 /*
@@ -679,26 +685,32 @@ void PlayingScreen::handleStateChange(const EventInterface& event){
 
 
 void PlayingScreen::draw(sf::RenderWindow &window){
+  //cout<<"drawing all the things"<<endl;
 
 
   //initlaize the color shift vectors
   //if we have not or this is a new board
-  if(!haveSetColorShift){
+  if(!haveSetColorShift || (pathColorShifts.size() != gameLogic->getRows() || pathColorShifts.at(0).size() != gameLogic->getCols())){
+    cout << "Called you " << endl;
     initColorShifts();
     haveSetColorShift=true;
   }
   drawFloorMap(window);
+  //cout<<"drawing all the things 1"<<endl;
   drawTowersAndObstacles(window);
+  //cout<<"drawing all the things 2"<<endl;
   //to avoid looping twice we draw all the units of the towers in the
   //same method as drawing the towers
+
   drawEnemyUnits(window);
+  //cout<<"drawing all the things 3"<<endl;
   drawProjectiles(window);
-
+  //cout<<"drawing all the things 4"<<endl;
   playingScreenHeader -> draw(window);
-
+  //cout<<"drawing all the things 5"<<endl;
   //draw the upgrade circle
   upgradeCircle -> draw(window);
-
+  //cout<<"drawing all the things 6"<<endl;
   //TODO change into real code for drawing the map!
   if(somethingChanged){
     cout << endl << "THE FLOOR " << endl;
@@ -714,7 +726,9 @@ void PlayingScreen::draw(sf::RenderWindow &window){
     printVector(distances);
 
     somethingChanged = false;
+
   }
+  //cout<<"we drew all the things"<<endl;
 }
 
 /*
@@ -724,6 +738,8 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
   //the 2d grid with ASCII representations of each tile
   const vector<vector<int>> floorGrid = gameLogic -> getFloor();
+
+  //cout << "floor is " << floorGrid.size() << " and " << floorGrid.at(0).size() << endl;
 
   assert(floorGrid.size()!=0);
 
@@ -738,7 +754,9 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
   //iterate through the 2d grid
   for(int row = 0; row < floorGrid.size(); row++){
     for(int col = 0; col < floorGrid.at(0).size(); col++){
+      //cout << "row " << row << " " << col << endl;
       int floorValue = floorGrid.at(row).at(col);
+     // cout << "is issue here " << endl;
       //if this is a path
       if(floorValue > 0){
         drawFloorPath(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
@@ -751,6 +769,7 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
       else if(floorGrid.at(row).at(col) == 0){
         drawFloorExit(window, row, col, yTileSize, xTileSize, floorRect);
       }
+     // cout << "exit loop " << endl;
     }
   }
 }
@@ -774,6 +793,8 @@ void PlayingScreen::drawFloorPath(sf::RenderWindow& window, int row, int col,
     //if this was an actual path version
     if(checkPathColorValue != -1){
 
+      assert(row < pathColorShifts.size());
+      assert(col < pathColorShifts.at(0).size());
       //weird tuple syntax but it just grabs the color shift in the tuple for this row, col
       int redShift = get<0>(pathColorShifts.at(row).at(col));
       int greenShift = get<1>(pathColorShifts.at(row).at(col));
@@ -841,7 +862,8 @@ void PlayingScreen::drawFloorTile(sf::RenderWindow& window, int row, int col,
 
   //if this was an actual tile version
   if(checkTileColorValue != -1){
-
+    assert(row < pathColorShifts.size());
+    assert(col < pathColorShifts.at(0).size());
     //weird tuple syntax but it just grabs the color shift in the tuple for this row, col
     int redShift = get<0>(pathColorShifts.at(row).at(col));
     int greenShift = get<1>(pathColorShifts.at(row).at(col));

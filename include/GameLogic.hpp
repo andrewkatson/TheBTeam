@@ -100,6 +100,7 @@ public:
   void handleMousePress(const EventInterface& event);
   void handleStateChange(const EventInterface& event);
   void handleProjectileExplosion(const EventInterface& event);
+  void handleLevelChangeEvent(const EventInterface& event);
   /*
     Called once every game loop. Updates the game's happenings according to the
     time since the last loop.
