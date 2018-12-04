@@ -251,6 +251,11 @@ void SoundManager::handleWaveChange(const EventInterface & event){
 }
 
 void SoundManager::handleStateChange(const EventInterface & event){
+  playSound(textLoader->getString("IDS_Level_Start_Noise"));
+  stopSound(textLoader->getString("IDS_Jazzy_Noise"));
+  stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
+  stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));
+  stopMusic();
 
   const StateChangeEvent* stateChangeEvent=static_cast<const StateChangeEvent*>(&event);
 
