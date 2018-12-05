@@ -225,26 +225,15 @@ void MeleeUnit::attackEngagedUnit(){
   float enemyHP = engagedUnit->getHitpoints();
   int enemyArmor = engagedUnit->getArmor();
 
-  cout << "engaged unit is " << engagedUnit->getID() << endl;
-  cout << "current type is " << getType() << endl;
-  cout << "attack "<< engagedUnit -> getType() << " " << engagedUnit->getArmor() << endl;
-  cout << "defend " << getArmor() << endl;
   assert(armor>0);
   enemyHP -= (float)damage *(float)(armorPenetration/enemyArmor);
-  cout << "damage " << damage << endl;
-  cout << "armor " << enemyArmor<< endl;
-  cout << "armor penetration "<< armorPenetration << endl;
-  cout << "remaining health " << enemyHP << endl;
   engagedUnit->updateHitpoints(enemyHP);
-
-  cout << "heealth left " << engagedUnit -> getHitpoints()  << endl;
 }
 
 void MeleeUnit::updateAttack(float delta){
   if(attackPossible(delta)){
     attackEngagedUnit();
   }
-  cout << "his health " << engagedUnit -> getHitpoints() << endl;
 }
 bool MeleeUnit::attackPossible(float delta){
   //the time object of the class
@@ -254,14 +243,9 @@ bool MeleeUnit::attackPossible(float delta){
   //time -last attack < (delta/attackrate)
   assert(attackRate>0);
   long long diff = nowInSec - lastAttack;
-  cout <<" now " << nowInSec << endl;
-  cout << "attacked " << lastAttack << endl;
-  cout << "diff " << diff << endl;
-  cout << "compared to " << delta/attackRate<< endl;
   if((diff)<= (long long)(delta/attackRate)){
     return false;
   }
   lastAttack = nowInSec;
-  cout << "last attack is now " << lastAttack << endl;
   return true;
 }

@@ -874,7 +874,7 @@ int TowerManager::getUpgradePrice(int row, int col){
  */
  void TowerManager::upgradeMeleeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade){
    //calculate the price for this upgrade
-   int upgradePrice = pow(1.5, towerToUpgrade -> getNumUpgrades());
+   int upgradePrice = pow(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")), towerToUpgrade -> getNumUpgrades());
 
    //generate an amount to upgrade
    //the distribution we generate numbers for
@@ -923,11 +923,11 @@ int TowerManager::getUpgradePrice(int row, int col){
   */
   void TowerManager::upgradeRangeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade){
     //calculate the price for this upgrade
-    int upgradePrice = pow(1.5, towerToUpgrade -> getNumUpgrades());
+    int upgradePrice = pow(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")), towerToUpgrade -> getNumUpgrades());
 
     //generate an amount to upgrade
     //the distribution we generate numbers for
-    std::uniform_int_distribution<int> dist(textLoader->getInteger(string("IDS_Minimum_Tower_Upgrade")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+    std::uniform_int_distribution<int> dist(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
 
     int upgradeAmount = dist(mt);
 

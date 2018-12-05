@@ -58,6 +58,8 @@ Button::Button(int windowX, int windowY, float xPos, float yPos, string message,
   this -> order = 0;
   this -> isCircle = isCircle;
   this -> buttonID = buttonID;
+  this -> xPos = xPos;
+  this -> yPos = yPos;
   this -> scaleButton(xPos, yPos);
 }
 
@@ -73,6 +75,8 @@ Button::Button(int windowX, int windowY, float xPos, float yPos, shared_ptr<Text
   this -> initTexture();
   this -> numChars = 0;
   this -> buttonID = buttonID;
+  this -> xPos = xPos;
+  this -> yPos = yPos;
 }
 
 void Button::setWindowSize(int windowX, int windowY){
@@ -131,6 +135,8 @@ void Button::setButtonPosition(Position position){
     xPos = (windowX - distanceFromYAxis)/2;
     yPos = (windowY - distanceFromXAxis)/2;
   }
+  this -> xPos = xPos;
+  this -> yPos = yPos;
   scaleButton(xPos, yPos);
 }
 
@@ -151,6 +157,8 @@ void Button::setButtonPosition(float xPos, float yPos){
     text.setPosition(sf::Vector2f(xPos, yPos));
     scaleButton(xPos, yPos);
   }
+  this -> xPos = xPos;
+  this -> yPos = yPos;
 }
 
 void Button::scaleButton(){
@@ -216,7 +224,8 @@ void Button::scaleButton(float xPos, float yPos){
   int boundingpadding = textLoader -> getInteger(string("IDS_Button_Size_Padding"));
   (this -> rect).setPosition((int)(boundingBoxXPos)-padding, ((int)(boundingBoxYPos)-padding));
   (this -> rect).setSize(sf::Vector2f((int)(boundingBoxXDim)+boundingpadding,(int)(boundingBoxYDim)+boundingpadding ));
-
+  this -> xPos = xPos;
+  this -> yPos = yPos;
 }
 
 /*
@@ -469,4 +478,58 @@ void Button::draw(sf::RenderWindow& window){
     (this->text).setFont(mainFont);
     window.draw(this -> text);
   }
+}
+
+/*
+ * Whether this button has been mirrored over the x or y axis
+ */
+bool Button::isMirrored(){
+  return isMirroredX() || isMirroredY();
+}
+
+bool Button::isMirroredX(){
+  return mirroredAcrossX;
+}
+
+bool Button::isMirroredY(){
+  return mirroredAcrossY;
+}
+
+void Button::mirrorOverX(int windowX){
+  float dimensionInX;
+  if(isCircle){
+    dimensionInX = circle.getRadius();
+  }
+  else{
+    dimensionInX = rect.getSize().x;
+  }
+  //how we mirror depends on which side of the middle of the window we are on
+  if(windowX / 2 > xPos){
+    this -> xPos = windowX - this->xPos - dimensionInX;
+  }
+  else{
+    this -> xPos = windowX - this->xPos - dimensionInX;
+  }
+  mirroredAcrossX = !mirroredAcrossX;
+  scaleButton(xPos, yPos);
+}
+
+void Button::mirrorOverY(int windowY){
+  float dimensionInY;
+  if(isCircle){
+    dimensionInY = circle.getRadius();
+  }
+  else{
+    dimensionInY = rect.getSize().y;
+  }
+  //how we mirror depends on which side of the middle of the window we are on
+  if(windowY / 2 > yPos){
+    this -> yPos = windowY - this->yPos - dimensionInY;
+  }
+  else{
+    this -> yPos = windowY - this->yPos - dimensionInY;
+  }
+
+  mirroredAcrossY = !mirroredAcrossY;
+  scaleButton(xPos, yPos);
 }

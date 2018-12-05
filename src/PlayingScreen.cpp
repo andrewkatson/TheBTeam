@@ -176,6 +176,23 @@ void PlayingScreen::deregisterDelegates(){
  * Initialize all the things used for drawing (shapes, fonts)
  */
 void PlayingScreen::initDrawingMaterials(){
+
+  if(!exitTexture.loadFromFile(textLoader->getString(string("IDS_Exit_Tile")))){
+    cerr << "could not load in exit tile" << endl;
+    assert(false);
+  }
+
+  //the size of each tile in x direction
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //the size of each tile in y direction
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //set its size
+  exitTile.setSize(sf::Vector2f(xTileSize, yTileSize));
+
+  //set the exit tile texture
+  exitTile.setTexture(&exitTexture);
+
   initRallyPointButton();
   initUpgradeCircle();
 }
@@ -912,15 +929,18 @@ void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
      float yPos = row * yTileSize;
 
      //set the position of the rectangle
+     exitTile.setPosition(xPos, yPos);
      floorRect.setPosition(xPos, yPos);
+
+     exitTile.setTexture(&exitTexture);
 
      //set the color of the rectangle
      sf::Color color(redComponent, greenComponent, blueComponent, alphaComponent);
      floorRect.setFillColor(color);
 
      //draw the rectangle
+     //window.draw(exitTile);
      window.draw(floorRect);
-
 }
 
 /*

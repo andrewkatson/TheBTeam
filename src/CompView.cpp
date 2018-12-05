@@ -184,7 +184,9 @@ void CompView::updateUnits(float deltaS){
         this -> eventManager -> queueEvent(actorDestroyed);
         continue;
       }
-    //  currentUnit->updateAttack(deltaS);
+      else{
+        currentUnit->updateAttack(deltaS);
+      }      
     }
   }
 }
