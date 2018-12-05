@@ -90,8 +90,8 @@ HitpointBar MeleeUnit::getHpBar() {
 }
 
 void MeleeUnit::move(float deltaS){
-  this->x+=(speed*cos(direction))*ActorInterface::getXScale();
-  this->y+=(speed*sin(direction)*-1)*ActorInterface::getYScale();
+  this->x+=deltaS*(100*speed*cos(direction))*ActorInterface::getXScale();
+  this->y+=deltaS*(100*speed*sin(direction)*-1)*ActorInterface::getYScale();
   if(isnan(x) || isnan(y)){
     cout << "position after " << x << " " << y << endl;
     cout << "direction was " << direction << endl;
