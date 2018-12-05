@@ -9,7 +9,7 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level,int startingDifficulty, shared_ptr<b2World> world){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level,int startingDifficulty){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
@@ -22,7 +22,6 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
   //this -> setUpPossibleEnemies();
   this -> setupWaves();
   this -> registerDelegates();
-  this -> world = world;
 }
 
 WaveManager::~WaveManager(){

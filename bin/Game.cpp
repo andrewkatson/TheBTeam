@@ -52,18 +52,12 @@ void Game::initGame(sf::RenderWindow  &game){
 
   speedScale=1;
 
-  //Intialize World
-  //have to take a parameter gravity because it is part of class paramters in Box2D library
-  b2Vec2 gravity(0, 0);
-  //bool doSleep = true;
-  this -> world = make_shared<b2World>(gravity);
-
   //world -> SetContactListener(&collisionCallbackInstance);
 
   //initlaize the texture loader
   this -> textureLoader = make_shared<TextureLoader>(textLoader);
   //initialize the Game Logic
-  this -> gameLogic = make_shared<GameLogic>(textLoader, windowXSize, windowYSize, textureLoader, world);
+  this -> gameLogic = make_shared<GameLogic>(textLoader, windowXSize, windowYSize, textureLoader);
   //get the event manager from the game logic so it can be passed to the user View
   //and comp view
   eventManager= this -> gameLogic -> getEventManager();
@@ -84,12 +78,7 @@ void Game::updateGame(float deltaS,sf::RenderWindow &game){
   this -> userView -> updateUserView(deltaS, game);
   this -> compView -> updateCompView(deltaS);
   this -> allyCompView -> updateAllyCompView(deltaS);
-  float32 timeStep = deltaS;      //the length of time passed to simulate (seconds)
-  int32 velocityIterations = 1;   //how strongly to correct velocity
-  int32 positionIterations = 3;   //how strongly to correct position
 
-  //world->Step(timeStep, velocityIterations, positionIterations);
-  //world->Step(timeStep, velocityIterations, positionIterations);
 
 }
 

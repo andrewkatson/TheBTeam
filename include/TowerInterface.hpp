@@ -19,7 +19,6 @@
 #include "EventManager.hpp"
 #include "ActorInterface.hpp"
 #include "Events/ActorDestroyedEvent.hpp"
-#include "Box2D/Box2D.h"
 #include <algorithm>
 #include <iostream>
 
@@ -73,10 +72,6 @@ protected:
   bool radiusVisible;
   //the degree of error
   const float e = 0.1;
-  //Box2d World and Body
-  shared_ptr<b2World> world;
-  b2Body* body;
-  b2Fixture* fixture;
 
   //scale in the x direction applied to tower when drawing
   float xScale = 1.0;
@@ -162,42 +157,6 @@ public:
     sprite.setOrigin(boundsOfSprite.left + (boundsOfSprite.width)/2.0,
     boundsOfSprite.top + (boundsOfSprite.height)/2.0);
     */
-  }
-
-  void startContact(void* collidingWith){
-    //collidingWith should be cast to a clas you can collide with ie Actors and Towers
-    cout << "start colliding in Tower Interface" << '\n'<<endl;
-  }
-
-  void endContact(void* collidingWith){
-    cout << "end colliding in Tower Interface" << '\n'<<endl;
-  }
-
-  //gives actor access to the world to set physics body
-  void setWorld(shared_ptr<b2World> world){
-    this -> world = world;
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_staticBody;
-    bodyDef.position.Set(xCoordinate,yCoordinate);
-    bodyDef.angle = 0;
-    body = world -> CreateBody(&bodyDef);
-    body ->SetUserData(this);
-
-    b2CircleShape circleShape;
-    circleShape.m_p.Set(0,0);
-    float scale = max(xScale, yScale);
-    circleShape.m_radius = radius * scale;
-    cout << "Tower Radius " << circleShape.m_radius<<endl;
-    b2Vec2 pos = body -> GetPosition();
-    cout << "tower shape at " << pos.x << " " << pos.y << endl;
-
-    b2FixtureDef towerFixtureDef;
-    towerFixtureDef.shape = &circleShape;
-    fixture = body -> CreateFixture(&towerFixtureDef);
-
-    cout << "tower radius is really " << radius << endl;
-    cout << "tower at " << xCoordinate << " " << yCoordinate<< endl;
-
   }
 
   void setXScale(float xScale){this->xScale = xScale;}

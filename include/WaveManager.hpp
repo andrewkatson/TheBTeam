@@ -30,7 +30,6 @@ using namespace std;
 #include "Events/DifficultyChangeEvent.hpp"
 #include "Events/WaveChangeEvent.hpp"
 #include "Events/OptionSelectedEvent.hpp"
-#include <Box2D/Box2D.h>
 
 
 using std::chrono::high_resolution_clock;
@@ -116,8 +115,6 @@ public:
    * converted to { 3, 0, 4, 2, 5 }.
    */
   map<int,vector<intPair>> getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions);
-  //handles all collisions
-  shared_ptr<b2World> world;
 
 
 
@@ -126,7 +123,7 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level,int startingDifficulty,shared_ptr<b2World> world);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level,int startingDifficulty);
   ~WaveManager();
 
   /*

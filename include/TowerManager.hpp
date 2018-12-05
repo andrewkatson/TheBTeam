@@ -34,7 +34,6 @@
 #include "EventManager.hpp"
 #include "Events/TowerCreationEvent.hpp"
 #include "Events/TowerRemoveEvent.hpp"
-#include <Box2D/Box2D.h>
 #include <vector>
 #include <unordered_map>
 #include <functional>
@@ -82,8 +81,7 @@ int yDim;
 float xGrid;
 //y dimension in pixels of a grid space
 float yGrid;
-//handles all collisions
-shared_ptr<b2World> world;
+
 
 //random number generator (seeded in the constructor)
 std::mt19937 mt;
@@ -93,7 +91,7 @@ typedef pair<int,int> intPair;
 
 public:
   TowerManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,
-     shared_ptr<TextureLoader> textureLoader, shared_ptr<b2World> world,shared_ptr<CollisionManager> collisionManager);
+     shared_ptr<TextureLoader> textureLoader,shared_ptr<CollisionManager> collisionManager);
   ~TowerManager();
 
   void setDimensions(int yDim, int xDim);

@@ -46,9 +46,6 @@ file(GLOB EXECLIST bin/*cpp)
 #  link_libraries(${Boost_LIBRARIES})           #
 #################################################
 
-add_subdirectory(Box2D)
-include_directories(${csci437_SOURCE_DIR}/Box2D )
-link_libraries(Box2D)
 
 #############
 # Find SFML #

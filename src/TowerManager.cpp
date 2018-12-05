@@ -5,13 +5,11 @@
  * @param eventManager: the event manager class that directs events
  */
 TowerManager::TowerManager(shared_ptr<EventManager> eventManager,
-  shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,
-  shared_ptr<b2World> world,shared_ptr<CollisionManager> collisionManager) : mt(std::random_device()()) {
+  shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,shared_ptr<CollisionManager> collisionManager) : mt(std::random_device()()) {
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> collisionManager = collisionManager;
-  this -> world = world;
   this -> registerDelegates();
   this -> populateObstacles();
   this -> populateTowersToChoose();
