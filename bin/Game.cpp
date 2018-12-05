@@ -76,7 +76,7 @@ void Game::initGame(sf::RenderWindow  &game){
 
 void Game::updateGame(float deltaS,sf::RenderWindow &game){
   this -> gameLogic -> updateGameLogic(deltaS);
-  this -> userView -> updateUserView( deltaS, game);
+  this -> userView -> updateUserView(deltaS, game);
   this -> compView -> updateCompView(deltaS);
   this -> allyCompView -> updateAllyCompView(deltaS);
   float32 timeStep = deltaS;      //the length of time passed to simulate (seconds)
