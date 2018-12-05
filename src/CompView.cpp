@@ -66,6 +66,7 @@ void CompView::updateUnits(float deltaS){
 
       //if the unit is dead create an actor destroyed event and do nothing
       if(currentUnit->getHitpoints() <= 0){
+        cout << "unit is dead" << endl;
         //the time object of the class
         auto now = high_resolution_clock::now();
         //the actual count in nanoseconds for the time
@@ -78,6 +79,7 @@ void CompView::updateUnits(float deltaS){
         shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, nowInNano);
         shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Death_Noise"), nowInNano);
         this -> eventManager -> queueEvent(actorDestroyed);
+        this -> eventManager -> queueEvent(playSound);
         continue;
       }
 
