@@ -143,13 +143,13 @@ void WaveManager::createNextWave() {
 
   std::uniform_real_distribution<double> percent_perturbation_rng(min_scale, max_scale);
 
-  cout << "entry pos size " << entryPositions.size() << endl;
+  //cout << "entry pos size " << entryPositions.size() << endl;
   buildDistanceEntryMap(entryPositions, distances);
 
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
 
   for(auto it=distancesFromEntryPositions.begin();it!=distancesFromEntryPositions.end();it++){
-    //cout << "map dist normalized " << it->first << endl;
+    ////cout << "map dist normalized " << it->first << endl;
   }
 
   double range=(--distancesFromEntryPositions.end())->first;
@@ -186,14 +186,14 @@ void WaveManager::createNextWave() {
     double spawn_distance;
     //do{
       spawn_distance=spawn_location_rng(rnd_gen);
-    //  cout << "spawn distance pick" << spawn_distance << endl;
+    //  //cout << "spawn distance pick" << spawn_distance << endl;
     //w}while(0>spawn_distance || spawn_distance>range);
     if(spawn_distance<0){
       spawn_distance=0.1;
     }else if(spawn_distance>range){
       spawn_distance=range-.1;
     }
-    //cout << "spawn dist: " << spawn_distance << endl;
+    ////cout << "spawn dist: " << spawn_distance << endl;
 
     int roundedKey;
 
@@ -263,6 +263,30 @@ void WaveManager::createNextWave() {
     enemy->setYCoordinate((float)windowY/ (float)distances.size() * ((float)entryPoint.first + yOffset)); //window size / board size = tile size
     enemy->setDirection(dir);
     enemy->setTileSize(xTileSize, yTileSize);
+
+    //get the sprite to be drawn
+    sf::Sprite currentSprite = enemy -> getSprite();
+    //the bounding rectangle will give us the dimensions of the sprite
+    sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+    //the x dimension of the box
+    float xDim = boundingBox.width;
+    //the ydimension of the box
+    float yDim = boundingBox.height;
+
+    //the scaling used for the units so that they do not fill up an entire square
+    float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
+    float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
+
+    //the scale in the x direction
+    float xScale = (float) xTileSize / ((float) xDim*unitScaleX);
+    //the scale in the y direction
+    float yScale = (float) yTileSize / ((float) yDim*unitScaleY);
+    //set the scale for the units sprite
+    //enemy->setScaleForSprite(xScale, yScale);
+
+    //set the center of the sprite
+    enemy->setToCenter();
+    enemy->setUnitScale(xScale,yScale);
     //setWorld and fixture
     //enemy -> setWorld(world);
 
@@ -316,7 +340,7 @@ void WaveManager::spawnNextUnit() {
 }
 
 void WaveManager::getWavesLeft() {
-    //cout<<"waves left = " << numWaves <<endl;
+    ////cout<<"waves left = " << numWaves <<endl;
     if(this -> numWaves == 0){
       auto now = high_resolution_clock::now();
       //the actual count in nanoseconds for the time
@@ -361,7 +385,7 @@ void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<
    * push_back the intpair to the end of the vector that the distance points to
    */
 
-  cout  << "entry points size " << distancesFromEntryPositions.size() << endl;
+  //cout  << "entry points size " << distancesFromEntryPositions.size() << endl;
 
   for(int z=0;z<entrypoints.size();z+=2){
 
@@ -379,7 +403,7 @@ void WaveManager::buildDistanceEntryMap(vector<int>& entrypoints, vector<vector<
     distancesFromEntryPositions[distance].push_back(rowcol);
   }
 
-  cout  << "after entry points size " << distancesFromEntryPositions.size() << endl;
+  //cout  << "after entry points size " << distancesFromEntryPositions.size() << endl;
 }
 
 map<int,vector<WaveManager::intPair>> WaveManager::getNormalizedDistanceMap(map<int,vector<intPair>>& distancesFromEntryPositions){
@@ -449,7 +473,7 @@ void WaveManager::handleLevelChanged(const EventInterface& event){
   auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
 
   level=levelChangedEventData->level;
-  cout<<"eat my ass"<<endl;
+  //cout<<"eat my ass"<<endl;
   setupWaves();
 }
 

@@ -14,7 +14,12 @@ using namespace std;
 #include <cmath>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
+#include <time.h>
+#include <chrono>
 //#include "GameLogic.hpp"
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::seconds;
 
 class MeleeUnit : public ActorInterface {
 
@@ -22,16 +27,6 @@ protected:
 
   //the money given to the player when they feed this unit
   int lunchMoney;
-
-  //The unit's current hitpoints.
-  int hitpoints;
-
-  //The damage the unit can deal.
-  int damage;
-
-  //The amount of armor the unit has.
-  int armor;
-
 
   //The bar for rendering the unit's HP
   HitpointBar hpBar;
@@ -46,6 +41,9 @@ protected:
   double overshoot;
 
   bool overshooting;
+
+  long long lastAttack =0;
+
 public:
 
   bool isOvershooting() const;
@@ -71,7 +69,7 @@ public:
 
   void setLunchMoney(int lunchMoney);
 
-  void setHitpoints(int hitpoints);
+  void setHitpoints(float hitpoints);
 
   int getDamage() const;
 
@@ -98,16 +96,6 @@ public:
    * @return the number of hitpoints the unit currently possesses
    */
   int getHitpoints(){return hitpoints;}
-
-  /*
-   * Update the unit's hit points accordingly
-   */
-  void updateHitpoints(int damage);
-
-  /*
-   * Update the unit's armor value.
-   */
-  void updateArmor(int damage);
 
   /*
    * Return whether or not the unit can attack.
@@ -180,6 +168,14 @@ public:
    * Setting the fixtures for Box2D
    */
   void setFixtures();
+
+  void updateAttack(float delta);
+
+  void attackEngagedUnit();
+
+  bool attackPossible(float delta);
+
+  bool atTarget();
 
 };
 

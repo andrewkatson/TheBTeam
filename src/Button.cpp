@@ -460,10 +460,10 @@ void Button::draw(sf::RenderWindow& window){
   if(textString.length()){
     sf::Font mainFont;
     if(!mainFont.loadFromFile(fontPath)){
-      cout << "No font!" << endl;
+      //cout << "No font!" << endl;
     }
     else{
-    //  cout << "loaded font!" << endl;
+    //  //cout << "loaded font!" << endl;
     }
 
     (this->text).setFont(mainFont);

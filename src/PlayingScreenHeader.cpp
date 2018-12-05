@@ -1126,10 +1126,10 @@ void PlayingScreenHeader::drawBuyTowerButton(sf::RenderWindow& window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
 
   text = buyTower -> getButtonText();
@@ -1154,10 +1154,10 @@ void PlayingScreenHeader::drawSellTowerButton(sf::RenderWindow& window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
 
   text = sellTower -> getButtonText();
@@ -1176,10 +1176,10 @@ void PlayingScreenHeader::drawHeaderButtons(sf::RenderWindow& window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
   for(shared_ptr<Button> toDraw : headerVariables){
     text = toDraw -> getButtonText();

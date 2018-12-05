@@ -7,7 +7,7 @@
 
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
-  <constant value="20" id ="IDS_P_B"> </constant>
+  <constant value="2000" id ="IDS_P_B"> </constant>
   <constant value="1" id="IDS_Default_Wave"> </constant>
   <constant value="1" id="IDS_Default_Level"> </constant>
   <constant value="1" id="IDS_Default_School"> </constant>
@@ -46,6 +46,9 @@
 
   <!--Range Tower Time Between Flip Textures -->
   <constant value = "1" id = "IDS_Range_Tower_Flip_Face"> </constant>
+
+  <!--Unit Combat Distance-->
+  <constant value="20" id="IDS_Unit_Combat_Distance"> </constant>
 
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->
@@ -142,51 +145,51 @@
 
   <!--Range Towers -->
   <!--CheesePizza Tower-->
-  <constant value="5" id ="IDS_CPT_ROF"> </constant>
+  <constant value="10" id ="IDS_CPT_ROF"> </constant>
   <constant value="100" id ="IDS_CPT_RA"> </constant>
   <constant value="5" id ="IDS_CPT_PR"> </constant>
   <!--PepperoniPizza Tower-->
-  <constant value="7" id ="IDS_PPT_ROF"> </constant>
+  <constant value="14" id ="IDS_PPT_ROF"> </constant>
   <constant value="120" id ="IDS_PPT_RA"> </constant>
   <constant value="30" id ="IDS_PPT_PR"> </constant>
   <!--DeepDish Tower-->
-  <constant value="3" id ="IDS_DDT_ROF"> </constant>
+  <constant value="6" id ="IDS_DDT_ROF"> </constant>
   <constant value="170" id ="IDS_DDT_RA"> </constant>
   <constant value="100" id ="IDS_DDT_PR"> </constant>
   <!--MeatLovers Tower-->
-  <constant value="10" id ="IDS_MLT_ROF"> </constant>
+  <constant value="20" id ="IDS_MLT_ROF"> </constant>
   <constant value="120" id ="IDS_MLT_RA"> </constant>
   <constant value="100" id ="IDS_MLT_PR"> </constant>
   <!--MiniM&Ms Tower-->
-  <constant value="100" id ="IDS_MMMT_ROF"> </constant>
+  <constant value="200" id ="IDS_MMMT_ROF"> </constant>
   <constant value="70" id ="IDS_MMMT_RA"> </constant>
   <constant value="5" id ="IDS_MMMT_PR"> </constant>
   <!--Normal M&Ms Tower-->
-  <constant value="120" id ="IDS_NMMT_ROF"> </constant>
+  <constant value="240" id ="IDS_NMMT_ROF"> </constant>
   <constant value="80" id ="IDS_NMMT_RA"> </constant>
   <constant value="30" id ="IDS_NMMT_PR"> </constant>
   <!--PeanutButter M&Ms Tower-->
-  <constant value="150" id ="IDS_PBMMT_ROF"> </constant>
+  <constant value="300" id ="IDS_PBMMT_ROF"> </constant>
   <constant value="90" id ="IDS_PBMMT_RA"> </constant>
   <constant value="100" id ="IDS_PBMMT_PR"> </constant>
   <!--Peanut M&Ms Tower-->
-  <constant value="70" id ="IDS_PMMT_ROF"> </constant>
+  <constant value="140" id ="IDS_PMMT_ROF"> </constant>
   <constant value="100" id ="IDS_PMMT_RA"> </constant>
   <constant value="100" id ="IDS_PMMT_PR"> </constant>
   <!--Soda Tower-->
-  <constant value="8" id ="IDS_SOT_ROF"> </constant>
+  <constant value="16" id ="IDS_SOT_ROF"> </constant>
   <constant value="95" id ="IDS_SOT_RA"> </constant>
   <constant value="5" id ="IDS_SOT_PR"> </constant>
   <!--EnergyDrink Tower-->
-  <constant value="12" id ="IDS_EDT_ROF"> </constant>
+  <constant value="24" id ="IDS_EDT_ROF"> </constant>
   <constant value="110" id ="IDS_EDT_RA"> </constant>
   <constant value="30" id ="IDS_EDT_PR"> </constant>
   <!--Gravy Tower-->
-  <constant value="3" id ="IDS_GT_ROF"> </constant>
+  <constant value="6" id ="IDS_GT_ROF"> </constant>
   <constant value="130" id ="IDS_GT_RA"> </constant>
   <constant value="100" id ="IDS_GT_PR"> </constant>
   <!-- Slushie Tower-->
-  <constant value="16" id ="IDS_SLT_ROF"> </constant>
+  <constant value="32" id ="IDS_SLT_ROF"> </constant>
   <constant value="150" id ="IDS_SLT_RA"> </constant>
   <constant value="100" id ="IDS_SLT_PR"> </constant>
 
@@ -200,71 +203,71 @@
 
   <!--Enemy Units -->
   <!--Average Kid Unit-->
-  <constant value="10" id="IDS_AK_HP"> </constant>
-  <constant value="60" id="IDS_AK_DM"> </constant>
-  <constant value="50" id="IDS_AK_AM"> </constant>
-  <constant value="5" id="IDS_AK_SP"> </constant>
+  <constant value="20" id="IDS_AK_HP"> </constant>
+  <constant value="6" id="IDS_AK_DM"> </constant>
+  <constant value="5" id="IDS_AK_AM"> </constant>
+  <constant value="700" id="IDS_AK_SP"> </constant>
   <constant value="2" id="IDS_AK_AP"> </constant>
   <constant value="5" id="IDS_AK_AR"> </constant>
   <constant value="5" id ="IDS_AK_LM"> </constant>
-  <constant value="5" id="IDS_AK_Attack_Rate"> </constant>
+  <constant value="500" id="IDS_AK_Attack_Rate"> </constant>
   <!--Fat Kid Unit-->
   <constant value="50" id="IDS_FK_HP"> </constant>
-  <constant value="100" id="IDS_FK_DM"> </constant>
-  <constant value="100" id="IDS_FK_AM"> </constant>
-  <constant value="3" id="IDS_FK_SP"> </constant>
+  <constant value="10" id="IDS_FK_DM"> </constant>
+  <constant value="10" id="IDS_FK_AM"> </constant>
+  <constant value="400" id="IDS_FK_SP"> </constant>
   <constant value="10" id="IDS_FK_AP"> </constant>
   <constant value="10" id="IDS_FK_AR"> </constant>
   <constant value="20" id ="IDS_FK_LM"> </constant>
-  <constant value="1" id="IDS_FK_Attack_Rate"> </constant>
+  <constant value="100" id="IDS_FK_Attack_Rate"> </constant>
   <!--Skinny Kid Unit-->
-  <constant value="1" id="IDS_SK_HP"> </constant>
-  <constant value="20" id="IDS_SK_DM"> </constant>
-  <constant value="10" id="IDS_SK_AM"> </constant>
-  <constant value="7" id="IDS_SK_SP"> </constant>
-  <constant value="0" id="IDS_SK_AP"> </constant>
+  <constant value="10" id="IDS_SK_HP"> </constant>
+  <constant value="2" id="IDS_SK_DM"> </constant>
+  <constant value="1" id="IDS_SK_AM"> </constant>
+  <constant value="1000" id="IDS_SK_SP"> </constant>
+  <constant value="1" id="IDS_SK_AP"> </constant>
   <constant value="1" id="IDS_SK_AR"> </constant>
   <constant value="1" id ="IDS_SK_LM"> </constant>
-  <constant value="15" id="IDS_SK_Attack_Rate"> </constant>
+  <constant value="1500" id="IDS_SK_Attack_Rate"> </constant>
 
 
   <!--Allied Units -->
   <!--Normal Fry Unit-->
-  <constant value="10" id="IDS_NF_HP"> </constant>
+  <constant value="100" id="IDS_NF_HP"> </constant>
   <constant value="5" id="IDS_NF_DM"> </constant>
-  <constant value="0" id="IDS_NF_AM"> </constant>
+  <constant value="1" id="IDS_NF_AM"> </constant>
   <constant value="10" id="IDS_NF_SP"> </constant>
-  <constant value="0" id="IDS_NF_AP"> </constant>
+  <constant value="1" id="IDS_NF_AP"> </constant>
   <constant value="1" id="IDS_NF_AR"> </constant>
   <constant value="0" id ="IDS_NF_LM"> </constant>
-  <constant value="5" id="IDS_NF_Attack_Rate"> </constant>
+  <constant value="500" id="IDS_NF_Attack_Rate"> </constant>
   <!--Crinkle Fry Unit-->
-  <constant value="20" id="IDS_CF_HP"> </constant>
+  <constant value="200" id="IDS_CF_HP"> </constant>
   <constant value="10" id="IDS_CF_DM"> </constant>
-  <constant value="1" id="IDS_CF_AM"> </constant>
-  <constant value="9" id="IDS_CF_SP"> </constant>
+  <constant value="3" id="IDS_CF_AM"> </constant>
+  <constant value="2" id="IDS_CF_SP"> </constant>
   <constant value="0" id="IDS_CF_AP"> </constant>
   <constant value="2" id="IDS_CF_AR"> </constant>
   <constant value="0" id ="IDS_CF_LM"> </constant>
-  <constant value="10" id="IDS_CF_Attack_Rate"> </constant>
+  <constant value="1000" id="IDS_CF_Attack_Rate"> </constant>
   <!--Waffle Fry Unit-->
-  <constant value="40" id="IDS_WF_HP"> </constant>
+  <constant value="400" id="IDS_WF_HP"> </constant>
   <constant value="20" id="IDS_WF_DM"> </constant>
   <constant value="8" id="IDS_WF_AM"> </constant>
-  <constant value="5" id="IDS_WF_SP"> </constant>
-  <constant value="5" id="IDS_WF_AP"> </constant>
+  <constant value="4" id="IDS_WF_SP"> </constant>
+  <constant value="10" id="IDS_WF_AP"> </constant>
   <constant value="10" id="IDS_WF_AR"> </constant>
   <constant value="0" id ="IDS_WF_LM"> </constant>
-  <constant value="3" id="IDS_WF_Attack_Rate"> </constant>
+  <constant value="300" id="IDS_WF_Attack_Rate"> </constant>
   <!--Spicy Fry Unit-->
-  <constant value="60" id="IDS_SF_HP"> </constant>
+  <constant value="600" id="IDS_SF_HP"> </constant>
   <constant value="15" id="IDS_SF_DM"> </constant>
-  <constant value="50" id="IDS_SF_AM"> </constant>
-  <constant value="20" id="IDS_SF_SP"> </constant>
+  <constant value="10" id="IDS_SF_AM"> </constant>
+  <constant value="1" id="IDS_SF_SP"> </constant>
   <constant value="1" id="IDS_SF_AP"> </constant>
   <constant value="5" id="IDS_SF_AR"> </constant>
   <constant value="0" id ="IDS_SF_LM"> </constant>
-  <constant value="20" id="IDS_SF_Attack_Rate"> </constant>
+  <constant value="2000" id="IDS_SF_Attack_Rate"> </constant>
 
 
 
@@ -841,8 +844,8 @@
     <constant value = "0.0000001" id="IDS_Rate_Of_Fire_Scaler"/>
 
     <!--Unit Scale -->
-    <constant value = "2.0" id="IDS_Unit_Size_Scale_X"/>
-    <constant value = "2.0" id="IDS_Unit_Size_Scale_Y"/>
+    <constant value = "4.0" id="IDS_Unit_Size_Scale_X"/>
+    <constant value = "4.0" id="IDS_Unit_Size_Scale_Y"/>
 
     <!--Projectile Scale-->
     <constant value = "6.0" id="IDS_Projectile_Size_Scale_X"/>
@@ -861,7 +864,7 @@
 
     <!--Player Constants-->
     <constant value="0.5" id="IDS_Percentage_Money_Returned_On_Sell_Tower"> </constant>
-    <constant value="0.05" id="IDS_Percentage_Unit_Hitpoint_Player_Damage"> </constant>
+    <constant value="0.001" id="IDS_Percentage_Unit_Hitpoint_Player_Damage"> </constant>
 
 
   </floats>

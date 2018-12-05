@@ -20,10 +20,10 @@ void MainMenuScreen::initText(){
 
   //load the main font
   if(!font.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-    //cout << "loaded font!" << endl;
+    ////cout << "loaded font!" << endl;
   }
 
   //get the path for the title font
@@ -31,7 +31,7 @@ void MainMenuScreen::initText(){
 
   //load a font for the title
   if(!titleFont.loadFromFile(titleFontPath)){
-    cout << "no title font!" << endl;
+    //cout << "no title font!" << endl;
   }
   else{
 
@@ -41,7 +41,7 @@ void MainMenuScreen::initText(){
   string titlePicTexturePath = textLoader -> getString(string("IDS_Main_Title_Pic"));
   if (!mainPicture.loadFromFile(titlePicTexturePath))
   {
-    cout << "main title not loaded!" << endl;
+    //cout << "main title not loaded!" << endl;
   }
   screen.resize(3);
 

@@ -35,10 +35,10 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices, shared_ptr<TextLoade
  * the minimum size is 6x6
  */
 void MapFactory::generateDimensions(){
-  //cout << "MAKE VERIFIER FOR ALL ENTRIES TO EXIT OTHERWISE REMAKE" << endl;
-  //cout << "IF ALL ENTRIES TO EXIT MARK AS YOU GO AND THEN REMOVE UNMARKED PATH ELEMENTS" << endl;
-  //cout << "FIX WEIRD OUT OF RANGE EXCEPTION" << endl;
-  //cout << "ALSO DEVELOP A METRIC FOR % BOARD COVERED (I.E. OBSTACLES OR PATH) " << endl;
+  ////cout << "MAKE VERIFIER FOR ALL ENTRIES TO EXIT OTHERWISE REMAKE" << endl;
+  ////cout << "IF ALL ENTRIES TO EXIT MARK AS YOU GO AND THEN REMOVE UNMARKED PATH ELEMENTS" << endl;
+  ////cout << "FIX WEIRD OUT OF RANGE EXCEPTION" << endl;
+  ////cout << "ALSO DEVELOP A METRIC FOR % BOARD COVERED (I.E. OBSTACLES OR PATH) " << endl;
 
   int modifier = textLoader -> getInteger(string("IDS_Cafeteria_Size_Modifier"));
 
@@ -83,8 +83,8 @@ void MapFactory::generateDimensions(){
 
   this -> xDim = xDim;
   this -> yDim = yDim;
-  cout<<xDim<<endl;
-  cout<<yDim<<endl;
+  //cout<<xDim<<endl;
+  //cout<<yDim<<endl;
 
 }
 
@@ -95,12 +95,12 @@ void MapFactory::generateDimensions(){
 void MapFactory::generateMap(){
   //generate the dimensions of the board using the cafeteria size choice
   generateDimensions();
-  cout << "here " << endl;
+  //cout << "here " << endl;
   int fails = 0;
   int notAnExit = 0;
   for(int i = 0; i < 1; i++){
     s.str("");
-    cout << "made map " << i << endl;
+    //cout << "made map " << i << endl;
     //try to make a map
     bool makeMap = false;
 
@@ -130,11 +130,11 @@ void MapFactory::generateMap(){
     putEmptyEntriesOnBoard();
     int tilesCleaned = cleanupMap();
     if(tilesCleaned){
-        cout << "Tiles Cleaned " << tilesCleaned << endl;
+        //cout << "Tiles Cleaned " << tilesCleaned << endl;
     }
   }
-  cout << "Failures " << fails << endl;
-  cout << "Not An Exit " << notAnExit << endl;
+  //cout << "Failures " << fails << endl;
+  //cout << "Not An Exit " << notAnExit << endl;
 }
 
 /*
@@ -144,7 +144,7 @@ void MapFactory::generateMap(){
 bool MapFactory::tryAMap(){
   //initializes all vector indicies to -1
   this ->  resetEverything();
-  cout << "entry is size " << entryPos.size() << endl;
+  //cout << "entry is size " << entryPos.size() << endl;
   this -> initGridArrays();
 
   //initialize the floor pattern
@@ -189,7 +189,7 @@ bool MapFactory::tryAMap(){
     }
   }
 
-  cout << "our num entries " << entryPos.size() << endl;
+  //cout << "our num entries " << entryPos.size() << endl;
   return true;
 }
 
@@ -795,11 +795,11 @@ void MapFactory::makeFloor(){
       if(floorGrid.at(row).at(col) != 0){
         if(col % 2 == 0){
           floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1);
-          //cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1)<<endl;
+          ////cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1)<<endl;
         }
         else{
           floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1);
-          //cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1)<<endl;
+          ////cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1)<<endl;
         }
       }
     }
@@ -1011,7 +1011,7 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
     //start at the index of your last position (could be the exit or adjacent to some other path)
     int currRow = lastPos.at(0);
     int currCol = lastPos.at(1);
-
+    /*
     //if not at the exit poisiton mark the current space as a path
     if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
       //mark the space ass a path if it is not touching an exit path
@@ -1021,13 +1021,14 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
         floorGrid.at(currRow).at(currCol) = path;
       }
     }
-
+    */
     while(!(board.at(currRow).at(currCol).rowParent == currRow &&
             board.at(currRow).at(currCol).colParent == currCol) ){
 
       int tempRow = board.at(currRow).at(currCol).rowParent;
       int tempCol = board.at(currRow).at(currCol).colParent;
 
+      /*
       //if not at the exit poisiton
       if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
         //if the next tile is not connected with an exit path but the current one is
@@ -1037,7 +1038,7 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
           floorGrid.at(currRow).at(currCol) = path;
         }
       }
-
+      */
       currRow = tempRow;
       currCol = tempCol;
 
@@ -1201,13 +1202,13 @@ bool MapFactory::connectedWithExit(int row, int col){
 
    return false;
    /*
-   cout << "Same path " << endl;
-   cout << path << endl;
-   cout << row << endl;
-   cout << col << endl;
-   cout << "NEW" << endl;
-   cout << newrow << endl;
-   cout << newcol << endl;
+   //cout << "Same path " << endl;
+   //cout << path << endl;
+   //cout << row << endl;
+   //cout << col << endl;
+   //cout << "NEW" << endl;
+   //cout << newrow << endl;
+   //cout << newcol << endl;
    printVector(paths);
    printVector(aboveFloorGrid);
    printVector(distances);
@@ -1225,8 +1226,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(rowMinusOneIn){
      if(!(rowMinusOne == row && newcol == col)){
        if(paths.at(rowMinusOne).at(newcol) == path){
-         //cout << "TOP" << endl;
-         //cout << rowMinusOne << " " << newcol << endl;
+         ////cout << "TOP" << endl;
+         ////cout << rowMinusOne << " " << newcol << endl;
          return true;
        }
      }
@@ -1234,8 +1235,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(rowPlusOneIn){
      if(!(rowPlusOne == row && newcol == col)){
        if(paths.at(rowPlusOne).at(newcol) == path){
-         //cout << "BOTTOM" << endl;
-         //cout << rowPlusOne << " " << newcol << endl;
+         ////cout << "BOTTOM" << endl;
+         ////cout << rowPlusOne << " " << newcol << endl;
          return true;
        }
      }
@@ -1243,8 +1244,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(colMinusOneIn){
      if(!(newrow == row && colMinusOne == col)){
        if(paths.at(newrow).at(colMinusOne) == path){
-         //cout << "LEFT" << endl;
-         //cout << newrow << " " << colMinusOne << endl;
+         ////cout << "LEFT" << endl;
+         ////cout << newrow << " " << colMinusOne << endl;
          return true;
        }
      }
@@ -1252,8 +1253,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(colPlusOneIn){
      if(!(newrow == row && colPlusOne == col)){
        if(paths.at(newrow).at(colPlusOne) == path){
-         //cout << "RIGHT" << endl;
-         //cout << newrow << " " << colPlusOne << endl;
+         ////cout << "RIGHT" << endl;
+         ////cout << newrow << " " << colPlusOne << endl;
          return true;
        }
      }
@@ -1818,41 +1819,41 @@ void MapFactory::printVector(vector<vector<T>> &v){
   for(vector<int> vec : v){
     for(auto it = vec.begin(); it != vec.end(); ++it){
       if(*it < 0){
-        cout << *it << " ";
+        //cout << *it << " ";
         s << *it << " ";
       }
       else{
-        cout << *it << "  ";
+        //cout << *it << "  ";
         s << *it << "  ";
       }
     }
-    cout << endl;
+    //cout << endl;
     s << endl;
   }
-  cout <<endl;
+  //cout <<endl;
   s << endl;
 }
 
 template <class T>
 void MapFactory::printVector(vector<T> &v){
   for(T &vec : v){
-    cout << vec << " ";
+    //cout << vec << " ";
     s << vec << " ";
   }
-  cout <<endl;
+  //cout <<endl;
   s << endl;
 }
 
 template <class T, class T2>
 void MapFactory::printUnorderedMap(unordered_map<T,unordered_map<T,T2>> &uo){
   for(auto it: uo){
-    cout << "Row " << (it).first << endl;
+    //cout << "Row " << (it).first << endl;
     s << "Row " << (it).first << endl;
     for(auto dt: it.second){
-      cout <<  dt.first << " ";
+      //cout <<  dt.first << " ";
       s <<  dt.first << " ";
     }
-    cout << endl;
+    //cout << endl;
     s << endl;
   }
 }
@@ -1873,20 +1874,20 @@ void MapFactory::printVectorCells(vector<vector<CellNode>>& board){
  * @param errorType: the string identifier of the error
  */
 void MapFactory::printError(string errorType){
-  cout << errorType << endl << endl;
+  //cout << errorType << endl << endl;
 
-  cout << "Paths grid " << endl;
-  cout << "0 is the exit " << endl;
-  cout << "Positive integers are paths " << endl;
-  cout << "Negative Integers indicate nothing is there " << endl;
+  //cout << "Paths grid " << endl;
+  //cout << "0 is the exit " << endl;
+  //cout << "Positive integers are paths " << endl;
+  //cout << "Negative Integers indicate nothing is there " << endl;
   printVector(paths);
 
-  cout << "Above Floor Grid " << endl;
-  cout << "Shows placed obstacles " << endl;
-  cout << "0 is the exit " << endl;
-  cout << "-1 is empty" << endl;
-  cout << "-2 is an invisible obstacle, so used only in map generation to make map twisting" << endl;
-  cout << "-3 or less is a visible obstacle that blocks tower and path" << endl;
+  //cout << "Above Floor Grid " << endl;
+  //cout << "Shows placed obstacles " << endl;
+  //cout << "0 is the exit " << endl;
+  //cout << "-1 is empty" << endl;
+  //cout << "-2 is an invisible obstacle, so used only in map generation to make map twisting" << endl;
+  //cout << "-3 or less is a visible obstacle that blocks tower and path" << endl;
   printVector(aboveFloorGrid);
 }
 

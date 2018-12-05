@@ -14,10 +14,10 @@ RestartScreen::RestartScreen(shared_ptr<EventManager> eventManager,shared_ptr<Te
 
   //load the main font
   if(!font.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-    //cout << "loaded font" <<endl;
+    ////cout << "loaded font" <<endl;
   }
 
   this -> initText();
@@ -35,7 +35,7 @@ void RestartScreen::initText(){
    string titlePicTexturePath = textLoader -> getString(string("IDS_Restart_Pic"));
    if (!restartPicture.loadFromFile(titlePicTexturePath))
    {
-       cout << "picture not loaded!" << endl;
+       //cout << "picture not loaded!" << endl;
    }
 
   //Screen items to handle selecting between restarting the game = Return to main menu or checking a future leaderboard or quitting

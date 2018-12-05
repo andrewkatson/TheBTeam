@@ -53,14 +53,14 @@ void RangeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
   auto timeToShoot = duration_cast<seconds>(time.time_since_epoch()).count();
   //if we are firing too quickly we ignore this enemy
   if(timeToShoot - lastTimeFired < (delta/rateOfFire)){
-    //cout << "time " << timeToShoot << endl;
-    //cout << "last time " << lastTimeFired << endl;
-    //cout << "diff " << timeToShoot - lastTimeFired << endl;
-    //cout << "rate of fire " << rateOfFire << endl;
+    ////cout << "time " << timeToShoot << endl;
+    ////cout << "last time " << lastTimeFired << endl;
+    ////cout << "diff " << timeToShoot - lastTimeFired << endl;
+    ////cout << "rate of fire " << rateOfFire << endl;
     return;
   }
 
-  //cout << "fire " << endl;
+  ////cout << "fire " << endl;
 
   if(textures -> size() > 1){
     //switch to the open texture if there is one

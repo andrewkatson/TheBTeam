@@ -234,14 +234,16 @@ void BoardManager::handleTowerRemove(const EventInterface& event){
 void BoardManager::handleOptionSelectedEvent(const EventInterface &event) {
   auto optionSelectedEvent = static_cast<const OptionSelectedEvent*>(&event);
   auto optionSelectedEventData = static_cast<OptionSelectedEventData*>((optionSelectedEvent->data).get());
+
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
   auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
   if(optionSelectedEventData -> optionID == 2){
     int base = optionSelectedEventData -> newValue + 1;
     int obsChoice = rand() %  5 + base;
-    cout<< "number of obstacles = " + std::to_string(obsChoice)<<endl;
+    //cout<< "number of obstacles = " + std::to_string(obsChoice)<<endl;
     setMapObstacleChoice(obsChoice);
   }
 
@@ -259,16 +261,16 @@ void BoardManager::handleOptionSelectedEvent(const EventInterface &event) {
     }
     int base = optionSelectedEventData -> newValue + 1;
     int entryPoints = rand() % 5 + base;
-    cout<<"number of entry points are: " + std::to_string(entryPoints)<<endl;
+    //cout<<"number of entry points are: " + std::to_string(entryPoints)<<endl;
     this -> mapFactory->getMapCustomizationChoices();
     setMapEntryChoice(entryPoints);
   }
   MapChoices* MC = &mapFactory -> getMapCustomizationChoices();
-  //cout<<MC->cafeteriaChoice<<endl;
-  /*cout<<"next line is obstacles"<<endl;
-  cout<<MC->obstacleChoice<<endl;
-  cout<<"next line is path entry"<<endl;
-  cout<<MC->pathEntryChoice<<endl;
+  ////cout<<MC->cafeteriaChoice<<endl;
+  /*//cout<<"next line is obstacles"<<endl;
+  //cout<<MC->obstacleChoice<<endl;
+  //cout<<"next line is path entry"<<endl;
+  //cout<<MC->pathEntryChoice<<endl;
   this -> mapFactory = unique_ptr<MapFactory>(new MapFactory(new MapChoices(MC->obstacleChoice,MC->cafeteriaChoice,MC->pathEntryChoice), textLoader));
 */
 

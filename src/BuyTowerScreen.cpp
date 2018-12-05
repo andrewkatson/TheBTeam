@@ -88,10 +88,10 @@ void BuyTowerScreen::draw(sf::RenderWindow &window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
 
   text.setFont(mainFont);
@@ -112,10 +112,10 @@ void BuyTowerScreen::drawTitle(sf::RenderWindow& window){
 
   //locally load the font
   if(!font.loadFromFile(secondaryFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
   sf::Text title;
 
@@ -415,7 +415,7 @@ void BuyTowerScreen::populateOptionsVector(){
     towerOptions.push_back(gameLogic -> getTowerPlaced(row,col));
   }
   else{
-    cout << "Should never reach here!" << endl;
+    //cout << "Should never reach here!" << endl;
     assert(true == false);
   }
 

@@ -15,6 +15,10 @@
 #include <vector>
 #include <chrono>
 #include <math.h>
+#include <memory>
+#include <iostream>
+#include <time.h>
+
 
 using std::cerr;
 using std::vector;
@@ -22,6 +26,7 @@ using std::shared_ptr;
 using std::make_shared;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
+using std::chrono::seconds;
 using std::chrono::nanoseconds;
 using std::chrono::seconds;
 class MeleeTower : public TowerInterface{
@@ -42,19 +47,25 @@ protected:
   //the specific units that are fighitng for this tower
   vector<shared_ptr<MeleeUnit>> currentUnits;
 
+  bool isEnemyPointingAtUnit = true;
   //whether we want to log the units made for this tower in the collision system
   bool logUnitsForCollisions;
 
+  //the number of enemy units currently engaged by our units (only counts when the enemy is engaed with our unit)
+  int unitsEngaged=0;
 public:
   MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~MeleeTower();
   void update(float delta);
-  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, float delta = 1.0);
+
+  void resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, float delta);
   bool withinRange(float x1, float y1, float x2, float y2);
   void calcAttackVector(shared_ptr<ActorInterface> meleeUnit, shared_ptr<ActorInterface> enemyInRange);
 
   void initSprite();
 
+  //start game clock
+  sf::Clock gameClock;
   void registerDelegates();
   void deregisterDelegates();
 
@@ -115,4 +126,5 @@ public:
   void updateUnitArmorPenetration(int newArmorPenetration);
   void updateUnitArmor(int newArmor);
   void updateUnitAttackRate(int newAttackRate);
+
 };

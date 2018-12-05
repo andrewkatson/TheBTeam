@@ -21,32 +21,53 @@ MeleeTower::~MeleeTower(){
 
 void MeleeTower::update(float delta){
   int unitIndex = 0;
+  //always reset units engaged
+  unitsEngaged = 0;
 
   //if we can respawn units then respawn them
-  respawnUnits(delta);
+  //respawnUnits(delta);
 
   //if a unit does not have an engaged enemy unit then send it back towards
   //a point situated around the rally point
   for(shared_ptr<MeleeUnit> unit : currentUnits){
+    //cout << "unit id " << unit -> getID() << endl;
     if(isnan(unit->getXCoordinate()) || isnan(unit->getYCoordinate())){
       cerr << "is nan here " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
       assert(false);
     }
 
-    if(unit -> getHitpoints() != 0){
+    if(unit -> getHitpoints() > 0){
       if((unit -> getEngagedUnit()).get() == NULL){
         //sets the unit position to the center of the tower if there is no set rally point
         //or moves it closer to the rally point position
-        resetUnitPosition(unit, unitIndex);
+        float startPos = unit->getXCoordinate();
+        float otherPos = unit->getYCoordinate();
+        resetUnitPosition(unit, unitIndex, delta);
       }
       else{
+        if(unit->getEngagedUnit()->getEngagedUnit() == unit){
+          unitsEngaged++;
+        }
         //TODO move the unit towards the enemy unit (or attack if in contact)
+        //check if my unit is at destination, if so move towards xtarget and ytarget
+        //else move to the enemy BUT before set the xvec and yVect
+        if (unit->atTarget()){
+          unit->updateAttack(delta);
+        }
+        else{
+          float startPos = unit->getXCoordinate();
+          float otherPos = unit->getYCoordinate();
+          unit->vectorMove(delta);
+        }
       }
-
+    }
+    else{
+      handleDeadUnit(unitIndex);
     }
     unitIndex++;
   }
 }
+
 
 /*
  * Initialize all the units that will spawn for this tower with a position
@@ -155,15 +176,15 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
     //set the vector the unit will move along
     unit -> setVector(xvec,yvec);
 
-    cout << "unit " << unitIndex << endl;
-    cout << "go to " << newX << " " << newY << endl;
-    cout << "along " << xvec << " " << yvec << endl;
+    //cout << "unit " << unitIndex << endl;
+    //cout << "go to " << newX << " " << newY << endl;
+    //cout << "along " << xvec << " " << yvec << endl;
 
     //move the unit
     unit -> vectorMove(delta);
     /*
     if(isnan(newX) || isnan(newY)){
-      cout << "oh my naaan " << newX << " " << newY << endl;
+      //cout << "oh my naaan " << newX << " " << newY << endl;
     }
 
 
@@ -174,12 +195,12 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
       //the vector components of the movement this unit needs to make
       float xVector = newX - unit -> getXCoordinate();
       float yVector = newY - unit -> getYCoordinate();
-      cout << "unit x position"<<endl;
-      cout<< unit -> getXCoordinate()<<endl;
-      cout<<"unit y position"<< endl;
-      cout<< unit -> getYCoordinate()<<endl;
-      cout<< "unit hp"<< endl;
-      cout<< unit -> getHitpoints()<<endl;
+      //cout << "unit x position"<<endl;
+      //cout<< unit -> getXCoordinate()<<endl;
+      //cout<<"unit y position"<< endl;
+      //cout<< unit -> getYCoordinate()<<endl;
+      //cout<< "unit hp"<< endl;
+      //cout<< unit -> getHitpoints()<<endl;
 
       //if the x vector of the y vector of the unit are nan set the units position to be its reset position
       if(isnan(xVector) || isnan(yVector)){
@@ -198,7 +219,7 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
       unit -> move(delta);
 
       if(isnan(unit->getXCoordinate()) || isnan(unit->getYCoordinate())){
-        cout << "what the helll " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
+        //cout << "what the helll " << unit->getXCoordinate() << " " << unit -> getYCoordinate() << endl;
       }
 
       //we check to see if the projectile has overshot the target
@@ -366,6 +387,10 @@ void MeleeTower::handleDeadUnit(int indexOfUnit){
 
   //set whatever time is in this space to the current time
   timeOfDeath.at(indexOfUnit) = nowInNano;
+
+  //set its fighting unit to null
+  currentUnits.at(indexOfUnit) -> getEngagedUnit() -> setEngagedUnit(NULL);
+  currentUnits.at(indexOfUnit) -> setEngagedUnit(NULL);
 }
 
 /*
@@ -378,6 +403,7 @@ void MeleeTower::respawnUnits(float delta){
   //the actual count in nanoseconds for the time
   auto nowInNano = duration_cast<seconds>(now.time_since_epoch()).count();
 
+  //cout << "here is problemo " << endl;
   for(int index = 0; index < timeOfDeath.size(); index++){
     long long deathTime = timeOfDeath.at(index);
 
@@ -398,13 +424,14 @@ void MeleeTower::respawnUnits(float delta){
       currentUnits.at(index) -> setYCoordinate(yCoordinate);
     }
   }
+  //cout << "no issue with respawn " << endl;
 }
 
 /*
  * @return if there is any enemy unit within the radius ofthe tower
  */
 bool MeleeTower::canAttack(){
-  //TODO implement using box2D collision
+
 }
 
 /*
@@ -412,7 +439,92 @@ bool MeleeTower::canAttack(){
  * is engaged with an enemy unit that is not also engaged with it
  */
 void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
-  cout << "Attack " << endl;
+  //do nothing if the rally point is still not reset
+  if(xRally == xCoordinate && yRally == yCoordinate){
+    return;
+  }
+  if(enemyInRange == NULL){
+    return;
+  }
+  if(unitsEngaged == currentUnits.size()){
+    return;
+  }
+  int unitIndex = 0;
+  //the angle to use to stagger each unit around the rally point flag
+  float angle = 360.0 / totalUnits;
+  for (shared_ptr<ActorInterface> unit : currentUnits){
+    //cout << "we are fine" << endl;
+    isEnemyPointingAtUnit = true;
+    if (unit->getEngagedUnit() == NULL){
+      float enemyX = enemyInRange->getXCoordinate();
+      float enemyY = enemyInRange->getYCoordinate();
+      sf::FloatRect dimensions = enemyInRange->getSprite().getGlobalBounds();
+
+      float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
+      //the x and y for the unit that is its resting position around the rally point flag
+      float newX = (unitCombatDistance) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + enemyX;
+      float newY = (unitCombatDistance) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + enemyY;
+
+      unit -> setEngagedUnit(enemyInRange);// x targ and y tart
+      unit -> setTargetPos(newX,newY);
+      unit -> setVector(newX - unit -> getXCoordinate(),newY - unit -> getYCoordinate());
+      // unit -> setXCoordinate(enemyInRange->getXCoordinate());
+      // unit -> setYCoordinate(enemyInRange->getYCoordinate());
+    }
+    // check is there a unit that is engaged with an enemy unit that the enemy unit isn't engaged with
+    if (unit->getEngagedUnit()->getEngagedUnit() != unit){
+      isEnemyPointingAtUnit = false;
+    }
+    if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() == enemyInRange){
+      if (enemyInRange->getEngagedUnit() == NULL){
+        enemyInRange -> setEngagedUnit(unit);
+      }
+    }
+    if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() != enemyInRange){
+      if (enemyInRange->getEngagedUnit() == NULL){
+        enemyInRange -> setEngagedUnit(unit);
+        float enemyX = enemyInRange->getXCoordinate();
+        float enemyY = enemyInRange->getYCoordinate();
+        sf::FloatRect dimensions = enemyInRange->getSprite().getGlobalBounds();
+
+
+        float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
+        //the x and y for the unit that is its resting position around the rally point flag
+        float newX = (unitCombatDistance) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + enemyX;
+        float newY = (unitCombatDistance) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + enemyY;
+
+        unit -> setEngagedUnit(enemyInRange);// x targ and y tart
+        unit -> setTargetPos(newX,newY);
+        unit -> setVector(newX - unit -> getXCoordinate(),newY - unit -> getYCoordinate());
+        // unit -> setXCoordinate(enemyInRange->getXCoordinate());
+        // unit -> setYCoordinate(enemyInRange->getYCoordinate());
+      }
+      else {
+        if (enemyInRange->getHitpoints() < unit->getEngagedUnit()->getHitpoints()){
+          float enemyX = enemyInRange->getXCoordinate();
+          float enemyY = enemyInRange->getYCoordinate();
+          sf::FloatRect dimensions = enemyInRange->getSprite().getGlobalBounds();
+
+          float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
+          //the x and y for the unit that is its resting position around the rally point flag
+          float newX = (unitCombatDistance) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + enemyX;
+          float newY = (unitCombatDistance) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + enemyY;
+
+          unit -> setEngagedUnit(enemyInRange);// x targ and y tart
+          unit -> setTargetPos(newX,newY);
+          unit -> setVector(newX - unit -> getXCoordinate(),newY - unit -> getYCoordinate());
+          // unit -> setXCoordinate(enemyInRange->getXCoordinate());
+          // unit -> setYCoordinate(enemyInRange->getYCoordinate());
+        }
+      }
+    }
+    //cout << "finished " << endl;
+
+    //cout << "unit " << counter << " is fighting " << unit -> getEngagedUnit() -> getType() << " with id " << unit -> getEngagedUnit() -> getID() << endl;
+    //cout << "unit id is " << unit -> getID() << endl;
+    unitIndex++;
+  }
+
 }
 
 /*

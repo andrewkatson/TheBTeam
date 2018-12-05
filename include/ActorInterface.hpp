@@ -28,6 +28,10 @@ protected:
   //A reference to the unit that this unit is fighting.
   shared_ptr<ActorInterface> engagedUnit;
 
+  //the scale of the unit when being drawn
+  float xUnitScale;
+  float yUnitScale;
+
   //whether the unit should be drawn or not (1=true, 0=false)
   float drawUnit=1;
 
@@ -62,10 +66,10 @@ protected:
   float speed;
 
   //The actor's hitpoints
-  int hitpoints;
+  float hitpoints;
 
   //Used to reset the actor's hit points
-  int maxHitpoints;
+  float maxHitpoints;
 
   //The actor's damage
   int damage;
@@ -132,6 +136,7 @@ public:
   string typeID;
   ActorInterface();
   ~ActorInterface();
+
 
   void startContact(void* collidingWith);
 
@@ -224,18 +229,18 @@ public:
 
   void setSpeed(float speed){this->speed=speed;}
 
-  int getHitpoints(){return this->hitpoints;}
+  float getHitpoints(){return this->hitpoints;}
   int getMaxHitpoints(){return this->maxHitpoints;}
   int getDamage(){return this->damage;}
-  int getArmor(){return this->armor;}
+  int getArmor(){cout << "armor was " << armor << endl; return this->armor;}
   int getArmorPenetration(){return this->armorPenetration;}
   int getRadius(){return radius;}
   int getAttackRate(){return attackRate;}
 
-  void updateHitpoints(int newHitpoints){this->hitpoints = newHitpoints;}
-  void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
+  void updateHitpoints(float newHitpoints){this->hitpoints = newHitpoints;}
+  void updateMaxHitpoints(float newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
   void updateDamage(int newDamage){damage = newDamage;}
-  void updateArmor(int newArmor){armor = newArmor;}
+  void updateArmor(int newArmor){cout << "are we setting the armor? " << endl; armor = newArmor;}
   void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
   void updateRadius(int newRadius){radius = newRadius;}
   void updateAttackRate(int newAttackRate){attackRate = newAttackRate;}
@@ -267,9 +272,17 @@ public:
     return false;
   }
 
+
+  void attack() {
+    engagedUnit->updateHitpoints(damage);
+    //TODO - handle attacking animation with userview, initiate attack.
+  }
+
+
   void setTileSize(float x, float y){this->xTileSize=x; this->yTileSize=y;}
 
   bool isAProjectile(){return isProjectile;}
+
   bool isAnAlly(){return isAlly;}
 
 
@@ -309,6 +322,22 @@ public:
    * Set the engaged unit
    */
   void setEngagedUnit(shared_ptr<ActorInterface> unitToEngage){engagedUnit = unitToEngage;}
+
+  float getXTarget(){return xTarget;}
+
+  float getYTarget(){return yTarget;}
+
+  float getXVector(){return xVector;}
+  float getYVector(){return yVector;}
+
+  //set sprite scale
+  void setScaleForSprite(float x, float y){sprite.setScale(x,y);}
+  //set sprite position
+  void setSpritePosition(float x, float y){sprite.setPosition(x,y);}
+  //set the unit scale used
+  void setUnitScale(float x, float y){xUnitScale=x; yUnitScale = y;}
+  float getUnitXScale(){return xUnitScale;}
+  float getUnitYScale(){return yUnitScale;}
 };
 
 #endif

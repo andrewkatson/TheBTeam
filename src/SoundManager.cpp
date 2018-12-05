@@ -103,7 +103,7 @@ void SoundManager::loadSounds(){
   for(int z=0;z<sound_paths.size();z++){
     loadSound(sound_paths[z],ids[z]);
   }
-  //cout << textLoader->getString(("IDS_Combat_")+std::to_string(0)+string("_Music_Path")) << endl;
+  ////cout << textLoader->getString(("IDS_Combat_")+std::to_string(0)+string("_Music_Path")) << endl;
 
 
   for(int z=0;z<=5;z++){
@@ -126,17 +126,17 @@ void SoundManager::loadSounds(){
 void SoundManager::loadSound(string path, string soundID){
   string true_path=textLoader->getString(path);
   string id=textLoader->getString(soundID);
-  //cout << "path" << textLoader->getString(path) << endl;
+  ////cout << "path" << textLoader->getString(path) << endl;
   assert(buffers[id].loadFromFile(true_path));
 
-  //cout << "adding sound " << textLoader->getString(soundID) << endl;
+  ////cout << "adding sound " << textLoader->getString(soundID) << endl;
   sound_objs[id].setBuffer(buffers[id]);
-  //cout << sound_objs.count(textLoader->getString(soundID)) << endl;
+  ////cout << sound_objs.count(textLoader->getString(soundID)) << endl;
 }
 
 
 void SoundManager::playSound(string soundID){
-  //cout << "playing sound " << soundID << endl;
+  ////cout << "playing sound " << soundID << endl;
   assert(sound_objs.count(soundID));
   sound_objs[soundID].play();
 }
@@ -171,7 +171,7 @@ void SoundManager::startSongOfType(int type){
 
   playingIndex=musicPicker(rnd_gen);
 
-  cout << "starting song of type" << playingIndex;
+  //cout << "starting song of type" << playingIndex;
 
   playMusic();
 }
@@ -201,7 +201,7 @@ void SoundManager::handleTowerRemove(const EventInterface &event) {
 }
 
 void SoundManager::handleWaveChange(const EventInterface & event){
-//  cout << "starting song of type" << playingIndex;
+//  //cout << "starting song of type" << playingIndex;
   stopSound(textLoader->getString("IDS_Jazzy_Noise"));
   stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
   stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));

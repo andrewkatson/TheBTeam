@@ -178,7 +178,7 @@ void GameLogic::updateGameLogic(float deltaS){
   //destroyed but moved can be placed in the right map
   this -> collisionManager -> checkForCollisions(deltaS);
   this -> eventManager -> processEvent();
-  //cout << "oh boy " << fryID << endl;
+  ////cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){
     int row = 3;
     int col = 3;
@@ -217,7 +217,7 @@ void GameLogic::updateGameLogic(float deltaS){
       //   }
       //   else if(canBuy(towerType) && boardManager -> isObstacle(row,col)){
       //     removeATower(row,col);
-      //     cout << "removed an obstacle" << endl;
+      //     //cout << "removed an obstacle" << endl;
       //     test -=2;
       //   }
       // }
@@ -228,8 +228,8 @@ void GameLogic::updateGameLogic(float deltaS){
       //get all the spawned units
       unordered_map<long long, shared_ptr<MeleeUnit>> spawnedWave = getSpawnedEnemyUnits();
 
-      cout << "size " << spawnedWave.size() << endl;
-      cout << "fry id now " << fryID << endl;
+      //cout << "size " << spawnedWave.size() << endl;
+      //cout << "fry id now " << fryID << endl;
 
       //get our fry guy
       shared_ptr<MeleeUnit> fryGuy = spawnedWave.at(fryID);
@@ -240,21 +240,21 @@ void GameLogic::updateGameLogic(float deltaS){
       //get the tower
       unordered_map<int, shared_ptr<TowerInterface>> towers = towerManager -> getTowersPlaced();
 
-      cout << "tower num " << towers.size() << endl;
-      cout << "check placed " << row*getCols() + col << endl;
+      //cout << "tower num " << towers.size() << endl;
+      //cout << "check placed " << row*getCols() + col << endl;
 
       shared_ptr<TowerInterface> towerToFire = towers.at(row*getCols() + col);
 
       towerToFire -> attack(fryGuy);
 
-      cout << "where is this tower " << endl;
-      cout << towerToFire -> getXCoordinate() << endl;
-      cout << towerToFire -> getYCoordinate() << endl;
+      //cout << "where is this tower " << endl;
+      //cout << towerToFire -> getXCoordinate() << endl;
+      //cout << towerToFire -> getYCoordinate() << endl;
       */
     }
     if(test == 10){
-      cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
-      cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
+      //cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
+      //cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
       if(boardManager -> isTower(row, col)){
         removeATower(row,col);
       }
@@ -383,7 +383,7 @@ void GameLogic::handleStateChange(const EventInterface& event){
  }
 
 void GameLogic::handleLevelChangeEvent(const EventInterface& event){
-  cout << "we changed level " << endl;
+  //cout << "we changed level " << endl;
   auto levelChangeEvent = static_cast<const LevelChangeEvent*>(&event);
   auto levelChangeEventData = static_cast<LevelChangeEventData*>((levelChangeEvent->data).get());
 
@@ -421,7 +421,7 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
   //reset all defaults in the player
   player -> setToDefaults();
 
-  cout << "we restarted game " << endl;
+  //cout << "we restarted game " << endl;
 }
 
 /*
@@ -430,7 +430,7 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
  void GameLogic::makeNewMap(){
    //make the new map
    this -> boardManager -> newMap();
-   cout<<"make a new map"<<endl;
+   //cout<<"make a new map"<<endl;
 
    //set the dimensions (x are cols, y are rows of the map)
    int cols = boardManager -> getXDim();
@@ -462,9 +462,9 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
    ActorInterface::setYScale(boardManager -> getYDim());
 
 
-   cout << "entries are now " << endl;
+   //cout << "entries are now " << endl;
    for(int i = 0; i < boardManager->getEntryPositions().size(); i+=2){
-     cout << "entry is " << boardManager->getEntryPositions().at(i+1) << " " << boardManager->getEntryPositions().at(i) << endl;
+     //cout << "entry is " << boardManager->getEntryPositions().at(i+1) << " " << boardManager->getEntryPositions().at(i) << endl;
    }
  }
 

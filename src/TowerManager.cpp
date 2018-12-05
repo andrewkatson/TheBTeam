@@ -531,7 +531,7 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
       int typeNum = (*it).first;
       //grab the string identifier of this type of obstacle
       string obstacleType = textLoader -> getTypeID(std::to_string(typeNum));
-      cout<<textLoader -> getTypeID(std::to_string(typeNum))<<endl;
+      //cout<<textLoader -> getTypeID(std::to_string(typeNum))<<endl;
 
       //the obstacle we will place
       shared_ptr<TowerInterface> obstacle;
@@ -763,14 +763,36 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
       meleeTower -> setUpUnitPositions(row, col);
       //ensure that the collision manager knows about the existence of our units
       meleeTower -> logUnitsForCollisionManager();
-      /*
+
       //loop through all the meleeUnits and set their world
       vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();
       for (shared_ptr<MeleeUnit> meleeUnit : meleeUnits){
-        meleeUnit -> setWorld(world);
-        meleeUnit -> setFixtures();
+        //get the sprite to be drawn
+        sf::Sprite currentSprite = meleeUnit -> getSprite();
+        //the bounding rectangle will give us the dimensions of the sprite
+        sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+        //the x dimension of the box
+        float xDim = boundingBox.width;
+        //the ydimension of the box
+        float yDim = boundingBox.height;
+
+        //the scaling used for the units so that they do not fill up an entire square
+        float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
+        float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
+
+        //the scale in the x direction
+        float xScale = (float) xGrid / ((float) xDim*unitScaleX);
+        //the scale in the y direction
+        float yScale = (float) yGrid / ((float) yDim*unitScaleY);
+
+        //set the scale for the units sprite
+        //meleeUnit->setScaleForSprite(xScale, yScale);
+        meleeUnit->setToCenter();
+        meleeUnit->setUnitScale(xScale,yScale);
+        //eleeUnit -> setWorld(world);
+        //meleeUnit -> setFixtures();
       }
-      */
+
     }
   }
   return retTower;

@@ -127,6 +127,7 @@ void Projectile::setFixtures(){
 }
 
 void Projectile::damageUnit(shared_ptr<ActorInterface> enemy){
+  cout << "enemy is " << enemy -> getType() << endl;
   enemy ->updateHitpoints(enemy->getHitpoints()-damage*(armorPenetration/(enemy->getArmor()>0?enemy->getArmor() : 1)));
   enemy ->flickerUnit();
 }

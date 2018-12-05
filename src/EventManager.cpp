@@ -120,5 +120,5 @@ void EventManager::clear( shared_ptr<event_queue> q )
 
 
 void EventManager::dumpErrors(){
-  //cout << s.str();
+  ////cout << s.str();
 }

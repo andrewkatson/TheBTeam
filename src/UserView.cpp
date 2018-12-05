@@ -121,10 +121,10 @@ void UserView::initText(){
   string mainFontPath = textLoader -> getString(string("IDS_MFP"));
 
   if(!font.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
 
 }

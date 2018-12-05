@@ -20,10 +20,10 @@ void Switcher::initText(){
 
     //load the font
     if(!font.loadFromFile(mainFontPath)){
-        cout << "No font!" << endl;
+        //cout << "No font!" << endl;
     }
     else{
-        //cout << "loaded font!" << endl;
+        ////cout << "loaded font!" << endl;
     }
 
     //construct the switcher based on the id passed to the constructor and use that to populate the options vector
