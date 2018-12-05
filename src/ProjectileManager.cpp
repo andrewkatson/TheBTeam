@@ -10,13 +10,12 @@
 #include "ProjectileManager.hpp"
 
 
-ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,shared_ptr<b2World> world) {
+ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) {
   //initialize the projectile vector
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> registerEvents();
   this -> registerDelegates();
-  this -> world = world;
 }
 
 ProjectileManager::~ProjectileManager(){
@@ -130,10 +129,49 @@ void ProjectileManager::handleActorDestroyed(const EventInterface& event){
 }
 
 void ProjectileManager::addProjectile(shared_ptr<ActorInterface> projectile){
+
+  //cout  << projectile->getType() << " " << textLoader->getTypeID("IDS_CPP") << endl;
+
+  string soundID;
+
+  if(projectile->getType() == textLoader->getTypeID("IDS_CPP") ||
+     projectile->getType() == textLoader->getTypeID("IDS_PPP") ||
+     projectile->getType() == textLoader->getTypeID("IDS_DDP") ||
+     projectile->getType() == textLoader->getTypeID("IDS_MLP")){
+    soundID="IDS_Fire_Pizza_Noise";
+
+  }else if(projectile->getType() == textLoader->getTypeID("IDS_MMMP") ||
+           projectile->getType() == textLoader->getTypeID("IDS_NMMP") ||
+           projectile->getType() == textLoader->getTypeID("IDS_PBMMP") ||
+           projectile->getType() == textLoader->getTypeID("IDS_PMMP")){
+    soundID="IDS_Fire_MnM_Noise";
+
+  }else{
+    soundID="IDS_Fire_Drink_Noise";
+
+  }
+
+    auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString(soundID),nowInNano);
+
+  eventManager->queueEvent(playSound);
+
   projectiles.insert({projectile->getID(), projectile});
 }
 
 void ProjectileManager::removeProjectile(long long ID){
+  //cout << "get hit" << endl;
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+  shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Hit_By_Projectile_Noise"),nowInNano);
+
+  eventManager->queueEvent(playSound);
+
   projectiles.erase(ID);
 }
 

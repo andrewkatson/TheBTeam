@@ -10,7 +10,6 @@
 #define ACTORINTERFACE_H
 
 #include <SFML/Graphics.hpp>
-#include <Box2D/Box2D.h>
 #include <memory>
 #include <vector>
 #include "EventManager.hpp"
@@ -107,11 +106,6 @@ protected:
   //the degree of error
   const float e = 0.001;
 
-  //Box2d World and Body
-  shared_ptr<b2World> world;
-  b2Body* body;
-  b2Fixture* fixture;
-
   //the area of effect for a projectile and the area of attack for a unit
   int radius;
 
@@ -137,21 +131,11 @@ public:
   ActorInterface();
   ~ActorInterface();
 
-
-  void startContact(void* collidingWith);
-
-  void endContact(void* collidingWith);
   /*
    * Rotate the texture by the number of degrees
    * @param degrees:
    */
   void rotate(float degrees);
-
-  /*
-    TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
-   */
-  //gives actor access to the world to set physics body
-  void setWorld(shared_ptr<b2World> world);
 
 
   /*

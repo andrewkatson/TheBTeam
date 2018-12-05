@@ -49,9 +49,11 @@ private:
 
   const int COMBAT=0;
   const int PREP=1;
-  const int WIN=2;
+  const int LOSE=2;
 
   std::random_device rd;
+
+  bool newLevel,musicPlaying;
 
 public:
 
@@ -129,6 +131,8 @@ public:
   void handleTowerCreation(const EventInterface& event);
 
   void handleWaveChange(const EventInterface & event);
+
+  void handleStateChange(const EventInterface & event);
 
 };
 

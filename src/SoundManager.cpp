@@ -16,6 +16,8 @@ SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
    this -> textLoader = textLoader;
    this -> registerDelegates();
    playingIndex=-1;
+   newLevel=false;
+   musicPlaying=false;
 }
 
 SoundManager::~SoundManager(){
@@ -54,6 +56,11 @@ void SoundManager::registerDelegates(){
   WaveChangeEvent waveChangeEvent= WaveChangeEvent();
   const EventType waveChangeEventType = waveChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(waveChangeDelegate, textLoader -> getString(string("IDS_SoundManager_WaveChange")),waveChangeEventType);
+
+  EventManager::EventDelegate stateChangeDelegate = std::bind(&SoundManager::handleStateChange, this, _1);
+  StateChangeEvent stateChangeEvent= StateChangeEvent();
+  const EventType stateChangeEventType = stateChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_SoundManager_StateChange")),stateChangeEventType);
 }
 
 void SoundManager::deregisterDelegates(){
@@ -87,7 +94,13 @@ void SoundManager::loadSounds(){
                        "IDS_Failure_Sound_Path",
                        "IDS_Ding_Sound_Path",
                        "IDS_QFG_Win_Sound_Path",
-                       "IDS_QFG4_Win_Sound_Path"};
+                       "IDS_QFG4_Win_Sound_Path",
+                       "IDS_Unit_Death_Sound_Path",
+                       "IDS_Unit_Hit_By_Projectile_Sound_Path",
+                       "IDS_Unit_Punch_Sound_Path",
+                       "IDS_Fire_Drink_Sound_Path",
+                       "IDS_Fire_MnM_Sound_Path",
+                       "IDS_Fire_Pizza_Sound_Path"};
   vector<string>ids={"IDS_Unit_Escape_Noise",
                      "IDS_Level_Start_Noise",
                      "IDS_Jazzy_Noise",
@@ -96,7 +109,13 @@ void SoundManager::loadSounds(){
                      "IDS_Failure_Noise",
                      "IDS_Ding_Noise",
                      "IDS_QFG_Win_Noise",
-                     "IDS_QFG4_Win_Noise"};
+                     "IDS_QFG4_Win_Noise",
+                     "IDS_Unit_Death_Noise",
+                     "IDS_Unit_Hit_By_Projectile_Noise",
+                     "IDS_Unit_Punch_Noise",
+                     "IDS_Fire_Drink_Noise",
+                     "IDS_Fire_MnM_Noise",
+                     "IDS_Fire_Pizza_Noise",};
 
   assert(sound_paths.size()==ids.size());
 
@@ -106,19 +125,26 @@ void SoundManager::loadSounds(){
   ////cout << textLoader->getString(("IDS_Combat_")+std::to_string(0)+string("_Music_Path")) << endl;
 
 
-  for(int z=0;z<=5;z++){
+  for(int z=0;z<=6;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
     music->setVolume(80);
     music_objs[COMBAT].push_back(music);
   }
-  for(int z=0;z<=2;z++){
+  for(int z=0;z<=3;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Prep_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
     music->setVolume(80);
     music_objs[PREP].push_back(music);
+  }
+  for(int z=0;z<=0;z++){
+    sf::Music *music=new sf::Music();
+    assert(music->openFromFile(textLoader->getString(string("IDS_End_")+std::to_string(z)+string("_Music_Path"))));
+    music->setLoop(true);
+    music->setVolume(80);
+    music_objs[LOSE].push_back(music);
   }
 
 }
@@ -150,6 +176,7 @@ void SoundManager::stopSound(string soundID){
 }
 
 void SoundManager::playMusic(){
+  musicPlaying=true;
   music_objs[playingType][playingIndex]->play();
 }
 
@@ -158,6 +185,7 @@ void SoundManager::pauseMusic(){
 }
 
 void SoundManager::stopMusic(){
+  musicPlaying=false;
   music_objs[playingType][playingIndex]->stop();
 
 }
@@ -189,7 +217,13 @@ void SoundManager::handleSoundPlay(const EventInterface& event){
 }
 
 void SoundManager::handleLevelChanged(const EventInterface& event){
+  stopSound(textLoader->getString("IDS_Jazzy_Noise"));
+  stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
+  stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));
+
   playSound(textLoader->getString("IDS_Level_Start_Noise"));
+
+  newLevel=true;
 }
 
 void SoundManager::handleTowerCreation(const EventInterface &event) {
@@ -216,13 +250,44 @@ void SoundManager::handleWaveChange(const EventInterface & event){
     startSongOfType(COMBAT);
   }else{
     stopMusic();
-    if(playingIndex==3) {
-      playSound(textLoader->getString("IDS_QFG_Win_Noise"));
-    }else if(playingIndex==4 || playingIndex==5){
+    if (newLevel){
+      newLevel=false;
+    }else {
+      if (playingIndex == 3) {
+        playSound(textLoader->getString("IDS_QFG_Win_Noise"));
+      } else if (playingIndex == 4 || playingIndex == 5) {
         playSound(textLoader->getString("IDS_QFG4_Win_Noise"));
-    }else{
-      playSound(textLoader->getString("IDS_Jazzy_Noise"));
+      } else {
+        playSound(textLoader->getString("IDS_Jazzy_Noise"));
+      }
+      startSongOfType(PREP);
     }
-    startSongOfType(PREP);
+  }
+}
+
+void SoundManager::handleStateChange(const EventInterface & event){
+
+  const StateChangeEvent* stateChangeEvent=static_cast<const StateChangeEvent*>(&event);
+
+  StateChangeEventData* stateChangeEventData=static_cast<StateChangeEventData*>((stateChangeEvent->data).get());
+
+  if(stateChangeEventData->state==State::Restart) {
+    stopSound(textLoader->getString("IDS_Level_Start_Noise"));
+    stopSound(textLoader->getString("IDS_Jazzy_Noise"));
+    stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
+    stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));
+    stopMusic();
+    //play the evangelion ending
+    startSongOfType(LOSE);
+  }else if(stateChangeEventData->state==State::Playing){
+    if(!musicPlaying){
+      cout << "lol" << endl;
+      startSongOfType(PREP);
+    }else if(playingType==LOSE){
+      cout << "lol" << endl;
+      stopMusic();
+    }
+  }else if(stateChangeEventData->state==State::MainMenu || stateChangeEventData->state==State::OptionsMenu){
+    if(playingIndex!=-1) stopMusic();
   }
 }

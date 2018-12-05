@@ -14,8 +14,6 @@ ActorInterface::ActorInterface(){
   //the id is the address of the current object
   id = (long long) this;
 
-  //set the body to NULL in case we never set the world so the destructor does not try to destroy an unitialized body
-  body = NULL;
 
   //set the attack rate to 0 in case this is a projectile
   attackRate = 0;
@@ -27,52 +25,12 @@ ActorInterface::ActorInterface(){
 
 ActorInterface::~ActorInterface(){
 
-  if(body){
-    //cout << "destoryed " << endl;
-    body -> DestroyFixture(fixture);
-    world -> DestroyBody(body);
-  }
 }
 
 void ActorInterface::rotate(float degrees){
   sprite.rotate(degrees);
 }
 
-
-void ActorInterface::setWorld(shared_ptr<b2World> world){
-  //Box2D Info
-  this -> world = world;
-
-  b2BodyDef bodyDef;
-  bodyDef.type = b2_dynamicBody;
-  bodyDef.position.Set(x,y);
-  bodyDef.angle = 0;
-  body = world -> CreateBody(&bodyDef);
-  body ->SetUserData( this );
-
-  //FIXTURES (moved to Projectile and MeleeUnit)
-  // b2CircleShape circle;
-  // circle.m_p.Set(0,0);
-  // circle.m_radius = (float) this -> radius/30.f;
-  // b2FixtureDef fixtureDef;
-	// fixtureDef.density = 1.f;
-	// fixtureDef.friction = 0.7f;
-	// fixtureDef.shape = &circle;
-	// fixtureDef.restitution = .5f;
-	// this -> body -> CreateFixture(&fixtureDef);
-	// this -> body -> SetAwake(1);
-}
-
-
-void ActorInterface::startContact(void* collidingWith){
-  //collidingWith should be cast to a clas you can collide with ie Actors and Towers
-  //cout << "start Contact Actor Interface" << '\n'<<endl;
-}
-
-void ActorInterface::endContact(void* collidingWith){
-  //look above
-  //cout << "end Contact Actor Interface" << '\n'<<endl;
-}
 
 double ActorInterface::getDirection() const {
   return direction;

@@ -250,9 +250,13 @@
   <string value="../resources/sounds/music/wave/HQTrack09.ogg" id="IDS_Combat_3_Music_Path"> </string>
   <string value="../resources/sounds/music/wave/QFG4Track04.ogg" id="IDS_Combat_4_Music_Path"> </string>
   <string value="../resources/sounds/music/wave/QFG4Track06.ogg" id="IDS_Combat_5_Music_Path"> </string>
+  <string value="../resources/sounds/music/wave/fe5fight.ogg" id="IDS_Combat_6_Music_Path"> </string>
   <string value="../resources/sounds/music/prep/HQTrack12.ogg" id="IDS_Prep_0_Music_Path"> </string>
   <string value="../resources/sounds/music/prep/qfg3calm.ogg" id="IDS_Prep_1_Music_Path"> </string>
   <string value="../resources/sounds/music/prep/086-Before-Battle.ogg" id="IDS_Prep_2_Music_Path"> </string>
+  <string value="../resources/sounds/music/prep/fo12calm.ogg" id="IDS_Prep_3_Music_Path"> </string>
+  <string value="../resources/sounds/music/end/evangelion-congrats.ogg" id="IDS_End_0_Music_Path"> </string>
+
 
   <!--Sound IDs-->
   <string value="Unit_Escape" id="IDS_Unit_Escape_Noise"> </string>
@@ -272,6 +276,10 @@
   <string value="Punch" id="IDS_Unit_Punch_Noise"> </string>
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
+
+  <!--Game Delegates-->
+
+  <string value="Game_Speed_Change" id="IDS_Game_SpeedChange"> </string>
     <!--GameLogic Delegates-->
     <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD_KP"> </string>
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
@@ -312,6 +320,7 @@
   <string value="Sound_Manager_Tower_Creation" id="IDS_SoundManager_TowerCreation"> </string>
   <string value="Sound_Manager_Tower_Remove" id="IDS_SoundManager_TowerRemove"> </string>
   <string value="Sound_Manager_Wave_Change" id="IDS_SoundManager_WaveChange"> </string>
+  <string value="Sound_Manager_State_Change" id="IDS_SoundManager_StateChange"> </string>
     <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->
@@ -357,7 +366,7 @@
 
 
     <!--RestartScreen-->
-    <string value="Congratualtions! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
+    <string value="Congratulations! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
 
     <!--OptionsMenuScreen-->
     <string value ="Confirm" id="IDS_Options_Menu_Confirm_Button"> </string>

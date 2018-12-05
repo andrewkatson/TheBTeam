@@ -26,7 +26,6 @@
 #include "Events/RestartGameEvent.hpp"
 #include "EventType.hpp"
 #include "Projectile.hpp"
-#include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include <random>
@@ -76,8 +75,6 @@ private:
   //stored the manager for all collions
   shared_ptr<CollisionManager> collisionManager;
 
-  shared_ptr<b2World> world;
-
   int test;
   long long fryID;
   long long fryID1;
@@ -86,7 +83,7 @@ public:
   /*
     Constructor. Initialize game, setting up instance variables.
    */
-  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader,shared_ptr<b2World> world);
+  GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY, shared_ptr<TextureLoader> textureLoader);
   ~GameLogic();
 
 

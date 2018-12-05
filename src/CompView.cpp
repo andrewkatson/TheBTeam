@@ -27,11 +27,28 @@ void CompView::updateUnits(float deltaS){
 
   vector<vector<int>> dists=gameLogic->getDistances();
   vector<vector<int>> floor=gameLogic->getFloor();
+  /*
+  printf("my distances: \n");
+  for(auto z : dists){
+    for(auto g : z){
+      printf("%3d",g);
+    }
+    printf("\n");
+  }
+
+  printf("my floor: \n");
+  for(auto z : floor){
+    for(auto g : z){
+      printf("%3d",g);
+    }
+    printf("\n");
+  }
+   */
 
   std::mt19937 rnd_gen (rd ());
 
-  uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()-.5);
-  uniform_real_distribution<double>y_overshoot(0,playingScreenHeader->getTrueYTileSize()-.5);
+  uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()*.95);
+  uniform_real_distribution<double>y_overshoot(0,playingScreenHeader->getTrueYTileSize()*.95);
 
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
     shared_ptr<MeleeUnit> currentUnit= iterator.second;
@@ -49,6 +66,7 @@ void CompView::updateUnits(float deltaS){
 
       //if the unit is dead create an actor destroyed event and do nothing
       if(currentUnit->getHitpoints() <= 0){
+        cout << "unit is dead" << endl;
         //the time object of the class
         auto now = high_resolution_clock::now();
         //the actual count in nanoseconds for the time
@@ -58,8 +76,10 @@ void CompView::updateUnits(float deltaS){
           currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
           currentUnit->setEngagedUnit(NULL);
         }
-        shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
+        shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, nowInNano);
+        shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Death_Noise"), nowInNano);
         this -> eventManager -> queueEvent(actorDestroyed);
+        this -> eventManager -> queueEvent(playSound);
         continue;
       }
 
@@ -106,7 +126,7 @@ void CompView::updateUnits(float deltaS){
           //printf("0<= adjusted_r? %d\nadjusted_r < floor.size()? %d\n0 <= adjusted_c? %d\nadjusted_c < floor[0].size()? %d\n",
           //      (0 <= adjusted_r), (adjusted_r < floor.size()), (0 <= adjusted_c), (adjusted_c < floor[0].size()));
           if((0 <= adjusted_r) && (adjusted_r < floor.size()) && (0 <= adjusted_c) && (adjusted_c < floor[0].size())) {
-            //printf("above floor grid: %d\n",floor[r + dir.first][c + dir.second]);
+            //wprintf("floor grid: %d\n",floor[adjusted_r][adjusted_c]);
             if (floor[r + dir_r][c + dir_c] >= 0) {
               //printf("huge succeeded\n");
               dists_coords[dists[adjusted_r][adjusted_c]] = dir;

@@ -114,18 +114,6 @@ void Projectile::handleTargetHit(){
   alreadyHit = true;
 }
 
-void Projectile::setFixtures(){
-  b2CircleShape circleShape;
-  circleShape.m_p.Set(0,0);
-  float scale = max(xScale, yScale);
-  circleShape.m_radius = radius * scale;
-
-  b2FixtureDef circleFixtureDef;
-  circleFixtureDef.shape = &circleShape; //this is a pointer to the shape above
-  fixture = body->CreateFixture(&circleFixtureDef); //add a fixture to the body
-
-}
-
 void Projectile::damageUnit(shared_ptr<ActorInterface> enemy){
   cout << "enemy is " << enemy -> getType() << endl;
   enemy ->updateHitpoints(enemy->getHitpoints()-damage*(armorPenetration/(enemy->getArmor()>0?enemy->getArmor() : 1)));

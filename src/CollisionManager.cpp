@@ -253,7 +253,7 @@ void CollisionManager::handleActorDestroyed(const EventInterface& event){
         int combinedRowCol = actorDestroyed -> getRow() * cols + actorDestroyed -> getCol();
         if(alliedUnits.find(combinedRowCol) == alliedUnits.end()){
           cerr << "allied unit not found in map on destruction " << endl;
-          assert(true == false);
+          assert(false);
         }
         alliedUnits.at(combinedRowCol).erase(actorDestroyed->getID());
       }
@@ -265,7 +265,7 @@ void CollisionManager::handleActorDestroyed(const EventInterface& event){
         int combinedRowCol = actorDestroyed -> getRow() * cols + actorDestroyed -> getCol();
         if(enemyUnits.find(combinedRowCol) == enemyUnits.end()){
           cerr << "enemy unit not found in map on destruction " << endl;
-          assert(true == false);
+          assert(false);
         }
         enemyUnits.at(combinedRowCol).erase(actorDestroyed->getID());
       }
