@@ -6,8 +6,6 @@
   @author Jeremy Elkayam
 */
 
-#include <Events/TowerRemoveEvent.hpp>
-#include <Events/TowerCreationEvent.hpp>
 #include "SoundManager.hpp"
 
 SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader){
@@ -18,6 +16,8 @@ SoundManager::SoundManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
    playingIndex=-1;
    newLevel=false;
    musicPlaying=false;
+   musicVolume=100;
+   sfxVolume=100;
 }
 
 SoundManager::~SoundManager(){
@@ -61,6 +61,11 @@ void SoundManager::registerDelegates(){
   StateChangeEvent stateChangeEvent= StateChangeEvent();
   const EventType stateChangeEventType = stateChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_SoundManager_StateChange")),stateChangeEventType);
+
+  EventManager::EventDelegate volumeChangeDelegate = std::bind(&SoundManager::handleVolumeChange, this, _1);
+  VolumeChangeEvent volumeChangeEvent= VolumeChangeEvent();
+  const EventType volumeChangeEventType = volumeChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(volumeChangeDelegate, textLoader -> getString(string("IDS_SoundManager_VolumeChange")),volumeChangeEventType);
 }
 
 void SoundManager::deregisterDelegates(){
@@ -129,21 +134,18 @@ void SoundManager::loadSounds(){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
-    music->setVolume(80);
     music_objs[COMBAT].push_back(music);
   }
   for(int z=0;z<=3;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Prep_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
-    music->setVolume(80);
     music_objs[PREP].push_back(music);
   }
   for(int z=0;z<=0;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_End_")+std::to_string(z)+string("_Music_Path"))));
     music->setLoop(true);
-    music->setVolume(80);
     music_objs[LOSE].push_back(music);
   }
 
@@ -164,6 +166,7 @@ void SoundManager::loadSound(string path, string soundID){
 void SoundManager::playSound(string soundID){
   //cout << "playing sound " << soundID << endl;
   assert(sound_objs.count(soundID));
+  sound_objs[soundID].setVolume(sfxVolume);
   sound_objs[soundID].play();
 }
 
@@ -177,6 +180,7 @@ void SoundManager::stopSound(string soundID){
 
 void SoundManager::playMusic(){
   musicPlaying=true;
+  music_objs[playingType][playingIndex]->setVolume(musicVolume);
   music_objs[playingType][playingIndex]->play();
 }
 
@@ -289,5 +293,18 @@ void SoundManager::handleStateChange(const EventInterface & event){
     }
   }else if(stateChangeEventData->state==State::MainMenu || stateChangeEventData->state==State::OptionsMenu){
     if(playingIndex!=-1) stopMusic();
+  }
+}
+
+void SoundManager::handleVolumeChange(const EventInterface &event) {
+
+  const VolumeChangeEvent* volumeChangeEvent= static_cast<const VolumeChangeEvent *>(&event);
+
+  VolumeChangeEventData* volumeChangeEventData= static_cast<VolumeChangeEventData*>((volumeChangeEvent->data).get());
+
+  if(volumeChangeEventData->type==SoundType::Music){
+    musicVolume=volumeChangeEventData->newVolume;
+  }else{
+    sfxVolume=volumeChangeEventData->newVolume;
   }
 }

@@ -10,6 +10,9 @@
 #define SOUNDMANAGER_H
 
 #include <SFML/Audio.hpp>
+#include <Events/TowerRemoveEvent.hpp>
+#include <Events/TowerCreationEvent.hpp>
+#include "Events/VolumeChangeEvent.hpp"
 #include "Player.hpp"
 #include "TextLoader.hpp"
 #include "Events/PlaySoundEvent.hpp"
@@ -54,6 +57,8 @@ private:
   std::random_device rd;
 
   bool newLevel,musicPlaying;
+
+  float musicVolume,sfxVolume;
 
 public:
 
@@ -134,6 +139,7 @@ public:
 
   void handleStateChange(const EventInterface & event);
 
+  void handleVolumeChange(const EventInterface & event);
 };
 
 #endif

@@ -4,7 +4,7 @@
 
 #include "Events/VolumeChangeEventData.hpp"
 
-VolumeChangeEventData(int newVolume, SoundType type,float timeStamp){
+VolumeChangeEventData::VolumeChangeEventData(float newVolume, SoundType type,float timeStamp){
   this->newVolume=newVolume;
   this->type=type;
   this->timeStamp=timeStamp;

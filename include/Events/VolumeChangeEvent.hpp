@@ -17,7 +17,7 @@ unique_ptr<EventDataInterface> data;
 static const EventType eventType;
 
 VolumeChangeEvent();
-VolumeChangeEvent(int newVolume, SoundType type,float timeStamp);
+VolumeChangeEvent(float newVolume, SoundType type,float timeStamp);
 
 const EventType& getEventType() const;
 float GetTimeStamp() const;

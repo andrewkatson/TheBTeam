@@ -11,11 +11,11 @@ enum class SoundType {SFX, Music};
 
 class VolumeChangeEventData : public EventDataInterface {
 public:
-  int newVolume;
+  float newVolume;
   SoundType type;
   float timeStamp;
 
-  VolumeChangeEventData(int newVolume, SoundType type,float timeStamp);
+  VolumeChangeEventData(float newVolume, SoundType type,float timeStamp);
 
 };
 

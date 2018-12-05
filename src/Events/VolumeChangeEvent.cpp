@@ -10,7 +10,7 @@ const EventType VolumeChangeEvent::eventType = EventType(&VolumeChangeEvent::eve
 VolumeChangeEvent::VolumeChangeEvent(){
 
 }
-VolumeChangeEvent::VolumeChangeEvent(int newVolume, SoundType type,float timeStamp){
+VolumeChangeEvent::VolumeChangeEvent(float newVolume, SoundType type,float timeStamp){
   this -> data = unique_ptr<VolumeChangeEventData>(new VolumeChangeEventData(newVolume, type,timeStamp));
 }
 
