@@ -652,4 +652,13 @@
   <hint value="You Will Lose" id="IDS_Hint_106"> </hint>
   <hint value="Remember It Will All Be Over Soon" id="IDS_Hint_107"> </hint>
   <hint value="Left Click Melee Tower and Left Click Its Rally Flag to Set Unit Spawn" id="IDS_Hint_108"> </hint>
+  <hint value="Press B on Any Screen To Return To the Previous One" id="IDS_Hint_109"> </hint>
+  <hint value="Life Is An Endless Slog" id="IDS_Hint_8"> </hint>
+  <hint value="Think of The Children" id="IDS_Hint_9"> </hint>
+  <hint value="Kyle Pederson" id="IDS_Hint_10"> </hint>
+  <hint value="Andrew Katson" id="IDS_Hint_11"> </hint>
+  <hint value="Jeremy Elkayam" id="IDS_Hint_12"> </hint>
+  <hint value="Mei Song" id="IDS_Hint_13"> </hint>
+  <hint value="You Can Change the Speed of the Game" id="IDS_Hint_14"> </hint>
+  <hint value="No Food Was Harmed in the Making of This game" id="IDS_Hint_15"> </hint>
 </hints>

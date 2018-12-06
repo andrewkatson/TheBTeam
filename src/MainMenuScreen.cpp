@@ -195,9 +195,9 @@ void MainMenuScreen::handleKeyPress(const EventInterface& event){
   }
   else if(key == "Enter"){
     if(selectedItem == (int) Choices::Play){
-      shared_ptr<EventInterface> playState = make_shared<StateChangeEvent>(State::Playing, nowInNano);
+      shared_ptr<EventInterface> loadingState = make_shared<StateChangeEvent>(State::Loading, nowInNano);
 
-      this -> eventManager -> queueEvent(playState);
+      this -> eventManager -> queueEvent(loadingState);
     }
     else if(selectedItem == (int) Choices::Options){
       shared_ptr<EventInterface> optionsState = make_shared<StateChangeEvent>(State::OptionsMenu, nowInNano);
@@ -211,8 +211,8 @@ void MainMenuScreen::handleKeyPress(const EventInterface& event){
     }
   }
   else if(key == "S"){
-    shared_ptr<EventInterface> playState = make_shared<StateChangeEvent>(State::Playing, nowInNano);
+    shared_ptr<EventInterface> loadingState = make_shared<StateChangeEvent>(State::Loading, nowInNano);
 
-    this -> eventManager -> queueEvent(playState);
+    this -> eventManager -> queueEvent(loadingState);
   }
 }
