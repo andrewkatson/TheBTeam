@@ -87,6 +87,8 @@ public:
    */
   int getLevel(){return level;}
 
+  void newLevelWave(){this -> wave = 1;}
+
   /*
    * return the school level
    */

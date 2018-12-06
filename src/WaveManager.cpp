@@ -461,9 +461,13 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
       //if both of these are empty, that means the last guy in the wave just died
       getWavesLeft();
       currentWaveNumber++;
-      shared_ptr<EventInterface> wcEvent = make_shared<WaveChangeEvent>(currentWaveNumber, nowInNano);
+      //if no waves left do not create a wave change event
+      if(this -> numWaves != 0){
 
-      eventManager->queueEvent(wcEvent);
+        shared_ptr<EventInterface> wcEvent = make_shared<WaveChangeEvent>(currentWaveNumber, nowInNano);
+
+        eventManager->queueEvent(wcEvent);
+      }
     }
   }
 }

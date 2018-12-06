@@ -130,7 +130,7 @@ void Player::modifyBalance(int modifyBy){
 }
 
 void Player::newLevelBalance(){
-    int newBalance = textLoader->getInteger(string("IDS_P_B")) * level;
+    int newBalance = textLoader->getInteger(string("IDS_P_B")) + level*textLoader->getInteger(string("IDS_Balance_Added_Per_Level"));
     //the time object of the class
     auto now = high_resolution_clock::now();
     //the actual count in nanoseconds for the time
@@ -202,7 +202,7 @@ void Player::resetHitpoints() {
 }
 
 void Player::newLevelHitpoints(){
-    int newHitpoints = textLoader->getInteger(string("IDS_P_HP")) * level;
+    int newHitpoints = textLoader->getInteger(string("IDS_P_HP")) + level * textLoader->getInteger(string("IDS_Hitpoints_Added_Per_Level"));
     //the time object of the class
     auto now = high_resolution_clock::now();
     //the actual count in nanoseconds for the time
@@ -218,7 +218,6 @@ void Player::newLevelHitpoints(){
 }
 
 void Player::updateWave(int wave){
-
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time

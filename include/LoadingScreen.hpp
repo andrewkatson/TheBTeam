@@ -1,6 +1,8 @@
 #pragma once
 #include "Screen.hpp"
 #include <chrono>
+#include <stdlib.h> 
+#include <time.h>
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::seconds;

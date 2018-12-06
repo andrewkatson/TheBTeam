@@ -26,7 +26,7 @@ void MeleeTower::update(float delta){
   unitsEngaged = 0;
 
   //if we can respawn units then respawn them
-  //respawnUnits(delta);
+  respawnUnits(delta);
 
   //if a unit does not have an engaged enemy unit then send it back towards
   //a point situated around the rally point

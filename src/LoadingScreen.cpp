@@ -7,6 +7,7 @@ LoadingScreen::LoadingScreen(int windowX, int windowY, shared_ptr<TextLoader> te
   this -> windowY = windowY;
   this -> textLoader = textLoader;
   this -> eventManager = eventManager;
+  srand (time(NULL));
   this -> loadHints();
   timeStarted = 0;
 }
@@ -62,7 +63,11 @@ void LoadingScreen::handleMapGenerated(const EventInterface& event){
 }
 
 void LoadingScreen::getNewHint(){
-  (currentHint++)%hints.size();
+  //rand value to pick a hint
+  int randVal = rand();
+
+  currentHint+=(randVal%hints.size());
+
   //set the text to the next hint
   hint.setString(hints.at((currentHint)%hints.size()));
 

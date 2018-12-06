@@ -183,17 +183,17 @@ bool MapFactory::tryAMap(){
       }
     }else{
       vector<intPair> dirs = {make_pair(0,1), make_pair(0,-1),make_pair(1,0),make_pair(-1,0)};
-      cout << "p " << p+1 << endl;
+      //cout << "p " << p+1 << endl;
 
       for(intPair z : dirs){
 
         int r=entryPos.at(2*p+1) + z.first; // col row because andrew likes garbage
         int c=entryPos.at(2*p) + z.second;
 
-        cout << "entry pos: " << r << "," << c << endl;
+        //cout << "entry pos: " << r << "," << c << endl;
 
         if(0 < r && r < floorGrid.size() && 0 < c && c < floorGrid[0].size() && floorGrid.at(r).at(c)>0){
-          cout << "p" << endl;
+//          cout << "p" << endl;
           combinedPaths.at(entryPos.at(2*p+1)).at(entryPos.at(2*p)).insert(r*xDim+c);
         }
       }
@@ -312,7 +312,7 @@ bool MapFactory::allPathsToExit(){
  */
 bool MapFactory::checkPathToExit(int row, int col){
   if(extraneousPaths.at(row).at(col) != 1){
-    printVector(extraneousPaths);
+    //printVector(extraneousPaths);
     return false;
   }
   return true;
@@ -867,7 +867,7 @@ bool MapFactory::makePathBFS(int path){
 }
 
 void MapFactory::mergeToMain(vector<vector<CellNode>>& board){
-  cout << "merging" << endl;
+  //cout << "merging" << endl;
   //start at the index of your last position (could be the exit or adjacent to some other path)
   int currRow = exitPos.at(1);
   int currCol = exitPos.at(0);
@@ -1936,7 +1936,7 @@ void MapFactory::printError(string errorType){
   //cout << "0 is the exit " << endl;
   //cout << "Positive integers are paths " << endl;
   //cout << "Negative Integers indicate nothing is there " << endl;
-  printVector(paths);
+//  printVector(paths);
 
   //cout << "Above Floor Grid " << endl;
   //cout << "Shows placed obstacles " << endl;
@@ -1944,7 +1944,7 @@ void MapFactory::printError(string errorType){
   //cout << "-1 is empty" << endl;
   //cout << "-2 is an invisible obstacle, so used only in map generation to make map twisting" << endl;
   //cout << "-3 or less is a visible obstacle that blocks tower and path" << endl;
-  printVector(aboveFloorGrid);
+  //printVector(aboveFloorGrid);
 }
 
 //------------------------------------------------------------------------------

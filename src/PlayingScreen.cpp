@@ -609,14 +609,14 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
  * Handle level changes by delegating to classes below this one that need to know
  */
 void PlayingScreen::handleLevelChangeEvent(const EventInterface& event){
-  playingScreenHeader -> handleLevelChange(event);
+  playingScreenHeader -> initDrawingMaterials();
 }
 
 /*
  * Handle restart game changes by delegating to classes below this one that need to know
  */
 void PlayingScreen::handleRestartGameEvent(const EventInterface& event){
-  playingScreenHeader -> handleRestartGame(event);
+  playingScreenHeader -> initDrawingMaterials();
 }
 
 

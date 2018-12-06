@@ -386,6 +386,8 @@ void PlayingScreenHeader::initWaveButton(){
   //get the starting wave
   shared_ptr<Player> player = gameLogic -> getPlayer();
   int startingWave = player -> getWave();
+
+  cout << "wave is " << startingWave << endl;
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));

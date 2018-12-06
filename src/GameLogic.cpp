@@ -377,6 +377,7 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //playerbalance=(20 * 2);
   player -> newLevelBalance();
   player -> newLevelHitpoints();
+  player -> newLevelWave();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
   makeNewMap();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
