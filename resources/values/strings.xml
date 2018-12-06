@@ -197,7 +197,15 @@
     <string value="../resources/sprites/obstacle/trashcan/can.png" id="IDS_Trash_Can_Obstacle_0"> </string>
 
     <!--Special Icons-->
-    <!--Rally Point Flag-->
+
+  <!--Button Icons-->
+
+  <string value="../resources/sprites/icons/play.png" id="IDS_Play_Button_Icon"> </string>
+  <string value="../resources/sprites/icons/slowplay.png" id="IDS_Slow_Play_Button_Icon"> </string>
+  <string value="../resources/sprites/icons/ffwd.png" id="IDS_Fast_Forward_Button_Icon"> </string>
+  <string value="../resources/sprites/icons/ultraffwd.png" id="IDS_Ultra_Fast_Forward_Button_Icon"> </string>
+
+  <!--Rally Point Flag-->
     <string value="../resources/sprites/icons/rallyflag.png" id="IDS_Rally_Flag_Icon"> </string>
 
     <!--Upgrade Icons-->
