@@ -313,7 +313,7 @@ void PlayingScreenHeader::initLevelButton(){
   //get the starting level
   shared_ptr<Player> player = gameLogic -> getPlayer();
   int startingLevel = player -> getLevel();
-
+  cout << "LEVEL " << startingLevel << endl;
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));

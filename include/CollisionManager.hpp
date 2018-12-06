@@ -101,5 +101,6 @@ public:
 
   bool inMap(int row, int col);
   bool inMap(float x, float y);
-
+  void clearEverything();
+  void clearBetweenWaves();
 };

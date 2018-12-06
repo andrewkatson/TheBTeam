@@ -108,6 +108,15 @@ void GameLogic::registerDelegates(){
   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(projectileExplosionEventDelegate, textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
+
+  //bind our delegate function for mouse presses
+  EventManager::EventDelegate waveChangeEventDelegate = std::bind(&GameLogic::handleWaveChangeEvent, this, _1);
+
+  //make an event and get its type
+  WaveChangeEvent waveChangeEvent = WaveChangeEvent();
+  EventType waveChangeEventType = waveChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(waveChangeEventDelegate, textLoader -> getString(string("IDS_GameLogic_Wave_Change_Delegate")),waveChangeEventType);
 }
 
 /*
@@ -137,6 +146,12 @@ void GameLogic::deregisterDelegates(){
   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
+
+  //make an event and get its type
+  WaveChangeEvent waveChangeEvent = WaveChangeEvent();
+  EventType waveChangeEventType = waveChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_GameLogic_Wave_Change_Delegate")),waveChangeEventType);
 }
 
 
@@ -148,7 +163,9 @@ void GameLogic::updateGameLogic(float deltaS){
 
   //check for collisions before processing events so any unit that has been
   //destroyed but moved can be placed in the right map
+  cout << "is it collision detection "  << endl;
   this -> collisionManager -> checkForCollisions(deltaS);
+  cout << "oh man it is " << endl;
   this -> eventManager -> processEvent();
   ////cout << "oh boy " << fryID << endl;
   if(boardManager -> hasMap()){
@@ -373,30 +390,37 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //makeNewMap();
   //this -> waveManager -> entryPositions;
   //player -> resetHitpoints();
-
+  cout<<"here"<<endl;
   //mirror the statistics of the current units so they affect the next level
   towerManager->updateBaseTowerStats();
   //clear all the towers placed
   towerManager->clearAllTowers();
+  //clear everythign from collision Manager
+  collisionManager->clearEverything();
+  //projectile manager
+  projectileManager->clearProjectiles();
 
   //playerbalance=(20 * 2);
   player -> newLevelBalance();
   player -> newLevelHitpoints();
   player -> newLevelWave();
+  player-> newLevel();
+  cout << "level is " << player->getLevel() << endl;
+  cout <<"yo" <<endl;
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
   makeNewMap();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
-
+  cout << "somewhere else " << endl;
   //call all the level change event functions for any class that is attached to gameLogic
   waveManager->handleLevelChanged(event);
   //make an event and queue it
   //shared_ptr<EventInterface>
   //this -> eventManager -> queueEvent
-
+  cout << "what is going on " << endl;
 
   soundManager->handleLevelChanged(event);
 
-
+  cout << "here is the problem " << endl;
   //we should switch the game to the loading screen state
   shared_ptr<EventInterface> loadingState = make_shared<StateChangeEvent>(State::Loading, nowInNano);
 
@@ -418,11 +442,25 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
   //reset all towers to base values
   towerManager -> resetAllTowersToBaseValues();
   towerManager -> clearAllTowers();
+  //clear everythign from collision Manager
+  collisionManager->clearEverything();
+  //projectile manager
+  projectileManager->clearProjectiles();
+
   //ensure no enemies are left in spawn system
   waveManager -> handleRestartGame(event);
 
 
   makeNewMap();
+}
+
+void GameLogic::handleWaveChangeEvent(const EventInterface& event){
+
+  //clear enemy units and projectiles from collision Manager
+  collisionManager->clearBetweenWaves();
+  //projectile manager
+  projectileManager->clearProjectiles();
+
 }
 
 /*

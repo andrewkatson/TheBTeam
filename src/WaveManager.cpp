@@ -374,7 +374,7 @@ void WaveManager::update(float deltaS) {
     timeElapsed=0;
     spawnNextUnit();
   }
-
+  cout << "left update wave manager" << endl;
 
 }
 

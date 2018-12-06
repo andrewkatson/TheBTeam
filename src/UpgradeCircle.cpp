@@ -107,6 +107,7 @@ void UpgradeCircle::handleMousePress(const EventInterface& event){
         if(isDisplayed){
           //a tower upgrade has to be purchaseable
           if(gameLogic->canUpgradeTowerStats(row,col)){
+
             string upgradeButtonID = "";
 
             //determine which button is being selected
@@ -119,6 +120,7 @@ void UpgradeCircle::handleMousePress(const EventInterface& event){
 
             if(upgradeButtonID != ""){
               //upgrade the tower
+              cout << "can upgrade " << towerSelected -> getType() << " with id " << upgradeButtonID << endl;
               gameLogic->upgradeTower(upgradeButtonID, row, col);
             }
           }

@@ -866,3 +866,19 @@ bool CollisionManager::inMap(float x, float y){
   }
   return true;
 }
+
+/*
+ * Clears everything between waves
+ */
+void CollisionManager::clearEverything(){
+    towersPlaced.clear();
+    projectilesFired.clear();
+    alliedUnits.clear();
+    enemyUnits.clear();
+}
+
+
+void CollisionManager::clearBetweenWaves(){
+  projectilesFired.clear();
+  enemyUnits.clear();
+}

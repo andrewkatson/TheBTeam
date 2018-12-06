@@ -93,6 +93,8 @@ public:
   void update(float deltaS);
 
   shared_ptr<ActorInterface> getProjectile(long long ID);
+
+  void clearProjectiles();
 };
 
 

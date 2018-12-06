@@ -187,3 +187,7 @@ shared_ptr<ActorInterface> ProjectileManager::getProjectile(long long ID){
   }
   return projectiles.at(ID);
 }
+
+void ProjectileManager::clearProjectiles(){
+  projectiles.clear();
+}

@@ -457,6 +457,8 @@ void BuyTowerScreen::populateOptionsVector(){
     //if we are selling then it is always valid
     bool isClickable = !(areBuying) ?  !(areBuying) :  balance >= tower -> getPrice() ? true : false;
 
+    cout << "tower of type " << tower -> getType() << " costs " << tower -> getPrice() << " we have " << balance << endl;
+
     shared_ptr<BuyTowerOption> newOption = make_shared<BuyTowerOption>(textLoader, xPos, yPos, xSize, ySize,
     fontPath, tower, showStats,  windowX, windowY, areBuying, isClickable,eventManager);
 

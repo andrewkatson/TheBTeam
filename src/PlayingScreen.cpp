@@ -1484,7 +1484,7 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
         rect.setOrigin(currentSprite.getOrigin());
         rect.setSize(sf::Vector2f(xDim, yDim));
         rect.setScale(xScale,yScale);
-        window.draw(rect);
+        //window.draw(rect);
 
         //set the sprite position inside the class
         unit->setSpritePosition(xPos,yPos);
@@ -1623,7 +1623,7 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
           rect.setOrigin(currentSprite.getOrigin());
           rect.setSize(sf::Vector2f(xDim, yDim));
           rect.setScale(xScale,yScale);
-          window.draw(rect);
+          //window.draw(rect);
           //finally draw the sprite
           window.draw(currentSprite);
 
