@@ -222,8 +222,9 @@ void PlayingScreen::initSpeedButtons() {
                                              textLoader -> getString(string("IDS_Button_Normal_Speed_Text")), textLoader, fontpath));
 
   // set the fill color for the button rectangle
-  this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
-                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+  this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                     this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")),
+                                     this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
                                      this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
 
   // set the outline color for the button
@@ -275,7 +276,8 @@ void PlayingScreen::initSpeedButtons() {
 
   //set the fill color for the button text
   this -> fastForwardButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
-                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
                                          this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
 
   //set the outline color for the text
@@ -635,14 +637,39 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   float yPos = mpEventData -> y;
 
 
+  if(slowPlayButton->isSelected(xPos,yPos) ||
+          playButton->isSelected(xPos,yPos) ||
+          fastForwardButton->isSelected(xPos,yPos) ||
+    ultraFastForwardButton->isSelected(xPos,yPos)){
 
+    this -> slowPlayButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+    this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+    this -> fastForwardButton-> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+    this -> ultraFastForwardButton-> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+
+  }
   if(slowPlayButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Slow_Play_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
 
-    //cout << "i changed speed" << endl;
+    this -> slowPlayButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
   }
 
   if(playButton->isSelected(xPos,yPos)){
@@ -650,6 +677,11 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Play_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
+
+    this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
   }
 
   if(fastForwardButton->isSelected(xPos,yPos)){
@@ -657,6 +689,10 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Fast_Forward_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
+    this -> fastForwardButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
   }
 
 
@@ -665,6 +701,11 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Ultra_Fast_Forward_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
+
+    this -> ultraFastForwardButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
   }
 
 
