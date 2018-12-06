@@ -174,7 +174,7 @@ void PlayingScreenHeader::initHitpointsButton(){
   //get the starting hitpoints
   shared_ptr<Player> player = gameLogic -> getPlayer();
   int startingHitpoints = player -> getHitpoints();
-
+  cout << " CURRENT HITPOINTS " << startingHitpoints << endl;
   //padding between each button in header
   int headerButtonPaddingX = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_X"));
   int headerButtonPaddingY = textLoader -> getInteger(string("IDS_Playing_Screen_Header_Padding_Y"));

@@ -819,6 +819,7 @@ void PlayingScreen::handleLevelChangeEvent(const EventInterface& event){
  */
 void PlayingScreen::handleRestartGameEvent(const EventInterface& event){
   playingScreenHeader -> initDrawingMaterials();
+  waveGoingOn = false;
 }
 
 

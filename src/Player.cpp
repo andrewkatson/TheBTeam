@@ -31,6 +31,7 @@ void Player::setToDefaults(){
   hitpoints= textLoader->getInteger(string("IDS_P_HP"));
   wave=textLoader->getInteger(string("IDS_Default_Wave"));
   level=textLoader->getInteger(string("IDS_Default_Level"));
+  schoolLevel = textLoader->getInteger(string("IDS_Default_School"));
 }
 
 
@@ -135,8 +136,6 @@ void Player::newLevelBalance(){
     auto now = high_resolution_clock::now();
     //the actual count in nanoseconds for the time
     auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
-
-    cout<<"new balance " << newBalance<<endl;
 
     shared_ptr<EventInterface> bcEvent = make_shared<BalanceChangeEvent>(newBalance, nowInNano);
 

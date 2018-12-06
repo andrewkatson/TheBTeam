@@ -379,7 +379,10 @@
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
-
+    <!--Leader Board Delegates-->
+    <string value="LeaderBoard_Screen_Handle_Key_Press" id="IDS_Leader_Board_Key_Press_Delegate"> </string>
+    <string value="LeaderBoard_Screen_Handle_Mouse_Press" id="IDS_Leader_Board_Mouse_Press_Delegate"> </string>
+    
     <!--RestartScreen-->
     <string value="Congratulations! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
 

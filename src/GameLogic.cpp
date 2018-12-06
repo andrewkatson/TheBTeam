@@ -403,11 +403,20 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   * Handle a game restart by resetting everything
   */
 void GameLogic::handleRestartGameEvent(const EventInterface& event){
-
+  //make a new map after checking for no towers, no enemies, resetting the player health and setting balance to be base * level
+  boardManager -> getAllObstacles().clear();
+  boardManager -> getAboveFloor().clear();
+  boardManager -> getDistances().clear();
+  boardManager -> getFloor().clear();
   //reset all defaults in the player
   player -> setToDefaults();
   //reset all towers to base values
   towerManager -> resetAllTowersToBaseValues();
+  towerManager -> clearAllTowers();
+  //ensure no enemies are left in spawn system
+  waveManager -> handleRestartGame(event);
+
+  makeNewMap();
 }
 
 /*

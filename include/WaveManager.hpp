@@ -215,6 +215,8 @@ public:
   void setDimensions(int rows, int cols);
 
   void handleOptionSelectedEvent(const EventInterface& event);
+  void handleRestartGame(const EventInterface &event);
+  void removeAllEnemies();
 };
 
 #endif

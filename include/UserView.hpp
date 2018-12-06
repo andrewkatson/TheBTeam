@@ -13,6 +13,7 @@
 #include "BuyTowerScreen.hpp"
 #include "PlayingScreen.hpp"
 #include "LoadingScreen.hpp"
+#include "LeaderBoardScreen.hpp"
 #include "PlayingScreenHeader.hpp"
 #include "GameLogic.hpp"
 

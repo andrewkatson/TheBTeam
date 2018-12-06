@@ -543,3 +543,19 @@ void WaveManager::handleOptionSelectedEvent(const EventInterface &event){
         //do something to the wave manager with the meal option
     }
 }
+
+void WaveManager::handleRestartGame(const EventInterface &event){
+  removeAllEnemies();
+
+  level= player->getLevel();
+  difficulty = player->getSchool();
+  currentWaveNumber = player -> getWave();
+}
+
+void WaveManager::removeAllEnemies(){
+  spawnedCurrentWave.clear();
+  numWaves =0;
+  while(!currentWave.empty()){
+    currentWave.front();
+  }
+}
