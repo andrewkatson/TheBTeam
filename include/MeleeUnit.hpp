@@ -176,7 +176,6 @@ public:
   bool attackPossible(float delta);
 
   bool atTarget();
-
 };
 
 

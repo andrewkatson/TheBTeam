@@ -220,6 +220,7 @@ void MeleeUnit::attackEngagedUnit(){
   engagedUnit->updateHitpoints(enemyHP);
   cout<<getType()<<endl;
   cout<<enemyHP<<endl;
+  engagedUnit->flickerUnit();
 }
 
 void MeleeUnit::updateAttack(float delta){

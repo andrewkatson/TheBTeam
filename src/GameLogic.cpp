@@ -159,98 +159,13 @@ void GameLogic::deregisterDelegates(){
 void GameLogic::updateGameLogic(float deltaS){
   if(getGameState()==State::Playing){
     this -> waveManager -> update(deltaS);
+    //check for collisions before processing events so any unit that has been
+    //destroyed but moved can be placed in the right map
+    cout << "is it collision detection "  << endl;
+    this -> collisionManager -> checkForCollisions(deltaS);
+    cout << "oh man it is " << endl;
   }
-
-  //check for collisions before processing events so any unit that has been
-  //destroyed but moved can be placed in the right map
-  cout << "is it collision detection "  << endl;
-  this -> collisionManager -> checkForCollisions(deltaS);
-  cout << "oh man it is " << endl;
   this -> eventManager -> processEvent();
-  ////cout << "oh boy " << fryID << endl;
-  if(boardManager -> hasMap()){
-    int row = 3;
-    int col = 3;
-    if(test == 5){
-      //creates a unit for testing as well
-      // shared_ptr<MeleeUnit> fryGuy = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
-      // shared_ptr<MeleeUnit> fryGuy1 = make_shared<NormalFryUnit>(textLoader, eventManager, textureLoader);
-      // fryGuy -> setWorld(world);
-      // fryGuy1 -> setWorld(world);
-      // fryGuy -> setFixtures();
-      // fryGuy1 -> setFixtures();
-      //
-      // fryID = fryGuy -> getID();
-      // fryID1 = fryGuy1 -> getID();
-
-      //set the x and y coordinates
-      // fryGuy -> setXCoordinate(3 * gridX);
-      // fryGuy -> setYCoordinate(2 * gridY);
-      // fryGuy1 -> setXCoordinate(3 * gridX);
-      // fryGuy1 -> setYCoordinate(2 * gridY);
-
-      //add to the current wave of spawned
-      //something something idiot
-      //(waveManager -> spawnedCurrentWave).insert({fryGuy -> getID(), fryGuy});
-      //(waveManager -> spawnedCurrentWave).insert({fryGuy1 -> getID(), fryGuy1});
-
-      //vector<shared_ptr<TowerInterface>> allTowers = allUpgradesForTower(row, col);
-
-      // if(allTowers.size() != 0){
-      //   shared_ptr<TowerInterface> tower = allTowers.at(0);
-      //   tower -> setWorld(world);
-      //   string towerType = tower -> getType();
-      //   if(canBuy(towerType) && !(boardManager->isObstacle(row,col))){
-      //     createATower(row,col,towerType);
-      //     test++;
-      //   }
-      //   else if(canBuy(towerType) && boardManager -> isObstacle(row,col)){
-      //     removeATower(row,col);
-      //     //cout << "removed an obstacle" << endl;
-      //     test -=2;
-      //   }
-      // }
-
-    }
-    if(test == 2){
-      /*
-      //get all the spawned units
-      unordered_map<long long, shared_ptr<MeleeUnit>> spawnedWave = getSpawnedEnemyUnits();
-
-      //cout << "size " << spawnedWave.size() << endl;
-      //cout << "fry id now " << fryID << endl;
-
-      //get our fry guy
-      shared_ptr<MeleeUnit> fryGuy = spawnedWave.at(fryID);
-
-      //rotate fry
-      sf::Sprite sp = fryGuy -> getSprite();
-
-      //get the tower
-      unordered_map<int, shared_ptr<TowerInterface>> towers = towerManager -> getTowersPlaced();
-
-      //cout << "tower num " << towers.size() << endl;
-      //cout << "check placed " << row*getCols() + col << endl;
-
-      shared_ptr<TowerInterface> towerToFire = towers.at(row*getCols() + col);
-
-      towerToFire -> attack(fryGuy);
-
-      //cout << "where is this tower " << endl;
-      //cout << towerToFire -> getXCoordinate() << endl;
-      //cout << towerToFire -> getYCoordinate() << endl;
-      */
-    }
-    if(test == 10){
-      //cout << "is there a tower now? " << boardManager -> isTower(row, col) << endl;
-      //cout << (boardManager -> getAboveFloor()).at(row).at(col) << endl;
-      if(boardManager -> isTower(row, col)){
-        removeATower(row,col);
-      }
-    }
-    test-=2;
-  }
-
 }
 /*
  * Handle any key press from the user

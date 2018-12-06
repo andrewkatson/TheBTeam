@@ -641,10 +641,15 @@
   <hint value="Right Click Tower To Upgrade Specific Stats" id="IDS_Hint_2"> </hint>
   <hint value="Use Fry Guys To Block Paths" id="IDS_Hint_3"> </hint>
   <hint value="Pizza Towers Feed The Larger Children" id="IDS_Hint_101"> </hint>
-  <hint value="Big Pharma Is Hurting Us. Stop Them." id="IDS_Hint_4"> </hint>
+  <hint value="Big Pharma Is Hurting Us Stop Them" id="IDS_Hint_4"> </hint>
   <hint value="Press H to Hide the Header" id="IDS_Hint_5"> </hint>
   <hint value="Fry Towers Feed the Normal Kids" id="IDS_Hint_104"> </hint>
   <hint value="Talk Quietly or Big Pharma Can Hear Us" id="IDS_Hint_7"> </hint>
   <hint value="M and M Towers Feed Small Kids the Best" id="IDS_Hint_6"> </hint>
   <hint value="If You Lose Less Health You Will Win More Often" id="IDS_Hint_102"> </hint>
+  <hint value="Left Click Tower To See Radius" id="IDS_Hint_103"> </hint>
+  <hint value="Upgrading Statistics Will Be Reflected In the Next Level" id="IDS_Hint_105"> </hint>
+  <hint value="You Will Lose" id="IDS_Hint_106"> </hint>
+  <hint value="Remember It Will All Be Over Soon" id="IDS_Hint_107"> </hint>
+  <hint value="Left Click Melee Tower and Left Click Its Rally Flag to Set Unit Spawn" id="IDS_Hint_108"> </hint>
 </hints>
