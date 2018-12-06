@@ -313,21 +313,21 @@
   <constant value="15" id="IDS_NMM_DM"> </constant>
   <constant value="0" id="IDS_NMM_AM"> </constant>
   <constant value="100" id="IDS_NMM_SP"> </constant>
-  <constant value="0" id="IDS_NMM_AP"> </constant>
+  <constant value="3" id="IDS_NMM_AP"> </constant>
   <constant value="0" id="IDS_NMM_AR"> </constant>
   <!--PeanutButterM&Ms Projectile-->
   <constant value="0" id="IDS_PBMM_HP"> </constant>
-  <constant value="" id="IDS_PBMM_DM"> </constant>
+  <constant value="20" id="IDS_PBMM_DM"> </constant>
   <constant value="0" id="IDS_PBMM_AM"> </constant>
-  <constant value="600" id="IDS_PBMM_SP"> </constant>
-  <constant value="0" id="IDS_PBMM_AP"> </constant>
+  <constant value="100" id="IDS_PBMM_SP"> </constant>
+  <constant value="3" id="IDS_PBMM_AP"> </constant>
   <constant value="2" id="IDS_PBMM_AR"> </constant>
   <!--PeanutM&Ms Projectile-->
   <constant value="0" id="IDS_PMM_HP"> </constant>
-  <constant value="3" id="IDS_PMM_DM"> </constant>
+  <constant value="20" id="IDS_PMM_DM"> </constant>
   <constant value="0" id="IDS_PMM_AM"> </constant>
-  <constant value="300" id="IDS_PMM_SP"> </constant>
-  <constant value="6" id="IDS_PMM_AP"> </constant>
+  <constant value="100" id="IDS_PMM_SP"> </constant>
+  <constant value="3" id="IDS_PMM_AP"> </constant>
   <constant value="0" id="IDS_PMM_AR"> </constant>
   <!--Soda Projectile-->
   <constant value="0" id="IDS_SO_HP"> </constant>
@@ -338,21 +338,21 @@
   <constant value="30" id="IDS_SO_AR"> </constant>
   <!--EnergyDrink Projectile-->
   <constant value="0" id="IDS_ED_HP"> </constant>
-  <constant value="6" id="IDS_ED_DM"> </constant>
+  <constant value="25" id="IDS_ED_DM"> </constant>
   <constant value="0" id="IDS_ED_AM"> </constant>
   <constant value="120" id="IDS_ED_SP"> </constant>
   <constant value="6" id="IDS_ED_AP"> </constant>
   <constant value="40" id="IDS_ED_AR"> </constant>
   <!--Gravy Projectile-->
   <constant value="0" id="IDS_G_HP"> </constant>
-  <constant value="10" id="IDS_G_DM"> </constant>
+  <constant value="30" id="IDS_G_DM"> </constant>
   <constant value="0" id="IDS_G_AM"> </constant>
   <constant value="60" id="IDS_G_SP"> </constant>
   <constant value="10" id="IDS_G_AP"> </constant>
-  <constant value="20" id="IDS_G_AR"> </constant>
+  <constant value="30" id="IDS_G_AR"> </constant>
   <!--Slushie Projectile-->
   <constant value="0" id="IDS_SL_HP"> </constant>
-  <constant value="7" id="IDS_SL_DM"> </constant>
+  <constant value="30" id="IDS_SL_DM"> </constant>
   <constant value="0" id="IDS_SL_AM"> </constant>
   <constant value="140" id="IDS_SL_SP"> </constant>
   <constant value="4" id="IDS_SL_AP"> </constant>
