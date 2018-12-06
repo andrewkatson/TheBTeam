@@ -65,7 +65,7 @@ private:
   //the upgrade system visuals
   unique_ptr<UpgradeCircle> upgradeCircle;
 
-  unique_ptr<Button>slowPlayButton,playButton,fastForwardButton,ultraFastForwardButton;
+  unique_ptr<Button>slowPlayButton,playButton,fastForwardButton,ultraFastForwardButton,startWaveButton;
 
   sf::CircleShape radius;
   sf::RectangleShape tile;
@@ -86,6 +86,7 @@ public:
   void initColorShifts();
   void initColorShiftsForFloor();
   void initColorShiftsForPath();
+  void initStartWaveButton();
 
   void handleMapGenerated(const EventInterface& event);
   void handleTowerCreation(const EventInterface& event);

@@ -152,6 +152,8 @@ void WaveManager::createNextWave() {
 
   std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
 
+  cout << "my average " <<  currentWaveNumber*(range/numWaves) << endl << "my deviation " << range/3 << endl;
+
   printf("my distances: \n");
   for(auto z : distances){
     for(auto g : z){

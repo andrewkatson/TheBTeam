@@ -794,6 +794,26 @@
   <!--BuyTower Option Outline Thickness-->
   <constant value="1" id="IDS_Buy_Tower_Option_Tile_Background_Outline_Thickness"> </constant>
 
+    <!--Speed Selected Button Colors-->
+    <constant value="33" id="IDS_Selected_Speed_Fill_Color_Red"> </constant>
+    <constant value="100" id="IDS_Selected_Speed_Fill_Color_Blue"> </constant>
+    <constant value="21" id="IDS_Selected_Speed_Fill_Color_Green"> </constant>
+
+
+    <!--Start Wave Button-->
+    <constant value="25" id="IDS_Start_Wave_Button_Text_Size"> </constant>
+    <constant value="300" id="IDS_Start_Wave_Button_Left_Pad"> </constant>
+    <constant value="250" id="IDS_Start_Wave_Button_Y_Pad"> </constant>
+    <constant value="20" id="IDS_Start_Wave_Button_Fill_Color_Red"> </constant>
+    <constant value="10" id="IDS_Start_Wave_Button_Fill_Color_Blue"> </constant>
+    <constant value="200" id="IDS_Start_Wave_Button_Fill_Color_Green"> </constant>
+    <constant value="0" id="IDS_Start_Wave_Button_Text_Outline_Color_Red"> </constant>
+    <constant value="0" id="IDS_Start_Wave_Button_Text_Outline_Color_Blue"> </constant>
+    <constant value="0" id="IDS_Start_Wave_Button_Text_Outline_Color_Green"> </constant>
+    <constant value="200" id="IDS_Start_Wave_Button_Text_Fill_Color_Red"> </constant>
+    <constant value="200" id="IDS_Start_Wave_Button_Text_Fill_Color_Blue"> </constant>
+    <constant value="200" id="IDS_Start_Wave_Button_Text_Fill_Color_Green"> </constant>
+
 
   <!--Buy Tower Purchase Button -->
   <constant value="0" id="IDS_Buy_Tower_Option_Tile_Purchase_Button_Clickable_Text_Fill_Color_Red"> </constant>
