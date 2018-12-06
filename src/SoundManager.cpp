@@ -216,11 +216,14 @@ void SoundManager::handleSoundPlay(const EventInterface& event){
 
 void SoundManager::handleLevelChanged(const EventInterface& event){
   cout << "yay sounds" << endl;
+  stopMusic();
   stopSound(textLoader->getString("IDS_Jazzy_Noise"));
   stopSound(textLoader->getString("IDS_QFG_Win_Noise"));
   stopSound(textLoader->getString("IDS_QFG4_Win_Noise"));
 
   playSound(textLoader->getString("IDS_Level_Start_Noise"));
+
+  startSongOfType(PREP);
 
   newLevel=true;
 }

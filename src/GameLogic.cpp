@@ -393,8 +393,13 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //shared_ptr<EventInterface>
   //this -> eventManager -> queueEvent
 
+
+  soundManager->handleLevelChanged(event);
+
+
   //we should switch the game to the loading screen state
   shared_ptr<EventInterface> loadingState = make_shared<StateChangeEvent>(State::Loading, nowInNano);
+
 
   this -> eventManager -> queueEvent(loadingState);
  }
@@ -415,6 +420,7 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
   towerManager -> clearAllTowers();
   //ensure no enemies are left in spawn system
   waveManager -> handleRestartGame(event);
+
 
   makeNewMap();
 }
