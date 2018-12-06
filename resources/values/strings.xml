@@ -379,6 +379,9 @@
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
 
+    <!--Leader Board Delegates-->
+    <string value="LeaderBoard_Screen_Handle_Key_Press" id="IDS_Leader_Board_Key_Press_Delegate"> </string>
+    <string value="LeaderBoard_Screen_Handle_Mouse_Press" id="IDS_Leader_Board_Mouse_Press_Delegate"> </string>
 
     <!--RestartScreen-->
     <string value="Congratulations! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
@@ -386,6 +389,9 @@
     <!--OptionsMenuScreen-->
     <string value ="Confirm" id="IDS_Options_Menu_Confirm_Button"> </string>
 
+    <!--LeaderBoardScreen -->
+    <string value="Oh Sorry No Connection To Server" id="IDS_Leader_Board_No_Connection"> </string>
+    <string value="LeaderBoard" id="IDS_Leader_Board_Normal_Title"></string>
 
     <!--School Switcher-->
     <!--Increment by 1 for gl-->
@@ -509,11 +515,14 @@
     <string value="Armor Penetration " id="IDS_Range_Actor_Armor_Penetration"> </string>
     <string value="Area of Effect " id="IDS_Range_Actor_Area_Of_Effect"> </string>
 
-
+  <!-- Speed Buttons-->
   <string value="Speed 0.5x" id="IDS_Button_Slow_Text"> </string>
   <string value="1x" id="IDS_Button_Normal_Speed_Text"> </string>
   <string value="2x" id="IDS_Button_Fast_Speed_Text"> </string>
   <string value="4x" id="IDS_Button_Very_Fast_Speed_Text"> </string>
+
+
+  <string value="Next Wave" id="IDS_Button_Start_Wave_Text"> </string>
 </strings>
 
 <typeids>

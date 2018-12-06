@@ -23,7 +23,7 @@ using namespace std;
 
   TODO - add states as needed.
 */
-enum class State{ MainMenu, OptionsMenu, Playing, BuyTower, Restart, Loading};
+enum class State{ MainMenu, OptionsMenu, Playing, BuyTower, Restart, Loading, LeaderBoard};
 
 class GameState{
 private:

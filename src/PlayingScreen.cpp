@@ -171,6 +171,51 @@ void PlayingScreen::deregisterDelegates(){
   upgradeCircle -> deregisterDelegates();
 }
 
+void PlayingScreen::initStartWaveButton(){
+
+  string fontpath = textLoader -> getString(string("IDS_TFP"));
+
+  //set up the back button
+  startWaveButton = unique_ptr<Button>(new Button(windowX, windowY, BOTTOMLEFT,
+                                                 textLoader -> getString(string("IDS_Button_Start_Wave_Text")), textLoader, fontpath));
+
+  // set the fill color for the button rectangle
+  this -> startWaveButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Fill_Color_Red")),
+                                         this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Fill_Color_Green")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  this -> startWaveButton -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Red")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Green")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  //this->backButton -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Thickness")));
+
+  //set the fill color for the button text
+  this -> startWaveButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Fill_Color_Red")),
+                                             this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Fill_Color_Green")),
+                                             this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
+
+  //set the outline color for the text
+  this -> startWaveButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Outline_Color_Red")),
+                                                this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Outline_Color_Green")),
+                                                this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
+
+  //set the button text outline thickness
+  this->startWaveButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
+
+  //set the text character size
+  this->startWaveButton -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Start_Wave_Button_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->startWaveButton) -> setFont(fontpath);
+
+  //rescale the button and reset it
+  (this -> startWaveButton) -> setButtonPosition(textLoader->getInteger("IDS_Start_Wave_Button_Left_Pad"),textLoader->getInteger("IDS_Start_Wave_Button_Y_Pad"));
+
+
+}
 
 void PlayingScreen::initSpeedButtons() {
 
@@ -222,8 +267,9 @@ void PlayingScreen::initSpeedButtons() {
                                              textLoader -> getString(string("IDS_Button_Normal_Speed_Text")), textLoader, fontpath));
 
   // set the fill color for the button rectangle
-  this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
-                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+  this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                     this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")),
+                                     this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
                                      this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
 
   // set the outline color for the button
@@ -275,7 +321,8 @@ void PlayingScreen::initSpeedButtons() {
 
   //set the fill color for the button text
   this -> fastForwardButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
-                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
                                          this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
 
   //set the outline color for the text
@@ -361,6 +408,7 @@ void PlayingScreen::initDrawingMaterials(){
   initRallyPointButton();
   initUpgradeCircle();
   initSpeedButtons();
+  initStartWaveButton();
 }
 
 /*
@@ -592,6 +640,13 @@ void PlayingScreen::handleKeyPress(const EventInterface& event){
     shared_ptr<EventInterface> waveChangeEvent = make_shared<WaveChangeEvent>(playingScreenHeader->getWaveNumber(),nowInNano,true);
 
     eventManager -> queueEvent(waveChangeEvent);
+  }else if(key == "H"){
+    slowPlayButton->flipVisibility();
+    playButton->flipVisibility();
+    playButton->flipVisibility();
+    fastForwardButton->flipVisibility();
+    ultraFastForwardButton->flipVisibility();
+
   }
 }
 
@@ -635,36 +690,81 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   float yPos = mpEventData -> y;
 
 
+  if(slowPlayButton->isCurrentlyVisible() && (slowPlayButton->isSelected(xPos,yPos) ||
+          playButton->isSelected(xPos,yPos) ||
+          fastForwardButton->isSelected(xPos,yPos) ||
+    ultraFastForwardButton->isSelected(xPos,yPos))){
 
-  if(slowPlayButton->isSelected(xPos,yPos)){
+    this -> slowPlayButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+    this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+    this -> fastForwardButton-> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+    this -> ultraFastForwardButton-> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+
+  }
+  if(slowPlayButton->isCurrentlyVisible() && slowPlayButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Slow_Play_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
 
-    //cout << "i changed speed" << endl;
+    this -> slowPlayButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
   }
 
-  if(playButton->isSelected(xPos,yPos)){
+  if(playButton->isCurrentlyVisible() && playButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Play_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
+
+    this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
   }
 
-  if(fastForwardButton->isSelected(xPos,yPos)){
+  if(fastForwardButton->isCurrentlyVisible() && fastForwardButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Fast_Forward_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
+    this -> fastForwardButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
   }
 
 
-  if(ultraFastForwardButton->isSelected(xPos,yPos)){
+  if(fastForwardButton->isCurrentlyVisible() && ultraFastForwardButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Ultra_Fast_Forward_Speed"), nowInNano);
 
     this -> eventManager -> queueEvent(speedChange);
+
+    this -> ultraFastForwardButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Red")),
+                                           this->textLoader -> getInteger(string("IDS_Selected_Speed_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                           this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  }
+
+  if(!waveGoingOn && startWaveButton->isSelected(xPos,yPos)){
+    shared_ptr<EventInterface> waveChangeEvent = make_shared<WaveChangeEvent>(playingScreenHeader->getWaveNumber(),nowInNano,true);
+
+    eventManager -> queueEvent(waveChangeEvent);
   }
 
 
@@ -812,6 +912,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
  */
 void PlayingScreen::handleLevelChangeEvent(const EventInterface& event){
   playingScreenHeader -> initDrawingMaterials();
+  waveGoingOn = false;
 }
 
 /*
@@ -819,6 +920,7 @@ void PlayingScreen::handleLevelChangeEvent(const EventInterface& event){
  */
 void PlayingScreen::handleRestartGameEvent(const EventInterface& event){
   playingScreenHeader -> initDrawingMaterials();
+  waveGoingOn = false;
 }
 
 
@@ -969,47 +1071,69 @@ void PlayingScreen::draw(sf::RenderWindow &window){
   ////cout<<"we drew all the things"<<endl;
 
   drawSpeedButtons(window);
+
+  if(!waveGoingOn) {
+
+    startWaveButton->draw(window);
+
+    //below is a workaround because the draw was not showing the text because sfml is stupid
+    sf::Text wave = startWaveButton->getButtonText();
+    sf::Font mainFont;
+    //used to make the font local
+    string mainFontPath = textLoader->getString(string("IDS_TFP"));
+
+    if (!mainFont.loadFromFile(mainFontPath)) {
+      //cout << "No font!" << endl;
+    } else {
+      //  //cout << "loaded font!" << endl;
+    }
+
+    wave.setFont(mainFont);
+    window.draw(wave);
+  }
 }
 
 void PlayingScreen::drawSpeedButtons(sf::RenderWindow& window){
-  slowPlayButton->draw(window);
 
-  //below is a workaround because the draw was not showing the text because sfml is stupid
-  sf::Text slow = slowPlayButton -> getButtonText();
-  sf::Font mainFont;
-  //used to make the font local
-  string mainFontPath = textLoader -> getString(string("IDS_TFP"));
+  if(slowPlayButton->isCurrentlyVisible()) {
+    slowPlayButton->draw(window);
 
-  if(!mainFont.loadFromFile(mainFontPath)){
-    //cout << "No font!" << endl;
+    //below is a workaround because the draw was not showing the text because sfml is stupid
+    sf::Text slow = slowPlayButton->getButtonText();
+    sf::Font mainFont;
+    //used to make the font local
+    string mainFontPath = textLoader->getString(string("IDS_TFP"));
+
+    if (!mainFont.loadFromFile(mainFontPath)) {
+      //cout << "No font!" << endl;
+    } else {
+      //  //cout << "loaded font!" << endl;
+    }
+
+    slow.setFont(mainFont);
+    window.draw(slow);
+    playButton->draw(window);
+
+    sf::Text norm = playButton->getButtonText();
+
+    norm.setFont(mainFont);
+    window.draw(norm);
+
+
+    fastForwardButton->draw(window);
+
+    sf::Text fast = fastForwardButton->getButtonText();
+
+    fast.setFont(mainFont);
+    window.draw(fast);
+
+    ultraFastForwardButton->draw(window);
+
+    sf::Text veryfast = ultraFastForwardButton->getButtonText();
+
+    veryfast.setFont(mainFont);
+    window.draw(veryfast);
   }
-  else{
-    //  //cout << "loaded font!" << endl;
-  }
-
-  slow.setFont(mainFont);
-  window.draw(slow);
-  playButton->draw(window);
-
-  sf::Text norm = playButton -> getButtonText();
-
-  norm.setFont(mainFont);
-  window.draw(norm);
-
-
-  fastForwardButton->draw(window);
-
-  sf::Text fast = fastForwardButton -> getButtonText();
-
-  fast.setFont(mainFont);
-  window.draw(fast);
-
-  ultraFastForwardButton->draw(window);
-
-  sf::Text veryfast = ultraFastForwardButton -> getButtonText();
-
-  veryfast.setFont(mainFont);
-  window.draw(veryfast);
 
 /*
 

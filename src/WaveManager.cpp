@@ -152,6 +152,8 @@ void WaveManager::createNextWave() {
 
   std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
 
+  cout << "my average " <<  currentWaveNumber*(range/numWaves) << endl << "my deviation " << range/3 << endl;
+
   printf("my distances: \n");
   for(auto z : distances){
     for(auto g : z){
@@ -542,4 +544,20 @@ void WaveManager::handleOptionSelectedEvent(const EventInterface &event){
     if(optionSelectedEventData -> optionID == 3){
         //do something to the wave manager with the meal option
     }
+}
+
+void WaveManager::handleRestartGame(const EventInterface &event){
+  removeAllEnemies();
+
+  level= player->getLevel();
+  difficulty = player->getSchool();
+  currentWaveNumber = player -> getWave();
+}
+
+void WaveManager::removeAllEnemies(){
+  spawnedCurrentWave.clear();
+  numWaves =0;
+  while(!currentWave.empty()){
+    currentWave.front();
+  }
 }

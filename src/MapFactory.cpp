@@ -1067,7 +1067,7 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
     //start at the index of your last position (could be the exit or adjacent to some other path)
     int currRow = lastPos.at(0);
     int currCol = lastPos.at(1);
-    /*
+    
     //if not at the exit poisiton mark the current space as a path
     if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
       //mark the space ass a path if it is not touching an exit path
@@ -1077,14 +1077,14 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
         floorGrid.at(currRow).at(currCol) = path;
       }
     }
-    */
+
     while(!(board.at(currRow).at(currCol).rowParent == currRow &&
             board.at(currRow).at(currCol).colParent == currCol) ){
 
       int tempRow = board.at(currRow).at(currCol).rowParent;
       int tempCol = board.at(currRow).at(currCol).colParent;
 
-      /*
+
       //if not at the exit poisiton
       if(!(currRow == exitPos.at(1) && currCol == exitPos.at(0))){
         //if the next tile is not connected with an exit path but the current one is
@@ -1094,7 +1094,7 @@ void MapFactory::markPath(vector<vector<CellNode>>& board, int path, vector<int>
           floorGrid.at(currRow).at(currCol) = path;
         }
       }
-      */
+
       currRow = tempRow;
       currCol = tempCol;
 

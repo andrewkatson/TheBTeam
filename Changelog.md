@@ -2,10 +2,15 @@
 
 ###Added
 - loading screen with hints[@andrewkatson][https://github.com/andrewkatson]
+- leaderboard screen 
 
 
 ###Changed
 - buy and sell buttons will mirror across middle of screen if you right click them (useful when they block clicks) [@andrewkatson][https://github.com/andrewkatson]
+- all projectiles and towers are more balanced [@meisong1997][https://github.com/meisong1997]
+
+###Fixed
+- Melee towers assign units and they kill other units [kp-hb][https://github.com/kp-hb]
 
 [0.8.0] 2018 - 12 -4
 ###Added

@@ -45,8 +45,6 @@ file(GLOB EXECLIST bin/*cpp)
 #  include_directories(${Boost_INCLUDE_DIRS})   #
 #  link_libraries(${Boost_LIBRARIES})           #
 #################################################
-
-
 #############
 # Find SFML #
 #############
