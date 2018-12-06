@@ -594,6 +594,13 @@ void PlayingScreen::handleKeyPress(const EventInterface& event){
     shared_ptr<EventInterface> waveChangeEvent = make_shared<WaveChangeEvent>(playingScreenHeader->getWaveNumber(),nowInNano,true);
 
     eventManager -> queueEvent(waveChangeEvent);
+  }else if(key == "H"){
+    slowPlayButton->flipVisibility();
+    playButton->flipVisibility();
+    playButton->flipVisibility();
+    fastForwardButton->flipVisibility();
+    ultraFastForwardButton->flipVisibility();
+
   }
 }
 
@@ -637,10 +644,10 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   float yPos = mpEventData -> y;
 
 
-  if(slowPlayButton->isSelected(xPos,yPos) ||
+  if(slowPlayButton->isCurrentlyVisible() && (slowPlayButton->isSelected(xPos,yPos) ||
           playButton->isSelected(xPos,yPos) ||
           fastForwardButton->isSelected(xPos,yPos) ||
-    ultraFastForwardButton->isSelected(xPos,yPos)){
+    ultraFastForwardButton->isSelected(xPos,yPos))){
 
     this -> slowPlayButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
                                            this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
@@ -660,7 +667,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
 
 
   }
-  if(slowPlayButton->isSelected(xPos,yPos)){
+  if(slowPlayButton->isCurrentlyVisible() && slowPlayButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Slow_Play_Speed"), nowInNano);
 
@@ -672,7 +679,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
 
   }
 
-  if(playButton->isSelected(xPos,yPos)){
+  if(playButton->isCurrentlyVisible() && playButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Play_Speed"), nowInNano);
 
@@ -684,7 +691,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
 
   }
 
-  if(fastForwardButton->isSelected(xPos,yPos)){
+  if(fastForwardButton->isCurrentlyVisible() && fastForwardButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Fast_Forward_Speed"), nowInNano);
 
@@ -696,7 +703,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   }
 
 
-  if(ultraFastForwardButton->isSelected(xPos,yPos)){
+  if(fastForwardButton->isCurrentlyVisible() && ultraFastForwardButton->isSelected(xPos,yPos)){
 
     shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Ultra_Fast_Forward_Speed"), nowInNano);
 
@@ -1013,44 +1020,46 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 }
 
 void PlayingScreen::drawSpeedButtons(sf::RenderWindow& window){
-  slowPlayButton->draw(window);
 
-  //below is a workaround because the draw was not showing the text because sfml is stupid
-  sf::Text slow = slowPlayButton -> getButtonText();
-  sf::Font mainFont;
-  //used to make the font local
-  string mainFontPath = textLoader -> getString(string("IDS_TFP"));
+  if(slowPlayButton->isCurrentlyVisible()) {
+    slowPlayButton->draw(window);
 
-  if(!mainFont.loadFromFile(mainFontPath)){
-    //cout << "No font!" << endl;
+    //below is a workaround because the draw was not showing the text because sfml is stupid
+    sf::Text slow = slowPlayButton->getButtonText();
+    sf::Font mainFont;
+    //used to make the font local
+    string mainFontPath = textLoader->getString(string("IDS_TFP"));
+
+    if (!mainFont.loadFromFile(mainFontPath)) {
+      //cout << "No font!" << endl;
+    } else {
+      //  //cout << "loaded font!" << endl;
+    }
+
+    slow.setFont(mainFont);
+    window.draw(slow);
+    playButton->draw(window);
+
+    sf::Text norm = playButton->getButtonText();
+
+    norm.setFont(mainFont);
+    window.draw(norm);
+
+
+    fastForwardButton->draw(window);
+
+    sf::Text fast = fastForwardButton->getButtonText();
+
+    fast.setFont(mainFont);
+    window.draw(fast);
+
+    ultraFastForwardButton->draw(window);
+
+    sf::Text veryfast = ultraFastForwardButton->getButtonText();
+
+    veryfast.setFont(mainFont);
+    window.draw(veryfast);
   }
-  else{
-    //  //cout << "loaded font!" << endl;
-  }
-
-  slow.setFont(mainFont);
-  window.draw(slow);
-  playButton->draw(window);
-
-  sf::Text norm = playButton -> getButtonText();
-
-  norm.setFont(mainFont);
-  window.draw(norm);
-
-
-  fastForwardButton->draw(window);
-
-  sf::Text fast = fastForwardButton -> getButtonText();
-
-  fast.setFont(mainFont);
-  window.draw(fast);
-
-  ultraFastForwardButton->draw(window);
-
-  sf::Text veryfast = ultraFastForwardButton -> getButtonText();
-
-  veryfast.setFont(mainFont);
-  window.draw(veryfast);
 
 /*
 
