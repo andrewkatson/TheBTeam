@@ -606,6 +606,14 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
 }
 
 /*
+ * Handle level changes by delegating to classes below this one that need to know
+ */
+void PlayingScreen::handleLevelChangeEvent(const EventInterface& event){
+  playingScreenHeader -> handleLevelChange(event);
+}
+
+
+/*
  * @return whether the passed positions are within the towers radius
  */
 bool PlayingScreen::clickWithinRange(float mouseX, float mouseY, shared_ptr<TowerInterface> tower){

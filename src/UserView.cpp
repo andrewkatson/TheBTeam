@@ -222,6 +222,17 @@ void UserView::handleStateChange(const EventInterface& event){
   (this->screens).at((int)screen) -> registerDelegates();
 }
 
+/*
+ * Handle level changes by delegating to classes below this one that need to know
+ */
+void UserView::handleLevelChangeEvent(const EventInterface& event){
+  shared_ptr<Screen> playing = screens.at((int) State::Playing);
+
+  PlayingScreen* playingScreen = dynamic_cast<PlayingScreen*>(playing.get());
+
+  playingScreen -> handleLevelChangeEvent(event);
+}
+
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
   if(shutDownGame){
     shutDown(game);

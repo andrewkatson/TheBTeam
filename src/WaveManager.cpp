@@ -497,7 +497,6 @@ void WaveManager::handleLevelChanged(const EventInterface& event){
   auto levelChangedEventData = static_cast<LevelChangeEventData*>((levelChangedEvent->data).get());
 
   level=levelChangedEventData->level;
-  //cout<<"eat my ass"<<endl;
   setupWaves();
 }
 

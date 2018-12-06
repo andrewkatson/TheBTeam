@@ -146,6 +146,7 @@ void Game::handleMapGeneration(const EventInterface &event){
  */
 void Game::handleLevelChange(const EventInterface &event){
   gameLogic->handleLevelChangeEvent(event);
+  userView->handleLevelChangeEvent(event);
 }
 
 /*

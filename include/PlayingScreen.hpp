@@ -116,4 +116,6 @@ public:
   shared_ptr<PlayingScreenHeader> getHeader(){return playingScreenHeader;};
 
   bool isFlagButtonClicked(){return rallyPointChange->isButtonClicked();}
+
+  void handleLevelChangeEvent(const EventInterface& event);
 };
