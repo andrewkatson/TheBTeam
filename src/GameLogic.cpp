@@ -374,6 +374,11 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //this -> waveManager -> entryPositions;
   //player -> resetHitpoints();
 
+  //mirror the statistics of the current units so they affect the next level
+  towerManager->updateBaseTowerStats();
+  //clear all the towers placed
+  towerManager->clearAllTowers();
+
   //playerbalance=(20 * 2);
   player -> newLevelBalance();
   player -> newLevelHitpoints();
@@ -381,11 +386,6 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
   makeNewMap();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
-
-  //mirror the statistics of the current units so they affect the next level
-  towerManager->updateBaseTowerStats();
-  //clear all the towers placed
-  towerManager->clearAllTowers();
 
   //call all the level change event functions for any class that is attached to gameLogic
   waveManager->handleLevelChanged(event);
@@ -472,7 +472,7 @@ void GameLogic::placeObstacles(){
   //and the position is a pair
   unordered_map<int, intPair> obstacleValueToPos;
   obstacleValueToPos = boardManager -> getAllObstacles();
-
+  cout << "obstacles are " << obstacleValueToPos.size() << endl;
   towerManager -> addObstacles(obstacleValueToPos);
 }
 

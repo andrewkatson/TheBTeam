@@ -116,4 +116,7 @@ public:
     * whether clicks are being checked for
     */
   bool clicksCheckedFor(){return !blockClicks;}
+
+  template <class T>
+  void printVector(const vector<vector<T>> &v);
 };

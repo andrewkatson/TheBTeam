@@ -885,6 +885,7 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
       (this->buyTower) -> setButtonPosition(TOPRIGHT);
     }
     else if(gameLogic->isObstacle(rowSelected,colSelected)){
+      printVector(gameLogic->getAboveFloor());
       (this->buyTower) -> setString(textLoader->getString("IDS_Buy_Tower_Existing_Obstacle"));
       (this->buyTower) -> setButtonPosition(TOPRIGHT);
     }
@@ -1172,4 +1173,21 @@ void PlayingScreenHeader::drawHeaderButtons(sf::RenderWindow& window){
     window.draw(toDraw -> getButtonRect());
     window.draw(text);
   }
+}
+
+template <class T>
+void PlayingScreenHeader::printVector(const vector<vector<T>> &v){
+  ////cout << " here !" << endl;
+  for(const vector<int> vec : v){
+    for(auto it = vec.begin(); it != vec.end(); ++it){
+      if(*it < 0){
+        cout << *it << " ";
+      }
+      else{
+        cout << *it << "  ";
+      }
+    }
+    cout << endl;
+  }
+  cout <<endl;
 }
