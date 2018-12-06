@@ -119,7 +119,7 @@ void MapFactory::generateMap(){
     }
 
     //TODO remove when done checking grids
-    //this -> printVector(this -> paths);
+    this -> printVector(this -> paths);
     //this -> printVector(this -> unavailableSpots);
     //this -> printVector(this -> distances);
     //this -> printVector(this -> floorGrid);
@@ -181,6 +181,22 @@ bool MapFactory::tryAMap(){
       if(!pathMade){
         return false;
       }
+    }else{
+      vector<intPair> dirs = {make_pair(0,1), make_pair(0,-1),make_pair(1,0),make_pair(-1,0)};
+      cout << "p " << p+1 << endl;
+
+      for(intPair z : dirs){
+
+        int r=entryPos.at(2*p+1) + z.first; // col row because andrew likes garbage
+        int c=entryPos.at(2*p) + z.second;
+
+        cout << "entry pos: " << r << "," << c << endl;
+
+        if(0 < r && r < floorGrid.size() && 0 < c && c < floorGrid[0].size() && floorGrid.at(r).at(c)>0){
+          cout << "p" << endl;
+          combinedPaths.at(entryPos.at(2*p+1)).at(entryPos.at(2*p)).insert(r*xDim+c);
+        }
+      }
     }
 
     if(p < entrysToExit.size()){
@@ -206,6 +222,7 @@ void MapFactory::initGridArrays(){
       this -> floorGrid.push_back(vector<int>(this -> xDim, -1));
       this -> aboveFloorGrid.push_back(vector<int>(this -> xDim, -1));
       this -> extraneousPaths.push_back(vector<int>(this -> xDim, -1));
+      this -> combinedPaths.push_back(vector<std::unordered_set<int>>(this -> xDim, std::unordered_set<int>()));
   }
 }
 /*
@@ -850,13 +867,14 @@ bool MapFactory::makePathBFS(int path){
 }
 
 void MapFactory::mergeToMain(vector<vector<CellNode>>& board){
+  cout << "merging" << endl;
   //start at the index of your last position (could be the exit or adjacent to some other path)
   int currRow = exitPos.at(1);
   int currCol = exitPos.at(0);
 
 
-  int last_parent_row=-1;
-  int last_parent_col=-1;
+  int last_row=-1;
+  int last_col=-1;
 
   while(!(board.at(currRow).at(currCol).rowParent == currRow &&
           board.at(currRow).at(currCol).colParent == currCol) ){
@@ -864,20 +882,25 @@ void MapFactory::mergeToMain(vector<vector<CellNode>>& board){
     int tempRow = board.at(currRow).at(currCol).rowParent;
     int tempCol = board.at(currRow).at(currCol).colParent;
 
-    if(last_parent_col != -1 && last_parent_row!=-1 && combinedPaths.at(currRow).at(currCol).find(last_parent_row*xDim+last_parent_col)==combinedPaths.at(currRow).at(currCol).end()){
-      combinedPaths.at(currRow).at(currCol).insert(last_parent_row*xDim+last_parent_col);
+    if(last_col != -1 && last_row!=-1 && combinedPaths.at(currRow).at(currCol).find(last_col*xDim+last_col)==combinedPaths.at(currRow).at(currCol).end()){
+      combinedPaths.at(currRow).at(currCol).insert(last_row*xDim+last_col);
     }
 
 
 
 
-    last_parent_row=tempRow;
-    last_parent_col=tempCol;
+    last_row=currRow;
+    last_col=currCol;
 
     currRow = tempRow;
     currCol = tempCol;
 
   }
+
+  if(last_col != -1 && last_row!=-1 && combinedPaths.at(currRow).at(currCol).find(last_row*xDim+last_col)==combinedPaths.at(currRow).at(currCol).end()){
+    combinedPaths.at(currRow).at(currCol).insert(last_row*xDim+last_col);
+  }
+
 }
 
 /*
@@ -1851,11 +1874,11 @@ void MapFactory::printVector(vector<vector<T>> &v){
   for(vector<int> vec : v){
     for(auto it = vec.begin(); it != vec.end(); ++it){
       if(*it < 0){
-        cout << *it << " ";
+        printf("%2d ",*it);
         s << *it << " ";
       }
       else{
-        cout << *it << "  ";
+        printf("%2d ",*it);
         s << *it << "  ";
       }
     }

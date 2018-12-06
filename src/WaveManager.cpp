@@ -454,7 +454,7 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
 
 void WaveManager::handleMapGenerated(const EventInterface& event){
 
-  cout << "new map bruh" << endl;
+//  cout << "new map bruh" << endl;
   auto mapGeneratedEvent= static_cast<const MapGeneratedEvent*>(&event);
 
   auto mapGeneratedEventData = static_cast<MapGeneratedEventData*>((mapGeneratedEvent->data).get());
