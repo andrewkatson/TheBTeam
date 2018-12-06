@@ -387,14 +387,20 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //clear all the towers placed
   towerManager->clearAllTowers();
 
+
   //call all the level change event functions for any class that is attached to gameLogic
   waveManager->handleLevelChanged(event);
   //make an event and queue it
   //shared_ptr<EventInterface>
   //this -> eventManager -> queueEvent
 
+
+  soundManager->handleLevelChanged(event);
+
+
   //we should switch the game to the loading screen state
   shared_ptr<EventInterface> loadingState = make_shared<StateChangeEvent>(State::Loading, nowInNano);
+
 
   this -> eventManager -> queueEvent(loadingState);
  }
@@ -415,6 +421,7 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
   towerManager -> clearAllTowers();
   //ensure no enemies are left in spawn system
   waveManager -> handleRestartGame(event);
+
 
   makeNewMap();
 }
