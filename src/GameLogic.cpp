@@ -403,12 +403,10 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   */
 void GameLogic::handleRestartGameEvent(const EventInterface& event){
 
-  /*
   //reset all defaults in the player
   player -> setToDefaults();
-
-  //cout << "we restarted game " << endl;
-  */
+  //reset all towers to base values
+  towerManager -> resetAllTowersToBaseValues();
 }
 
 /*

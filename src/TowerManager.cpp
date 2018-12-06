@@ -972,4 +972,134 @@ void TowerManager::clearAllTowers(){
  */
 void TowerManager::updateBaseTowerStats(){
 
+  //as we iterate through the placed towers we do not want to check the same type again
+  unordered_map<string, int> checkedTowerTypes;
+
+  for(auto it : towersPlaced){
+
+      shared_ptr<TowerInterface> tower = it.second;
+
+      if(tower->isTower){
+
+
+      //if we have not found the tower then it is the base one and we need to
+      //set all of its stats to the current tower placed
+      if(checkedTowerTypes.find(tower->getType()) != checkedTowerTypes.end() ){
+        shared_ptr<TowerInterface> baseTower = allTowerTypes.at(tower->getType());
+
+        //set all the base tower stats to 0
+        setAllStatsOfTowerAToB(baseTower, tower);
+
+        checkedTowerTypes.insert({tower->getType(), 1});
+      }
+      else{
+        shared_ptr<TowerInterface> baseTower = allTowerTypes.at(tower->getType());
+        //otherwise we just average the stats after adding the current towers stats
+        updateAllStatsOfAByB(baseTower, tower, checkedTowerTypes.at(tower->getType()));
+        //update the number of towers of this type
+        checkedTowerTypes.at(tower->getType()) = checkedTowerTypes.at(tower->getType()) + 1;
+        //then average the stats again
+        divideAllStatsOfTower(baseTower, checkedTowerTypes.at(tower->getType()));
+      }
+    }
+  }
+}
+
+/*
+ * Set all the passed tower stats to the stats of the second passed tower
+ */
+void TowerManager::setAllStatsOfTowerAToB(shared_ptr<TowerInterface> towerA, shared_ptr<TowerInterface> towerB){
+  if(towerA -> isMelee){
+    //cast as a melee tower
+    MeleeTower* meleeTowerA = dynamic_cast<MeleeTower*>(towerA.get());
+    MeleeTower* meleeTowerB = dynamic_cast<MeleeTower*>(towerB.get());
+
+    meleeTowerA->updateRadius(meleeTowerB->getRadius());
+    meleeTowerA->updateRespawnSpeed(meleeTowerB->getRespawnSpeed());
+    meleeTowerA->updateUnitHitpoints(meleeTowerB->getUnitHitpoints());
+    meleeTowerA->updateUnitDamage(meleeTowerB->getUnitDamage());
+    meleeTowerA->updateUnitArmorPenetration(meleeTowerB->getUnitArmorPenetration());
+    meleeTowerA->updateUnitArmor(meleeTowerB->getUnitArmor());
+    meleeTowerA->updateUnitAttackRate(meleeTowerB->getUnitAttackRate());
+  }
+  else{
+    //cast as a range tower
+    RangeTower* rangeTowerA = dynamic_cast<RangeTower*>(towerA.get());
+    RangeTower* rangeTowerB = dynamic_cast<RangeTower*>(towerB.get());
+
+    rangeTowerA->updateRadius(rangeTowerB->getRadius());
+    rangeTowerA->updateRateOfFire(rangeTowerB->getRateOfFire());
+    rangeTowerA->updateProjectileDamage(rangeTowerB->getProjectileDamage());
+    rangeTowerA->updateProjectileArmorPenetration(rangeTowerB->getProjectileArmorPenetration());
+    rangeTowerA->updateProjectileAreaOfEffect(rangeTowerB->getProjectileAreaOfEffect());
+  }
+}
+/*
+ * Add all the stats of one tower to the stats of the second tower and set it
+ * also takes into consideration how many previous towers' stats we have used
+ * to get towerA's so it will use the full value
+ */
+void TowerManager::updateAllStatsOfAByB(shared_ptr<TowerInterface> towerA, shared_ptr<TowerInterface> towerB, int totalOfTypeA){
+  if(towerA -> isMelee){
+    //cast as a melee tower
+    MeleeTower* meleeTowerA = dynamic_cast<MeleeTower*>(towerA.get());
+    MeleeTower* meleeTowerB = dynamic_cast<MeleeTower*>(towerB.get());
+
+    meleeTowerA->updateRadius(meleeTowerB->getRadius()+meleeTowerA->getRadius()*totalOfTypeA);
+    meleeTowerA->updateRespawnSpeed(meleeTowerB->getRespawnSpeed()+meleeTowerA->getRespawnSpeed()*totalOfTypeA);
+    meleeTowerA->updateUnitHitpoints(meleeTowerB->getUnitHitpoints()+meleeTowerA->getUnitHitpoints()*totalOfTypeA);
+    meleeTowerA->updateUnitDamage(meleeTowerB->getUnitDamage()+meleeTowerA->getUnitDamage()*totalOfTypeA);
+    meleeTowerA->updateUnitArmorPenetration(meleeTowerB->getUnitArmorPenetration()+meleeTowerA->getUnitArmorPenetration()*totalOfTypeA);
+    meleeTowerA->updateUnitArmor(meleeTowerB->getUnitArmor()+meleeTowerA->getUnitArmor()*totalOfTypeA);
+    meleeTowerA->updateUnitAttackRate(meleeTowerB->getUnitAttackRate()+meleeTowerA->getUnitAttackRate()*totalOfTypeA);
+  }
+  else{
+    //cast as a range tower
+    RangeTower* rangeTowerA = dynamic_cast<RangeTower*>(towerA.get());
+    RangeTower* rangeTowerB = dynamic_cast<RangeTower*>(towerB.get());
+
+    rangeTowerA->updateRadius(rangeTowerB->getRadius()+rangeTowerA->getRadius()*totalOfTypeA);
+    rangeTowerA->updateRateOfFire(rangeTowerB->getRateOfFire()+rangeTowerA->getRateOfFire()*totalOfTypeA);
+    rangeTowerA->updateProjectileDamage(rangeTowerB->getProjectileDamage()+rangeTowerA->getProjectileDamage()*totalOfTypeA);
+    rangeTowerA->updateProjectileArmorPenetration(rangeTowerB->getProjectileArmorPenetration()+rangeTowerA->getProjectileArmorPenetration()*totalOfTypeA);
+    rangeTowerA->updateProjectileAreaOfEffect(rangeTowerB->getProjectileAreaOfEffect()+rangeTowerA->getProjectileAreaOfEffect()*totalOfTypeA);
+  }
+}
+
+/*
+ * Divides all stats of a tower by the passed value
+ */
+void TowerManager::divideAllStatsOfTower(shared_ptr<TowerInterface> tower, int divideBy){
+  if(tower -> isMelee){
+    //cast as a melee tower
+    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+
+    meleeTower->updateRadius(meleeTower->getRadius()/divideBy);
+    meleeTower->updateRespawnSpeed(meleeTower->getRespawnSpeed()/divideBy);
+    meleeTower->updateUnitHitpoints(meleeTower->getUnitHitpoints()/divideBy);
+    meleeTower->updateUnitDamage(meleeTower->getUnitDamage()/divideBy);
+    meleeTower->updateUnitArmorPenetration(meleeTower->getUnitArmorPenetration()/divideBy);
+    meleeTower->updateUnitArmor(meleeTower->getUnitArmor()/divideBy);
+    meleeTower->updateUnitAttackRate(meleeTower->getUnitAttackRate()/divideBy);
+  }
+  else{
+    //cast as a range tower
+    RangeTower* rangeTower = dynamic_cast<RangeTower*>(tower.get());
+
+    rangeTower->updateRadius(rangeTower->getRadius()/divideBy);
+    rangeTower->updateRateOfFire(rangeTower->getRateOfFire()/divideBy);
+    rangeTower->updateProjectileDamage(rangeTower->getProjectileDamage()/divideBy);
+    rangeTower->updateProjectileArmorPenetration(rangeTower->getProjectileArmorPenetration()/divideBy);
+    rangeTower->updateProjectileAreaOfEffect(rangeTower->getProjectileAreaOfEffect()/divideBy);
+  }
+}
+
+/*
+ * Reset all the base towers to their default values
+ */
+void TowerManager::resetAllTowersToBaseValues(){
+  allTowerTypes.clear();
+  allTowerUpgrades.clear();
+  populateObstacles();
+  populateTowerUpgrades();
 }

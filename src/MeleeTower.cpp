@@ -10,6 +10,7 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> e = 0.00001;
   this -> timeOfDeath = {-1, -1, -1};
   this -> isMelee = true;
+  this -> isTower = true;
   this -> radiusVisible = false;
   this -> registerDelegates();
   this -> setToCenter();
@@ -47,13 +48,6 @@ void MeleeTower::update(float delta){
       else{
         if(unit->getEngagedUnit()->getEngagedUnit() == unit){
           unitsEngaged++;
-        }
-        //TODO move the unit towards the enemy unit (or attack if in contact)
-        if(unit->getEngagedUnit()->getHitpoints() < 0){
-          if(unit->getEngagedUnit() -> getEngagedUnit() == unit){
-            unit -> getEngagedUnit()->setEngagedUnit((NULL));
-          }
-          unit ->setEngagedUnit(NULL);
         }
         //check if my unit is at destination, if so move towards xtarget and ytarget
         //else move to the enemy BUT before set the xvec and yVect
@@ -395,7 +389,9 @@ void MeleeTower::handleDeadUnit(int indexOfUnit){
   timeOfDeath.at(indexOfUnit) = nowInNano;
 
   //set its fighting unit to null
-  currentUnits.at(indexOfUnit) -> getEngagedUnit() -> setEngagedUnit(NULL);
+  if(currentUnits.at(indexOfUnit) -> getEngagedUnit() != NULL){
+    currentUnits.at(indexOfUnit) -> getEngagedUnit() -> setEngagedUnit(NULL);
+  }
   currentUnits.at(indexOfUnit) -> setEngagedUnit(NULL);
 }
 
@@ -462,6 +458,7 @@ void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
     //cout << "we are fine" << endl;
     isEnemyPointingAtUnit = true;
     if (unit->getHitpoints() > 0) {
+      cout << " Fry unti " << unitIndex << " is alive " << endl;
       if (unit->getEngagedUnit() == NULL) {
         float enemyX = enemyInRange->getXCoordinate();
         float enemyY = enemyInRange->getYCoordinate();

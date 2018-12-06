@@ -612,6 +612,13 @@ void PlayingScreen::handleLevelChangeEvent(const EventInterface& event){
   playingScreenHeader -> handleLevelChange(event);
 }
 
+/*
+ * Handle restart game changes by delegating to classes below this one that need to know
+ */
+void PlayingScreen::handleRestartGameEvent(const EventInterface& event){
+  playingScreenHeader -> handleRestartGame(event);
+}
+
 
 /*
  * @return whether the passed positions are within the towers radius

@@ -5,6 +5,7 @@ RangeTower::RangeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> isMelee = false;
+  this -> isTower = true;
   this -> radiusVisible = false;
   //set the tower interface scaling factor for the rate of fire
   rateOfFireScale = textLoader -> getDouble(string("IDS_Rate_Of_Fire_Scaler"));

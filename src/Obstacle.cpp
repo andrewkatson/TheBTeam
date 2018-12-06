@@ -4,6 +4,7 @@
 Obstacle::Obstacle(shared_ptr<EventManager> eventManager,shared_ptr<TextLoader> textLoader) : TowerInterface(){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> isTower = false;
   this -> isMelee = false;
   this -> radiusVisible = false;
   this -> radius = 0;

@@ -64,6 +64,7 @@ public:
   void handleMousePress(const EventInterface& event);
   void handleStateChange(const EventInterface& event);
   void handleLevelChangeEvent(const EventInterface& event);
+  void handleRestartGameEvent(const EventInterface& event);
 
   void updateUserView(float deltaS, sf::RenderWindow &game);
 

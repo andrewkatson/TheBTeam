@@ -39,6 +39,7 @@
 #include <functional>
 #include <assert.h>
 #include <random>
+#include <unordered_set>
 
 using namespace std::placeholders;
 
@@ -46,6 +47,7 @@ using std::vector;
 using std::unordered_map;
 using std::dynamic_pointer_cast;
 using std::cerr;
+using std::unordered_set;
 class TowerManager{
 //Store the textLoader to make requests for strings and constants
 shared_ptr<TextLoader> textLoader;
@@ -129,6 +131,12 @@ public:
   void clearAllTowers();
 
   void updateBaseTowerStats();
+  void setAllStatsOfTowerAToB(shared_ptr<TowerInterface> towerA,
+      shared_ptr<TowerInterface> towerB);
+  void updateAllStatsOfAByB(shared_ptr<TowerInterface> towerA,
+    shared_ptr<TowerInterface> towerB, int totalOfTypeA);
+  void divideAllStatsOfTower(shared_ptr<TowerInterface> tower, int divideBy);
+  void resetAllTowersToBaseValues();
 
 private:
   void registerDelegates();

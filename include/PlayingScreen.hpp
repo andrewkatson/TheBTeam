@@ -93,6 +93,8 @@ public:
   bool firstTimeClickOnRallyFlag(shared_ptr<TowerInterface> tower);
   void handleStateChange(const EventInterface& event);
   void handleWaveChange(const EventInterface& event);
+  void handleLevelChangeEvent(const EventInterface& event);
+  void handleRestartGameEvent(const EventInterface& event);
 
   void draw(sf::RenderWindow& window);
   void drawFloorMap(sf::RenderWindow& window);
@@ -117,5 +119,5 @@ public:
 
   bool isFlagButtonClicked(){return rallyPointChange->isButtonClicked();}
 
-  void handleLevelChangeEvent(const EventInterface& event);
+
 };

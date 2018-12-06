@@ -300,11 +300,6 @@ void WaveManager::createNextWave() {
     //set the center of the sprite
     //enemy->setToCenter();
     enemy->setUnitScale(xScale,yScale);
-    //setWorld and fixture
-    //enemy -> setWorld(world);
-
-    //enemy -> setFixtures();
-
     currentWave.push(enemy);
   }
   //printf("created a wave with %ld units\n",currentWave.size());

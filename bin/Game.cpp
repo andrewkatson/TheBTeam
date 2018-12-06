@@ -154,4 +154,5 @@ void Game::handleLevelChange(const EventInterface &event){
  */
 void Game::handleRestartGame(const EventInterface &event){
   gameLogic->handleRestartGameEvent(event);
+  userView->handleRestartGameEvent(event);
 }
