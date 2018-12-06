@@ -222,6 +222,9 @@
     <string value="IDS_Rate_Of_Fire_Upgrade" id="IDS_Rate_Of_Fire_Upgrade_ID"> </string>
     <string value="IDS_Respawn_Speed_Upgrade" id="IDS_Respawn_Speed_Upgrade_ID"> </string>
 
+    <!--Exit Tile Path -->
+    <string value="../resources/textures/vegies1.png" id="IDS_Exit_Tile"> </string>
+
   <!--Sound Paths-->
   <string value="../resources/sounds/unit/escape.ogg" id="IDS_Unit_Escape_Sound_Path"> </string>
   <string value="../resources/sounds/game_stuff/newlevel.ogg" id="IDS_Level_Start_Sound_Path"> </string>

@@ -53,6 +53,10 @@ private:
   //the number of cols
   int cols;
 
+  //scaling used for units in the x and y direction
+  float unitScaleX;
+  float unitScaleY;
+
   //circle shape to take the place of any tower radius
   sf::CircleShape radius;
   //rectangle shape to act in place of the tiles to check if a circle intersects

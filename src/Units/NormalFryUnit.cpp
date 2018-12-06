@@ -17,6 +17,4 @@ NormalFryUnit::NormalFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   //load in the initial texture for sizing
   initSprite();
 
-  //set the sprite for the actor to have a position that is equivalent to its center
-  setToCenter();
 }

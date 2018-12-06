@@ -20,7 +20,6 @@ using namespace std;
 #include "Events/ActorDestroyedEvent.hpp"
 #include "Events/PlaySoundEvent.hpp"
 #include "TextLoader.hpp"
-#include <Box2D/Box2D.h>
 #include <algorithm>
 #include <chrono>
 
@@ -37,14 +36,13 @@ private:
   shared_ptr<TextLoader> textLoader;
   //Array storing the actors representing all projectiles.
   unordered_map<long long, shared_ptr<ActorInterface>> projectiles;
-  //handles all collisions
-  shared_ptr<b2World> world;
+
 public:
 
   /*
    * Constructor. Initialize the projectile vector
    */
-  ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<b2World> world);
+  ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader);
   ~ProjectileManager();
 
   /*

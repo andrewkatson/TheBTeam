@@ -8,25 +8,28 @@ CollisionManager::CollisionManager(shared_ptr<TextLoader> textLoader, shared_ptr
   this -> eventManager = eventManager;
   this -> waveManager = waveManager;
   this -> projectileManager = projectileManager;
+  //the scaling used for the units so that they do not fill up an entire square
+  unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
+  unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
   registerDelegates();
 }
 
 CollisionManager::~CollisionManager(){
   deregisterDelegates();
-  cout << "num made " << nummade << " num destroyed " << numdestroyed << endl;
+  //cout << "num made " << nummade << " num destroyed " << numdestroyed << endl;
 
   for(auto it : towersPlaced){
-    cout << "towers "<< it.second.size() << endl;
+    //cout << "towers "<< it.second.size() << endl;
   }
 
   for(auto it : alliedUnits){
-    cout << "allied units " << it.second.size() << endl;
+    //cout << "allied units " << it.second.size() << endl;
   }
 
   for(auto it : enemyUnits){
-    cout << "Enemy units " << it.second.size() << endl;
+    //cout << "Enemy units " << it.second.size() << endl;
     if(it.second.size() != 0){
-      cout << "position is " << it.first / cols << " " << it.first % cols << endl;
+      //cout << "position is " << it.first / cols << " " << it.first % cols << endl;
     }
   }
 }
@@ -189,8 +192,8 @@ void CollisionManager::handleActorCreated(const EventInterface& event){
     //if this is an allied unit we place it in a map only for the allied units
     if(actorCreated->isAnAlly()){
       //the row and col the ally is currently at
-      cout << "row " << actorCreated -> getRow() << " col " << actorCreated -> getCol() << endl;
-      cout << "x pos " << actorCreated -> getXCoordinate() << " y " << actorCreated -> getYCoordinate() << endl;
+      //cout << "row " << actorCreated -> getRow() << " col " << actorCreated -> getCol() << endl;
+      //cout << "x pos " << actorCreated -> getXCoordinate() << " y " << actorCreated -> getYCoordinate() << endl;
       if(inMap(row,col)){
         int combinedRowCol = actorCreated -> getRow() * cols + actorCreated -> getCol();
         //if there is not a row, col stored then we need to set one up
@@ -203,8 +206,8 @@ void CollisionManager::handleActorCreated(const EventInterface& event){
     }
     else{
       //the row and col the enemy is currently at
-      cout << "row en " << actorCreated -> getRow() << " col " << actorCreated -> getCol() << endl;
-      cout << "x pos en " << actorCreated -> getXCoordinate() << " y " << actorCreated -> getYCoordinate() << endl;
+      //cout << "row en " << actorCreated -> getRow() << " col " << actorCreated -> getCol() << endl;
+      //cout << "x pos en " << actorCreated -> getXCoordinate() << " y " << actorCreated -> getYCoordinate() << endl;
       if(inMap(row,col)){
         nummade++;
         int combinedRowCol = actorCreated -> getRow() * cols + actorCreated -> getCol();
@@ -317,8 +320,8 @@ void CollisionManager::removeOldTower(shared_ptr<TowerInterface> tower){
 
         //if the tile we have set is within the circle
         if(tileInRadius(tower)){
-          cout << "intersecting! " << endl;
-          cout << "row " << row << " and col " << col << endl;
+          //cout << "intersecting! " << endl;
+          //cout << "row " << row << " and col " << col << endl;
 
           int combinedRowCol = row*cols + col;
           //if the row,col pair does not have any towers in it we have to make one
@@ -537,11 +540,25 @@ void CollisionManager::checkForCollisions(float delta){
 
             //if there is a collision we only tell the tower since
             //only that will be taking any action
-            auto isCollision = [] (shared_ptr<ActorInterface> enemyUnit, shared_ptr<TowerInterface> tower)
+            auto isCollision = [this] (shared_ptr<ActorInterface> enemyUnit, shared_ptr<TowerInterface> tower)
             {
+              sf::Sprite enemySprite = enemyUnit->getSprite();
+              //the bounding rectangle will give us the dimensions of the sprite
+              sf::FloatRect boundingBox = enemySprite.getGlobalBounds();
+              //the x dimension of the box
+              float xDim = boundingBox.width;
+              //the ydimension of the box
+              float yDim = boundingBox.height;
+              //the scale in the x direction
+              float xScaleSprite = (float) xTileSize / ((float) xDim*unitScaleX);
+              //the scale in the y direction
+              float yScaleSprite = (float) yTileSize / ((float) yDim*unitScaleY);
+
+              enemySprite.setScale(xScaleSprite,yScaleSprite);
+              enemySprite.setPosition(enemyUnit->getXCoordinate(), enemyUnit->getYCoordinate());
 
               //get the eight points that are on the bounding box of the rectangle relevant to this calculation
-              auto eightPoints = [](sf::FloatRect rect){
+              auto eightPoints = [this](sf::FloatRect rect){
                 vector<floatPair> eightPoints;
 
                 //the eight corners
@@ -556,7 +573,7 @@ void CollisionManager::checkForCollisions(float delta){
                 eightPoints.push_back(make_pair(rect.left+rect.width, rect.top + (rect.height)/2.0));
                 eightPoints.push_back(make_pair(rect.left+(rect.width)/2.0, rect.top + rect.height));
                 return eightPoints;
-              }((enemyUnit->getSprite()).getGlobalBounds());
+              }(enemySprite.getGlobalBounds());
 
               float towerX = tower -> getXCoordinate();
               float towerY = tower -> getYCoordinate();
@@ -569,12 +586,11 @@ void CollisionManager::checkForCollisions(float delta){
               for(floatPair corner : eightPoints){
                 //find distance of point from region bounded by the ellipse radius
                 float distanceOfPoint = pow((corner.first - towerX),2)/pow((towerRadius*xScale),2) +  pow((corner.second - towerY),2)/pow((towerRadius*yScale),2);
-
                 if(distanceOfPoint <= 1.0){
                   return true;
                 }
               }
-
+              return false;
             }(gridWithEnemyUnits.second, towerAndKeyAtGrid.second);
 
             if(isCollision){
@@ -685,11 +701,25 @@ void CollisionManager::projectileExplosionCollisionCheck(shared_ptr<ActorInterfa
 
           //if there is a collision we only tell the tower since
           //only that will be taking any action
-          auto isCollision = [] (shared_ptr<ActorInterface> enemyUnit, shared_ptr<ActorInterface> projectile)
+          auto isCollision = [this] (shared_ptr<ActorInterface> enemyUnit, shared_ptr<ActorInterface> projectile)
           {
+            sf::Sprite enemySprite = enemyUnit->getSprite();
+            //the bounding rectangle will give us the dimensions of the sprite
+            sf::FloatRect boundingBox = enemySprite.getGlobalBounds();
+            //the x dimension of the box
+            float xDim = boundingBox.width;
+            //the ydimension of the box
+            float yDim = boundingBox.height;
 
+            //the scale in the x direction
+            float xScaleSprite = (float) xTileSize / ((float) xDim*unitScaleX);
+            //the scale in the y direction
+            float yScaleSprite = (float) yTileSize / ((float) yDim*unitScaleY);
+
+            enemySprite.setScale(xScaleSprite,yScaleSprite);
+            enemySprite.setPosition(enemyUnit->getXCoordinate(), enemyUnit->getYCoordinate());
             //get the eight points that are on the bounding box of the rectangle relevant to this calculation
-            auto eightPoints = [](sf::FloatRect rect){
+            auto eightPoints = [this](sf::FloatRect rect){
               vector<floatPair> eightPoints;
 
               //the eight corners
@@ -704,13 +734,15 @@ void CollisionManager::projectileExplosionCollisionCheck(shared_ptr<ActorInterfa
               eightPoints.push_back(make_pair(rect.left+rect.width, rect.top + (rect.height)/2.0));
               eightPoints.push_back(make_pair(rect.left+(rect.width)/2.0, rect.top + rect.height));
               return eightPoints;
-            }((enemyUnit->getSprite()).getGlobalBounds());
+            }(enemySprite.getGlobalBounds());
 
             float projectileX = projectile -> getXCoordinate();
             float projectileY = projectile -> getYCoordinate();
             float projectileRadius = projectile->getRadius();
             float xScale = projectile->getXTowerScale();
             float yScale = projectile->getYTowerScale();
+            //for enemies we have a higher bar of collisions
+            int counterPointsInside = 0;
 
             //iterate through all four corners and if one lies within the bounds (And midpoints)
             //of the radius (which should be an ellipse) return true
@@ -722,7 +754,7 @@ void CollisionManager::projectileExplosionCollisionCheck(shared_ptr<ActorInterfa
                 return true;
               }
             }
-
+            return false;
           }(gridWithEnemyUnits.second, projectile);
 
           if(isCollision){

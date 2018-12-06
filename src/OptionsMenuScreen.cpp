@@ -24,10 +24,10 @@ OptionsMenuScreen::OptionsMenuScreen(shared_ptr<EventManager> eventManager,share
 
   //load the main font
   if(!font.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-    //cout << "loaded font" <<endl;
+    ////cout << "loaded font" <<endl;
   }
 
 }
@@ -188,10 +188,10 @@ void OptionsMenuScreen::draw(sf::RenderWindow &window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-        cout << "No font!" << endl;
+        //cout << "No font!" << endl;
   }
   else{
-        //  cout << "loaded font!" << endl;
+        //  //cout << "loaded font!" << endl;
   }
 
   text.setFont(mainFont);

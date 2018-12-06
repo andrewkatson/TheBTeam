@@ -47,8 +47,17 @@ private:
   float xScale = 1.0;
   float yScale = 1.0;
 
+  //the current position in coordinates
+  float xPos;
+  float yPos;
+
   //the id of the button (may not always have one)
   string buttonID;
+
+  //indicating we have mirrored the button across the y
+  bool mirroredAcrossX=false;
+  //across the x
+  bool mirroredAcrossY=false;
 
 public:
   Button();
@@ -100,8 +109,14 @@ public:
   void setOrigin(float originX, float originY);
 
   void draw(sf::RenderWindow& window);
-  
+
   string getButtonID(){return buttonID;}
+
+  bool isMirrored();
+  bool isMirroredX();
+  bool isMirroredY();
+  void mirrorOverX(int winowX);
+  void mirrorOverY(int windowY);
 
 };
 

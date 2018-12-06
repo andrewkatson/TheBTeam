@@ -388,10 +388,10 @@ void BuyTowerOption::drawPurchaseButton(sf::RenderWindow& window){
   string mainFontPath = textLoader -> getString(string("IDS_SFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
 
   text = buyOrSell -> getButtonText();
@@ -411,10 +411,10 @@ void BuyTowerOption::drawStatisticsButtons(sf::RenderWindow& window){
     string mainFontPath = textLoader -> getString(string("IDS_SFP"));
 
     if(!mainFont.loadFromFile(mainFontPath)){
-      cout << "No font!" << endl;
+      //cout << "No font!" << endl;
     }
     else{
-    //  cout << "loaded font!" << endl;
+    //  //cout << "loaded font!" << endl;
     }
 
     for(shared_ptr<Button> toDraw: statisticsButtons){

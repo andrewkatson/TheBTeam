@@ -57,7 +57,10 @@ private:
   unique_ptr<Button> rallyPointChange;
   //true if there's a wave happening. false otherwise
   bool waveGoingOn;
-
+  //the special rectangle shape used as the exit tile
+  sf::RectangleShape exitTile;
+  //texture for the exit tile
+  sf::Texture exitTexture;
   //the upgrade system visuals
   unique_ptr<UpgradeCircle> upgradeCircle;
 

@@ -1,5 +1,7 @@
 [Unreleased]
 
+###Changed
+- buy and sell buttons will mirror across middle of screen if you right click them (useful when they block clicks) [@andrewkatson][https://github.com/andrewkatson]
 
 [0.8.0] 2018 - 12 -4
 ###Added

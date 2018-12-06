@@ -844,9 +844,15 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
   //otherwise it will not register the click
   bool buyTowerClicked = (this->buyTower) -> isSelected(xPos,yPos);
   if(buyTowerClicked){
-    shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, rowSelected, colSelected, true, nowInNano);
 
-    this -> eventManager -> queueEvent(buyTowerState);
+    if(mouseButtonPressed == "Right"){
+      buyTower -> mirrorOverY(windowY);
+    }
+    else{
+      shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, rowSelected, colSelected, true, nowInNano);
+
+      this -> eventManager -> queueEvent(buyTowerState);
+    }
     return;
   }
 
@@ -855,9 +861,14 @@ void PlayingScreenHeader::handleMousePress(const EventInterface& event){
   //otherwise it will not register the click
   bool sellTowerClicked = (this->sellTower) -> isSelected(xPos,yPos);
   if(sellTowerClicked){
-    shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, rowSelected, colSelected, false, nowInNano);
+    if(mouseButtonPressed == "Right"){
+      sellTower -> mirrorOverY(windowY);
+    }
+    else{
+      shared_ptr<EventInterface> buyTowerState = make_shared<StateChangeEvent>(State::BuyTower, rowSelected, colSelected, false, nowInNano);
 
-    this -> eventManager -> queueEvent(buyTowerState);
+      this -> eventManager -> queueEvent(buyTowerState);
+    }
     return;
   }
 
@@ -1126,10 +1137,10 @@ void PlayingScreenHeader::drawBuyTowerButton(sf::RenderWindow& window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
 
   text = buyTower -> getButtonText();
@@ -1154,10 +1165,10 @@ void PlayingScreenHeader::drawSellTowerButton(sf::RenderWindow& window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
 
   text = sellTower -> getButtonText();
@@ -1176,10 +1187,10 @@ void PlayingScreenHeader::drawHeaderButtons(sf::RenderWindow& window){
   string mainFontPath = textLoader -> getString(string("IDS_TFP"));
 
   if(!mainFont.loadFromFile(mainFontPath)){
-    cout << "No font!" << endl;
+    //cout << "No font!" << endl;
   }
   else{
-  //  cout << "loaded font!" << endl;
+  //  //cout << "loaded font!" << endl;
   }
   for(shared_ptr<Button> toDraw : headerVariables){
     text = toDraw -> getButtonText();

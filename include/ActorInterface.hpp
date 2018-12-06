@@ -10,7 +10,6 @@
 #define ACTORINTERFACE_H
 
 #include <SFML/Graphics.hpp>
-#include <Box2D/Box2D.h>
 #include <memory>
 #include <vector>
 #include "EventManager.hpp"
@@ -27,6 +26,10 @@ class ActorInterface{
 protected:
   //A reference to the unit that this unit is fighting.
   shared_ptr<ActorInterface> engagedUnit;
+
+  //the scale of the unit when being drawn
+  float xUnitScale;
+  float yUnitScale;
 
   //whether the unit should be drawn or not (1=true, 0=false)
   float drawUnit=1;
@@ -62,10 +65,10 @@ protected:
   float speed;
 
   //The actor's hitpoints
-  int hitpoints;
+  float hitpoints;
 
   //Used to reset the actor's hit points
-  int maxHitpoints;
+  float maxHitpoints;
 
   //The actor's damage
   int damage;
@@ -103,11 +106,6 @@ protected:
   //the degree of error
   const float e = 0.001;
 
-  //Box2d World and Body
-  shared_ptr<b2World> world;
-  b2Body* body;
-  b2Fixture* fixture;
-
   //the area of effect for a projectile and the area of attack for a unit
   int radius;
 
@@ -133,21 +131,11 @@ public:
   ActorInterface();
   ~ActorInterface();
 
-
-  void startContact(void* collidingWith);
-
-  void endContact(void* collidingWith);
   /*
    * Rotate the texture by the number of degrees
    * @param degrees:
    */
   void rotate(float degrees);
-
-  /*
-    TODO - hash out the specifics of the interface's constructor. does it need a default implementation?
-   */
-  //gives actor access to the world to set physics body
-  void setWorld(shared_ptr<b2World> world);
 
 
   /*
@@ -225,18 +213,18 @@ public:
 
   void setSpeed(float speed){this->speed=speed;}
 
-  int getHitpoints(){return this->hitpoints;}
+  float getHitpoints(){return this->hitpoints;}
   int getMaxHitpoints(){return this->maxHitpoints;}
   int getDamage(){return this->damage;}
-  int getArmor(){return this->armor;}
+  int getArmor(){cout << "armor was " << armor << endl; return this->armor;}
   int getArmorPenetration(){return this->armorPenetration;}
   int getRadius(){return radius;}
   int getAttackRate(){return attackRate;}
 
-  void updateHitpoints(int newHitpoints){this->hitpoints = newHitpoints;}
-  void updateMaxHitpoints(int newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
+  void updateHitpoints(float newHitpoints){this->hitpoints = newHitpoints;}
+  void updateMaxHitpoints(float newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
   void updateDamage(int newDamage){damage = newDamage;}
-  void updateArmor(int newArmor){armor = newArmor;}
+  void updateArmor(int newArmor){cout << "are we setting the armor? " << endl; armor = newArmor;}
   void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
   void updateRadius(int newRadius){radius = newRadius;}
   void updateAttackRate(int newAttackRate){attackRate = newAttackRate;}
@@ -322,6 +310,18 @@ public:
   float getXTarget(){return xTarget;}
 
   float getYTarget(){return yTarget;}
+
+  float getXVector(){return xVector;}
+  float getYVector(){return yVector;}
+
+  //set sprite scale
+  void setScaleForSprite(float x, float y){sprite.setScale(x,y);}
+  //set sprite position
+  void setSpritePosition(float x, float y){sprite.setPosition(x,y);}
+  //set the unit scale used
+  void setUnitScale(float x, float y){xUnitScale=x; yUnitScale = y;}
+  float getUnitXScale(){return xUnitScale;}
+  float getUnitYScale(){return yUnitScale;}
 };
 
 #endif

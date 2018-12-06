@@ -61,17 +61,9 @@ void MeleeUnit::initSprite(){
 
 
 void MeleeUnit::setToCenter(){
-  sf::FloatRect boundsOfSprite = sprite.getLocalBounds();
+  sf::FloatRect boundsOfSprite = sprite.getGlobalBounds();
   sprite.setOrigin(boundsOfSprite.left + (boundsOfSprite.width)/2.0,
   boundsOfSprite.top + (boundsOfSprite.height)/2.0);
-}
-
-void MeleeUnit::updateHitpoints(int damage){
-  hitpoints-=damage;
-}
-
-void MeleeUnit::updateArmor(int damage) {
-  armor-=damage;
 }
 
 bool MeleeUnit::canAttack() {
@@ -90,18 +82,36 @@ HitpointBar MeleeUnit::getHpBar() {
 }
 
 void MeleeUnit::move(float deltaS){
-  this->x+=deltaS*(100*speed*cos(direction))*ActorInterface::getXScale();
-  this->y+=deltaS*(100*speed*sin(direction)*-1)*ActorInterface::getYScale();
+  this->x+=(speed*cos(direction))*ActorInterface::getXScale()*deltaS;
+  this->y+=(speed*sin(direction)*-1)*ActorInterface::getYScale()*deltaS;
   if(isnan(x) || isnan(y)){
-    cout << "position after " << x << " " << y << endl;
-    cout << "direction was " << direction << endl;
+    //cout << "position after " << x << " " << y << endl;
+    //cout << "direction was " << direction << endl;
   }
 }
 
 void MeleeUnit::vectorMove(float delta){
-  float newX = xVector /(500/speed) *delta * xScale + x;
-  float newY = yVector / (500/speed) *delta * yScale + y;
+  //the weird subtraction here is to make it so that if a staistic "speed" is a high number
+  //in the xml it will cause the unit to be faster while also having a similar calculation
+  //to the normal unit move function
+  //float newX = xVector / (abs(speed-25)) *delta *ActorInterface::getXScale() + x;
+  //float newY = yVector / (abs(speed-25)) *delta *ActorInterface::getYScale() + y;
 
+  float newX = xVector * speed * delta + x;
+  float newY = yVector * speed  * delta + y;
+
+  /*
+  cout << "currently at " << x << " "<< y <<endl;
+  cout << "x target is " << xTarget << " " << yTarget << endl;
+  cout << "vec is " << xVector << " " << yVector << endl;
+  cout << "go unit ! " << endl;
+  cout << "new x " << newX << " " << newY << endl;
+  cout << "xVector / speed " << xVector/speed <<  endl;
+  cout << "yVector/ speed " << yVector/speed << endl;
+  cout << "add deltax " << xVector/speed*delta << endl;
+  cout << "add deltay " << yVector/speed*delta << endl;
+  */
+  //cout << "move to intended " << newX << " " << newY << endl;
   //we check to see if the projectile has overshot the target
   if(xVector > 0 ){
     if(newX > xTarget - e){
@@ -124,9 +134,23 @@ void MeleeUnit::vectorMove(float delta){
       newY = yTarget;
     }
   }
-
   x = newX;
   y = newY;
+  //cout << " move to " << x << endl;
+  //cout << " move to " << y << endl;
+}
+
+/*
+ * used to compare the position of a unit and its target
+ * @return bool: if the coordinates passed are equivalent
+ */
+bool MeleeUnit::atTarget(){
+  if(xTarget - e <= x && xTarget + e >= x){
+    if(yTarget - e <= y && yTarget + e >=y){
+      return true;
+    }
+  }
+  return false;
 }
 
 bool MeleeUnit::isCollision(sf::FloatRect colliding_with){
@@ -138,11 +162,11 @@ int MeleeUnit::getLunchMoney() const {
 }
 
 void MeleeUnit::setLunchMoney(int lunchMoney) {
-  MeleeUnit::lunchMoney = lunchMoney;
+  this -> lunchMoney = lunchMoney;
 }
 
-void MeleeUnit::setHitpoints(int hitpoints) {
-  MeleeUnit::hitpoints = hitpoints;
+void MeleeUnit::setHitpoints(float hitpoints) {
+  this -> hitpoints = hitpoints;
 }
 
 int MeleeUnit::getDamage() const {
@@ -150,7 +174,7 @@ int MeleeUnit::getDamage() const {
 }
 
 void MeleeUnit::setDamage(int damage) {
-  MeleeUnit::damage = damage;
+  this -> damage = damage;
 }
 
 int MeleeUnit::getArmor() const {
@@ -158,7 +182,8 @@ int MeleeUnit::getArmor() const {
 }
 
 void MeleeUnit::setArmor(int armor) {
-  MeleeUnit::armor = armor;
+  assert(false);
+  this-> armor = armor;
 }
 
 int MeleeUnit::getAttackRadius() const {
@@ -166,19 +191,9 @@ int MeleeUnit::getAttackRadius() const {
 }
 
 void MeleeUnit::setAttackRadius(int attackRadius) {
-  radius = attackRadius;
+  this -> radius = attackRadius;
 }
 
-void MeleeUnit::setFixtures(){
-  sf::FloatRect boundingBox = sprite.getGlobalBounds();
-  b2PolygonShape boxShape;
-  boxShape.SetAsBox(boundingBox.width*xScale, boundingBox.height*yScale);
-
-  b2FixtureDef boxFixtureDef;
-  boxFixtureDef.shape = &boxShape;
-  boxFixtureDef.density = 1;
-  fixture = body->CreateFixture(&boxFixtureDef);
-}
 
 double MeleeUnit::getOvershoot() const {
   return overshoot;
@@ -197,27 +212,28 @@ void MeleeUnit::setOvershooting(bool overshooting) {
 }
 
 void MeleeUnit::attackEngagedUnit(){
-  int hp = engagedUnit->getHitpoints();
-  int armor = engagedUnit->getArmor();
-  hp -= damage *(armorPenetration/armor);
-  engagedUnit->updateHitpoints(hp);
-  //hitpoints-=damage*(armorPenetration/armor);
-  cout << "I AM ATTACKING YOU" << endl;
+  float enemyHP = engagedUnit->getHitpoints();
+  int enemyArmor = engagedUnit->getArmor();
+
+  assert(armor>0);
+  enemyHP -= (float)damage *(float)(armorPenetration/enemyArmor);
+  engagedUnit->updateHitpoints(enemyHP);
 }
 
 void MeleeUnit::updateAttack(float delta){
-  if(this->sprite.getGlobalBounds().intersects(engagedUnit->getSprite().getGlobalBounds()) && attackPossible(delta) == true){
+  if(attackPossible(delta)){
     attackEngagedUnit();
   }
 }
-
 bool MeleeUnit::attackPossible(float delta){
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in seconds for the time
   auto nowInSec = duration_cast<seconds>(now.time_since_epoch()).count();
   //time -last attack < (delta/attackrate)
-  if((nowInSec-lastAttack)<(delta/attackRate)){
+  assert(attackRate>0);
+  long long diff = nowInSec - lastAttack;
+  if((diff)<= (long long)(delta/attackRate)){
     return false;
   }
   lastAttack = nowInSec;

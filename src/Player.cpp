@@ -136,7 +136,7 @@ void Player::newLevelBalance(){
     //the actual count in nanoseconds for the time
     auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
 
-    cout<<newBalance<<endl;
+    //cout<<newBalance<<endl;
 
     shared_ptr<EventInterface> bcEvent = make_shared<BalanceChangeEvent>(newBalance, nowInNano);
 
@@ -188,7 +188,7 @@ void Player::modifyHitpoints(int pointsToDeduct){
 
 void Player::resetHitpoints() {
     int reset = (this -> hitpoints - 100);
-    cout<<reset<<endl;
+    //cout<<reset<<endl;
     //the time object of the class
     auto now = high_resolution_clock::now();
     //the actual count in nanoseconds for the time

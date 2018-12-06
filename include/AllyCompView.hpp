@@ -10,6 +10,11 @@
  #include "TextLoader.hpp"
  #include "GameLogic.hpp"
  #include "PlayingScreenHeader.hpp"
+ #include <chrono>
+
+ using std::chrono::high_resolution_clock;
+ using std::chrono::duration_cast;
+ using std::chrono::nanoseconds;
  class AllyCompView{
  private:
    //Store the textLoader to make requests for strings and constants

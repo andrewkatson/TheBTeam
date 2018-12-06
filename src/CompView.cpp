@@ -89,7 +89,8 @@ void CompView::updateUnits(float deltaS){
 
       if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
         shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit,deltaS);
-        shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"),deltaS);
+
+        shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(((int)currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"))> 1? (int)currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage") : 1,deltaS);
         shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Escape_Noise"),deltaS);
 
         if(currentUnit->getEngagedUnit() != NULL){
@@ -222,7 +223,24 @@ void CompView::updateUnits(float deltaS){
     }
     //else we'll call another function to attack the enemy (attackengagedunit)
     else {
-      currentUnit->updateAttack(deltaS);
+      //if the unit is dead create an actor destroyed event and do nothing
+      if(currentUnit->getHitpoints() <= 0){
+        //the time object of the class
+        auto now = high_resolution_clock::now();
+        //the actual count in nanoseconds for the time
+        auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+        //if the enemy was engaged with a unit we need to denengage them both
+        if(currentUnit->getEngagedUnit() != NULL){
+          currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
+          currentUnit->setEngagedUnit(NULL);
+        }
+        shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit, deltaS);
+        this -> eventManager -> queueEvent(actorDestroyed);
+        continue;
+      }
+      else{
+        currentUnit->updateAttack(deltaS);
+      }      
     }
   }
 }

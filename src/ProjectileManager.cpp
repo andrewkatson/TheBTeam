@@ -10,13 +10,12 @@
 #include "ProjectileManager.hpp"
 
 
-ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader,shared_ptr<b2World> world) {
+ProjectileManager::ProjectileManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader) {
   //initialize the projectile vector
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> registerEvents();
   this -> registerDelegates();
-  this -> world = world;
 }
 
 ProjectileManager::~ProjectileManager(){
@@ -101,8 +100,8 @@ void ProjectileManager::handleActorCreated(const EventInterface& event){
   if(isProjectile){
     //the projectile that was created
     shared_ptr<ActorInterface> firedProjectile = acEventData -> actorCreated;
-    cout << "yay projectile !" << endl;
-    cout << "id " << firedProjectile->getID() << endl;
+    //cout << "yay projectile !" << endl;
+    //cout << "id " << firedProjectile->getID() << endl;
     addProjectile(firedProjectile);
   }
 }
@@ -123,7 +122,7 @@ void ProjectileManager::handleActorDestroyed(const EventInterface& event){
   //get the id of the actor to check if it was a projectile
   long long actorDestroyedID = adEventData -> actorID;
 
-  cout << "remove ! " << actorDestroyedID << endl;
+  //cout << "remove ! " << actorDestroyedID << endl;
   if(projectiles.find(actorDestroyedID) != projectiles.end()){
     removeProjectile(actorDestroyedID);
   }
@@ -183,7 +182,7 @@ void ProjectileManager::update(float deltaS){
 //Used ID to grab projectile
 shared_ptr<ActorInterface> ProjectileManager::getProjectile(long long ID){
   if(projectiles.find(ID) == projectiles.end()){
-    cout << " oh no " << ID << endl;
+    //cout << " oh no " << ID << endl;
     assert(true==false);
   }
   return projectiles.at(ID);

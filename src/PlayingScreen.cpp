@@ -176,6 +176,23 @@ void PlayingScreen::deregisterDelegates(){
  * Initialize all the things used for drawing (shapes, fonts)
  */
 void PlayingScreen::initDrawingMaterials(){
+
+  if(!exitTexture.loadFromFile(textLoader->getString(string("IDS_Exit_Tile")))){
+    cerr << "could not load in exit tile" << endl;
+    assert(false);
+  }
+
+  //the size of each tile in x direction
+  const float xTileSize = playingScreenHeader -> getTrueXTileSize();
+  //the size of each tile in y direction
+  const float yTileSize = playingScreenHeader -> getTrueYTileSize();
+
+  //set its size
+  exitTile.setSize(sf::Vector2f(xTileSize, yTileSize));
+
+  //set the exit tile texture
+  exitTile.setTexture(&exitTexture);
+
   initRallyPointButton();
   initUpgradeCircle();
 }
@@ -232,7 +249,7 @@ void PlayingScreen::initColorShiftsForFloor(){
   //cols
   int cols = gameLogic -> getCols();
 
-  cout << "how< many rows " << rows << " "<< cols << endl;
+  //cout << "how< many rows " << rows << " "<< cols << endl;
 
   //set the number of rows
   floorColorShifts.resize(rows);
@@ -276,7 +293,7 @@ void PlayingScreen::initColorShiftsForPath(){
   //cols
   int cols = gameLogic -> getCols();
 
-  cout << "how we feeling " << rows << " " << cols << endl;
+  //cout << "how we feeling " << rows << " " << cols << endl;
 
   //set the number of rows
   pathColorShifts.resize(rows);
@@ -308,7 +325,7 @@ void PlayingScreen::initColorShiftsForPath(){
     }
   }
 
-  cout << "row size of colors " << pathColorShifts.size() << " " <<pathColorShifts.at(0).size() << endl;
+  //cout << "row size of colors " << pathColorShifts.size() << " " <<pathColorShifts.at(0).size() << endl;
 }
 
 /*
@@ -449,7 +466,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   //get the y position
   float yPos = mpEventData -> y;
 
-  cout << "x " << xPos << " y " << yPos << endl;
+  //cout << "x " << xPos << " y " << yPos << endl;
 
   //get the size of a tile in the x
   float xTileSize = playingScreenHeader -> getTrueXTileSize();
@@ -687,50 +704,50 @@ void PlayingScreen::handleStateChange(const EventInterface& event){
 
 
 void PlayingScreen::draw(sf::RenderWindow &window){
-  //cout<<"drawing all the things"<<endl;
+  ////cout<<"drawing all the things"<<endl;
 
 
   //initlaize the color shift vectors
   //if we have not or this is a new board
   if(!haveSetColorShift || (pathColorShifts.size() != gameLogic->getRows() || pathColorShifts.at(0).size() != gameLogic->getCols())){
-    cout << "Called you " << endl;
+    //cout << "Called you " << endl;
     initColorShifts();
     haveSetColorShift=true;
   }
   drawFloorMap(window);
-  //cout<<"drawing all the things 1"<<endl;
+  ////cout<<"drawing all the things 1"<<endl;
   drawTowersAndObstacles(window);
-  //cout<<"drawing all the things 2"<<endl;
+  ////cout<<"drawing all the things 2"<<endl;
   //to avoid looping twice we draw all the units of the towers in the
   //same method as drawing the towers
 
   drawEnemyUnits(window);
-  //cout<<"drawing all the things 3"<<endl;
+  ////cout<<"drawing all the things 3"<<endl;
   drawProjectiles(window);
-  //cout<<"drawing all the things 4"<<endl;
+  ////cout<<"drawing all the things 4"<<endl;
   playingScreenHeader -> draw(window);
-  //cout<<"drawing all the things 5"<<endl;
+  ////cout<<"drawing all the things 5"<<endl;
   //draw the upgrade circle
   upgradeCircle -> draw(window);
-  //cout<<"drawing all the things 6"<<endl;
+  ////cout<<"drawing all the things 6"<<endl;
   //TODO change into real code for drawing the map!
   if(somethingChanged){
-    cout << endl << "THE FLOOR " << endl;
+    //cout << endl << "THE FLOOR " << endl;
     const vector<vector<int>> floor = gameLogic -> getFloor();
     printVector(floor);
 
-    cout << endl << "ABOVE THE FLOOR" << endl;
+    //cout << endl << "ABOVE THE FLOOR" << endl;
     const vector<vector<int>> aboveFloor = gameLogic -> getAboveFloor();
     printVector(aboveFloor);
 
-    cout << endl << "DISTANCES " << endl;
+    //cout << endl << "DISTANCES " << endl;
     const vector<vector<int>> distances = gameLogic -> getDistances();
     printVector(distances);
 
     somethingChanged = false;
 
   }
-  //cout<<"we drew all the things"<<endl;
+  ////cout<<"we drew all the things"<<endl;
 }
 
 /*
@@ -741,7 +758,7 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
   //the 2d grid with ASCII representations of each tile
   const vector<vector<int>> floorGrid = gameLogic -> getFloor();
 
-  //cout << "floor is " << floorGrid.size() << " and " << floorGrid.at(0).size() << endl;
+  ////cout << "floor is " << floorGrid.size() << " and " << floorGrid.at(0).size() << endl;
 
   assert(floorGrid.size()!=0);
 
@@ -756,9 +773,9 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
   //iterate through the 2d grid
   for(int row = 0; row < floorGrid.size(); row++){
     for(int col = 0; col < floorGrid.at(0).size(); col++){
-      //cout << "row " << row << " " << col << endl;
+      ////cout << "row " << row << " " << col << endl;
       int floorValue = floorGrid.at(row).at(col);
-     // cout << "is issue here " << endl;
+     // //cout << "is issue here " << endl;
       //if this is a path
       if(floorValue > 0){
         drawFloorPath(window, row, col, yTileSize, xTileSize, floorValue, floorRect);
@@ -771,7 +788,7 @@ void PlayingScreen::drawFloorMap(sf::RenderWindow& window){
       else if(floorGrid.at(row).at(col) == 0){
         drawFloorExit(window, row, col, yTileSize, xTileSize, floorRect);
       }
-     // cout << "exit loop " << endl;
+     // //cout << "exit loop " << endl;
     }
   }
 }
@@ -912,15 +929,18 @@ void PlayingScreen::drawFloorExit(sf::RenderWindow& window, int row, int col,
      float yPos = row * yTileSize;
 
      //set the position of the rectangle
+     exitTile.setPosition(xPos, yPos);
      floorRect.setPosition(xPos, yPos);
+
+     exitTile.setTexture(&exitTexture);
 
      //set the color of the rectangle
      sf::Color color(redComponent, greenComponent, blueComponent, alphaComponent);
      floorRect.setFillColor(color);
 
      //draw the rectangle
+     //window.draw(exitTile);
      window.draw(floorRect);
-
 }
 
 /*
@@ -1025,7 +1045,7 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
   for(shared_ptr<MeleeUnit>& unit : units){
 
     //only draw them if they have health
-    if(unit -> getHitpoints() != 0){
+    if(unit -> getHitpoints() > 0){
       //get the sprite to be drawn
       sf::Sprite currentSprite = unit -> getSprite();
 
@@ -1061,6 +1081,17 @@ void PlayingScreen::drawTowerUnits(shared_ptr<TowerInterface> tower, sf::RenderW
 
         //set the position of the sprite to the top left of the rectangle
         currentSprite.setPosition(xPos, yPos);
+
+        sf::RectangleShape rect;
+        rect.setFillColor(sf::Color::Blue);
+        rect.setPosition(xPos,yPos);
+        rect.setOrigin(currentSprite.getOrigin());
+        rect.setSize(sf::Vector2f(xDim, yDim));
+        rect.setScale(xScale,yScale);
+        window.draw(rect);
+
+        //set the sprite position inside the class
+        unit->setSpritePosition(xPos,yPos);
 
         //finally draw the sprite
         window.draw(currentSprite);
@@ -1166,6 +1197,7 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
           //the ydimension of the box
           float yDim = boundingBox.height;
 
+
           //the scaling used for the units so that they do not fill up an entire square
           float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
           float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
@@ -1187,34 +1219,43 @@ void PlayingScreen::drawEnemyUnits(sf::RenderWindow& window){
           //set the position of the sprite to the top left of the rectangle
           currentSprite.setPosition(xPos, yPos);
 
+          //set the sprite position inside the class
+          //current->setSpritePosition(xPos,yPos);
+          sf::RectangleShape rect;
+          rect.setFillColor(sf::Color::Blue);
+          rect.setPosition(xPos,yPos);
+          rect.setOrigin(currentSprite.getOrigin());
+          rect.setSize(sf::Vector2f(xDim, yDim));
+          rect.setScale(xScale,yScale);
+          window.draw(rect);
           //finally draw the sprite
           window.draw(currentSprite);
 
           // sf::CircleShape radiusCircle = current -> getRadiusCircle();
           // radiusCircle.setFillColor(sf::Color(150, 50, 250));
           // float radius = (float) current -> getRadius();
-          // //cout << radius << endl;
+          // ////cout << radius << endl;
           // radiusCircle.setRadius(radius);
           // radiusCircle.setScale(xScale, yScale);
           // //reset the origin so any position set refers to the center of the circle
           // radiusCircle.setOrigin(radius, radius);
           // radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
           // window.draw(radiusCircle);
-          //cout << "drew radius" << endl;
+          ////cout << "drew radius" << endl;
 
 
           /*
           sf::CircleShape radiusCircle = current -> getRadiusCircle();
           radiusCircle.setFillColor(sf::Color(150, 50, 250));
           float radius = (float) current -> getRadius();
-          //cout << radius << endl;
+          ////cout << radius << endl;
           radiusCircle.setRadius(radius);
           radiusCircle.setScale(xScale, yScale);
           //reset the origin so any position set refers to the center of the circle
           radiusCircle.setOrigin(radius, radius);
           radiusCircle.setPosition((float)(xPos)+ (xDim)/2.0, (float) (yPos) + (yDim)/2.0);
           window.draw(radiusCircle);
-          //cout << "drew radius" << endl;
+          ////cout << "drew radius" << endl;
 
            */
     }
@@ -1301,17 +1342,17 @@ bool PlayingScreen::wasHeaderRecalculated(){
 
 template <class T>
 void PlayingScreen::printVector(const vector<vector<T>> &v){
-  //cout << " here !" << endl;
+  ////cout << " here !" << endl;
   for(const vector<int> vec : v){
     for(auto it = vec.begin(); it != vec.end(); ++it){
       if(*it < 0){
-        cout << *it << " ";
+        //cout << *it << " ";
       }
       else{
-        cout << *it << "  ";
+        //cout << *it << "  ";
       }
     }
-    cout << endl;
+    //cout << endl;
   }
-  cout <<endl;
+  //cout <<endl;
 }

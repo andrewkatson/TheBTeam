@@ -5,13 +5,11 @@
  * @param eventManager: the event manager class that directs events
  */
 TowerManager::TowerManager(shared_ptr<EventManager> eventManager,
-  shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,
-  shared_ptr<b2World> world,shared_ptr<CollisionManager> collisionManager) : mt(std::random_device()()) {
+  shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,shared_ptr<CollisionManager> collisionManager) : mt(std::random_device()()) {
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
   this -> collisionManager = collisionManager;
-  this -> world = world;
   this -> registerDelegates();
   this -> populateObstacles();
   this -> populateTowersToChoose();
@@ -531,7 +529,7 @@ void TowerManager::addObstacles(unordered_map<int, intPair>& allObstaclesToPlace
       int typeNum = (*it).first;
       //grab the string identifier of this type of obstacle
       string obstacleType = textLoader -> getTypeID(std::to_string(typeNum));
-      cout<<textLoader -> getTypeID(std::to_string(typeNum))<<endl;
+      //cout<<textLoader -> getTypeID(std::to_string(typeNum))<<endl;
 
       //the obstacle we will place
       shared_ptr<TowerInterface> obstacle;
@@ -763,14 +761,36 @@ shared_ptr<TowerInterface> TowerManager::copyOfTowerType(string type, int row, i
       meleeTower -> setUpUnitPositions(row, col);
       //ensure that the collision manager knows about the existence of our units
       meleeTower -> logUnitsForCollisionManager();
-      /*
+
       //loop through all the meleeUnits and set their world
       vector<shared_ptr<MeleeUnit>> meleeUnits = meleeTower -> getUnits();
       for (shared_ptr<MeleeUnit> meleeUnit : meleeUnits){
-        meleeUnit -> setWorld(world);
-        meleeUnit -> setFixtures();
+        //get the sprite to be drawn
+        sf::Sprite currentSprite = meleeUnit -> getSprite();
+        //the bounding rectangle will give us the dimensions of the sprite
+        sf::FloatRect boundingBox = currentSprite.getGlobalBounds();
+        //the x dimension of the box
+        float xDim = boundingBox.width;
+        //the ydimension of the box
+        float yDim = boundingBox.height;
+
+        //the scaling used for the units so that they do not fill up an entire square
+        float unitScaleX = textLoader -> getDouble(string("IDS_Unit_Size_Scale_X"));
+        float unitScaleY =  textLoader -> getDouble(string("IDS_Unit_Size_Scale_Y"));
+
+        //the scale in the x direction
+        float xScale = (float) xGrid / ((float) xDim*unitScaleX);
+        //the scale in the y direction
+        float yScale = (float) yGrid / ((float) yDim*unitScaleY);
+
+        //set the scale for the units sprite
+        //meleeUnit->setScaleForSprite(xScale, yScale);
+        meleeUnit->setToCenter();
+        meleeUnit->setUnitScale(xScale,yScale);
+        //eleeUnit -> setWorld(world);
+        //meleeUnit -> setFixtures();
       }
-      */
+
     }
   }
   return retTower;
@@ -852,7 +872,7 @@ int TowerManager::getUpgradePrice(int row, int col){
  */
  void TowerManager::upgradeMeleeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade){
    //calculate the price for this upgrade
-   int upgradePrice = pow(1.5, towerToUpgrade -> getNumUpgrades());
+   int upgradePrice = pow(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")), towerToUpgrade -> getNumUpgrades());
 
    //generate an amount to upgrade
    //the distribution we generate numbers for
@@ -901,11 +921,11 @@ int TowerManager::getUpgradePrice(int row, int col){
   */
   void TowerManager::upgradeRangeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade){
     //calculate the price for this upgrade
-    int upgradePrice = pow(1.5, towerToUpgrade -> getNumUpgrades());
+    int upgradePrice = pow(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")), towerToUpgrade -> getNumUpgrades());
 
     //generate an amount to upgrade
     //the distribution we generate numbers for
-    std::uniform_int_distribution<int> dist(textLoader->getInteger(string("IDS_Minimum_Tower_Upgrade")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+    std::uniform_int_distribution<int> dist(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
 
     int upgradeAmount = dist(mt);
 
