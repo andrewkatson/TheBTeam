@@ -67,10 +67,14 @@ void Game::initGame(sf::RenderWindow  &game){
   this -> compView = unique_ptr<CompView>(new CompView(eventManager, textLoader, gameLogic, userView->getHeader()));
   //initalize the Computer View for the ai that is allied to the player
   this -> allyCompView = unique_ptr<AllyCompView>(new AllyCompView(eventManager, textLoader, gameLogic, userView->getHeader()));
+
+  this ->registerDelegates();
 }
 
 
 void Game::updateGame(float deltaS,sf::RenderWindow &game){
+
+  //cout << "my speed:" << speedScale << endl;
   deltaS*=speedScale;
   //cout << "elapsed: " << deltaS << endl;
 
@@ -98,6 +102,8 @@ void Game::deregisterDelegates() {
 }
 
 void Game::handleSpeedChange(const EventInterface &event) {
+
+  cout << "i changed speed" << endl;
 
 
   const SpeedChangeEvent* scEvent = static_cast<const SpeedChangeEvent*>(&event);

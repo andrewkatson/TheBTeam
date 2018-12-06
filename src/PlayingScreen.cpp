@@ -172,6 +172,171 @@ void PlayingScreen::deregisterDelegates(){
 }
 
 
+void PlayingScreen::initSpeedButtons() {
+
+
+  string fontpath = textLoader -> getString(string("IDS_TFP"));
+
+  //set up the back button
+  slowPlayButton = unique_ptr<Button>(new Button(windowX, windowY, BOTTOMLEFT,
+                                             textLoader -> getString(string("IDS_Button_Slow_Text")), textLoader, fontpath));
+
+  // set the fill color for the button rectangle
+  this -> slowPlayButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  this -> slowPlayButton -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Red")),
+                                        this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Green")),
+                                        this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  //this->backButton -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Thickness")));
+
+  //set the fill color for the button text
+  this -> slowPlayButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
+
+  //set the outline color for the text
+  this -> slowPlayButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
+
+  //set the button text outline thickness
+  this->slowPlayButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
+
+  //set the text character size
+  this->slowPlayButton -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Back_Button_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->slowPlayButton) -> setFont(fontpath);
+
+  //rescale the button and reset it
+  (this -> slowPlayButton) -> setButtonPosition(textLoader->getInteger("IDS_Slow_Button_Left_Pad"),windowY-textLoader->getInteger("IDS_Speed_Buttons_Y_Pad"));
+
+
+  //set up the back button
+  playButton = unique_ptr<Button>(new Button(windowX, windowY, BOTTOMLEFT,
+                                             textLoader -> getString(string("IDS_Button_Normal_Speed_Text")), textLoader, fontpath));
+
+  // set the fill color for the button rectangle
+  this -> playButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  this -> playButton -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Red")),
+                                        this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Green")),
+                                        this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  //this->backButton -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Thickness")));
+
+  //set the fill color for the button text
+  this -> playButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
+
+  //set the outline color for the text
+  this -> playButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
+
+  //set the button text outline thickness
+  this->playButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
+
+  //set the text character size
+  this->playButton -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Back_Button_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->playButton) -> setFont(fontpath);
+
+  //rescale the button and reset it
+  (this -> playButton) -> setButtonPosition(textLoader->getInteger("IDS_Normal_Speed_Button_Left_Pad"),windowY-textLoader->getInteger("IDS_Speed_Buttons_Y_Pad"));
+
+
+  fastForwardButton = unique_ptr<Button>(new Button(windowX, windowY, BOTTOMLEFT,
+                                             textLoader -> getString(string("IDS_Button_Fast_Speed_Text")), textLoader, fontpath));
+
+  // set the fill color for the button rectangle
+  this -> fastForwardButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                     this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  this -> fastForwardButton -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Red")),
+                                        this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Green")),
+                                        this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  //this->backButton -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Thickness")));
+
+  //set the fill color for the button text
+  this -> fastForwardButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
+
+  //set the outline color for the text
+  this -> fastForwardButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
+
+  //set the button text outline thickness
+  this->fastForwardButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
+
+  //set the text character size
+  this->fastForwardButton -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Back_Button_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->fastForwardButton) -> setFont(fontpath);
+
+  //rescale the button and reset it
+  (this -> fastForwardButton) -> setButtonPosition(textLoader->getInteger("IDS_Fast_Speed_Button_Left_Pad"),windowY-textLoader->getInteger("IDS_Speed_Buttons_Y_Pad"));
+
+  ultraFastForwardButton = unique_ptr<Button>(new Button(windowX, windowY, BOTTOMLEFT,
+                                                    textLoader -> getString(string("IDS_Button_Very_Fast_Speed_Text")), textLoader, fontpath));
+
+  // set the fill color for the button rectangle
+  this -> ultraFastForwardButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Red")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Green")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  this -> ultraFastForwardButton -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Red")),
+                                               this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Green")),
+                                               this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  //this->backButton -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Thickness")));
+
+  //set the fill color for the button text
+  this -> ultraFastForwardButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Red")),
+                                                this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Green")),
+                                                this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
+
+  //set the outline color for the text
+  this -> ultraFastForwardButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Red")),
+                                                   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Green")),
+                                                   this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
+
+  //set the button text outline thickness
+  this->ultraFastForwardButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
+
+  //set the text character size
+  this->ultraFastForwardButton -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Back_Button_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->ultraFastForwardButton) -> setFont(fontpath);
+
+  //rescale the button and reset it
+  (this -> ultraFastForwardButton) -> setButtonPosition(textLoader->getInteger("IDS_Very_Fast_Speed_Button_Left_Pad"),windowY-textLoader->getInteger("IDS_Speed_Buttons_Y_Pad"));
+
+
+}
+
+
 /*
  * Initialize all the things used for drawing (shapes, fonts)
  */
@@ -195,6 +360,7 @@ void PlayingScreen::initDrawingMaterials(){
 
   initRallyPointButton();
   initUpgradeCircle();
+  initSpeedButtons();
 }
 
 /*
@@ -441,6 +607,8 @@ void PlayingScreen::handleWaveChange(const EventInterface& event){
  * @param event: event of the mouse press
  */
 void PlayingScreen::handleMousePress(const EventInterface& event){
+
+
   //the time object of the class
   auto now = high_resolution_clock::now();
   //the actual count in nanoseconds for the time
@@ -466,7 +634,41 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
   //get the y position
   float yPos = mpEventData -> y;
 
-  //cout << "x " << xPos << " y " << yPos << endl;
+
+
+  if(slowPlayButton->isSelected(xPos,yPos)){
+
+    shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Slow_Play_Speed"), nowInNano);
+
+    this -> eventManager -> queueEvent(speedChange);
+
+    //cout << "i changed speed" << endl;
+  }
+
+  if(playButton->isSelected(xPos,yPos)){
+
+    shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Play_Speed"), nowInNano);
+
+    this -> eventManager -> queueEvent(speedChange);
+  }
+
+  if(fastForwardButton->isSelected(xPos,yPos)){
+
+    shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Fast_Forward_Speed"), nowInNano);
+
+    this -> eventManager -> queueEvent(speedChange);
+  }
+
+
+  if(ultraFastForwardButton->isSelected(xPos,yPos)){
+
+    shared_ptr<EventInterface> speedChange = make_shared<SpeedChangeEvent>(textLoader->getDouble("IDS_Ultra_Fast_Forward_Speed"), nowInNano);
+
+    this -> eventManager -> queueEvent(speedChange);
+  }
+
+
+    //cout << "x " << xPos << " y " << yPos << endl;
 
   //get the size of a tile in the x
   float xTileSize = playingScreenHeader -> getTrueXTileSize();
@@ -714,6 +916,8 @@ void PlayingScreen::draw(sf::RenderWindow &window){
     initColorShifts();
     haveSetColorShift=true;
   }
+
+
   drawFloorMap(window);
   ////cout<<"drawing all the things 1"<<endl;
   drawTowersAndObstacles(window);
@@ -748,6 +952,59 @@ void PlayingScreen::draw(sf::RenderWindow &window){
 
   }
   ////cout<<"we drew all the things"<<endl;
+
+  drawSpeedButtons(window);
+}
+
+void PlayingScreen::drawSpeedButtons(sf::RenderWindow& window){
+  slowPlayButton->draw(window);
+
+  //below is a workaround because the draw was not showing the text because sfml is stupid
+  sf::Text slow = slowPlayButton -> getButtonText();
+  sf::Font mainFont;
+  //used to make the font local
+  string mainFontPath = textLoader -> getString(string("IDS_TFP"));
+
+  if(!mainFont.loadFromFile(mainFontPath)){
+    //cout << "No font!" << endl;
+  }
+  else{
+    //  //cout << "loaded font!" << endl;
+  }
+
+  slow.setFont(mainFont);
+  window.draw(slow);
+  playButton->draw(window);
+
+  sf::Text norm = playButton -> getButtonText();
+
+  norm.setFont(mainFont);
+  window.draw(norm);
+
+
+  fastForwardButton->draw(window);
+
+  sf::Text fast = fastForwardButton -> getButtonText();
+
+  fast.setFont(mainFont);
+  window.draw(fast);
+
+  ultraFastForwardButton->draw(window);
+
+  sf::Text veryfast = ultraFastForwardButton -> getButtonText();
+
+  veryfast.setFont(mainFont);
+  window.draw(veryfast);
+
+/*
+
+  ultraFastForwardButton->draw(window);
+
+  sf::Text superfast = playButton -> getButtonText();
+
+  norm.setFont(mainFont);
+  window.draw(superfast);
+*/
 }
 
 /*
