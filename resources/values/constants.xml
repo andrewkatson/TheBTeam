@@ -282,42 +282,42 @@
   <constant value="20" id="IDS_CP_AR"> </constant>
   <!--PepperoniPizza Projectile-->
   <constant value="0" id="IDS_PP_HP"> </constant>
-  <constant value="15" id="IDS_PP_DM"> </constant>
+  <constant value="55" id="IDS_PP_DM"> </constant>
   <constant value="0" id="IDS_PP_AM"> </constant>
-  <constant value="80" id="IDS_PP_SP"> </constant>
-  <constant value="14" id="IDS_PP_AP"> </constant>
-  <constant value="10" id="IDS_PP_AR"> </constant>
+  <constant value="100" id="IDS_PP_SP"> </constant>
+  <constant value="10" id="IDS_PP_AP"> </constant>
+  <constant value="20" id="IDS_PP_AR"> </constant>
   <!--MeatLovers Projectile-->
   <constant value="0" id="IDS_ML_HP"> </constant>
-  <constant value="25" id="IDS_ML_DM"> </constant>
+  <constant value="60" id="IDS_ML_DM"> </constant>
   <constant value="50" id="IDS_ML_AM"> </constant>
-  <constant value="80" id="IDS_ML_SP"> </constant>
+  <constant value="100" id="IDS_ML_SP"> </constant>
   <constant value="14" id="IDS_ML_AP"> </constant>
-  <constant value="10" id="IDS_ML_AR"> </constant>
+  <constant value="20" id="IDS_ML_AR"> </constant>
   <!--DeepDish Projectile-->
   <constant value="0" id="IDS_DD_HP"> </constant>
-  <constant value="15" id="IDS_DD_DM"> </constant>
+  <constant value="60" id="IDS_DD_DM"> </constant>
   <constant value="0" id="IDS_DD_AM"> </constant>
-  <constant value="30" id="IDS_DD_SP"> </constant>
+  <constant value="100" id="IDS_DD_SP"> </constant>
   <constant value="20" id="IDS_DD_AP"> </constant>
-  <constant value="10" id="IDS_DD_AR"> </constant>
+  <constant value="2-" id="IDS_DD_AR"> </constant>
   <!--MiniM&Ms Projectile-->
   <constant value="0" id="IDS_MMM_HP"> </constant>
-  <constant value="100" id="IDS_MMM_DM"> </constant>
+  <constant value="10" id="IDS_MMM_DM"> </constant>
   <constant value="0" id="IDS_MMM_AM"> </constant>
   <constant value="100" id="IDS_MMM_SP"> </constant>
   <constant value="1" id="IDS_MMM_AP"> </constant>
   <constant value="20" id="IDS_MMM_AR"> </constant>
   <!--NormalM&Ms Projectile-->
   <constant value="0" id="IDS_NMM_HP"> </constant>
-  <constant value="5" id="IDS_NMM_DM"> </constant>
+  <constant value="15" id="IDS_NMM_DM"> </constant>
   <constant value="0" id="IDS_NMM_AM"> </constant>
-  <constant value="80" id="IDS_NMM_SP"> </constant>
+  <constant value="100" id="IDS_NMM_SP"> </constant>
   <constant value="0" id="IDS_NMM_AP"> </constant>
   <constant value="0" id="IDS_NMM_AR"> </constant>
   <!--PeanutButterM&Ms Projectile-->
   <constant value="0" id="IDS_PBMM_HP"> </constant>
-  <constant value="2" id="IDS_PBMM_DM"> </constant>
+  <constant value="" id="IDS_PBMM_DM"> </constant>
   <constant value="0" id="IDS_PBMM_AM"> </constant>
   <constant value="600" id="IDS_PBMM_SP"> </constant>
   <constant value="0" id="IDS_PBMM_AP"> </constant>
