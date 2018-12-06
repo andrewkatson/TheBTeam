@@ -165,11 +165,10 @@ void LeaderBoardScreen::handleMousePress(const EventInterface& event){
 }
 
 void LeaderBoardScreen::tryToConnect(){
-  /*
+
   const char *cmd = &(execute[0]);
-  //char *cmd = "ssh adkatson@me.cs.wm.edu ; 930916720";
   cout << cmd << endl;
-  string result = exec(cmd);
+  //string result = exec(cmd);
 
   if(result == "FAIL"){
     connection = false;
