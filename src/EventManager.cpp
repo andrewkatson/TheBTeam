@@ -50,7 +50,6 @@ void EventManager::registerEvent(const EventType &type){
 // to a particular magazine (EvenetType) and is sending their address (EventDelegate)
 void EventManager::registerDelegate(const EventDelegate& d, const string &eventDelegateIdentifier,
                   const EventType &type){
-
   //in case we do not find the event type we add it
   //to the map
   event_map::const_iterator it = EventDelegateMap.find(type);

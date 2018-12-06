@@ -30,6 +30,7 @@ using namespace std;
 #include "Events/DifficultyChangeEvent.hpp"
 #include "Events/WaveChangeEvent.hpp"
 #include "Events/OptionSelectedEvent.hpp"
+#include "Player.hpp"
 
 
 using std::chrono::high_resolution_clock;
@@ -49,6 +50,8 @@ public:
   //Store the textureLoader to get the textures for this tower and pass to
   //any dependent units or projectiles
   shared_ptr<TextureLoader> textureLoader;
+  //the player
+  shared_ptr<Player> player;
 
   //Vector storing every enemy type that can be spawned.
   //vector<shared_ptr<MeleeUnit>> enemies;
@@ -123,7 +126,7 @@ public:
    * Constructor for the WaveManager class. Sets up enemies that can be spawned
    * as well as waves to be spawned.
    */
-  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level,int startingDifficulty);
+  WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,int windowX, int windowY,int level,int startingDifficulty, shared_ptr<Player> player);
   ~WaveManager();
 
   /*

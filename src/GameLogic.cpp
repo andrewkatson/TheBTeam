@@ -18,7 +18,7 @@ GameLogic::GameLogic(shared_ptr<TextLoader> textLoader, int windowX, int windowY
   this -> player = make_shared<Player>(eventManager, textLoader);
   this -> soundManager = unique_ptr<SoundManager>(new SoundManager(eventManager, textLoader));
   this -> soundManager->loadSounds();
-  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool());
+  this -> waveManager = make_shared<WaveManager>(eventManager, textLoader, textureLoader,windowX,windowY,player->getLevel(),player->getSchool(), player);
   this -> projectileManager = make_shared<ProjectileManager>(eventManager, textLoader);
   this -> collisionManager = make_shared<CollisionManager>(textLoader, eventManager, waveManager, projectileManager);
   this -> towerManager = make_shared<TowerManager>(eventManager, textLoader, textureLoader, collisionManager);
@@ -108,26 +108,6 @@ void GameLogic::registerDelegates(){
   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(projectileExplosionEventDelegate, textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
-
-  //bind our delegate function for mouse presses
-  EventManager::EventDelegate levelChangeEventDelegate = std::bind(&GameLogic::handleLevelChangeEvent, this, _1);
-
-  //make an event and get its type
-  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
-  EventType levelChangeEventType = levelChangeEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> registerDelegate(levelChangeEventDelegate, textLoader -> getString(string("IDS_GLD_LC")),levelChangeEventType);
-
-
-  //bind our delegate function for mouse presses
-  EventManager::EventDelegate restartGameEventDelegate = std::bind(&GameLogic::handleRestartGameEvent, this, _1);
-
-  //make an event and get its type
-  RestartGameEvent restartGameEvent = RestartGameEvent();
-  EventType restartGameEventType = restartGameEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> registerDelegate(restartGameEventDelegate, textLoader -> getString(string("IDS_GameLogic_Handle_Restart")),restartGameEventType);
-
 }
 
 /*
@@ -157,13 +137,6 @@ void GameLogic::deregisterDelegates(){
   EventType projectileExplosionEventType = projectileExplosionEvent.getEventType();
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
-
-  //make an event and get its type
-  RestartGameEvent restartGameEvent = RestartGameEvent();
-  EventType restartGameEventType = restartGameEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GameLogic_Handle_Restart")),restartGameEventType);
-
 }
 
 
@@ -399,28 +372,43 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   boardManager -> getFloor().clear();
   //makeNewMap();
   //this -> waveManager -> entryPositions;
-  player -> resetHitpoints();
+  //player -> resetHitpoints();
 
   //playerbalance=(20 * 2);
   player -> newLevelBalance();
+  player -> newLevelHitpoints();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
   makeNewMap();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
 
+  //mirror the statistics of the current units so they affect the next level
+  towerManager->updateBaseTowerStats();
+  //clear all the towers placed
+  towerManager->clearAllTowers();
 
+  //call all the level change event functions for any class that is attached to gameLogic
+  waveManager->handleLevelChanged(event);
   //make an event and queue it
   //shared_ptr<EventInterface>
   //this -> eventManager -> queueEvent
+
+  //we should switch the game to the loading screen state
+  shared_ptr<EventInterface> loadingState = make_shared<StateChangeEvent>(State::Loading, nowInNano);
+
+  this -> eventManager -> queueEvent(loadingState);
  }
 
  /*
   * Handle a game restart by resetting everything
   */
 void GameLogic::handleRestartGameEvent(const EventInterface& event){
+
+  /*
   //reset all defaults in the player
   player -> setToDefaults();
 
   //cout << "we restarted game " << endl;
+  */
 }
 
 /*
@@ -982,4 +970,11 @@ const unordered_map<long long,shared_ptr<MeleeUnit>>& GameLogic::getSpawnedEnemy
  */
 unordered_map<long long, shared_ptr<ActorInterface>>& GameLogic::getFiredProjectiles(){
   return projectileManager -> getAllProjectiles();
+}
+
+/*
+ * @return player's hitpoints
+ */
+int GameLogic::getHitpoints(){
+  return player -> getHitpoints();
 }

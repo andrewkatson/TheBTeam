@@ -125,6 +125,11 @@ public:
   float getXTileSize(){return xGrid;}
   float getYTileSize(){return yGrid;}
 
+
+  void clearAllTowers();
+
+  void updateBaseTowerStats();
+
 private:
   void registerDelegates();
   void deregisterDelegates();

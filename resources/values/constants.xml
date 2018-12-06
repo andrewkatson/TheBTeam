@@ -7,7 +7,7 @@
 
   <!--Player-->
   <constant value="100" id ="IDS_P_HP"> </constant>
-  <constant value="2000" id ="IDS_P_B"> </constant>
+  <constant value="20" id ="IDS_P_B"> </constant>
   <constant value="1" id="IDS_Default_Wave"> </constant>
   <constant value="1" id="IDS_Default_Level"> </constant>
   <constant value="1" id="IDS_Default_School"> </constant>
@@ -62,6 +62,10 @@
 
   <!--Unit Combat Distance-->
   <constant value="20" id="IDS_Unit_Combat_Distance"> </constant>
+
+  <!--Loading Screen-->
+  <constant value="5" id="IDS_Loading_Screen_Time"> </constant>
+  <constant value="30" id="IDS_Hint_Text"></constant>
 
   <!--Identifiers used for aboveFloorGrid-->
   <!--Of the format "Type Level Branch"-->

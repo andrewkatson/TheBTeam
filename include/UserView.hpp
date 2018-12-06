@@ -12,6 +12,7 @@
 #include "RestartScreen.hpp"
 #include "BuyTowerScreen.hpp"
 #include "PlayingScreen.hpp"
+#include "LoadingScreen.hpp"
 #include "PlayingScreenHeader.hpp"
 #include "GameLogic.hpp"
 
@@ -62,6 +63,7 @@ public:
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
   void handleStateChange(const EventInterface& event);
+  void handleLevelChangeEvent(const EventInterface& event);
 
   void updateUserView(float deltaS, sf::RenderWindow &game);
 

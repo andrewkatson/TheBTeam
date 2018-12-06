@@ -106,12 +106,14 @@ void UserView::initScreens(){
   shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(eventManager, textLoader,gameLogic, windowX, windowY);
   //Restart Screen
   shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(eventManager, textLoader,windowX, windowY);
-
+  //Loading Screen
+  shared_ptr<Screen> loadingScreen = make_shared<LoadingScreen>(windowX, windowY, textLoader, eventManager);
   screens.push_back(mainMenuScreen);
   screens.push_back(optionsMenuScreen);
   screens.push_back(playingScreen);
   screens.push_back(buyTowerScreen);
   screens.push_back(restartScreen);
+  screens.push_back(loadingScreen);
 }
 
 /*
@@ -218,6 +220,17 @@ void UserView::handleStateChange(const EventInterface& event){
 
   //register all the delegagtes for the new state
   (this->screens).at((int)screen) -> registerDelegates();
+}
+
+/*
+ * Handle level changes by delegating to classes below this one that need to know
+ */
+void UserView::handleLevelChangeEvent(const EventInterface& event){
+  shared_ptr<Screen> playing = screens.at((int) State::Playing);
+
+  PlayingScreen* playingScreen = dynamic_cast<PlayingScreen*>(playing.get());
+
+  playingScreen -> handleLevelChangeEvent(event);
 }
 
 void UserView::updateUserView(float deltaS, sf::RenderWindow &game){
