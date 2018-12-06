@@ -298,7 +298,7 @@ void WaveManager::createNextWave() {
     //enemy->setScaleForSprite(xScale, yScale);
 
     //set the center of the sprite
-    enemy->setToCenter();
+    //enemy->setToCenter();
     enemy->setUnitScale(xScale,yScale);
     //setWorld and fixture
     //enemy -> setWorld(world);

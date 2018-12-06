@@ -3,6 +3,10 @@
  *
  * Purpose: Handle loading and playing of all game sounds through simple methods.
  *
+ * Disclaimer: I know the sound loading here kind of sucks... but I had no time to make
+ * it good, and SFML's sounds being uncopyable didn't help.
+ *  - Jeremy
+ *
  * @author Jeremy Elkayam
 */
 
@@ -10,6 +14,9 @@
 #define SOUNDMANAGER_H
 
 #include <SFML/Audio.hpp>
+#include <Events/TowerRemoveEvent.hpp>
+#include <Events/TowerCreationEvent.hpp>
+#include "Events/VolumeChangeEvent.hpp"
 #include "Player.hpp"
 #include "TextLoader.hpp"
 #include "Events/PlaySoundEvent.hpp"
@@ -54,6 +61,8 @@ private:
   std::random_device rd;
 
   bool newLevel,musicPlaying;
+
+  float musicVolume,sfxVolume;
 
 public:
 
@@ -134,6 +143,7 @@ public:
 
   void handleStateChange(const EventInterface & event);
 
+  void handleVolumeChange(const EventInterface & event);
 };
 
 #endif

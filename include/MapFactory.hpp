@@ -18,6 +18,7 @@
 #include <utility>
 #include <assert.h>
 #include <set>
+#include <unordered_set>
 #include <limits>
 #include <random>
 
@@ -57,6 +58,8 @@ private:
 
   //int pair (used to assocaite a row and col)
   typedef pair<int,int> intPair;
+
+
   //double - int int pair (used to associate f with a row col)
   typedef pair<double, intPair> fPair;
 
@@ -152,6 +155,8 @@ private:
    */
   unique_ptr<RandomVariates> randomVariates = unique_ptr<RandomVariates>(new RandomVariates());
 
+  vector<vector<std::unordered_set<int>>> combinedPaths;
+
   int softReset;
   int hardReset;
   int numObstaclesRemoved;
@@ -192,6 +197,7 @@ private:
               vector<vector<bool>>& closedList, vector<vector<CellNode>>& board, int path);
   bool isEntrance(int row, int col);
   void markPath(vector<vector<CellNode>>& board, int path,vector<int>& lastPos);
+  void mergeToMain(vector<vector<CellNode>>& board);
 
 
   bool connectedWithExit(int row, int col);
@@ -246,6 +252,9 @@ public:
 
   template <class T>
   void printVector(vector<vector<T>> &v);
+
+
+  vector<vector<std::unordered_set<int>>>& getCombinedPaths();
 };
 
 #endif

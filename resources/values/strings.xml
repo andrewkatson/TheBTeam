@@ -291,7 +291,8 @@
     <string value="GameLogic_Projectile_Explosion" id="IDS_GameLogic_Delegate_Projectile_Explosion"> </string>
     <string value="GAMELOGICLEVELCHANGEDELEGATE" id="IDS_GLD_LC"></string>
     <string value="Game_Logic_Handle_Restart" id="IDS_GameLogic_Handle_Restart"> </string>
-
+  <!--CompView Delegates-->
+  <string value="Comp_View_Map_Generated" id="IDS_CompView_MapGenerated"> </string>
     <!--Player Delegates-->
     <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
     <string value="Player_Handle_Lost_Hitpoints" id="IDS_Player_Lose_Hitpoints"> </string>
@@ -318,13 +319,15 @@
     <string value="Wave_Manager_Difficulty_Change" id="IDS_WaveManager_DifficultyChange"> </string>
     <string value="Wave_Manager_Wave_Change" id="IDS_WaveManager_WaveChange"> </string>
 
-    <!--Sound Manager Delegates-->
-    <string value="Sound_Manager_Play_Sound" id="IDS_SoundManager_PlaySound"> </string>
-    <string value="Sound_Manager_Level_Change" id="IDS_SoundManager_LevelChange"> </string>
-    <string value="Sound_Manager_Tower_Creation" id="IDS_SoundManager_TowerCreation"> </string>
-    <string value="Sound_Manager_Tower_Remove" id="IDS_SoundManager_TowerRemove"> </string>
-    <string value="Sound_Manager_Wave_Change" id="IDS_SoundManager_WaveChange"> </string>
-    <string value="Sound_Manager_State_Change" id="IDS_SoundManager_StateChange"> </string>
+  <!--Sound Manager Delegates-->
+  <string value="Sound_Manager_Play_Sound" id="IDS_SoundManager_PlaySound"> </string>
+  <string value="Sound_Manager_Level_Change" id="IDS_SoundManager_LevelChange"> </string>
+  <string value="Sound_Manager_Tower_Creation" id="IDS_SoundManager_TowerCreation"> </string>
+  <string value="Sound_Manager_Tower_Remove" id="IDS_SoundManager_TowerRemove"> </string>
+  <string value="Sound_Manager_Wave_Change" id="IDS_SoundManager_WaveChange"> </string>
+  <string value="Sound_Manager_State_Change" id="IDS_SoundManager_StateChange"> </string>
+  <string value="Sound_Manager_Volume_Change" id="IDS_SoundManager_VolumeChange"> </string>
+
     <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->

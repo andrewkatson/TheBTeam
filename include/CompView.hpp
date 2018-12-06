@@ -22,6 +22,10 @@ private:
 
   std::random_device rd;
 
+  vector<vector<int>> floor;
+
+  vector<vector<std::unordered_set<int>>>combinedPaths;
+
 public:
   CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,shared_ptr<PlayingScreenHeader> playingScreenHeader);
 
@@ -30,8 +34,9 @@ public:
   void attackEnemies();
 
   void updateUnits(float deltaS);
-  void delegateEvents();
+  void registerDelegates();
 
+  void handleMapGenerated(const EventInterface& event);
 };
 
 #endif

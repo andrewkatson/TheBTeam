@@ -29,7 +29,7 @@ void MeleeUnit::update(float delta){
 
     s_elapsed += delta;
 
-    if (s_elapsed > 1/speed) {
+    if (s_elapsed > textLoader->getDouble("IDS_Unit_Animation_Speed_Factor")/speed) {
       s_elapsed = 0;
 
       if (walk_cycle_position == 0) { //first walking frame
@@ -218,6 +218,8 @@ void MeleeUnit::attackEngagedUnit(){
   assert(armor>0);
   enemyHP -= (float)damage *(float)(armorPenetration/enemyArmor);
   engagedUnit->updateHitpoints(enemyHP);
+  cout<<getType()<<endl;
+  cout<<enemyHP<<endl;
 }
 
 void MeleeUnit::updateAttack(float delta){

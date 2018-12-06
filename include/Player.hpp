@@ -106,6 +106,11 @@ public:
   void modifyBalance(int modifyBy);
 
   /*
+   * reset hitpoints to be the origianl hitpoints * level
+   */
+  void newLevelHitpoints();
+
+  /*
    * reset balance to be the original balance * level unless the player is restarting so check
    */
   void newLevelBalance();

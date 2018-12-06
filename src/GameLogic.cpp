@@ -376,6 +376,7 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
 
   //playerbalance=(20 * 2);
   player -> newLevelBalance();
+  player -> newLevelHitpoints();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
   makeNewMap();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
@@ -438,7 +439,7 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
    auto now = high_resolution_clock::now();
    //the actual count in nanoseconds for the time
    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
-   shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano,boardManager->getDistances(),boardManager->getEntryPositions());
+   shared_ptr<EventInterface> mapGenerated = make_shared<MapGeneratedEvent>(nowInNano,boardManager->getDistances(),boardManager->getEntryPositions(),boardManager->getCombinedPaths());
 
    this -> eventManager -> queueEvent(mapGenerated);
 

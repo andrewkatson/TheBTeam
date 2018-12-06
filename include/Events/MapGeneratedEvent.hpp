@@ -17,7 +17,7 @@ public:
   static const EventType eventType;
 
   MapGeneratedEvent();
-  MapGeneratedEvent(float timeStamp,const vector<vector<int>>& distances,const vector<int>&entrances);
+  MapGeneratedEvent(float timeStamp,const vector<vector<int>>& distances,const vector<int>&entrances, vector<vector<std::unordered_set<int>>>combinedPaths);
 
   const EventType& getEventType() const;
   float GetTimeStamp() const;

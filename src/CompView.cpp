@@ -6,6 +6,7 @@ CompView::CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader>
   this -> gameLogic = gameLogic;
   this -> waveManager = gameLogic->getWaveManager();
   this -> playingScreenHeader = playingScreenHeader;
+  this -> registerDelegates();
 }
 
 void CompView::updateCompView(float deltaS){
@@ -25,8 +26,8 @@ void CompView::updateUnits(float deltaS){
   // Poll the actor class for its speed and position on map, use the shortest distance >= 0
   //	and move that direction
 
-  vector<vector<int>> dists=gameLogic->getDistances();
-  vector<vector<int>> floor=gameLogic->getFloor();
+  //vector<vector<int>> dists=gameLogic->getDistances();
+  //vector<vector<int>> floor=gameLogic->getFloor();
   /*
   printf("my distances: \n");
   for(auto z : dists){
@@ -113,7 +114,7 @@ void CompView::updateUnits(float deltaS){
 
         int adjusted_r,adjusted_c,dir_r,dir_c;
 
-
+/*
         for(auto dir : angles){
           //printf("row + %d col %d \nfloor:%ldx%ld\n",dir.first,dir.second,floor.size(),floor[0].size());
 
@@ -140,6 +141,39 @@ void CompView::updateUnits(float deltaS){
 
         //printf("going to next: %lf\n",new_direction);
 
+*/
+        std::unordered_set<int>myNextTiles=combinedPaths.at(r).at(c);
+
+        std::uniform_int_distribution<unsigned int>nextTilePicker(0,myNextTiles.size()-1);
+
+        //cout << "tryna move " << myNextTiles.size() << endl;
+
+        std::mt19937 rnd_gen(rd());
+
+        //cout << "my set " << *myNextTiles.begin() << endl;
+
+        unsigned int next_index=nextTilePicker(rnd_gen);
+
+        auto selected_key = myNextTiles.begin();
+
+        std::advance(selected_key,next_index);
+
+        int next_row=*selected_key/floor[0].size();
+        int next_col=*selected_key%floor[0].size();
+
+       // cout << next_row << "," << next_col << endl;
+
+        double new_direction;
+
+        if(next_col<c){
+          new_direction=M_PI;
+        }else if(next_col>c){
+          new_direction=0;
+        }else if(next_row<r){
+          new_direction=M_PI/2;
+        }else{
+          new_direction=3*M_PI/2;
+        }
 
         double curdir=currentUnit->getDirection();
 
@@ -205,14 +239,16 @@ void CompView::updateUnits(float deltaS){
         continue;
       }
       else{
-        currentUnit->updateAttack(deltaS);
+          if(currentUnit -> getEngagedUnit()-> getHitpoints() < 0){
+              cout<<currentUnit -> getEngagedUnit() -> getType()<<endl;
+              currentUnit -> setEngagedUnit(NULL);
+          }
+          else currentUnit->updateAttack(deltaS);
       }      
     }
   }
 }
 
-
-void CompView::delegateEvents(){}
 
 bool CompView::coordsInsideTile(int row, int col,double x, double y){
 
@@ -225,3 +261,38 @@ bool CompView::coordsInsideTile(int row, int col,double x, double y){
 
   return (min_x < x && x < max_x) && (min_y < y && y < max_y);
 };
+
+
+void CompView::handleMapGenerated(const EventInterface &event) {
+  cout << "get a map event" << endl;
+
+  auto mapGeneratedEvent= static_cast<const MapGeneratedEvent*>(&event);
+
+  auto mapGeneratedEventData = static_cast<MapGeneratedEventData*>((mapGeneratedEvent->data).get());
+
+  floor=gameLogic->getFloor();
+
+  combinedPaths=mapGeneratedEventData->combinedPaths;
+
+  for(auto z : combinedPaths){
+    for (auto g : z){
+      if(!g.empty()) {
+        int rowcol= *g.begin();
+        int r=rowcol/floor[0].size();
+        int c=rowcol%floor[0].size();
+        printf("%2d,%2d |", r,c);
+      }else {
+        printf("       ");
+      }
+    }
+    printf("\n");
+  }
+}
+
+void CompView::registerDelegates(){
+  EventManager::EventDelegate mapGenDelegate = std::bind(&CompView::handleMapGenerated, this, _1);
+  MapGeneratedEvent mapGenEvent = MapGeneratedEvent();
+  const EventType mapGenEventType = mapGenEvent.getEventType();
+  this -> eventManager -> registerDelegate(mapGenDelegate, textLoader -> getString(string("IDS_CompView_MapGenerated")),mapGenEventType);
+
+}

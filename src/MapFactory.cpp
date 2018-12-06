@@ -35,10 +35,10 @@ MapFactory::MapFactory(MapChoices *mapCustomizationChoices, shared_ptr<TextLoade
  * the minimum size is 6x6
  */
 void MapFactory::generateDimensions(){
-  ////cout << "MAKE VERIFIER FOR ALL ENTRIES TO EXIT OTHERWISE REMAKE" << endl;
-  ////cout << "IF ALL ENTRIES TO EXIT MARK AS YOU GO AND THEN REMOVE UNMARKED PATH ELEMENTS" << endl;
-  ////cout << "FIX WEIRD OUT OF RANGE EXCEPTION" << endl;
-  ////cout << "ALSO DEVELOP A METRIC FOR % BOARD COVERED (I.E. OBSTACLES OR PATH) " << endl;
+  //cout << "MAKE VERIFIER FOR ALL ENTRIES TO EXIT OTHERWISE REMAKE" << endl;
+  //cout << "IF ALL ENTRIES TO EXIT MARK AS YOU GO AND THEN REMOVE UNMARKED PATH ELEMENTS" << endl;
+  //cout << "FIX WEIRD OUT OF RANGE EXCEPTION" << endl;
+  //cout << "ALSO DEVELOP A METRIC FOR % BOARD COVERED (I.E. OBSTACLES OR PATH) " << endl;
 
   int modifier = textLoader -> getInteger(string("IDS_Cafeteria_Size_Modifier"));
 
@@ -181,6 +181,22 @@ bool MapFactory::tryAMap(){
       if(!pathMade){
         return false;
       }
+    }else{
+      vector<intPair> dirs = {make_pair(0,1), make_pair(0,-1),make_pair(1,0),make_pair(-1,0)};
+      cout << "p " << p+1 << endl;
+
+      for(intPair z : dirs){
+
+        int r=entryPos.at(2*p+1) + z.first; // col row because andrew likes garbage
+        int c=entryPos.at(2*p) + z.second;
+
+        cout << "entry pos: " << r << "," << c << endl;
+
+        if(0 < r && r < floorGrid.size() && 0 < c && c < floorGrid[0].size() && floorGrid.at(r).at(c)>0){
+          cout << "p" << endl;
+          combinedPaths.at(entryPos.at(2*p+1)).at(entryPos.at(2*p)).insert(r*xDim+c);
+        }
+      }
     }
 
     if(p < entrysToExit.size()){
@@ -206,6 +222,7 @@ void MapFactory::initGridArrays(){
       this -> floorGrid.push_back(vector<int>(this -> xDim, -1));
       this -> aboveFloorGrid.push_back(vector<int>(this -> xDim, -1));
       this -> extraneousPaths.push_back(vector<int>(this -> xDim, -1));
+      this -> combinedPaths.push_back(vector<std::unordered_set<int>>(this -> xDim, std::unordered_set<int>()));
   }
 }
 /*
@@ -221,6 +238,7 @@ void MapFactory::resetEverything(){
   exitPos.clear();
   entryPos.clear();
   entryDirections.clear();
+  combinedPaths.clear();
 }
 
 /*
@@ -795,11 +813,11 @@ void MapFactory::makeFloor(){
       if(floorGrid.at(row).at(col) != 0){
         if(col % 2 == 0){
           floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1);
-          ////cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1)<<endl;
+          //cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice))) * (-1)<<endl;
         }
         else{
           floorGrid.at(row).at(col) = (2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1);
-          ////cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1)<<endl;
+          //cout<<(2 * ((int)(mapCustomizationChoices -> cafeteriaChoice)) - 1) * (-1)<<endl;
         }
       }
     }
@@ -842,7 +860,45 @@ bool MapFactory::makePathBFS(int path){
   //otherwise mark the path on the grids
   else{
     markPath(board, path, lastPos);
+    mergeToMain(board);
     return true;
+  }
+
+}
+
+void MapFactory::mergeToMain(vector<vector<CellNode>>& board){
+  cout << "merging" << endl;
+  //start at the index of your last position (could be the exit or adjacent to some other path)
+  int currRow = exitPos.at(1);
+  int currCol = exitPos.at(0);
+
+
+  int last_row=-1;
+  int last_col=-1;
+
+  while(!(board.at(currRow).at(currCol).rowParent == currRow &&
+          board.at(currRow).at(currCol).colParent == currCol) ){
+
+    int tempRow = board.at(currRow).at(currCol).rowParent;
+    int tempCol = board.at(currRow).at(currCol).colParent;
+
+    if(last_col != -1 && last_row!=-1 && combinedPaths.at(currRow).at(currCol).find(last_col*xDim+last_col)==combinedPaths.at(currRow).at(currCol).end()){
+      combinedPaths.at(currRow).at(currCol).insert(last_row*xDim+last_col);
+    }
+
+
+
+
+    last_row=currRow;
+    last_col=currCol;
+
+    currRow = tempRow;
+    currCol = tempCol;
+
+  }
+
+  if(last_col != -1 && last_row!=-1 && combinedPaths.at(currRow).at(currCol).find(last_row*xDim+last_col)==combinedPaths.at(currRow).at(currCol).end()){
+    combinedPaths.at(currRow).at(currCol).insert(last_row*xDim+last_col);
   }
 
 }
@@ -1202,13 +1258,13 @@ bool MapFactory::connectedWithExit(int row, int col){
 
    return false;
    /*
-   //cout << "Same path " << endl;
-   //cout << path << endl;
-   //cout << row << endl;
-   //cout << col << endl;
-   //cout << "NEW" << endl;
-   //cout << newrow << endl;
-   //cout << newcol << endl;
+   cout << "Same path " << endl;
+   cout << path << endl;
+   cout << row << endl;
+   cout << col << endl;
+   cout << "NEW" << endl;
+   cout << newrow << endl;
+   cout << newcol << endl;
    printVector(paths);
    printVector(aboveFloorGrid);
    printVector(distances);
@@ -1226,8 +1282,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(rowMinusOneIn){
      if(!(rowMinusOne == row && newcol == col)){
        if(paths.at(rowMinusOne).at(newcol) == path){
-         ////cout << "TOP" << endl;
-         ////cout << rowMinusOne << " " << newcol << endl;
+         //cout << "TOP" << endl;
+         //cout << rowMinusOne << " " << newcol << endl;
          return true;
        }
      }
@@ -1235,8 +1291,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(rowPlusOneIn){
      if(!(rowPlusOne == row && newcol == col)){
        if(paths.at(rowPlusOne).at(newcol) == path){
-         ////cout << "BOTTOM" << endl;
-         ////cout << rowPlusOne << " " << newcol << endl;
+         //cout << "BOTTOM" << endl;
+         //cout << rowPlusOne << " " << newcol << endl;
          return true;
        }
      }
@@ -1244,8 +1300,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(colMinusOneIn){
      if(!(newrow == row && colMinusOne == col)){
        if(paths.at(newrow).at(colMinusOne) == path){
-         ////cout << "LEFT" << endl;
-         ////cout << newrow << " " << colMinusOne << endl;
+         //cout << "LEFT" << endl;
+         //cout << newrow << " " << colMinusOne << endl;
          return true;
        }
      }
@@ -1253,8 +1309,8 @@ bool MapFactory::connectedWithExit(int row, int col){
    if(colPlusOneIn){
      if(!(newrow == row && colPlusOne == col)){
        if(paths.at(newrow).at(colPlusOne) == path){
-         ////cout << "RIGHT" << endl;
-         ////cout << newrow << " " << colPlusOne << endl;
+         //cout << "RIGHT" << endl;
+         //cout << newrow << " " << colPlusOne << endl;
          return true;
        }
      }
@@ -1819,18 +1875,18 @@ void MapFactory::printVector(vector<vector<T>> &v){
   for(vector<int> vec : v){
     for(auto it = vec.begin(); it != vec.end(); ++it){
       if(*it < 0){
-        //cout << *it << " ";
+        printf("%2d ",*it);
         s << *it << " ";
       }
       else{
-        //cout << *it << "  ";
+        printf("%2d ",*it);
         s << *it << "  ";
       }
     }
-    //cout << endl;
+    cout << endl;
     s << endl;
   }
-  //cout <<endl;
+  cout <<endl;
   s << endl;
 }
 
@@ -1932,4 +1988,8 @@ void MapFactory::setMapCafeteriaChoice(cafeteria cafeteriaChoice){
 }
 void MapFactory::setMapEntryChoice(int pathEntryChoice){
   mapCustomizationChoices -> pathEntryChoice = pathEntryChoice;
+}
+
+vector<vector<std::unordered_set<int>>>& MapFactory::getCombinedPaths(){
+  return combinedPaths;
 }

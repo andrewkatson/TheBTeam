@@ -15,8 +15,10 @@
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
+#include <cmath>
 #include<iostream>
-#include <math.h>
+#include <cmath>
+
 using namespace std;
 using std::shared_ptr;
 using std::addressof;
