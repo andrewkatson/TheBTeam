@@ -127,6 +127,8 @@ public:
 
   unordered_map<int,intPair>& getAllObstacles();
 
+  vector<vector<std::unordered_set<int>>>& getCombinedPaths();
+
 private:
   void addTower(int row, int col, int towerTypeNum);
   void clearTowerOrObstacle(int row, int col);

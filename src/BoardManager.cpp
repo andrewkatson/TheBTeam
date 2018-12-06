@@ -7,6 +7,10 @@ BoardManager::BoardManager(shared_ptr<EventManager> eventManager, shared_ptr<Tex
   this -> registerDelegates();
 }
 
+vector<vector<std::unordered_set<int>>>& BoardManager::getCombinedPaths(){
+  return mapFactory->getCombinedPaths();
+}
+
 BoardManager::~BoardManager(){
   this -> deregisterDelegates();
 }

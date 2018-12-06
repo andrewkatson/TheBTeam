@@ -221,6 +221,7 @@ void MapFactory::resetEverything(){
   exitPos.clear();
   entryPos.clear();
   entryDirections.clear();
+  combinedPaths.clear();
 }
 
 /*
@@ -842,9 +843,41 @@ bool MapFactory::makePathBFS(int path){
   //otherwise mark the path on the grids
   else{
     markPath(board, path, lastPos);
+    mergeToMain(board);
     return true;
   }
 
+}
+
+void MapFactory::mergeToMain(vector<vector<CellNode>>& board){
+  //start at the index of your last position (could be the exit or adjacent to some other path)
+  int currRow = exitPos.at(1);
+  int currCol = exitPos.at(0);
+
+
+  int last_parent_row=-1;
+  int last_parent_col=-1;
+
+  while(!(board.at(currRow).at(currCol).rowParent == currRow &&
+          board.at(currRow).at(currCol).colParent == currCol) ){
+
+    int tempRow = board.at(currRow).at(currCol).rowParent;
+    int tempCol = board.at(currRow).at(currCol).colParent;
+
+    if(last_parent_col != -1 && last_parent_row!=-1 && combinedPaths.at(currRow).at(currCol).find(last_parent_row*xDim+last_parent_col)==combinedPaths.at(currRow).at(currCol).end()){
+      combinedPaths.at(currRow).at(currCol).insert(last_parent_row*xDim+last_parent_col);
+    }
+
+
+
+
+    last_parent_row=tempRow;
+    last_parent_col=tempCol;
+
+    currRow = tempRow;
+    currCol = tempCol;
+
+  }
 }
 
 /*
@@ -1931,4 +1964,8 @@ void MapFactory::setMapCafeteriaChoice(cafeteria cafeteriaChoice){
 }
 void MapFactory::setMapEntryChoice(int pathEntryChoice){
   mapCustomizationChoices -> pathEntryChoice = pathEntryChoice;
+}
+
+vector<vector<std::unordered_set<int>>>& MapFactory::getCombinedPaths(){
+  return combinedPaths;
 }
