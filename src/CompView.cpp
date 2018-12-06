@@ -205,7 +205,11 @@ void CompView::updateUnits(float deltaS){
         continue;
       }
       else{
-        currentUnit->updateAttack(deltaS);
+          if(currentUnit -> getEngagedUnit()-> getHitpoints() < 0){
+              cout<<currentUnit -> getEngagedUnit() -> getType()<<endl;
+              currentUnit -> setEngagedUnit(NULL);
+          }
+          else currentUnit->updateAttack(deltaS);
       }      
     }
   }
