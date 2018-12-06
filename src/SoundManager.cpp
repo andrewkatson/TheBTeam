@@ -91,6 +91,11 @@ void SoundManager::loadSounds(){
      else
         stop the game and pull up a box saying you 'screwed' up (family friendly)
  */
+
+
+
+  //yes this hardcoded vector sucks... I know... sorry...
+
   vector<string>sound_paths={"IDS_Unit_Escape_Sound_Path",
                        "IDS_Level_Start_Sound_Path",
                        "IDS_Jazzy_Sound_Path",
@@ -127,9 +132,8 @@ void SoundManager::loadSounds(){
   for(int z=0;z<sound_paths.size();z++){
     loadSound(sound_paths[z],ids[z]);
   }
-  ////cout << textLoader->getString(("IDS_Combat_")+std::to_string(0)+string("_Music_Path")) << endl;
 
-
+  //this also sucks.... sorry...
   for(int z=0;z<=6;z++){
     sf::Music *music=new sf::Music();
     assert(music->openFromFile(textLoader->getString(string("IDS_Combat_")+std::to_string(z)+string("_Music_Path"))));
@@ -154,17 +158,13 @@ void SoundManager::loadSounds(){
 void SoundManager::loadSound(string path, string soundID){
   string true_path=textLoader->getString(path);
   string id=textLoader->getString(soundID);
-  ////cout << "path" << textLoader->getString(path) << endl;
   assert(buffers[id].loadFromFile(true_path));
 
-  ////cout << "adding sound " << textLoader->getString(soundID) << endl;
   sound_objs[id].setBuffer(buffers[id]);
-  ////cout << sound_objs.count(textLoader->getString(soundID)) << endl;
 }
 
 
 void SoundManager::playSound(string soundID){
-  ////cout << "playing sound " << soundID << endl;
   assert(sound_objs.count(soundID));
   sound_objs[soundID].setVolume(sfxVolume);
   sound_objs[soundID].play();
@@ -203,7 +203,6 @@ void SoundManager::startSongOfType(int type){
 
   playingIndex=musicPicker(rnd_gen);
 
-  //cout << "starting song of type" << playingIndex;
 
   playMusic();
 }

@@ -844,8 +844,8 @@
     <constant value = "0.0000001" id="IDS_Rate_Of_Fire_Scaler"/>
 
     <!--Unit Scale -->
-    <constant value = "4.0" id="IDS_Unit_Size_Scale_X"/>
-    <constant value = "4.0" id="IDS_Unit_Size_Scale_Y"/>
+    <constant value = "2.0" id="IDS_Unit_Size_Scale_X"/>
+    <constant value = "2.0" id="IDS_Unit_Size_Scale_Y"/>
 
     <!--Projectile Scale-->
     <constant value = "6.0" id="IDS_Projectile_Size_Scale_X"/>
@@ -868,6 +868,10 @@
 
     <!--Tower Upgrades -->
     <constant value="1.3" id="IDS_Tower_Upgrade_Base_Upgrade_Price"/>
+
+    <!-- -->
+    <constant value="150" id="IDS_Unit_Animation_Speed_Factor"/>
+
 
   </floats>
 </constants>

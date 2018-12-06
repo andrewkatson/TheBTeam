@@ -146,7 +146,7 @@ void CompView::updateUnits(float deltaS){
 
         std::uniform_int_distribution<unsigned int>nextTilePicker(0,myNextTiles.size()-1);
 
-        cout << "tryna move " << myNextTiles.size() << endl;
+        //cout << "tryna move " << myNextTiles.size() << endl;
 
         std::mt19937 rnd_gen(rd());
 
@@ -161,7 +161,7 @@ void CompView::updateUnits(float deltaS){
         int next_row=*selected_key/floor[0].size();
         int next_col=*selected_key%floor[0].size();
 
-        cout << next_row << "," << next_col << endl;
+       // cout << next_row << "," << next_col << endl;
 
         double new_direction;
 

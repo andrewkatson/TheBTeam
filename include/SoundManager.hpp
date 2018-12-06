@@ -3,6 +3,10 @@
  *
  * Purpose: Handle loading and playing of all game sounds through simple methods.
  *
+ * Disclaimer: I know the sound loading here kind of sucks... but I had no time to make
+ * it good, and SFML's sounds being uncopyable didn't help.
+ *  - Jeremy
+ *
  * @author Jeremy Elkayam
 */
 
