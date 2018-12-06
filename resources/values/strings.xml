@@ -197,7 +197,15 @@
     <string value="../resources/sprites/obstacle/trashcan/can.png" id="IDS_Trash_Can_Obstacle_0"> </string>
 
     <!--Special Icons-->
-    <!--Rally Point Flag-->
+
+  <!--Button Icons-->
+
+  <string value="../resources/sprites/icons/play.png" id="IDS_Play_Button_Icon"> </string>
+  <string value="../resources/sprites/icons/slowplay.png" id="IDS_Slow_Play_Button_Icon"> </string>
+  <string value="../resources/sprites/icons/ffwd.png" id="IDS_Fast_Forward_Button_Icon"> </string>
+  <string value="../resources/sprites/icons/ultraffwd.png" id="IDS_Ultra_Fast_Forward_Button_Icon"> </string>
+
+  <!--Rally Point Flag-->
     <string value="../resources/sprites/icons/rallyflag.png" id="IDS_Rally_Flag_Icon"> </string>
 
     <!--Upgrade Icons-->
@@ -500,6 +508,12 @@
     <string value="Damage " id="IDS_Range_Actor_Damage"> </string>
     <string value="Armor Penetration " id="IDS_Range_Actor_Armor_Penetration"> </string>
     <string value="Area of Effect " id="IDS_Range_Actor_Area_Of_Effect"> </string>
+
+
+  <string value="Speed 0.5x" id="IDS_Button_Slow_Text"> </string>
+  <string value="1x" id="IDS_Button_Normal_Speed_Text"> </string>
+  <string value="2x" id="IDS_Button_Fast_Speed_Text"> </string>
+  <string value="4x" id="IDS_Button_Very_Fast_Speed_Text"> </string>
 </strings>
 
 <typeids>

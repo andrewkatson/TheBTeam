@@ -6,6 +6,7 @@
 #include "Button.hpp"
 #include "PlayingScreenHeader.hpp"
 #include "UpgradeCircle.hpp"
+#include "Events/SpeedChangeEvent.hpp"
 #include <random>
 #include <tuple>
 
@@ -64,6 +65,8 @@ private:
   //the upgrade system visuals
   unique_ptr<UpgradeCircle> upgradeCircle;
 
+  unique_ptr<Button>slowPlayButton,playButton,fastForwardButton,ultraFastForwardButton;
+
   sf::CircleShape radius;
   sf::RectangleShape tile;
 
@@ -79,6 +82,7 @@ public:
   void initDrawingMaterials();
   void initRallyPointButton();
   void initUpgradeCircle();
+  void initSpeedButtons();
   void initColorShifts();
   void initColorShiftsForFloor();
   void initColorShiftsForPath();
@@ -109,6 +113,7 @@ public:
   void drawTowerRadius(shared_ptr<TowerInterface> tower, sf::RenderWindow& window, float xScale, float yScale, sf::Color color);
   void drawEnemyUnits(sf::RenderWindow& window);
   void drawProjectiles(sf::RenderWindow& window);
+  void drawSpeedButtons(sf::RenderWindow& window);
 
   bool wasHeaderRecalculated();
 
