@@ -49,6 +49,12 @@ void MeleeTower::update(float delta){
           unitsEngaged++;
         }
         //TODO move the unit towards the enemy unit (or attack if in contact)
+        if(unit->getEngagedUnit()->getHitpoints() < 0){
+          if(unit->getEngagedUnit() -> getEngagedUnit() == unit){
+            unit -> getEngagedUnit()->setEngagedUnit((NULL));
+          }
+          unit ->setEngagedUnit(NULL);
+        }
         //check if my unit is at destination, if so move towards xtarget and ytarget
         //else move to the enemy BUT before set the xvec and yVect
         if (unit->atTarget()){
@@ -452,77 +458,78 @@ void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
   int unitIndex = 0;
   //the angle to use to stagger each unit around the rally point flag
   float angle = 360.0 / totalUnits;
-  for (shared_ptr<ActorInterface> unit : currentUnits){
+  for (shared_ptr<ActorInterface> unit : currentUnits) {
     //cout << "we are fine" << endl;
     isEnemyPointingAtUnit = true;
-    if (unit->getEngagedUnit() == NULL){
-      float enemyX = enemyInRange->getXCoordinate();
-      float enemyY = enemyInRange->getYCoordinate();
-      sf::FloatRect dimensions = enemyInRange->getSprite().getGlobalBounds();
-
-      float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
-      //the x and y for the unit that is its resting position around the rally point flag
-      float newX = (unitCombatDistance) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + enemyX;
-      float newY = (unitCombatDistance) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + enemyY;
-
-      unit -> setEngagedUnit(enemyInRange);// x targ and y tart
-      unit -> setTargetPos(newX,newY);
-      unit -> setVector(newX - unit -> getXCoordinate(),newY - unit -> getYCoordinate());
-      // unit -> setXCoordinate(enemyInRange->getXCoordinate());
-      // unit -> setYCoordinate(enemyInRange->getYCoordinate());
-    }
-    // check is there a unit that is engaged with an enemy unit that the enemy unit isn't engaged with
-    if (unit->getEngagedUnit()->getEngagedUnit() != unit){
-      isEnemyPointingAtUnit = false;
-    }
-    if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() == enemyInRange){
-      if (enemyInRange->getEngagedUnit() == NULL){
-        enemyInRange -> setEngagedUnit(unit);
-      }
-    }
-    if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() != enemyInRange){
-      if (enemyInRange->getEngagedUnit() == NULL){
-        enemyInRange -> setEngagedUnit(unit);
+    if (unit->getHitpoints() > 0) {
+      if (unit->getEngagedUnit() == NULL) {
         float enemyX = enemyInRange->getXCoordinate();
         float enemyY = enemyInRange->getYCoordinate();
         sf::FloatRect dimensions = enemyInRange->getSprite().getGlobalBounds();
 
-
         float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
         //the x and y for the unit that is its resting position around the rally point flag
-        float newX = (unitCombatDistance) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + enemyX;
-        float newY = (unitCombatDistance) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + enemyY;
+        float newX = (unitCombatDistance) * xScale * cos(angle * unitIndex * (M_PI / 180.0)) + enemyX;
+        float newY = (unitCombatDistance) * yScale * sin(angle * unitIndex * (M_PI / 180.0)) + enemyY;
 
-        unit -> setEngagedUnit(enemyInRange);// x targ and y tart
-        unit -> setTargetPos(newX,newY);
-        unit -> setVector(newX - unit -> getXCoordinate(),newY - unit -> getYCoordinate());
+        unit->setEngagedUnit(enemyInRange);// x targ and y tart
+        unit->setTargetPos(newX, newY);
+        unit->setVector(newX - unit->getXCoordinate(), newY - unit->getYCoordinate());
         // unit -> setXCoordinate(enemyInRange->getXCoordinate());
         // unit -> setYCoordinate(enemyInRange->getYCoordinate());
       }
-      else {
-        if (enemyInRange->getHitpoints() < unit->getEngagedUnit()->getHitpoints()){
+      // check is there a unit that is engaged with an enemy unit that the enemy unit isn't engaged with
+      if (unit->getEngagedUnit()->getEngagedUnit() != unit) {
+        isEnemyPointingAtUnit = false;
+      }
+      if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() == enemyInRange) {
+        if (enemyInRange->getEngagedUnit() == NULL) {
+          enemyInRange->setEngagedUnit(unit);
+        }
+      }
+      if (isEnemyPointingAtUnit == false && unit->getEngagedUnit() != enemyInRange) {
+        if (enemyInRange->getEngagedUnit() == NULL) {
+          enemyInRange->setEngagedUnit(unit);
           float enemyX = enemyInRange->getXCoordinate();
           float enemyY = enemyInRange->getYCoordinate();
           sf::FloatRect dimensions = enemyInRange->getSprite().getGlobalBounds();
 
+
           float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
           //the x and y for the unit that is its resting position around the rally point flag
-          float newX = (unitCombatDistance) * xScale * cos(angle*unitIndex * (M_PI/180.0)) + enemyX;
-          float newY = (unitCombatDistance) * yScale * sin(angle*unitIndex * (M_PI/180.0)) + enemyY;
+          float newX = (unitCombatDistance) * xScale * cos(angle * unitIndex * (M_PI / 180.0)) + enemyX;
+          float newY = (unitCombatDistance) * yScale * sin(angle * unitIndex * (M_PI / 180.0)) + enemyY;
 
-          unit -> setEngagedUnit(enemyInRange);// x targ and y tart
-          unit -> setTargetPos(newX,newY);
-          unit -> setVector(newX - unit -> getXCoordinate(),newY - unit -> getYCoordinate());
+          unit->setEngagedUnit(enemyInRange);// x targ and y tart
+          unit->setTargetPos(newX, newY);
+          unit->setVector(newX - unit->getXCoordinate(), newY - unit->getYCoordinate());
           // unit -> setXCoordinate(enemyInRange->getXCoordinate());
           // unit -> setYCoordinate(enemyInRange->getYCoordinate());
+        } else {
+          if (enemyInRange->getHitpoints() < unit->getEngagedUnit()->getHitpoints()) {
+            float enemyX = enemyInRange->getXCoordinate();
+            float enemyY = enemyInRange->getYCoordinate();
+            sf::FloatRect dimensions = enemyInRange->getSprite().getGlobalBounds();
+
+            float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
+            //the x and y for the unit that is its resting position around the rally point flag
+            float newX = (unitCombatDistance) * xScale * cos(angle * unitIndex * (M_PI / 180.0)) + enemyX;
+            float newY = (unitCombatDistance) * yScale * sin(angle * unitIndex * (M_PI / 180.0)) + enemyY;
+
+            unit->setEngagedUnit(enemyInRange);// x targ and y tart
+            unit->setTargetPos(newX, newY);
+            unit->setVector(newX - unit->getXCoordinate(), newY - unit->getYCoordinate());
+            // unit -> setXCoordinate(enemyInRange->getXCoordinate());
+            // unit -> setYCoordinate(enemyInRange->getYCoordinate());
+          }
         }
       }
-    }
-    //cout << "finished " << endl;
+      //cout << "finished " << endl;
 
-    //cout << "unit " << counter << " is fighting " << unit -> getEngagedUnit() -> getType() << " with id " << unit -> getEngagedUnit() -> getID() << endl;
-    //cout << "unit id is " << unit -> getID() << endl;
-    unitIndex++;
+      //cout << "unit " << counter << " is fighting " << unit -> getEngagedUnit() -> getType() << " with id " << unit -> getEngagedUnit() -> getID() << endl;
+      //cout << "unit id is " << unit -> getID() << endl;
+      unitIndex++;
+    }
   }
 
 }
@@ -557,6 +564,9 @@ shared_ptr<vector<int>>  MeleeTower::getStatistics(){
  void MeleeTower::updateUnitHitpoints(int newMaxHitpoints){
    for(shared_ptr<MeleeUnit> unit : currentUnits){
      unit -> updateMaxHitpoints(newMaxHitpoints);
+     if( unit ->getHitpoints() < 0){
+       handleDeadUnit(0);
+     }
    }
  }
 
