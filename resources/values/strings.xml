@@ -509,11 +509,14 @@
     <string value="Armor Penetration " id="IDS_Range_Actor_Armor_Penetration"> </string>
     <string value="Area of Effect " id="IDS_Range_Actor_Area_Of_Effect"> </string>
 
-
+  <!-- Speed Buttons-->
   <string value="Speed 0.5x" id="IDS_Button_Slow_Text"> </string>
   <string value="1x" id="IDS_Button_Normal_Speed_Text"> </string>
   <string value="2x" id="IDS_Button_Fast_Speed_Text"> </string>
   <string value="4x" id="IDS_Button_Very_Fast_Speed_Text"> </string>
+
+
+  <string value="Next Wave" id="IDS_Button_Start_Wave_Text"> </string>
 </strings>
 
 <typeids>

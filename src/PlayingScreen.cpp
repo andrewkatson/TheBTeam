@@ -171,6 +171,51 @@ void PlayingScreen::deregisterDelegates(){
   upgradeCircle -> deregisterDelegates();
 }
 
+void PlayingScreen::initStartWaveButton(){
+
+  string fontpath = textLoader -> getString(string("IDS_TFP"));
+
+  //set up the back button
+  startWaveButton = unique_ptr<Button>(new Button(windowX, windowY, BOTTOMLEFT,
+                                                 textLoader -> getString(string("IDS_Button_Start_Wave_Text")), textLoader, fontpath));
+
+  // set the fill color for the button rectangle
+  this -> startWaveButton -> setFillColor(this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Fill_Color_Red")),
+                                         this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Fill_Color_Green")),
+                                         this->textLoader -> getInteger(string("IDS_Back_Button_Fill_Color_Alpha")));
+
+  // set the outline color for the button
+  this -> startWaveButton -> setOutlineColor(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Red")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Green")),
+                                            this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Color_Alpha")));
+
+  //set the button outline thickness
+  //this->backButton -> setOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Outline_Thickness")));
+
+  //set the fill color for the button text
+  this -> startWaveButton -> setTextFillColor(this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Fill_Color_Red")),
+                                             this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Fill_Color_Blue")), this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Fill_Color_Green")),
+                                             this->textLoader -> getInteger(string("IDS_Back_Button_Text_Fill_Color_Alpha")));
+
+  //set the outline color for the text
+  this -> startWaveButton -> setTextOutlineColor(this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Outline_Color_Red")),
+                                                this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Outline_Color_Blue")),this->textLoader -> getInteger(string("IDS_Start_Wave_Button_Text_Outline_Color_Green")),
+                                                this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Color_Alpha")));
+
+  //set the button text outline thickness
+  this->startWaveButton -> setTextOutlineThickness(this->textLoader -> getInteger(string("IDS_Back_Button_Text_Outline_Thickness")));
+
+  //set the text character size
+  this->startWaveButton -> setTextSize(this->windowX / this->textLoader->getInteger(string("IDS_Start_Wave_Button_Text_Size")));
+
+  //set the font inside the button so it can be used to calculate a bounds
+  (this->startWaveButton) -> setFont(fontpath);
+
+  //rescale the button and reset it
+  (this -> startWaveButton) -> setButtonPosition(textLoader->getInteger("IDS_Start_Wave_Button_Left_Pad"),textLoader->getInteger("IDS_Start_Wave_Button_Y_Pad"));
+
+
+}
 
 void PlayingScreen::initSpeedButtons() {
 
@@ -363,6 +408,7 @@ void PlayingScreen::initDrawingMaterials(){
   initRallyPointButton();
   initUpgradeCircle();
   initSpeedButtons();
+  initStartWaveButton();
 }
 
 /*
@@ -715,6 +761,12 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
 
   }
 
+  if(!waveGoingOn && startWaveButton->isSelected(xPos,yPos)){
+    shared_ptr<EventInterface> waveChangeEvent = make_shared<WaveChangeEvent>(playingScreenHeader->getWaveNumber(),nowInNano,true);
+
+    eventManager -> queueEvent(waveChangeEvent);
+  }
+
 
     //cout << "x " << xPos << " y " << yPos << endl;
 
@@ -1017,6 +1069,26 @@ void PlayingScreen::draw(sf::RenderWindow &window){
   ////cout<<"we drew all the things"<<endl;
 
   drawSpeedButtons(window);
+
+  if(!waveGoingOn) {
+
+    startWaveButton->draw(window);
+
+    //below is a workaround because the draw was not showing the text because sfml is stupid
+    sf::Text wave = startWaveButton->getButtonText();
+    sf::Font mainFont;
+    //used to make the font local
+    string mainFontPath = textLoader->getString(string("IDS_TFP"));
+
+    if (!mainFont.loadFromFile(mainFontPath)) {
+      //cout << "No font!" << endl;
+    } else {
+      //  //cout << "loaded font!" << endl;
+    }
+
+    wave.setFont(mainFont);
+    window.draw(wave);
+  }
 }
 
 void PlayingScreen::drawSpeedButtons(sf::RenderWindow& window){
