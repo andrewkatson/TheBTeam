@@ -14,6 +14,8 @@ TextLoader::TextLoader(){
   //fill the constants map
   loadInts();
   loadDoubles();
+
+  loadHints();
 }
 
 /*
@@ -29,6 +31,20 @@ void TextLoader::loadStrings(){
     strings.insert({s, node -> Attribute("value")});
   }
 }
+/*
+ * Load in the hints by the id
+ */
+void TextLoader::loadHints(){
+  tinyxml2::XMLDocument doc;
+  doc.LoadFile( "../resources/values/strings.xml" );
+  tinyxml2::XMLElement * root =  doc.FirstChildElement("hints");
+
+  for(tinyxml2::XMLElement* node = root->FirstChildElement("hint"); node != NULL; node= node->NextSiblingElement("hint")) {
+    string s(node->Attribute("id"));
+    hints.push_back(node -> Attribute("value"));
+  }
+}
+
 
 /*
  * Load in the class typeids by their id
@@ -121,4 +137,8 @@ double TextLoader::getDouble(const std::string id){
  */
 unordered_map<string, string>& TextLoader::getAllTypeIDS(){
   return typeids;
+}
+
+vector<string> TextLoader::getAllHints(){
+  return hints;
 }

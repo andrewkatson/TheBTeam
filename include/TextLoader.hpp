@@ -12,13 +12,14 @@
 #include <iostream>
 #include <assert.h>
 #include "tinyxml2.h"
+#include <vector>
 
 using std::string;
 using std::unordered_map;
 using std::stringstream;
 using std::cout;
 using std::endl;
-
+using std::vector;
 
 class TextLoader {
 
@@ -31,17 +32,20 @@ public:
   double getDouble(const std::string id);
 
   unordered_map<string, string>& getAllTypeIDS();
+  vector<string> getAllHints();
 
 private:
   unordered_map<string, string> strings;
   unordered_map<string, string> typeids;
   unordered_map<string, int> ints;
   unordered_map<string, double> doubles;
+  vector<string> hints;
 
   void loadStrings();
   void loadTypeIDS();
   void loadInts();
   void loadDoubles();
+  void loadHints();
 };
 
 

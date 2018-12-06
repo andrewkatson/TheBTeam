@@ -161,6 +161,8 @@ public:
   unordered_map<long long, shared_ptr<ActorInterface>>& getFiredProjectiles();
   shared_ptr<WaveManager> getWaveManager(){return waveManager;};
 
+  int getHitpoints();
+
 };
 
 #endif

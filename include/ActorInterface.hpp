@@ -16,7 +16,7 @@
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
 #include<iostream>
-
+#include <math.h>
 using namespace std;
 using std::shared_ptr;
 using std::addressof;

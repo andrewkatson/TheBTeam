@@ -9,7 +9,9 @@
 #include "WaveManager.hpp"
 
 
-WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader, int windowX, int windowY,int level,int startingDifficulty){
+WaveManager::WaveManager(shared_ptr<EventManager> eventManager,
+   shared_ptr<TextLoader> textLoader, shared_ptr<TextureLoader> textureLoader,
+    int windowX, int windowY,int level,int startingDifficulty, shared_ptr<Player> player){
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
   this -> textureLoader = textureLoader;
@@ -17,6 +19,7 @@ WaveManager::WaveManager(shared_ptr<EventManager> eventManager, shared_ptr<TextL
   this -> windowY = windowY;
   this -> level = level;
   this -> difficulty = startingDifficulty;
+  this -> player = player;
   this -> currentWaveNumber = 1;
   this -> timeElapsed = 0;
   //this -> setUpPossibleEnemies();
@@ -54,15 +57,9 @@ void WaveManager::registerDelegates() {
   const EventType mapGenEventType = mapGenEvent.getEventType();
   this -> eventManager -> registerDelegate(mapGenDelegate, textLoader -> getString(string("IDS_WaveManager_MapGenerated")),mapGenEventType);
 
-  EventManager::EventDelegate levelChangeDelegate = std::bind(&WaveManager::handleLevelChanged, this, _1);
-  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
-  const EventType levelChangeEventType = levelChangeEvent.getEventType();
-  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_LevelChange")),levelChangeEventType);
-
   EventManager::EventDelegate difficultyChangeDelegate = std::bind(&WaveManager::handleDiffChanged, this, _1);
   DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
   const EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
-  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_WaveManager_DifficultyChange")),difficultyChangeEventType);
 
   EventManager::EventDelegate waveChangeDelegate = std::bind(&WaveManager::handleWaveChange, this, _1);
   WaveChangeEvent waveChangeEvent = WaveChangeEvent();
@@ -357,7 +354,8 @@ void WaveManager::spawnNextUnit() {
 
 void WaveManager::getWavesLeft() {
     ////cout<<"waves left = " << numWaves <<endl;
-    if(this -> numWaves == 0){
+    //only make a level if we have not lost
+    if(this -> numWaves == 0 && player->getHitpoints() > 0){
       auto now = high_resolution_clock::now();
       //the actual count in nanoseconds for the time
       auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
@@ -477,7 +475,6 @@ void WaveManager::handleActorDestroyed(const EventInterface& event) {
 
 void WaveManager::handleMapGenerated(const EventInterface& event){
 
-  cout << "new map bruh" << endl;
   auto mapGeneratedEvent= static_cast<const MapGeneratedEvent*>(&event);
 
   auto mapGeneratedEventData = static_cast<MapGeneratedEventData*>((mapGeneratedEvent->data).get());

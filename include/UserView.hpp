@@ -12,6 +12,7 @@
 #include "RestartScreen.hpp"
 #include "BuyTowerScreen.hpp"
 #include "PlayingScreen.hpp"
+#include "LoadingScreen.hpp"
 #include "PlayingScreenHeader.hpp"
 #include "GameLogic.hpp"
 

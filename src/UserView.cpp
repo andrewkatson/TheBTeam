@@ -106,12 +106,14 @@ void UserView::initScreens(){
   shared_ptr<Screen> playingScreen = make_shared<PlayingScreen>(eventManager, textLoader,gameLogic, windowX, windowY);
   //Restart Screen
   shared_ptr<Screen> restartScreen = make_shared<RestartScreen>(eventManager, textLoader,windowX, windowY);
-
+  //Loading Screen
+  shared_ptr<Screen> loadingScreen = make_shared<LoadingScreen>(windowX, windowY, textLoader, eventManager);
   screens.push_back(mainMenuScreen);
   screens.push_back(optionsMenuScreen);
   screens.push_back(playingScreen);
   screens.push_back(buyTowerScreen);
   screens.push_back(restartScreen);
+  screens.push_back(loadingScreen);
 }
 
 /*

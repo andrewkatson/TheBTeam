@@ -39,12 +39,7 @@ void BoardManager::registerDelegates(){
   EventManager::EventDelegate optionSelectedDelegate = std::bind(&BoardManager::handleOptionSelectedEvent, this, _1);
   OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
   const EventType optionSelectedEventType = optionSelectedEvent.getEventType();
-  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_OS")), optionSelectedEventType);
-
-  EventManager::EventDelegate levelChangeDelegate = std::bind(&BoardManager::handleLevelChangeEvent, this, _1);
-  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
-  const EventType levelChangeEventType = levelChangeEvent.getEventType();
-  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_BMD_LC")), levelChangeEventType);
+  this -> eventManager -> registerDelegate(optionSelectedDelegate, textLoader -> getString(string("IDS_OMSD_BM")), optionSelectedEventType);
 }
 
 /*
@@ -69,13 +64,7 @@ void BoardManager::deregisterDelegates(){
   OptionSelectedEvent optionSelectedEvent = OptionSelectedEvent();
   EventType optionSelectedEventType = optionSelectedEvent.getEventType();
   //deregister the delegate and its type
-  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_OMSD_OS")),optionSelectedEventType);
-
-  //make an event and get its type
-  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
-  EventType levelChangeEventType = levelChangeEvent.getEventType();
-  //deregister the delegate and its type
-  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_BMD_LC")),levelChangeEventType);
+  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_OMSD_BM")),optionSelectedEventType);
 }
 
 //genearte a new random map

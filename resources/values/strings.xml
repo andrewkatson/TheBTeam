@@ -225,61 +225,65 @@
     <!--Exit Tile Path -->
     <string value="../resources/textures/vegies1.png" id="IDS_Exit_Tile"> </string>
 
-  <!--Sound Paths-->
-  <string value="../resources/sounds/unit/escape.ogg" id="IDS_Unit_Escape_Sound_Path"> </string>
-  <string value="../resources/sounds/game_stuff/newlevel.ogg" id="IDS_Level_Start_Sound_Path"> </string>
-  <string value="../resources/sounds/game_stuff/jazzy.ogg" id="IDS_Jazzy_Sound_Path"> </string>
-  <string value="../resources/sounds/tower/harp.ogg" id="IDS_Tower_Creation_Sound_Path"> </string>
-  <string value="../resources/sounds/tower/chaching.ogg" id="IDS_Tower_Remove_Sound_Path"> </string>
-  <string value="../resources/sounds/game_stuff/failure.ogg" id="IDS_Failure_Sound_Path"> </string>
-  <string value="../resources/sounds/tower/ding.ogg" id="IDS_Ding_Sound_Path"> </string>
-  <string value="../resources/sounds/game_stuff/qfgwin.ogg" id="IDS_QFG_Win_Sound_Path"> </string>
-  <string value="../resources/sounds/game_stuff/qfg4win.ogg" id="IDS_QFG4_Win_Sound_Path"> </string>
-  <string value="../resources/sounds/tower/firedrink.ogg" id="IDS_Fire_Drink_Sound_Path"> </string>
-  <string value="../resources/sounds/tower/firemnm.ogg" id="IDS_Fire_MnM_Sound_Path"> </string>
-  <string value="../resources/sounds/tower/firepizza.ogg" id="IDS_Fire_Pizza_Sound_Path"> </string>
-  <string value="../resources/sounds/unit/death.ogg" id="IDS_Unit_Death_Sound_Path"> </string>
-  <string value="../resources/sounds/unit/hitbyprojectile.ogg" id="IDS_Unit_Hit_By_Projectile_Sound_Path"> </string>
-  <string value="../resources/sounds/unit/punch.ogg" id="IDS_Unit_Punch_Sound_Path"> </string>
+    <!--Sound Paths-->
+    <string value="../resources/sounds/unit/escape.ogg" id="IDS_Unit_Escape_Sound_Path"> </string>
+    <string value="../resources/sounds/game_stuff/newlevel.ogg" id="IDS_Level_Start_Sound_Path"> </string>
+    <string value="../resources/sounds/game_stuff/jazzy.ogg" id="IDS_Jazzy_Sound_Path"> </string>
+    <string value="../resources/sounds/tower/harp.ogg" id="IDS_Tower_Creation_Sound_Path"> </string>
+    <string value="../resources/sounds/tower/chaching.ogg" id="IDS_Tower_Remove_Sound_Path"> </string>
+    <string value="../resources/sounds/game_stuff/failure.ogg" id="IDS_Failure_Sound_Path"> </string>
+    <string value="../resources/sounds/tower/ding.ogg" id="IDS_Ding_Sound_Path"> </string>
+    <string value="../resources/sounds/game_stuff/qfgwin.ogg" id="IDS_QFG_Win_Sound_Path"> </string>
+    <string value="../resources/sounds/game_stuff/qfg4win.ogg" id="IDS_QFG4_Win_Sound_Path"> </string>
+    <string value="../resources/sounds/tower/firedrink.ogg" id="IDS_Fire_Drink_Sound_Path"> </string>
+    <string value="../resources/sounds/tower/firemnm.ogg" id="IDS_Fire_MnM_Sound_Path"> </string>
+    <string value="../resources/sounds/tower/firepizza.ogg" id="IDS_Fire_Pizza_Sound_Path"> </string>
+    <string value="../resources/sounds/unit/death.ogg" id="IDS_Unit_Death_Sound_Path"> </string>
+    <string value="../resources/sounds/unit/hitbyprojectile.ogg" id="IDS_Unit_Hit_By_Projectile_Sound_Path"> </string>
+    <string value="../resources/sounds/unit/punch.ogg" id="IDS_Unit_Punch_Sound_Path"> </string>
 
 
-  <!--Music Paths-->
-  <string value="../resources/sounds/music/wave/evangelion.ogg" id="IDS_Combat_0_Music_Path"> </string>
-  <string value="../resources/sounds/music/wave/fe4fight.ogg" id="IDS_Combat_1_Music_Path"> </string>
-  <string value="../resources/sounds/music/wave/HQTrack01.ogg" id="IDS_Combat_2_Music_Path"> </string>
-  <string value="../resources/sounds/music/wave/HQTrack09.ogg" id="IDS_Combat_3_Music_Path"> </string>
-  <string value="../resources/sounds/music/wave/QFG4Track04.ogg" id="IDS_Combat_4_Music_Path"> </string>
-  <string value="../resources/sounds/music/wave/QFG4Track06.ogg" id="IDS_Combat_5_Music_Path"> </string>
-  <string value="../resources/sounds/music/wave/fe5fight.ogg" id="IDS_Combat_6_Music_Path"> </string>
-  <string value="../resources/sounds/music/prep/HQTrack12.ogg" id="IDS_Prep_0_Music_Path"> </string>
-  <string value="../resources/sounds/music/prep/qfg3calm.ogg" id="IDS_Prep_1_Music_Path"> </string>
-  <string value="../resources/sounds/music/prep/086-Before-Battle.ogg" id="IDS_Prep_2_Music_Path"> </string>
-  <string value="../resources/sounds/music/prep/fo12calm.ogg" id="IDS_Prep_3_Music_Path"> </string>
-  <string value="../resources/sounds/music/end/evangelion-congrats.ogg" id="IDS_End_0_Music_Path"> </string>
+    <!--Music Paths-->
+    <string value="../resources/sounds/music/wave/evangelion.ogg" id="IDS_Combat_0_Music_Path"> </string>
+    <string value="../resources/sounds/music/wave/fe4fight.ogg" id="IDS_Combat_1_Music_Path"> </string>
+    <string value="../resources/sounds/music/wave/HQTrack01.ogg" id="IDS_Combat_2_Music_Path"> </string>
+    <string value="../resources/sounds/music/wave/HQTrack09.ogg" id="IDS_Combat_3_Music_Path"> </string>
+    <string value="../resources/sounds/music/wave/QFG4Track04.ogg" id="IDS_Combat_4_Music_Path"> </string>
+    <string value="../resources/sounds/music/wave/QFG4Track06.ogg" id="IDS_Combat_5_Music_Path"> </string>
+    <string value="../resources/sounds/music/wave/fe5fight.ogg" id="IDS_Combat_6_Music_Path"> </string>
+    <string value="../resources/sounds/music/prep/HQTrack12.ogg" id="IDS_Prep_0_Music_Path"> </string>
+    <string value="../resources/sounds/music/prep/qfg3calm.ogg" id="IDS_Prep_1_Music_Path"> </string>
+    <string value="../resources/sounds/music/prep/086-Before-Battle.ogg" id="IDS_Prep_2_Music_Path"> </string>
+    <string value="../resources/sounds/music/prep/fo12calm.ogg" id="IDS_Prep_3_Music_Path"> </string>
+    <string value="../resources/sounds/music/end/evangelion-congrats.ogg" id="IDS_End_0_Music_Path"> </string>
 
 
-  <!--Sound IDs-->
-  <string value="Unit_Escape" id="IDS_Unit_Escape_Noise"> </string>
-  <string value="New_Level" id="IDS_Level_Start_Noise"> </string>
-  <string value="Jazzy" id="IDS_Jazzy_Noise"> </string>
-  <string value="Tower_Creation" id="IDS_Tower_Creation_Noise"> </string>
-  <string value="Tower_Remove" id="IDS_Tower_Remove_Noise"> </string>
-  <string value="Failure" id="IDS_Failure_Noise"> </string>
-  <string value="Ding" id="IDS_Ding_Noise"> </string>
-  <string value="QFGWin" id="IDS_QFG_Win_Noise"> </string>
-  <string value="QFG4Win" id="IDS_QFG4_Win_Noise"> </string>
-  <string value="Fire_Drink" id="IDS_Fire_Drink_Noise"> </string>
-  <string value="Fire_MnM" id="IDS_Fire_MnM_Noise"> </string>
-  <string value="Fire_Pizza" id="IDS_Fire_Pizza_Noise"> </string>
-  <string value="Death" id="IDS_Unit_Death_Noise"> </string>
-  <string value="Hit_By_Projectile" id="IDS_Unit_Hit_By_Projectile_Noise"> </string>
-  <string value="Punch" id="IDS_Unit_Punch_Noise"> </string>
+    <!--Sound IDs-->
+    <string value="Unit_Escape" id="IDS_Unit_Escape_Noise"> </string>
+    <string value="New_Level" id="IDS_Level_Start_Noise"> </string>
+    <string value="Jazzy" id="IDS_Jazzy_Noise"> </string>
+    <string value="Tower_Creation" id="IDS_Tower_Creation_Noise"> </string>
+    <string value="Tower_Remove" id="IDS_Tower_Remove_Noise"> </string>
+    <string value="Failure" id="IDS_Failure_Noise"> </string>
+    <string value="Ding" id="IDS_Ding_Noise"> </string>
+    <string value="QFGWin" id="IDS_QFG_Win_Noise"> </string>
+    <string value="QFG4Win" id="IDS_QFG4_Win_Noise"> </string>
+    <string value="Fire_Drink" id="IDS_Fire_Drink_Noise"> </string>
+    <string value="Fire_MnM" id="IDS_Fire_MnM_Noise"> </string>
+    <string value="Fire_Pizza" id="IDS_Fire_Pizza_Noise"> </string>
+    <string value="Death" id="IDS_Unit_Death_Noise"> </string>
+    <string value="Hit_By_Projectile" id="IDS_Unit_Hit_By_Projectile_Noise"> </string>
+    <string value="Punch" id="IDS_Unit_Punch_Noise"> </string>
     <!--Title-->
     <string value="Food Fight" id="IDS_GAMETITLE"> </string>
 
-  <!--Game Delegates-->
+    <!--Game Delegates-->
 
-  <string value="Game_Speed_Change" id="IDS_Game_SpeedChange"> </string>
+    <string value="Game_Speed_Change" id="IDS_Game_SpeedChange"> </string>
+    <string value="Game_Map_Generated" id="IDS_Game_Map_Generated_Delegate"> </string>
+    <string value="Game_Level_Change" id="IDS_Game_Level_Change_Delegate"> </string>
+    <string value="Game_Restart_Change" id="IDS_Game_Restarted_Delegate"> </string>
+
     <!--GameLogic Delegates-->
     <string value="GAMELOGICHANDLEKEYPRESS" id="IDS_GLD_KP"> </string>
     <string value="GAMELOGICHANDLEMOUSEPRESS" id="IDS_GLD_MP"> </string>
@@ -314,13 +318,13 @@
     <string value="Wave_Manager_Difficulty_Change" id="IDS_WaveManager_DifficultyChange"> </string>
     <string value="Wave_Manager_Wave_Change" id="IDS_WaveManager_WaveChange"> </string>
 
-  <!--Sound Manager Delegates-->
-  <string value="Sound_Manager_Play_Sound" id="IDS_SoundManager_PlaySound"> </string>
-  <string value="Sound_Manager_Level_Change" id="IDS_SoundManager_LevelChange"> </string>
-  <string value="Sound_Manager_Tower_Creation" id="IDS_SoundManager_TowerCreation"> </string>
-  <string value="Sound_Manager_Tower_Remove" id="IDS_SoundManager_TowerRemove"> </string>
-  <string value="Sound_Manager_Wave_Change" id="IDS_SoundManager_WaveChange"> </string>
-  <string value="Sound_Manager_State_Change" id="IDS_SoundManager_StateChange"> </string>
+    <!--Sound Manager Delegates-->
+    <string value="Sound_Manager_Play_Sound" id="IDS_SoundManager_PlaySound"> </string>
+    <string value="Sound_Manager_Level_Change" id="IDS_SoundManager_LevelChange"> </string>
+    <string value="Sound_Manager_Tower_Creation" id="IDS_SoundManager_TowerCreation"> </string>
+    <string value="Sound_Manager_Tower_Remove" id="IDS_SoundManager_TowerRemove"> </string>
+    <string value="Sound_Manager_Wave_Change" id="IDS_SoundManager_WaveChange"> </string>
+    <string value="Sound_Manager_State_Change" id="IDS_SoundManager_StateChange"> </string>
     <!--MainMenuScreen Delegates-->
     <string value="MAINMENUSCREENHANDLEKEYPRESS" id="IDS_MMSD_KP"> </string>
     <!--OptionsMenuScreen Delegates-->
@@ -454,7 +458,6 @@
     <string value="Speed: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_3"> </string>
     <string value="Armor Penetration: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_4"> </string>
     <string value="Respawn Speed: " id="IDS_Buy_Tower_Option_Tile_Button_Melee_Tower_5"> </string>
-
 
     <!--Upgrade Button IDs-->
     <string value="Tower_Radius" id="IDS_Tower_Radius_Upgrade"> </string>
@@ -604,3 +607,17 @@
   <typeid value="Fat_Kid_Unit" id="IDS_FKU"> </typeid>
 
 </typeids>
+
+<hints>
+  <hint value="Drink Towers Feed Many Kids at Once" id="IDS_Hint_100"> </hint>
+  <hint value="Place Towers to Feed the Children" id="IDS_Hint_0"> </hint>
+  <hint value="Right Click Buy/Sell Tower If They Are In The Way" id="IDS_Hint_1"> </hint>
+  <hint value="Right Click Tower To Upgrade Specific Stats" id="IDS_Hint_2"> </hint>
+  <hint value="Use Fry Guys To Block Paths" id="IDS_Hint_3"> </hint>
+  <hint value="Pizza Towers Feed The Larger Children" id="IDS_Hint_101"> </hint>
+  <hint value="Big Pharma Is Hurting Us. Stop Them." id="IDS_Hint_4"> </hint>
+  <hint value="Press H to Hide the Header" id="IDS_Hint_5"> </hint>
+  <hint value="Fry Towers Feed the Normal Kids" id="IDS_Hint_104"> </hint>
+  <hint value="Talk Quietly or Big Pharma Can Hear Us" id="IDS_Hint_7"> </hint>
+  <hint value="M and M Towers Feed Small Kids the Best" id="IDS_Hint_6"> </hint>
+</hints>

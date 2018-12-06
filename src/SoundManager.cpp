@@ -37,11 +37,6 @@ void SoundManager::registerDelegates(){
   const EventType playSoundEventType = playSoundEvent.getEventType();
   this -> eventManager -> registerDelegate(playSoundDelegate, textLoader -> getString(string("IDS_SoundManager_PlaySound")),playSoundEventType);
 
-  EventManager::EventDelegate levelChangeDelegate = std::bind(&SoundManager::handleLevelChanged, this, _1);
-  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
-  const EventType levelChangeEventType = levelChangeEvent.getEventType();
-  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_SoundManager_LevelChange")),levelChangeEventType);
-
   EventManager::EventDelegate towerCreationDelegate = std::bind(&SoundManager::handleTowerCreation, this, _1);
   TowerCreationEvent towerCreationEvent = TowerCreationEvent();
   const EventType towerCreationEventType = towerCreationEvent.getEventType();

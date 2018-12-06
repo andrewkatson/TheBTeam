@@ -956,3 +956,20 @@ int TowerManager::getUpgradePrice(int row, int col){
 
     rangeTower->incrementNewUpgrade();
   }
+
+
+/*
+ * Clear all the towers from the map
+ */
+void TowerManager::clearAllTowers(){
+  towersPlaced.clear();
+}
+
+/*
+ * Update all the base tower statistics to reflect the
+ * average of all the statistics for the towers placed so that
+ * player upgrades will affect how the game develops
+ */
+void TowerManager::updateBaseTowerStats(){
+
+}

@@ -669,13 +669,6 @@ void PlayingScreenHeader::registerDelegates(){
   //bind our delegate function for level change
   EventManager::EventDelegate levelChangeDelegate = std::bind(&PlayingScreenHeader::handleLevelChange, this, _1);
 
-  //make an event and get its type
-  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
-  EventType levelChangeEventType = levelChangeEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_PSH_LC")),levelChangeEventType);
-
-
   //bind our delegate function for wave change
   EventManager::EventDelegate waveChangeDelegate = std::bind(&PlayingScreenHeader::handleWaveChange, this, _1);
 
@@ -700,15 +693,6 @@ void PlayingScreenHeader::registerPersistentDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(balanceChangeDelegate, textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
 
-  //bind our delegate function for balance change
-  EventManager::EventDelegate restartGameEventDelegate = std::bind(&PlayingScreenHeader::handleRestartGame, this, _1);
-
-  //make an event and get its type
-  RestartGameEvent restartGameEvent = RestartGameEvent();
-  EventType restartGameEventType = restartGameEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> registerDelegate(restartGameEventDelegate, textLoader -> getString(string("IDS_PSH_RG")),restartGameEventType);
-
 }
 
 /*
@@ -720,12 +704,6 @@ void PlayingScreenHeader::deregisterPersistentDelegates(){
   EventType balanceChangeEventType = balanceChangeEvent.getEventType();
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PSH_BC")),balanceChangeEventType);
-
-  //make an event and get its type
-  RestartGameEvent restartGameEvent = RestartGameEvent();
-  EventType restartGameEventType = restartGameEvent.getEventType();
-  //register the delegate and its type
-  this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_PSH_RG")),restartGameEventType);
 }
 
 /*
@@ -750,12 +728,6 @@ void PlayingScreenHeader::deregisterDelegates(){
   EventType loseHitpointsEventType = loseHitpointsEvent.getEventType();
   //deregister the delegate and its type
   this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_PSH_LHP")),loseHitpointsEventType);
-  //make an event and get its type
-  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
-  EventType levelChangeEventType = levelChangeEvent.getEventType();
-  //deregister the delegate and its type
-  this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_PSH_LC")),levelChangeEventType);
-
   //make an event and get its type
   WaveChangeEvent waveChangeEvent = WaveChangeEvent();
   EventType waveChangeEventType = waveChangeEvent.getEventType();

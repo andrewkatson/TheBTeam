@@ -42,6 +42,9 @@ public:
   void deregisterDelegates();
 
   void handleSpeedChange(const EventInterface& event);
+  void handleMapGeneration(const EventInterface &event);
+  void handleLevelChange(const EventInterface &event);
+  void handleRestartGame(const EventInterface &event);
 };
 
 #endif
