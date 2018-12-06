@@ -6,6 +6,7 @@ LeaderBoardScreen::LeaderBoardScreen(int windowX, int windowY, shared_ptr<TextLo
   this -> windowY = windowY;
   this -> eventManager = eventManager;
   this -> textLoader = textLoader;
+  this -> connection = false;
   this -> initBackButton();
 }
 
@@ -77,7 +78,7 @@ void LeaderBoardScreen::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(keyPressDelegate, textLoader -> getString(string("IDS_Leader_Board_Key_Press_Delegate")),keyPressEventType);
 
-
+  tryToConnect();
 }
 
 void LeaderBoardScreen::deregisterDelegates(){
@@ -94,6 +95,7 @@ void LeaderBoardScreen::deregisterDelegates(){
   //register the delegate and its type
   this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_Leader_Board_Key_Press_Delegate")),keyPressEventType);
 
+  endConnect();
 }
 
 /*
@@ -162,8 +164,97 @@ void LeaderBoardScreen::handleMousePress(const EventInterface& event){
   }
 }
 
+void LeaderBoardScreen::tryToConnect(){
+  /*
+  const char *cmd = &(execute[0]);
+  //char *cmd = "ssh adkatson@me.cs.wm.edu ; 930916720";
+  cout << cmd << endl;
+  string result = exec(cmd);
+
+  if(result == "FAIL"){
+    connection = false;
+  }
+  else{
+    connection = true;
+    getLeaderBoard();
+  }
+  cout << "result was " << result << endl;
+  /*
+  my_ssh_session = ssh_new();
+  int verbosity = SSH_LOG_PROTOCOL;
+  int port = 22;
+  int rc;
+  if (my_ssh_session == NULL){
+    connection = false;
+    return;
+  }
+
+  ssh_options_set(my_ssh_session, SSH_OPTIONS_HOST, "localhost");
+  ssh_options_set(my_ssh_session, SSH_OPTIONS_LOG_VERBOSITY, &verbosity);
+  ssh_options_set(my_ssh_session, SSH_OPTIONS_PORT, &port);
+
+  rc = ssh_connect(my_ssh_session);
+  if (rc != SSH_OK)
+  {
+  fprintf(stderr, "Error connecting to localhost: %s\n",
+          ssh_get_error(my_ssh_session));
+  exit(-1);
+  }
+  */
+
+}
+
+std::string LeaderBoardScreen::exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        result = "FAIL";
+        //throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    if(result != "FAIL" && result.length() == 0){
+      result = "OK";
+    }
+    return result;
+}
+
+void LeaderBoardScreen::getLeaderBoard(){
+
+}
+
+void LeaderBoardScreen::endConnect(){
+  if(connection){
+    //ssh_free(my_ssh_session);
+  }
+}
 
 void LeaderBoardScreen::draw(sf::RenderWindow& window){
+
+
+  sf::Text message;
+  message.setFont(mainFont);
+  if(connection){
+    message.setString(textLoader->getString(string("IDS_Leader_Board_Normal_Title")));
+  }
+  else{
+    message.setString(textLoader->getString(string("IDS_Leader_Board_No_Connection")));
+  }
+
+  message.setCharacterSize(textLoader->getInteger(string("IDS_Leader_Board_Message_Text_Size")));
+  //and size the rectangle to be the center of the screen
+  sf::FloatRect rect = message.getGlobalBounds();
+
+  message.setOrigin(rect.width/2, rect.height/2);
+
+  message.setPosition(windowX/2, windowY/6);
+
+  message.setFillColor(sf::Color::White);
+
+  window.draw(message);
+
   backButton -> draw(window);
 
   //below is a workaround because the draw was not showing the text because sfml is stupid

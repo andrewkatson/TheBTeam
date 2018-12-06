@@ -171,9 +171,9 @@ void RestartScreen::handleKeyPress(const EventInterface& event){
       this -> eventManager -> queueEvent(mainMenu);
     }
     else if(selectedItem == (int) Choices::Leaderboard){
-        shared_ptr<EventInterface> quit = make_shared<KeyPressEvent>(string("Q"), nowInNano);
+      shared_ptr<EventInterface> leaderBoard = make_shared<StateChangeEvent>(State::LeaderBoard, nowInNano);
 
-        this -> eventManager -> queueEvent(quit);
+      this -> eventManager -> queueEvent(leaderBoard);
     }
 
     else if(selectedItem == (int) Choices::Quit){

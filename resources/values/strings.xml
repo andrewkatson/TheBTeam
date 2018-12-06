@@ -382,13 +382,16 @@
     <!--Leader Board Delegates-->
     <string value="LeaderBoard_Screen_Handle_Key_Press" id="IDS_Leader_Board_Key_Press_Delegate"> </string>
     <string value="LeaderBoard_Screen_Handle_Mouse_Press" id="IDS_Leader_Board_Mouse_Press_Delegate"> </string>
-    
+
     <!--RestartScreen-->
     <string value="Congratulations! You tried your best, but Big Pharma wins..." id="IDS_RSM"></string>
 
     <!--OptionsMenuScreen-->
     <string value ="Confirm" id="IDS_Options_Menu_Confirm_Button"> </string>
 
+    <!--LeaderBoardScreen -->
+    <string value="Oh Sorry No Connection To Server" id="IDS_Leader_Board_No_Connection"> </string>
+    <string value="LeaderBoard" id="IDS_Leader_Board_Normal_Title"></string>
 
     <!--School Switcher-->
     <!--Increment by 1 for gl-->

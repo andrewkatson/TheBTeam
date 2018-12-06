@@ -812,6 +812,7 @@ void PlayingScreen::handleMousePress(const EventInterface& event){
  */
 void PlayingScreen::handleLevelChangeEvent(const EventInterface& event){
   playingScreenHeader -> initDrawingMaterials();
+  waveGoingOn = false;
 }
 
 /*

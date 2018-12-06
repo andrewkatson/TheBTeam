@@ -1,6 +1,13 @@
 #pragma once
 #include "Screen.hpp"
 #include "Button.hpp"
+//#define LIBSSH_STATIC 1
+//#include <../libssh/include/libssh/libssh.h>
+#include <stdlib.h>
+#include <stdexcept>
+#include <string>
+#include <array>
+#include <cstdio>
 /*
  * Handles an ssh to a basic server to check your stats against those
  * @author Andrew Katson
@@ -17,6 +24,12 @@ private:
   //size of window
   int windowX;
   int windowY;
+  //our ssh session
+  //ssh_session my_ssh_session;
+  //whether we made a sucessful connection or not
+  bool connection;
+
+  sf::Font mainFont;
 public:
 
   LeaderBoardScreen(int windowX, int windowY, shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager);
@@ -30,6 +43,11 @@ public:
 
   void handleKeyPress(const EventInterface& event);
   void handleMousePress(const EventInterface& event);
+
+  void tryToConnect();
+  std::string exec(const char* cmd);
+  void getLeaderBoard();
+  void endConnect();
 
   void draw(sf::RenderWindow& window);
  };
