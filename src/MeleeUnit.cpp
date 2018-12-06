@@ -218,6 +218,8 @@ void MeleeUnit::attackEngagedUnit(){
   assert(armor>0);
   enemyHP -= (float)damage *(float)(armorPenetration/enemyArmor);
   engagedUnit->updateHitpoints(enemyHP);
+  cout<<getType()<<endl;
+  cout<<enemyHP<<endl;
 }
 
 void MeleeUnit::updateAttack(float delta){

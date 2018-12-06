@@ -15,6 +15,7 @@
 #include "EventManager.hpp"
 #include "TextLoader.hpp"
 #include "TextureLoader.hpp"
+#include <cmath>
 #include<iostream>
 #include <cmath>
 
