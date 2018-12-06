@@ -226,7 +226,7 @@
   <!--Enemy Units -->
   <!--Average Kid Unit-->
   <constant value="20" id="IDS_AK_HP"> </constant>
-  <constant value="1000" id="IDS_AK_DM"> </constant>
+  <constant value="7" id="IDS_AK_DM"> </constant>
   <constant value="5" id="IDS_AK_AM"> </constant>
   <constant value="550" id="IDS_AK_SP"> </constant>
   <constant value="2" id="IDS_AK_AP"> </constant>
@@ -244,7 +244,7 @@
   <constant value="100" id="IDS_FK_Attack_Rate"> </constant>
   <!--Skinny Kid Unit-->
   <constant value="10" id="IDS_SK_HP"> </constant>
-  <constant value="2" id="IDS_SK_DM"> </constant>
+  <constant value="5" id="IDS_SK_DM"> </constant>
   <constant value="1" id="IDS_SK_AM"> </constant>
   <constant value="700" id="IDS_SK_SP"> </constant>
   <constant value="1" id="IDS_SK_AP"> </constant>
@@ -256,25 +256,25 @@
   <!--Allied Units -->
   <!--Normal Fry Unit-->
   <constant value="100" id="IDS_NF_HP"> </constant>
-  <constant value="5" id="IDS_NF_DM"> </constant>
+  <constant value="20" id="IDS_NF_DM"> </constant>
   <constant value="1" id="IDS_NF_AM"> </constant>
   <constant value="10" id="IDS_NF_SP"> </constant>
-  <constant value="1" id="IDS_NF_AP"> </constant>
+  <constant value="5" id="IDS_NF_AP"> </constant>
   <constant value="1" id="IDS_NF_AR"> </constant>
   <constant value="0" id ="IDS_NF_LM"> </constant>
   <constant value="500" id="IDS_NF_Attack_Rate"> </constant>
   <!--Crinkle Fry Unit-->
   <constant value="200" id="IDS_CF_HP"> </constant>
-  <constant value="10" id="IDS_CF_DM"> </constant>
+  <constant value="25" id="IDS_CF_DM"> </constant>
   <constant value="3" id="IDS_CF_AM"> </constant>
   <constant value="2" id="IDS_CF_SP"> </constant>
-  <constant value="0" id="IDS_CF_AP"> </constant>
+  <constant value="5" id="IDS_CF_AP"> </constant>
   <constant value="2" id="IDS_CF_AR"> </constant>
   <constant value="0" id ="IDS_CF_LM"> </constant>
   <constant value="1000" id="IDS_CF_Attack_Rate"> </constant>
   <!--Waffle Fry Unit-->
   <constant value="400" id="IDS_WF_HP"> </constant>
-  <constant value="20" id="IDS_WF_DM"> </constant>
+  <constant value="30" id="IDS_WF_DM"> </constant>
   <constant value="8" id="IDS_WF_AM"> </constant>
   <constant value="4" id="IDS_WF_SP"> </constant>
   <constant value="10" id="IDS_WF_AP"> </constant>
@@ -283,10 +283,10 @@
   <constant value="300" id="IDS_WF_Attack_Rate"> </constant>
   <!--Spicy Fry Unit-->
   <constant value="600" id="IDS_SF_HP"> </constant>
-  <constant value="15" id="IDS_SF_DM"> </constant>
+  <constant value="30" id="IDS_SF_DM"> </constant>
   <constant value="10" id="IDS_SF_AM"> </constant>
   <constant value="1" id="IDS_SF_SP"> </constant>
-  <constant value="1" id="IDS_SF_AP"> </constant>
+  <constant value="20" id="IDS_SF_AP"> </constant>
   <constant value="5" id="IDS_SF_AR"> </constant>
   <constant value="0" id ="IDS_SF_LM"> </constant>
   <constant value="2000" id="IDS_SF_Attack_Rate"> </constant>
