@@ -150,7 +150,7 @@ void WaveManager::createNextWave() {
 
   double range=(--distancesFromEntryPositions.end())->first;
 
-  std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
+  std::normal_distribution<double> spawn_location_rng((currentWaveNumber-1)*(range/numWaves),range/3);
 
   cout << "my average " <<  currentWaveNumber*(range/numWaves) << endl << "my deviation " << range/3 << endl;
 
@@ -304,7 +304,7 @@ void WaveManager::createNextWave() {
     enemy->setUnitScale(xScale,yScale);
     currentWave.push(enemy);
   }
-  //printf("created a wave with %ld units\n",currentWave.size());
+  printf("created a wave with %ld units\n",currentWave.size());
 }
 
 
@@ -374,7 +374,7 @@ void WaveManager::update(float deltaS) {
     timeElapsed=0;
     spawnNextUnit();
   }
-  cout << "left update wave manager" << endl;
+  //cout << "left update wave manager" << endl;
 
 }
 

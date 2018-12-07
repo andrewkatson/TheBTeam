@@ -46,6 +46,8 @@ void CompView::updateUnits(float deltaS){
   }
    */
 
+  cout << "iterating over enemies" << endl;
+
   std::mt19937 rnd_gen (rd ());
 
   uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()*.95);
@@ -53,12 +55,15 @@ void CompView::updateUnits(float deltaS){
 
   for(auto iterator : waveManager->getSpawnedEnemyUnits()){
       shared_ptr<MeleeUnit> currentUnit= iterator.second;
+      cout << "got an enemy" << endl;
       //if you're not engaged with a unit do all the movement collide
       if (currentUnit->getEngagedUnit() == NULL ){
         //printf("loop thru a unit\n");
+        cout << "checked engaged unit" << endl;
+
 
         if(!coordsInsideTile(currentUnit->getRow(),currentUnit->getCol(),currentUnit->getXCoordinate(),currentUnit->getYCoordinate())){
-          //printf("updating tile...\nx: %f\ny: %f\n",currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
+          printf("updating tile...\nx: %f\ny: %f\n",currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
           int newCol=currentUnit->getXCoordinate()/playingScreenHeader->getTrueXTileSize();
           int newRow=currentUnit->getYCoordinate()/playingScreenHeader->getTrueYTileSize();
           currentUnit->setRow(newRow);
@@ -86,6 +91,8 @@ void CompView::updateUnits(float deltaS){
 
         //printf("checked the tile\nrow: %d\ncol: %d\n",currentUnit->getRow(),currentUnit->getCol());
 
+        cout << "checked if dead" << endl;
+
 
         if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
           shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit,deltaS);
@@ -102,13 +109,14 @@ void CompView::updateUnits(float deltaS){
           this -> eventManager -> queueEvent(hitpointsLost);
           this -> eventManager -> queueEvent(playSound);
         }
-        else { //these don't need to happen if the unit hit the exit
+        else { //these don't need to happen if the unit hit the exi
+          cout << "trying to movew" << endl;
 
           int r = currentUnit->getRow();
           int c = currentUnit->getCol();
           //printf("row=%d col=%d x=%f y=%f\n",r,c,currentUnit->getXCoordinate(),currentUnit->getYCoordinate());
 
-          std::map<int, double> dists_coords;
+//          std::map<int, double> dists_coords;
 
           vector<double> angles={0,M_PI/2,M_PI,3*M_PI/2};
 
@@ -135,22 +143,22 @@ void CompView::updateUnits(float deltaS){
             }
           }
           assert(!dists_coords.empty());
-          //printf("map size: %ld\n",dists_coords.size());
+          printf("map size: %ld\n",dists_coords.size());
 
           double new_direction = dists_coords.begin()->second; //get the one with the shortest distance
 
-          //printf("going to next: %lf\n",new_direction);
+          printf("going to next: %lf\n",new_direction);
 
   */
           std::unordered_set<int>myNextTiles=combinedPaths.at(r).at(c);
 
           std::uniform_int_distribution<unsigned int>nextTilePicker(0,myNextTiles.size()-1);
 
-          //cout << "tryna move " << myNextTiles.size() << endl;
+          cout << "tryna move " << myNextTiles.size() << endl;
 
           std::mt19937 rnd_gen(rd());
 
-          //cout << "my set " << *myNextTiles.begin() << endl;
+          cout << "my set " << *myNextTiles.begin() << endl;
 
           unsigned int next_index=nextTilePicker(rnd_gen);
 
@@ -161,7 +169,7 @@ void CompView::updateUnits(float deltaS){
           int next_row=*selected_key/floor[0].size();
           int next_col=*selected_key%floor[0].size();
 
-         // cout << next_row << "," << next_col << endl;
+          cout << next_row << "," << next_col << endl;
 
           double new_direction;
 

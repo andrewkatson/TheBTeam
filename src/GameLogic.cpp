@@ -161,9 +161,9 @@ void GameLogic::updateGameLogic(float deltaS){
     this -> waveManager -> update(deltaS);
     //check for collisions before processing events so any unit that has been
     //destroyed but moved can be placed in the right map
-    cout << "is it collision detection "  << endl;
+    //cout << "is it collision detection "  << endl;
     this -> collisionManager -> checkForCollisions(deltaS);
-    cout << "oh man it is " << endl;
+    //cout << "oh man it is " << endl;
   }
   this -> eventManager -> processEvent();
 }
