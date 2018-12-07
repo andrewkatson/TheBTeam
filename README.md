@@ -33,6 +33,12 @@ Right clicking a tower will bring up its __Upgrade Circle__. This will allow you
 French fry HQs have a unique control scheme. Clicking on one will show you a flag icon inside a circle. Clicking this flag will allow you to pick it up. You can drop it on any path tile inside the tower's circle of influence. This flag will tell the tower's Fryguys where they should convene while they're not fighting.
 
 ### Towers
+![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/meatlovers/closed.png")
+![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/gravy/can.png")
+![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/minimnm/closed.png")
+![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/deepdish/closed.png")
+![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/wafflefry/normal.png")
+
 Buying towers costs money. Upgrading them costs more money! Luckily, when you feed kids, you get their lunch money, which you can spend on more towers. As you advance through the game's levels, you'll also start with more and more money as you begin new levels
 
 #### Dr. Paprika
