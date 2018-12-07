@@ -180,6 +180,8 @@ void LeaderBoardScreen::tryToConnect(){
     connection = true;
     getLeaderBoard();
   }
+
+
   /*
   my_ssh_session = ssh_new();
   int verbosity = SSH_LOG_PROTOCOL;

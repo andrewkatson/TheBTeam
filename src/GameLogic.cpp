@@ -323,10 +323,14 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   towerManager->updateBaseTowerStats();
   //clear all the towers placed
   towerManager->clearAllTowers();
+
+  cout << "tower manager passed" << endl;
   //clear everythign from collision Manager
   collisionManager->clearEverything();
+  cout << "collison manager passed" << endl;
   //projectile manager
   projectileManager->clearProjectiles();
+  cout << "projectile manager passed" << endl;
 
   //playerbalance=(20 * 2);
   player -> newLevelBalance();
