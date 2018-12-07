@@ -4,7 +4,7 @@ A Food Themed 2D Tower Defense Game with procedurally generated maps and waves.
 ## Download Instructions
 - Head to the computer lab on the first floor of McGlothlin-Street Hall, 251 Jamestown Rd, Williamsburg, VA
 - Log into one of the computers and enter the following command into a terminal window:
- - `git clone https://github.com/andrewkatson/TheBTeam.git ; cd TheBTeam ; mkdir Release ; cd Release ; cmake .. ; make ; ./Game `
+ - `git clone https://github.com/andrewkatson/TheBTeam.git ; cd TheBTeam ; mkdir Debug ; cd Debug ; cmake .. ; make ; ./Game `
 - You're playing! Have fun!
 
 ## Background
@@ -33,27 +33,39 @@ Right clicking a tower will bring up its __Upgrade Circle__. This will allow you
 French fry HQs have a unique control scheme. Clicking on one will show you a flag icon inside a circle. Clicking this flag will allow you to pick it up. You can drop it on any path tile inside the tower's circle of influence. This flag will tell the tower's Fryguys where they should convene while they're not fighting.
 
 ### Towers
-![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/meatlovers/closed.png")
-![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/gravy/can.png")
-![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/minimnm/closed.png")
-![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/deepdish/closed.png")
-![tower]("https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/wafflefry/normal.png")
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/meatlovers/closed.png)
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/gravy/can.png)
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/minimnm/closed.png)
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/deepdish/closed.png)
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/wafflefrycontainer/normal.png)
 
 Buying towers costs money. Upgrading them costs more money! Luckily, when you feed kids, you get their lunch money, which you can spend on more towers. As you advance through the game's levels, you'll also start with more and more money as you begin new levels
 
 #### Dr. Paprika
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/colacan/can.png)
+
 Soda and other drinks are a great well-rounded weapon for general purposes! They'll rot those kids' teeth to hell and back.
 
 #### W&W
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/minimnm/open.png)
+
 Candies' light weights and quick travel speeds are great for fighting fast units, but they won't do much damage.
 
 #### P.P.'s Pizza
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/cheezpizz/open.png)
+
 Pizza towers do strong damage and pierce armor, but their projectiles travel slowly and won't hit the quicker kids.
 
 #### Fry Guy HQ
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/normalfrycontainer/normal.png)
+
 These house fry-guys, the first line of defense in your army. Once they see a unit, they'll start fighting him and keep him stationary as long as he stays alive. They're great for stalling units and keeping them away from the veggie table while your other towers whittle their health down.
 
 ### Children
+![unit](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/unit/skinnykidunit/standing.png)
+![unit](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/unit/averagekidunit/standing.png)
+![unit](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/unit/fatkidunit/standing.png)
+
 Children come in 3 different weight classes. The largest kids are slow, but have nearly bottomless stomachs and built-in armor. The smallest kids are on the other side of the spectrum-- they're quick runners, but their bellies will fill up fast. Average sized kids tend to form the bulk of the kids at school, and they fall somewhere in between the biggest and the smallest kids.
 
 ### Tips
