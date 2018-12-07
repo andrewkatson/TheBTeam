@@ -148,6 +148,9 @@ public:
 
   void handleLoseHitpoints(const EventInterface& event);
 
+  void handleBalanceChanged(const EventInterface& event);
+
+
   void setToDefaults();
 
   void newLevel(){level++;}

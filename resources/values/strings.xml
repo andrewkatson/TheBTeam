@@ -306,6 +306,7 @@
     <string value="Player_Difficulty_Change" id="IDS_Player_DifficultyChange"> </string>
     <string value="Player_Handle_Lost_Hitpoints" id="IDS_Player_Lose_Hitpoints"> </string>
     <string value="Player_Option_Selected_Event" id="IDS_Player_Option_Selected"> </string>
+  <string value="Player_Balance_Change" id="IDS_Player_Balance_Change"> </string>
     <!--UserView Delegates-->
     <string value="USERVIEWHANDLEKEYPRESS" id="IDS_UVD_KP"> </string>
     <string value="USERVIEWHANDLEMOUSEPRESS" id="IDS_UVD_MP"> </string>
