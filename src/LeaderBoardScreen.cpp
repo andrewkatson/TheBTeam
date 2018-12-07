@@ -165,7 +165,7 @@ void LeaderBoardScreen::handleMousePress(const EventInterface& event){
 }
 
 void LeaderBoardScreen::tryToConnect(){
-
+/*
   const char *cmd = &(execute[0]);
   cout << cmd << endl;
   //string result = exec(cmd);
@@ -178,6 +178,7 @@ void LeaderBoardScreen::tryToConnect(){
     getLeaderBoard();
   }
   cout << "result was " << result << endl;
+  */
   /*
   my_ssh_session = ssh_new();
   int verbosity = SSH_LOG_PROTOCOL;

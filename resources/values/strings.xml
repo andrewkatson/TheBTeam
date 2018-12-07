@@ -648,7 +648,7 @@
   <hint value="M and M Towers Feed Small Kids the Best" id="IDS_Hint_6"> </hint>
   <hint value="If You Lose Less Health You Will Win More Often" id="IDS_Hint_102"> </hint>
   <hint value="Left Click Tower To See Radius" id="IDS_Hint_103"> </hint>
-  <hint value="Upgrading Statistics Will Be Reflected In the Next Level" id="IDS_Hint_105"> </hint>
+  <hint value="Upgrading Statistics Will\nBe Reflected In the Next Level" id="IDS_Hint_105"> </hint>
   <hint value="You Will Lose" id="IDS_Hint_106"> </hint>
   <hint value="Remember It Will All Be Over Soon" id="IDS_Hint_107"> </hint>
   <hint value="Left Click Melee Tower and Left Click Its Rally Flag to Set Unit Spawn" id="IDS_Hint_108"> </hint>
@@ -661,4 +661,14 @@
   <hint value="Mei Song" id="IDS_Hint_13"> </hint>
   <hint value="You Can Change the Speed of the Game" id="IDS_Hint_14"> </hint>
   <hint value="No Food Was Harmed in the Making of This game" id="IDS_Hint_15"> </hint>
+  <hint value="Please Give Us An A" id="IDS_Hint_16"> </hint>
+  <hint value="We Tried" id="IDS_Hint_17"> </hint>
+  <hint value="Having Trouble? Maybe Try Eating More Junk Food" id="IDS_Hint_18"> </hint>
+  <hint value="Wish We Had More Time" id="IDS_Hint_19"> </hint>
+  <hint value="Reticulating Splines" id="IDS_Hint_21"> </hint>
+  <hint value="Dough Rising Please Wait" id="IDS_Hint_22"> </hint>
+  <hint value="Protip: Play The Game Well and You Won't Suck" id="IDS_Hint_23"> </hint>
+  <hint value="Make Sure To Take Breaks And Shower More" id="IDS_Hint_24"> </hint>
+  <hint value="Attack Kids' Weak Points For Massive Damage" id="IDS_Hint_25"> </hint>
+  <hint value="Suck Blue Frog" id="IDS_Hint_26"> </hint>
 </hints>
