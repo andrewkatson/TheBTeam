@@ -17,13 +17,18 @@ Food Fight is a __tower defense__ game, played in a cafeteria. Your goal is to m
 Food Fight has multiple different control schemes for its different gameplay modes. Make sure you know them before you play.
 
 #### Menu
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/manual/title.png)
+
 To navigate through game menus, you can use the arrow keys `← → ↑ ↓` to select an option, and `Enter` to confirm.
 
 #### Gameplay
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/manual/gameplay.png)
 
 On the main gameplay screen, you can press one of the four __speed buttons__ to change the speed at which the action plays out. You can also press the `H` key to hide and show the HUD. When no waves are going on, a __Next Wave__ button appears, allowing you to trigger the next wave at your leisure. 
 
 #### Placing Towers
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/manual/buying.png)
+
 You can __double click__ on any empty tile to bring up the __Buy Tower__ button. Clicking this will bring you to a screen where you can pick the tower you want to buy. If you click on a tile where a tower is present, this button will be replaced with the __Sell Tower__ and __Upgrade Tower__ buttons. If a tile has an obstacle, you will be able to __Remove__ this obstacle for a price.
 
 #### Upgrade Circle
