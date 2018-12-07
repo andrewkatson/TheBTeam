@@ -212,14 +212,17 @@ void MeleeUnit::setOvershooting(bool overshooting) {
 }
 
 void MeleeUnit::attackEngagedUnit(){
+  if(engagedUnit == NULL){
+    return;
+  }
   float enemyHP = engagedUnit->getHitpoints();
   int enemyArmor = engagedUnit->getArmor();
 
   assert(armor>0);
   enemyHP -= (float)damage *(float)(armorPenetration/enemyArmor);
   engagedUnit->updateHitpoints(enemyHP);
-  cout<<getType()<<endl;
-  cout<<enemyHP<<endl;
+  cout<<" I AM "  << getType()<<endl;
+  cout<<"enemy has " << enemyHP<<endl;
   engagedUnit->flickerUnit();
 }
 

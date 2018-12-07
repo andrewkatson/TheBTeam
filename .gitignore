@@ -3,6 +3,6 @@ Release/
 Debug/
 .idea/
 cmake-build-debug/
-
+cmake/
 # Emacs buffer files
 *~

@@ -13,6 +13,8 @@ public:
   long long  actorID;
   float timeStamp;
   shared_ptr<ActorInterface> actorDestroyed;
+  //whether we fed the child or if they just reached the exit
+  bool fed;
 
-  ActorDestroyedEventData(long long actorID, shared_ptr<ActorInterface> actorDestroyed,float timeStamp);
+  ActorDestroyedEventData(long long actorID, shared_ptr<ActorInterface> actorDestroyed,float timeStamp, bool fed=true);
 };

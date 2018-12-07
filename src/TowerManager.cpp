@@ -984,7 +984,7 @@ void TowerManager::updateBaseTowerStats(){
 
       //if we have not found the tower then it is the base one and we need to
       //set all of its stats to the current tower placed
-      if(checkedTowerTypes.find(tower->getType()) != checkedTowerTypes.end() ){
+      if(checkedTowerTypes.find(tower->getType()) == checkedTowerTypes.end() ){
         shared_ptr<TowerInterface> baseTower = allTowerTypes.at(tower->getType());
 
         //set all the base tower stats to 0

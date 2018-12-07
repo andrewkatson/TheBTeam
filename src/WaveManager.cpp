@@ -304,7 +304,7 @@ void WaveManager::createNextWave() {
     enemy->setUnitScale(xScale,yScale);
     currentWave.push(enemy);
   }
-  printf("created a wave with %ld units\n",currentWave.size());
+  //printf("created a wave with %ld units\n",currentWave.size());
 }
 
 

@@ -6,7 +6,7 @@
   <constant value="600" id="IDS_W_Y"> </constant>
 
   <!--Player-->
-  <constant value="100" id ="IDS_P_HP"> </constant>
+  <constant value="10" id ="IDS_P_HP"> </constant>
   <constant value="20" id ="IDS_P_B"> </constant>
   <constant value="1" id="IDS_Default_Wave"> </constant>
   <constant value="1" id="IDS_Default_Level"> </constant>
@@ -920,6 +920,9 @@
     <constant value="1" id="IDS_Play_Speed"/>
     <constant value="2" id="IDS_Fast_Forward_Speed"/>
     <constant value="4" id="IDS_Ultra_Fast_Forward_Speed"/>
+
+    <!--Melee Tower Unit Speed-->
+    <constant value="20.0" id="IDS_Melee_Tower_Unit_Speed_Lamba"/>
 
   </floats>
 </constants>

@@ -165,20 +165,23 @@ void LeaderBoardScreen::handleMousePress(const EventInterface& event){
 }
 
 void LeaderBoardScreen::tryToConnect(){
-/*
-  const char *cmd = &(execute[0]);
-  cout << cmd << endl;
-  //string result = exec(cmd);
 
+
+  //const char *cmd = &(execute[0]);
+  //system(cmd);
+  //cout << cmd << endl;
+  //string result = exec(cmd);
+  string result = "FAIL";
   if(result == "FAIL"){
     connection = false;
+    getLocalLeaderBoard();
   }
   else{
     connection = true;
     getLeaderBoard();
   }
-  cout << "result was " << result << endl;
-  */
+
+
   /*
   my_ssh_session = ssh_new();
   int verbosity = SSH_LOG_PROTOCOL;
@@ -223,6 +226,13 @@ std::string LeaderBoardScreen::exec(const char* cmd) {
 
 void LeaderBoardScreen::getLeaderBoard(){
 
+}
+
+void LeaderBoardScreen::getLocalLeaderBoard(){
+  //ensure there is a leaderboard
+  string execute = "touch leaderboard.txt";
+  const char *cmd = &(execute[0]);
+  exec(cmd);
 }
 
 void LeaderBoardScreen::endConnect(){

@@ -99,6 +99,7 @@ public:
   void handleLevelChangeEvent(const EventInterface& event);
   void handleRestartGameEvent(const EventInterface& event);
   void handleWaveChangeEvent(const EventInterface& event);
+  void handleActorDestroyed(const EventInterface& event);
   /*
     Called once every game loop. Updates the game's happenings according to the
     time since the last loop.

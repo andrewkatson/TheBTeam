@@ -91,7 +91,7 @@ void GameLogic::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_GLD_MP")),mousePressEventType);
 
-  //bind our delegate function for mouse presses
+  //bind our delegate function for state change
   EventManager::EventDelegate stateChangeDelegate = std::bind(&GameLogic::handleStateChange, this, _1);
 
   //make an event and get its type
@@ -100,7 +100,7 @@ void GameLogic::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(stateChangeDelegate, textLoader -> getString(string("IDS_GLD_SC")),stateChangeEventType);
 
-  //bind our delegate function for mouse presses
+  //bind our delegate function for projectile explosion
   EventManager::EventDelegate projectileExplosionEventDelegate = std::bind(&GameLogic::handleProjectileExplosion, this, _1);
 
   //make an event and get its type
@@ -109,7 +109,7 @@ void GameLogic::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(projectileExplosionEventDelegate, textLoader -> getString(string("IDS_GameLogic_Delegate_Projectile_Explosion")),projectileExplosionEventType);
 
-  //bind our delegate function for mouse presses
+  //bind our delegate function for wave change
   EventManager::EventDelegate waveChangeEventDelegate = std::bind(&GameLogic::handleWaveChangeEvent, this, _1);
 
   //make an event and get its type
@@ -117,6 +117,15 @@ void GameLogic::registerDelegates(){
   EventType waveChangeEventType = waveChangeEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(waveChangeEventDelegate, textLoader -> getString(string("IDS_GameLogic_Wave_Change_Delegate")),waveChangeEventType);
+
+    //bind our delegate function for actor destroy
+    EventManager::EventDelegate actorDestroyedDelegate = std::bind(&GameLogic::handleActorDestroyed, this, _1);
+
+    //make an event and get its type
+    ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+    EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+    //register the delegate and its type
+    this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_GameLogic_Actor_Destroyed")),actorDestroyedEventType);
 }
 
 /*
@@ -152,6 +161,12 @@ void GameLogic::deregisterDelegates(){
   EventType waveChangeEventType = waveChangeEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> deregisterDelegate( textLoader -> getString(string("IDS_GameLogic_Wave_Change_Delegate")),waveChangeEventType);
+
+    //make an event and get its type
+    ActorDestroyedEvent actorDestroyedEvent = ActorDestroyedEvent();
+    EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
+    //register the delegate and its type
+    this -> eventManager -> deregisterDelegate(textLoader -> getString(string("IDS_GameLogic_Actor_Destroyed")),actorDestroyedEventType);
 }
 
 
@@ -305,7 +320,7 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //makeNewMap();
   //this -> waveManager -> entryPositions;
   //player -> resetHitpoints();
-  cout<<"here"<<endl;
+
   //mirror the statistics of the current units so they affect the next level
   towerManager->updateBaseTowerStats();
   //clear all the towers placed
@@ -324,22 +339,20 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   player -> newLevelHitpoints();
   player -> newLevelWave();
   player-> newLevel();
-  cout << "level is " << player->getLevel() << endl;
-  cout <<"yo" <<endl;
+
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
   makeNewMap();
   //waveManager -> setEntryPoints(boardManager -> getEntryPositions());
-  cout << "somewhere else " << endl;
+
   //call all the level change event functions for any class that is attached to gameLogic
   waveManager->handleLevelChanged(event);
   //make an event and queue it
   //shared_ptr<EventInterface>
   //this -> eventManager -> queueEvent
-  cout << "what is going on " << endl;
+
 
   soundManager->handleLevelChanged(event);
 
-  cout << "here is the problem " << endl;
   //we should switch the game to the loading screen state
   shared_ptr<EventInterface> loadingState = make_shared<StateChangeEvent>(State::Loading, nowInNano);
 
@@ -374,6 +387,18 @@ void GameLogic::handleRestartGameEvent(const EventInterface& event){
 }
 
 void GameLogic::handleWaveChangeEvent(const EventInterface& event){
+  //now create an event to indicate the level needs to change
+  //the time object of the class
+  auto now = high_resolution_clock::now();
+  //the actual count in nanoseconds for the time
+  auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+  //if you end a wave on no health you lose
+  if(player->getHitpoints() <= 0){
+    shared_ptr<EventInterface> restart = make_shared<StateChangeEvent>(State::Restart, nowInNano);
+
+
+    this -> eventManager -> queueEvent(restart);
+  }
 
   //clear enemy units and projectiles from collision Manager
   collisionManager->clearBetweenWaves();
@@ -381,6 +406,30 @@ void GameLogic::handleWaveChangeEvent(const EventInterface& event){
   projectileManager->clearProjectiles();
 
 }
+
+/*
+ * Handle destruction of an actor by removing it from the map of actors
+ */
+void GameLogic::handleActorDestroyed(const EventInterface& event) {
+    /*
+     * cast it
+     */
+    const ActorDestroyedEvent* actorDestroyedEvent = static_cast<const ActorDestroyedEvent*>(&event);
+
+    ActorDestroyedEventData* actorDestroyedEventData = static_cast<ActorDestroyedEventData*>((actorDestroyedEvent -> data).get());
+
+    long long actorID = actorDestroyedEventData -> actorID;//get the dead actor's ID
+
+    //if this was a melee unit we need to add its money to the balance
+    if(!(actorDestroyedEventData->actorDestroyed -> isAProjectile())){
+      //only add his lunch money if we fed him
+      if(actorDestroyedEventData->fed){
+          MeleeUnit* unit = dynamic_cast<MeleeUnit*>(actorDestroyedEventData->actorDestroyed.get());
+          player -> modifyBalance(unit -> getLunchMoney());
+      }
+    }
+}
+
 
 /*
  * Have a new map generated (callable by the UserView)
