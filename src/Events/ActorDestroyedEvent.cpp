@@ -6,8 +6,8 @@ const EventType ActorDestroyedEvent::eventType = EventType(&ActorDestroyedEvent:
 ActorDestroyedEvent::ActorDestroyedEvent(){
 
 }
-ActorDestroyedEvent::ActorDestroyedEvent(long long actorID, shared_ptr<ActorInterface> actorDestroyed, float timeStamp){
-  this -> data = unique_ptr<ActorDestroyedEventData>(new ActorDestroyedEventData(actorID, actorDestroyed, timeStamp));
+ActorDestroyedEvent::ActorDestroyedEvent(long long actorID, shared_ptr<ActorInterface> actorDestroyed, float timeStamp, bool fed){
+  this -> data = unique_ptr<ActorDestroyedEventData>(new ActorDestroyedEventData(actorID, actorDestroyed, timeStamp, fed));
 }
 
 const EventType& ActorDestroyedEvent::getEventType() const{

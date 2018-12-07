@@ -88,7 +88,8 @@ void CompView::updateUnits(float deltaS){
 
 
         if(gameLogic->isExit(currentUnit->getRow(),currentUnit->getCol())){
-          shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit,deltaS);
+          bool didFeed = false;
+          shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit,deltaS, didFeed);
 
           shared_ptr<EventInterface> hitpointsLost = make_shared<LoseHitpointsEvent>(((int)currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage"))> 1? (int)currentUnit->getHitpoints()*textLoader->getDouble("IDS_Percentage_Unit_Hitpoint_Player_Damage") : 1,deltaS);
           shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",textLoader->getString("IDS_Unit_Escape_Noise"),deltaS);

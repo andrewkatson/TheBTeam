@@ -26,7 +26,7 @@ void MeleeTower::update(float delta){
   unitsEngaged = 0;
 
   //if we can respawn units then respawn them
-  respawnUnits(delta);
+  //respawnUnits(delta);
 
   //if a unit does not have an engaged enemy unit then send it back towards
   //a point situated around the rally point
@@ -38,7 +38,7 @@ void MeleeTower::update(float delta){
     }
 
     if(unit -> getHitpoints() > 0){
-      if((unit -> getEngagedUnit()).get() == NULL){
+      if(unit -> getEngagedUnit() == NULL){
         //sets the unit position to the center of the tower if there is no set rally point
         //or moves it closer to the rally point position
         float startPos = unit->getXCoordinate();
@@ -49,14 +49,34 @@ void MeleeTower::update(float delta){
         if(unit->getEngagedUnit()->getEngagedUnit() == unit){
           unitsEngaged++;
         }
+        if(unit -> getEngagedUnit() -> getHitpoints() < 0){
+          if(unit -> getEngagedUnit()->getEngagedUnit() == unit){
+            unit -> getEngagedUnit() -> setEngagedUnit(NULL);
+          }
+          unit -> setEngagedUnit(NULL);
+          break;
+        }
+
         //check if my unit is at destination, if so move towards xtarget and ytarget
         //else move to the enemy BUT before set the xvec and yVect
         if (unit->atTarget()){
           unit->updateAttack(delta);
         }
         else{
-          float startPos = unit->getXCoordinate();
-          float otherPos = unit->getYCoordinate();
+
+          //recalcualte their attack vector so that they move slowly as they get closer to the target
+          float angle = 360/currentUnits.size();
+          float enemyX = unit->getEngagedUnit()->getXCoordinate();
+          float enemyY = unit->getEngagedUnit()->getYCoordinate();
+          sf::FloatRect dimensions = unit->getEngagedUnit()->getSprite().getGlobalBounds();
+          float unitCombatDistance = textLoader->getInteger(string("IDS_Unit_Combat_Distance"));
+          //the x and y for the unit that is its resting position around the rally point flag
+          float newX = (unitCombatDistance) * xScale * cos(angle * unitIndex * (M_PI / 180.0)) + enemyX;
+          float newY = (unitCombatDistance) * yScale * sin(angle * unitIndex * (M_PI / 180.0)) + enemyY;
+
+          unit->setEngagedUnit(unit->getEngagedUnit());// x targ and y tart
+          unit->setTargetPos(newX, newY);
+          unit->setVector(newX - unit->getXCoordinate(), newY - unit->getYCoordinate());
           unit->vectorMove(delta);
         }
       }
@@ -73,11 +93,22 @@ void MeleeTower::update(float delta){
  * Initialize all the units that will spawn for this tower with a position
  */
 void MeleeTower::setUpUnits(){
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  //use a pseudo random generator to make the speeds of the units a bit different
+  std::default_random_engine generator(seed);
+  std::exponential_distribution<double> distribution(textLoader->getDouble(string("IDS_Melee_Tower_Unit_Speed_Lamba")));
 
 
   for(int unitIndex = 0; unitIndex < currentUnits.size(); unitIndex++){
     currentUnits.at(unitIndex) -> setXCoordinate(xCoordinate);
     currentUnits.at(unitIndex) -> setYCoordinate(yCoordinate);
+
+    //fry guys given slightly differnet speeds
+    float currSpeed = currentUnits.at(unitIndex)->getSpeed();
+    float modifiedSpeed = currSpeed + distribution(generator);
+    modifiedSpeed = modifiedSpeed > 0 ? modifiedSpeed : 1;
+
+    currentUnits.at(unitIndex) -> setSpeed(modifiedSpeed);
   }
 }
 

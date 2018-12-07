@@ -121,7 +121,7 @@ void MapFactory::generateMap(){
     //TODO remove when done checking grids
     //this -> printVector(this -> paths);
     //this -> printVector(this -> unavailableSpots);
-    //this -> printVector(this -> distances);
+    this -> printVector(this -> distances);
     //this -> printVector(this -> floorGrid);
     //this -> printVector(this -> aboveFloorGrid);
 

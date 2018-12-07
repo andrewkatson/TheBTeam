@@ -47,6 +47,7 @@ public:
   void tryToConnect();
   std::string exec(const char* cmd);
   void getLeaderBoard();
+  void getLocalLeaderBoard();
   void endConnect();
 
   void draw(sf::RenderWindow& window);

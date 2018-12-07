@@ -121,7 +121,7 @@ void LoadingScreen::draw(sf::RenderWindow& window){
 
   sf::Text message;
   message.setFont(mainFont);
-  message.setString(hints.at(currentHint));
+  message.setString(hints.at(currentHint%hints.size()));
   message.setCharacterSize(textLoader->getInteger(string("IDS_Hint_Text")));
   //and size the rectangle to be the center of the screen
   sf::FloatRect rect = message.getGlobalBounds();
