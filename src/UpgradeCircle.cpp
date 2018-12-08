@@ -35,6 +35,15 @@ void UpgradeCircle::registerDelegates(){
   //register the delegate and its type
   this -> eventManager -> registerDelegate(mousePressDelegate, textLoader -> getString(string("IDS_Upgrade_Circle_Mouse_Press")),mousePressEventType);
 
+
+  EventManager::EventDelegate levelChangeDelegate = std::bind(&UpgradeCircle::handleLevelChanged, this, _1);
+
+  //make an event and get its type
+  LevelChangeEvent levelChangeEvent = LevelChangeEvent();
+  EventType levelChangeEventType = levelChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(levelChangeDelegate, textLoader -> getString(string("IDS_Upgrade_Circle_Level_Change")),levelChangeEventType);
+
 }
 
 /*
@@ -632,4 +641,9 @@ void UpgradeCircle::drawUpgradePriceButton(sf::RenderWindow& window){
   }
 
   window.draw(text);
+}
+
+
+void UpgradeCircle::handleLevelChanged(const EventInterface& event){
+  isDisplayed=false;
 }

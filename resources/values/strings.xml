@@ -373,6 +373,7 @@
 
     <!--Upgrade Circle Delegates-->
     <string value="Upgrade_Circle_Mouse_Press_Delegate" id="IDS_Upgrade_Circle_Mouse_Press"> </string>
+  <string value="Upgrade_Circle_Level_Change_Delegate" id="IDS_Upgrade_Circle_Level_Change"> </string>
 
     <!--BuyTowerScreen Delegates-->
     <string value="BUYTOWERSCREENMOUSEPRESS" id="IDS_BTS_MP"> </string>

@@ -53,8 +53,8 @@ void CompView::updateUnits(float deltaS){
   uniform_real_distribution<double>x_overshoot(0,playingScreenHeader->getTrueXTileSize()*.95);
   uniform_real_distribution<double>y_overshoot(0,playingScreenHeader->getTrueYTileSize()*.95);
 
-  for(auto iterator : waveManager->getSpawnedEnemyUnits()){
-      shared_ptr<MeleeUnit> currentUnit= iterator.second;
+  for(auto iterator = waveManager->getSpawnedEnemyUnits().begin(); iterator!=waveManager->getSpawnedEnemyUnits().end();iterator++){
+      shared_ptr<MeleeUnit> currentUnit= iterator->second;
       cout << "got an enemy" << endl;
       //if you're not engaged with a unit do all the movement collide
       if (currentUnit->getEngagedUnit() == NULL ){
@@ -157,77 +157,110 @@ void CompView::updateUnits(float deltaS){
 
           cout << "tryna move " << myNextTiles.size() << endl;
 
-          std::mt19937 rnd_gen(rd());
+          //just warp to a nearby unit to handle this case
+          if(myNextTiles.empty()){
+            auto next_spot=iterator;
+            next_spot++;
+            if(next_spot!=waveManager->getSpawnedEnemyUnits().end()){
+              //he's at an invalid spot so just warp him to the next guy and hope for the best
+              shared_ptr<MeleeUnit> warp_guy=next_spot->second;
+              currentUnit->setXCoordinate(warp_guy->getXCoordinate());
+              currentUnit->setYCoordinate(warp_guy->getYCoordinate());
+              currentUnit->setRow(warp_guy->getRow());
+              currentUnit->setCol(warp_guy->getCol());
+              currentUnit->setDirection(warp_guy->getDirection());
+              currentUnit->setXScale(warp_guy->getXScale());
+              currentUnit->setYScale(warp_guy->getYScale());
+            }else{
+              //just kill him
+              bool didFeed = false;
+              shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),currentUnit,deltaS, didFeed);
 
-          cout << "my set " << *myNextTiles.begin() << endl;
-
-          unsigned int next_index=nextTilePicker(rnd_gen);
-
-          auto selected_key = myNextTiles.begin();
-
-          std::advance(selected_key,next_index);
-
-          int next_row=*selected_key/floor[0].size();
-          int next_col=*selected_key%floor[0].size();
-
-          cout << next_row << "," << next_col << endl;
-
-          double new_direction;
-
-          if(next_col<c){
-            new_direction=M_PI;
-          }else if(next_col>c){
-            new_direction=0;
-          }else if(next_row<r){
-            new_direction=M_PI/2;
-          }else{
-            new_direction=3*M_PI/2;
-          }
-
-          double curdir=currentUnit->getDirection();
-
-          if(new_direction==curdir){
-            currentUnit->setOvershooting(false);
-          }
-          else{
-            if(currentUnit->isOvershooting()){
-              //if it didn't hit its target yet, keep overshooting, otherwise stop
-              bool passedTarget=((curdir==0 && currentUnit->getXCoordinate()>currentUnit->getOvershoot()) //going right, so the cor should be greater than the overshoot
-                      || (curdir==M_PI/2 && currentUnit->getYCoordinate()<currentUnit->getOvershoot()) // going up, so the cor should be less
-                      || (curdir==M_PI && currentUnit->getXCoordinate()<currentUnit->getOvershoot())
-                      || (curdir==3*M_PI/2 && currentUnit->getYCoordinate()>currentUnit->getOvershoot()));
-
-              if(!passedTarget){
-                new_direction=currentUnit->getDirection();
+              if(currentUnit->getEngagedUnit() != NULL){
+                currentUnit->getEngagedUnit() -> setEngagedUnit(NULL);
               }
+              currentUnit->setEngagedUnit(NULL);
 
+              this -> eventManager -> queueEvent(actorDestroyed);
+
+              cout << "something fucked up" << endl;
             }
-            else {
-              double overshoot;
-              if(curdir==0){
-                overshoot=currentUnit->getXCoordinate()+x_overshoot(rnd_gen);
-              }else if(curdir==M_PI/2){
-                overshoot=currentUnit->getYCoordinate()-y_overshoot(rnd_gen);
-              }else if(curdir==M_PI){
-                overshoot=currentUnit->getXCoordinate()-x_overshoot(rnd_gen);
-              }else{
-                overshoot=currentUnit->getYCoordinate()+y_overshoot(rnd_gen);
+
+          }else {
+
+            std::mt19937 rnd_gen(rd());
+
+            cout << "my set " << *myNextTiles.begin() << endl;
+
+            unsigned int next_index = nextTilePicker(rnd_gen);
+
+            auto selected_key = myNextTiles.begin();
+
+            std::advance(selected_key, next_index);
+
+            int next_row = *selected_key / floor[0].size();
+            int next_col = *selected_key % floor[0].size();
+
+            cout << next_row << "," << next_col << endl;
+
+            double new_direction;
+
+            if (next_col < c) {
+              new_direction = M_PI;
+            } else if (next_col > c) {
+              new_direction = 0;
+            } else if (next_row < r) {
+              new_direction = M_PI / 2;
+            } else {
+              new_direction = 3 * M_PI / 2;
+            }
+
+            double curdir = currentUnit->getDirection();
+
+            if (new_direction == curdir) {
+              currentUnit->setOvershooting(false);
+            } else {
+              if (currentUnit->isOvershooting()) {
+                //if it didn't hit its target yet, keep overshooting, otherwise stop
+                bool passedTarget = ((curdir == 0 && currentUnit->getXCoordinate() >
+                                                     currentUnit->getOvershoot()) //going right, so the cor should be greater than the overshoot
+                                     || (curdir == M_PI / 2 && currentUnit->getYCoordinate() <
+                                                               currentUnit->getOvershoot()) // going up, so the cor should be less
+                                     || (curdir == M_PI && currentUnit->getXCoordinate() < currentUnit->getOvershoot())
+                                     || (curdir == 3 * M_PI / 2 &&
+                                         currentUnit->getYCoordinate() > currentUnit->getOvershoot()));
+
+                if (!passedTarget) {
+                  new_direction = currentUnit->getDirection();
+                }
+
+              } else {
+                double overshoot;
+                if (curdir == 0) {
+                  overshoot = currentUnit->getXCoordinate() + x_overshoot(rnd_gen);
+                } else if (curdir == M_PI / 2) {
+                  overshoot = currentUnit->getYCoordinate() - y_overshoot(rnd_gen);
+                } else if (curdir == M_PI) {
+                  overshoot = currentUnit->getXCoordinate() - x_overshoot(rnd_gen);
+                } else {
+                  overshoot = currentUnit->getYCoordinate() + y_overshoot(rnd_gen);
+                }
+                currentUnit->setOvershoot(overshoot);
+
+                currentUnit->setOvershooting(true);
+
+                new_direction = currentUnit->getDirection();
               }
-              currentUnit->setOvershoot(overshoot);
-
-              currentUnit->setOvershooting(true);
-
-              new_direction=currentUnit->getDirection();
+              //new_direction=currentUnit->getDirection();
             }
-            //new_direction=currentUnit->getDirection();
+
+
+            currentUnit->setDirection(new_direction);
+
+            currentUnit->move(deltaS);
+
+            currentUnit->update(deltaS);
           }
-
-
-          currentUnit->setDirection(new_direction);
-
-          currentUnit->move(deltaS);
-
-          currentUnit->update(deltaS);
         }
       }
       //else we'll call another function to attack the enemy (attackengagedunit)
