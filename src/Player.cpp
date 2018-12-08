@@ -332,3 +332,8 @@ void Player::handleBalanceChanged(const EventInterface& event){
   balance += balanceChange;
 
 }
+
+
+void Player::setBalance(int balance){
+  this->balance=balance;
+}

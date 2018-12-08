@@ -150,6 +150,8 @@ public:
 
   void handleBalanceChanged(const EventInterface& event);
 
+  void setBalance(int balance);
+
 
   void setToDefaults();
 

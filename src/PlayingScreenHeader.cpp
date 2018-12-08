@@ -1131,6 +1131,8 @@ void PlayingScreenHeader::drawBuyTowerButton(sf::RenderWindow& window){
  */
 void PlayingScreenHeader::drawSellTowerButton(sf::RenderWindow& window){
 
+  gameLogic->getPlayer()->setBalance(headerVariableValues.at(1));
+
   //if the button is invisible do not draw it
   if(!sellTower -> isCurrentlyVisible()){
     return;
