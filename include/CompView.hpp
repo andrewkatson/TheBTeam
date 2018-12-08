@@ -26,6 +26,10 @@ private:
 
   vector<vector<std::unordered_set<int>>>combinedPaths;
 
+  bool isNumber(float x);
+
+  bool isFiniteNumber(float x);
+
 public:
   CompView(shared_ptr<EventManager> eventManager, shared_ptr<TextLoader> textLoader, shared_ptr<GameLogic> gameLogic,shared_ptr<PlayingScreenHeader> playingScreenHeader);
 
