@@ -906,7 +906,7 @@
 
     <!--Player Constants-->
     <constant value="0.5" id="IDS_Percentage_Money_Returned_On_Sell_Tower"> </constant>
-    <constant value="0.001" id="IDS_Percentage_Unit_Hitpoint_Player_Damage"> </constant>
+    <constant value=".3" id="IDS_Percentage_Unit_Hitpoint_Player_Damage"> </constant>
 
     <!--Tower Upgrades -->
     <constant value="1.3" id="IDS_Tower_Upgrade_Base_Upgrade_Price"/>
