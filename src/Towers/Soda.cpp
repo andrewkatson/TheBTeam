@@ -1,5 +1,7 @@
 #include "Towers/Soda.hpp"
 
+int Soda::priceMult = 1;
+
 Soda::Soda(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
   this -> typeID = textLoader->getTypeID(string("IDS_SOT"));
   this -> textLoader = textLoader;

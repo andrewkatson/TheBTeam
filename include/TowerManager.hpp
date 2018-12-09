@@ -40,6 +40,7 @@
 #include <assert.h>
 #include <random>
 #include <unordered_set>
+#include <cmath>
 
 using namespace std::placeholders;
 
@@ -139,6 +140,8 @@ public:
   void resetAllTowersToBaseValues();
 
 private:
+  void updateTowerPrices();
+
   void registerDelegates();
   void deregisterDelegates();
 
@@ -161,5 +164,6 @@ private:
 
   void upgradeMeleeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
   void upgradeRangeTower(string upgradeButtonID, shared_ptr<TowerInterface> towerToUpgrade);
+
 };
 #endif

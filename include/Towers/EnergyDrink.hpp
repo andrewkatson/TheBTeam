@@ -4,6 +4,7 @@
 class EnergyDrink : public RangeTower{
 private:
   shared_ptr<ActorInterface> createProjectile();
+  static int priceMult;
 public:
   EnergyDrink(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
@@ -24,4 +25,8 @@ public:
   void attack(shared_ptr<ActorInterface> enemyInRange, float delta){RangeTower::attack(enemyInRange, delta);}
   void update(float delta){RangeTower::update(delta);}
   shared_ptr<vector<int>> getStatistics(){return RangeTower::getStatistics();}
+
+
+  int getPrice(){return this->price*EnergyDrink::priceMult;}
+  void setPriceMult(int priceMult){EnergyDrink::priceMult=priceMult;}
 };

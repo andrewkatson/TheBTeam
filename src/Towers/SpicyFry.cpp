@@ -1,4 +1,7 @@
 #include "Towers/SpicyFry.hpp"
+
+int SpicyFry::priceMult = 1;
+
 SpicyFry::SpicyFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;
   this -> textLoader = textLoader;

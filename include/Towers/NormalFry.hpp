@@ -5,6 +5,7 @@
 
 class NormalFry : public MeleeTower{
 private:
+  static int priceMult;
 public:
   NormalFry(shared_ptr<TextLoader> textLoader,int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits=true);
 
@@ -21,4 +22,7 @@ public:
   void attack(shared_ptr<ActorInterface> enemyInRange, float delta){MeleeTower::attack(enemyInRange, delta);}
   void update(float delta){MeleeTower::update(delta);}
   shared_ptr<vector<int>>  getStatistics(){return MeleeTower::getStatistics();}
+
+  int getPrice(){return this->price*NormalFry::priceMult;}
+  void setPriceMult(int priceMult){NormalFry::priceMult=priceMult;}
 };

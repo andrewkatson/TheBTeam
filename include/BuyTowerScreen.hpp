@@ -54,4 +54,5 @@ public:
   void populateOptionsVector();
   void identifyDifferentialsInStatistics(vector<int>& meleeTowerMaxStats, vector<int>& rangeTowerMaxStats,
      vector<shared_ptr<TowerInterface>> towerOptions);
+
 };

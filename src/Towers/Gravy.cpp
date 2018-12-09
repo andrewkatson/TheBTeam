@@ -1,5 +1,7 @@
 #include "Towers/Gravy.hpp"
 
+int Gravy::priceMult = 1;
+
 Gravy::Gravy(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
   this -> typeID = textLoader->getTypeID(string("IDS_GT"));
   this -> textLoader = textLoader;

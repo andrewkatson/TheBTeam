@@ -6,6 +6,7 @@ TowerInterface::TowerInterface(){
   //the id is the address of the current object
   towerID = (long long) this;
 
+
 }
 
 

@@ -338,10 +338,16 @@ int TowerManager::getTowerPrice(int row, int col){
      towerID = tower -> getType();
   }
 
+  //for(auto z : allTowerTypes){
+  //  cout << "tower type " << z.first << endl;
+  //}
+
   // get the vector of towers we can upgrade to
   //grab the first tower in that list
   //and return its price
   int price = allTowerUpgrades.at(towerID).at(0) -> getPrice();
+
+
 
   return price;
 }
@@ -350,6 +356,10 @@ int TowerManager::getTowerPrice(int row, int col){
  * @return the price of the specific tower
  */
 int TowerManager::getTowerPrice(string towerTypeID){
+  //for(auto z : allTowerTypes){
+  //  cout << "tower type " << z.first << endl;
+  //}
+
   assert(allTowerTypes.find(towerTypeID) != allTowerTypes.end());
   return allTowerTypes.at(towerTypeID) -> getPrice();
 }
@@ -457,12 +467,59 @@ shared_ptr<TowerInterface> TowerManager::getObstacle(int row, int col){
   return towersPlaced.at(row*xDim + col);
 }
 
+void TowerManager::updateTowerPrices(){
+
+  cout << "updating price" << endl;
+
+  std::unordered_map<string,int>typesToTowerCount;
+
+  if(towersPlaced.empty()){
+
+    for(auto z : allTowerTypes){
+      string towerID = z.first;
+      typesToTowerCount[towerID]=0;
+    }
+
+    /*
+    for(auto z : allTowerUpgrades){
+      string towerID = z.first;
+      typesToTowerCount[towerID]=0;
+    }
+     */
+
+  }else{
+    for(auto z : towersPlaced){
+      typesToTowerCount[z.second->getType()]++;
+    }
+  }
+
+  for(auto z : typesToTowerCount){
+
+    if(allTowerTypes.find(z.first)!=allTowerTypes.end()) {
+      cout << "going through tower " << z.first << endl;
+
+      allTowerTypes.at(z.first)->setPriceMult(std::pow(2, z.second));
+    }
+
+  }
+}
+
+
 
 /*
  * Handle a tower creation event
  * @param event: the tower creation event
  */
 void TowerManager::handleTowerCreation(const EventInterface& event){
+
+
+  //for(auto tower : allTowerTypes){
+  //  cout << "tower type " << tower.first << endl;
+  //}
+  //for(auto tower : allTowerUpgrades){
+  //  cout << "tower upgrade " << tower.first << endl;
+  //}
+
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * TowerCreationEvent type which allows us to access variables and methods
@@ -486,6 +543,9 @@ void TowerManager::handleTowerCreation(const EventInterface& event){
 
   //and add it
   addTower(towerTypeID, row, col);
+
+
+  updateTowerPrices();
 }
 
 /*
@@ -493,6 +553,7 @@ void TowerManager::handleTowerCreation(const EventInterface& event){
  * @param event: the tower remove event
  */
 void TowerManager::handleTowerRemove(const EventInterface& event){
+
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * TowerRemoveEvent type which allows us to access variables and methods
@@ -514,6 +575,9 @@ void TowerManager::handleTowerRemove(const EventInterface& event){
 
   //remove the tower at the position specified
   removeTower(row, col);
+
+
+  updateTowerPrices();
 
 }
 
@@ -963,6 +1027,7 @@ int TowerManager::getUpgradePrice(int row, int col){
  */
 void TowerManager::clearAllTowers(){
   towersPlaced.clear();
+  updateTowerPrices();
 }
 
 /*

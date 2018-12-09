@@ -4,6 +4,7 @@
 class DeepDish : public RangeTower{
 private:
   shared_ptr<ActorInterface> createProjectile();
+  static int priceMult;
 public:
   DeepDish(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader);
 
@@ -23,6 +24,8 @@ public:
   bool canAttack(){return RangeTower::canAttack();}
   void attack(shared_ptr<ActorInterface> enemyInRange, float delta){RangeTower::attack(enemyInRange, delta);}
   void update(float delta){RangeTower::update(delta);}
+  int getPrice(){return this->price*DeepDish::priceMult;}
+  void setPriceMult(int priceMult){DeepDish::priceMult=priceMult;}
 
   shared_ptr<vector<int>>  getStatistics(){return RangeTower::getStatistics();}
 };
