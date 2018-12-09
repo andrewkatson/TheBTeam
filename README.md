@@ -8,11 +8,11 @@ A Food Themed 2D Tower Defense Game with procedurally generated maps and waves.
 - You're playing! Have fun!
 
 ### Required Packages
-- If not playing on a McGlothlin lab machine, the following packages are required:
- - `git`
- - `make`
- - `cmake`
- - `libsfml-dev`
+If not playing on a McGlothlin lab machine, the following packages are required:
+- `git`
+- `make`
+- `cmake`
+- `libsfml-dev`
 
 ## Background
 The year is _20X3_. __Big Pharma__ has just finished their most recent campaign of polluting the water with chemical to make the frogs’ teeth whiter. Now, __Big Pharma__ sets its sights on making the children healthy by introducing _mind controlling genes_ into the GMO-ridden vegetables that currently occupy school cafeterias everywhere. You, our heroic protagonist, assume the role of __War Chief__ for the Jolly United Neighboring Kingdom Fighting Unsavory Delinquents __(J.U.N.K.F.U.D).__ You are tasked with keeping the kids of __Chester A. Arthur Elementary School__ sated so that they are not infected by the __Vegetables__. 
