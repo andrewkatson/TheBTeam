@@ -5,12 +5,13 @@
 - leaderboard screen 
 - Buttons to change speed [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Button shows up between waves to trigger a new wave starting
-- Manual
+- A manual describing how to play
 
 
 ###Changed
 - buy and sell buttons will mirror across middle of screen if you right click them (useful when they block clicks) [@andrewkatson][https://github.com/andrewkatson]
 - all projectiles and towers are more balanced [@meisong1997][https://github.com/meisong1997]
+- A tower's price is now doubled for every tower you already have of that type. [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 ###Fixed
 - Melee towers assign units and they kill other units [kp-hb][https://github.com/kp-hb]
@@ -20,7 +21,7 @@
 - Improved audio
 
 ###Known Issues
-- When dying to the last enemy of a level you don't hit the lose screen
+- When dying to the last enemy of a level you don't hit the lose screen [@jeremyelkayam][https://github.com/jeremyelkayam]
 
 
 [0.8.0] 2018 - 12 -4
