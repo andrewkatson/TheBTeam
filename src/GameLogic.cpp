@@ -660,6 +660,8 @@ bool GameLogic::attemptSellTower(int row, int col){
 
    int playerBalance = player -> getBalance();
 
+   cout << "can upgrade" << endl;
+
    if(playerBalance >= upgradeCost){
 
      shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("",

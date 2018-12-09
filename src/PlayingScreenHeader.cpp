@@ -1077,6 +1077,10 @@ bool PlayingScreenHeader::headerRecalculated(){
 }
 
 void PlayingScreenHeader::draw(sf::RenderWindow &window){
+
+
+  gameLogic->getPlayer()->setBalance(headerVariableValues.at(1));
+
   //if something has changed we need to resize the header
   if(recaculateHeader){
     ySize = getMaximumY();
@@ -1130,8 +1134,6 @@ void PlayingScreenHeader::drawBuyTowerButton(sf::RenderWindow& window){
  * @param window: the game window to draw on
  */
 void PlayingScreenHeader::drawSellTowerButton(sf::RenderWindow& window){
-
-  gameLogic->getPlayer()->setBalance(headerVariableValues.at(1));
 
   //if the button is invisible do not draw it
   if(!sellTower -> isCurrentlyVisible()){
