@@ -84,10 +84,10 @@ Children come in 3 different weight classes. The largest kids are slow, but have
 
 
 ### Tips
-- Different towers have strengths and weaknesses that allow them to counter different units. A diverse lineup will increase your chances of success.
-- Your upgrades from the upgrade circle will carry over when you upgrade to a new level of tower, but the upgrade prices won't. Upgrade your tower once the smaller upgrades get too expensive and you'll always be able to upgrade!
+- Different towers have strengths and weaknesses that allow them to counter different units. Plus, the more towers you have of a certain type, the more expensive it'll be to buy more of that tower. A diverse lineup will increase your chances of success.
+- Your upgrades from the upgrade circle will carry over when you upgrade to a new level of tower, but the upgrade prices will reset to be cheap again. Upgrade your tower to a new level once the smaller upgrades get too expensive and you'll always be able to upgrade!
 - Even though you'll lose all your upgraded towers when starting a new level, your towers will get stronger on subsequent levels based on how you upgraded them in earlier levels. Use your upgrades wisely, and don't be afraid to upgrade!
-- You start with more money when you begin a new level, but your money from the last level won't carry over. Make the most use of your money while you still have it!
+- You start with more money when you begin a new level than when you began the previous level, but your left over money from previous levels won't carry over. Make the most use of your money while you still have it!
 
 ## Miscellanea
 Game created by Andrew Katson (team lead), Kyle Pederson, Jeremy Elkayam, and Mei Song.
