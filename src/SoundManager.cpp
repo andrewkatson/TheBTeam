@@ -256,6 +256,7 @@ void SoundManager::handleWaveChange(const EventInterface & event){
       newLevel=false;
     }else {
       if (playingIndex == 3) {
+        cout << "fuck yeah" << endl;
         playSound(textLoader->getString("IDS_QFG_Win_Noise"));
       } else if (playingIndex == 4 || playingIndex == 5) {
         playSound(textLoader->getString("IDS_QFG4_Win_Noise"));
