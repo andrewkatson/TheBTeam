@@ -10,6 +10,7 @@ A Food Themed 2D Tower Defense Game with procedurally generated maps and waves.
 ### Required Packages
 If not playing on a McGlothlin lab machine, the following packages are required:
 - `git`
+- `g++`
 - `make`
 - `cmake`
 - `libsfml-dev`
