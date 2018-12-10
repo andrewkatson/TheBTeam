@@ -117,6 +117,7 @@ public:
   /*
    * update the position, check if it hit its target
    */
+
   virtual void update(float delta)=0;
 
   /*

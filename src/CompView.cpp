@@ -46,7 +46,7 @@ void CompView::updateUnits(float deltaS){
   }
    */
 
-  cout << "iterating over enemies" << endl;
+  //cout << "iterating over enemies" << endl;
 
   std::mt19937 rnd_gen (rd ());
 
@@ -55,20 +55,66 @@ void CompView::updateUnits(float deltaS){
 
   for(auto iterator = waveManager->getSpawnedEnemyUnits().begin(); iterator!=waveManager->getSpawnedEnemyUnits().end();iterator++){
       shared_ptr<MeleeUnit> currentUnit= iterator->second;
-      cout << "got an enemy" << endl;
+      //cout << "got an enemy" << endl;
       //if you're not engaged with a unit do all the movement collide
       if (currentUnit->getEngagedUnit() == NULL ) {
         //printf("loop thru a unit\n");
-        cout << "checked engaged unit" << endl;
+        //cout << "checked engaged unit" << endl;
 
 
-        if (isNumber(currentUnit->getXCoordinate()) && isFiniteNumber(currentUnit->getXCoordinate())
-            && isNumber(currentUnit->getYCoordinate()) && isFiniteNumber(currentUnit->getYCoordinate())) {
+        if (!isNumber(currentUnit->getXCoordinate()) || !isFiniteNumber(currentUnit->getXCoordinate())
+             || !isNumber(currentUnit->getYCoordinate()) || !isFiniteNumber(currentUnit->getYCoordinate())) {
+          //if any of these are true it's an invalid number so tell it to fuck right off
+          //that and just warp one of the guys to an entrance
 
+          cout << "his coords were nan so here we go" << endl;
+
+          std::mt19937 rnd_gen(rd());
+          std::uniform_int_distribution<int> entry_picker(0,entries.size()/2-1);
+
+          int entry_dex = entry_picker(rnd_gen);
+
+          int warp_r = entries.at(entry_dex+1);
+          int warp_c = entries.at(entry_dex);
+
+          currentUnit->setRow(warp_r);
+          currentUnit->setCol(warp_c);
+
+          uniform_real_distribution<float>entry_offset_rng(0.0001,0.9999);
+
+          float offset=entry_offset_rng(rnd_gen);
+          float xOffset,yOffset;
+          double dir;
+
+          if(warp_r == 0){
+            yOffset =0.001;
+            xOffset=offset;
+            dir=3*M_PI/2;
+          }else if(warp_c==0){
+            yOffset =offset;
+            xOffset= .001;
+            dir=0;
+          }else if(warp_r==gameLogic->getRows()-1){
+            yOffset = .999;
+            xOffset=offset;
+            dir=M_PI/2;
+          }else{
+            yOffset =offset;
+            xOffset=0.999;
+            dir=M_PI;
+          }
+
+
+          currentUnit->setXCoordinate((float)gameLogic->getWindowX() / (float)gameLogic->getCols() * ((float)warp_c + xOffset)); // multiply tile size by tiles
+          currentUnit->setYCoordinate((float)gameLogic->getWindowY()/ (float)gameLogic->getRows() * ((float)warp_r + yOffset)); //window size / board size = tile size
+          currentUnit->setDirection(dir);
+
+
+        }
 
           if (!coordsInsideTile(currentUnit->getRow(), currentUnit->getCol(), currentUnit->getXCoordinate(),
                                 currentUnit->getYCoordinate())) {
-            printf("updating tile...\nx: %f\ny: %f\n", currentUnit->getXCoordinate(), currentUnit->getYCoordinate());
+            //printf("updating tile...\nx: %f\ny: %f\n", currentUnit->getXCoordinate(), currentUnit->getYCoordinate());
             int newCol = currentUnit->getXCoordinate() / playingScreenHeader->getTrueXTileSize();
             int newRow = currentUnit->getYCoordinate() / playingScreenHeader->getTrueYTileSize();
             currentUnit->setRow(newRow);
@@ -77,7 +123,7 @@ void CompView::updateUnits(float deltaS){
 
           //if the unit is dead create an actor destroyed event and do nothing
           if (currentUnit->getHitpoints() <= 0) {
-            cout << "unit is dead" << endl;
+            //cout << "unit is dead" << endl;
             //the time object of the class
             auto now = high_resolution_clock::now();
             //the actual count in nanoseconds for the time
@@ -98,7 +144,7 @@ void CompView::updateUnits(float deltaS){
 
           //printf("checked the tile\nrow: %d\ncol: %d\n",currentUnit->getRow(),currentUnit->getCol());
 
-          cout << "checked if dead" << endl;
+          //cout << "checked if dead" << endl;
 
 
           if (gameLogic->isExit(currentUnit->getRow(), currentUnit->getCol())) {
@@ -123,7 +169,7 @@ void CompView::updateUnits(float deltaS){
             this->eventManager->queueEvent(hitpointsLost);
             this->eventManager->queueEvent(playSound);
           } else { //these don't need to happen if the unit hit the exi
-            cout << "trying to movew" << endl;
+            //cout << "trying to movew" << endl;
 
             int r = currentUnit->getRow();
             int c = currentUnit->getCol();
@@ -167,7 +213,7 @@ void CompView::updateUnits(float deltaS){
 
             std::uniform_int_distribution<unsigned int> nextTilePicker(0, myNextTiles.size() - 1);
 
-            cout << "tryna move " << myNextTiles.size() << endl;
+            //cout << "tryna move " << myNextTiles.size() << endl;
 
             //just warp to a nearby unit to handle this case
             if (myNextTiles.empty()) {
@@ -197,14 +243,14 @@ void CompView::updateUnits(float deltaS){
 
                 this->eventManager->queueEvent(actorDestroyed);
 
-                cout << "something fucked up" << endl;
+                //cout << "something fucked up" << endl;
               }
 
             } else {
 
               std::mt19937 rnd_gen(rd());
 
-              cout << "my set " << *myNextTiles.begin() << endl;
+              //cout << "my set " << *myNextTiles.begin() << endl;
 
               unsigned int next_index = nextTilePicker(rnd_gen);
 
@@ -215,7 +261,7 @@ void CompView::updateUnits(float deltaS){
               int next_row = *selected_key / floor[0].size();
               int next_col = *selected_key % floor[0].size();
 
-              cout << next_row << "," << next_col << endl;
+              //cout << next_row << "," << next_col << endl;
 
               double new_direction;
 
@@ -277,41 +323,7 @@ void CompView::updateUnits(float deltaS){
               currentUnit->update(deltaS);
             }
           }
-        }
-        else{ //their position isn't valid so we can warp them to a friend or kill them
-
-          auto next_spot = iterator;
-          next_spot++;
-          if (next_spot != waveManager->getSpawnedEnemyUnits().end()) {
-            //he's at an invalid spot so just warp him to the next guy and hope for the best
-            shared_ptr<MeleeUnit> warp_guy = next_spot->second;
-            currentUnit->setXCoordinate(warp_guy->getXCoordinate());
-            currentUnit->setYCoordinate(warp_guy->getYCoordinate());
-            currentUnit->setRow(warp_guy->getRow());
-            currentUnit->setCol(warp_guy->getCol());
-            currentUnit->setDirection(warp_guy->getDirection());
-            currentUnit->setXScale(warp_guy->getXScale());
-            currentUnit->setYScale(warp_guy->getYScale());
-          } else {
-            //just kill him
-            bool didFeed = false;
-            shared_ptr<EventInterface> actorDestroyed = make_shared<ActorDestroyedEvent>(currentUnit->getID(),
-                                                                                         currentUnit, deltaS,
-                                                                                         didFeed);
-
-            if (currentUnit->getEngagedUnit() != NULL) {
-              currentUnit->getEngagedUnit()->setEngagedUnit(NULL);
-            }
-            currentUnit->setEngagedUnit(NULL);
-
-            this->eventManager->queueEvent(actorDestroyed);
-
-            cout << "something fucked up" << endl;
-          }
-        }
-      }
-      //else we'll call another function to attack the enemy (attackengagedunit)
-      else {
+        } else {
         //if the unit is dead create an actor destroyed event and do nothing
         if(currentUnit->getHitpoints() <= 0){
           //the time object of the class
@@ -329,7 +341,7 @@ void CompView::updateUnits(float deltaS){
         }
         else{
             if(currentUnit -> getEngagedUnit()-> getHitpoints() < 0){
-                cout<<currentUnit -> getEngagedUnit() -> getType()<<endl;
+                //cout<<currentUnit -> getEngagedUnit() -> getType()<<endl;
                 currentUnit -> setEngagedUnit(NULL);
             }
             else currentUnit->updateAttack(deltaS);
@@ -362,6 +374,8 @@ void CompView::handleMapGenerated(const EventInterface &event) {
   floor=gameLogic->getFloor();
 
   combinedPaths=mapGeneratedEventData->combinedPaths;
+
+  entries=mapGeneratedEventData->entrances;
 
   for(auto z : combinedPaths){
     for (auto g : z){
