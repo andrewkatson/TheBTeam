@@ -150,6 +150,8 @@ void WaveManager::createNextWave() {
 
   double range=(--distancesFromEntryPositions.end())->first;
 
+  cout << "range chosen is " << endl;
+
   std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
 
   cout << "my average " <<  currentWaveNumber*(range/numWaves) << endl << "my deviation " << range/3 << endl;
