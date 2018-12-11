@@ -1,23 +1,26 @@
 [1.0.0] 2018 - 12 - 6
 
-###Added
-- loading screen with hints[@andrewkatson][https://github.com/andrewkatson]
+### Added
+- loading screen with hints [@andrewkatson][https://github.com/andrewkatson]
 - leaderboard screen 
 - Buttons to change speed [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Button shows up between waves to trigger a new wave starting
 - A manual describing how to play
 
 
-###Changed
+### Changed
 - buy and sell buttons will mirror across middle of screen if you right click them (useful when they block clicks) [@andrewkatson][https://github.com/andrewkatson]
 - all projectiles and towers are more balanced [@meisong1997][https://github.com/meisong1997]
 - A tower's price is now doubled for every tower you already have of that type. [@jeremyelkayam][https://github.com/jeremyelkayam]
 
-###Fixed
+### Fixed
 - Melee towers assign units and they kill other units [kp-hb][https://github.com/kp-hb]
 - Sometimes players couldn't buy towers or upgrades even though they had enough money, now that doesn't happen [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Fixed enemy units never spawning at the furthest board entrances
+- Fixed stat and type upgrades sometimes not working
 - Fixed multiple crash scenarios
+ - Fixed a crash where a unit's coordinates would be initialized to infinity or NaN on later levels
+ - Fixed a crash where the game tried to keep rendering an upgrade circle if the upgrade circle was displayed at the end of a level
 - Improved audio
 
 ###Known Issues
@@ -25,7 +28,7 @@
 
 
 [0.8.0] 2018 - 12 -4
-###Added
+### Added
 - Textures added for other units as well as all tower upgrades, as follows: [@jeremyelkayam][https://github.com/jeremyelkayam]
  - Kids
   - Fat Kid
