@@ -914,6 +914,7 @@
     <!--Animation Speed Constants-->
     <constant value="150" id="IDS_Enemy_Animation_Speed_Factor"/>
     <constant value="1" id="IDS_Fry_Animation_Speed_Factor"/>
+    <constant value=".3" id="IDS_Unit_Punch_Time_Between_Frames"/>
 
 
     <!--Speed Constants-->

@@ -490,7 +490,7 @@ void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
     //cout << "we are fine" << endl;
     isEnemyPointingAtUnit = true;
     if (unit->getHitpoints() > 0) {
-      cout << " Fry unti " << unitIndex << " is alive " << endl;
+      //cout << " Fry unti " << unitIndex << " is alive " << endl;
       if (unit->getEngagedUnit() == NULL) {
         float enemyX = enemyInRange->getXCoordinate();
         float enemyY = enemyInRange->getYCoordinate();

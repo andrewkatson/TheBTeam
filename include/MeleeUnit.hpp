@@ -14,12 +14,14 @@ using namespace std;
 #include <cmath>
 #include "ActorInterface.hpp"
 #include "HitpointBar.hpp"
+#include "Events/PlaySoundEvent.hpp"
 #include <time.h>
 #include <chrono>
 //#include "GameLogic.hpp"
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
 using std::chrono::seconds;
+using std::chrono::nanoseconds;
 
 class MeleeUnit : public ActorInterface {
 
@@ -35,7 +37,7 @@ protected:
   float s_elapsed;
 
   //The index of the sprite that the actor is currently using.
-  int current_sprite,walk_cycle_position;
+  int current_sprite,walk_cycle_position,attack_cycle_position;
 
   //Stores the amount of pixels that this unit overshoots its target when turning.
   double overshoot;
@@ -43,6 +45,7 @@ protected:
   bool overshooting;
 
   long long lastAttack =0;
+
 
 public:
 

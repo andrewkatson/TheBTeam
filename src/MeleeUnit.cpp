@@ -16,6 +16,7 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> overshoot = 0;
   this -> current_sprite = 0 ;
   this -> walk_cycle_position = 0;
+  this -> attack_cycle_position = 0;
 }
 
 //update animation for our main unit
@@ -36,7 +37,7 @@ void MeleeUnit::updateWalkAnim(float delta, float timeBetweenFrames){
   s_elapsed += delta;
   if (s_elapsed > timeBetweenFrames) {
 
-    cout << "swap frame" << endl;
+    //cout << "swap frame" << endl;
 
     s_elapsed = 0;
 
@@ -245,14 +246,50 @@ void MeleeUnit::attackEngagedUnit(){
   assert(armor>0);
   enemyHP -= (float)damage *(float)(armorPenetration/enemyArmor);
   engagedUnit->updateHitpoints(enemyHP);
-  cout<<" I AM "  << getType()<<endl;
-  cout<<"enemy has " << enemyHP<<endl;
+  //cout<<" I AM "  << getType()<<endl;
+  //cout<<"enemy has " << enemyHP<<endl;
   engagedUnit->flickerUnit();
+  s_elapsed=0;
+  if(attack_cycle_position==0){
+    attack_cycle_position=1;
+    current_sprite=3;
+  }else{//attack cycle position must be the last spot in the cycle
+    attack_cycle_position=3;
+    current_sprite = 4;
+  }
+  this->sprite.setTexture(textures->at(current_sprite));
 }
 
 void MeleeUnit::updateAttack(float delta){
+  s_elapsed+=delta;
+
+  if(s_elapsed > textLoader->getDouble("IDS_Unit_Punch_Time_Between_Frames") && current_sprite!=2){
+    cout << "i set my sprite back to standing" << endl;
+    current_sprite = 2;
+    if(attack_cycle_position==1){
+      attack_cycle_position=2;
+    }else{
+      attack_cycle_position=0;
+    }
+
+    this->sprite.setTexture(textures->at(current_sprite));
+
+  }
+
   if(attackPossible(delta)){
     attackEngagedUnit();
+
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("", textLoader->getString(
+            "IDS_Unit_Punch_Noise"), nowInNano);
+    eventManager->queueEvent(playSound);
+
+    cout<<" my name is "  << getType()<<endl;
+    cout << "and i am in a punching frame" << endl;
+
   }
 }
 bool MeleeUnit::attackPossible(float delta){
