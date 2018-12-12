@@ -176,6 +176,8 @@ public:
   bool attackPossible(float delta);
 
   bool atTarget();
+
+  void updateWalkAnim(float delta, float timeBetweenFrames);
 };
 
 

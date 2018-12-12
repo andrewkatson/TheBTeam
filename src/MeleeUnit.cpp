@@ -18,6 +18,7 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> walk_cycle_position = 0;
 }
 
+//update animation for our main unit
 void MeleeUnit::update(float delta){
 
   if(speed==0){
@@ -26,29 +27,35 @@ void MeleeUnit::update(float delta){
     this->sprite.setTexture(textures->at(current_sprite));
 
   }else {
+    updateWalkAnim(delta, textLoader->getDouble("IDS_Enemy_Animation_Speed_Factor")/speed);
+  }
+}
 
-    s_elapsed += delta;
+void MeleeUnit::updateWalkAnim(float delta, float timeBetweenFrames){
 
-    if (s_elapsed > textLoader->getDouble("IDS_Unit_Animation_Speed_Factor")/speed) {
-      s_elapsed = 0;
+  s_elapsed += delta;
+  if (s_elapsed > timeBetweenFrames) {
 
-      if (walk_cycle_position == 0) { //first walking frame
-        walk_cycle_position = 1;
-        current_sprite = 2; //standing
-      }else if(walk_cycle_position == 1){ // second walking frame
-        walk_cycle_position = 2;
-        current_sprite = 1;
-      } else if(walk_cycle_position == 2) {
-        walk_cycle_position = 3;
-        current_sprite = 2;
-      }else{
-        walk_cycle_position = 0;
-        current_sprite = 0;
-      }
+    cout << "swap frame" << endl;
 
-      this->sprite.setTexture(textures->at(current_sprite));
+    s_elapsed = 0;
 
+    if (walk_cycle_position == 0) { //first walking frame
+      walk_cycle_position = 1;
+      current_sprite = 2; //standing
+    }else if(walk_cycle_position == 1){ // second walking frame
+      walk_cycle_position = 2;
+      current_sprite = 1;
+    } else if(walk_cycle_position == 2) {
+      walk_cycle_position = 3;
+      current_sprite = 2;
+    }else{
+      walk_cycle_position = 0;
+      current_sprite = 0;
     }
+
+    this->sprite.setTexture(textures->at(current_sprite));
+
   }
 }
 
@@ -106,9 +113,14 @@ void MeleeUnit::vectorMove(float delta){
 
 
 
-  if(abs(deltaX) > .001 || abs(deltaY) > .001) { //if our movement is above a certain threshold, change angle
+  if(abs(deltaX) > .1 || abs(deltaY) > .1) { //if our movement is above a certain threshold, change angle
     double angle = atan2(xTarget - x, yTarget - y) - M_PI / 2;
     setDirection(angle);
+    //cout << "time between frames " << textLoader->getDouble("IDS_Fry_Animation_Speed_Factor")/speed << endl;
+    updateWalkAnim(delta,textLoader->getDouble("IDS_Fry_Animation_Speed_Factor")/speed);
+  }else{
+    current_sprite=2;
+    this->sprite.setTexture(textures->at(current_sprite));
   }
 
 

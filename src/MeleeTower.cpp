@@ -80,6 +80,7 @@ void MeleeTower::update(float delta){
           unit->vectorMove(delta);
         }
       }
+
     }
     else{
       handleDeadUnit(unitIndex);
