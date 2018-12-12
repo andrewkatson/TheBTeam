@@ -287,8 +287,8 @@ void MeleeUnit::updateAttack(float delta){
             "IDS_Unit_Punch_Noise"), nowInNano);
     eventManager->queueEvent(playSound);
 
-    cout<<" my name is "  << getType()<<endl;
-    cout << "and i am in a punching frame" << endl;
+    //cout<<" my name is "  << getType()<<endl;
+    //cout << "and i am in a punching frame" << endl;
 
   }
 }
