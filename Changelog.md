@@ -1,7 +1,7 @@
 [1.0.0] 2018 - 12 - 6
 
 ### Added
-- loading screen with hints[@andrewkatson][https://github.com/andrewkatson]
+- loading screen with hints [@andrewkatson][https://github.com/andrewkatson]
 - leaderboard screen 
 - Buttons to change speed [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Button shows up between waves to trigger a new wave starting
@@ -19,7 +19,10 @@
 - Melee towers assign units and they kill other units [kp-hb][https://github.com/kp-hb]
 - Sometimes players couldn't buy towers or upgrades even though they had enough money, now that doesn't happen [@jeremyelkayam][https://github.com/jeremyelkayam]
 - Fixed enemy units never spawning at the furthest board entrances
+- Fixed stat and type upgrades sometimes not working
 - Fixed multiple crash scenarios
+ - Fixed a crash where a unit's coordinates would be initialized to infinity or NaN on later levels
+ - Fixed a crash where the game tried to keep rendering an upgrade circle if the upgrade circle was displayed at the end of a level
 - Improved audio
 
 ### Known Issues

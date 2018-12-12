@@ -7,35 +7,48 @@ A Food Themed 2D Tower Defense Game with procedurally generated maps and waves.
  - `git clone https://github.com/andrewkatson/TheBTeam.git ; cd TheBTeam ; mkdir Debug ; cd Debug ; cmake .. ; make ; ./Game `
 - You're playing! Have fun!
 
+### Required Packages
+If not playing on a McGlothlin lab machine, the following packages are required:
+- `git`
+- `g++`
+- `make`
+- `cmake`
+- `libsfml-dev`
+
 ## Background
 The year is _20X3_. __Big Pharma__ has just finished their most recent campaign of polluting the water with chemical to make the frogs’ teeth whiter. Now, __Big Pharma__ sets its sights on making the children healthy by introducing _mind controlling genes_ into the GMO-ridden vegetables that currently occupy school cafeterias everywhere. You, our heroic protagonist, assume the role of __War Chief__ for the Jolly United Neighboring Kingdom Fighting Unsavory Delinquents __(J.U.N.K.F.U.D).__ You are tasked with keeping the kids of __Chester A. Arthur Elementary School__ sated so that they are not infected by the __Vegetables__. 
 
 ## How To Play
-Food Fight is a __tower defense__ game, played in a cafeteria. Your goal is to make sure as few kids get to the salad bar as possible. You'll do this by creating towers that fire food items at the children so that they get too full and lose their appetite. Each level of Food Fight is played in a new cafeteria with a unique layout that changes every time you play. There are countless strategic possibilities!
+Food Fight is a __tower defense__ game, played in a cafeteria. Your goal is to make sure as few kids get to the salad bar as possible. You'll do this by creating towers that fire food items at the children automatically so that they get too full and lose their appetite. Each level of Food Fight is played in a new cafeteria with a unique layout that changes every time you play. There are countless strategic possibilities!
 
-### Controls
-Food Fight has multiple different control schemes for its different gameplay modes. Make sure you know them before you play.
+Food Fight has multiple different control schemes for its different gameplay modes, and many game mechanics. Make sure you know them before you play.
 
-#### Menu
+### Menu
 ![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/manual/title.png)
 
 To navigate through game menus, you can use the arrow keys `← → ↑ ↓` to select an option, and `Enter` to confirm.
 
-#### Gameplay
+### Gameplay
 ![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/manual/gameplay.png)
 
 On the main gameplay screen, you can press one of the four __speed buttons__ to change the speed at which the action plays out. You can also press the `H` key to hide and show the HUD. When no waves are going on, a __Next Wave__ button appears, allowing you to trigger the next wave at your leisure. 
 
-#### Placing Towers
+### Placing Towers
 ![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/manual/buying.png)
 
-You can __double click__ on any empty tile to bring up the __Buy Tower__ button. Clicking this will bring you to a screen where you can pick the tower you want to buy. If you click on a tile where a tower is present, this button will be replaced with the __Sell Tower__ and __Upgrade Tower__ buttons. If a tile has an obstacle, you will be able to __Remove__ this obstacle for a price.
+You can __double click__ on any empty tile to bring up the __Buy Tower__ button. Clicking this will bring you to a screen where you can pick the tower you want to buy.
 
-#### Upgrade Circle
+### Upgrading Towers
+If you click on a tile where a tower is present, the __Sell Tower__ and __Upgrade Tower__ buttons will appear. Different towers have different types of upgrades, specializing in different areas. Experiment to your heart's content!
+
+### Obstacles
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/obstacle/cafeteriatable/table.png)
+![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/obstacle/trashcan/can.png)
+
+Obstacles can sometimes be found throughout the cafeteria, and can include lunch tables or trash cans. Obstacles usually won't get in your way, but you won't be able to place towers on tiles that are occupied by obstacles. You can pay money to __Remove__ obstacles from the game board, but this is an expensive procedure, and you should consider carefully whether or not you want to work around that obstacle's place on the board.
+
+### Upgrade Circle
 Right clicking a tower will bring up its __Upgrade Circle__. This will allow you to individually upgrade aspects of a tower's statistics. You can click on each icon to upgrade a specific statistic if you have the money. Experiment to your liking!
-
-#### Fry Towers
-French fry HQs have a unique control scheme. Clicking on one will show you a flag icon inside a circle. Clicking this flag will allow you to pick it up. You can drop it on any path tile inside the tower's circle of influence. This flag will tell the tower's Fryguys where they should convene while they're not fighting.
 
 ### Towers
 ![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/meatlovers/closed.png)
@@ -44,7 +57,7 @@ French fry HQs have a unique control scheme. Clicking on one will show you a fla
 ![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/deepdish/closed.png)
 ![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/wafflefrycontainer/normal.png)
 
-Buying towers costs money. Upgrading them costs more money! Luckily, when you feed kids, you get their lunch money, which you can spend on more towers. As you advance through the game's levels, you'll also start with more and more money as you begin new levels
+Buying towers costs money. Upgrading them costs more money! In addition, every time you buy a tower, it'll cost twice as much to buy more towers of that type. Luckily, when you feed kids, you get their lunch money, which you can spend on more towers. As you advance through the game's levels, you'll also start with more and more money at the beginning of each level, allowing you to better prepare for the waves to come.
 
 #### Dr. Paprika
 ![tower](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/tower/colacan/can.png)
@@ -66,6 +79,10 @@ Pizza towers do strong damage and pierce armor, but their projectiles travel slo
 
 These house fry-guys, the first line of defense in your army. Once they see a unit, they'll start fighting him and keep him stationary as long as he stays alive. They're great for stalling units and keeping them away from the veggie table while your other towers whittle their health down.
 
+##### Rally Points
+
+These towers also have a unique control scheme. Clicking on one will show you a flag icon inside a circle. Clicking this flag will allow you to pick it up. You can drop it on any path tile inside the tower's circle of influence. This flag will tell the tower's Fryguys where they should convene while they're not fighting.
+
 ### Children
 ![unit](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/unit/skinnykidunit/standing.png)
 ![unit](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/sprites/unit/averagekidunit/standing.png)
@@ -73,11 +90,12 @@ These house fry-guys, the first line of defense in your army. Once they see a un
 
 Children come in 3 different weight classes. The largest kids are slow, but have nearly bottomless stomachs and built-in armor. The smallest kids are on the other side of the spectrum-- they're quick runners, but their bellies will fill up fast. Average sized kids tend to form the bulk of the kids at school, and they fall somewhere in between the biggest and the smallest kids.
 
+
 ### Tips
-- Different towers have strengths and weaknesses that allow them to counter different units. A diverse lineup will increase your chances of success.
-- Your upgrades from the upgrade circle will carry over when you upgrade to a new level of tower, but the upgrade prices won't. Upgrade your tower once the smaller upgrades get too expensive and you'll always be able to upgrade!
+- Different towers have strengths and weaknesses that allow them to counter different units. Plus, the more towers you have of a certain type, the more expensive it'll be to buy more of that tower. A diverse lineup will increase your chances of success.
+- Your upgrades from the upgrade circle will carry over when you upgrade to a new level of tower, but the upgrade prices will reset to be cheap again. Upgrade your tower to a new level once the smaller upgrades get too expensive and you'll always be able to upgrade!
 - Even though you'll lose all your upgraded towers when starting a new level, your towers will get stronger on subsequent levels based on how you upgraded them in earlier levels. Use your upgrades wisely, and don't be afraid to upgrade!
-- You start with more money when you begin a new level, but your money from the last level won't carry over. Make the most use of your money while you still have it!
+- You start with more money when you begin a new level than when you began the previous level, but your left over money from previous levels won't carry over. Make the most use of your money while you still have it!
 
 ## Miscellanea
 Game created by Andrew Katson (team lead), Kyle Pederson, Jeremy Elkayam, and Mei Song.
