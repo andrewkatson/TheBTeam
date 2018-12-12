@@ -97,8 +97,20 @@ void MeleeUnit::vectorMove(float delta){
   //float newX = xVector / (abs(speed-25)) *delta *ActorInterface::getXScale() + x;
   //float newY = yVector / (abs(speed-25)) *delta *ActorInterface::getYScale() + y;
 
-  float newX = xVector * speed * delta + x;
-  float newY = yVector * speed  * delta + y;
+  float deltaX = xVector * speed * delta;
+  float deltaY = yVector * speed  * delta;
+
+  float newX = deltaX + x;
+  float newY = deltaY + y;
+
+
+
+
+  if(abs(deltaX) > .001 || abs(deltaY) > .001) { //if our movement is above a certain threshold, change angle
+    double angle = atan2(xTarget - x, yTarget - y) - M_PI / 2;
+    setDirection(angle);
+  }
+
 
   /*
   cout << "currently at " << x << " "<< y <<endl;
