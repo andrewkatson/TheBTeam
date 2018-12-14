@@ -299,7 +299,7 @@ void Player::handleLoseHitpoints(const EventInterface& event){
   int lostHitpoints = lhpEventData -> lostHitpoints;
 
   this->hitpoints -= lostHitpoints;
-  cout << "new hit points " << hitpoints << endl;
+  //cout << "new hit points " << hitpoints << endl;
   if(hitpoints <= 0){
     //the time object of the class
     auto now = high_resolution_clock::now();

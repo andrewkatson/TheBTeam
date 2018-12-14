@@ -270,7 +270,7 @@ void MeleeUnit::updateAttack(float delta){
   timeSinceLastAttack+=delta;
 
   if(s_elapsed > textLoader->getDouble("IDS_Unit_Punch_Time_Between_Frames") && current_sprite!=2){
-    cout << "i set my sprite back to standing" << endl;
+    //cout << "i set my sprite back to standing" << endl;
     current_sprite = 2;
     if(attack_cycle_position==1){
       attack_cycle_position=2;
@@ -301,10 +301,10 @@ void MeleeUnit::updateAttack(float delta){
 bool MeleeUnit::attackPossible(){
   assert(attackRate>0);
 
-  cout << "i am " << typeID << " can i attack? " << (timeSinceLastAttack > 1.0/(float)attackRate) << endl;
+  //cout << "i am " << typeID << " can i attack? " << (timeSinceLastAttack > 1.0/(float)attackRate) << endl;
 
-  cout << "time between attacks  " << 1.0/(float)attackRate << endl;
-  cout << "time is " << timeSinceLastAttack << endl;
+  //cout << "time between attacks  " << 1.0/(float)attackRate << endl;
+  //cout << "time is " << timeSinceLastAttack << endl;
 
   return timeSinceLastAttack > 1.0/(float)attackRate;
 }

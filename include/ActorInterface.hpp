@@ -218,7 +218,7 @@ public:
   float getHitpoints(){return this->hitpoints;}
   int getMaxHitpoints(){return this->maxHitpoints;}
   int getDamage(){return this->damage;}
-  int getArmor(){cout << "armor was " << armor << endl; return this->armor;}
+  int getArmor(){/*cout << "armor was " << armor << endl;*/ return this->armor;}
   int getArmorPenetration(){return this->armorPenetration;}
   int getRadius(){return radius;}
   int getAttackRate(){return attackRate;}
@@ -226,8 +226,7 @@ public:
   void updateHitpoints(float newHitpoints){this->hitpoints = newHitpoints;}
   void updateMaxHitpoints(float newMaxHitpoints){maxHitpoints = newMaxHitpoints;}
   void updateDamage(int newDamage){damage = newDamage;}
-  void updateArmor(int newArmor){cout << "are we setting the armor? " << endl; armor = newArmor;}
-  void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
+  void updateArmor(int newArmor){/*cout << "are we setting the armor? " << endl;*/ armor = newArmor;}void updateArmorPenetration(int newArmorPenetration){armorPenetration = newArmorPenetration;}
   void updateRadius(int newRadius){radius = newRadius;}
   void updateAttackRate(int newAttackRate){attackRate = newAttackRate;}
 

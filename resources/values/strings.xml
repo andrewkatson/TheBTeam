@@ -381,6 +381,7 @@
     <string value="Buy_Tower_Screen_Handle_State_Change" id="IDS_BTS_SC"> </string>
     <!--MeleeTower Delegates -->
     <string value="MELEETOWERHANDLEACTORDESTROYED" id="IDS_MT_AD"> </string>
+  <string value="MeleeTower_WaveChange" id="IDS_MeleeTower_WaveChange"> </string>
 
     <!--Leader Board Delegates-->
     <string value="LeaderBoard_Screen_Handle_Key_Press" id="IDS_Leader_Board_Key_Press_Delegate"> </string>
@@ -651,8 +652,7 @@
   <hint value="M and M Towers Feed Small Kids the Best" id="IDS_Hint_6"> </hint>
   <hint value="If You Lose Less Health You Will Win More Often" id="IDS_Hint_102"> </hint>
   <hint value="Left Click Tower To See Radius" id="IDS_Hint_103"> </hint>
-  <hint value="Upgrading Statistics Will\nBe Reflected In the Next Level" id="IDS_Hint_105"> </hint>
-
+  <hint value="Upgrades Carry Over Between Levels" id="IDS_Hint_105"> </hint>
   <hint value="You Will Lose" id="IDS_Hint_106"> </hint>
   <hint value="Left Click Rally Flag To Channge Unit Spawn" id="IDS_Hint_108"> </hint>
   <hint value="Press B on Any Screen To Return To the Previous One" id="IDS_Hint_109"> </hint>
