@@ -114,6 +114,7 @@ void CompView::updateUnits(float deltaS){
 
           if (!coordsInsideTile(currentUnit->getRow(), currentUnit->getCol(), currentUnit->getXCoordinate(),
                                 currentUnit->getYCoordinate())) {
+            cout << "update my row/col" << endl;
             //printf("updating tile...\nx: %f\ny: %f\n", currentUnit->getXCoordinate(), currentUnit->getYCoordinate());
             int newCol = currentUnit->getXCoordinate() / playingScreenHeader->getTrueXTileSize();
             int newRow = currentUnit->getYCoordinate() / playingScreenHeader->getTrueYTileSize();

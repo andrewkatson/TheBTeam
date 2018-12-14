@@ -44,7 +44,7 @@ protected:
 
   bool overshooting;
 
-  long long lastAttack =0;
+  float timeSinceLastAttack;
 
 
 public:
@@ -176,7 +176,7 @@ public:
 
   void attackEngagedUnit();
 
-  bool attackPossible(float delta);
+  bool attackPossible();
 
   bool atTarget();
 

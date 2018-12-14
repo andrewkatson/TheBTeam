@@ -17,6 +17,8 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> current_sprite = 0 ;
   this -> walk_cycle_position = 0;
   this -> attack_cycle_position = 0;
+  this->timeSinceLastAttack = 0;
+
 }
 
 //update animation for our main unit
@@ -240,6 +242,9 @@ void MeleeUnit::attackEngagedUnit(){
   if(engagedUnit == NULL){
     return;
   }
+  timeSinceLastAttack = 0;
+
+
   float enemyHP = engagedUnit->getHitpoints();
   int enemyArmor = engagedUnit->getArmor();
 
@@ -262,6 +267,7 @@ void MeleeUnit::attackEngagedUnit(){
 
 void MeleeUnit::updateAttack(float delta){
   s_elapsed+=delta;
+  timeSinceLastAttack+=delta;
 
   if(s_elapsed > textLoader->getDouble("IDS_Unit_Punch_Time_Between_Frames") && current_sprite!=2){
     cout << "i set my sprite back to standing" << endl;
@@ -276,7 +282,7 @@ void MeleeUnit::updateAttack(float delta){
 
   }
 
-  if(attackPossible(delta)){
+  if(attackPossible()){
     attackEngagedUnit();
 
     auto now = high_resolution_clock::now();
@@ -292,17 +298,13 @@ void MeleeUnit::updateAttack(float delta){
 
   }
 }
-bool MeleeUnit::attackPossible(float delta){
-  //the time object of the class
-  auto now = high_resolution_clock::now();
-  //the actual count in seconds for the time
-  auto nowInSec = duration_cast<seconds>(now.time_since_epoch()).count();
-  //time -last attack < (delta/attackrate)
+bool MeleeUnit::attackPossible(){
   assert(attackRate>0);
-  long long diff = nowInSec - lastAttack;
-  if((diff)<= (long long)(delta/attackRate)){
-    return false;
-  }
-  lastAttack = nowInSec;
-  return true;
+
+  cout << "i am " << typeID << " can i attack? " << (timeSinceLastAttack > 1.0/(float)attackRate) << endl;
+
+  cout << "time between attacks  " << 1.0/(float)attackRate << endl;
+  cout << "time is " << timeSinceLastAttack << endl;
+
+  return timeSinceLastAttack > 1.0/(float)attackRate;
 }
