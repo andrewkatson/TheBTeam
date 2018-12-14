@@ -13,7 +13,7 @@ FatKidUnit::FatKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<EventManage
   this->radius=textLoader->getInteger(string("IDS_FK_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_FK_LM"));;
   this->typeID=textLoader->getTypeID(string("IDS_FKU"));
-  this->attackRate=textLoader->getInteger(string("IDS_FK_Attack_Rate"));
+  this->attackRate=textLoader->getDouble(string("IDS_FK_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(typeID);
   this -> isAlly = false;
   //set the initial sprite texture

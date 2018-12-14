@@ -9,7 +9,7 @@ NormalFryUnit::NormalFryUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Event
   this->radius=textLoader->getInteger(string("IDS_NF_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_NF_LM"));;
   this->typeID=textLoader->getTypeID(string("IDS_NFU"));
-  this->attackRate=textLoader->getInteger(string("IDS_NF_Attack_Rate"));
+  this->attackRate=textLoader->getDouble(string("IDS_NF_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(typeID);
   this -> isAlly = true;
   //set the initial sprite texture

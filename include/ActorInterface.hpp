@@ -82,7 +82,7 @@ protected:
   int armorPenetration;
 
   //The actor's attack rate (not applicable to projectiles)
-  int attackRate;
+  float attackRate;
 
   //The rectangle corresponding to the object's dimensions.
   sf::FloatRect collisionBox;

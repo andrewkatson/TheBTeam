@@ -13,7 +13,7 @@ AverageKidUnit::AverageKidUnit(shared_ptr<TextLoader> textLoader, shared_ptr<Eve
   this->radius=textLoader->getInteger(string("IDS_AK_AR"));;
   this->lunchMoney=textLoader->getInteger(string("IDS_AK_LM"));;
   this->typeID=textLoader->getTypeID(string("IDS_AKU"));
-  this->attackRate=textLoader->getInteger(string("IDS_AK_Attack_Rate"));
+  this->attackRate=textLoader->getDouble(string("IDS_AK_Attack_Rate"));
   this -> textures = textureLoader -> getTexture(typeID);
   this -> isAlly = false;
   //set the initial sprite texture
