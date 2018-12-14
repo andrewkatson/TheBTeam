@@ -55,9 +55,6 @@
   <constant value="6" id="IDS_Minimum_Board_Dimensions"> </constant>
   <constant value="3" id="IDS_Invisible_Obstacle_Modifier"> </constant>
 
-  <!--Tower Upgrades-->
-  <constant value="1" id="IDS_Minimum_Tower_Upgrade"> </constant>
-  <constant value="3" id="IDS_Maximum_Tower_Upgrade"> </constant>
 
   <!--Range Tower Time Between Flip Textures -->
   <constant value = "1" id = "IDS_Range_Tower_Flip_Face"> </constant>
@@ -929,6 +926,10 @@
 
     <!--Melee Tower Unit Speed-->
     <constant value="20.0" id="IDS_Melee_Tower_Unit_Speed_Lamba"/>
+
+    <!--Tower Upgrades-->
+    <constant value="1" id="IDS_Minimum_Tower_Upgrade"> </constant>
+    <constant value="1.1" id="IDS_Maximum_Tower_Upgrade"> </constant>
 
   </floats>
 </constants>

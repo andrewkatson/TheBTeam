@@ -940,35 +940,35 @@ int TowerManager::getUpgradePrice(int row, int col){
 
    //generate an amount to upgrade
    //the distribution we generate numbers for
-   std::uniform_int_distribution<int> dist(textLoader->getInteger(string("IDS_Minimum_Tower_Upgrade")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+   std::uniform_real_distribution<float> dist(textLoader->getDouble(string("IDS_Minimum_Tower_Upgrade")),textLoader->getDouble(string("IDS_Maximum_Tower_Upgrade")));
 
-   int upgradeAmount = dist(mt);
+   float upgradeAmount = dist(mt);
 
    //cast as a melee tower
    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(towerToUpgrade.get());
 
    //check which upgrade has been trigged and apply the upgrading amount
    if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
-     meleeTower->updateRadius(meleeTower->getRadius()+upgradeAmount);
+     meleeTower->updateRadius(meleeTower->getRadius()*upgradeAmount);
      collisionManager -> handleTowerRadiusUpgrade(towerToUpgrade);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Respawn_Rate_Upgrade"))){
-     meleeTower->updateRespawnSpeed(meleeTower->getRespawnSpeed()+upgradeAmount);
+     meleeTower->updateRespawnSpeed(meleeTower->getRespawnSpeed()/upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Hitpoints_Upgrade"))){
-     meleeTower->updateUnitHitpoints(meleeTower->getUnitHitpoints()+upgradeAmount);
+     meleeTower->updateUnitHitpoints(meleeTower->getUnitHitpoints()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Damage_Upgrade"))){
-     meleeTower->updateUnitDamage(meleeTower->getUnitDamage()+upgradeAmount);
+     meleeTower->updateUnitDamage(meleeTower->getUnitDamage()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Penetration_Upgrade"))){
-     meleeTower->updateUnitArmorPenetration(meleeTower->getUnitArmorPenetration()+upgradeAmount);
+     meleeTower->updateUnitArmorPenetration(meleeTower->getUnitArmorPenetration()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Upgrade"))){
-     meleeTower->updateUnitArmor(meleeTower->getUnitArmor()+upgradeAmount);
+     meleeTower->updateUnitArmor(meleeTower->getUnitArmor()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Attack_Rate_Upgrade"))){
-     meleeTower->updateUnitAttackRate(meleeTower->getUnitAttackRate()+upgradeAmount);
+     meleeTower->updateUnitAttackRate(meleeTower->getUnitAttackRate()*upgradeAmount);
    }
    else{
      cerr << "upgrade Melee Tower unknown upgrade button id : TowerManager" << endl;
@@ -989,29 +989,29 @@ int TowerManager::getUpgradePrice(int row, int col){
 
     //generate an amount to upgrade
     //the distribution we generate numbers for
-    std::uniform_int_distribution<int> dist(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+   std::uniform_real_distribution<float> dist(textLoader->getDouble(string("IDS_Minimum_Tower_Upgrade")),textLoader->getDouble(string("IDS_Maximum_Tower_Upgrade")));
 
-    int upgradeAmount = dist(mt);
+   float upgradeAmount = dist(mt);
 
     //cast as a range tower
     RangeTower* rangeTower = dynamic_cast<RangeTower*>(towerToUpgrade.get());
 
     //check which upgrade has been trigged and apply the upgrading amount
     if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
-      rangeTower->updateRadius(rangeTower->getRadius()+upgradeAmount);
+      rangeTower->updateRadius(rangeTower->getRadius()*upgradeAmount);
       collisionManager -> handleTowerRadiusUpgrade(towerToUpgrade);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Rate_Of_Fire_Upgrade"))){
-      rangeTower->updateRateOfFire(rangeTower->getRateOfFire()+upgradeAmount);
+      rangeTower->updateRateOfFire(rangeTower->getRateOfFire()/upgradeAmount);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Damage_Upgrade"))){
-      rangeTower->updateProjectileDamage(rangeTower->getProjectileDamage()+upgradeAmount);
+      rangeTower->updateProjectileDamage(rangeTower->getProjectileDamage()*upgradeAmount);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Penetration_Upgrade"))){
-      rangeTower->updateProjectileArmorPenetration(rangeTower->getProjectileArmorPenetration()+upgradeAmount);
+      rangeTower->updateProjectileArmorPenetration(rangeTower->getProjectileArmorPenetration()*upgradeAmount);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Area_Of_Effect_Upgrade"))){
-      rangeTower->updateProjectileAreaOfEffect(rangeTower->getProjectileAreaOfEffect()+upgradeAmount);
+      rangeTower->updateProjectileAreaOfEffect(rangeTower->getProjectileAreaOfEffect()*upgradeAmount);
     }
     else{
       cerr << "upgrade Range Tower unknown upgrade button id : Tower Manager" << endl;
