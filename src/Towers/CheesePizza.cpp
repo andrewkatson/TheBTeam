@@ -1,5 +1,7 @@
 #include "Towers/CheesePizza.hpp"
 
+int CheesePizza::priceMult=1;
+
 CheesePizza::CheesePizza(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader) {
   this -> typeID = textLoader->getTypeID(string("IDS_CPT"));
   this -> textLoader = textLoader;

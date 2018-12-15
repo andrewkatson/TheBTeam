@@ -1,6 +1,6 @@
 #include "Towers/NormalFry.hpp"
 
-
+int NormalFry::priceMult = 1;
 
 NormalFry::NormalFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;

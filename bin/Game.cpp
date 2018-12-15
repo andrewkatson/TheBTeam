@@ -149,6 +149,12 @@ void Game::handleMapGeneration(const EventInterface &event){
  * Handle Levels (avoids race conditions)
  */
 void Game::handleLevelChange(const EventInterface &event){
+
+  //if the player is actually dead then we need to handle this as a restart game event
+  if(gameLogic->getHitpoints() <= 0){
+    handleRestartGame(event);
+    return;
+  }
   gameLogic->handleLevelChangeEvent(event);
   userView->handleLevelChangeEvent(event);
 }

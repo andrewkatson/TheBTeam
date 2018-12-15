@@ -8,7 +8,7 @@ MeleeTower::MeleeTower(shared_ptr<EventManager> eventManager, shared_ptr<TextLoa
   this -> xRally = 0xFFFFFFFF;
   this -> yRally = 0xFFFFFFFF;
   this -> e = 0.00001;
-  this -> timeOfDeath = {-1, -1, -1};
+  this -> timeSinceDeath = {-1, -1, -1};
   this -> isMelee = true;
   this -> isTower = true;
   this -> radiusVisible = false;
@@ -80,6 +80,7 @@ void MeleeTower::update(float delta){
           unit->vectorMove(delta);
         }
       }
+
     }
     else{
       handleDeadUnit(unitIndex);
@@ -219,7 +220,6 @@ void MeleeTower::resetUnitPosition(shared_ptr<MeleeUnit> unit, int unitIndex, fl
     }
 
 
-    /*
     //if the unit is already at its correct resting poisiton nothing needs to be done
     if(!(withinRange(newX, newY, unit->getXCoordinate(), unit->getYCoordinate()))){
 
@@ -319,6 +319,15 @@ void MeleeTower::registerDelegates(){
   EventType actorDestroyedEventType = actorDestroyedEvent.getEventType();
   //register the delegate and its type
   this -> eventManager -> registerDelegate(actorDestroyedDelegate, textLoader -> getString(string("IDS_MT_AD")),actorDestroyedEventType);
+
+
+  EventManager::EventDelegate waveChangeDelegate = std::bind(&MeleeTower::handleWaveChange, this, _1);
+
+  //make an event and get its type
+  WaveChangeEvent waveChangeEvent = WaveChangeEvent();
+  EventType waveChangeEventType = waveChangeEvent.getEventType();
+  //register the delegate and its type
+  this -> eventManager -> registerDelegate(waveChangeDelegate, textLoader -> getString(string("IDS_MeleeTower_WaveChange")),waveChangeEventType);
 }
 
 /*
@@ -405,19 +414,30 @@ void MeleeTower::handleActorDestroyed(const EventInterface& event){
   }
 }
 
+void MeleeTower::handleWaveChange(const EventInterface& event){
+  cout << "wave change " << timeSinceDeath.size() << endl;
+  //to avoid pointless waiting between waves we should respawn everyone immediately
+  for(int z=0;z<timeSinceDeath.size();z++) {
+    cout << "wave change loop " << z << endl << "time since death: " << timeSinceDeath.at(z) << endl;
+    if (timeSinceDeath.at(z) > 0) {
+      timeSinceDeath.at(z) = std::numeric_limits<float>::max();
+      cout << "setting time since death to max: " << timeSinceDeath.at(z) << endl;
+      //set time since death to logical max so that a call to respawnUnits() will immediately respawn
+    }
+  }
+}
+
 /*
  * If one of this tower's units died then we take the index of it in the currentUnits
  * list and start a timer for it that is checked for when it will respawn
  * @param indexOfUnit: the index of the dead unit in currentUnits
  */
 void MeleeTower::handleDeadUnit(int indexOfUnit){
-  //the time object of the class
-  auto now = high_resolution_clock::now();
-  //the actual count in nanoseconds for the time
-  auto nowInNano = duration_cast<seconds>(now.time_since_epoch()).count();
 
-  //set whatever time is in this space to the current time
-  timeOfDeath.at(indexOfUnit) = nowInNano;
+  if(timeSinceDeath.at(indexOfUnit) < 0){ //if he wasn't dead already
+    timeSinceDeath.at(indexOfUnit) = 0; //start counting
+  }
+  //cout << "handling dead unit " << endl;
 
   //set its fighting unit to null
   if(currentUnits.at(indexOfUnit) -> getEngagedUnit() != NULL){
@@ -431,21 +451,19 @@ void MeleeTower::handleDeadUnit(int indexOfUnit){
  * since it last died than the respawn Speed
  */
 void MeleeTower::respawnUnits(float delta){
-  //the time object of the class
-  auto now = high_resolution_clock::now();
-  //the actual count in nanoseconds for the time
-  auto nowInNano = duration_cast<seconds>(now.time_since_epoch()).count();
-
-  //cout << "here is problemo " << endl;
-  for(int index = 0; index < timeOfDeath.size(); index++){
-    long long deathTime = timeOfDeath.at(index);
+  for(int index = 0; index < timeSinceDeath.size(); index++){
+    //cout << "loop in respawn units" << endl;
 
     //if this is not a dead unit
-    if(deathTime == -1){
+    if(timeSinceDeath.at(index) < 0){
+      //cout << "unit " << index << " is not dead" << endl;
       continue;
+    }else{ //if he's dead we need to keep counting up
+      timeSinceDeath.at(index)+=delta;
     }
-    if(nowInNano - deathTime < (delta/respawnSpeed)){
-      timeOfDeath.at(index) = -1;
+    //cout << "elapsed since my death: " <<  timeSinceDeath.at(index) << "time to respawn: " << respawnSpeed << endl;
+    if(timeSinceDeath.at(index)>respawnSpeed){
+      timeSinceDeath.at(index) = -1;
       //set the health back to max
       currentUnits.at(index) -> resetHealth();
 
@@ -489,7 +507,7 @@ void MeleeTower::attack(shared_ptr<ActorInterface> enemyInRange, float delta){
     //cout << "we are fine" << endl;
     isEnemyPointingAtUnit = true;
     if (unit->getHitpoints() > 0) {
-      cout << " Fry unti " << unitIndex << " is alive " << endl;
+      //cout << " Fry unti " << unitIndex << " is alive " << endl;
       if (unit->getEngagedUnit() == NULL) {
         float enemyX = enemyInRange->getXCoordinate();
         float enemyY = enemyInRange->getYCoordinate();
@@ -629,7 +647,7 @@ shared_ptr<vector<int>>  MeleeTower::getStatistics(){
  void MeleeTower::respawnAllUnits() {
 
      for(int index = 0; index < currentUnits.size(); index++){
-         timeOfDeath.at(index) = -1;
+         timeSinceDeath.at(index) = -1;
          //set the health back to max
          currentUnits.at(index) -> resetHealth();
 

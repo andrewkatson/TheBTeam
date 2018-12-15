@@ -1,5 +1,7 @@
 #include "Towers/EnergyDrink.hpp"
 
+int EnergyDrink::priceMult=1;
+
 EnergyDrink::EnergyDrink(shared_ptr<TextLoader> textLoader,  shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader) {
   this -> typeID = textLoader->getTypeID(string("IDS_EDT"));
   this -> textLoader = textLoader;

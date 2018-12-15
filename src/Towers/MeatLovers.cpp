@@ -1,4 +1,7 @@
 #include "Towers/MeatLovers.hpp"
+
+int MeatLovers::priceMult = 1;
+
 MeatLovers::MeatLovers(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
   this -> typeID = textLoader->getTypeID(string("IDS_MLT"));
   this -> textLoader = textLoader;

@@ -1077,6 +1077,10 @@ bool PlayingScreenHeader::headerRecalculated(){
 }
 
 void PlayingScreenHeader::draw(sf::RenderWindow &window){
+
+
+  gameLogic->getPlayer()->setBalance(headerVariableValues.at(1));
+
   //if something has changed we need to resize the header
   if(recaculateHeader){
     ySize = getMaximumY();

@@ -145,14 +145,12 @@ void WaveManager::createNextWave() {
   distancesFromEntryPositions=getNormalizedDistanceMap(distancesFromEntryPositions);
 
   for(auto it=distancesFromEntryPositions.begin();it!=distancesFromEntryPositions.end();it++){
-    cout << "map dist normalized " << it->first << endl;
+    ////cout << "map dist normalized " << it->first << endl;
   }
 
   double range=(--distancesFromEntryPositions.end())->first;
 
-  cout << "range chosen is " << endl;
-
-  std::normal_distribution<double> spawn_location_rng(0+currentWaveNumber*(range/numWaves),range/3);
+  std::normal_distribution<double> spawn_location_rng((currentWaveNumber-1)*(range/numWaves),range/3);
 
   cout << "my average " <<  currentWaveNumber*(range/numWaves) << endl << "my deviation " << range/3 << endl;
 
@@ -213,11 +211,11 @@ void WaveManager::createNextWave() {
 
     //iterate through every key in the map
     for(auto iterator=(distancesFromEntryPositions.begin());iterator!=distancesFromEntryPositions.end();iterator++){
-      printf("picking entrance. key: %d,length of vector: %ld\n",iterator->first,iterator->second.size());
+      //printf("picking entrance. key: %d,length of vector: %ld\n",iterator->first,iterator->second.size());
       //for(int z=0;z<iterator->second.size();z++){
       //  printf("{ %d , %d } ",iterator->second[z].first,iterator->second[z].second);
       //}
-      printf("\n");
+      //printf("\n");
       //current and next keys in the map
       double current=iterator->first;
       double next=(++iterator)->first;
@@ -376,6 +374,7 @@ void WaveManager::update(float deltaS) {
     timeElapsed=0;
     spawnNextUnit();
   }
+  //cout << "left update wave manager" << endl;
 
 }
 

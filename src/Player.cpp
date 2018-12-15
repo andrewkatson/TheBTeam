@@ -50,6 +50,11 @@ void Player::registerDelegates(){
   DifficultyChangeEvent difficultyChangeEvent = DifficultyChangeEvent();
   EventType difficultyChangeEventType = difficultyChangeEvent.getEventType();
   this -> eventManager -> registerDelegate(difficultyChangeDelegate, textLoader -> getString(string("IDS_Player_DifficultyChange")),difficultyChangeEventType);
+
+  EventManager::EventDelegate balanceChangeDelegate = std::bind(&Player::handleBalanceChanged, this, _1);
+  BalanceChangeEvent balanceChangeEvent = BalanceChangeEvent();
+  EventType balanceChangeEventType = balanceChangeEvent.getEventType();
+  this -> eventManager -> registerDelegate(balanceChangeDelegate, textLoader -> getString(string("IDS_Player_BalanceChange")),balanceChangeEventType);
 }
 
 void Player::deregisterDelegates(){
@@ -294,7 +299,7 @@ void Player::handleLoseHitpoints(const EventInterface& event){
   int lostHitpoints = lhpEventData -> lostHitpoints;
 
   this->hitpoints -= lostHitpoints;
-  cout << "new hit points " << hitpoints << endl;
+  //cout << "new hit points " << hitpoints << endl;
   if(hitpoints <= 0){
     //the time object of the class
     auto now = high_resolution_clock::now();
@@ -304,4 +309,31 @@ void Player::handleLoseHitpoints(const EventInterface& event){
 
     this -> eventManager -> queueEvent(restartScreen);
   }
+}
+
+
+void Player::handleBalanceChanged(const EventInterface& event){
+  /*
+   * cast the EventInterface reference to a CONST pointer to the
+   * BalanceChangeEvent type which allows us to access variables and methods
+   * specific to BalanceChangeEvent
+   */
+  const BalanceChangeEvent* bcEvent = static_cast<const BalanceChangeEvent*>(&event);
+  /*
+   * cast the "data" (a EventDataInterface) to a BalanceChangeEventData type
+   * the .get() is because data is a unique_ptr and we need to grab the
+   * raw pointer inside of it for this
+   */
+  BalanceChangeEventData* bcEventData = static_cast<BalanceChangeEventData*>((bcEvent -> data).get());
+  //get the balance change
+  int balanceChange = bcEventData -> balanceChange;
+
+
+  balance += balanceChange;
+
+}
+
+
+void Player::setBalance(int balance){
+  this->balance=balance;
 }

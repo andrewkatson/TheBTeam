@@ -1,4 +1,7 @@
 #include "Towers/MiniMMS.hpp"
+
+int MiniMMS::priceMult = 1;
+
 MiniMMS::MiniMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader) {
   this -> typeID = textLoader->getTypeID(string("IDS_MMMT"));
   this -> textLoader = textLoader;

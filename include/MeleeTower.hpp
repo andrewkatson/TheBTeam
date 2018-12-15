@@ -11,6 +11,7 @@
 #include "TowerInterface.hpp"
 #include "MeleeUnit.hpp"
 #include "Events/ActorCreatedEvent.hpp"
+#include "Events/WaveChangeEvent.hpp"
 #include <memory>
 #include <vector>
 #include <chrono>
@@ -38,7 +39,7 @@ protected:
   int respawnSpeed;
   //vecotr that holds the measured time since the death of each of the units
   //at the corresponding index in currentUnits (set to 0 when they are alive);
-  vector<long long> timeOfDeath;
+  vector<float> timeSinceDeath;
   //the values used to determine if a float is equal
   float e;
   //the x coordinate of the rally point for this tower
@@ -97,6 +98,7 @@ public:
   void setProjectile(){}
 
   void handleActorDestroyed(const EventInterface& event);
+  void handleWaveChange(const EventInterface& event);
 
   void handleDeadUnit(int indexOfUnit);
 

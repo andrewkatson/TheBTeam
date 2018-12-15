@@ -16,8 +16,12 @@ MeleeUnit::MeleeUnit(shared_ptr<EventManager> eventManager, shared_ptr<TextLoade
   this -> overshoot = 0;
   this -> current_sprite = 0 ;
   this -> walk_cycle_position = 0;
+  this -> attack_cycle_position = 0;
+  this->timeSinceLastAttack = 0;
+
 }
 
+//update animation for our main unit
 void MeleeUnit::update(float delta){
 
   if(speed==0){
@@ -26,29 +30,35 @@ void MeleeUnit::update(float delta){
     this->sprite.setTexture(textures->at(current_sprite));
 
   }else {
+    updateWalkAnim(delta, textLoader->getDouble("IDS_Enemy_Animation_Speed_Factor")/speed);
+  }
+}
 
-    s_elapsed += delta;
+void MeleeUnit::updateWalkAnim(float delta, float timeBetweenFrames){
 
-    if (s_elapsed > textLoader->getDouble("IDS_Unit_Animation_Speed_Factor")/speed) {
-      s_elapsed = 0;
+  s_elapsed += delta;
+  if (s_elapsed > timeBetweenFrames) {
 
-      if (walk_cycle_position == 0) { //first walking frame
-        walk_cycle_position = 1;
-        current_sprite = 2; //standing
-      }else if(walk_cycle_position == 1){ // second walking frame
-        walk_cycle_position = 2;
-        current_sprite = 1;
-      } else if(walk_cycle_position == 2) {
-        walk_cycle_position = 3;
-        current_sprite = 2;
-      }else{
-        walk_cycle_position = 0;
-        current_sprite = 0;
-      }
+    //cout << "swap frame" << endl;
 
-      this->sprite.setTexture(textures->at(current_sprite));
+    s_elapsed = 0;
 
+    if (walk_cycle_position == 0) { //first walking frame
+      walk_cycle_position = 1;
+      current_sprite = 2; //standing
+    }else if(walk_cycle_position == 1){ // second walking frame
+      walk_cycle_position = 2;
+      current_sprite = 1;
+    } else if(walk_cycle_position == 2) {
+      walk_cycle_position = 3;
+      current_sprite = 2;
+    }else{
+      walk_cycle_position = 0;
+      current_sprite = 0;
     }
+
+    this->sprite.setTexture(textures->at(current_sprite));
+
   }
 }
 
@@ -97,8 +107,25 @@ void MeleeUnit::vectorMove(float delta){
   //float newX = xVector / (abs(speed-25)) *delta *ActorInterface::getXScale() + x;
   //float newY = yVector / (abs(speed-25)) *delta *ActorInterface::getYScale() + y;
 
-  float newX = xVector * speed * delta + x;
-  float newY = yVector * speed  * delta + y;
+  float deltaX = xVector * speed * delta;
+  float deltaY = yVector * speed  * delta;
+
+  float newX = deltaX + x;
+  float newY = deltaY + y;
+
+
+
+
+  if(abs(deltaX) > .1 || abs(deltaY) > .1) { //if our movement is above a certain threshold, change angle
+    double angle = atan2(xTarget - x, yTarget - y) - M_PI / 2;
+    setDirection(angle);
+    //cout << "time between frames " << textLoader->getDouble("IDS_Fry_Animation_Speed_Factor")/speed << endl;
+    updateWalkAnim(delta,textLoader->getDouble("IDS_Fry_Animation_Speed_Factor")/speed);
+  }else{
+    current_sprite=2;
+    this->sprite.setTexture(textures->at(current_sprite));
+  }
+
 
   /*
   cout << "currently at " << x << " "<< y <<endl;
@@ -215,33 +242,69 @@ void MeleeUnit::attackEngagedUnit(){
   if(engagedUnit == NULL){
     return;
   }
+  timeSinceLastAttack = 0;
+
+
   float enemyHP = engagedUnit->getHitpoints();
   int enemyArmor = engagedUnit->getArmor();
 
   assert(armor>0);
   enemyHP -= (float)damage *(float)(armorPenetration/enemyArmor);
   engagedUnit->updateHitpoints(enemyHP);
-  cout<<" I AM "  << getType()<<endl;
-  cout<<"enemy has " << enemyHP<<endl;
+  //cout<<" I AM "  << getType()<<endl;
+  //cout<<"enemy has " << enemyHP<<endl;
   engagedUnit->flickerUnit();
+  s_elapsed=0;
+  if(attack_cycle_position==0){
+    attack_cycle_position=1;
+    current_sprite=3;
+  }else{//attack cycle position must be the last spot in the cycle
+    attack_cycle_position=3;
+    current_sprite = 4;
+  }
+  this->sprite.setTexture(textures->at(current_sprite));
 }
 
 void MeleeUnit::updateAttack(float delta){
-  if(attackPossible(delta)){
+  s_elapsed+=delta;
+  timeSinceLastAttack+=delta;
+
+  if(s_elapsed > textLoader->getDouble("IDS_Unit_Punch_Time_Between_Frames") && current_sprite!=2){
+    //cout << "i set my sprite back to standing" << endl;
+    current_sprite = 2;
+    if(attack_cycle_position==1){
+      attack_cycle_position=2;
+    }else{
+      attack_cycle_position=0;
+    }
+
+    this->sprite.setTexture(textures->at(current_sprite));
+
+  }
+
+  if(attackPossible()){
     attackEngagedUnit();
+
+    auto now = high_resolution_clock::now();
+    //the actual count in nanoseconds for the time
+    auto nowInNano = duration_cast<nanoseconds>(now.time_since_epoch()).count();
+
+    shared_ptr<EventInterface> playSound = make_shared<PlaySoundEvent>("", textLoader->getString(
+            "IDS_Unit_Punch_Noise"), nowInNano);
+    eventManager->queueEvent(playSound);
+
+    //cout<<" my name is "  << getType()<<endl;
+    //cout << "and i am in a punching frame" << endl;
+
   }
 }
-bool MeleeUnit::attackPossible(float delta){
-  //the time object of the class
-  auto now = high_resolution_clock::now();
-  //the actual count in seconds for the time
-  auto nowInSec = duration_cast<seconds>(now.time_since_epoch()).count();
-  //time -last attack < (delta/attackrate)
+bool MeleeUnit::attackPossible(){
   assert(attackRate>0);
-  long long diff = nowInSec - lastAttack;
-  if((diff)<= (long long)(delta/attackRate)){
-    return false;
-  }
-  lastAttack = nowInSec;
-  return true;
+
+  //cout << "i am " << typeID << " can i attack? " << (timeSinceLastAttack > 1.0/(float)attackRate) << endl;
+
+  //cout << "time between attacks  " << 1.0/(float)attackRate << endl;
+  //cout << "time is " << timeSinceLastAttack << endl;
+
+  return timeSinceLastAttack > 1.0/(float)attackRate;
 }

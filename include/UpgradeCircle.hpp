@@ -112,4 +112,7 @@ public:
   void drawCircleToDraw(sf::RenderWindow& window);
 
   bool isCurrentlyVisible(){return isDisplayed;}
+
+
+  void handleLevelChanged(const EventInterface& event);
 };

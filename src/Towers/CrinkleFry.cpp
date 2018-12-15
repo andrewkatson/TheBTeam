@@ -1,5 +1,6 @@
 #include "Towers/CrinkleFry.hpp"
 
+int CrinkleFry::priceMult=1;
 
 CrinkleFry::CrinkleFry(shared_ptr<TextLoader> textLoader, int maxMeleeUnits, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader, bool setUpUnits) : MeleeTower(eventManager, textLoader){
   this -> totalUnits = maxMeleeUnits;

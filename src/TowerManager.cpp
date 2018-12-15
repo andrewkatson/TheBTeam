@@ -338,10 +338,16 @@ int TowerManager::getTowerPrice(int row, int col){
      towerID = tower -> getType();
   }
 
+  //for(auto z : allTowerTypes){
+  //  cout << "tower type " << z.first << endl;
+  //}
+
   // get the vector of towers we can upgrade to
   //grab the first tower in that list
   //and return its price
   int price = allTowerUpgrades.at(towerID).at(0) -> getPrice();
+
+
 
   return price;
 }
@@ -350,6 +356,10 @@ int TowerManager::getTowerPrice(int row, int col){
  * @return the price of the specific tower
  */
 int TowerManager::getTowerPrice(string towerTypeID){
+  //for(auto z : allTowerTypes){
+  //  cout << "tower type " << z.first << endl;
+  //}
+
   assert(allTowerTypes.find(towerTypeID) != allTowerTypes.end());
   return allTowerTypes.at(towerTypeID) -> getPrice();
 }
@@ -457,12 +467,59 @@ shared_ptr<TowerInterface> TowerManager::getObstacle(int row, int col){
   return towersPlaced.at(row*xDim + col);
 }
 
+void TowerManager::updateTowerPrices(){
+
+  cout << "updating price" << endl;
+
+  std::unordered_map<string,int>typesToTowerCount;
+
+  if(towersPlaced.empty()){
+
+    for(auto z : allTowerTypes){
+      string towerID = z.first;
+      typesToTowerCount[towerID]=0;
+    }
+
+    /*
+    for(auto z : allTowerUpgrades){
+      string towerID = z.first;
+      typesToTowerCount[towerID]=0;
+    }
+     */
+
+  }else{
+    for(auto z : towersPlaced){
+      typesToTowerCount[z.second->getType()]++;
+    }
+  }
+
+  for(auto z : typesToTowerCount){
+
+    if(allTowerTypes.find(z.first)!=allTowerTypes.end()) {
+      cout << "going through tower " << z.first << endl;
+
+      allTowerTypes.at(z.first)->setPriceMult(std::pow(2, z.second));
+    }
+
+  }
+}
+
+
 
 /*
  * Handle a tower creation event
  * @param event: the tower creation event
  */
 void TowerManager::handleTowerCreation(const EventInterface& event){
+
+
+  //for(auto tower : allTowerTypes){
+  //  cout << "tower type " << tower.first << endl;
+  //}
+  //for(auto tower : allTowerUpgrades){
+  //  cout << "tower upgrade " << tower.first << endl;
+  //}
+
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * TowerCreationEvent type which allows us to access variables and methods
@@ -486,6 +543,9 @@ void TowerManager::handleTowerCreation(const EventInterface& event){
 
   //and add it
   addTower(towerTypeID, row, col);
+
+
+  updateTowerPrices();
 }
 
 /*
@@ -493,6 +553,7 @@ void TowerManager::handleTowerCreation(const EventInterface& event){
  * @param event: the tower remove event
  */
 void TowerManager::handleTowerRemove(const EventInterface& event){
+
   /*
    * cast the EventInterface reference to a CONST pointer to the
    * TowerRemoveEvent type which allows us to access variables and methods
@@ -514,6 +575,9 @@ void TowerManager::handleTowerRemove(const EventInterface& event){
 
   //remove the tower at the position specified
   removeTower(row, col);
+
+
+  updateTowerPrices();
 
 }
 
@@ -876,35 +940,35 @@ int TowerManager::getUpgradePrice(int row, int col){
 
    //generate an amount to upgrade
    //the distribution we generate numbers for
-   std::uniform_int_distribution<int> dist(textLoader->getInteger(string("IDS_Minimum_Tower_Upgrade")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+   std::uniform_real_distribution<float> dist(textLoader->getDouble(string("IDS_Minimum_Tower_Upgrade")),textLoader->getDouble(string("IDS_Maximum_Tower_Upgrade")));
 
-   int upgradeAmount = dist(mt);
+   float upgradeAmount = dist(mt);
 
    //cast as a melee tower
    MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(towerToUpgrade.get());
 
    //check which upgrade has been trigged and apply the upgrading amount
    if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
-     meleeTower->updateRadius(meleeTower->getRadius()+upgradeAmount);
+     meleeTower->updateRadius(meleeTower->getRadius()*upgradeAmount);
      collisionManager -> handleTowerRadiusUpgrade(towerToUpgrade);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Respawn_Rate_Upgrade"))){
-     meleeTower->updateRespawnSpeed(meleeTower->getRespawnSpeed()+upgradeAmount);
+     meleeTower->updateRespawnSpeed(meleeTower->getRespawnSpeed()/upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Hitpoints_Upgrade"))){
-     meleeTower->updateUnitHitpoints(meleeTower->getUnitHitpoints()+upgradeAmount);
+     meleeTower->updateUnitHitpoints(meleeTower->getUnitHitpoints()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Damage_Upgrade"))){
-     meleeTower->updateUnitDamage(meleeTower->getUnitDamage()+upgradeAmount);
+     meleeTower->updateUnitDamage(meleeTower->getUnitDamage()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Penetration_Upgrade"))){
-     meleeTower->updateUnitArmorPenetration(meleeTower->getUnitArmorPenetration()+upgradeAmount);
+     meleeTower->updateUnitArmorPenetration(meleeTower->getUnitArmorPenetration()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Upgrade"))){
-     meleeTower->updateUnitArmor(meleeTower->getUnitArmor()+upgradeAmount);
+     meleeTower->updateUnitArmor(meleeTower->getUnitArmor()*upgradeAmount);
    }
    else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Attack_Rate_Upgrade"))){
-     meleeTower->updateUnitAttackRate(meleeTower->getUnitAttackRate()+upgradeAmount);
+     meleeTower->updateUnitAttackRate(meleeTower->getUnitAttackRate()*upgradeAmount);
    }
    else{
      cerr << "upgrade Melee Tower unknown upgrade button id : TowerManager" << endl;
@@ -925,29 +989,29 @@ int TowerManager::getUpgradePrice(int row, int col){
 
     //generate an amount to upgrade
     //the distribution we generate numbers for
-    std::uniform_int_distribution<int> dist(textLoader->getDouble(string("IDS_Tower_Upgrade_Base_Upgrade_Price")),pow(textLoader->getInteger(string("IDS_Maximum_Tower_Upgrade")), towerToUpgrade->getLevel()));
+   std::uniform_real_distribution<float> dist(textLoader->getDouble(string("IDS_Minimum_Tower_Upgrade")),textLoader->getDouble(string("IDS_Maximum_Tower_Upgrade")));
 
-    int upgradeAmount = dist(mt);
+   float upgradeAmount = dist(mt);
 
     //cast as a range tower
     RangeTower* rangeTower = dynamic_cast<RangeTower*>(towerToUpgrade.get());
 
     //check which upgrade has been trigged and apply the upgrading amount
     if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Radius_Upgrade"))){
-      rangeTower->updateRadius(rangeTower->getRadius()+upgradeAmount);
+      rangeTower->updateRadius(rangeTower->getRadius()*upgradeAmount);
       collisionManager -> handleTowerRadiusUpgrade(towerToUpgrade);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Tower_Rate_Of_Fire_Upgrade"))){
-      rangeTower->updateRateOfFire(rangeTower->getRateOfFire()+upgradeAmount);
+      rangeTower->updateRateOfFire(rangeTower->getRateOfFire()/upgradeAmount);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Max_Damage_Upgrade"))){
-      rangeTower->updateProjectileDamage(rangeTower->getProjectileDamage()+upgradeAmount);
+      rangeTower->updateProjectileDamage(rangeTower->getProjectileDamage()*upgradeAmount);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Armor_Penetration_Upgrade"))){
-      rangeTower->updateProjectileArmorPenetration(rangeTower->getProjectileArmorPenetration()+upgradeAmount);
+      rangeTower->updateProjectileArmorPenetration(rangeTower->getProjectileArmorPenetration()*upgradeAmount);
     }
     else if(upgradeButtonID == textLoader->getString(string("IDS_Actor_Area_Of_Effect_Upgrade"))){
-      rangeTower->updateProjectileAreaOfEffect(rangeTower->getProjectileAreaOfEffect()+upgradeAmount);
+      rangeTower->updateProjectileAreaOfEffect(rangeTower->getProjectileAreaOfEffect()*upgradeAmount);
     }
     else{
       cerr << "upgrade Range Tower unknown upgrade button id : Tower Manager" << endl;
@@ -963,6 +1027,7 @@ int TowerManager::getUpgradePrice(int row, int col){
  */
 void TowerManager::clearAllTowers(){
   towersPlaced.clear();
+  updateTowerPrices();
 }
 
 /*

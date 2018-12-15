@@ -111,9 +111,13 @@ public:
   virtual void setXCoordinate(float xCor)=0;
   virtual void setYCoordinate(float yCor)=0;
   virtual shared_ptr<vector<int>> getStatistics()=0;
+
+  virtual void setPriceMult(int priceMult){cout << "base price mult" << endl;}
+
   /*
    * update the position, check if it hit its target
    */
+
   virtual void update(float delta)=0;
 
   /*

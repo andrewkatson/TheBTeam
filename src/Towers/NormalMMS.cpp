@@ -1,5 +1,7 @@
 #include "Towers/NormalMMS.hpp"
 
+int NormalMMS::priceMult = 1;
+
 NormalMMS::NormalMMS(shared_ptr<TextLoader> textLoader, shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
   this -> typeID = textLoader->getTypeID(string("IDS_NMMT"));
   this -> textLoader = textLoader;

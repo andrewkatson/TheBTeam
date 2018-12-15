@@ -176,7 +176,9 @@ void GameLogic::updateGameLogic(float deltaS){
     this -> waveManager -> update(deltaS);
     //check for collisions before processing events so any unit that has been
     //destroyed but moved can be placed in the right map
+    //cout << "is it collision detection "  << endl;
     this -> collisionManager -> checkForCollisions(deltaS);
+    //cout << "oh man it is " << endl;
   }
   this -> eventManager -> processEvent();
 }
@@ -331,7 +333,7 @@ void GameLogic::handleLevelChangeEvent(const EventInterface& event){
   //projectile manager
   projectileManager->clearProjectiles();
   cout << "projectile manager passed" << endl;
-
+  
   //playerbalance=(20 * 2);
   player -> newLevelBalance();
   player -> newLevelHitpoints();
@@ -659,6 +661,8 @@ bool GameLogic::attemptSellTower(int row, int col){
    int upgradeCost = getUpgradePrice(row, col);
 
    int playerBalance = player -> getBalance();
+
+   cout << "can upgrade" << endl;
 
    if(playerBalance >= upgradeCost){
 

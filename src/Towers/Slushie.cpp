@@ -1,5 +1,7 @@
 #include "Towers/Slushie.hpp"
 
+int Slushie::priceMult = 1;
+
 Slushie::Slushie(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
   this -> typeID = textLoader->getTypeID(string("IDS_SLT"));
   this -> textLoader = textLoader;

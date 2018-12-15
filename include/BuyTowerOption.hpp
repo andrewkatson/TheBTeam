@@ -76,4 +76,5 @@ public:
 
   void indicateStatDifferential(int indexOfStat, int differential);
   void realignStatButtons();
+
 };

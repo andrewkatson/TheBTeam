@@ -1,4 +1,7 @@
 #include "Towers/PepperoniPizza.hpp"
+
+int PepperoniPizza::priceMult = 1;
+
 PepperoniPizza::PepperoniPizza(shared_ptr<TextLoader> textLoader,shared_ptr<EventManager> eventManager, shared_ptr<TextureLoader> textureLoader) : RangeTower(eventManager, textLoader){
   this -> typeID = textLoader->getTypeID(string("IDS_PPT"));
   this -> textLoader = textLoader;
