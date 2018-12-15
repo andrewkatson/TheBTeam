@@ -26,7 +26,7 @@ void MeleeTower::update(float delta){
   unitsEngaged = 0;
 
   //if we can respawn units then respawn them
-  //respawnUnits(delta);
+  respawnUnits(delta);
 
   //if a unit does not have an engaged enemy unit then send it back towards
   //a point situated around the rally point
@@ -620,4 +620,24 @@ shared_ptr<vector<int>>  MeleeTower::getStatistics(){
    for(shared_ptr<MeleeUnit> unit : currentUnits){
      unit -> updateAttackRate(newAttackRate);
    }
+ }
+
+
+ /*
+  * Respawn all units that are dead
+  */
+ void MeleeTower::respawnAllUnits() {
+
+     for(int index = 0; index < currentUnits.size(); index++){
+         timeOfDeath.at(index) = -1;
+         //set the health back to max
+         currentUnits.at(index) -> resetHealth();
+
+         //set the engaged unit to null
+         currentUnits.at(index) -> setEngagedUnit(NULL);
+
+         //set the position to be the center of the tower (so it will not draw and then start moving towards some other point)
+         currentUnits.at(index) -> setXCoordinate(xCoordinate);
+         currentUnits.at(index) -> setYCoordinate(yCoordinate);
+     }
  }

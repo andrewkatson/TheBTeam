@@ -138,6 +138,8 @@ public:
   void divideAllStatsOfTower(shared_ptr<TowerInterface> tower, int divideBy);
   void resetAllTowersToBaseValues();
 
+  void respawnAllDeadUnits();
+
 private:
   void registerDelegates();
   void deregisterDelegates();

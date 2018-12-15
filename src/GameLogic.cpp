@@ -402,6 +402,8 @@ void GameLogic::handleWaveChangeEvent(const EventInterface& event){
   collisionManager->clearBetweenWaves();
   //projectile manager
   projectileManager->clearProjectiles();
+  //restore any melee tower units that are currently dead
+  towerManager->respawnAllDeadUnits();
 
 }
 

@@ -7,7 +7,10 @@
 
 ###Changed
 - buy and sell buttons will mirror across middle of screen if you right click them (useful when they block clicks) [@andrewkatson][https://github.com/andrewkatson]
+- melee units make their opponents flicker when attacking 
+- melee units all respawn at wave end
 - all projectiles and towers are more balanced [@meisong1997][https://github.com/meisong1997]
+
 
 ###Fixed
 - Melee towers assign units and they kill other units [kp-hb][https://github.com/kp-hb]

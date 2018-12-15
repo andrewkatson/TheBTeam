@@ -1103,3 +1103,18 @@ void TowerManager::resetAllTowersToBaseValues(){
   populateObstacles();
   populateTowerUpgrades();
 }
+
+/*
+ * Respawn all the dead units of the melee towers
+ */
+void TowerManager::respawnAllDeadUnits() {
+  for(auto it = towersPlaced.begin(); it != towersPlaced.end(); ++it){
+    shared_ptr<TowerInterface> tower = it->second;
+
+    if(tower->isMelee){
+      //cast to melee tower
+      MeleeTower* meleeTower = dynamic_cast<MeleeTower*>(tower.get());
+      meleeTower->respawnAllUnits();
+    }
+  }
+}

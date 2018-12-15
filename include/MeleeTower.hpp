@@ -128,4 +128,5 @@ public:
   void updateUnitArmor(int newArmor);
   void updateUnitAttackRate(int newAttackRate);
 
+  void respawnAllUnits();
 };
