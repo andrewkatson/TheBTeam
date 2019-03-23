@@ -3,12 +3,20 @@ A Food Themed 2D Tower Defense Game with procedurally generated maps and waves.
 
 ## Download Instructions
 - Head to the computer lab on the first floor of McGlothlin-Street Hall, 251 Jamestown Rd, Williamsburg, VA
-- Log into one of the computers and enter the following command into a terminal window:
- - `git clone https://github.com/andrewkatson/TheBTeam.git ; cd TheBTeam ; mkdir Debug ; cd Debug ; cmake .. ; make ; ./Game `
+- Log into one of the computers and enter the following commands into a terminal window:
+  - `git clone https://github.com/andrewkatson/TheBTeam.git`
+  - `cd TheBTeam`
+  - `mkdir Debug`
+  - `cd Debug`
+  - `cmake ..`
+  - `make`
+  - `./Game`
 - You're playing! Have fun!
 
-### Required Packages
-If not playing on a McGlothlin lab machine, the following packages are required:
+### Playing on a non-W&M machine
+If you're prohibitively far from the William & Mary CS lab (or are too lazy to go there), you can perform the above procedure in any Linux terminal. However, it is possible to encounter issues with compiling and running the game using this method. __The game has been thoroughly tested on the lab machines, but not other systems. It is not guaranteed to work properly with your setup__. 
+
+__N.B.:__ If not playing on a McGlothlin lab machine, the following packages are required:
 - `git`
 - `g++`
 - `make`
