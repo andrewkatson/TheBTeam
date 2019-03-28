@@ -91,7 +91,7 @@ These house fry-guys, the first line of defense in your army. Once they see a un
 
 ##### Rally Points
 
-![rally](https://raw.githubusercontent.com/andrewkatson/TheBTeam/master/resources/manual/rally.png)
+![rally](https://raw.githubusercontent.com/andrewkatson/TheBTeam/ef0b1a3fd3d48078d49fb04abd8451898d6dee72/resources/manual/rally.png)
 
 These towers also have a unique control scheme. Clicking on one will show you a flag icon inside a circle. Clicking this flag will allow you to pick it up. You can drop it on any path tile inside the tower's circle of influence. This flag will tell the tower's Fryguys where they should convene while they're not fighting.
 
